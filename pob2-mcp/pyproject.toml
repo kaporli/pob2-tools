@@ -1,0 +1,19 @@
+[project]
+name = "pob2-mcp"
+version = "0.1.0"
+description = "MCP server exposing the Path of Building 2 calculation engine, character import, and PoE2 trade API"
+requires-python = ">=3.10"
+dependencies = ["mcp>=2.0", "requests>=2.31"]
+
+[project.scripts]
+pob2-mcp = "pob2mcp.server:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["pob2mcp"]
+
+[tool.setuptools.package-data]
+pob2mcp = ["*.lua"]

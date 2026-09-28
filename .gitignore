@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# optimizer run outputs & logs
+runs/
+*.log
+
+# per-user OAuth token cache (normally lives in ~/.pob2-mcp/, never here)
+.pob2-mcp/
+token.json
+
+# editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

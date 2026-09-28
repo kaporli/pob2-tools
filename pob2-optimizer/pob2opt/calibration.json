@@ -1,0 +1,19 @@
+{
+ "constants": {
+  "st_fudge": {
+   "ground_rain": 2.667
+  },
+  "clear_fudge": {}
+ },
+ "observations": [
+  {
+   "skill": "Rain of Arrows",
+   "archetype": "ground_rain",
+   "axis": "single",
+   "model_honest": 375.0,
+   "observed": 1000.0,
+   "correction": 2.6666666666666665,
+   "note": "user: bad single target, some damage"
+  }
+ ]
+}
