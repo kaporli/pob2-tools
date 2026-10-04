@@ -1,0 +1,84 @@
+{
+  "reviewed_commit": "9d58905",
+  "spec_version": "1.0",
+  "review_date": "2026-10-04",
+  "reviewer": "Codex",
+  "verdict": "changes_required",
+  "environment": {
+    "python": "3.12.4",
+    "platform": "Windows x64",
+    "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "pob_tracked_diff_empty": true,
+    "python_310_run_performed": false
+  },
+  "executed_suites": [
+    {
+      "command": "python -m pytest tests/unit tests/integration -ra",
+      "exit_code": 0,
+      "passed": 66,
+      "xfailed": 13
+    },
+    {
+      "command": "python -m pytest -m engine -ra",
+      "context": "POB2_ROOT set to existing separate pinned checkout",
+      "exit_code": 0,
+      "passed": 30,
+      "deselected": 79,
+      "xfailed": 4
+    }
+  ],
+  "adversarial_checks": [
+    {
+      "name": "ci_engine_setup_error",
+      "input": "Existing engine tests with runtime unset, plus an engine-marked test whose fixture raises RuntimeError",
+      "pytest_exit_code": 1,
+      "skipped": 34,
+      "errors": 1,
+      "current_workflow_guard_would_accept": true
+    },
+    {
+      "name": "run_root_is_regular_file",
+      "observed_status": "ok",
+      "expected_status": "incompatible"
+    },
+    {
+      "name": "run_root_has_regular_file_ancestor",
+      "observed_status": "ok",
+      "expected_status": "incompatible"
+    },
+    {
+      "name": "nine_byte_invalid_dll",
+      "payload_ascii": "not a DLL",
+      "observed_status": "ok",
+      "observed_architecture": "unknown",
+      "expected": "block engine readiness"
+    },
+    {
+      "name": "arm64_pe_header_on_x64_python",
+      "observed_status": "ok",
+      "observed_architecture": "arm64",
+      "expected_status": "incompatible"
+    }
+  ],
+  "dependency_metadata": {
+    "rpds_py_version": "2026.6.3",
+    "rpds_py_requires_python": ">=3.11",
+    "declared_project_minimum": "3.10",
+    "examples_of_unpinned_active_dependencies": [
+      "anyio",
+      "httpx2",
+      "pydantic",
+      "pyjwt",
+      "starlette",
+      "uvicorn",
+      "typing-extensions",
+      "packaging",
+      "pygments"
+    ]
+  },
+  "not_independently_repeated": [
+    "Hosted CI history",
+    "Clean install on Python 3.10",
+    "Engine timing and peak-memory measurement script"
+  ]
+}

@@ -11,8 +11,13 @@
 
 Item 1 is exercised directly against the real ``load_phase``/``save_phase``.
 Items 2-4 are source-level characterizations: the values live inside functions
-that cannot run without PoB, so the test pins the literals and the repair
-removes them.
+that cannot run without PoB and a full harvest.
+
+**The source checks are legacy characterization, not requirements.** The
+delivery plan keeps ``phases.py``/``cli.py`` as a legacy comparison path until
+replacement tests pass, so a valid repair may leave every literal below exactly
+where it is. What must change is what a *new* run does, and the repaired
+expectations at the bottom are written against that boundary instead.
 
 Repairs: P08-T01 (immutable run contexts and cache identity) and P02-T02
 (catalog-derived class, level, quest-reward and support-slot rules).
@@ -99,9 +104,17 @@ def test_ascendancy_point_budget_is_a_hardcoded_level_threshold():
     assert any(f in SOURCE for f in ASCENDANCY_FORMULAS)
 
 
-def test_point_budgets_are_not_derived_from_a_catalog():
-    assert "catalog" not in SOURCE.lower()
-    assert "patch_profile" not in SOURCE
+def test_point_budgets_are_computed_without_consulting_any_catalog():
+    """Scoped to the formulas themselves.
+
+    An earlier version asserted that the string "catalog" was absent from the
+    whole module, which would have failed on a harmless comment. What matters is
+    that the budget expressions depend only on ``args.level``.
+    """
+    for formula in QUEST_POINT_FORMULAS:
+        assert "args.level" in formula
+        assert "catalog" not in formula
+        assert "profile" not in formula
 
 
 # ----------------------------------------- 4. candidate lists are hard-capped
@@ -115,45 +128,77 @@ def literal_slice_count() -> int:
 
 
 def test_candidate_lists_are_truncated_by_literal_slices():
+    """Legacy fact. Display slices in a report are fine; the search cap is not."""
     assert literal_slice_count() >= 6
     assert re.search(r'"--top",\s*type=int,\s*default=8', SOURCE)
 
 
-# ------------------------------------------------------- repaired behaviour
+# ------------------------------------------------------- future repair contract
+# P00 can validate the probes against labelled doubles. It cannot fabricate P01
+# records or assume a P08 return type. The explicit binding check turns into a
+# hard failure when the service exists, until P08 wires real validated fixtures.
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01: evaluation reuse must require a full identity "
-           "match (request, catalog, patch profile, engine revision), not a filename.",
+from dataclasses import replace
+
+import jsonschema
+from repair_contracts import (
+    MissingFutureService, PREPARE_PROBES, REQUIRED_REQUEST_KEYS,
+    make_prepare_fixture, require_production_binding,
 )
-def test_repaired_cache_requires_a_matching_run_identity():
-    params = set(inspect.signature(cli.load_phase).parameters)
-    assert params & {"identity", "manifest", "run_id", "cache_key"}
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01: the league must be resolved during prepare and "
-           "frozen in the run manifest, not defaulted in the argument parser.",
-)
-def test_repaired_league_is_not_hardcoded():
-    assert "Forbidden Rites" not in SOURCE
+@pytest.fixture
+def prepare_case(tmp_path):
+    return make_prepare_fixture(tmp_path)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05/P02-T02 repair: quest-passive and ascendancy budgets must come "
-           "from the pinned catalog, not from level thresholds in the CLI.",
-)
-def test_repaired_point_budgets_are_catalog_derived():
-    assert not any(f in SOURCE for f in QUEST_POINT_FORMULAS)
-    assert not any(f in SOURCE for f in ASCENDANCY_FORMULAS)
+@pytest.mark.parametrize("probe", PREPARE_PROBES, ids=lambda probe: probe.__name__)
+def test_prepare_probe_accepts_valid_synthetic_behavior(prepare_case, probe):
+    request, prepare, catalog_hash = prepare_case
+    probe(prepare, request, catalog_hash)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01/P08-T03: result-set size belongs to the run "
-           "request, not to literal slices inside the phases.",
-)
-def test_repaired_result_sets_are_not_literal_slices():
-    assert literal_slice_count() == 0
+@pytest.mark.parametrize("index,defect", [
+    (0, {"cache_identity": "constant"}),
+    (1, {"league_id": "current"}),
+    (2, {"catalog_hash": "untraceable"}),
+    (2, {"passive_points": 999}),
+    (3, {"finalist_limit": 8}),
+])
+def test_prepare_probe_rejects_wrong_behavior(prepare_case, index, defect):
+    request, prepare, catalog_hash = prepare_case
+
+    def broken(candidate):
+        return replace(prepare(candidate), **defect)
+
+    with pytest.raises(AssertionError):
+        PREPARE_PROBES[index](broken, request, catalog_hash)
+
+
+def test_prepare_fixture_has_every_documented_request_field(prepare_case):
+    from repair_contracts import REPO
+    specification = (REPO / "docs/specs/interfaces.md").read_text()
+    line = next(line for line in specification.splitlines() if line.startswith("Required request keys:"))
+    documented = set(re.findall(r"`([^`]+)`", line))
+    assert documented == set(REQUIRED_REQUEST_KEYS)
+    assert documented <= prepare_case[0].keys()
+
+
+def test_validation_failure_is_not_a_repair_xfail(prepare_case):
+    request, prepare, catalog_hash = prepare_case
+    del request["scenario_suite"]
+    with pytest.raises(jsonschema.ValidationError, match="scenario_suite"):
+        PREPARE_PROBES[0](prepare, request, catalog_hash)
+
+
+def test_missing_snapshot_is_not_a_repair_xfail(prepare_case):
+    request, prepare, catalog_hash = prepare_case
+    Path(request["catalog_profile"]).unlink()
+    with pytest.raises(FileNotFoundError):
+        PREPARE_PROBES[0](prepare, request, catalog_hash)
+
+
+@pytest.mark.xfail(strict=True, raises=MissingFutureService,
+                   reason="P08-T01: prepare service and production contract binding are not implemented")
+def test_production_prepare_contract_binding_is_pending():
+    require_production_binding("pob2opt.search", "P08-T01")

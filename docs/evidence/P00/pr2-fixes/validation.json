@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-04",
+  "starting_commit": "089e065e2e0ceb8c6be9efa71e3726d51aa0ce8a",
+  "python_versions": [
+    "3.10.22",
+    "3.12.4"
+  ],
+  "clean_installs": {
+    "310": {
+      "count": 2,
+      "locked_distributions": 41,
+      "identical": true
+    },
+    "312": {
+      "count": 2,
+      "locked_distributions": 39,
+      "identical": true
+    }
+  },
+  "offline_tests_per_interpreter": {
+    "command": "python -m pytest tests/unit tests/integration -q",
+    "passed": 116,
+    "xfailed": 8,
+    "exit_code": 0
+  },
+  "full_suite": {
+    "command": "python -m pytest -ra --junitxml=.venv/pr2-validation/full-suite.xml",
+    "python": "3.12.4",
+    "passed": 146,
+    "xfailed": 12,
+    "exit_code": 0,
+    "duration_seconds": 12.5,
+    "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e"
+  },
+  "negative_dependency_check": {
+    "description": "Both conditional pins and installed distributions removed in an isolated scratch environment",
+    "exit_code": 1,
+    "missing": [
+      "exceptiongroup",
+      "tomli"
+    ]
+  },
+  "scope": "Synthetic prepare probes validate test contracts only. Actual P02/P08 services remain unimplemented; narrow binding checks require production tests when they appear.",
+  "inventory_canonical_json_sha256": {
+    "inventory-py310-a.json": "87b5c72f8bd80699236ec2b456156617a51429e6b0b7c259a5079fd784cae6d8",
+    "inventory-py310-b.json": "87b5c72f8bd80699236ec2b456156617a51429e6b0b7c259a5079fd784cae6d8",
+    "inventory-py312-a.json": "b8f44c8e75bdff1ba7319095f19d5cd6f36519de8add07708503c7bdf2c243dd",
+    "inventory-py312-b.json": "b8f44c8e75bdff1ba7319095f19d5cd6f36519de8add07708503c7bdf2c243dd"
+  },
+  "implementation_commit": "e0aa81d7c80170911f7f2ead66ed7d023a443ddc",
+  "ci_run_id": 37216286664,
+  "ci_jobs": {
+    "3.10": 111477353583,
+    "3.12": 111477353648
+  },
+  "ci_conclusion": "success",
+  "review_verdict": "accepted_for_P00_foundation_scope"
+}

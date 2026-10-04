@@ -80,11 +80,28 @@ DPS), as does save/reload of a build after an intervening different build. Ten
 repeated evaluations of an unchanged state are identical. This is evidence for
 these operations on this checkout; it is not a general determinism claim.
 
-**Expected console noise.** The engine's LuaJIT uses an SEH exception
-(`0xe24c4a02`) during startup error unwinding. `faulthandler`, which pytest
-enables, prints `Windows fatal exception: code 0xe24c4a02` and a traceback each
-time an engine boots. It is caught by LuaJIT and harmless. `faulthandler` was
-deliberately left enabled so a genuine native crash stays visible.
+**Expected console noise, corrected.** An earlier version of this document
+said the `0xe24c4a02` banner appeared "once per engine boot". That was wrong,
+and wrong by three orders of magnitude: it was inferred from output that had
+already been filtered through `grep -v` and `tail`. Measured on an unfiltered
+`python -m pytest -m engine -q` with one engine session:
+
+| | Count |
+|---|---|
+| `Windows fatal exception: code 0xe24c4a02` banners | 6984 |
+| Traceback frame lines | 265 790 |
+| Total console lines | 286 749 |
+
+PoB's LuaJIT raises that SEH exception as part of ordinary error unwinding, not
+only at startup, so `faulthandler` reports thousands of caught exceptions during
+a normal passing run. The exit code was 0 throughout.
+
+The diagnostic is redirected, not disabled. `tests/conftest.py` enables
+`faulthandler` against a per-session log file for the duration of the engine
+session and restores stderr afterwards, and `pytest_terminal_summary` prints the
+log's path and size. Measured after the change: 9 console lines, with all
+30 619 628 bytes and 7067 banners preserved in the log. A real native crash
+still shows in pytest's exit code.
 
 ### F11 Importing a build destroys it
 
@@ -127,10 +144,13 @@ findings above and need a reviewer decision on where they belong.
 | P00-OBS-03 | `alloc_nodes` on one distant passive allocates the entire path to it (1 -> 18 nodes, 17 points). `dealloc_nodes` on the same id removes only that node and leaves the 16 path nodes allocated, so allocate-then-deallocate does not return to the starting state. Whether orphaned path nodes should be pruned is a game-rule question, not a defect claim. | `tests/engine/test_engine_smoke.py::test_allocation_pathing_and_deallocation_are_not_symmetric` | P02-T03 legality rules |
 | P00-OBS-04 | `build.targetVersionData` is nil on the pinned checkout; `build.targetVersion` is `"0_1"` while builds are saved with `treeVersion="0_5"`. The replaced smoke script probed `targetVersionData`, printed `version = 0`, and reported success anyway. Nothing here may be read as patch evidence. | `tests/engine/test_engine_smoke.py::test_engine_internals_are_reachable` | P02-T02 patch profile |
 
-**Scope of P00-OBS-02 on this machine.** All four build files in the user's PoB
-Builds folder have `characterLevelAutoMode="false"`, so the legacy runs captured
-in `baseline/` were not affected by it. The defect is latent, not retroactive.
-It does bite any build created fresh in PoB, because `new_build` produces
+**Scope of P00-OBS-02 on this machine.** All four build files currently in the
+user's PoB Builds folder have `characterLevelAutoMode="false"`. That is the
+present content of those files; it is not evidence of what they contained when
+the unmanifested legacy runs were made, and those runs recorded no input
+identity. So the correct statement is: **not reproduced against the currently
+inspected source files**, and not determinable for the historical runs. The
+defect does bite any build created fresh in PoB, because `new_build` produces
 `characterLevelAutoMode="true"`.
 
 ## Not investigated
@@ -152,15 +172,21 @@ AMD64 CPUs, 31.2 GiB RAM, CPython 3.12.4 64-bit, Windows 11 10.0.26200).
 
 | Operation | What it is | Result |
 |---|---|---|
-| Cold start | `Pob2Engine(pob_root)`: load `lua51.dll`, run `HeadlessWrapper.lua`, load `bootstrap.lua` | 1.39 s (1 sample) |
-| Warm reset | `load_build_xml` + reload `opt_helpers.lua` + `OPT_setup`, i.e. `Worker.reset()` | median 0.133 s, min 0.106 s, max 0.344 s, mean 0.152 s, sd 0.062 s (12 samples) |
-| Evaluation | `equip_item` into Weapon 1 + `get_stats(all=True)` | median 0.0127 s, min 0.0116 s, max 0.0163 s, mean 0.0130 s, sd 0.0014 s (12 samples) |
+| Cold start | `Pob2Engine(pob_root)`: load `lua51.dll`, run `HeadlessWrapper.lua`, load `bootstrap.lua` | 1.52 s (1 sample) |
+| Warm reset | `load_build_xml` + reload **both** `opt_helpers.lua` and `tree_lib.lua` + `OPT_setup`, i.e. the exact call sequence of `Worker.reset()` | median 0.154 s, min 0.125 s, max 0.455 s, mean 0.185 s, sd 0.090 s (12 samples) |
+| Evaluation | `equip_item` into Weapon 1 + `get_stats(all=True)` | median 0.0171 s, min 0.0153 s, max 0.0203 s, mean 0.0172 s, sd 0.0015 s (12 samples) |
 
 | Memory (process working set) | Bytes |
 |---|---|
-| Before boot | 18 399 232 |
-| After boot | 252 637 184 (+223 MiB for the engine) |
-| Peak during the run | 551 841 792 (526 MiB) |
+| Before boot | 20 434 944 |
+| After boot | 245 374 976 (+215 MiB for the engine) |
+| Peak during the run | 586 444 800 (559 MiB) |
+
+An earlier version of the warm-reset figure (median 0.133 s) reloaded only
+`opt_helpers.lua`, so it measured a reduced probe under the name of the real
+operation. The script now reloads both files, as `Worker.reset()` does, and the
+artifact records the PoB commit, its dirty state, the measurement timestamp and
+the SHA-256 of every fixture input.
 
 A-B-A during the same run: B differed from A (47.22 vs 106.84 `TotalDPS`) and A
 reproduced exactly within `1e-6` relative tolerance.

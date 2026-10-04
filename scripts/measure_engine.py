@@ -17,10 +17,13 @@ from __future__ import annotations
 
 import argparse
 import ctypes
+import datetime
+import hashlib
 import json
 import os
 import platform
 import statistics
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -121,6 +124,35 @@ def stats_match(first: dict, second: dict) -> bool:
     return True
 
 
+def checkout_provenance(pob_root: Path) -> dict:
+    """Commit and dirty state of the PoB checkout the timings came from.
+
+    A timing without the revision it was measured against cannot be compared
+    with a later one.
+    """
+    info: dict = {"path": str(pob_root)}
+    for key, args in (("commit", ["rev-parse", "HEAD"]),
+                      ("branch", ["rev-parse", "--abbrev-ref", "HEAD"])):
+        try:
+            result = subprocess.run(["git", "-C", str(pob_root), *args],
+                                    capture_output=True, text=True, timeout=30)
+            info[key] = result.stdout.strip() if result.returncode == 0 else None
+        except (OSError, subprocess.SubprocessError):
+            info[key] = None
+    try:
+        result = subprocess.run(["git", "-C", str(pob_root), "status", "--porcelain"],
+                                capture_output=True, text=True, timeout=60)
+        if result.returncode == 0:
+            lines = [line for line in result.stdout.splitlines() if line.strip()]
+            info["tracked_files_modified"] = sum(
+                1 for line in lines if not line.startswith("??"))
+            info["untracked_files"] = sum(1 for line in lines if line.startswith("??"))
+            info["dirty_tracked_tree"] = info["tracked_files_modified"] > 0
+    except (OSError, subprocess.SubprocessError):
+        info["dirty_tracked_tree"] = None
+    return info
+
+
 def hardware() -> dict:
     return {
         "platform": platform.platform(),
@@ -138,8 +170,17 @@ def hardware() -> dict:
 def measure(pob_root: str) -> dict:
     from pob2mcp.engine import Pob2Engine
 
-    opt_helpers = (REPO_ROOT / "pob2-optimizer" / "pob2opt" / "lua"
-                   / "opt_helpers.lua").read_text(encoding="utf-8")
+    # Worker.reset() reloads both helper files. Measuring only one would be a
+    # reduced probe reported under the name of the real operation.
+    lua_dir = REPO_ROOT / "pob2-optimizer" / "pob2opt" / "lua"
+    helper_names = ("opt_helpers.lua", "tree_lib.lua")
+    helpers = [(name, (lua_dir / name).read_text(encoding="utf-8"))
+               for name in helper_names]
+    opt_helpers = dict(helpers)["opt_helpers.lua"]
+
+    def load_helpers():
+        for _, source in helpers:
+            engine.eval_lua(source)
 
     before_boot = memory_bytes()
     started = time.perf_counter()
@@ -152,14 +193,14 @@ def measure(pob_root: str) -> dict:
     engine.call("alloc_nodes", {"ids": [n["id"] for n in nodes[:2]]})
     engine.call("equip_item", {"raw": FIXTURE_WEAPON, "slot": "Weapon 1"})
     build_xml = engine.call("save_build_xml")["xml"]
-    engine.eval_lua(opt_helpers)
+    load_helpers()
 
     # Warm reset: exactly what engine_worker.Worker.reset() does.
     reset_samples: list[float] = []
     for _ in range(WARM_ITERATIONS):
         started = time.perf_counter()
         engine.call("load_build_xml", {"xml": build_xml, "name": "measure"})
-        engine.eval_lua(opt_helpers)
+        load_helpers()
         engine.eval_lua("return OPT_setup(28, 0)")
         reset_samples.append(time.perf_counter() - started)
 
@@ -189,7 +230,17 @@ def measure(pob_root: str) -> dict:
         "what_this_is": "Timings for the named operations on one machine and one "
                         "PoB checkout. Not a throughput claim for other hardware, "
                         "other builds, or the future encounter evaluator.",
-        "pob_root": str(Path(pob_root).resolve()),
+        "measured_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "pob_root": str(pob_root),
+        "pob_checkout": checkout_provenance(Path(pob_root)),
+        "fixture_identity": {
+            "weapon_sha256": hashlib.sha256(FIXTURE_WEAPON.encode()).hexdigest(),
+            "stronger_weapon_sha256": hashlib.sha256(STRONGER_WEAPON.encode()).hexdigest(),
+            "helper_lua_sha256": {
+                name: hashlib.sha256(source.encode()).hexdigest()
+                for name, source in helpers
+            },
+        },
         "hardware": hardware(),
         "operations": {
             "cold_start": {
@@ -198,8 +249,9 @@ def measure(pob_root: str) -> dict:
                 "count": 1, "seconds": round(cold_start_s, 6),
             },
             "warm_reset": {
-                "description": "load_build_xml + reload opt_helpers.lua + OPT_setup, "
-                               "i.e. engine_worker.Worker.reset().",
+                "description": "load_build_xml + reload opt_helpers.lua and "
+                               "tree_lib.lua + OPT_setup, i.e. the exact call "
+                               "sequence of engine_worker.Worker.reset().",
                 **summarize(reset_samples),
             },
             "evaluation": {
@@ -233,12 +285,15 @@ def main(argv=None) -> int:
     if not args.pob_root:
         print("set POB2_ROOT or pass --pob-root; refusing to guess", file=sys.stderr)
         return 3
-    if not (Path(args.pob_root) / "runtime" / "lua51.dll").is_file():
-        print("no lua51.dll under %s/runtime" % args.pob_root, file=sys.stderr)
+    # Resolve before the engine starts: Pob2Engine chdirs into the PoB source
+    # tree, so a relative path recorded afterwards would name the wrong place.
+    pob_root = Path(args.pob_root).expanduser().resolve()
+    if not (pob_root / "runtime" / "lua51.dll").is_file():
+        print("no lua51.dll under %s" % (pob_root / "runtime"), file=sys.stderr)
         return 3
 
     out_path = Path(args.out).resolve() if args.out else None
-    report = measure(args.pob_root)
+    report = measure(str(pob_root))
     payload = json.dumps(report, indent=2) + "\n"
     if out_path:
         out_path.parent.mkdir(parents=True, exist_ok=True)

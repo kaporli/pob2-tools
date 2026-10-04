@@ -139,25 +139,72 @@ class DoctorReport:
 
 # ----------------------------------------------------------------- utilities
 
-def _pe_machine(path: Path) -> str:
-    """Architecture recorded in a PE binary's COFF header, or ``unknown``.
+#: COFF machine values, by the name used in this report.
+PE_MACHINES = {0x014C: "x86", 0x8664: "x64", 0xAA64: "arm64", 0x01C4: "armv7"}
 
-    Catches the 32-bit-Python / 64-bit-DLL mismatch before ctypes fails with an
-    opaque OSError. Reads a few bytes; it never loads the library.
+#: Which DLL architecture the running interpreter can actually load. Pointer
+#: width alone does not establish instruction-set compatibility: an ARM64 DLL
+#: and an x64 DLL are both 64-bit and are not interchangeable.
+HOST_MACHINE = {
+    ("64bit", "AMD64"): "x64",
+    ("64bit", "x86_64"): "x64",
+    ("64bit", "ARM64"): "arm64",
+    ("64bit", "aarch64"): "arm64",
+    ("32bit", "AMD64"): "x86",
+    ("32bit", "x86"): "x86",
+    ("32bit", "i386"): "x86",
+}
+
+
+def host_machine() -> str | None:
+    """Architecture of the running interpreter, or None if not recognized."""
+    bits = "64bit" if struct.calcsize("P") * 8 == 64 else "32bit"
+    return HOST_MACHINE.get((bits, platform.machine()))
+
+
+def _pe_machine(path: Path) -> str:
+    """Architecture recorded in a PE binary's COFF header.
+
+    Returns a name from :data:`PE_MACHINES`, ``"0x...."`` for a recognized PE
+    header carrying an unrecognized machine value, or ``"invalid"`` when the
+    file is not a readable PE binary at all. ``"invalid"`` and ``"unknown"`` are
+    kept apart because they mean different things to the caller: one disproves
+    usability, the other only fails to establish it.
+
+    Reads a few bytes; it never loads the library.
     """
     try:
         with path.open("rb") as fh:
             if fh.read(2) != b"MZ":
-                return "unknown"
+                return "invalid"
             fh.seek(0x3C)
-            offset = struct.unpack("<I", fh.read(4))[0]
+            raw = fh.read(4)
+            if len(raw) != 4:
+                return "invalid"
+            offset = struct.unpack("<I", raw)[0]
             fh.seek(offset)
             if fh.read(4) != b"PE\0\0":
-                return "unknown"
-            machine = struct.unpack("<H", fh.read(2))[0]
-    except (OSError, struct.error):
-        return "unknown"
-    return {0x014C: "x86", 0x8664: "x64", 0xAA64: "arm64"}.get(machine, hex(machine))
+                return "invalid"
+            raw = fh.read(2)
+            if len(raw) != 2:
+                return "invalid"
+            machine = struct.unpack("<H", raw)[0]
+    except (OSError, struct.error, ValueError):
+        return "invalid"
+    return PE_MACHINES.get(machine, hex(machine))
+
+
+def _obstructing_component(path: Path) -> Path | None:
+    """The first existing component of ``path`` that is not a directory.
+
+    A regular file anywhere along the path means the directory can never be
+    created there, so reporting the nearest writable ancestor would be a false
+    positive.
+    """
+    for candidate in reversed([path, *path.parents]):
+        if candidate.exists() and not candidate.is_dir():
+            return candidate
+    return None
 
 
 def _module_origin(name: str) -> str | None:
@@ -319,19 +366,35 @@ def check_pob_runtime(pob_root: Path) -> Check:
                      "lua51.dll not found at {}; the engine cannot start.".format(dll),
                      blocks=("engine",), data=data)
     data["bytes"] = dll.stat().st_size
-    data["architecture"] = _pe_machine(dll)
-    host_bits = struct.calcsize("P") * 8
-    if data["architecture"] == "x86" and host_bits == 64:
+    found = _pe_machine(dll)
+    host = host_machine()
+    data["architecture"] = found
+    data["host_architecture"] = host
+
+    if found == "invalid":
         return Check("pob_runtime_dll", INCOMPATIBLE,
-                     "lua51.dll is 32-bit but this Python is 64-bit.",
+                     "{} is not a readable PE binary; it cannot be the engine "
+                     "runtime.".format(dll),
                      blocks=("engine",), data=data)
-    if data["architecture"] == "x64" and host_bits == 32:
+    if host is None:
+        return Check("pob_runtime_dll", UNKNOWN,
+                     "This interpreter's architecture ({}, {}-bit) is not "
+                     "recognized, so DLL compatibility cannot be established.".format(
+                         platform.machine(), struct.calcsize("P") * 8),
+                     blocks=("engine",), data=data)
+    if found not in PE_MACHINES.values():
+        return Check("pob_runtime_dll", UNKNOWN,
+                     "lua51.dll reports an unrecognized machine type {}; "
+                     "compatibility with {} cannot be established.".format(found, host),
+                     blocks=("engine",), data=data)
+    if found != host:
         return Check("pob_runtime_dll", INCOMPATIBLE,
-                     "lua51.dll is 64-bit but this Python is 32-bit.",
+                     "lua51.dll is {} but this Python is {}; same pointer width "
+                     "is not enough.".format(found, host),
                      blocks=("engine",), data=data)
     return Check("pob_runtime_dll", OK,
-                 "lua51.dll present ({}, {} bytes).".format(
-                     data["architecture"], data["bytes"]), data=data)
+                 "lua51.dll present ({}, {} bytes), matching this {} interpreter.".format(
+                     found, data["bytes"], host), data=data)
 
 
 def check_pob_profile(pob_root: Path) -> Check:
@@ -433,9 +496,21 @@ def check_run_location(run_root: Path) -> Check:
     """Can run bundles be written here?
 
     Probes the nearest existing ancestor so the diagnostic never creates the run
-    directory as a side effect.
+    directory as a side effect. Every existing component is inspected first: a
+    regular file at the leaf or anywhere above it makes the directory
+    impossible to create, however writable its parent happens to be.
     """
     data: dict[str, Any] = {"run_root": str(run_root), "exists": run_root.exists()}
+
+    obstruction = _obstructing_component(run_root)
+    if obstruction is not None:
+        data["obstructed_by"] = str(obstruction)
+        where = "the requested path" if obstruction == run_root else "a parent of it"
+        return Check("run_location", INCOMPATIBLE,
+                     "{} exists and is not a directory ({}); the run directory "
+                     "cannot be created there.".format(obstruction, where),
+                     blocks=("runs",), data=data)
+
     probe_dir = _nearest_existing(run_root)
     data["probed"] = str(probe_dir) if probe_dir else None
     if probe_dir is None:
@@ -443,6 +518,9 @@ def check_run_location(run_root: Path) -> Check:
                      "No existing parent directory for {}.".format(run_root),
                      blocks=("runs",), data=data)
     data["writable"] = os.access(probe_dir, os.W_OK)
+    data["writable_is_an_indication_only"] = (
+        "os.access reports permission bits. It does not guarantee a later write "
+        "succeeds: ACLs, quota, a full disk or a concurrent change can still fail.")
     if not data["writable"]:
         return Check("run_location", INCOMPATIBLE,
                      "{} is not writable; run bundles cannot be stored.".format(probe_dir),
@@ -452,7 +530,9 @@ def check_run_location(run_root: Path) -> Check:
     except OSError:
         pass
     return Check("run_location", OK,
-                 "Run bundles can be written under {}.".format(probe_dir), data=data)
+                 "Run bundles can be written under {} (permission bits only; "
+                 "not a guarantee against a later ACL or disk failure).".format(probe_dir),
+                 data=data)
 
 
 # ------------------------------------------------------------------- collect

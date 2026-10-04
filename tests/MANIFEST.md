@@ -5,14 +5,28 @@ What each group of tests is, what it needs, and the exact command to run it
 
 ## Prerequisites
 
+Create and activate a clean venv for your interpreter. Install the explicitly
+unpinned bootstrap tools with `python -m pip install --upgrade pip setuptools wheel`.
+Then install the complete lock and both projects without dependency resolution:
+
 ```
-python -m pip install -r requirements-dev.txt
-python -m pip install -e ./pob2-mcp -e ./pob2-optimizer
+python -m pip install --no-deps -r requirements/lock-py312-win_amd64.txt
+python -m pip install --no-deps --no-build-isolation -e ./pob2-mcp -e ./pob2-optimizer
 ```
 
-The second line matters: if the packages are installed editable from another
-checkout, `tests/unit/test_import_provenance.py` fails on purpose. See
-`docs/evidence/P00/environment.md`.
+Use `lock-py310-win_amd64.txt` on Python 3.10. Run
+`python scripts/lock_dependencies.py --check` afterward: it rejects extra,
+missing or differently versioned distributions and runs `pip check`. CI repeats
+this in two clean venvs per interpreter and compares the saved inventories.
+
+The second line also matters for a different reason: if the packages are
+installed editable from another checkout, `tests/unit/test_import_provenance.py`
+fails on purpose. See `docs/evidence/P00/environment.md`.
+
+`requirements-dev.txt` holds only the direct dependencies. Regenerate both locks
+after changing it with `py -3.10 scripts/lock_dependencies.py` and
+`py -3.12 scripts/lock_dependencies.py`. Generation resolves on the actual
+interpreter; cross-target pip flags do not establish correct marker evaluation.
 
 Check the environment before blaming a test:
 
@@ -32,6 +46,8 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | Engine | `python -m pytest -m engine` | A PoB2 checkout and its LuaJIT runtime | Skips with a reason when absent. A skip is **not** an engine pass. |
 | Everything selectable by default | `python -m pytest` | As above | Excludes `network` and `longrun`. |
 | Measurements | `python scripts/measure_engine.py --out docs/evidence/P00/measurements.json` | A PoB2 checkout | Not a test; writes evidence. |
+| Installed lock audit | `python scripts/lock_dependencies.py --check` | Clean locked venv; no network | Checks direct pins, exact installed inventory and dependency consistency. Does not demand newly released versions. |
+| Engine skip guard | `python scripts/check_engine_skips.py --exit-code N --junit engine-junit.xml` | Nothing | What CI uses to decide that engine tests skipped for the right reason. |
 
 Selecting the PoB checkout:
 
@@ -73,6 +89,7 @@ none yet).
 | `test_f10_engine_lifecycle_contract.py` | Research F10 at the API surface: `chdir`, no teardown, no timeout, undifferentiated errors. |
 | `test_f11_worker_wipes_imported_build.py` | Research F11, via a recording engine double. |
 | `test_f12_item_conversion_source.py` | Research F12 from the handler source. |
+| `test_engine_skip_guard.py` | The CI engine-skip guard rejects a fixture error, a failing test, a collection error, an empty selection, an interrupt, a test that actually ran, and an xfail posing as a runtime skip. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -98,15 +115,26 @@ gameplay measurement.
 
 ## Expected noise
 
-Engine runs print two things that are not failures:
+PoB's LuaJIT raises an SEH exception (`0xe24c4a02`) as part of ordinary error
+unwinding, and `faulthandler` reports every one. Measured on one unfiltered
+engine session: **6984 banners, 265 790 traceback frame lines, 286 749 console
+lines**, with pytest exiting 0 throughout. An earlier version of this file
+described it as "once per engine boot", which was wrong.
 
-* PoB's own startup output (`Loading main script...`, `missing node <id>`,
-  `Uniques loaded`). The Lua runtime writes to the process stdout handle
-  directly, so pytest's capture does not suppress it.
-* `Windows fatal exception: code 0xe24c4a02` with a traceback, once per engine
-  boot. That is LuaJIT's SEH-based error unwinding during startup, caught
-  internally. `faulthandler` is deliberately left on so a real native crash is
-  still visible.
+`tests/conftest.py` now redirects `faulthandler` to a per-session log file for
+the duration of the engine session and restores stderr afterwards. The run
+prints the log's path and size instead:
+
+```
+native fault diagnostics: 32187121 bytes at ...\pytest-N\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is
+  large and is not by itself a crash.
+```
+
+Nothing is suppressed: every banner is in that file, and a genuine native crash
+still shows up in pytest's exit code. PoB's own startup output
+(`Loading main script...`, `missing node <id>`) may still appear, because the
+Lua runtime writes to the process stdout handle directly.
 
 ## Recorded results
 
@@ -115,11 +143,43 @@ working tree, PoB `ce566ea`:
 
 | Command | Result |
 |---|---|
-| `python -m pytest` (no `POB2_ROOT`) | 66 passed, 34 skipped, 13 xfailed |
-| `python -m pytest` (with `POB2_ROOT`) | 96 passed, 17 xfailed, ~12 s |
-| `python -m pytest tests/unit` | 61 passed, 12 xfailed |
-| `python -m pytest -m engine` (with `POB2_ROOT`) | 30 passed, 79 deselected, 4 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 91 passed, 34 skipped, 13 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 121 passed, 17 xfailed |
+| `python -m pytest tests/unit` | 86 passed, 12 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 30 passed, 104 deselected, 4 xfailed |
+| Clean install from `lock-py312-win_amd64.txt` in an empty venv, then `pip check` and `pytest tests/unit tests/integration` | `No broken requirements found.`; 66 passed, 13 xfailed |
 
 Every `xfail` is `strict` and names the repair task that will turn it into a
 pass. A non-strict xfail is not used anywhere: an expectation that passes early
 must fail the suite so the marker gets removed.
+
+## PR #2 repair-contract correction
+
+The prior broad F05/F10 xfails were removed. There are now two strictly scoped
+missing-service expectations, which catch only `MissingFutureService`. Once
+`pob2opt.search` or `pob2opt.evaluation` exists, its binding check fails and
+requires the owning task to install real acceptance coverage. Broken imports,
+validation errors and missing fixture files are not accepted repair outcomes.
+
+`tests/repair_contracts.py` materializes a complete offline request and local
+synthetic profile, catalog, league, scenario, corpus and item-pool snapshots.
+F05 probes accept the labelled synthetic service and reject constant cache keys,
+unresolved leagues, incorrect/untraceable budgets and ignored candidate limits.
+The snapshots are test-double data, not accepted P01 record schemas or evidence
+of production preparation. P08 owns the mapping from actual validated records
+to the test observation format; no production return type is imposed by P00.
+
+P02-T01 must replace its missing-service check with these acceptance cases:
+
+1. Evaluate valid P01 build/state/profile fixtures and assert unchanged parent
+   cwd, including a synthetic worker which changes its own cwd.
+2. Use a synthetic wedged worker and assert a typed bounded timeout. Run the
+   test probe under an independent process supervisor with a hard outer deadline
+   and process-tree cleanup, so a broken implementation fails instead of hanging.
+3. Force worker death, then prove the next valid request completes in a different
+   process. A reset of the same process does not satisfy the check.
+4. Exercise actual PoB evaluations under `tests/engine`, with runtime prerequisites;
+   keep the synthetic worker lane offline. No public `evaluate_raw` API is required.
+
+This explicitly defers production lifecycle coverage to P02 instead of passing
+invalid None inputs or executing an unbounded Lua loop in an offline unit test.
