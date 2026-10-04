@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "game": "poe2",
+  "class": "Huntress",
+  "level": 100,
+  "patch_selection": "current",
+  "league_selection": "current_pc_challenge_trade",
+  "mode": "offline_items",
+  "budget": null,
+  "scenario_suite": "benchmarks/huntress-v1/suite.json",
+  "catalog_profile": "profiles/poe2-current-verified.json",
+  "corpus_path": "data/corpus",
+  "item_pool_ids": ["reviewed-huntress-item-pool-v1"],
+  "seed": 20261004,
+  "time_budget_s": 14400,
+  "workers": "auto",
+  "memory_limit_mb": 8192,
+  "allow_weapon_switch": true,
+  "allow_external_gear_swap": false,
+  "execution_profile": "skilled_manual"
+}
