@@ -1,0 +1,12 @@
+# Default: let git normalize line endings in text files it manages.
+* text=auto
+
+# Fixtures are content-addressed. tests/fixtures/manifest.json records a
+# SHA-256 per file and tests/unit/test_fixture_manifest.py verifies it, so the
+# bytes checked out must be the bytes that were committed. Without `-text`,
+# core.autocrlf rewrites LF to CRLF on a Windows checkout and every recorded
+# hash breaks - which is exactly what the first CI run caught.
+tests/fixtures/** -text
+
+# The Lua probe is executed by a luajit subprocess; keep its bytes stable too.
+tests/integration/lua/*.lua -text
