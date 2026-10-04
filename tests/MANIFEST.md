@@ -5,24 +5,28 @@ What each group of tests is, what it needs, and the exact command to run it
 
 ## Prerequisites
 
-Install from the lock for your interpreter, then the two packages under that
-same lock as a constraint:
+Create and activate a clean venv for your interpreter. Install the explicitly
+unpinned bootstrap tools with `python -m pip install --upgrade pip setuptools wheel`.
+Then install the complete lock and both projects without dependency resolution:
 
 ```
-python -m pip install -r requirements/lock-py312-win_amd64.txt
-python -m pip install -c requirements/lock-py312-win_amd64.txt -e ./pob2-mcp -e ./pob2-optimizer
+python -m pip install --no-deps -r requirements/lock-py312-win_amd64.txt
+python -m pip install --no-deps --no-build-isolation -e ./pob2-mcp -e ./pob2-optimizer
 ```
 
-Use `lock-py310-win_amd64.txt` on Python 3.10. The constraint on the second
-command is what stops it from drifting the environment the first one
-established; `python -m pip check` confirms the result.
+Use `lock-py310-win_amd64.txt` on Python 3.10. Run
+`python scripts/lock_dependencies.py --check` afterward: it rejects extra,
+missing or differently versioned distributions and runs `pip check`. CI repeats
+this in two clean venvs per interpreter and compares the saved inventories.
 
 The second line also matters for a different reason: if the packages are
 installed editable from another checkout, `tests/unit/test_import_provenance.py`
 fails on purpose. See `docs/evidence/P00/environment.md`.
 
 `requirements-dev.txt` holds only the direct dependencies. Regenerate both locks
-after changing it with `python scripts/lock_dependencies.py`.
+after changing it with `py -3.10 scripts/lock_dependencies.py` and
+`py -3.12 scripts/lock_dependencies.py`. Generation resolves on the actual
+interpreter; cross-target pip flags do not establish correct marker evaluation.
 
 Check the environment before blaming a test:
 
@@ -42,7 +46,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | Engine | `python -m pytest -m engine` | A PoB2 checkout and its LuaJIT runtime | Skips with a reason when absent. A skip is **not** an engine pass. |
 | Everything selectable by default | `python -m pytest` | As above | Excludes `network` and `longrun`. |
 | Measurements | `python scripts/measure_engine.py --out docs/evidence/P00/measurements.json` | A PoB2 checkout | Not a test; writes evidence. |
-| Lock freshness | `python scripts/lock_dependencies.py --check` | Network | Fails if a lock is stale against `requirements-dev.txt`. |
+| Installed lock audit | `python scripts/lock_dependencies.py --check` | Clean locked venv; no network | Checks direct pins, exact installed inventory and dependency consistency. Does not demand newly released versions. |
 | Engine skip guard | `python scripts/check_engine_skips.py --exit-code N --junit engine-junit.xml` | Nothing | What CI uses to decide that engine tests skipped for the right reason. |
 
 Selecting the PoB checkout:
@@ -148,3 +152,34 @@ working tree, PoB `ce566ea`:
 Every `xfail` is `strict` and names the repair task that will turn it into a
 pass. A non-strict xfail is not used anywhere: an expectation that passes early
 must fail the suite so the marker gets removed.
+
+## PR #2 repair-contract correction
+
+The prior broad F05/F10 xfails were removed. There are now two strictly scoped
+missing-service expectations, which catch only `MissingFutureService`. Once
+`pob2opt.search` or `pob2opt.evaluation` exists, its binding check fails and
+requires the owning task to install real acceptance coverage. Broken imports,
+validation errors and missing fixture files are not accepted repair outcomes.
+
+`tests/repair_contracts.py` materializes a complete offline request and local
+synthetic profile, catalog, league, scenario, corpus and item-pool snapshots.
+F05 probes accept the labelled synthetic service and reject constant cache keys,
+unresolved leagues, incorrect/untraceable budgets and ignored candidate limits.
+The snapshots are test-double data, not accepted P01 record schemas or evidence
+of production preparation. P08 owns the mapping from actual validated records
+to the test observation format; no production return type is imposed by P00.
+
+P02-T01 must replace its missing-service check with these acceptance cases:
+
+1. Evaluate valid P01 build/state/profile fixtures and assert unchanged parent
+   cwd, including a synthetic worker which changes its own cwd.
+2. Use a synthetic wedged worker and assert a typed bounded timeout. Run the
+   test probe under an independent process supervisor with a hard outer deadline
+   and process-tree cleanup, so a broken implementation fails instead of hanging.
+3. Force worker death, then prove the next valid request completes in a different
+   process. A reset of the same process does not satisfy the check.
+4. Exercise actual PoB evaluations under `tests/engine`, with runtime prerequisites;
+   keep the synthetic worker lane offline. No public `evaluate_raw` API is required.
+
+This explicitly defers production lifecycle coverage to P02 instead of passing
+invalid None inputs or executing an unbounded Lua loop in an offline unit test.

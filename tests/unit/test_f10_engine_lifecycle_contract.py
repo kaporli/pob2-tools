@@ -72,71 +72,16 @@ def test_missing_runtime_is_reported_with_an_actionable_message(tmp_path):
     assert "POB2_ROOT" in message
 
 
-# ------------------------------------------------------- repaired behaviour
-#
-# P02-T01 promises an `EngineAdapter` with one engine per worker process, a
-# parent working directory that never moves, bounded requests, and worker
-# replacement after a timeout or crash. These expectations are written against
-# that boundary, so a repair that keeps the legacy engine inside an isolated
-# worker satisfies them, and a repair that only adds an unused parameter or
-# method does not.
-#
-# They currently fail because `pob2opt.evaluation` does not exist yet.
+# ------------------------------------------------------- future repair binding
+# P01 records and P02 worker fixtures do not exist yet. Passing None records or
+# inventing evaluate_raw() would prescribe an invalid production contract.
+# P02 must replace this binding check with actual adapter evaluations. See the
+# explicit cases and hard outer-timeout requirement in tests/MANIFEST.md.
+
+from repair_contracts import MissingFutureService, require_production_binding
 
 
-def load_adapter():
-    """The future engine adapter, or a failure that keeps the xfail honest."""
-    from pob2opt.evaluation import EngineAdapter  # noqa: F401  (does not exist yet)
-
-    return EngineAdapter
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="F10 repair is P02-T01: evaluating through the adapter must leave the "
-           "calling process working directory unchanged. The worker may still "
-           "chdir internally; that is explicitly permitted.",
-)
-def test_repaired_adapter_leaves_the_parent_working_directory_alone(tmp_path):
-    import os
-
-    adapter = load_adapter()
-    before = os.getcwd()
-    adapter().primitives(build=None, state=None, profile=None)
-    assert os.getcwd() == before
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="F10 repair is P02-T01: a wedged request must return a typed timeout "
-           "within its bound. A timeout parameter that is never enforced does "
-           "not satisfy this.",
-)
-def test_repaired_adapter_enforces_the_timeout_it_advertises():
-    import time
-
-    adapter = load_adapter()
-    instance = adapter()
-    started = time.perf_counter()
-    result = instance.evaluate_raw("while true do end", timeout_s=1.0)
-    elapsed = time.perf_counter() - started
-
-    assert result.status == "timeout"
-    assert elapsed < 10.0, "the call must be bounded, not merely annotated"
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="F10 repair is P02-T01: after a forced worker failure the adapter must "
-           "replace the process and complete the next request. Resetting Lua "
-           "tables does not count as replacing a crashed native state.",
-)
-def test_repaired_adapter_replaces_a_worker_after_failure():
-    adapter = load_adapter()
-    instance = adapter()
-    first = instance.evaluate_raw("os.exit(1)", timeout_s=5.0)
-    assert first.status in {"engine_crash", "timeout"}
-
-    second = instance.evaluate_raw("return 1 + 1", timeout_s=5.0)
-    assert second.status == "ok"
-    assert second.worker_id != first.worker_id
+@pytest.mark.xfail(strict=True, raises=MissingFutureService,
+                   reason="P02-T01: engine adapter and production contract binding are not implemented")
+def test_production_engine_contract_binding_is_pending():
+    require_production_binding("pob2opt.evaluation", "P02-T01")

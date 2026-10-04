@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-04",
+  "gate": "G0",
+  "specification_version": "1.0",
+  "pr": "https://github.com/kaporli/pob2-tools/pull/2",
+  "base_commit": "e3ee6de8c7b08da708a25bd5a703efcf49d65f2c",
+  "reviewed_commit": "089e065e2e0ceb8c6be9efa71e3726d51aa0ce8a",
+  "verdict": "changes_required",
+  "review_document": "docs/reviews/G0-PR2.md",
+  "local_python": "3.12.4",
+  "checks": [
+    {
+      "command": "python -m pytest tests/unit tests/integration -ra",
+      "exit_code": 0,
+      "passed": 91,
+      "xfailed": 13
+    },
+    {
+      "command": "python -m pytest -m engine -ra",
+      "environment": {"POB2_ROOT": "C:/Users/Elias/PycharmProjects/PathOfBuilding-PoE2"},
+      "exit_code": 0,
+      "passed": 30,
+      "xfailed": 4,
+      "deselected": 104,
+      "duration_seconds": 55.21,
+      "native_diagnostic_log_bytes": 38958382
+    }
+  ],
+  "ci": {
+    "run_id": 37206558162,
+    "py310_job_id": 111448840768,
+    "py312_job_id": 111448840563,
+    "both_jobs_succeeded": true,
+    "py310_installed_outside_lock": {"exceptiongroup": "1.3.1", "tomli": "2.4.1"}
+  },
+  "independent_challenges": {
+    "py310_active_requirements_missing_from_lock": [
+      "pytest -> exceptiongroup>=1; python_version < 3.11",
+      "pytest -> tomli>=1; python_version < 3.11",
+      "anyio -> exceptiongroup>=1.0.2; python_version < 3.11"
+    ],
+    "f05_request_missing_required_fields": [
+      "allow_external_gear_swap", "allow_weapon_switch", "catalog_profile",
+      "corpus_path", "execution_profile", "item_pool_ids", "memory_limit_mb",
+      "scenario_suite", "time_budget_s", "workers"
+    ],
+    "synthetic_prepare_enforces_documented_required_keys": {
+      "affected_tests": 4,
+      "all_rejected_before_behavior_assertions": true,
+      "exception": "jsonschema.ValidationError: 'scenario_suite' is a required property",
+      "production_service_tested": false
+    }
+  },
+  "findings": [
+    {"id": "PR2-R01", "priority": "P2", "prior_finding": "G0-R05", "summary": "Python 3.10 conditional dependencies are absent from the lock and silently installed by CI."},
+    {"id": "PR2-R02", "priority": "P2", "prior_finding": "G0-R06", "summary": "Revised repair tests use invalid inputs and absorb unrelated validation failures as xfails."}
+  ],
+  "prior_findings_accepted": ["G0-R01", "G0-R02", "G0-R03", "G0-R04"],
+  "limitations": [
+    "Python 3.10 tested by GitHub Actions, not locally.",
+    "Measurement campaign and two-clean-install claim not independently rerun.",
+    "No current-patch gameplay or build-quality acceptance implied."
+  ],
+  "application_code_changed": false,
+  "github_review_posted": false,
+  "merged": false
+}

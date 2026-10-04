@@ -47,22 +47,19 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: x64
 
-      - name: Install from the lock for this interpreter
+      - name: Reproduce the lock in two clean environments
         shell: bash
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r "$LOCK"
-          # The constraint is what stops the editable install from drifting the
-          # environment the lock just established.
-          python -m pip install -c "$LOCK" -e ./pob2-mcp -e ./pob2-optimizer
-
-      - name: Dependency graph is consistent
-        run: python -m pip check
-
-      - name: Lock files are up to date with requirements-dev.txt
-        # Only on one interpreter: the check resolves both locks itself.
-        if: matrix.python-version == '3.12'
-        run: python scripts/lock_dependencies.py --check
+          for suffix in a b; do
+            python -m venv ".venv-ci-$suffix"
+            py=".venv-ci-$suffix/Scripts/python.exe"
+            "$py" -m pip install --upgrade pip setuptools wheel
+            "$py" -m pip install --no-deps -r "$LOCK"
+            "$py" -m pip install --no-deps --no-build-isolation -e ./pob2-mcp -e ./pob2-optimizer
+            "$py" scripts/lock_dependencies.py --check --inventory "inventory-$suffix.json"
+          done
+          cmp inventory-a.json inventory-b.json
+          python -c "from pathlib import Path; print(Path('.venv-ci-a/Scripts').resolve())" >> "$GITHUB_PATH"
 
       - name: Environment diagnostics
         shell: bash
@@ -104,6 +101,8 @@ jobs:
             unit-junit.xml
             integration-junit.xml
             engine-junit.xml
+            inventory-a.json
+            inventory-b.json
           if-no-files-found: ignore
 
       - name: Job summary

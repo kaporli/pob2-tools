@@ -5,17 +5,22 @@
 # per supported interpreter under requirements/. Install from a lock, not from
 # this file, unless you are regenerating the locks:
 #
-#   python -m pip install -r requirements/lock-py312-win_amd64.txt
-#   python -m pip install -c requirements/lock-py312-win_amd64.txt -e ./pob2-mcp -e ./pob2-optimizer
+#   python -m pip install --no-deps -r requirements/lock-py312-win_amd64.txt
+#   python -m pip install --no-deps --no-build-isolation -e ./pob2-mcp -e ./pob2-optimizer
 #
-# Regenerate the locks after changing anything here:
+# First create/activate a clean venv and install pip, setuptools and wheel.
+# Verify after installing: python scripts/lock_dependencies.py --check
 #
-#   python scripts/lock_dependencies.py
+# Regenerate each lock with its actual interpreter after changing anything here:
+#
+#   py -3.10 scripts/lock_dependencies.py
+#   py -3.12 scripts/lock_dependencies.py
 #
 # Supported interpreters are CPython 3.10 and 3.12 on win_amd64. Both packages
 # declare requires-python >= 3.10 and architecture.md retains 3.10, so a pin
 # that cannot be installed on 3.10 is a defect, not a documentation gap. The
-# locks differ where a transitive dependency has to: rpds-py resolves to 0.30.0
+# locks include Python-specific dependencies (exceptiongroup/tomli on 3.10);
+# rpds-py resolves to 0.30.0
 # on 3.10 and 2026.6.3 on 3.12, because the newer release requires 3.11.
 #
 # The PoB engine is not a Python dependency. It is an external checkout selected

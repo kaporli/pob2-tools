@@ -1,0 +1,5 @@
+{
+  "exit_code": 1,
+  "stdout": "anyio 4.15.1 requires exceptiongroup, which is not installed.\npytest 9.1.1 requires exceptiongroup, which is not installed.\npytest 9.1.1 requires tomli, which is not installed.\n",
+  "stderr": "Command '['C:\\\\Users\\\\Elias\\\\PycharmProjects\\\\pob2-tools\\\\.venv\\\\pr2-validation\\\\py310-b\\\\Scripts\\\\python.exe', '-m', 'pip', 'check']' returned non-zero exit status 1.\n"
+}

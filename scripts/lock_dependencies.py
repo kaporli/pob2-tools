@@ -1,27 +1,22 @@
-"""Generate a complete dependency lock per supported interpreter (G0-R01, G0-R05).
+"""Generate/check the lock using the actual target CPython on Windows x64.
 
-`requirements-dev.txt` declares the direct dependencies. This script resolves
-them with pip and writes one fully pinned lock per supported Python version, so
-a clean install cannot pick different code than the install the evidence was
-produced with.
+Run once under each supported interpreter:
+    py -3.10 scripts/lock_dependencies.py
+    py -3.12 scripts/lock_dependencies.py
 
-Regenerate both locks with:
-
-    python scripts/lock_dependencies.py
-
-It resolves without installing anything (`pip install --dry-run --report`) and
-targets each interpreter explicitly, so it does not need that interpreter to be
-present. It does need network access to the package index.
-
-Resolution is per interpreter on purpose: rpds-py, for example, resolves to
-0.30.0 on 3.10 and 2026.6.3 on 3.12, because the newer release requires 3.11.
+Generation uses the package index. --check is offline: it verifies direct pins,
+installed versions, and the installed dependency graph. CI installs with
+--no-deps in two clean venvs before checking, so missing pins cannot be filled
+silently. pip/setuptools/wheel are explicitly unpinned bootstrap tools.
 """
-
 from __future__ import annotations
 
 import argparse
+import importlib.metadata as metadata
 import json
+import platform
 import re
+import struct
 import subprocess
 import sys
 import tempfile
@@ -30,107 +25,118 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DIRECT_REQUIREMENTS = REPO_ROOT / "requirements-dev.txt"
 LOCK_DIR = REPO_ROOT / "requirements"
-
-#: Supported interpreters. Both packages declare requires-python >= 3.10, and
-#: architecture.md retains 3.10 compatibility, so 3.10 is the floor and 3.12 is
-#: the version the P00 evidence was produced on.
 TARGETS = ("3.10", "3.12")
-
-#: The engine is a Windows x64 build, so that is the only platform resolved.
-PLATFORM = "win_amd64"
-
-REQUIREMENT_LINE = re.compile(r"^\s*([A-Za-z0-9][A-Za-z0-9._-]*\s*==\s*[^\s;#]+)")
+BOOTSTRAP = {"pip", "setuptools", "wheel"}
+PROJECTS = {"pob2-mcp", "pob2-optimizer"}
+PIN = re.compile(r"([A-Za-z0-9][A-Za-z0-9._-]*)==([^\s;#]+)")
 
 
-def read_direct_requirements(path: Path) -> list[str]:
-    out = []
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if line.lstrip().startswith("#"):
+def normalize(name):
+    return re.sub(r"[-_.]+", "-", name).lower()
+
+
+def read_pins(path):
+    pins = {}
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        line = line.split("#", 1)[0].strip()
+        if not line:
             continue
-        match = REQUIREMENT_LINE.match(line)
-        if match:
-            out.append(match.group(1).replace(" ", ""))
-    if not out:
-        raise SystemExit("no pinned requirements found in %s" % path)
-    return out
+        match = PIN.fullmatch(line)
+        if not match:
+            raise ValueError(f"{path}:{number}: expected an unconditional name==version pin")
+        name, version = match.groups()
+        name = normalize(name)
+        if name in pins:
+            raise ValueError(f"{path}:{number}: duplicate distribution {name}")
+        pins[name] = version
+    if not pins:
+        raise ValueError(f"empty dependency file: {path}")
+    return pins
 
 
-def resolve(requirements: list[str], python_version: str) -> list[tuple[str, str]]:
-    abi = "cp" + python_version.replace(".", "")
+def target_version():
+    version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    if (version not in TARGETS or sys.platform != "win32"
+            or platform.python_implementation() != "CPython"
+            or struct.calcsize("P") != 8
+            or platform.machine().lower() not in {"amd64", "x86_64"}):
+        raise ValueError("run with native Windows x64 CPython 3.10 or 3.12; cross-target generation is not supported")
+    return version
+
+
+def resolve(direct):
+    # No --python-version/--platform override: wheel and marker resolution must
+    # both use the interpreter that will actually install this lock.
     with tempfile.TemporaryDirectory() as tmp:
         report = Path(tmp) / "report.json"
-        command = [
-            sys.executable, "-m", "pip", "install",
-            "--quiet", "--dry-run", "--ignore-installed",
-            "--only-binary=:all:",
-            "--python-version", python_version,
-            "--implementation", "cp",
-            "--abi", abi,
-            "--platform", PLATFORM,
-            "--report", str(report),
-            *requirements,
-        ]
-        result = subprocess.run(command, capture_output=True, text=True)
-        if result.returncode != 0 or not report.is_file():
-            sys.stderr.write(result.stdout + result.stderr)
-            raise SystemExit("resolution failed for Python %s" % python_version)
+        subprocess.run([
+            sys.executable, "-m", "pip", "install", "--quiet", "--dry-run",
+            "--ignore-installed", "--only-binary=:all:", "--report", str(report),
+            *(f"{name}=={version}" for name, version in sorted(direct.items())),
+        ], check=True)
         payload = json.loads(report.read_text(encoding="utf-8"))
-    rows = [(item["metadata"]["name"], item["metadata"]["version"])
-            for item in payload["install"]]
-    return sorted(rows, key=lambda row: row[0].lower())
+    return {normalize(item["metadata"]["name"]): item["metadata"]["version"]
+            for item in payload["install"]}
 
 
-def render(rows: list[tuple[str, str]], python_version: str, direct: list[str]) -> str:
-    direct_names = {item.split("==")[0].lower().replace("_", "-") for item in direct}
-    lines = [
-        "# Generated by scripts/lock_dependencies.py. Do not edit by hand.",
-        "#",
-        "# Complete resolved dependency set for CPython %s on %s." % (python_version, PLATFORM),
-        "# Regenerate with:  python scripts/lock_dependencies.py",
-        "#",
-        "# Install with:",
-        "#   python -m pip install -r requirements/lock-py%s-%s.txt" % (
-            python_version.replace(".", ""), PLATFORM),
-        "#   python -m pip install -c requirements/lock-py%s-%s.txt -e ./pob2-mcp -e ./pob2-optimizer" % (
-            python_version.replace(".", ""), PLATFORM),
-        "#",
-        "# The constraint on the editable install is what stops the second command",
-        "# from drifting the environment the first one established.",
-        "#",
-        "# pip, setuptools and wheel are intentionally not locked: they bootstrap the",
-        "# install itself. Everything else below is pinned.",
+def render(pins, version):
+    header = [
+        "# Generated by scripts/lock_dependencies.py under native Windows x64 CPython " + version,
+        "# Regenerate: py -" + version + " scripts/lock_dependencies.py",
+        "# Install this file with pip install --no-deps -r <lock>.",
+        "# Install editable projects with --no-deps --no-build-isolation.",
+        "# pip, setuptools and wheel are unpinned bootstrap/build tools.",
+        "# Verify in a clean venv: python scripts/lock_dependencies.py --check",
         "",
     ]
-    for name, version in rows:
-        marker = "  # direct" if name.lower().replace("_", "-") in direct_names else ""
-        lines.append("%s==%s%s" % (name, version, marker))
-    return "\n".join(lines) + "\n"
+    return "\n".join(header + [f"{name}=={value}" for name, value in sorted(pins.items())]) + "\n"
 
 
-def main(argv=None) -> int:
+def compare_inventory(locked, installed, direct):
+    errors = []
+    for name, version in direct.items():
+        if locked.get(name) != version:
+            errors.append(f"direct pin differs or is missing: {name}=={version}")
+    for name, version in locked.items():
+        if installed.get(name) != version:
+            errors.append(f"{name}: locked {version}, installed {installed.get(name, 'MISSING')}")
+    for name in sorted(installed.keys() - locked.keys() - BOOTSTRAP - PROJECTS):
+        errors.append(f"installed outside lock: {name}=={installed[name]}")
+    for name in sorted(PROJECTS - installed.keys()):
+        errors.append(f"editable project missing: {name}")
+    return errors
+
+
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true",
-                        help="fail if a lock file is out of date instead of rewriting it")
+    parser.add_argument("--check", action="store_true", help="verify installed lock offline, without resolving newer releases")
+    parser.add_argument("--inventory", type=Path, help="write validated runtime/test inventory (with --check)")
     args = parser.parse_args(argv)
-
-    direct = read_direct_requirements(DIRECT_REQUIREMENTS)
-    LOCK_DIR.mkdir(exist_ok=True)
-    stale = []
-    for python_version in TARGETS:
-        rows = resolve(direct, python_version)
-        path = LOCK_DIR / ("lock-py%s-%s.txt" % (python_version.replace(".", ""), PLATFORM))
-        content = render(rows, python_version, direct)
-        if args.check:
-            current = path.read_text(encoding="utf-8") if path.is_file() else ""
-            if current != content:
-                stale.append(path.name)
-            continue
-        path.write_text(content, encoding="utf-8", newline="\n")
-        print("wrote %s (%d packages)" % (path.name, len(rows)), file=sys.stderr)
-    if stale:
-        print("out of date: %s" % ", ".join(stale), file=sys.stderr)
+    if args.inventory and not args.check:
+        parser.error("--inventory requires --check")
+    try:
+        version = target_version()
+        direct = read_pins(DIRECT_REQUIREMENTS)
+        path = LOCK_DIR / f"lock-py{version.replace('.', '')}-win_amd64.txt"
+        if not args.check:
+            pins = resolve(direct)
+            path.write_text(render(pins, version), encoding="utf-8", newline="\n")
+            print(f"wrote {path.name}: {len(pins)} distributions")
+            return 0
+        locked = read_pins(path)
+        installed = {normalize(d.metadata["Name"]): d.version for d in metadata.distributions()}
+        errors = compare_inventory(locked, installed, direct)
+        if errors:
+            raise ValueError("\n".join(errors))
+        subprocess.run([sys.executable, "-m", "pip", "check"], check=True)
+        if args.inventory:
+            args.inventory.write_text(json.dumps(
+                {name: installed[name] for name in sorted(locked)}, indent=2) + "\n", encoding="utf-8")
+        print(f"verified {len(locked)} locked distributions on Python {version}")
+        return 0
+    except (ValueError, OSError, subprocess.CalledProcessError) as exc:
+        print(str(exc), file=sys.stderr)
         return 1
-    return 0
 
 
 if __name__ == "__main__":

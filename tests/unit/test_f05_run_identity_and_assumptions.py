@@ -133,80 +133,72 @@ def test_candidate_lists_are_truncated_by_literal_slices():
     assert re.search(r'"--top",\s*type=int,\s*default=8', SOURCE)
 
 
-# ------------------------------------------------------- repaired behaviour
-#
-# P08-T01 promises an immutable run manifest: patch, league, catalog, corpus and
-# item snapshots resolved once and frozen, with evaluation reuse keyed on that
-# identity. P02-T02 promises catalog-derived point budgets. These expectations
-# are written against those boundaries.
-#
-# They are deliberately NOT "the literal disappeared from cli.py". The legacy
-# phase pipeline is allowed to keep its literals and its filename cache; what
-# must not happen is a *new* run inheriting them. They currently fail because
-# `pob2opt.search` does not exist yet.
+# ------------------------------------------------------- future repair contract
+# P00 can validate the probes against labelled doubles. It cannot fabricate P01
+# records or assume a P08 return type. The explicit binding check turns into a
+# hard failure when the service exists, until P08 wires real validated fixtures.
 
+from dataclasses import replace
 
-def prepare_run(request):
-    """The future prepare step, or a failure that keeps the xfail honest."""
-    from pob2opt.search import prepare  # noqa: F401  (does not exist yet)
-
-    return prepare(request)
-
-
-BASE_REQUEST = {
-    "schema_version": 1, "game": "poe2", "class": "Huntress", "level": 100,
-    "patch_selection": "current", "league_selection": "current",
-    "mode": "offline_items", "budget": None, "seed": 1,
-}
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01: evaluation reuse must be keyed on the full "
-           "resolved run identity, so two different requests cannot share a "
-           "cached result. Keeping load_phase for the legacy path is fine.",
+import jsonschema
+from repair_contracts import (
+    MissingFutureService, PREPARE_PROBES, REQUIRED_REQUEST_KEYS,
+    make_prepare_fixture, require_production_binding,
 )
-def test_repaired_two_different_requests_get_different_cache_identities():
-    low = prepare_run(dict(BASE_REQUEST, level=28))
-    high = prepare_run(dict(BASE_REQUEST, level=100))
-
-    assert low.cache_identity != high.cache_identity
-    assert prepare_run(dict(BASE_REQUEST, level=28)).cache_identity == low.cache_identity
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01: `current` must be resolved to an immutable "
-           "league id at prepare time and frozen in the manifest.",
-)
-def test_repaired_league_is_resolved_and_frozen_in_the_manifest():
-    manifest = prepare_run(dict(BASE_REQUEST)).manifest
-
-    assert manifest["league"]["selection"] == "current"
-    assert manifest["league"]["resolved_id"]
-    assert manifest["league"]["resolved_id"] != "current"
+@pytest.fixture
+def prepare_case(tmp_path):
+    return make_prepare_fixture(tmp_path)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05/P02-T02 repair: quest-passive and ascendancy budgets must be "
-           "derived from the pinned catalog and traceable to it.",
-)
-def test_repaired_point_budgets_come_from_the_catalog():
-    manifest = prepare_run(dict(BASE_REQUEST)).manifest
-    budgets = manifest["point_budgets"]
-
-    assert budgets["source"] == "catalog"
-    assert budgets["catalog_hash"]
-    assert isinstance(budgets["passive_points"], int)
-    assert isinstance(budgets["ascendancy_points"], int)
+@pytest.mark.parametrize("probe", PREPARE_PROBES, ids=lambda probe: probe.__name__)
+def test_prepare_probe_accepts_valid_synthetic_behavior(prepare_case, probe):
+    request, prepare, catalog_hash = prepare_case
+    probe(prepare, request, catalog_hash)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01/P08-T03: how many candidates a new search "
-           "keeps belongs to the request, not to a literal slice.",
-)
-def test_repaired_candidate_limits_come_from_the_request():
-    manifest = prepare_run(dict(BASE_REQUEST, finalist_limit=64)).manifest
-    assert manifest["search"]["finalist_limit"] == 64
+@pytest.mark.parametrize("index,defect", [
+    (0, {"cache_identity": "constant"}),
+    (1, {"league_id": "current"}),
+    (2, {"catalog_hash": "untraceable"}),
+    (2, {"passive_points": 999}),
+    (3, {"finalist_limit": 8}),
+])
+def test_prepare_probe_rejects_wrong_behavior(prepare_case, index, defect):
+    request, prepare, catalog_hash = prepare_case
+
+    def broken(candidate):
+        return replace(prepare(candidate), **defect)
+
+    with pytest.raises(AssertionError):
+        PREPARE_PROBES[index](broken, request, catalog_hash)
+
+
+def test_prepare_fixture_has_every_documented_request_field(prepare_case):
+    from repair_contracts import REPO
+    specification = (REPO / "docs/specs/interfaces.md").read_text()
+    line = next(line for line in specification.splitlines() if line.startswith("Required request keys:"))
+    documented = set(re.findall(r"`([^`]+)`", line))
+    assert documented == set(REQUIRED_REQUEST_KEYS)
+    assert documented <= prepare_case[0].keys()
+
+
+def test_validation_failure_is_not_a_repair_xfail(prepare_case):
+    request, prepare, catalog_hash = prepare_case
+    del request["scenario_suite"]
+    with pytest.raises(jsonschema.ValidationError, match="scenario_suite"):
+        PREPARE_PROBES[0](prepare, request, catalog_hash)
+
+
+def test_missing_snapshot_is_not_a_repair_xfail(prepare_case):
+    request, prepare, catalog_hash = prepare_case
+    Path(request["catalog_profile"]).unlink()
+    with pytest.raises(FileNotFoundError):
+        PREPARE_PROBES[0](prepare, request, catalog_hash)
+
+
+@pytest.mark.xfail(strict=True, raises=MissingFutureService,
+                   reason="P08-T01: prepare service and production contract binding are not implemented")
+def test_production_prepare_contract_binding_is_pending():
+    require_production_binding("pob2opt.search", "P08-T01")
