@@ -5,14 +5,24 @@ What each group of tests is, what it needs, and the exact command to run it
 
 ## Prerequisites
 
+Install from the lock for your interpreter, then the two packages under that
+same lock as a constraint:
+
 ```
-python -m pip install -r requirements-dev.txt
-python -m pip install -e ./pob2-mcp -e ./pob2-optimizer
+python -m pip install -r requirements/lock-py312-win_amd64.txt
+python -m pip install -c requirements/lock-py312-win_amd64.txt -e ./pob2-mcp -e ./pob2-optimizer
 ```
 
-The second line matters: if the packages are installed editable from another
-checkout, `tests/unit/test_import_provenance.py` fails on purpose. See
-`docs/evidence/P00/environment.md`.
+Use `lock-py310-win_amd64.txt` on Python 3.10. The constraint on the second
+command is what stops it from drifting the environment the first one
+established; `python -m pip check` confirms the result.
+
+The second line also matters for a different reason: if the packages are
+installed editable from another checkout, `tests/unit/test_import_provenance.py`
+fails on purpose. See `docs/evidence/P00/environment.md`.
+
+`requirements-dev.txt` holds only the direct dependencies. Regenerate both locks
+after changing it with `python scripts/lock_dependencies.py`.
 
 Check the environment before blaming a test:
 
@@ -32,6 +42,8 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | Engine | `python -m pytest -m engine` | A PoB2 checkout and its LuaJIT runtime | Skips with a reason when absent. A skip is **not** an engine pass. |
 | Everything selectable by default | `python -m pytest` | As above | Excludes `network` and `longrun`. |
 | Measurements | `python scripts/measure_engine.py --out docs/evidence/P00/measurements.json` | A PoB2 checkout | Not a test; writes evidence. |
+| Lock freshness | `python scripts/lock_dependencies.py --check` | Network | Fails if a lock is stale against `requirements-dev.txt`. |
+| Engine skip guard | `python scripts/check_engine_skips.py --exit-code N --junit engine-junit.xml` | Nothing | What CI uses to decide that engine tests skipped for the right reason. |
 
 Selecting the PoB checkout:
 
@@ -73,6 +85,7 @@ none yet).
 | `test_f10_engine_lifecycle_contract.py` | Research F10 at the API surface: `chdir`, no teardown, no timeout, undifferentiated errors. |
 | `test_f11_worker_wipes_imported_build.py` | Research F11, via a recording engine double. |
 | `test_f12_item_conversion_source.py` | Research F12 from the handler source. |
+| `test_engine_skip_guard.py` | The CI engine-skip guard rejects a fixture error, a failing test, a collection error, an empty selection, an interrupt, a test that actually ran, and an xfail posing as a runtime skip. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -98,15 +111,26 @@ gameplay measurement.
 
 ## Expected noise
 
-Engine runs print two things that are not failures:
+PoB's LuaJIT raises an SEH exception (`0xe24c4a02`) as part of ordinary error
+unwinding, and `faulthandler` reports every one. Measured on one unfiltered
+engine session: **6984 banners, 265 790 traceback frame lines, 286 749 console
+lines**, with pytest exiting 0 throughout. An earlier version of this file
+described it as "once per engine boot", which was wrong.
 
-* PoB's own startup output (`Loading main script...`, `missing node <id>`,
-  `Uniques loaded`). The Lua runtime writes to the process stdout handle
-  directly, so pytest's capture does not suppress it.
-* `Windows fatal exception: code 0xe24c4a02` with a traceback, once per engine
-  boot. That is LuaJIT's SEH-based error unwinding during startup, caught
-  internally. `faulthandler` is deliberately left on so a real native crash is
-  still visible.
+`tests/conftest.py` now redirects `faulthandler` to a per-session log file for
+the duration of the engine session and restores stderr afterwards. The run
+prints the log's path and size instead:
+
+```
+native fault diagnostics: 32187121 bytes at ...\pytest-N\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is
+  large and is not by itself a crash.
+```
+
+Nothing is suppressed: every banner is in that file, and a genuine native crash
+still shows up in pytest's exit code. PoB's own startup output
+(`Loading main script...`, `missing node <id>`) may still appear, because the
+Lua runtime writes to the process stdout handle directly.
 
 ## Recorded results
 
@@ -115,10 +139,11 @@ working tree, PoB `ce566ea`:
 
 | Command | Result |
 |---|---|
-| `python -m pytest` (no `POB2_ROOT`) | 66 passed, 34 skipped, 13 xfailed |
-| `python -m pytest` (with `POB2_ROOT`) | 96 passed, 17 xfailed, ~12 s |
-| `python -m pytest tests/unit` | 61 passed, 12 xfailed |
-| `python -m pytest -m engine` (with `POB2_ROOT`) | 30 passed, 79 deselected, 4 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 91 passed, 34 skipped, 13 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 121 passed, 17 xfailed |
+| `python -m pytest tests/unit` | 86 passed, 12 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 30 passed, 104 deselected, 4 xfailed |
+| Clean install from `lock-py312-win_amd64.txt` in an empty venv, then `pip check` and `pytest tests/unit tests/integration` | `No broken requirements found.`; 66 passed, 13 xfailed |
 
 Every `xfail` is `strict` and names the repair task that will turn it into a
 pass. A non-strict xfail is not used anywhere: an expectation that passes early

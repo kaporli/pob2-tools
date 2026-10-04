@@ -11,8 +11,13 @@
 
 Item 1 is exercised directly against the real ``load_phase``/``save_phase``.
 Items 2-4 are source-level characterizations: the values live inside functions
-that cannot run without PoB, so the test pins the literals and the repair
-removes them.
+that cannot run without PoB and a full harvest.
+
+**The source checks are legacy characterization, not requirements.** The
+delivery plan keeps ``phases.py``/``cli.py`` as a legacy comparison path until
+replacement tests pass, so a valid repair may leave every literal below exactly
+where it is. What must change is what a *new* run does, and the repaired
+expectations at the bottom are written against that boundary instead.
 
 Repairs: P08-T01 (immutable run contexts and cache identity) and P02-T02
 (catalog-derived class, level, quest-reward and support-slot rules).
@@ -99,9 +104,17 @@ def test_ascendancy_point_budget_is_a_hardcoded_level_threshold():
     assert any(f in SOURCE for f in ASCENDANCY_FORMULAS)
 
 
-def test_point_budgets_are_not_derived_from_a_catalog():
-    assert "catalog" not in SOURCE.lower()
-    assert "patch_profile" not in SOURCE
+def test_point_budgets_are_computed_without_consulting_any_catalog():
+    """Scoped to the formulas themselves.
+
+    An earlier version asserted that the string "catalog" was absent from the
+    whole module, which would have failed on a harmless comment. What matters is
+    that the budget expressions depend only on ``args.level``.
+    """
+    for formula in QUEST_POINT_FORMULAS:
+        assert "args.level" in formula
+        assert "catalog" not in formula
+        assert "profile" not in formula
 
 
 # ----------------------------------------- 4. candidate lists are hard-capped
@@ -115,45 +128,85 @@ def literal_slice_count() -> int:
 
 
 def test_candidate_lists_are_truncated_by_literal_slices():
+    """Legacy fact. Display slices in a report are fine; the search cap is not."""
     assert literal_slice_count() >= 6
     assert re.search(r'"--top",\s*type=int,\s*default=8', SOURCE)
 
 
 # ------------------------------------------------------- repaired behaviour
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01: evaluation reuse must require a full identity "
-           "match (request, catalog, patch profile, engine revision), not a filename.",
-)
-def test_repaired_cache_requires_a_matching_run_identity():
-    params = set(inspect.signature(cli.load_phase).parameters)
-    assert params & {"identity", "manifest", "run_id", "cache_key"}
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05 repair is P08-T01: the league must be resolved during prepare and "
-           "frozen in the run manifest, not defaulted in the argument parser.",
-)
-def test_repaired_league_is_not_hardcoded():
-    assert "Forbidden Rites" not in SOURCE
+#
+# P08-T01 promises an immutable run manifest: patch, league, catalog, corpus and
+# item snapshots resolved once and frozen, with evaluation reuse keyed on that
+# identity. P02-T02 promises catalog-derived point budgets. These expectations
+# are written against those boundaries.
+#
+# They are deliberately NOT "the literal disappeared from cli.py". The legacy
+# phase pipeline is allowed to keep its literals and its filename cache; what
+# must not happen is a *new* run inheriting them. They currently fail because
+# `pob2opt.search` does not exist yet.
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F05/P02-T02 repair: quest-passive and ascendancy budgets must come "
-           "from the pinned catalog, not from level thresholds in the CLI.",
-)
-def test_repaired_point_budgets_are_catalog_derived():
-    assert not any(f in SOURCE for f in QUEST_POINT_FORMULAS)
-    assert not any(f in SOURCE for f in ASCENDANCY_FORMULAS)
+def prepare_run(request):
+    """The future prepare step, or a failure that keeps the xfail honest."""
+    from pob2opt.search import prepare  # noqa: F401  (does not exist yet)
+
+    return prepare(request)
+
+
+BASE_REQUEST = {
+    "schema_version": 1, "game": "poe2", "class": "Huntress", "level": 100,
+    "patch_selection": "current", "league_selection": "current",
+    "mode": "offline_items", "budget": None, "seed": 1,
+}
 
 
 @pytest.mark.xfail(
     strict=True,
-    reason="F05 repair is P08-T01/P08-T03: result-set size belongs to the run "
-           "request, not to literal slices inside the phases.",
+    reason="F05 repair is P08-T01: evaluation reuse must be keyed on the full "
+           "resolved run identity, so two different requests cannot share a "
+           "cached result. Keeping load_phase for the legacy path is fine.",
 )
-def test_repaired_result_sets_are_not_literal_slices():
-    assert literal_slice_count() == 0
+def test_repaired_two_different_requests_get_different_cache_identities():
+    low = prepare_run(dict(BASE_REQUEST, level=28))
+    high = prepare_run(dict(BASE_REQUEST, level=100))
+
+    assert low.cache_identity != high.cache_identity
+    assert prepare_run(dict(BASE_REQUEST, level=28)).cache_identity == low.cache_identity
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="F05 repair is P08-T01: `current` must be resolved to an immutable "
+           "league id at prepare time and frozen in the manifest.",
+)
+def test_repaired_league_is_resolved_and_frozen_in_the_manifest():
+    manifest = prepare_run(dict(BASE_REQUEST)).manifest
+
+    assert manifest["league"]["selection"] == "current"
+    assert manifest["league"]["resolved_id"]
+    assert manifest["league"]["resolved_id"] != "current"
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="F05/P02-T02 repair: quest-passive and ascendancy budgets must be "
+           "derived from the pinned catalog and traceable to it.",
+)
+def test_repaired_point_budgets_come_from_the_catalog():
+    manifest = prepare_run(dict(BASE_REQUEST)).manifest
+    budgets = manifest["point_budgets"]
+
+    assert budgets["source"] == "catalog"
+    assert budgets["catalog_hash"]
+    assert isinstance(budgets["passive_points"], int)
+    assert isinstance(budgets["ascendancy_points"], int)
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="F05 repair is P08-T01/P08-T03: how many candidates a new search "
+           "keeps belongs to the request, not to a literal slice.",
+)
+def test_repaired_candidate_limits_come_from_the_request():
+    manifest = prepare_run(dict(BASE_REQUEST, finalist_limit=64)).manifest
+    assert manifest["search"]["finalist_limit"] == 64

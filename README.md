@@ -75,8 +75,9 @@ export POESESSID="…"     # from your pathofexile.com session
 ## Development
 
 ```bash
-pip install -r requirements-dev.txt          # pinned test dependencies
-pip install -e ./pob2-mcp -e ./pob2-optimizer
+LOCK=requirements/lock-py312-win_amd64.txt   # or lock-py310-win_amd64.txt
+pip install -r $LOCK                         # complete, resolved, pinned
+pip install -c $LOCK -e ./pob2-mcp -e ./pob2-optimizer
 
 python -m pob2opt.cli doctor --json          # what can this machine do?
 python -m pytest tests/unit                  # offline; no PoB, no network

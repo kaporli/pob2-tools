@@ -45,6 +45,12 @@ def test_collection_succeeds(collect_output):
 
 
 def test_collection_does_not_boot_pob(collect_output):
+    """Scope: this inspects the console for PoB's startup banners.
+
+    It shows the engine did not start. It is not independent proof that
+    collection made no network call, and it does not become that by passing.
+    Strengthen it when P03 adds acquisition modules.
+    """
     combined = collect_output.stdout + collect_output.stderr
     for banner in ENGINE_BANNERS:
         assert banner not in combined, "PoB booted during collection: " + banner
