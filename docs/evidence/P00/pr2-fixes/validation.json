@@ -47,5 +47,13 @@
     "inventory-py310-b.json": "87b5c72f8bd80699236ec2b456156617a51429e6b0b7c259a5079fd784cae6d8",
     "inventory-py312-a.json": "b8f44c8e75bdff1ba7319095f19d5cd6f36519de8add07708503c7bdf2c243dd",
     "inventory-py312-b.json": "b8f44c8e75bdff1ba7319095f19d5cd6f36519de8add07708503c7bdf2c243dd"
-  }
+  },
+  "implementation_commit": "e0aa81d7c80170911f7f2ead66ed7d023a443ddc",
+  "ci_run_id": 37216286664,
+  "ci_jobs": {
+    "3.10": 111477353583,
+    "3.12": 111477353648
+  },
+  "ci_conclusion": "success",
+  "review_verdict": "accepted_for_P00_foundation_scope"
 }

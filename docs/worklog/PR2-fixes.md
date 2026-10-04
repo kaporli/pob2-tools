@@ -6,7 +6,8 @@
 - Specification version: 1.0.
 - Engineer: Codex, at Elias's request to implement and push the fixes.
 - Starting commit: `089e065e2e0ceb8c6be9efa71e3726d51aa0ce8a`.
-- Implementation: the commit containing this handoff; see the follow-up review for its exact hash.
+- Implementation commit: `e0aa81d7c80170911f7f2ead66ed7d023a443ddc`.
+- Follow-up verdict and hosted CI: [G0-PR2-fixes.md](../reviews/G0-PR2-fixes.md).
 - Status: review_ready.
 - Dependencies: [PR #2 review](../reviews/G0-PR2.md); no product scope change.
 
