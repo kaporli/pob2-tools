@@ -24,6 +24,9 @@ patched LuaJIT (`runtime/lua51.dll`) through `ctypes` and call into its Lua.
 
 ## Packages
 
+The staged development plan is in [the implementation specifications](docs/specs/README.md).
+It includes project tasks, shared contracts, acceptance gates, and an engineering review process.
+
 | Package | What it is | Entry point |
 |---|---|---|
 | [`pob2-mcp`](pob2-mcp/) | ctypes bridge to PoB's headless engine, exposed as an MCP server; also a PoE2 trade client and GGG OAuth helper. | `pob2-mcp` |
@@ -68,6 +71,26 @@ searches are gated by GGG and need a session cookie:
 ```bash
 export POESESSID="…"     # from your pathofexile.com session
 ```
+
+## Development
+
+```bash
+pip install -r requirements-dev.txt          # pinned test dependencies
+pip install -e ./pob2-mcp -e ./pob2-optimizer
+
+python -m pob2opt.cli doctor --json          # what can this machine do?
+python -m pytest tests/unit                  # offline; no PoB, no network
+python -m pytest -m engine -ra               # needs a PoB checkout, else skips
+```
+
+`doctor` exits `0` when every blocking check passes and `3` when a missing
+dependency blocks something; `summary.blocked_capabilities` says which. Test
+groups, markers, prerequisites and recorded results are in
+[`tests/MANIFEST.md`](tests/MANIFEST.md).
+
+Engine tests skip with a reason when no PoB runtime is configured. **A skip is
+not a pass** — no gate that needs real engine behaviour may be accepted from a
+run where they skipped.
 
 ## Notes
 

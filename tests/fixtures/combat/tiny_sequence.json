@@ -1,0 +1,22 @@
+{
+  "fixture_id": "combat/tiny_sequence",
+  "kind": "synthetic",
+  "schema_version": 1,
+  "purpose": "A deterministic three-action sequence with an exactly hand-computable result. Used as an arithmetic oracle for any encounter evaluator: damage must be counted once, action time must be charged, and a lockout window must not be billed as uptime.",
+  "not_a_claim": "Durations and damage values are invented. They model no PoE 2 skill, enemy or animation.",
+  "units": {"time": "seconds", "damage": "damage"},
+  "window_s": 10.0,
+  "actions": [
+    {"id": "a1", "name": "builder",  "cast_time_s": 0.5, "damage": 100.0, "repeats": 8},
+    {"id": "a2", "name": "spender",  "cast_time_s": 1.0, "damage": 1200.0, "repeats": 2},
+    {"id": "a3", "name": "lockout",  "cast_time_s": 4.0, "damage": 0.0,   "repeats": 1}
+  ],
+  "oracle": {
+    "total_action_time_s": 10.0,
+    "total_damage": 3200.0,
+    "dps_over_window": 320.0,
+    "derivation": "builder 8 x 0.5 s = 4.0 s and 8 x 100 = 800; spender 2 x 1.0 s = 2.0 s and 2 x 1200 = 2400; lockout 4.0 s and 0 damage. 4.0 + 2.0 + 4.0 = 10.0 s; 800 + 2400 = 3200; 3200 / 10.0 = 320.0.",
+    "naive_uptime_only_dps": 533.3333333333334,
+    "naive_derivation": "Ignoring the 4.0 s lockout gives 3200 / 6.0 = 533.33..., which is the error mode this fixture exists to catch."
+  }
+}

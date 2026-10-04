@@ -1,0 +1,1089 @@
+{
+  "schema_version": 1,
+  "what_this_is": "Inventory of the pre-existing legacy phase-pipeline outputs found on the development machine. They were produced by the legacy pob2opt phases before this specification existed, with inputs that were not recorded in a manifest. They are kept as historical evidence of what the tool used to emit; they are NOT a validated baseline and no number in them may be cited as a measured result.",
+  "source_directory": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs",
+  "inside_repository": false,
+  "captured_on": "2026-10-04",
+  "runs": [
+    {
+      "run": "l28",
+      "file_count": 12,
+      "files": [
+        {
+          "name": "build_01_Hexblast.xml",
+          "bytes": 34913,
+          "sha256": "cc34ddb3798e0f2144e425649ff99b6fe03005331ed64ff6b71f0ac4b815eaca",
+          "modified_utc": "2026-09-21T20:49:25.873144Z"
+        },
+        {
+          "name": "build_02_Hexblast.xml",
+          "bytes": 35005,
+          "sha256": "7f355d87816d4239268bb16e1bea6dfedc14f839b45cada18877e59e8ec2acd4",
+          "modified_utc": "2026-09-21T20:49:25.873644Z"
+        },
+        {
+          "name": "build_03_Hexblast.xml",
+          "bytes": 35003,
+          "sha256": "a0f85b3f8c5c09498be6565abde7445a12b6fb1ed1813c8812006f4a3ffbbd1f",
+          "modified_utc": "2026-09-21T20:49:25.874144Z"
+        },
+        {
+          "name": "build_04_Hexblast.xml",
+          "bytes": 34499,
+          "sha256": "c8269947ac942b3eb18d4fda1ca41f01d62eb5fb566e99eb54215eaa597849c2",
+          "modified_utc": "2026-09-21T20:49:25.874144Z"
+        },
+        {
+          "name": "build_05_Hexblast.xml",
+          "bytes": 34999,
+          "sha256": "fcddf6a2eb693194cd992252346d536c86b3eb1064ec6368a51949c86a8c080d",
+          "modified_utc": "2026-09-21T20:49:25.874644Z"
+        },
+        {
+          "name": "build_06_Hexblast.xml",
+          "bytes": 34959,
+          "sha256": "764971075e04131df97f5b2fa611cdb0eeccccd19414baa6ced03f0e9ca6c685",
+          "modified_utc": "2026-09-21T20:49:25.875144Z"
+        },
+        {
+          "name": "combos.json",
+          "bytes": 107453,
+          "sha256": "3332772e3cc2f981ecddc45c89a10fd9fd9fde5d3e860895d7dfa6b407ee073a",
+          "modified_utc": "2026-09-21T20:35:12.332920Z"
+        },
+        {
+          "name": "finals.json",
+          "bytes": 3942,
+          "sha256": "5ddf9746b73cc254d7a460b6752f73ab61aa4cde48f783a1ff5f075852a13c6c",
+          "modified_utc": "2026-09-21T20:49:25.875645Z"
+        },
+        {
+          "name": "gems.json",
+          "bytes": 154302,
+          "sha256": "777caa68fd1cf62a4ddf06992e1744c64b907db136db55b788dec876f0330e7f",
+          "modified_utc": "2026-09-21T20:34:38.769173Z"
+        },
+        {
+          "name": "report.md",
+          "bytes": 2802,
+          "sha256": "0902650474f438d594aa40aac1ee4f50a9439f69982a14a86aa22bb6f406ab8f",
+          "modified_utc": "2026-09-21T20:49:25.988856Z"
+        },
+        {
+          "name": "screen.json",
+          "bytes": 148476,
+          "sha256": "eccc850f4362aea44932b6e9414ad67ea7b130afb7b87fff5c0f1651bf385c4f",
+          "modified_utc": "2026-09-21T20:34:56.883399Z"
+        },
+        {
+          "name": "stack.json",
+          "bytes": 125696,
+          "sha256": "22e61efb6dc60d0764b81ada77ec0d4be832c5ff67a88731c9ff02b3817e9297",
+          "modified_utc": "2026-09-21T20:41:34.139966Z"
+        }
+      ]
+    },
+    {
+      "run": "l28tiered",
+      "file_count": 19,
+      "files": [
+        {
+          "name": "build_01_Hammer_of_the_Gods.xml",
+          "bytes": 35774,
+          "sha256": "4cec27acbdd3ae3edb31b7144f05fa7b361e644ef521dbc4eb48cff9b23ca878",
+          "modified_utc": "2026-09-21T22:31:37.565101Z"
+        },
+        {
+          "name": "build_02_Twister.xml",
+          "bytes": 36920,
+          "sha256": "0ead86e1dde94a2c421c67850477129e89d66caff9136cd17809182126878492",
+          "modified_utc": "2026-09-21T22:31:37.566105Z"
+        },
+        {
+          "name": "build_03_Hexblast.xml",
+          "bytes": 34855,
+          "sha256": "195af938175d67350037ff65fc92f7153ef4a6ff2781667da622f78727bdf93a",
+          "modified_utc": "2026-09-21T22:31:37.567106Z"
+        },
+        {
+          "name": "build_04_His_Scattering_Calamity.xml",
+          "bytes": 33165,
+          "sha256": "0d7ed5487b0aa14b687f1c2fc778a88c579a98382dd44db97cac094a19a01a44",
+          "modified_utc": "2026-09-21T22:31:37.568105Z"
+        },
+        {
+          "name": "build_05_Lightning_Warp.xml",
+          "bytes": 32900,
+          "sha256": "2fddae2ecd2ec960201252493c9fedbbaf744952c13f837f9e680ac42942b83a",
+          "modified_utc": "2026-09-21T22:31:37.569104Z"
+        },
+        {
+          "name": "build_06_Fragments_Of_The_Past.xml",
+          "bytes": 34530,
+          "sha256": "d9d3bd9dd31109689fef8fde5e40e60619a90490198962b0e6a1a845cc8150e0",
+          "modified_utc": "2026-09-21T22:31:37.570104Z"
+        },
+        {
+          "name": "build_07_Ancestral_Cry.xml",
+          "bytes": 35693,
+          "sha256": "15bd361e1ee6134857a440f6ae484f753f3f2af15ad327c7a91b9e62fa447029",
+          "modified_utc": "2026-09-21T22:31:37.570104Z"
+        },
+        {
+          "name": "build_08_The_Stars_Answer.xml",
+          "bytes": 32123,
+          "sha256": "7822fd56498aa7189f016745afe184c120dc39df74058de4e41e4755e8901915",
+          "modified_utc": "2026-09-21T22:31:37.571105Z"
+        },
+        {
+          "name": "build_gap_Flameblast.xml",
+          "bytes": 33877,
+          "sha256": "bf6ef3e89cbf2f6c73ca52fa0694b238783ea50c76168e2539694659b9b6ecf6",
+          "modified_utc": "2026-09-22T06:36:52.384912Z"
+        },
+        {
+          "name": "build_gap_Grim_Pillars.xml",
+          "bytes": 33162,
+          "sha256": "71f74d83cb5097f7aa5e2c34f5fb839cef53e4f2c1d845f86c22d33eb7f948b6",
+          "modified_utc": "2026-09-22T06:37:53.130166Z"
+        },
+        {
+          "name": "build_gap_Whirling_Assault.xml",
+          "bytes": 34260,
+          "sha256": "3ffdc2e421771d340bb2c0ea3074da4825a6c50c98f2137260be868d1c77c140",
+          "modified_utc": "2026-09-22T06:37:23.084231Z"
+        },
+        {
+          "name": "combos.json",
+          "bytes": 226613,
+          "sha256": "5882ab5de1d6ba4ccb6b913c52bea7593196815081bf976d31df5da7602bc8cd",
+          "modified_utc": "2026-09-21T21:54:32.863390Z"
+        },
+        {
+          "name": "finals.json",
+          "bytes": 5353,
+          "sha256": "845d0459ddc9bfeb5f96b22e515ce004a0889e1dcd8bacf2795fe2fc6e32bce2",
+          "modified_utc": "2026-09-21T22:31:37.574609Z"
+        },
+        {
+          "name": "gems.json",
+          "bytes": 154302,
+          "sha256": "15d825a69024c4deef99a52daad03eb8df547c171947b8a317b631911de84a78",
+          "modified_utc": "2026-09-21T21:52:09.491382Z"
+        },
+        {
+          "name": "harvest.json",
+          "bytes": 78117,
+          "sha256": "65a969592be6c5f51fc8319e3aa07e396f18b45d68947c2eee181ea8fe32e430",
+          "modified_utc": "2026-09-21T21:52:07.430724Z"
+        },
+        {
+          "name": "report.md",
+          "bytes": 5897,
+          "sha256": "4eecc0aa1acef2e1554935801b5898eac719463c5db53caed46aef2c9a18b79b",
+          "modified_utc": "2026-09-21T22:43:23.570972Z"
+        },
+        {
+          "name": "screen.json",
+          "bytes": 1437121,
+          "sha256": "0f32d9b7fc77bf792168f9b2678021fc16bb013311ed5cc4582871631b56f24d",
+          "modified_utc": "2026-09-21T22:26:02.145027Z"
+        },
+        {
+          "name": "stack.json",
+          "bytes": 133267,
+          "sha256": "c1a4a94eb12bc5b7a4e19f135f055b088094809f9f9681f8dd20cbaa6ed79811",
+          "modified_utc": "2026-09-21T22:03:06.709513Z"
+        },
+        {
+          "name": "triggers.json",
+          "bytes": 64783,
+          "sha256": "65661ae862b4a681015fe2603d7028da69b4718080efd61ecce47123873e6ab9",
+          "modified_utc": "2026-09-21T22:43:23.450141Z"
+        }
+      ]
+    },
+    {
+      "run": "l30tier",
+      "file_count": 81,
+      "files": [
+        {
+          "name": "combos.json",
+          "bytes": 234225,
+          "sha256": "83958524a4f8d68a321a8c6562922ddb7325bc95645ae288d0b7b151e225b818",
+          "modified_utc": "2026-09-22T07:52:28.302808Z"
+        },
+        {
+          "name": "gems.json",
+          "bytes": 154302,
+          "sha256": "c93e8675ee80339b3018bcfd69f086c947601d5bae1d0314d6fcf399314d5dc0",
+          "modified_utc": "2026-09-22T10:31:30.983061Z"
+        },
+        {
+          "name": "harvest.json",
+          "bytes": 81138,
+          "sha256": "7d84e850770db23e50e07aba5264991276a5d44b3095e14878b98ee7595b41fa",
+          "modified_utc": "2026-09-22T07:50:55.721049Z"
+        },
+        {
+          "name": "screen.json",
+          "bytes": 1477663,
+          "sha256": "96ee16e4f469777abe0256811684b04e04465a53f28281d82355dba395704661",
+          "modified_utc": "2026-09-22T07:52:10.173454Z"
+        },
+        {
+          "name": "tier_01_His_Scattering_Calamity.xml",
+          "bytes": 33545,
+          "sha256": "ad82f68c2a22ae87eb3d20f39f91a7a9d7e0645b83ab929df70426faafe517ae",
+          "modified_utc": "2026-09-22T10:42:21.912664Z"
+        },
+        {
+          "name": "tier_01_Rapid_Shot.xml",
+          "bytes": 34040,
+          "sha256": "dd8f025e864597fcd9dfc0e20973c7190eb5f221d3716671a0ae9ff7747191c1",
+          "modified_utc": "2026-09-22T07:56:07.529084Z"
+        },
+        {
+          "name": "tier_02_Rain_of_Arrows.xml",
+          "bytes": 34145,
+          "sha256": "9eab1935d1f65512b9c1abd244c5df33a18cd527ac0e508364a6cd3919e39b34",
+          "modified_utc": "2026-09-22T10:42:21.913666Z"
+        },
+        {
+          "name": "tier_03_His_Scattering_Calamity.xml",
+          "bytes": 33244,
+          "sha256": "68c3f32a044341705cfe555f423ec0f905d18ea541bf9a2f6d33ee48448907e3",
+          "modified_utc": "2026-09-22T07:56:07.529084Z"
+        },
+        {
+          "name": "tier_03_His_Winnowing_Flame.xml",
+          "bytes": 33775,
+          "sha256": "79930494dd7fa7d21675fdbfc2aa4546defdf4a2a58d796c81049da158659ad8",
+          "modified_utc": "2026-09-22T10:42:21.914665Z"
+        },
+        {
+          "name": "tier_04_Bursting_Fen_Toad.xml",
+          "bytes": 33959,
+          "sha256": "7bdda380ed70f0675e88e5716dc2424f2caceef9cc89b555bc9a9b3f53327da8",
+          "modified_utc": "2026-09-22T10:42:21.915167Z"
+        },
+        {
+          "name": "tier_04_Icestorm.xml",
+          "bytes": 33700,
+          "sha256": "7b8bec6ee70ab01827ad4c8251061654985e4d9a6e4986788202b49e12bca475",
+          "modified_utc": "2026-09-22T08:17:09.869413Z"
+        },
+        {
+          "name": "tier_04_Plasma_Blast.xml",
+          "bytes": 34218,
+          "sha256": "4adfafe6558183fd4881388de3022de6361a43bde8153819bb68cccdeec01fe1",
+          "modified_utc": "2026-09-22T07:56:07.530085Z"
+        },
+        {
+          "name": "tier_05_Icestorm.xml",
+          "bytes": 33615,
+          "sha256": "19d7eb54bb07d15b541523a2d44caa8a7690c37f929c2e960d6d8306e956bd8d",
+          "modified_utc": "2026-09-22T10:42:21.915665Z"
+        },
+        {
+          "name": "tier_05_Smash_to_Smithereens.xml",
+          "bytes": 34576,
+          "sha256": "6be60eb4964e449e7dfd47791d21ed84ff9d120e209d30142db07b4b919bfc62",
+          "modified_utc": "2026-09-22T08:17:09.870450Z"
+        },
+        {
+          "name": "tier_06_Ember_Fusillade.xml",
+          "bytes": 33669,
+          "sha256": "98c6f982217f13838e7e32258abfe9b221b91b535b9d753908e2ee45b1fe4804",
+          "modified_utc": "2026-09-22T08:17:09.871455Z"
+        },
+        {
+          "name": "tier_06_His_Winnowing_Flame.xml",
+          "bytes": 33421,
+          "sha256": "b58683d7aab5390fc3454966f0ec76c0878bcacf2e2ec246d1a9a58f924eabd9",
+          "modified_utc": "2026-09-22T07:56:07.530085Z"
+        },
+        {
+          "name": "tier_06_Plasma_Blast.xml",
+          "bytes": 34472,
+          "sha256": "8fb777c7cad49cd98d966cc03a802abdf580e080c8acd690788ec8a128b8c8a8",
+          "modified_utc": "2026-09-22T10:42:21.916666Z"
+        },
+        {
+          "name": "tier_07_Ember_Fusillade.xml",
+          "bytes": 33733,
+          "sha256": "cf1a4cd50f6c276a973fa298bb175e1296c5a77779ba92d49a48649585000ea7",
+          "modified_utc": "2026-09-22T10:42:21.917168Z"
+        },
+        {
+          "name": "tier_07_Firestorm.xml",
+          "bytes": 33767,
+          "sha256": "e104ad814f1292cd9b42a84f405ab140a5562c9a7588531ca347574dde8dea4f",
+          "modified_utc": "2026-09-22T08:17:09.871958Z"
+        },
+        {
+          "name": "tier_07_Icestorm.xml",
+          "bytes": 33463,
+          "sha256": "bb5317d33112e7f9d05029bdaf49312c84a96e83d9c26874b659fd80ccf3c8ef",
+          "modified_utc": "2026-09-22T07:56:07.530085Z"
+        },
+        {
+          "name": "tier_07_Smash_to_Smithereens.xml",
+          "bytes": 34600,
+          "sha256": "d04a3ec0680341d14892d9b7d45b63b7e390427aa5686611b581a121df4d79b3",
+          "modified_utc": "2026-09-22T09:42:19.884515Z"
+        },
+        {
+          "name": "tier_08_Bursting_Fen_Toad.xml",
+          "bytes": 33708,
+          "sha256": "b40d319a9b9ead0eb4a9df0607014eb68d29d2ca44cc98d1f26a2bb10c64d23b",
+          "modified_utc": "2026-09-22T07:56:07.531084Z"
+        },
+        {
+          "name": "tier_08_Ember_Fusillade.xml",
+          "bytes": 33739,
+          "sha256": "fe26d08a7a954d6bb1f1b7784bfc124cf836e1e3cf2b73910db0cecf95b05310",
+          "modified_utc": "2026-09-22T09:42:19.885514Z"
+        },
+        {
+          "name": "tier_08_Firestorm.xml",
+          "bytes": 33973,
+          "sha256": "f44390747c912fd55c0485fa1e1c4f0ef585131b935aa3614c92afb6a196c84d",
+          "modified_utc": "2026-09-22T10:42:21.917666Z"
+        },
+        {
+          "name": "tier_08_Profane_Ritual.xml",
+          "bytes": 33653,
+          "sha256": "a2405443494f5b1ae681a0c015541ae4c01af1808abe562b3ba5a263212347da",
+          "modified_utc": "2026-09-22T08:17:09.872459Z"
+        },
+        {
+          "name": "tier_09_Chaos_Bolt.xml",
+          "bytes": 33600,
+          "sha256": "f1ab857f4a79bbd86cf119203af8013c7c179fd52e65f83699411e56f853d8db",
+          "modified_utc": "2026-09-22T08:17:09.873459Z"
+        },
+        {
+          "name": "tier_09_Ember_Fusillade.xml",
+          "bytes": 33471,
+          "sha256": "2375ee64a39be7e210e4e8c5f2d29e5d1c33da9d194764c610b05264958258c9",
+          "modified_utc": "2026-09-22T07:56:07.531084Z"
+        },
+        {
+          "name": "tier_09_Firestorm.xml",
+          "bytes": 33979,
+          "sha256": "68636e73cbc2cda2f9fe56823584bb2811b8b06028f26cddc9a813e2f2500ab6",
+          "modified_utc": "2026-09-22T09:42:19.886014Z"
+        },
+        {
+          "name": "tier_09_Profane_Ritual.xml",
+          "bytes": 33707,
+          "sha256": "57ae2ae072f8d213f12153bc1f5d62fc769c1304e54b8fe4b3da8a37dc6dcd09",
+          "modified_utc": "2026-09-22T10:42:21.918166Z"
+        },
+        {
+          "name": "tier_10_Chaos_Bolt.xml",
+          "bytes": 33698,
+          "sha256": "d83da109f6bde99a449c37ebc222ae35dc9564768ef021212a3e34f3918fea49",
+          "modified_utc": "2026-09-22T10:42:21.919170Z"
+        },
+        {
+          "name": "tier_10_Firestorm.xml",
+          "bytes": 33567,
+          "sha256": "7589fbbe4064927dae4092fd8dadf184f583b589e9d64233eff2b0cde861fe46",
+          "modified_utc": "2026-09-22T07:56:07.531084Z"
+        },
+        {
+          "name": "tier_10_Lightning_Warp.xml",
+          "bytes": 33294,
+          "sha256": "4be1ed177fecaa0235f61ec74c8b156cac9602b6f5ca185f2e8d879254698d7f",
+          "modified_utc": "2026-09-22T08:17:09.873960Z"
+        },
+        {
+          "name": "tier_10_Profane_Ritual.xml",
+          "bytes": 33697,
+          "sha256": "0136e6a621430d32a19c4951eda21d10768b01758b07a6609891c155f0ba34f4",
+          "modified_utc": "2026-09-22T09:42:19.887014Z"
+        },
+        {
+          "name": "tier_11_Arc.xml",
+          "bytes": 33764,
+          "sha256": "a17f5fa665b9e028f5f5e785082f99e9c89a91e077129afcaf3319a5f35e7b1c",
+          "modified_utc": "2026-09-22T10:42:21.920208Z"
+        },
+        {
+          "name": "tier_11_Chaos_Bolt.xml",
+          "bytes": 33716,
+          "sha256": "12246820c86bfebf67ed3411a5b53ac68d1cf9ca664c7e148c535d5ae58ed324",
+          "modified_utc": "2026-09-22T09:42:19.887513Z"
+        },
+        {
+          "name": "tier_11_Comet.xml",
+          "bytes": 33568,
+          "sha256": "d32ecb991d0d9ab9847de7165c200241f9b396fddb6044c5378961b4ade791f2",
+          "modified_utc": "2026-09-22T08:17:09.874459Z"
+        },
+        {
+          "name": "tier_11_Profane_Ritual.xml",
+          "bytes": 33419,
+          "sha256": "c5756d48eb22cb31fc7d52ef78869696c57195c28b2973e142eef85bfa69ba8d",
+          "modified_utc": "2026-09-22T07:56:07.532084Z"
+        },
+        {
+          "name": "tier_12_Arc.xml",
+          "bytes": 33718,
+          "sha256": "46e695853f29d120d0902dc34d9c78ffb8f192c0a6aa7d5c3287d90820a7fac8",
+          "modified_utc": "2026-09-22T09:42:19.890022Z"
+        },
+        {
+          "name": "tier_12_Chaos_Bolt.xml",
+          "bytes": 33365,
+          "sha256": "7a06737aa3e80125a31fc24cabeac1f5e242818ebf74150af04cfa9f8326e4dd",
+          "modified_utc": "2026-09-22T07:56:07.532084Z"
+        },
+        {
+          "name": "tier_12_Lightning_Warp.xml",
+          "bytes": 33419,
+          "sha256": "ecd61b168954181cfb8fa68d07c390e312d39c09591f3a9565d9e96c136b86a5",
+          "modified_utc": "2026-09-22T10:42:21.920713Z"
+        },
+        {
+          "name": "tier_12_Living_Bomb.xml",
+          "bytes": 33685,
+          "sha256": "3a377e4e1e81898253398917e227620a722b12f0c8ee463492f46e32627380cd",
+          "modified_utc": "2026-09-22T08:17:09.875460Z"
+        },
+        {
+          "name": "tier_13_Lightning_Warp.xml",
+          "bytes": 33336,
+          "sha256": "734f1c2b6fe691baef9b45265e53e08ecbfc3b5deb4c33a26672a8263d8d3dc7",
+          "modified_utc": "2026-09-22T09:42:19.891522Z"
+        },
+        {
+          "name": "tier_13_Living_Bomb.xml",
+          "bytes": 33748,
+          "sha256": "62a4e0ddb7cf6d59ed4e41c4d6f74dfa66bd312df927ba52a8d282ad6dec6bb4",
+          "modified_utc": "2026-09-22T10:42:21.921213Z"
+        },
+        {
+          "name": "tier_13_Twister.xml",
+          "bytes": 35434,
+          "sha256": "4fc7dd14a7ee38e0e058791cd2123b46a9aa282c803c59f19b44a5fcc5af6a98",
+          "modified_utc": "2026-09-22T08:17:09.875958Z"
+        },
+        {
+          "name": "tier_14_Arc.xml",
+          "bytes": 33456,
+          "sha256": "4a7af748ea363a2dbe8dcd33998d44727e3289ff6fe9e62e8c01c5dbcfb5403d",
+          "modified_utc": "2026-09-22T07:56:07.534050Z"
+        },
+        {
+          "name": "tier_14_His_Vile_Intrusion.xml",
+          "bytes": 33446,
+          "sha256": "bda2ad99dab6e472d2f0b2a1977f7af79d9a7b396c84ab671f38acda1d8fd43e",
+          "modified_utc": "2026-09-22T10:42:21.921718Z"
+        },
+        {
+          "name": "tier_14_Living_Bomb.xml",
+          "bytes": 33725,
+          "sha256": "b9aa8c2993126a6139973e93381b6d6d500f5885ee94546b9a09c008eaaa229d",
+          "modified_utc": "2026-09-22T09:42:19.892022Z"
+        },
+        {
+          "name": "tier_15_Comet.xml",
+          "bytes": 33333,
+          "sha256": "519f6222cf39e5784a2e54608904fc0d01560f1380b5b697fdc4522085d9d2d8",
+          "modified_utc": "2026-09-22T07:56:07.534050Z"
+        },
+        {
+          "name": "tier_15_Essence_Drain.xml",
+          "bytes": 33673,
+          "sha256": "57751b070f834532ad9ada4627922e908e3ef64220d74b40e2e96575796aceb0",
+          "modified_utc": "2026-09-22T10:42:21.922716Z"
+        },
+        {
+          "name": "tier_15_His_Vile_Intrusion.xml",
+          "bytes": 33411,
+          "sha256": "8a01216da66524b5a74a6d16e0de9aa2ad41d3d574f456ca18c49cdb195694c4",
+          "modified_utc": "2026-09-22T09:42:19.892522Z"
+        },
+        {
+          "name": "tier_16_Essence_Drain.xml",
+          "bytes": 33628,
+          "sha256": "1800ec721dc5a342dc7306345a14365f27f01a12e9955e58fb0f513b6fcf44cc",
+          "modified_utc": "2026-09-22T09:42:19.893023Z"
+        },
+        {
+          "name": "tier_16_Living_Bomb.xml",
+          "bytes": 33449,
+          "sha256": "68dfb7586f04a9152b3af8e3674a9e55f1234ce7128243209c73749840cfff7a",
+          "modified_utc": "2026-09-22T07:56:07.535055Z"
+        },
+        {
+          "name": "tier_16_Soulrend.xml",
+          "bytes": 33682,
+          "sha256": "a40425a9b38c5912068ea0c0620cdfaa52c715d15662d46598335942bb2c79eb",
+          "modified_utc": "2026-09-22T10:42:21.923717Z"
+        },
+        {
+          "name": "tier_17_Hexblast.xml",
+          "bytes": 34259,
+          "sha256": "13f7c507a6de245c1d57bbfc5aad134fc4775a3fe43dc8d55333ca93f9463d50",
+          "modified_utc": "2026-09-22T10:42:21.924217Z"
+        },
+        {
+          "name": "tier_17_His_Vile_Intrusion.xml",
+          "bytes": 33160,
+          "sha256": "6343b7b278c71da40c979914966dc0c54dde29d362d83d328195fffcb0da3dd2",
+          "modified_utc": "2026-09-22T07:56:07.535055Z"
+        },
+        {
+          "name": "tier_17_Soulrend.xml",
+          "bytes": 33578,
+          "sha256": "6ac25578b2b74cbe807d5eb5b49f6f010ee503da22d2b6d7b8d31cdead3afaee",
+          "modified_utc": "2026-09-22T09:42:19.894022Z"
+        },
+        {
+          "name": "tier_18_Ancestral_Cry.xml",
+          "bytes": 34572,
+          "sha256": "3955ba712fc7bf7224a4fb901e4f436ca610476c24829bb25c17155a462a84bc",
+          "modified_utc": "2026-09-22T10:42:21.924718Z"
+        },
+        {
+          "name": "tier_18_Essence_Drain.xml",
+          "bytes": 33345,
+          "sha256": "f142f2c374d513fe545eeff6365e0ad27062edae8f0584f46e1193ff11a34c91",
+          "modified_utc": "2026-09-22T07:56:07.535055Z"
+        },
+        {
+          "name": "tier_18_Hexblast.xml",
+          "bytes": 34207,
+          "sha256": "9e0f7068a99f4f3e8691e485aeac153bfe7668784b4fb130045c25ebc1c6ef34",
+          "modified_utc": "2026-09-22T09:42:19.895022Z"
+        },
+        {
+          "name": "tier_18_Spiraling_Conspiracy.xml",
+          "bytes": 34230,
+          "sha256": "5f0a80a952ac332ad61ba39b8fc1ad12bf9a0e2cc266626d1953147255345cac",
+          "modified_utc": "2026-09-22T08:17:09.879463Z"
+        },
+        {
+          "name": "tier_19_Ancestral_Cry.xml",
+          "bytes": 34526,
+          "sha256": "e1f79564f1cb62ce89fa4ef79ccef3ffa737e2ee54ed3840440c2bf5be1c2fed",
+          "modified_utc": "2026-09-22T09:42:19.895522Z"
+        },
+        {
+          "name": "tier_19_Soulrend.xml",
+          "bytes": 33266,
+          "sha256": "4773cd12c8f137bf7e97cfa8c2ca866ad2c8e19618ca032fc71e682110863fc6",
+          "modified_utc": "2026-09-22T07:56:07.536055Z"
+        },
+        {
+          "name": "tier_19_The_Stars_Answer.xml",
+          "bytes": 32721,
+          "sha256": "2988656f5a6e48dfbba14350a32131b4261a1ca8c45b552025251f12475d9aac",
+          "modified_utc": "2026-09-22T10:42:21.925217Z"
+        },
+        {
+          "name": "tier_20_Hexblast.xml",
+          "bytes": 33465,
+          "sha256": "2b31b6cad084233fe53df0a3a83335ec1b042d12db17722b1d89d2f595e6bd01",
+          "modified_utc": "2026-09-22T07:56:07.536055Z"
+        },
+        {
+          "name": "tier_20_Spiraling_Conspiracy.xml",
+          "bytes": 34313,
+          "sha256": "c339e902c2fa159bc0496219d10d0948b3895a82637ec5f8af8a636988a0bbb5",
+          "modified_utc": "2026-09-22T10:42:21.925718Z"
+        },
+        {
+          "name": "tier_20_The_Stars_Answer.xml",
+          "bytes": 32633,
+          "sha256": "fe66b8694d34ed4ff975416c4f5a1b2b979f53f64ae38b8db14084ee124f6c62",
+          "modified_utc": "2026-09-22T09:42:19.896525Z"
+        },
+        {
+          "name": "tier_21_Incinerate.xml",
+          "bytes": 33656,
+          "sha256": "51c598c11b5f6ceb1670b329ab6b53be9d1598e00aa05f1ffb315f12c49e9844",
+          "modified_utc": "2026-09-22T07:56:07.536055Z"
+        },
+        {
+          "name": "tier_21_Spiraling_Conspiracy.xml",
+          "bytes": 34308,
+          "sha256": "7bb47cda2d20c114a40849ddbd1ea9c30c751cfddf7095425ce15e7aa0fe3902",
+          "modified_utc": "2026-09-22T09:42:19.897530Z"
+        },
+        {
+          "name": "tier_21_Wild_Protector.xml",
+          "bytes": 34328,
+          "sha256": "80cbe666adc195036fe96dd411c3e6e81c09f3a7030518d6db0311f1fa92accf",
+          "modified_utc": "2026-09-22T10:42:21.926718Z"
+        },
+        {
+          "name": "tier_22_Ruzhan,_the_Blazing_Sword.xml",
+          "bytes": 34389,
+          "sha256": "a7e76c1e2a130bdf9bbaa90c7ec187fd192f04c4eb0c2ec78628b41a58fe1e17",
+          "modified_utc": "2026-09-22T10:42:21.927217Z"
+        },
+        {
+          "name": "tier_22_The_Stars_Answer.xml",
+          "bytes": 32296,
+          "sha256": "a3f20f91673bd5d5037faded171f2559ccdd956066d6a4d46c19464e9dfc5e34",
+          "modified_utc": "2026-09-22T07:56:07.536055Z"
+        },
+        {
+          "name": "tier_22_Wild_Protector.xml",
+          "bytes": 34277,
+          "sha256": "710fd74001a28faf6f870663e6276f0de26f2a1209eba63fdea949cceadaf108",
+          "modified_utc": "2026-09-22T09:42:19.897530Z"
+        },
+        {
+          "name": "tier_23_Azmerian_Wolf.xml",
+          "bytes": 34290,
+          "sha256": "da7f003eb46f51ef5758cc47951beeeef174a04aafe1c475eede42805a842901",
+          "modified_utc": "2026-09-22T10:42:21.927718Z"
+        },
+        {
+          "name": "tier_23_Ruzhan,_the_Blazing_Sword.xml",
+          "bytes": 34353,
+          "sha256": "ad387cb33ba04855afdfaa9e0dcf18f1665c73538952e745fd643fa25ff89c51",
+          "modified_utc": "2026-09-22T09:42:19.899576Z"
+        },
+        {
+          "name": "tier_23_Spiraling_Conspiracy.xml",
+          "bytes": 34036,
+          "sha256": "c39fd5bfdc13850e9ab1a96efdbd88de1b11d46e2d12c49cf956c904d55433c8",
+          "modified_utc": "2026-09-22T07:56:07.537055Z"
+        },
+        {
+          "name": "tier_24_Azmerian_Wolf.xml",
+          "bytes": 34204,
+          "sha256": "d721d77a7efe34c2183027bcef37c9839b3a0050e53b6f416059e39c28cd69f0",
+          "modified_utc": "2026-09-22T09:42:19.900080Z"
+        },
+        {
+          "name": "tier_24_Ruzhan,_the_Blazing_Sword.xml",
+          "bytes": 34149,
+          "sha256": "08115400aa83897bf6fbcc073ed338e7712fecd4607ab27be25158630afd5c6c",
+          "modified_utc": "2026-09-22T07:56:07.537055Z"
+        },
+        {
+          "name": "tier_25_Wild_Protector.xml",
+          "bytes": 33987,
+          "sha256": "fe505cc1291055720677fc08dd32a31a303a2da2947b4c66d7cd4ed79d039f29",
+          "modified_utc": "2026-09-22T07:56:07.537055Z"
+        },
+        {
+          "name": "tier_26_Azmerian_Wolf.xml",
+          "bytes": 33956,
+          "sha256": "72694f1e6f13ef9130768c27e2dafae54128e22b5c7ad62532675b921bd69cb2",
+          "modified_utc": "2026-09-22T07:56:07.538055Z"
+        },
+        {
+          "name": "tierlist.json",
+          "bytes": 14570,
+          "sha256": "f95527643ba4d512c371cdbc47a956cee112bd2eb9c2fdebd965e4eb45ff83a4",
+          "modified_utc": "2026-09-22T10:42:21.931259Z"
+        },
+        {
+          "name": "tierlist.md",
+          "bytes": 3293,
+          "sha256": "ec7599610f2a02aeb745964a36c93be6fadcefc7ebe318c8f6a2fc3cfa4a16f5",
+          "modified_utc": "2026-09-22T10:42:21.932259Z"
+        }
+      ]
+    },
+    {
+      "run": "l37",
+      "file_count": 41,
+      "files": [
+        {
+          "name": "combos.json",
+          "bytes": 235201,
+          "sha256": "cf73a77963bc8444430331d8341c96e1b15325fcefb33b1e40ca7c87db5d7464",
+          "modified_utc": "2026-09-22T11:58:43.719741Z"
+        },
+        {
+          "name": "gems.json",
+          "bytes": 154695,
+          "sha256": "bf2d1a01abea4398c338dbd38f14e74c77cd3a1ac374de55d8690001b3cf05e3",
+          "modified_utc": "2026-09-22T17:23:32.444085Z"
+        },
+        {
+          "name": "harvest.json",
+          "bytes": 85156,
+          "sha256": "7cae5d7e137f5b5a2e16680e1a07d9f6e2dfafe52646d38317f90990129ea651",
+          "modified_utc": "2026-09-22T11:56:03.907944Z"
+        },
+        {
+          "name": "report.md",
+          "bytes": 4046,
+          "sha256": "c2c6cbf798def8935e0098393f6035151f72144182e8814411253f0348eecf35",
+          "modified_utc": "2026-09-22T17:32:15.181037Z"
+        },
+        {
+          "name": "screen.json",
+          "bytes": 1432632,
+          "sha256": "9c38ca27902615fe0655096eb183efff4cb31b431b59aff8d2cda07f940fb099",
+          "modified_utc": "2026-09-22T11:58:13.185553Z"
+        },
+        {
+          "name": "tier_01_Rain_of_Arrows.xml",
+          "bytes": 34663,
+          "sha256": "dd15e04752fad2dda96404457c0ca423d8925796e25dd65ec8e40a9897f4d5f2",
+          "modified_utc": "2026-09-22T17:31:33.311002Z"
+        },
+        {
+          "name": "tier_01_Rapid_Shot.xml",
+          "bytes": 38054,
+          "sha256": "6fb1adebc82c0219309fa763a4b0f391b83dba202850f8c46b0e9be33543a827",
+          "modified_utc": "2026-09-22T12:09:55.585317Z"
+        },
+        {
+          "name": "tier_02_His_Scattering_Calamity.xml",
+          "bytes": 34473,
+          "sha256": "899d200253f653572f7ba60b7ed2ddc703971b8c5ff5428af45041a2362229d4",
+          "modified_utc": "2026-09-22T17:31:33.311501Z"
+        },
+        {
+          "name": "tier_02_Rain_of_Arrows.xml",
+          "bytes": 34692,
+          "sha256": "18daa8e8789c57575e310be30b0ca10416e694ccf8833c4da9378ba75634c46b",
+          "modified_utc": "2026-09-22T12:09:55.586317Z"
+        },
+        {
+          "name": "tier_03_His_Scattering_Calamity.xml",
+          "bytes": 34486,
+          "sha256": "daba7a2b5c4922f8e5530aa0a477e648240191cf8478e309133d583855540583",
+          "modified_utc": "2026-09-22T12:09:55.587318Z"
+        },
+        {
+          "name": "tier_03_Twister.xml",
+          "bytes": 35996,
+          "sha256": "59cb18cee47dc3e8171881d21da5375f100f1f69aa75fff522be5a143c97a266",
+          "modified_utc": "2026-09-22T17:31:33.312004Z"
+        },
+        {
+          "name": "tier_04_Bursting_Fen_Toad.xml",
+          "bytes": 34504,
+          "sha256": "b3857c9747320ea7011c25be566c0dd07f666f7b8957ce1e868f314f029ddd74",
+          "modified_utc": "2026-09-22T17:31:33.312004Z"
+        },
+        {
+          "name": "tier_05_His_Winnowing_Flame.xml",
+          "bytes": 34514,
+          "sha256": "cd64b5ca1f77e4a0de4e2c39277e83a8df0bd89901aca24dc15c416fc8937f1f",
+          "modified_utc": "2026-09-22T17:31:33.313008Z"
+        },
+        {
+          "name": "tier_05_Smash_to_Smithereens.xml",
+          "bytes": 35071,
+          "sha256": "13e164d6a0bfd117c8edb75f53448212f6dadb44ad9b0397b27896e0e713dc51",
+          "modified_utc": "2026-09-22T12:09:55.589363Z"
+        },
+        {
+          "name": "tier_06_His_Winnowing_Flame.xml",
+          "bytes": 34440,
+          "sha256": "c02d9f984541a9e379eb65586b6b47b5f5d0ad46d4101323ff8e76d463ae5269",
+          "modified_utc": "2026-09-22T12:09:55.589363Z"
+        },
+        {
+          "name": "tier_06_Icestorm.xml",
+          "bytes": 34354,
+          "sha256": "038d5d0741cd9064a6e9c78acea75b947e23254d82aa11a3f1fb8fca9794d8d0",
+          "modified_utc": "2026-09-22T17:31:33.313514Z"
+        },
+        {
+          "name": "tier_07_Arc.xml",
+          "bytes": 34454,
+          "sha256": "6aac807b1fafc162a5888048f57b94c2bbb5a0d8a877db7dbd65f6f3830b811c",
+          "modified_utc": "2026-09-22T17:31:33.314012Z"
+        },
+        {
+          "name": "tier_07_Icestorm.xml",
+          "bytes": 34238,
+          "sha256": "908bd6caf3750b2e077455de849db621e3d49b12d036f8bce84e6f79cac105d8",
+          "modified_utc": "2026-09-22T12:09:55.590368Z"
+        },
+        {
+          "name": "tier_08_Ember_Fusillade.xml",
+          "bytes": 33851,
+          "sha256": "65b2d8fc595322fb79bf4f2933753a1a50ae8dddb100aaf70acf62f9a22e817a",
+          "modified_utc": "2026-09-22T12:09:55.590368Z"
+        },
+        {
+          "name": "tier_08_Lightning_Warp.xml",
+          "bytes": 34162,
+          "sha256": "aae12976ca811544feb316567ee2048dd2f01dd82b073dafbd7964bca74f9273",
+          "modified_utc": "2026-09-22T17:31:33.314512Z"
+        },
+        {
+          "name": "tier_09_Chaos_Bolt.xml",
+          "bytes": 33817,
+          "sha256": "426f7f8938beb96e9ac3aff0f39f71c6a45365fa11f1ef2280ac5a7e42def0ef",
+          "modified_utc": "2026-09-22T17:31:33.314512Z"
+        },
+        {
+          "name": "tier_09_Lightning_Warp.xml",
+          "bytes": 34175,
+          "sha256": "68a984724cbe213063be8bc3f6bfe2762869de3b5428bdd1d17c9ffc936df046",
+          "modified_utc": "2026-09-22T12:09:55.591368Z"
+        },
+        {
+          "name": "tier_10_Living_Bomb.xml",
+          "bytes": 34297,
+          "sha256": "9af08f33f042f485ccd47d20af6909b2ff34e85acbe2d55ad3bc3ed7fd388e59",
+          "modified_utc": "2026-09-22T17:31:33.315512Z"
+        },
+        {
+          "name": "tier_11_Profane_Ritual.xml",
+          "bytes": 33832,
+          "sha256": "26129c2989b1e9f5526b87f09f542715d190a0e9463cd48a9be376188fb30f16",
+          "modified_utc": "2026-09-22T17:31:33.316014Z"
+        },
+        {
+          "name": "tier_12_Comet.xml",
+          "bytes": 34431,
+          "sha256": "3782d6c38caa1f4dfba828872a2c77418aed08721339e2ea837c4980f74774cf",
+          "modified_utc": "2026-09-22T17:31:33.316014Z"
+        },
+        {
+          "name": "tier_13_Essence_Drain.xml",
+          "bytes": 33832,
+          "sha256": "f644089fb3ce50d29d59cccae2491253234fe4d993948a71264a9eaf7747910d",
+          "modified_utc": "2026-09-22T12:09:55.594368Z"
+        },
+        {
+          "name": "tier_13_His_Vile_Intrusion.xml",
+          "bytes": 34218,
+          "sha256": "0de012c20c9ed0a505ebb49d97162f7aeb660c02cdd465106ce8efb885ad4d6e",
+          "modified_utc": "2026-09-22T17:31:33.316513Z"
+        },
+        {
+          "name": "tier_14_Black_Powder_Blitz.xml",
+          "bytes": 34607,
+          "sha256": "b36925b3e7eacff7a883789d753e8db4655bd9a5d1dedd59c3bf27663fb9296c",
+          "modified_utc": "2026-09-22T17:31:33.317014Z"
+        },
+        {
+          "name": "tier_14_Decompose.xml",
+          "bytes": 34754,
+          "sha256": "ba4fa59f88f47bb62c859cba30506d0f9faa8ff5c9ef8671a8f1b28846c44b1c",
+          "modified_utc": "2026-09-22T12:09:55.595368Z"
+        },
+        {
+          "name": "tier_15_Essence_Drain.xml",
+          "bytes": 33899,
+          "sha256": "d84c5c2ee0ba710456890efef5d1d4680bf4982c0bc31b98cdeb4efd91481fa4",
+          "modified_utc": "2026-09-22T17:31:33.317513Z"
+        },
+        {
+          "name": "tier_15_Spiraling_Conspiracy.xml",
+          "bytes": 34688,
+          "sha256": "c5f9b79b09b974c1421f5a60c9001a24f3da289479ddd6b71e163cc5f851f94a",
+          "modified_utc": "2026-09-22T12:09:55.595368Z"
+        },
+        {
+          "name": "tier_16_Hexblast.xml",
+          "bytes": 34964,
+          "sha256": "a7f55f68ac1c21bf8d03e2c47763b949e1d32ea3110b908e8159fad1b0c32736",
+          "modified_utc": "2026-09-22T17:31:33.318013Z"
+        },
+        {
+          "name": "tier_16_Wild_Protector.xml",
+          "bytes": 34683,
+          "sha256": "8855002f282d7e83f7fcf41a92fcccffa50a1475c6c29eaad94572deb8b2cc6d",
+          "modified_utc": "2026-09-22T12:09:55.596368Z"
+        },
+        {
+          "name": "tier_17_Azmerian_Wolf.xml",
+          "bytes": 34631,
+          "sha256": "789e1d37cbaf43eb916ba1acc2a9f5770127851a6c9f3c5c783bf4edb8d740ad",
+          "modified_utc": "2026-09-22T17:31:33.318511Z"
+        },
+        {
+          "name": "tier_17_Ruzhan,_the_Blazing_Sword.xml",
+          "bytes": 34715,
+          "sha256": "8ce7dd5dc3d2b96613844379f8acec4f38e65546705b2052619294b50db5051b",
+          "modified_utc": "2026-09-22T12:09:55.597367Z"
+        },
+        {
+          "name": "tier_18_Wild_Protector.xml",
+          "bytes": 34681,
+          "sha256": "653c03107bb78acd7c3795a683c107fcfdaf306ced94c519ed075661659a65ab",
+          "modified_utc": "2026-09-22T17:31:33.318511Z"
+        },
+        {
+          "name": "tier_19_Spiraling_Conspiracy.xml",
+          "bytes": 34675,
+          "sha256": "cf8cf42eed1a1e3681ba47dbf32cf943e6c7fd50f5068cacf9fcd44d3c0f77d4",
+          "modified_utc": "2026-09-22T17:31:33.319012Z"
+        },
+        {
+          "name": "tier_20_The_Stars_Answer.xml",
+          "bytes": 32600,
+          "sha256": "d6860f973ca65da43869997ac779668c4950ed0c749baec4953ce0777783ebea",
+          "modified_utc": "2026-09-22T17:31:33.319512Z"
+        },
+        {
+          "name": "tier_21_Ruzhan,_the_Blazing_Sword.xml",
+          "bytes": 34929,
+          "sha256": "1bd8dd0508e13cf529814a40e0a37bb34d1785421e129502d351dd5b0e2a2a19",
+          "modified_utc": "2026-09-22T17:31:33.320013Z"
+        },
+        {
+          "name": "tierlist.json",
+          "bytes": 16632,
+          "sha256": "bf492b5cbbdbe8c1b80c57aa4f41985941ad74e865bcaa4399fb3ebcad678b92",
+          "modified_utc": "2026-09-22T17:31:33.321015Z"
+        },
+        {
+          "name": "tierlist.md",
+          "bytes": 3690,
+          "sha256": "d63421924fb7ba00e0b4ee13186002aa1646f19e4e481d7ef9bb91a5e1ce2f24",
+          "modified_utc": "2026-09-22T17:32:38.370427Z"
+        }
+      ]
+    },
+    {
+      "run": "l60tiered",
+      "file_count": 19,
+      "files": [
+        {
+          "name": "build_01_Twister.xml",
+          "bytes": 39654,
+          "sha256": "6b9a09514abc2e8b526b0414341588ef7455159608c8642d552c24bf28a31681",
+          "modified_utc": "2026-09-22T07:08:41.265621Z"
+        },
+        {
+          "name": "build_02_Supercharged_Slam.xml",
+          "bytes": 34575,
+          "sha256": "e770e445db6691113b72b530071d512b7d05222324ef58742ea58dc730526bda",
+          "modified_utc": "2026-09-22T07:08:41.266624Z"
+        },
+        {
+          "name": "build_03_Smash_to_Smithereens.xml",
+          "bytes": 35284,
+          "sha256": "efee493a1c3923956169e0acae7247527857fafdac90e5738e2e1f8cf2f3bc51",
+          "modified_utc": "2026-09-22T07:08:41.266624Z"
+        },
+        {
+          "name": "build_04_Plasma_Blast.xml",
+          "bytes": 35543,
+          "sha256": "b6ae7310356a7d0acc85361baa71d9c3bc3d5ab822f9ac7d88b4646950967412",
+          "modified_utc": "2026-09-22T07:08:41.268673Z"
+        },
+        {
+          "name": "build_05_Hexblast.xml",
+          "bytes": 37947,
+          "sha256": "6982bee008dd8ece0e702c09d842374ed7cbf5aa186ddc832e1f03ef6cd84156",
+          "modified_utc": "2026-09-22T07:08:41.268673Z"
+        },
+        {
+          "name": "build_06_Hexblast.xml",
+          "bytes": 38332,
+          "sha256": "7446a5e77a325dcb1a19d1d3479230b70405613c890f68bc1a0f482dfc739df3",
+          "modified_utc": "2026-09-22T07:08:41.269677Z"
+        },
+        {
+          "name": "build_07_Hexblast.xml",
+          "bytes": 38329,
+          "sha256": "11063213af0cce607b4ff74c662a347ebc167f6ce84d484251816f9d483941e0",
+          "modified_utc": "2026-09-22T07:08:41.269677Z"
+        },
+        {
+          "name": "build_08_Wild_Protector.xml",
+          "bytes": 37969,
+          "sha256": "7bbb77b2d86b2a32adec71e1d0c5b0b5f77bb2a87948ed3e85f85b6d32d2ee48",
+          "modified_utc": "2026-09-22T07:08:41.270677Z"
+        },
+        {
+          "name": "build_09_Decompose.xml",
+          "bytes": 34202,
+          "sha256": "2f1ae1b938eed4a30cf48e9c2b92e993529f7a92c1b96e26e8660292adfcbaa8",
+          "modified_utc": "2026-09-22T07:08:41.271677Z"
+        },
+        {
+          "name": "build_10_Profane_Ritual.xml",
+          "bytes": 33711,
+          "sha256": "a9f62c8cfdb044ef026e404f38bcb806d3c6f66326cf0dc83cb8c1609d957001",
+          "modified_utc": "2026-09-22T07:08:41.272848Z"
+        },
+        {
+          "name": "build_11_The_Stars_Answer.xml",
+          "bytes": 32308,
+          "sha256": "52f836a36bcd7746038369e83e97a1a3160f49c733e2442d6514373f44762290",
+          "modified_utc": "2026-09-22T07:08:41.273854Z"
+        },
+        {
+          "name": "combos.json",
+          "bytes": 250573,
+          "sha256": "1a8b6ef897824134f3a0365a704f6e3af32f2ff66e575ed49cc33a530a15f44a",
+          "modified_utc": "2026-09-22T06:50:10.613145Z"
+        },
+        {
+          "name": "finals.json",
+          "bytes": 7444,
+          "sha256": "ce06c075c7c51e2a52cb9a97e7ffb2bac071d99ec8cb873f38a0d5e604d7d1ad",
+          "modified_utc": "2026-09-22T07:08:41.277852Z"
+        },
+        {
+          "name": "gems.json",
+          "bytes": 154695,
+          "sha256": "538d525e05a9357f048db0d968f9e81528ca3459a9e451051cc82d2212a8f6fc",
+          "modified_utc": "2026-09-22T06:47:50.198689Z"
+        },
+        {
+          "name": "harvest.json",
+          "bytes": 95244,
+          "sha256": "1d4d3574401f31a01e4fa748c12ccf2bf02dde558ba6def154f472bcac48051f",
+          "modified_utc": "2026-09-22T06:47:47.606421Z"
+        },
+        {
+          "name": "report.md",
+          "bytes": 6241,
+          "sha256": "568a07fc1974a639c0834b461ec1b386a1e75df88d11fd07c31eb0643bf7b5a0",
+          "modified_utc": "2026-09-22T07:08:41.310416Z"
+        },
+        {
+          "name": "screen.json",
+          "bytes": 1488088,
+          "sha256": "6688dd9a0accc36bc0804c309795ddd8d856b232a85e11b2c5824d4c05f200b7",
+          "modified_utc": "2026-09-22T06:49:43.709375Z"
+        },
+        {
+          "name": "stack.json",
+          "bytes": 121802,
+          "sha256": "2ff8c59fa7a746da85a895d8b63a88754c8035d77b4d3b55b9de2a454554a228",
+          "modified_utc": "2026-09-22T06:59:04.487396Z"
+        },
+        {
+          "name": "triggers.json",
+          "bytes": 60233,
+          "sha256": "70506b13edd523ac6fe277b772955bc01d6df5632490f5d566357bf8495dea28",
+          "modified_utc": "2026-09-22T06:50:19.284887Z"
+        }
+      ]
+    },
+    {
+      "run": "smoke",
+      "file_count": 2,
+      "files": [
+        {
+          "name": "gems.json",
+          "bytes": 154302,
+          "sha256": "1d085da1bf985bcccc4ade8367772a2abd3f2b2e8f59dea9a350476f844e1366",
+          "modified_utc": "2026-09-21T20:34:19.858016Z"
+        },
+        {
+          "name": "screen.json",
+          "bytes": 1865,
+          "sha256": "35c73a84feda0b54445cceb58eaabbbc4d083497da11ed5bd8be98bfc31f5e55",
+          "modified_utc": "2026-09-21T20:34:22.225826Z"
+        }
+      ]
+    }
+  ]
+}

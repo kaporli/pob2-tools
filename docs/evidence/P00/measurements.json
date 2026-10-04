@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "what_this_is": "Timings for the named operations on one machine and one PoB checkout. Not a throughput claim for other hardware, other builds, or the future encounter evaluator.",
+  "pob_root": "C:\\Users\\Elias\\PycharmProjects\\PathOfBuilding-PoE2",
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+    "machine": "AMD64",
+    "logical_cpus": 16,
+    "total_physical_bytes": 33521352704,
+    "python": "3.12.4",
+    "python_bits": 64
+  },
+  "operations": {
+    "cold_start": {
+      "description": "Pob2Engine(pob_root): load lua51.dll, run HeadlessWrapper.lua, load bootstrap.lua.",
+      "count": 1,
+      "seconds": 1.390863
+    },
+    "warm_reset": {
+      "description": "load_build_xml + reload opt_helpers.lua + OPT_setup, i.e. engine_worker.Worker.reset().",
+      "count": 12,
+      "min_s": 0.105851,
+      "median_s": 0.133236,
+      "max_s": 0.343984,
+      "mean_s": 0.152345,
+      "stdev_s": 0.062199
+    },
+    "evaluation": {
+      "description": "equip_item into Weapon 1 + get_stats(all=True).",
+      "count": 12,
+      "min_s": 0.011612,
+      "median_s": 0.012674,
+      "max_s": 0.016336,
+      "mean_s": 0.013037,
+      "stdev_s": 0.001437
+    }
+  },
+  "memory_bytes": {
+    "before_boot": {
+      "working_set": 18399232,
+      "peak_working_set": 18399232
+    },
+    "after_boot": {
+      "working_set": 252637184,
+      "peak_working_set": 252637184
+    },
+    "peak": {
+      "working_set": 541110272,
+      "peak_working_set": 551841792
+    },
+    "boot_delta_working_set": 234237952
+  },
+  "aba_check": {
+    "description": "A and B must differ, and A must reproduce exactly.",
+    "tolerance_relative": 1e-06,
+    "b_differs_from_a": true,
+    "a_reproduced": true,
+    "a_total_dps": 47.222385956304,
+    "b_total_dps": 106.83562856206
+  }
+}

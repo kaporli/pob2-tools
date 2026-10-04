@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC fixture (P00-T02). Deliberately malformed PoB2 build XML:
+     the <Build> element is never closed and <Tree> carries a non-numeric level.
+     Loading this must produce a classified invalid-input failure, never a
+     silently empty but "successful" build. Not a real character. -->
+<PathOfBuilding2>
+	<Build ascendClassName="None" className="Huntress" level="not-a-number" targetVersion="0_1">
+		<PlayerStat stat="TotalDPS" value="
+	<Tree activeSpec="1">
+		<Spec classId="7" nodes="1,2,3"
+</PathOfBuilding2

@@ -1,0 +1,37 @@
+# Development and test dependencies (P00-T01).
+#
+# These are the versions the P00 evidence was produced with on 2026-10-04, on
+# CPython 3.12.4 (64-bit, Windows). They are pinned so another engineer
+# reproduces the recorded results rather than whatever resolves today. Bump them
+# deliberately and rerun the suite; do not let a resolver move them silently.
+#
+#   python -m pip install -r requirements-dev.txt
+#   python -m pip install -e ./pob2-mcp -e ./pob2-optimizer
+#
+# The PoB engine is NOT a Python dependency. It is an external checkout selected
+# by POB2_ROOT or the external/PathOfBuilding-PoE2 submodule; see
+# docs/evidence/P00/environment.md.
+
+# Runtime dependencies of the two packages.
+requests==2.32.3
+mcp==2.2.0
+
+# Explicit contract validation for persisted records (architecture.md).
+jsonschema==4.26.0
+
+# Test harness.
+pytest==9.1.1
+
+# Transitive pins, recorded so an install is reproducible rather than merely
+# satisfiable.
+attrs==26.1.0
+certifi==2025.1.31
+charset-normalizer==3.4.1
+colorama==0.4.6
+idna==3.20
+iniconfig==2.3.0
+jsonschema-specifications==2025.9.1
+pluggy==1.6.0
+referencing==0.37.0
+rpds-py==2026.6.3
+urllib3==2.3.0

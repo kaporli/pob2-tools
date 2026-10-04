@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC fixture (P00-T02). Hand-written minimal PoB2 build: a level-28
+     Huntress (classId 8) with no socket groups, no allocated passives and no
+     items. It loads successfully and its full-DPS total is a LEGITIMATE zero -
+     there is no skill to include - which must never be confused with damage
+     that could not be computed. Observed on the pinned checkout: PoB still
+     reports a small non-zero unarmed hit, so "no skill" and "no damage at all"
+     are different statements. This file makes no claim about PoE 2 mechanics. -->
+<PathOfBuilding2>
+	<Build ascendClassName="None" characterLevelAutoMode="false" className="Huntress" level="28" mainSocketGroup="1" targetVersion="0_1" viewMode="TREE"/>
+	<Import/>
+	<Calcs/>
+	<Skills activeSkillSet="1" sortGemsByDPS="true" sortGemsByDPSField="CombinedDPS">
+		<SkillSet id="1" title="Default"/>
+	</Skills>
+	<Tree activeSpec="1">
+		<Spec ascendClassId="0" classId="8" nodes="" secondaryAscendClassId="nil" treeVersion="0_5">
+			<Sockets/>
+			<Overrides/>
+		</Spec>
+	</Tree>
+	<Items activeItemSet="1">
+		<ItemSet useSecondWeaponSet="false" id="1"/>
+	</Items>
+	<Config/>
+	<Notes/>
+	<TreeView searchStr="" showStatDifferences="true" zoomLevel="3" zoomX="0" zoomY="0"/>
+</PathOfBuilding2>

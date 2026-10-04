@@ -507,7 +507,24 @@ PHASES["feedback"] = phase_feedback
 PHASES["calibrate"] = phase_calibrate
 
 
-def main():
+def _doctor(argv):
+    """`pob2opt doctor` (P00-T03). Imported lazily: diagnostics must stay usable
+    even when something in the legacy phase pipeline is broken."""
+    from . import doctor
+    return doctor.main(argv)
+
+
+#: Subcommands from docs/specs/interfaces.md. These never touch PHASES; the
+#: legacy phase pipeline keeps its own parser and its existing behavior.
+NEW_COMMANDS = {"doctor": _doctor}
+
+
+def main(argv=None):
+    argv = list(sys.argv[1:] if argv is None else argv)
+    # New-contract subcommands are dispatched before the legacy phase parser so
+    # they cannot inherit its required --level/--out or reach the phase pipeline.
+    if argv and argv[0] in NEW_COMMANDS:
+        return NEW_COMMANDS[argv[0]](argv[1:])
     ap = argparse.ArgumentParser(prog="pob2opt")
     ap.add_argument("phase", choices=list(PHASES) + ["all"])
     ap.add_argument("--level", type=int, required=True)
@@ -532,7 +549,7 @@ def main():
     ap.add_argument("--mcp-path", default=DEFAULT_MCP_PATH)
     ap.add_argument("--build-xml", default=DEFAULT_BUILD,
                     help="character XML (class/level source)")
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
     args.tier_weights = tuple(float(x) for x in args.tier_weights.split(","))
     # engine workers chdir into the PoB source tree; every path must be absolute
     args.out = os.path.abspath(args.out)
@@ -549,8 +566,9 @@ def main():
             PHASES[name](args)
     else:
         PHASES[args.phase](args)
+    return 0
 
 
 if __name__ == "__main__":
     mp.freeze_support()
-    main()
+    sys.exit(main())

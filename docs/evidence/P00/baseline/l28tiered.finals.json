@@ -1,0 +1,252 @@
+[
+ {
+  "main": "Hammer of the Gods",
+  "enablers": [],
+  "stack": [
+   "Ancestral Cry",
+   "Fragments Of The Past",
+   "Ice-Tipped Arrows"
+  ],
+  "weapon": "Shyaba",
+  "supports": [
+   "Brutality III",
+   "Concentrated Area",
+   "Bleed III"
+  ],
+  "ascendancy": "Ritualist",
+  "tree_points": 33,
+  "assumptions": [
+   "conditionEmpowered"
+  ],
+  "ceiling": 11460.580157968,
+  "floor": 11460.580157968,
+  "life": 476,
+  "requirements": {
+   "str": 52,
+   "dex": 30,
+   "int": 7,
+   "reqStr": 48,
+   "reqDex": 50,
+   "reqInt": 5
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_01_Hammer_of_the_Gods.xml"
+ },
+ {
+  "main": "Twister",
+  "enablers": [
+   "Whirling Slash"
+  ],
+  "stack": [
+   "Spiraling Conspiracy",
+   "The Stars Answer",
+   "Ruzhan, the Blazing Sword"
+  ],
+  "weapon": "Behemoth Edge",
+  "supports": [
+   "Hit and Run",
+   "Concentrated Area",
+   "Rapid Attacks II"
+  ],
+  "ascendancy": "Amazon",
+  "tree_points": 33,
+  "assumptions": [
+   "conditionEmpowered",
+   "twisterCold",
+   "twisterFire",
+   "twisterLightning",
+   "whirlwindBuffCold",
+   "whirlwindBuffFire",
+   "whirlwindBuffLightning",
+   "whirlwindStages"
+  ],
+  "ceiling": 9263.5701515844,
+  "floor": 701.1755466621,
+  "life": 406,
+  "requirements": {
+   "str": 17,
+   "dex": 30,
+   "int": 22,
+   "reqStr": 17,
+   "reqDex": 48,
+   "reqInt": 48
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_02_Twister.xml"
+ },
+ {
+  "main": "Hexblast",
+  "enablers": [],
+  "stack": [
+   "The Stars Answer",
+   "His Winnowing Flame",
+   "Skyfall"
+  ],
+  "weapon": "Brimstone Spell",
+  "supports": [
+   "Extraction",
+   "Concentrated Area",
+   "Poison II"
+  ],
+  "ascendancy": "Amazon",
+  "tree_points": 33,
+  "assumptions": [
+   "conditionEmpowered"
+  ],
+  "ceiling": 3155.7299501757,
+  "floor": 3155.7299501757,
+  "life": 446,
+  "requirements": {
+   "str": 37,
+   "dex": 15,
+   "int": 50,
+   "reqStr": null,
+   "reqDex": 5,
+   "reqInt": 48
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_03_Hexblast.xml"
+ },
+ {
+  "main": "His Scattering Calamity",
+  "enablers": [],
+  "stack": [],
+  "weapon": "Fate Mast",
+  "supports": [
+   "Lightning Penetration",
+   "Extraction",
+   "Rapid Casting II"
+  ],
+  "ascendancy": "Amazon",
+  "tree_points": 33,
+  "assumptions": [
+   "conditionEmpowered"
+  ],
+  "ceiling": 1803.5769,
+  "floor": 1803.5769,
+  "life": 416,
+  "requirements": {
+   "str": 22,
+   "dex": 20,
+   "int": 52,
+   "reqStr": null,
+   "reqDex": 5,
+   "reqInt": 48
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_04_His_Scattering_Calamity.xml"
+ },
+ {
+  "main": "Lightning Warp",
+  "enablers": [],
+  "stack": [],
+  "weapon": "Brimstone Spell",
+  "supports": [
+   "Extraction",
+   "Lightning Penetration",
+   "Concentrated Area"
+  ],
+  "ascendancy": "Amazon",
+  "tree_points": 32,
+  "assumptions": [
+   "conditionEmpowered"
+  ],
+  "ceiling": 1591.893,
+  "floor": 1591.893,
+  "life": 406,
+  "requirements": {
+   "str": 17,
+   "dex": 25,
+   "int": 50,
+   "reqStr": null,
+   "reqDex": 5,
+   "reqInt": 48
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_05_Lightning_Warp.xml"
+ },
+ {
+  "main": "Fragments Of The Past",
+  "enablers": [
+   "Ice-Tipped Arrows"
+  ],
+  "stack": [],
+  "weapon": "Shyaba",
+  "supports": [
+   "Cold Penetration",
+   "Cold Attunement",
+   "Rapid Attacks II"
+  ],
+  "ascendancy": "Ritualist",
+  "tree_points": 32,
+  "assumptions": [
+   "conditionEmpowered"
+  ],
+  "ceiling": 1564.9017369658,
+  "floor": 1564.9017369658,
+  "life": 456,
+  "requirements": {
+   "str": 42,
+   "dex": 45,
+   "int": 7,
+   "reqStr": 37,
+   "reqDex": 50,
+   "reqInt": 10
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_06_Fragments_Of_The_Past.xml"
+ },
+ {
+  "main": "Ancestral Cry",
+  "enablers": [],
+  "stack": [
+   "Fragments Of The Past",
+   "Spiraling Conspiracy",
+   "The Stars Answer"
+  ],
+  "weapon": "Shyaba",
+  "supports": [
+   "Corrupting Cry I",
+   "Concentrated Area",
+   "Armour Explosion"
+  ],
+  "ascendancy": "Amazon",
+  "tree_points": 26,
+  "assumptions": [
+   "conditionEmpowered"
+  ],
+  "ceiling": 1239.6555811864,
+  "floor": 1239.6555811864,
+  "life": 476,
+  "requirements": {
+   "str": 52,
+   "dex": 50,
+   "int": 52,
+   "reqStr": 48,
+   "reqDex": 50,
+   "reqInt": 48
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_07_Ancestral_Cry.xml"
+ },
+ {
+  "main": "The Stars Answer",
+  "enablers": [],
+  "stack": [],
+  "weapon": "Brimstone Spell",
+  "supports": [
+   "Concentrated Area",
+   "Cold Mastery"
+  ],
+  "ascendancy": "Amazon",
+  "tree_points": 0,
+  "assumptions": [
+   "conditionEmpowered"
+  ],
+  "ceiling": 581.66428455218,
+  "floor": 581.66428455218,
+  "life": 386,
+  "requirements": {
+   "str": 7,
+   "dex": 15,
+   "int": 15,
+   "reqStr": null,
+   "reqDex": null,
+   "reqInt": 10
+  },
+  "xml_file": "C:\\Users\\Elias\\PycharmProjects\\pob2-optimizer\\runs\\l28tiered\\build_08_The_Stars_Answer.xml"
+ }
+]
