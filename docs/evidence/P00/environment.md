@@ -1,0 +1,164 @@
+# P00-T01 Environment and current baseline
+
+Recorded on 2026-10-04 against specification version 1.0. Everything below was
+observed on the development machine; nothing is inferred. No secrets, tokens or
+unrelated environment variables are recorded.
+
+## Repository state at the start of the task
+
+| Item | Value |
+|---|---|
+| Repository | `C:\Users\Elias\PycharmProjects\pob2-tools` |
+| Branch | `main` |
+| Starting commit | `6290674e2f05985be779e9f46e19656da4ae4e0e` ("Add CODEOWNERS: owner review required on all PRs", 2026-09-28) |
+| Working tree before this task | `M README.md`, `D external/PathOfBuilding-PoE2`, untracked `docs/` |
+
+The pre-existing local changes were left intact. The `README.md` modification
+(adding a link to `docs/specs/README.md`) and the untracked `docs/` tree are the
+specification delivery and were not reverted or rewritten.
+
+## Operating system and Python
+
+| Item | Value |
+|---|---|
+| OS | Windows 11 Pro, 10.0.26200 (`Windows-11-10.0.26200-SP0`) |
+| CPU | AMD64 Family 25 Model 97 Stepping 2 (AuthenticAMD), 16 logical processors |
+| Physical memory | 33 521 352 704 bytes (31.2 GiB) |
+| Python | CPython 3.12.4, 64-bit, `C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe` |
+| Shells available | PowerShell 7 and Git Bash |
+
+Note for the architecture requirement "retain Python 3.10 compatibility": the
+machine runs 3.12.4, so 3.10 compatibility is a source-level constraint that is
+**not** exercised here. No 3.10 interpreter is installed and no 3.10 run was
+performed.
+
+## Packages
+
+Installed versions are pinned in [`requirements-dev.txt`](../../../requirements-dev.txt).
+At the start of the task `pytest` was **not installed**; it was installed as part
+of P00-T02 (`pytest==9.1.1`). `jsonschema==4.26.0`, `requests==2.32.3` and
+`mcp==2.2.0` were already present.
+
+### Finding: the editable installs point outside this repository
+
+```
+pob2-mcp         0.1.0  C:\Users\Elias\PycharmProjects\pob2-mcp
+pob2-optimizer   0.1.0  C:\Users\Elias\PycharmProjects\pob2-optimizer
+```
+
+Both packages are installed editable from the **pre-monorepo standalone
+checkouts**, not from `pob2-tools/`. A plain `import pob2opt` therefore resolves
+to `C:\Users\Elias\PycharmProjects\pob2-optimizer\pob2opt`, and those copies
+differ from the monorepo sources:
+
+| File | Difference in the installed copy |
+|---|---|
+| `pob2mcp/engine.py` | `DEFAULT_POB_ROOT` is the hardcoded path `C:\Users\Elias\PycharmProjects\PathOfBuilding-PoE2`; it has no submodule fallback. |
+| `pob2opt/cli.py` | `DEFAULT_POB_ROOT` and `DEFAULT_MCP_PATH` are hardcoded absolute paths; no `_resolve` helper. |
+| `pob2opt/engine_worker.py` | `sys.path.insert(0, mcp_path)` is unconditional. |
+
+Neither sibling directory is a git repository, so those copies have no history.
+
+Consequences and handling:
+
+* `tests/conftest.py` prepends the monorepo package directories to `sys.path`,
+  and `tests/unit/test_import_provenance.py` fails if an outside copy wins.
+* `pob2opt doctor` reports this as the `package_provenance` check
+  (`incompatible`, blocking capability `reproducible_runs`).
+* The repair is a reinstall, which **was not performed**: changing a user's
+  installed environment is outside this task. The exact commands are in
+  [Clean install](#clean-install).
+
+## Path of Building checkout
+
+| Item | Value |
+|---|---|
+| Submodule declared in `.gitmodules` | `external/PathOfBuilding-PoE2` -> `https://github.com/PathOfBuildingCommunity/PathOfBuilding-PoE2.git` |
+| Commit recorded by `git ls-tree HEAD external/` | `ce566eac45ea8a86477f513c7ee65a1ebe60014e` |
+| Submodule present in the working tree | **No** - reported as `D external/PathOfBuilding-PoE2` |
+| Separately configured checkout | `C:\Users\Elias\PycharmProjects\PathOfBuilding-PoE2` |
+| Its commit | `ce566eac45ea8a86477f513c7ee65a1ebe60014e` on branch `dev` (tracking `origin/dev`) |
+| Its tracked files | clean (`git diff --stat` empty) |
+| Its untracked files | 10 user scratch files under `src/`: `bow_weights.txt`, `catha_diag.json`, `char_view.txt`, `cid.txt`, `defstats.json`, `herald_info.json`, `new_best_xbow.json`, `rolling_slam_check.txt`, `sliver_result.txt`, `twv.json` |
+| Runtime | `runtime\lua51.dll` present, PE machine `x64`, 616 448 bytes |
+| Catalog evidence | 6 passive-tree versions under `src\TreeData`, 873 `src\Data\**\*.lua` files |
+
+**The separately configured checkout is at exactly the commit the submodule
+pins.** The engine is therefore usable on this machine and the engine tests run
+for real. The absent submodule is still a reproducibility gap for anyone else:
+without `POB2_ROOT` set, `pob2opt doctor` reports `pob_directory: missing` and
+exits 3.
+
+The missing submodule was **not** restored and the user's PoB checkout was
+**not** modified, per `architecture.md` ("P00 records the currently missing
+submodule; this specification does not restore or alter it") and the P00-T01
+instruction not to overwrite user changes. The untracked scratch files above are
+user work and must stay untouched; note that `Pob2Engine` `chdir`s into exactly
+that directory (research F10).
+
+### Selecting it
+
+```
+set POB2_ROOT=C:\Users\Elias\PycharmProjects\PathOfBuilding-PoE2
+```
+
+or, in Git Bash, `export POB2_ROOT=/c/Users/Elias/PycharmProjects/PathOfBuilding-PoE2`.
+
+## Other local tooling
+
+| Item | Value | Why it matters |
+|---|---|---|
+| `luajit` | `C:\Users\Elias\AppData\Local\Programs\LuaJIT\bin\luajit` | A stock LuaJIT, unrelated to PoB's patched `lua51.dll`. `tests/integration/test_f12_item_conversion_luajit.py` uses it to run the item-conversion handler without PoB; it skips when absent. |
+| `POB2_BUILD_XML` default | `C:\Users\Elias\Documents\Path of Building (PoE2)\Builds\My Character.xml` | **Does not exist.** The legacy `pob2opt <phase>` CLI opens this path unconditionally and would fail at argument parsing. Four other builds exist in that folder; `POB2_BUILD_XML` must be set to one of them. |
+| `POESESSID` | not set | No trade credential is configured; no provider was contacted. |
+| OAuth token cache | `~\.pob2-mcp\token.json` - not present | No OAuth flow was started. |
+
+## Clean install
+
+From a clean clone, on Windows with Python 3.10 or newer, 64-bit:
+
+```
+git clone https://github.com/kaporli/pob2-tools.git
+cd pob2-tools
+git submodule update --init --recursive        # provides external/PathOfBuilding-PoE2
+python -m pip install -r requirements-dev.txt
+python -m pip install -e ./pob2-mcp -e ./pob2-optimizer
+python -m pob2opt.cli doctor --json
+```
+
+If the submodule cannot be fetched, point `POB2_ROOT` at an existing
+PathOfBuilding-PoE2 checkout at commit `ce566ea` instead. `doctor` reports which
+of the two was used.
+
+On the recorded machine the editable installs must be refreshed so they come
+from this working tree rather than the standalone checkouts:
+
+```
+python -m pip install -e ./pob2-mcp -e ./pob2-optimizer
+```
+
+`git submodule update` is never run as part of the tests, so upstream PoB is not
+auto-updated. The pinned commit changes only by an explicit commit to this
+repository.
+
+## Existing run outputs
+
+Six legacy run directories exist at
+`C:\Users\Elias\PycharmProjects\pob2-optimizer\runs\`: `l28`, `l28tiered`,
+`l30tier`, `l37`, `l60tiered`, `smoke`. They predate this specification, are
+outside the repository, and carry no manifest recording the request, catalog or
+engine revision that produced them.
+
+Captured as historical evidence only:
+
+* [`baseline/legacy-runs.json`](baseline/legacy-runs.json) - every file with size, SHA-256 and modification time.
+* [`baseline/l28tiered.report.md`](baseline/l28tiered.report.md) and [`baseline/l28tiered.finals.json`](baseline/l28tiered.finals.json) - one representative run's human-readable output.
+
+No number in those files is a validated result, and none was used to derive
+anything in this task. The originals were not moved or modified.
+
+## Measurements
+
+Engine timings, memory and the A-B-A check are in
+[`measurements.json`](measurements.json); see
+[`findings.md`](findings.md) for the summary and the characterization results.

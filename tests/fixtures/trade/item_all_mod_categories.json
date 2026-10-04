@@ -1,0 +1,33 @@
+{
+  "fixture_id": "trade/item_all_mod_categories",
+  "kind": "synthetic",
+  "schema_version": 1,
+  "purpose": "One hand-written trade-API-shaped item carrying every modifier array that pob2mcp/bootstrap.lua convert_trade_item normalizes. Each mod line contains its own category marker so a dropped category is visible in the converted item string. Reproduces research finding F12.",
+  "not_a_claim": "Mod text, base type and values are invented placeholders chosen to be greppable. They are not real PoE 2 modifiers and must never be used as crafting or balance evidence.",
+  "shape_source": "Field names copied from the arrays that bootstrap.lua convert_trade_item reads (enchantMods, runeMods, implicitMods, explicitMods, fracturedMods, desecratedMods, craftedMods). No live trade response was fetched.",
+  "emitted_by_current_code": ["enchantMods", "runeMods", "implicitMods", "explicitMods"],
+  "normalized_but_dropped_by_current_code": ["fracturedMods", "desecratedMods", "craftedMods"],
+  "item": {
+    "rarity": "Rare",
+    "name": "FIXTURE Mod Category Probe",
+    "typeLine": "Long Quarterstaff",
+    "ilvl": 82,
+    "corrupted": false,
+    "properties": [
+      {"name": "Quality", "values": [["+20%", 1]]}
+    ],
+    "requirements": [
+      {"name": "Level", "values": [["65", 0]]}
+    ],
+    "enchantMods": [{"description": "FIXTUREMOD enchant line one"}],
+    "runeMods": [{"description": "FIXTUREMOD rune line one"}],
+    "implicitMods": [{"description": "FIXTUREMOD implicit line one"}],
+    "explicitMods": [
+      {"description": "FIXTUREMOD explicit line one"},
+      {"description": "FIXTUREMOD explicit line two"}
+    ],
+    "fracturedMods": [{"description": "FIXTUREMOD fractured line one"}],
+    "desecratedMods": [{"description": "FIXTUREMOD desecrated line one"}],
+    "craftedMods": [{"description": "FIXTUREMOD crafted line one"}]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "generated_by": "P00-T02",
+  "statement": "Every fixture listed here is SYNTHETIC: hand-written for testing software behavior. None is PoB output, a live provider response, or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
+  "fixtures": [
+    {
+      "path": "builds/zero_dps_huntress.xml",
+      "sha256": "ac159989abb73d1e3c60c4a56ff0ff1e3aa673bd2d732d10a656c3ec50c00539",
+      "bytes": 1291,
+      "origin": "synthetic",
+      "author": "P00-T02",
+      "description": "Minimal hand-written PoB2 Huntress with no socket groups, no passives and no items; loads successfully and its FullDPS is a legitimate zero.",
+      "used_by": [
+        "tests/engine/test_engine_zero_dps.py"
+      ],
+      "caveat": "Hand-written against the element names observed in PoB2 export files. Not produced by PoB and not a real character."
+    },
+    {
+      "path": "builds/malformed_build.xml",
+      "sha256": "93a9b86c58edcd009b127a53538dd8578d2e2522db74437292b77a0f78ebecfe",
+      "bytes": 563,
+      "origin": "synthetic",
+      "author": "P00-T02",
+      "description": "Deliberately truncated/invalid PoB2 build XML.",
+      "used_by": [
+        "tests/engine/test_engine_invalid_input.py"
+      ],
+      "caveat": "Invalid on purpose. Never repair it in place; add a new fixture instead."
+    },
+    {
+      "path": "search/two_choice_synergy.json",
+      "sha256": "725ad7cfebd2a02416a376e23355da2194a0b4a0f5014af7339fd21d009a4070",
+      "bytes": 1260,
+      "origin": "synthetic",
+      "author": "P00-T02",
+      "description": "Two-axis search space whose optimum needs a coordinated two-axis change.",
+      "used_by": [
+        "tests/unit/test_greedy_search_limit.py"
+      ],
+      "caveat": "Invented payoff numbers; models no PoE 2 content."
+    },
+    {
+      "path": "combat/tiny_sequence.json",
+      "sha256": "d00345a924cf39eb9654be89e91a86d40f7a604817bcd77389be10e8a9fbade2",
+      "bytes": 1320,
+      "origin": "synthetic",
+      "author": "P00-T02",
+      "description": "Three-action deterministic sequence with a hand-computed DPS oracle.",
+      "used_by": [
+        "tests/unit/test_combat_sequence_oracle.py"
+      ],
+      "caveat": "Invented durations and damage; models no PoE 2 skill."
+    },
+    {
+      "path": "trade/item_all_mod_categories.json",
+      "sha256": "3bc73f6fe7c76e238f10b0d608e51e55509d3596366488bd420a2c3b49f6174b",
+      "bytes": 1863,
+      "origin": "synthetic",
+      "author": "P00-T02",
+      "description": "Trade-API-shaped item carrying every modifier array convert_trade_item normalizes.",
+      "used_by": [
+        "tests/unit/test_f12_item_conversion_source.py",
+        "tests/integration/test_f12_item_conversion_luajit.py",
+        "tests/engine/test_f12_item_conversion_golden.py"
+      ],
+      "caveat": "Field names mirror bootstrap.lua's reads; no live trade response was fetched. Mod text is invented."
+    }
+  ]
+}

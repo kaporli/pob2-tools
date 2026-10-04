@@ -1,0 +1,23 @@
+{
+  "fixture_id": "search/two_choice_synergy",
+  "kind": "synthetic",
+  "schema_version": 1,
+  "purpose": "A two-axis search space whose best point is only reachable by changing both axes at once. Used to show that a greedy, one-change-at-a-time search (research F04) cannot find a coordinated improvement, and as the oracle for any replacement search kernel.",
+  "not_a_claim": "The axes, options and payoffs are invented numbers. They model no PoE 2 skill, support or passive.",
+  "axes": {
+    "support": ["S_alpha", "S_beta"],
+    "passive": ["P_alpha", "P_beta"]
+  },
+  "baseline": {"support": "S_alpha", "passive": "P_alpha"},
+  "payoff": [
+    {"support": "S_alpha", "passive": "P_alpha", "score": 100.0},
+    {"support": "S_alpha", "passive": "P_beta",  "score": 90.0},
+    {"support": "S_beta",  "passive": "P_alpha", "score": 90.0},
+    {"support": "S_beta",  "passive": "P_beta",  "score": 160.0}
+  ],
+  "oracle": {
+    "global_best": {"support": "S_beta", "passive": "P_beta", "score": 160.0},
+    "greedy_single_change_result": {"support": "S_alpha", "passive": "P_alpha", "score": 100.0},
+    "reason": "Every single-axis change from the baseline loses 10 points, so a hill climber restricted to one change per step stops at the baseline."
+  }
+}
