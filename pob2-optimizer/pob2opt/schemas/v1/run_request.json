@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/run_request.json",
+  "title": "RunRequest",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "game": {
+      "type": "string",
+      "const": "poe2"
+    },
+    "class": {
+      "type": "string"
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "patch_selection": {
+      "type": "string"
+    },
+    "league_selection": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "market",
+        "offline_items",
+        "theoretical"
+      ]
+    },
+    "budget": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^-?\\d+(\\.\\d+)?$"
+    },
+    "scenario_suite": {
+      "type": "string"
+    },
+    "catalog_profile": {
+      "type": "string"
+    },
+    "corpus_path": {
+      "type": "string"
+    },
+    "item_pool_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "time_budget_s": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "workers": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "const": "auto"
+        }
+      ]
+    },
+    "memory_limit_mb": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "allow_weapon_switch": {
+      "type": "boolean"
+    },
+    "allow_external_gear_swap": {
+      "type": "boolean"
+    },
+    "execution_profile": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "game",
+    "class",
+    "level",
+    "patch_selection",
+    "league_selection",
+    "mode",
+    "budget",
+    "scenario_suite",
+    "catalog_profile",
+    "corpus_path",
+    "item_pool_ids",
+    "seed",
+    "time_budget_s",
+    "workers",
+    "memory_limit_mb",
+    "allow_weapon_switch",
+    "allow_external_gear_swap",
+    "execution_profile"
+  ],
+  "additionalProperties": false,
+  "description": "The request file of interfaces.md. Not a persisted domain record."
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/mechanic_rule.json",
+  "title": "MechanicRule",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mechanic_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "patch_profile_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_input_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dependency_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "implementation_ref": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string",
+      "enum": [
+        "pob",
+        "simulator",
+        "scenario"
+      ]
+    },
+    "support": {
+      "type": "string",
+      "enum": [
+        "implemented",
+        "partial",
+        "unsupported",
+        "unknown"
+      ]
+    },
+    "validation": {
+      "type": "string",
+      "enum": [
+        "untested",
+        "fixture_checked",
+        "gameplay_checked",
+        "contradicted",
+        "stale"
+      ]
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tolerances": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "mechanic_id",
+    "version",
+    "patch_profile_ids",
+    "required_input_paths",
+    "dependency_ids",
+    "implementation_ref",
+    "owner",
+    "support",
+    "validation",
+    "evidence_ids",
+    "limitations",
+    "tolerances"
+  ],
+  "additionalProperties": false
+}

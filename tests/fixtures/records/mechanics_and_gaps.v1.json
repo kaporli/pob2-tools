@@ -1,0 +1,161 @@
+{
+  "kind": "synthetic",
+  "purpose": "Claims extracted from sources, the rules that may calculate them, and the structured record of what is still missing.",
+  "not_a_claim": "Every identifier, number and text string here is invented to exercise record validation. None is a PoE 2 entity, a PoB output, a provider response or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
+  "schema_version": 1,
+  "patch_format": "Each invalid and also_valid case is the valid record with the listed JSON Pointer paths replaced. The value \"__remove__\" deletes the key; \"__nan__\" and \"__inf__\" insert the float values JSON itself cannot hold.",
+  "records": {
+    "mechanic_claim": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-claim-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-source-1"
+        ],
+        "subject_ids": [
+          "fixture-skill-1"
+        ],
+        "claim_text": "SYNTHETIC: the fixture skill repeats once per fixture trigger.",
+        "source_document_id": "fixture-source-1",
+        "source_locator": "paragraph 4",
+        "applies_to_patch": "fixture-patch-1",
+        "dependencies": [],
+        "status": "unverified",
+        "evidence_ids": []
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "corroborated without naming the corroborating evidence",
+          "patch": {
+            "/status": "corroborated"
+          },
+          "expect_code": "unevidenced_claim_status",
+          "expect_path": "/evidence_ids"
+        },
+        {
+          "name": "empty claim text",
+          "patch": {
+            "/claim_text": ""
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/claim_text"
+        }
+      ]
+    },
+    "mechanic_rule": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-rule-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-claim-1"
+        ],
+        "mechanic_id": "fixture-mechanic-1",
+        "version": "1",
+        "patch_profile_ids": [
+          "fixture-profile-1"
+        ],
+        "required_input_paths": [
+          "/skill_groups/0/skills/0/level"
+        ],
+        "dependency_ids": [],
+        "implementation_ref": "pob2opt.evaluation.fixture:unsupported",
+        "owner": "simulator",
+        "support": "unsupported",
+        "validation": "untested",
+        "evidence_ids": [
+          "fixture-evidence-1"
+        ],
+        "limitations": [
+          "SYNTHETIC: no repeat behaviour is implemented"
+        ],
+        "tolerances": {}
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "an owner outside pob, simulator and scenario",
+          "patch": {
+            "/owner": "whoever_runs_first"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/owner"
+        },
+        {
+          "name": "an invented support state",
+          "patch": {
+            "/support": "probably_works"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/support"
+        }
+      ]
+    },
+    "data_gap": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-gap-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-claim-1"
+        ],
+        "gap_id": "fixture-gap-1",
+        "kind": "unsupported_rule",
+        "subject_ids": [
+          "fixture-build-1"
+        ],
+        "field_paths": [
+          "/skill_groups/0"
+        ],
+        "mechanic_ids": [
+          "fixture-mechanic-1"
+        ],
+        "severity": "blocking",
+        "explanation": "SYNTHETIC: the registry has no rule for the fixture repeat modifier.",
+        "needed_evidence": "Damage events with timestamps for fixture-skill-1 under the fixture repeat modifier, single stationary target, five trials.",
+        "collection_method": "manual measurement procedure",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "an evidence request too short to act on",
+          "patch": {
+            "/needed_evidence": "Need more data"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/needed_evidence"
+        },
+        {
+          "name": "a long evidence request that still names no measurement",
+          "patch": {
+            "/needed_evidence": "Need more data about this interaction, and more information in general, at some point."
+          },
+          "expect_code": "vacuous_evidence_request",
+          "expect_path": "/needed_evidence"
+        },
+        {
+          "name": "a gap whose two identities disagree",
+          "patch": {
+            "/gap_id": "fixture-gap-other"
+          },
+          "expect_code": "identity_mismatch",
+          "expect_path": "/gap_id"
+        },
+        {
+          "name": "resolved without resolution evidence",
+          "patch": {
+            "/status": "resolved"
+          },
+          "expect_code": "unevidenced_resolution",
+          "expect_path": "/resolution_evidence_ids"
+        }
+      ]
+    }
+  }
+}

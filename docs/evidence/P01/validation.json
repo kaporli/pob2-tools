@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "task": "P01",
+  "recorded_on": "2026-10-04",
+  "specification_version": "1.0",
+  "what_this_is": "Offline test and check results for the P01 delivery, recorded on the development machine described in docs/evidence/P00/environment.md. Every record, hash and run exercised by these suites is SYNTHETIC. No PoB engine, no provider and no gameplay measurement is involved, so nothing here is evidence about PoE 2 mechanics or about practical performance.",
+  "runs": [
+    {
+      "what": "offline unit suite",
+      "interpreter": "CPython 3.12.4 (development interpreter)",
+      "command": "python -m pytest tests/unit",
+      "result": {
+        "tests": 446,
+        "passed": 439,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 7,
+        "time_s": 4.56
+      }
+    },
+    {
+      "what": "offline unit suite",
+      "interpreter": "CPython 3.10.22 (clean locked venv .venv/pr2-validation/py310-a)",
+      "command": ".venv/pr2-validation/py310-a/Scripts/python.exe -m pytest tests/unit",
+      "result": {
+        "tests": 446,
+        "passed": 439,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 7,
+        "time_s": 4.42
+      }
+    },
+    {
+      "what": "offline unit suite",
+      "interpreter": "CPython 3.12.4 (clean locked venv .venv/pr2-validation/py312-a)",
+      "command": ".venv/pr2-validation/py312-a/Scripts/python.exe -m pytest tests/unit",
+      "result": {
+        "tests": 446,
+        "passed": 439,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 7,
+        "time_s": 4.36
+      }
+    },
+    {
+      "what": "everything selectable by default (unit, integration, engine)",
+      "interpreter": "CPython 3.12.4 (development interpreter)",
+      "command": "python -m pytest",
+      "result": {
+        "tests": 486,
+        "passed": 444,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 42,
+        "time_s": 4.38
+      },
+      "note": "34 skips are the engine group: POB2_ROOT is unset in this run and the external/PathOfBuilding-PoE2 submodule is still absent. P01 touches no engine code, so a skip here is not a P01 result."
+    }
+  ],
+  "checks": [
+    {
+      "check": "generated schemas match the record dataclasses",
+      "command": "python scripts/generate_schemas.py --check",
+      "exit_code": 0,
+      "output": "20 schema files match pob2opt/domain/records.py"
+    },
+    {
+      "check": "installed dependency lock, Python 3.10",
+      "command": ".venv/pr2-validation/py310-a/Scripts/python.exe scripts/lock_dependencies.py --check",
+      "exit_code": 0,
+      "output": "verified 41 locked distributions on Python 3.10"
+    },
+    {
+      "check": "installed dependency lock, Python 3.12",
+      "command": ".venv/pr2-validation/py312-a/Scripts/python.exe scripts/lock_dependencies.py --check",
+      "exit_code": 0,
+      "output": "verified 39 locked distributions on Python 3.12"
+    },
+    {
+      "check": "schemas/v1 ships inside the built wheel",
+      "command": "python -m pip wheel --no-deps --no-build-isolation -w <tmp> ./pob2-optimizer",
+      "exit_code": 0,
+      "output": "pob2_optimizer-0.1.0-py3-none-any.whl contains 20 files under pob2opt/schemas/v1/, 10 under pob2opt/domain/ and 10 under pob2opt/storage/"
+    },
+    {
+      "check": "end-to-end example reproduces the recorded evidence",
+      "command": "python scripts/p01_demo_run.py",
+      "exit_code": 0,
+      "output": "writes docs/evidence/P01/demo-run.json; tests/unit/test_p01_demo_run.py re-runs it and compares"
+    }
+  ],
+  "counting_note": "JUnit reports an expected failure as a skip. The unit runs are 439 passed and 7 strict xfails, all of which are P00 characterizations waiting on P02 and P08, not P01 work. The default run adds 34 engine skips and 1 integration xfail."
+}

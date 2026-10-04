@@ -1,0 +1,350 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/patch_profile.json",
+  "title": "PatchProfile",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "game": {
+      "type": "string",
+      "const": "poe2"
+    },
+    "realm": {
+      "type": "string"
+    },
+    "league_id": {
+      "type": "string"
+    },
+    "patch_id": {
+      "type": "string"
+    },
+    "patch_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resolved_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "pob_commit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pob_dirty_hash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "catalog_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "adapter_version": {
+      "type": "string"
+    },
+    "compatibility": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "partial",
+        "unknown",
+        "stale"
+      ]
+    },
+    "compatibility_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "character_rules": {
+      "$ref": "#/$defs/CharacterRules"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "game",
+    "realm",
+    "league_id",
+    "patch_id",
+    "patch_evidence_ids",
+    "resolved_at",
+    "pob_commit",
+    "pob_dirty_hash",
+    "catalog_hash",
+    "adapter_version",
+    "compatibility",
+    "compatibility_evidence_ids",
+    "character_rules"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "CharacterRules": {
+      "type": "object",
+      "properties": {
+        "level_range": {
+          "$ref": "#/$defs/LevelRange"
+        },
+        "class_ascendancies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "gem_level_limit": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "skill_level_limit": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "point_budgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PointBudgetRule"
+          }
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SlotRule"
+          }
+        },
+        "support_restrictions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SupportRestriction"
+          }
+        },
+        "weapon_sets": {
+          "$ref": "#/$defs/WeaponSetRules"
+        },
+        "missing_rule_gap_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "level_range",
+        "class_ascendancies",
+        "gem_level_limit",
+        "skill_level_limit",
+        "point_budgets",
+        "slots",
+        "support_restrictions",
+        "weapon_sets",
+        "missing_rule_gap_ids",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "LevelRange": {
+      "type": "object",
+      "properties": {
+        "minimum": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "PointBudgetRule": {
+      "type": "object",
+      "properties": {
+        "rule_id": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "required_progression_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "passive_points": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ascendancy_points": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "rule_id",
+        "level",
+        "required_progression_flags",
+        "passive_points",
+        "ascendancy_points",
+        "evidence_ids"
+      ],
+      "additionalProperties": false,
+      "description": "A budget as a function of explicit progression flags, not of level."
+    },
+    "SlotRule": {
+      "type": "object",
+      "properties": {
+        "slot_id": {
+          "type": "string"
+        },
+        "accepted_base_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "weapon_set_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "slot_id",
+        "accepted_base_categories",
+        "weapon_set_id",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "SupportRestriction": {
+      "type": "object",
+      "properties": {
+        "restriction_id": {
+          "type": "string"
+        },
+        "applies_to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_supports": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "description": {
+          "type": "string"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "restriction_id",
+        "applies_to",
+        "max_supports",
+        "description",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "WeaponSetRules": {
+      "type": "object",
+      "properties": {
+        "set_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hands_per_set": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "swap_allowed": {
+          "type": "boolean"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "set_ids",
+        "hands_per_set",
+        "swap_allowed",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/parse_result.json",
+  "title": "ParseResult",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial",
+        "invalid",
+        "unsupported_format"
+      ]
+    },
+    "parser_id": {
+      "type": "string"
+    },
+    "parser_version": {
+      "type": "string"
+    },
+    "source_document_id": {
+      "type": "string"
+    },
+    "record_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "field_coverage": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CoverageCount"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ParseIssue"
+      }
+    },
+    "raw_extensions": {
+      "type": "object",
+      "additionalProperties": {}
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "status",
+    "parser_id",
+    "parser_version",
+    "source_document_id",
+    "record_ids",
+    "field_coverage",
+    "issues",
+    "raw_extensions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "CoverageCount": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "present": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "domain",
+        "present",
+        "resolved",
+        "missing"
+      ],
+      "additionalProperties": false,
+      "description": "Counts by domain. Deliberately not one misleading percentage."
+    },
+    "ParseIssue": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "field_path": {
+          "type": "string"
+        },
+        "source_locator": {
+          "type": "string"
+        },
+        "explanation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "field_path",
+        "source_locator",
+        "explanation"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/aggregate_result.json",
+  "title": "AggregateResult",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "aggregate_id": {
+      "type": "string"
+    },
+    "build_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rotation_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "manifest_id": {
+      "type": "string"
+    },
+    "objective_id": {
+      "type": "string"
+    },
+    "suite_id": {
+      "type": "string"
+    },
+    "category_scores": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "number",
+          "null"
+        ]
+      }
+    },
+    "balanced_score": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "scenario_gates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ScenarioGateOutcome"
+      }
+    },
+    "eligible": {
+      "type": "boolean"
+    },
+    "strength_label": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "clear_focused",
+        "boss_focused",
+        "balanced",
+        null
+      ]
+    },
+    "recommendation_status": {
+      "type": "string",
+      "enum": [
+        "recommended",
+        "not_recommended",
+        "excluded",
+        "unresolved"
+      ]
+    },
+    "sensitivity_result_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evaluation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclusion_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "aggregate_id",
+    "build_hash",
+    "rotation_hash",
+    "manifest_id",
+    "objective_id",
+    "suite_id",
+    "category_scores",
+    "balanced_score",
+    "scenario_gates",
+    "eligible",
+    "strength_label",
+    "recommendation_status",
+    "sensitivity_result_ids",
+    "evaluation_ids",
+    "exclusion_reasons"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ScenarioGateOutcome": {
+      "type": "object",
+      "properties": {
+        "scenario_id": {
+          "type": "string"
+        },
+        "ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "passed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "scenario_id",
+        "ratio",
+        "passed",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

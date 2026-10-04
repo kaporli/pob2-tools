@@ -48,6 +48,8 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | Measurements | `python scripts/measure_engine.py --out docs/evidence/P00/measurements.json` | A PoB2 checkout | Not a test; writes evidence. |
 | Installed lock audit | `python scripts/lock_dependencies.py --check` | Clean locked venv; no network | Checks direct pins, exact installed inventory and dependency consistency. Does not demand newly released versions. |
 | Engine skip guard | `python scripts/check_engine_skips.py --exit-code N --junit engine-junit.xml` | Nothing | What CI uses to decide that engine tests skipped for the right reason. |
+| Schema freshness | `python scripts/generate_schemas.py --check` | Nothing | Fails when `pob2opt/schemas/v1` no longer matches `pob2opt/domain/records.py`. Regenerate with the same command minus `--check`. |
+| P01 end-to-end example | `python scripts/p01_demo_run.py` | Nothing | Not a test; rewrites `docs/evidence/P01/demo-run.json`. `tests/unit/test_p01_demo_run.py` re-runs it and compares. |
 
 Selecting the PoB checkout:
 
@@ -90,6 +92,13 @@ none yet).
 | `test_f11_worker_wipes_imported_build.py` | Research F11, via a recording engine double. |
 | `test_f12_item_conversion_source.py` | Research F12 from the handler source. |
 | `test_engine_skip_guard.py` | The CI engine-skip guard rejects a fixture error, a failing test, a collection error, an empty selection, an interrupt, a test that actually ran, and an xfail posing as a runtime skip. |
+| `test_p01_t01_records.py` | P01-T01: every record kind's valid and invalid examples, the four no-value states, unknown schema versions, NaN, unknown and missing fields, unresolved references. |
+| `test_p01_t01_schemas.py` | P01-T01: `schemas/v1` is regenerated from the dataclasses, each schema compiles, `$ref`s resolve locally, no annotation is left unresolved. |
+| `test_p01_t02_identity.py` | P01-T02: what does and does not change a build, item, listing, rotation or scenario identity, including Windows newline variations. |
+| `test_p01_t03_storage.py` | P01-T03: blob reuse and corruption, immutable records, source history, migrations, cache-key uniqueness, two fault injections around the ingest transaction. |
+| `test_p01_t04_cache.py` | P01-T04: every dependency forces a cache miss, miss reasons are persisted, a run bundle survives its corpus being deleted, legacy phase output is never cache-eligible. |
+| `test_p01_t05_tasks.py` | P01-T05: task states and transitions, the four interruption points, checkpoint validation, and all 15 documented inspection queries. |
+| `test_p01_demo_run.py` | Re-runs `scripts/p01_demo_run.py` and checks the claims `docs/evidence/P01/demo-run.json` records. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 

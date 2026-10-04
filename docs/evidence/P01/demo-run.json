@@ -1,0 +1,258 @@
+{
+  "steps": [
+    {
+      "step": "ingest",
+      "blob_hash": "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859",
+      "first_write_reused_an_existing_blob": false,
+      "second_write_reused_an_existing_blob": true,
+      "source_records": 1
+    },
+    {
+      "step": "copy_references",
+      "sources": [
+        "fixture-source-1"
+      ],
+      "normalized": [
+        "fixture-catalog-1",
+        "fixture-item-1",
+        "fixture-build-1",
+        "fixture-clear-dense",
+        "fixture-rotation-clear"
+      ],
+      "blobs": [
+        "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859"
+      ]
+    },
+    {
+      "step": "corpus_disconnected",
+      "self_check": {
+        "run_id": "fixture-run-1",
+        "manifest_hash": "3a31286f24c1c9740217603b1ca5d48ca7858bdd4ba0e08cd0016f60d5c5c189",
+        "blobs_declared": 1,
+        "records_declared": 6,
+        "missing_blobs": [],
+        "missing_records": [],
+        "readable": true
+      }
+    },
+    {
+      "step": "cold_cache",
+      "outcome": "miss",
+      "reason": "no_entry"
+    },
+    {
+      "step": "checkpoint_is_stale",
+      "checkpoint_completed_task_ids": [],
+      "database_completed_task_ids": [
+        "demo-task-1"
+      ]
+    },
+    {
+      "step": "resume",
+      "recovered_from_running": [
+        "demo-task-2"
+      ],
+      "to_dispatch": [
+        "demo-task-2",
+        "demo-task-3"
+      ],
+      "already_completed": [
+        "demo-task-1"
+      ],
+      "duplicate_message_created_a_second_result": false,
+      "evaluation_rows": 1
+    },
+    {
+      "step": "legacy_import",
+      "phase": "gems",
+      "cache_eligible": false,
+      "blob_hash": "51511a9d69099169d0059337622197cbffb99366fad4a39496b258f6b1d37aaf"
+    },
+    {
+      "step": "warm_cache",
+      "detailed": [
+        "hit",
+        "exact_match"
+      ],
+      "screen": [
+        "miss",
+        "no_entry"
+      ]
+    }
+  ],
+  "inspection_queries": {
+    "schema_version": [
+      {
+        "version": 1,
+        "name": "initial records, evaluations, gaps, runs and task state",
+        "applied_at": "2026-10-04T17:51:36.639Z"
+      }
+    ],
+    "task_counts_by_state": [
+      {
+        "run_id": "fixture-run-1",
+        "state": "completed",
+        "tasks": 1
+      },
+      {
+        "run_id": "fixture-run-1",
+        "state": "queued",
+        "tasks": 2
+      }
+    ],
+    "unfinished_tasks": [
+      {
+        "task_id": "demo-task-2",
+        "generation_id": 1,
+        "candidate_id": "demo-candidate-2",
+        "state": "queued",
+        "attempt": 1,
+        "dispatched_at": null
+      },
+      {
+        "task_id": "demo-task-3",
+        "generation_id": 1,
+        "candidate_id": "demo-candidate-3",
+        "state": "queued",
+        "attempt": 0,
+        "dispatched_at": null
+      }
+    ],
+    "task_history": [
+      {
+        "task_id": "demo-task-1",
+        "attempt": 0,
+        "from_state": null,
+        "to_state": "queued",
+        "reason": "enqueued",
+        "at": "2026-10-04T17:51:36.679Z"
+      },
+      {
+        "task_id": "demo-task-2",
+        "attempt": 0,
+        "from_state": null,
+        "to_state": "queued",
+        "reason": "enqueued",
+        "at": "2026-10-04T17:51:36.679Z"
+      },
+      {
+        "task_id": "demo-task-3",
+        "attempt": 0,
+        "from_state": null,
+        "to_state": "queued",
+        "reason": "enqueued",
+        "at": "2026-10-04T17:51:36.680Z"
+      },
+      {
+        "task_id": "demo-task-1",
+        "attempt": 1,
+        "from_state": "queued",
+        "to_state": "running",
+        "reason": "dispatched to demo-worker-1",
+        "at": "2026-10-04T17:51:36.682Z"
+      },
+      {
+        "task_id": "demo-task-1",
+        "attempt": 1,
+        "from_state": "running",
+        "to_state": "completed",
+        "reason": "result committed",
+        "at": "2026-10-04T17:51:36.692Z"
+      },
+      {
+        "task_id": "demo-task-2",
+        "attempt": 1,
+        "from_state": "queued",
+        "to_state": "running",
+        "reason": "dispatched to demo-worker-2",
+        "at": "2026-10-04T17:51:36.693Z"
+      },
+      {
+        "task_id": "demo-task-2",
+        "attempt": 1,
+        "from_state": "running",
+        "to_state": "queued",
+        "reason": "interrupted attempt 1 returned to the queue",
+        "at": "2026-10-04T17:51:36.694Z"
+      }
+    ],
+    "completed_results_once_each": [
+      {
+        "task_id": "demo-task-1",
+        "evaluation_id": "fixture-evaluation-1",
+        "rows_per_task": 1
+      }
+    ],
+    "duplicate_evaluations_by_cache_key": [],
+    "cache_decisions": [
+      {
+        "reason": "no_entry",
+        "outcome": "miss",
+        "decisions": 2
+      },
+      {
+        "reason": "exact_match",
+        "outcome": "hit",
+        "decisions": 1
+      }
+    ],
+    "cache_misses_in_detail": [
+      {
+        "cache_key": "f5f37b176a181def663ba82edda2e311b77ae33e26237f1230c0679bacf148b0",
+        "reason": "no_entry",
+        "rejected_cache_key": null,
+        "detail": null,
+        "decided_at": "2026-10-04T17:51:36.678Z"
+      },
+      {
+        "cache_key": "1a1c6f4479184d13699c7919aed9ceea8e63f6ea22e6765052948038eb7e0248",
+        "reason": "no_entry",
+        "rejected_cache_key": null,
+        "detail": null,
+        "decided_at": "2026-10-04T17:51:36.700Z"
+      }
+    ],
+    "orphan_blob_rows": [],
+    "source_versions_per_external_id": [
+      {
+        "provider": "fixture_provider",
+        "external_id": "FX-1",
+        "versions": 1,
+        "distinct_payloads": 1
+      }
+    ],
+    "open_blocking_gaps": [
+      {
+        "gap_id": "fixture-gap-1",
+        "kind": "unsupported_rule",
+        "severity": "blocking"
+      }
+    ],
+    "legacy_imports_are_labelled": [
+      {
+        "import_id": "legacy:gems:51511a9d69099169",
+        "phase": "gems",
+        "source_path": "C:\\Users\\Elias\\AppData\\Local\\Temp\\pob2opt-p01-trnzzr0g\\legacy\\gems.json",
+        "imported_at": "2026-10-04T17:51:36.698Z"
+      }
+    ],
+    "evaluations_marked_legacy": [],
+    "run_declared_references": [
+      {
+        "run_id": "fixture-run-1",
+        "kind": "blob",
+        "refs": 1
+      },
+      {
+        "run_id": "fixture-run-1",
+        "kind": "normalized",
+        "refs": 5
+      },
+      {
+        "run_id": "fixture-run-1",
+        "kind": "source",
+        "refs": 1
+      }
+    ]
+  }
+}
