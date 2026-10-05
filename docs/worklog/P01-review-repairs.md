@@ -101,6 +101,13 @@ Recorded in [validation.json](../evidence/P01/validation.json):
 | the nine P01 modules only | 431 passed |
 | default selection | 547 passed, 34 engine skips, 8 xfailed |
 
+Hosted CI for this commit, [run 37362031537](https://github.com/kaporli/pob2-tools/actions/runs/37362031537),
+succeeded on both interpreters with the same counts: 542 passed and 7
+xfailed, 41 and 39 locked distributions, 20 schemas matching, and 34 engine
+tests collected and skipped for the missing-runtime reason. The lane
+provisions no PoB runtime, so it is evidence about the offline foundation
+only. A skip is not an engine pass.
+
 ## Adverse cases
 
 Each finding has its original probe as a test, plus the cases the review asked to be added: the three previously unchecked reference fields and seven more like them, nested evidence inside `character_rules`, a catalog entity rule reference, an item and a patch profile that cite a catalog without providing one, a source document naming a blob whose bytes are absent, a transitive copy whose payload was deleted behind the repository, a v1 database upgrading to v2 with its rows intact, and a stale attempt after recovery.

@@ -185,5 +185,32 @@
     "script": "docs/evidence/P01/review-ae4303e-probes.py",
     "results": "docs/evidence/P01/review-ae4303e.json",
     "note": "The reviewer's script is kept unchanged as evidence about ae4303e. Against the repaired code it now stops at its first probe, because an empty run bundle no longer accepts an evaluation whose build, rotation and scenario it does not hold. That refusal is the P01-R03 fix."
+  },
+  "ci": {
+    "what_this_is": "The hosted offline lane for the repair commit. It installs each lock into two clean venvs, compares the inventories, checks the generated schemas, and requires the engine tests to skip for the missing-runtime reason. It provisions no PoB runtime, so it is evidence about the offline foundation only and never about an engine gate.",
+    "commit": "46c50a1",
+    "run_id": 37362031537,
+    "url": "https://github.com/kaporli/pob2-tools/actions/runs/37362031537",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "offline (py3.10)",
+        "job_id": 111938695979,
+        "unit_and_integration": "542 passed, 7 xfailed",
+        "locked_distributions": 41,
+        "schemas_matched": 20,
+        "non_success_steps": 0
+      },
+      {
+        "name": "offline (py3.12)",
+        "job_id": 111938695767,
+        "unit_and_integration": "542 passed, 7 xfailed",
+        "locked_distributions": 39,
+        "schemas_matched": 20,
+        "non_success_steps": 0
+      }
+    ],
+    "engine_skip_guard": "34 engine tests collected, all skipped for the missing-runtime reason, pytest exit 0. A skip is not an engine pass.",
+    "matches_local": "The CI counts are identical to the locally recorded runs above on both interpreters."
   }
 }
