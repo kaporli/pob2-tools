@@ -33,11 +33,10 @@ from ..domain import (
     RECORD_TYPES,
     from_jsonable,
     manifest_hash,
-    rotation_hash,
     to_jsonable,
 )
 from ..domain.records import kind_of
-from ..domain.validation import ANY_RECORD, _references
+from ..domain.validation import ANY_RECORD, NAMESPACES, _references, provided_identifiers
 from .errors import (
     BlobCorrupt,
     BlobNotFound,
@@ -218,7 +217,12 @@ class RunBundle:
         # One batch, so records that reference each other resolve together.
         copied_records: list[str] = []
         if other_records:
-            self.store.import_batch(other_records, require_references=False)
+            self.store.import_batch(
+                other_records, require_references=False,
+                legacy_evaluation_ids={
+                    r.evaluation_id for r in other_records
+                    if kind_of(r) == "evaluation_result"
+                    and corpus.is_legacy_evaluation(r.cache_key)})
             copied_records = [_record_id(r) for r in other_records]
 
         self.store.add_run_references(self.run_id, "source", copied_sources)
@@ -261,7 +265,13 @@ class RunBundle:
                     blobs.add(value)
                     continue
                 target = lookup.locate(namespace, value)
-                if target is not None and target not in seen:
+                if target is None:
+                    if namespace == ANY_RECORD and corpus.reference_index().contains(
+                            "blob_hashes", value):
+                        blobs.add(value)
+                    else:
+                        unresolved.setdefault(namespace, []).append(value)
+                elif target not in seen:
                     queue.append(target)
         return found, blobs, unresolved
 
@@ -348,7 +358,7 @@ def _read_payload(store: RunStore, blob_hash: str) -> bytes | None:
 
 
 def _record_id(record: Any) -> str:
-    for attribute in ("record_id", "gap_id", "observation_id", "run_id"):
+    for attribute in ("record_id", "evaluation_id", "gap_id", "observation_id", "run_id"):
         value = getattr(record, attribute, None)
         if value is not None:
             return str(value)
@@ -360,44 +370,24 @@ class _CorpusLookup:
 
     def __init__(self, corpus: RunStore) -> None:
         self.corpus = corpus
-        self._table: dict[str, tuple[str, str]] | None = None
+        self._table: dict[tuple[str, str], tuple[str, str]] | None = None
 
     def locate(self, namespace: str, value: str) -> tuple[str, str] | None:
         if self._table is None:
             self._table = self._build()
-        return self._table.get(value)
+        if namespace == ANY_RECORD:
+            for name in NAMESPACES:
+                target = self._table.get((name, value))
+                if target is not None:
+                    return target
+            return None
+        return self._table.get((namespace, value))
 
-    def _build(self) -> dict[str, tuple[str, str]]:
-        """Map every identifier in the corpus to the row that provides it."""
-        table: dict[str, tuple[str, str]] = {}
-        for row in self.corpus.conn.execute(
-                "SELECT record_id FROM source_record"):
-            table[row["record_id"]] = ("source", row["record_id"])
+    def _build(self) -> dict[tuple[str, str], tuple[str, str]]:
+        table: dict[tuple[str, str], tuple[str, str]] = {}
         for rid, kind, record in self.corpus.iter_stored():
-            if kind in ("source_document", "acquisition_result"):
-                continue
-            for key in _identifiers_of(kind, record):
-                table.setdefault(key, ("record", rid))
+            bucket = ("source" if kind in ("source_document", "acquisition_result")
+                      else "record")
+            for key in provided_identifiers(record):
+                table.setdefault(key, (bucket, rid))
         return table
-
-
-def _identifiers_of(kind: str, record: Any) -> tuple[str, ...]:
-    """Every identifier a reference could legitimately use to name a record.
-
-    Deliberately not ``catalog_hash`` on an item, a build or a patch
-    profile: those cite a catalog, they do not provide one, and treating a
-    citation as a provider is how a bundle came to believe it held a catalog
-    it had never copied.
-    """
-    keys = [getattr(record, "record_id", None)]
-    for attribute in ("item_hash", "build_hash", "listing_id", "scenario_id",
-                      "rotation_id", "mechanic_id", "gap_id", "evaluation_id",
-                      "observation_id", "run_id"):
-        keys.append(getattr(record, attribute, None))
-    if kind == "game_catalog":
-        keys.append(record.catalog_hash)
-    if kind == "rotation_policy":
-        keys.append(rotation_hash(record))
-    if kind == "run_manifest":
-        keys.append(manifest_hash(record))
-    return tuple(k for k in keys if isinstance(k, str))

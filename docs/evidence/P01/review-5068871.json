@@ -1,0 +1,30 @@
+{
+  "source_corpus_valid": true,
+  "copy_aggregate": {
+    "error": "StorageError",
+    "message": "evaluation_result cannot be imported in a batch"
+  },
+  "listing_before_item": {
+    "source_corpus_valid": true,
+    "copy_complete": true,
+    "item_copied": false,
+    "readable": false,
+    "unresolved": {
+      "fixture-build-1": [
+        "/equipment/fixture-slot-weapon/item_hash"
+      ],
+      "fixture-listing-1": [
+        "/item_hash"
+      ]
+    }
+  },
+  "acquisition_as_source_document": {
+    "memory_index_ok": false,
+    "memory_errors": [
+      "/source_document_ids/0"
+    ],
+    "sql_index_ok": true,
+    "inserted": true,
+    "bundle_readable": true
+  }
+}

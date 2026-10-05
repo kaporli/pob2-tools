@@ -256,8 +256,9 @@ class RunStore:
 
     def import_batch(self, records: Sequence[Any], *,
                      require_references: bool = True,
-                     run_id: str | None = None) -> dict[str, bool]:
-        """Accept a set of records of any kind as one validated unit.
+                     run_id: str | None = None,
+                     legacy_evaluation_ids: Iterable[str] = ()) -> dict[str, bool]:
+        """Accept normalized records, gaps, observations, runs and evaluations.
 
         References are resolved against the store **plus the batch**, and
         everything is written in one transaction. This is what cyclic
@@ -265,11 +266,17 @@ class RunStore:
         it also cites a gap that lives in another table, so neither an
         ordering nor a normalized-only batch can import them
         (review finding P01-R03, point 2).
+
+        ``legacy_evaluation_ids`` preserves historical cache exclusion when
+        importing evaluations. A duplicate with different eligibility is a
+        conflict, just like a duplicate with a different payload. Source
+        documents and acquisitions use their dedicated ingestion methods.
         """
         index = self.reference_index(records) if require_references else None
         decoded = [self._require_valid(record, index=index)
                    for record in records]
 
+        legacy_ids = set(legacy_evaluation_ids)
         created: dict[str, bool] = {}
         with transaction(self.conn) as conn:
             for record in decoded:
@@ -277,8 +284,10 @@ class RunStore:
                 writer = self._WRITERS.get(kind)
                 if writer is None:
                     raise StorageError("%s cannot be imported in a batch" % kind)
-                created[_identity_of(record)] = writer(self, conn, record,
-                                                       run_id)
+                options = ({"legacy": record.evaluation_id in legacy_ids}
+                           if kind == "evaluation_result" else {})
+                created[_identity_of(record)] = writer(
+                    self, conn, record, run_id, **options)
         return created
 
     # -- single-record writers, each usable inside a shared transaction ----
@@ -497,37 +506,47 @@ class RunStore:
         result = self._require_valid(
             result, expected="evaluation_result",
             index=self.reference_index([result]) if require_references else None)
-        payload = canonical_text(to_jsonable(result))
         now = self.clock()
         with transaction(self.conn) as conn:
-            by_key = conn.execute(
-                "SELECT evaluation_id, json FROM evaluation WHERE cache_key = ?",
-                (result.cache_key,)).fetchone()
-            if by_key is not None:
-                if by_key["evaluation_id"] != result.evaluation_id:
-                    raise CacheKeyConflict(result.cache_key,
-                                           by_key["evaluation_id"],
-                                           result.evaluation_id)
-                if by_key["json"] != payload:
-                    raise DuplicateRecord("evaluation_result",
-                                          result.evaluation_id)
-                created = False
-            else:
-                conn.execute(
-                    "INSERT INTO evaluation (evaluation_id, cache_key, run_id,"
-                    " build_hash, rotation_hash, scenario_id, manifest_id,"
-                    " fidelity, seed, status, legacy, created_at, json)"
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    (result.evaluation_id, result.cache_key, run_id,
-                     result.build_hash, result.rotation_hash,
-                     result.scenario_id, result.manifest_id,
-                     result.fidelity.value, result.seed, result.status.value,
-                     1 if legacy else 0, result.created_at, payload))
-                created = True
+            created = self._write_evaluation(conn, result, run_id, legacy=legacy)
 
             if task_id is not None:
                 self._close_task(conn, task_id, result, now, attempt)
         return Committed(result.evaluation_id, created)
+
+    def _write_evaluation(self, conn: sqlite3.Connection, result: Any,
+                          run_id: str | None = None, *, legacy: bool = False) -> bool:
+        """Import an evaluation without changing tasks or its cache eligibility."""
+        payload = canonical_text(to_jsonable(result))
+        by_key = conn.execute(
+            "SELECT evaluation_id, json, legacy FROM evaluation WHERE cache_key = ?",
+            (result.cache_key,)).fetchone()
+        if by_key is not None:
+            if by_key["evaluation_id"] != result.evaluation_id:
+                raise CacheKeyConflict(result.cache_key,
+                                       by_key["evaluation_id"],
+                                       result.evaluation_id)
+            if by_key["json"] != payload or bool(by_key["legacy"]) != legacy:
+                raise DuplicateRecord("evaluation_result",
+                                      result.evaluation_id)
+            created = False
+        else:
+            if conn.execute("SELECT 1 FROM evaluation WHERE evaluation_id = ?",
+                            (result.evaluation_id,)).fetchone():
+                raise DuplicateRecord("evaluation_result", result.evaluation_id)
+            conn.execute(
+                "INSERT INTO evaluation (evaluation_id, cache_key, run_id,"
+                " build_hash, rotation_hash, scenario_id, manifest_id,"
+                " fidelity, seed, status, legacy, created_at, json)"
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (result.evaluation_id, result.cache_key, run_id,
+                 result.build_hash, result.rotation_hash,
+                 result.scenario_id, result.manifest_id,
+                 result.fidelity.value, result.seed, result.status.value,
+                 1 if legacy else 0, result.created_at, payload))
+            created = True
+
+        return created
 
     @staticmethod
     def _close_task(conn: sqlite3.Connection, task_id: str, result: Any,
@@ -703,7 +722,7 @@ class RunStore:
 
 def _identity_of(record: Any) -> str:
     """The id a batch result is keyed by."""
-    for attribute in ("record_id", "gap_id", "observation_id", "run_id"):
+    for attribute in ("record_id", "evaluation_id", "gap_id", "observation_id", "run_id"):
         value = getattr(record, attribute, None)
         if value is not None:
             return str(value)
@@ -712,6 +731,7 @@ def _identity_of(record: Any) -> str:
 
 RunStore._WRITERS = dict(
     {kind: RunStore._write_normalized for kind in _NORMALIZED_HASHES},
+    evaluation_result=RunStore._write_evaluation,
     data_gap=RunStore._write_gap,
     observation=RunStore._write_observation,
     run_manifest=RunStore._write_run,

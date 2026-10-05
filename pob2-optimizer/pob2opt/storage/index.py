@@ -44,6 +44,7 @@ _SQL_SOURCES: dict[str, tuple[str, str]] = {
 #: and letting a citation answer the lookup is how a bundle believed it held
 #: a catalog it had never copied (review finding P01-R03).
 _KIND_FILTER: dict[str, tuple[str, ...]] = {
+    "source_document_ids": ("source_document",),
     "item_hashes": ("item_instance",),
     "build_hashes": ("build_spec",),
     "listing_ids": ("listing",),

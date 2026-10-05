@@ -113,6 +113,44 @@ NAMESPACES = (
 ANY_RECORD = "any_record"
 
 
+# A record owns these identities; attributes on other kinds are citations.
+PROVIDED_FIELDS = {
+    "source_document": (("source_document_ids", "record_id"),),
+    "patch_profile": (("patch_profile_ids", "record_id"),),
+    "listing": (("listing_ids", "listing_id"),),
+    "scenario_spec": (("scenario_ids", "scenario_id"),),
+    "rotation_policy": (("rotation_ids", "rotation_id"),),
+    "evaluation_result": (("evaluation_ids", "evaluation_id"),),
+    "run_manifest": (("manifest_ids", "run_id"),),
+    "data_gap": (("gap_ids", "gap_id"),),
+    "mechanic_rule": (("mechanic_ids", "mechanic_id"),),
+    "item_instance": (("item_hashes", "item_hash"),),
+    "build_spec": (("build_hashes", "build_hash"),),
+    "game_catalog": (("catalog_hashes", "catalog_hash"),),
+}
+
+
+def provided_identifiers(record: Any):
+    """Typed identities supplied by a record, never its outgoing references.
+
+    Shared by in-memory validation and snapshot traversal. Blob ownership
+    requires actual bytes and must be supplied separately by the store.
+    """
+    kind = kind_of(record)
+    for attribute in ("record_id", "evaluation_id", "gap_id",
+                      "observation_id", "run_id"):
+        value = getattr(record, attribute, None)
+        if value is not None:
+            yield "record_ids", value
+            break
+    for namespace, attribute in PROVIDED_FIELDS.get(kind, ()):
+        yield namespace, getattr(record, attribute)
+    if kind == "rotation_policy":
+        yield "rotation_hashes", identity.rotation_hash(record)
+    if kind == "run_manifest":
+        yield "manifest_hashes", identity.manifest_hash(record)
+
+
 class ReferenceIndex(Protocol):
     """What a reference is allowed to resolve to.
 
@@ -160,40 +198,8 @@ class RecordIndex:
         return value in getattr(self, namespace)
 
     def add(self, record: Any) -> "RecordIndex":
-        kind = kind_of(record)
-        rid = getattr(record, "record_id", None)
-        if rid is not None:
-            self.record_ids.add(rid)
-        bucket = {
-            "source_document": ("source_document_ids", "record_id"),
-            "patch_profile": ("patch_profile_ids", "record_id"),
-            "listing": ("listing_ids", "listing_id"),
-            "scenario_spec": ("scenario_ids", "scenario_id"),
-            "rotation_policy": ("rotation_ids", "rotation_id"),
-            "evaluation_result": ("evaluation_ids", "evaluation_id"),
-            "run_manifest": ("manifest_ids", "run_id"),
-            "data_gap": ("gap_ids", "gap_id"),
-            "mechanic_rule": ("mechanic_ids", "mechanic_id"),
-        }.get(kind)
-        if bucket is not None:
-            getattr(self, bucket[0]).add(getattr(record, bucket[1]))
-        if kind == "item_instance":
-            self.item_hashes.add(record.item_hash)
-        if kind == "build_spec":
-            self.build_hashes.add(record.build_hash)
-        # Content identities are derived, not stored fields, so they are
-        # computed here rather than read off the record.
-        if kind == "rotation_policy":
-            self.rotation_hashes.add(identity.rotation_hash(record))
-        if kind == "run_manifest":
-            self.manifest_hashes.add(identity.manifest_hash(record))
-        # Only the catalog itself provides a catalog hash. A patch profile
-        # pins one and an item cites one; neither is evidence that the
-        # catalog was exported into this corpus.
-        if kind == "game_catalog":
-            self.catalog_hashes.add(record.catalog_hash)
-        # A SourceDocument naming a blob is not evidence the bytes are here.
-        # Only ``add_blob``, called by whoever actually holds them, says that.
+        for namespace, value in provided_identifiers(record):
+            getattr(self, namespace).add(value)
         return self
 
     def add_blob(self, blob_hash: str) -> "RecordIndex":
