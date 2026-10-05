@@ -66,7 +66,7 @@
         "support": "unsupported",
         "validation": "untested",
         "evidence_ids": [
-          "fixture-evidence-1"
+          "fixture-source-1"
         ],
         "limitations": [
           "SYNTHETIC: no repeat behaviour is implemented"

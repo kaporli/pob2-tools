@@ -209,8 +209,24 @@ _V1 = (
     """,
 )
 
+#: One candidate in one generation is evaluated under several contexts: a
+#: clear scenario and a boss scenario, a screening pass and a detailed one,
+#: and several seeds for a stochastic suite. Migration 1 made the candidate
+#: the task, which refused the second of any of those (review finding
+#: P01-R04). ``context_key`` carries the evaluation context the task is
+#: expected to produce, so task identity stays unique without collapsing
+#: distinct evaluations onto one row.
+_V2 = (
+    "DROP INDEX task_candidate",
+    "ALTER TABLE task ADD COLUMN context_key TEXT NOT NULL DEFAULT ''",
+    "CREATE INDEX task_candidate ON task (run_id, generation_id, candidate_id)",
+    "CREATE UNIQUE INDEX task_identity ON task "
+    "(run_id, generation_id, candidate_id, context_key)",
+)
+
 MIGRATIONS: tuple[Migration, ...] = (
     Migration(1, "initial records, evaluations, gaps, runs and task state", _V1),
+    Migration(2, "task context key: one candidate, several evaluations", _V2),
 )
 
 LATEST_VERSION = max(m.version for m in MIGRATIONS)
@@ -237,8 +253,9 @@ def migrate(conn: sqlite3.Connection, *, now: str,
     history = applied(conn)
     highest = max(history) if history else 0
     known = {m.version for m in migrations}
-    if highest > max(known | {0}):
-        raise SchemaTooNew(highest, LATEST_VERSION)
+    implemented = max(known | {0})
+    if highest > implemented:
+        raise SchemaTooNew(highest, implemented)
 
     for migration in sorted(migrations, key=lambda m: m.version):
         recorded = history.get(migration.version)

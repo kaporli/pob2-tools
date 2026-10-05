@@ -8,6 +8,7 @@ builds, call PoB or reach the network.
 * ``repositories`` - ``RunStore``, the coordinator's single writer.
 * ``tasks`` - task state, recovery and atomic checkpoints.
 * ``runbundle`` - the immutable run directory and corpus copy-in.
+* ``index`` - reference resolution against the database.
 * ``legacy`` - historical phase outputs, labelled and never cache-eligible.
 * ``queries`` - the documented read-only inspection queries.
 """
@@ -22,12 +23,15 @@ from .errors import (
     CacheKeyConflict,
     CheckpointMismatch,
     DuplicateRecord,
+    IncompleteBundle,
     LegacyArtifact,
     MigrationError,
     MigrationHistoryChanged,
     RecordNotFound,
     SchemaTooNew,
+    StaleAttempt,
     StorageError,
+    TaskResultMismatch,
     TaskStateError,
 )
 from .legacy import (
@@ -37,6 +41,7 @@ from .legacy import (
     load_legacy_phase,
     reject_as_checkpoint,
 )
+from .index import StoreIndex
 from .migrations import LATEST_VERSION, MIGRATIONS, Migration, migrate
 from .queries import QUERIES, run_all, run_query
 from .repositories import (
@@ -60,10 +65,12 @@ from .tasks import (
 __all__ = [
     "BLOB_DIRECTORY", "BlobCorrupt", "BlobNotFound", "BlobStore", "BlobWrite",
     "CORPUS_DATABASE", "CacheKeyConflict", "CheckpointMismatch", "Committed",
-    "CopyReport", "DuplicateRecord", "Ingested", "LATEST_VERSION",
+    "CopyReport", "DuplicateRecord", "IncompleteBundle", "Ingested",
+    "LATEST_VERSION",
     "LegacyArtifact", "LegacyPhaseImport", "MIGRATIONS", "Migration",
     "MigrationError", "MigrationHistoryChanged", "QUERIES", "RUN_DATABASE",
-    "RecordNotFound", "RunBundle", "RunStore", "SchemaTooNew", "StorageError",
+    "RecordNotFound", "RunBundle", "RunStore", "SchemaTooNew",
+    "StaleAttempt", "StorageError", "StoreIndex", "TaskResultMismatch",
     "TaskRow", "TaskStateError", "TaskStore", "connect", "import_legacy_run",
     "iter_legacy_imports", "load_legacy_phase", "migrate", "open_database",
     "read_checkpoint", "reject_as_checkpoint", "resume_plan", "run_all",

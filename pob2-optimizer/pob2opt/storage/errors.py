@@ -90,6 +90,30 @@ class TaskStateError(StorageError):
                          % (task_id, current, requested))
 
 
+class TaskResultMismatch(StorageError):
+    """A result does not belong to the task being closed with it."""
+
+    def __init__(self, task_id: str, detail: str) -> None:
+        self.task_id = task_id
+        super().__init__("task %s %s" % (task_id, detail))
+
+
+class StaleAttempt(StorageError):
+    """A result arrived from a dispatch that has since been superseded.
+
+    This is what a worker that outlived a recovery delivers. Accepting it
+    would attribute one attempt to another.
+    """
+
+    def __init__(self, task_id: str, reported: int, current: int) -> None:
+        self.task_id = task_id
+        self.reported = reported
+        self.current = current
+        super().__init__(
+            "task %s is on attempt %d; a result from attempt %d is stale"
+            % (task_id, current, reported))
+
+
 class CheckpointMismatch(StorageError):
     """A checkpoint does not belong to the manifest it is being resumed with."""
 
@@ -99,6 +123,27 @@ class CheckpointMismatch(StorageError):
         super().__init__(
             "checkpoint was written for manifest %s but this run's manifest "
             "is %s; resuming would mix two runs" % (found, expected))
+
+
+class IncompleteBundle(StorageError):
+    """A run bundle was asked to declare itself ready and could not.
+
+    Carries the full ``self_check`` result, so the caller sees which blobs,
+    records or references are missing rather than only that something is.
+    """
+
+    def __init__(self, run_id: str, check: dict) -> None:
+        self.run_id = run_id
+        self.check = check
+        parts = []
+        for key in ("missing_blobs", "corrupt_blobs", "missing_records"):
+            if check.get(key):
+                parts.append("%s=%s" % (key, check[key]))
+        if check.get("unresolved_references"):
+            parts.append("unresolved_references=%s"
+                         % check["unresolved_references"])
+        super().__init__("run bundle %s is not self-contained: %s"
+                         % (run_id, "; ".join(parts) or "unknown"))
 
 
 class LegacyArtifact(StorageError):

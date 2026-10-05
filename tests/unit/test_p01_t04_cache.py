@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from record_fixtures import blob_payloads, records
+from record_fixtures import blob_payloads, records, seed_corpus
 
 from pob2opt.domain import (
     DEPENDENCY_FIELDS,
@@ -29,10 +29,11 @@ from pob2opt.domain import (
     rotation_hash,
     scenario_hash,
 )
-from pob2opt.domain.cache import AggregateKey
+from pob2opt.domain.cache import AggregateComponent, AggregateKey
 from pob2opt.domain.enums import CacheOutcome, CacheReason, Fidelity
 from pob2opt.storage import (
     BlobNotFound,
+    IncompleteBundle,
     LegacyArtifact,
     RunBundle,
     RunStore,
@@ -109,17 +110,63 @@ def test_the_same_inputs_always_produce_the_same_key():
     assert len(key().cache_key()) == 64
 
 
+def aggregate(manifest=MANIFEST, scenarios=("fixture-clear-dense",),
+              **key_overrides) -> AggregateKey:
+    components = [
+        AggregateComponent.of(
+            scenario_id,
+            replace(EvaluationKey.from_manifest(
+                manifest, build_hash=R["build_spec"].build_hash,
+                rotation_hash=rotation_hash(R["rotation_policy"]),
+                scenario_hash=scenario_hash(R["scenario_spec"]),
+                fidelity=Fidelity.DETAILED), **key_overrides))
+        for scenario_id in scenarios
+    ]
+    return AggregateKey.from_components(
+        manifest, build_hash=R["build_spec"].build_hash,
+        rotation_hash=rotation_hash(R["rotation_policy"]),
+        components=components)
+
+
 def test_the_aggregate_key_adds_objective_and_baselines():
-    base = AggregateKey.from_manifest(
-        MANIFEST, build_hash=R["build_spec"].build_hash,
-        rotation_hash=rotation_hash(R["rotation_policy"]))
+    base = aggregate()
     assert "objective_hash" in base.identity()
     assert "baseline_suite_hash" in base.identity()
     assert replace(base, objective_hash="7" * 64).cache_key() != base.cache_key()
     assert replace(base, baseline_suite_hash="6" * 64).cache_key() != \
         base.cache_key()
-    # Seed and fidelity are not aggregate inputs; the evaluations carry them.
-    assert "seed" not in base.identity()
+
+
+@pytest.mark.parametrize("dependency", sorted(CHANGES))
+def test_a_changed_constituent_evaluation_changes_aggregate_identity(dependency):
+    """Review finding P01-R05.
+
+    The aggregate cited its evaluations without including them, so an
+    aggregate computed from different simulation outcomes reused the old
+    identity. Every dependency that moves an evaluation key must now move
+    the aggregate key with it.
+    """
+    assert aggregate(**CHANGES[dependency]).cache_key() != aggregate().cache_key()
+
+
+def test_changing_the_run_seed_changes_aggregate_identity():
+    """The exact collision the review reproduced."""
+    other_seed = replace(MANIFEST, rng_seed=MANIFEST.rng_seed + 1)
+    assert aggregate(other_seed).cache_key() != aggregate().cache_key()
+
+
+def test_component_order_does_not_change_aggregate_identity():
+    """The components are a set; reordering them is not a different score."""
+    forward = aggregate(scenarios=("fixture-clear-dense", "fixture-boss-short"))
+    backward = aggregate(scenarios=("fixture-boss-short", "fixture-clear-dense"))
+    assert forward.cache_key() == backward.cache_key()
+
+
+def test_an_aggregate_without_its_evaluations_has_no_identity():
+    with pytest.raises(ValueError, match="no identity"):
+        AggregateKey.from_components(
+            MANIFEST, build_hash=R["build_spec"].build_hash,
+            rotation_hash=rotation_hash(R["rotation_policy"]), components=[])
 
 
 # ------------------------------------------------------- lookups and reasons
@@ -133,6 +180,7 @@ def test_an_empty_cache_misses_with_a_recorded_reason(store: RunStore):
 
 
 def test_a_stored_result_hits_and_the_reason_is_recorded(store: RunStore):
+    seed_corpus(store, with_results=False)
     result = replace(R["evaluation_result"], cache_key=key().cache_key())
     store.commit_evaluation(None, result)
     decision = store.lookup(key())
@@ -142,6 +190,7 @@ def test_a_stored_result_hits_and_the_reason_is_recorded(store: RunStore):
 
 
 def test_a_screen_result_cannot_answer_a_detailed_request(store: RunStore):
+    seed_corpus(store, with_results=False)
     screen = key(fidelity=Fidelity.SCREEN)
     stored = replace(R["evaluation_result"], cache_key=screen.cache_key(),
                      fidelity=Fidelity.SCREEN,
@@ -160,6 +209,7 @@ def test_a_screen_result_cannot_answer_a_detailed_request(store: RunStore):
 
 
 def test_a_legacy_entry_is_never_cache_eligible(store: RunStore):
+    seed_corpus(store, with_results=False)
     result = replace(R["evaluation_result"], cache_key=key().cache_key())
     store.commit_evaluation(None, result, legacy=True)
     decision = store.lookup(key())
@@ -172,17 +222,19 @@ def test_popularity_alone_does_not_change_a_combat_result(store: RunStore):
     from pob2opt.domain.records import PopularitySignal
 
     before = key().cache_key()
+    seed_corpus(store, with_results=False)
     popular = replace(R["source_document"], record_id="fixture-source-1p",
                       popularity=[PopularitySignal(kind="favourites",
                                                    value=4200.0,
                                                    observed_at="2026-10-05T00:00:00Z")])
-    store.ingest_source(SOURCE_PAYLOAD, R["source_document"])
     store.ingest_source(SOURCE_PAYLOAD, popular)
     assert build_hash(R["build_spec"]) == R["build_spec"].build_hash
     assert key().cache_key() == before
     # Two acquisition records, one payload.
     assert len(store.source_history("fixture_provider", "FX-1")) == 2
-    assert store.conn.execute("SELECT COUNT(*) FROM blob").fetchone()[0] == 1
+    assert store.conn.execute(
+        "SELECT COUNT(*) FROM blob WHERE blob_hash = ?",
+        (R["source_document"].blob_hash,)).fetchone()[0] == 1
 
 
 def test_listing_price_changes_the_snapshot_not_the_combat_key(store: RunStore):
@@ -226,33 +278,81 @@ def test_creating_a_bundle_twice_in_one_directory_is_refused(tmp_path: Path):
 def test_a_run_stays_readable_after_its_corpus_is_disconnected(tmp_path: Path):
     corpus_root = tmp_path / "corpus"
     with RunStore.open_corpus(corpus_root) as corpus:
-        corpus.ingest_source(SOURCE_PAYLOAD, R["source_document"])
-        corpus.put_normalized(R["game_catalog"])
-        corpus.put_normalized(R["item_instance"])
-        corpus.put_normalized(R["build_spec"])
+        seed_corpus(corpus)
 
     with RunStore.open_corpus(corpus_root) as corpus, _bundle(tmp_path) as bundle:
-        report = bundle.copy_references(
-            corpus,
-            source_ids=["fixture-source-1"],
-            normalized_ids=["fixture-catalog-1", "fixture-item-1",
-                            "fixture-build-1"])
-        assert report.sources == ("fixture-source-1",)
-        assert len(report.normalized) == 3
-        assert report.blobs == (R["source_document"].blob_hash,)
+        # Only the build is asked for. Its catalog, items, listings, rotation
+        # and raw payload come with it, because a bundle freezes a graph.
+        report = bundle.copy_references(corpus,
+                                        normalized_ids=["fixture-build-1"])
+        assert report.complete
+        assert "fixture-build-1" in report.normalized
+        assert "fixture-catalog-1" in report.normalized
+        assert "fixture-item-1" in report.normalized
+        assert "fixture-source-1" in report.sources
+        assert R["source_document"].blob_hash in report.blobs
 
     # The corpus is deleted entirely.
     shutil.rmtree(corpus_root)
 
     with RunBundle.open(tmp_path / "runs" / MANIFEST.run_id) as reopened:
         check = reopened.self_check()
-        assert check["readable"] is True
+        assert check["readable"] is True, check
         assert check["missing_blobs"] == [] and check["missing_records"] == []
+        assert check["unresolved_references"] == {}
         assert reopened.store.read_payload(
             R["source_document"].blob_hash) == SOURCE_PAYLOAD
         assert reopened.store.get_normalized("fixture-build-1") == R["build_spec"]
-        assert reopened.declared_references()["normalized"] == [
-            "fixture-build-1", "fixture-catalog-1", "fixture-item-1"]
+        assert reopened.require_readable()["readable"] is True
+
+
+def test_copying_a_build_without_its_graph_is_not_a_readable_bundle(tmp_path):
+    """Review finding P01-R03, the exact probe the reviewer ran."""
+    corpus_root = tmp_path / "corpus"
+    with RunStore.open_corpus(corpus_root) as corpus:
+        # A dangling build, admitted only through the explicit staging flag.
+        corpus.put_normalized(R["build_spec"], require_references=False)
+        assert "fixture-build-1" in corpus.unresolved_references()
+
+        with _bundle(tmp_path) as bundle:
+            bundle.copy_references(corpus, normalized_ids=["fixture-build-1"],
+                                   transitive=False)
+            check = bundle.self_check()
+            assert check["readable"] is False
+            assert "fixture-build-1" in check["unresolved_references"]
+            assert "/catalog_hash" in \
+                check["unresolved_references"]["fixture-build-1"]
+            with pytest.raises(IncompleteBundle, match="not self-contained"):
+                bundle.require_readable()
+
+
+def test_a_dangling_record_cannot_be_stored_without_saying_so(tmp_path: Path):
+    with RunStore.open_corpus(tmp_path / "corpus") as corpus:
+        from pob2opt.domain import RecordInvalid
+
+        with pytest.raises(RecordInvalid) as exc:
+            corpus.put_normalized(R["build_spec"])
+        paths = [e.field_path for e in exc.value.report.errors]
+        assert "/catalog_hash" in paths
+        assert "/equipment/fixture-slot-weapon/item_hash" in paths
+        assert "/raw_blob_hashes/0" in paths
+        assert corpus.conn.execute(
+            "SELECT COUNT(*) FROM normalized_record").fetchone()[0] == 0
+
+
+def test_a_transitive_copy_reports_a_dependency_the_corpus_lacks(tmp_path):
+    corpus_root = tmp_path / "corpus"
+    with RunStore.open_corpus(corpus_root) as corpus:
+        seed_corpus(corpus)
+        # Delete the payload the build depends on, behind the repository.
+        corpus.blobs.path_for(R["source_document"].blob_hash).unlink()
+
+        with _bundle(tmp_path) as bundle:
+            report = bundle.copy_references(
+                corpus, normalized_ids=["fixture-build-1"])
+            assert not report.complete
+            assert R["source_document"].blob_hash in report.unresolved["blob"]
+            assert bundle.self_check()["readable"] is False
 
 
 def test_a_bundle_reports_what_it_is_missing_rather_than_guessing(tmp_path: Path):

@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from record_fixtures import blob_payloads, records
+from record_fixtures import blob_payloads, records, seed_corpus
 
 from pob2opt.domain import document_hash, to_jsonable
 from pob2opt.domain.enums import AcquisitionStatus
@@ -34,11 +34,17 @@ from pob2opt.storage import (
     RunStore,
     SchemaTooNew,
     StorageError,
+    connect,
     migrate,
     open_database,
     schema_version,
 )
-from pob2opt.storage.migrations import LATEST_VERSION, Migration, applied
+from pob2opt.storage.migrations import (
+    LATEST_VERSION,
+    MIGRATIONS,
+    Migration,
+    applied,
+)
 
 R = records()
 PAYLOADS = blob_payloads()
@@ -55,8 +61,8 @@ def store(tmp_path: Path) -> RunStore:
 
 def test_a_new_database_is_at_the_latest_migration(tmp_path: Path):
     conn = open_database(tmp_path / "x.sqlite")
-    assert schema_version(conn) == LATEST_VERSION == 1
-    assert set(applied(conn)) == {1}
+    assert schema_version(conn) == LATEST_VERSION == 2
+    assert set(applied(conn)) == {1, 2}
 
 
 def test_migrating_twice_changes_nothing(tmp_path: Path):
@@ -68,14 +74,32 @@ def test_migrating_twice_changes_nothing(tmp_path: Path):
 
 def test_editing_an_applied_migration_is_refused(tmp_path: Path):
     conn = open_database(tmp_path / "x.sqlite")
-    edited = Migration(1, "initial", ("SELECT 1",))
+    edited = (Migration(1, "initial", ("SELECT 1",)),) + MIGRATIONS[1:]
     with pytest.raises(MigrationHistoryChanged) as exc:
-        migrate(conn, now="2026-10-04T00:00:00Z", migrations=(edited,))
+        migrate(conn, now="2026-10-04T00:00:00Z", migrations=edited)
     assert exc.value.version == 1
 
 
+def test_a_v1_database_upgrades_to_v2_without_losing_tasks(tmp_path: Path):
+    """Migration 2 relaxes the task index; it does not rewrite migration 1."""
+    conn = connect(tmp_path / "x.sqlite")
+    migrate(conn, now="2026-10-04T00:00:00Z", migrations=MIGRATIONS[:1])
+    assert schema_version(conn) == 1
+    conn.execute(
+        "INSERT INTO task (task_id, run_id, generation_id, candidate_id,"
+        " state, attempt, enqueued_at, payload) VALUES ('t1', 'r', 1, 'c',"
+        " 'queued', 0, '2026-10-04T00:00:00Z', '{}')")
+
+    assert migrate(conn, now="2026-10-05T00:00:00Z") == (2,)
+    assert schema_version(conn) == 2
+    row = conn.execute("SELECT task_id, context_key FROM task").fetchone()
+    assert row["task_id"] == "t1"
+    assert row["context_key"] == ""
+    assert applied(conn)[1][1] == MIGRATIONS[0].checksum()
+
+
 def test_a_database_from_a_newer_build_is_refused(tmp_path: Path):
-    conn = open_database(tmp_path / "x.sqlite")
+    conn = open_database(tmp_path / "x.sqlite")  # noqa: F841
     conn.execute("INSERT INTO schema_migration (version, name, checksum,"
                  " applied_at) VALUES (99, 'future', 'x', '2030-01-01T00:00:00Z')")
     with pytest.raises(SchemaTooNew):
@@ -259,14 +283,14 @@ def test_a_fault_inside_the_transaction_writes_no_partial_row(store: RunStore):
 # ----------------------------------------------------- normalized records
 
 def test_normalized_records_round_trip_through_sqlite(store: RunStore):
+    seed_corpus(store)
     for kind in ("item_instance", "build_spec", "scenario_spec",
                  "rotation_policy", "mechanic_rule", "patch_profile"):
-        assert store.put_normalized(R[kind]) is True
         assert store.get_normalized(R[kind].record_id) == R[kind]
 
 
 def test_builds_are_findable_by_their_hash(store: RunStore):
-    store.put_normalized(R["build_spec"])
+    seed_corpus(store)
     found = store.find_normalized("build_spec", R["build_spec"].build_hash)
     assert [b.record_id for b in found] == ["fixture-build-1"]
     assert store.find_normalized("build_spec", "0" * 64) == []
@@ -282,7 +306,7 @@ def test_an_invalid_record_never_reaches_storage(store: RunStore):
 
     broken = replace(R["build_spec"], raw_blob_hashes=[])
     with pytest.raises(RecordInvalid):
-        store.put_normalized(broken)
+        store.put_normalized(broken, require_references=False)
     assert store.conn.execute(
         "SELECT COUNT(*) FROM normalized_record").fetchone()[0] == 0
 
@@ -290,7 +314,7 @@ def test_an_invalid_record_never_reaches_storage(store: RunStore):
 # ------------------------------------------------------------ evaluations
 
 def test_evaluation_cache_keys_are_unique(store: RunStore):
-    store.commit_evaluation(None, R["evaluation_result"])
+    seed_corpus(store)
     clash = replace(R["evaluation_result"], record_id="fixture-evaluation-2",
                     evaluation_id="fixture-evaluation-2")
     with pytest.raises(CacheKeyConflict) as exc:
@@ -299,6 +323,7 @@ def test_evaluation_cache_keys_are_unique(store: RunStore):
 
 
 def test_a_repeated_completion_message_creates_one_result(store: RunStore):
+    seed_corpus(store, with_results=False)
     first = store.commit_evaluation(None, R["evaluation_result"])
     second = store.commit_evaluation(None, R["evaluation_result"])
     assert first.created is True and second.created is False
@@ -306,7 +331,7 @@ def test_a_repeated_completion_message_creates_one_result(store: RunStore):
 
 
 def test_evaluations_are_readable_by_cache_key(store: RunStore):
-    store.commit_evaluation(None, R["evaluation_result"])
+    seed_corpus(store)
     found = store.evaluation_by_cache_key(R["evaluation_result"].cache_key)
     assert found == R["evaluation_result"]
     assert store.evaluation_by_cache_key("0" * 64) is None
@@ -315,32 +340,27 @@ def test_evaluations_are_readable_by_cache_key(store: RunStore):
 # ----------------------------------------------------- gaps, observations
 
 def test_gaps_and_observations_are_stored_and_queryable(store: RunStore):
-    assert store.put_gap(R["data_gap"]) is True
+    seed_corpus(store)
     assert store.put_gap(R["data_gap"]) is False
     assert [g.gap_id for g in store.open_gaps("blocking")] == ["fixture-gap-1"]
     assert store.open_gaps("informational") == []
 
-    assert store.put_observation(R["observation"]) is True
+    assert store.put_observation(R["observation"]) is False
     assert store.conn.execute(
         "SELECT dataset_split FROM observation").fetchone()[0] == "holdout"
 
 
 def test_the_store_index_resolves_its_own_references(store: RunStore):
-    store.ingest_source(SOURCE_PAYLOAD, R["source_document"])
-    store.put_normalized(R["item_instance"])
-    index = store.index()
+    seed_corpus(store)
+    index = store.record_index()
     assert R["item_instance"].item_hash in index.item_hashes
     assert R["source_document"].blob_hash in index.blob_hashes
     assert "fixture-source-1" in index.source_document_ids
 
 
 def test_stored_records_can_be_revalidated_against_the_corpus(store: RunStore):
-    store.ingest_source(SOURCE_PAYLOAD, R["source_document"])
-    store.put_normalized(R["item_instance"])
+    seed_corpus(store)
     reports = store.validate_stored()
-    assert set(reports) == {"fixture-source-1", "fixture-item-1"}
-    item = reports["fixture-item-1"]
-    # fixture-item-1 cites a catalog that was not copied into this store, so
-    # the reference pass reports it instead of inventing one.
-    assert "unresolved_reference" in item.codes()
-    assert "/catalog_hash" in item.paths()
+    assert len(reports) >= 15
+    assert all(report.ok for report in reports.values()),         {rid: r.errors for rid, r in reports.items() if not r.ok}
+    assert store.unresolved_references() == {}

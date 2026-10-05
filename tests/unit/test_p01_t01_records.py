@@ -15,7 +15,13 @@ from pathlib import Path
 
 import pytest
 
-from record_fixtures import apply_patch, load_cases, load_files, valid_payloads
+from record_fixtures import (
+    apply_patch,
+    closed_index,
+    load_cases,
+    load_files,
+    valid_payloads,
+)
 
 from pob2opt.domain import (
     ABSENT,
@@ -33,26 +39,15 @@ from pob2opt.domain.schemas import UnknownSchemaVersion, check_schema_version
 
 CASES = load_cases()
 
-#: Identifiers the fixtures reference that are not themselves fixture records:
-#: evidence bundles, blobs and the acquisition the source document came from.
-EXTRA_KNOWN_IDS = {
-    "fixture-evidence-1", "fixture-evidence-2", "fixture-acquisition-1",
-    "fixture-run-1", "fixture-source-1", "fixture-claim-1", "fixture-profile-1",
-    "fixture-build-1", "fixture-item-1", "fixture-gap-1",
-}
-
-
 @pytest.fixture(scope="module")
 def index() -> RecordIndex:
-    """One corpus containing every valid fixture record."""
-    payloads = valid_payloads()
-    records = [from_jsonable(RECORD_TYPES[kind], payload)
-               for kind, payload in payloads.items()
-               if kind not in ("run_request", "checkpoint")]
-    built = RecordIndex.from_records(records)
-    built.add_blob(payloads["source_document"]["blob_hash"])
-    built.record_ids.update(EXTRA_KNOWN_IDS)
-    return built
+    """A corpus in which every fixture reference resolves.
+
+    Nothing is whitelisted into it: it is built from the fixture records
+    themselves, so a reference that does not resolve is a real hole in the
+    graph rather than a missing entry in a test-local allow list.
+    """
+    return closed_index()
 
 
 # ----------------------------------------------------- coverage of the set

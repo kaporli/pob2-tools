@@ -144,7 +144,12 @@ def from_jsonable(ann: Any, value: Any, *, path: str = "") -> Any:
     """Build the value the annotation describes out of plain JSON data."""
     allows_none, _allows_absent, members = _is_optional_like(ann)
     if value is None:
-        if allows_none:
+        # ``Any`` is a free-form JSON value, and null is a JSON value. The
+        # encoder writes it and the generated schema permits it, so refusing
+        # it here made a record that validated and stored unreadable on the
+        # way back out (review finding P01-R02). A field with a declared
+        # non-nullable type still rejects null.
+        if allows_none or any(member is Any for member in members):
             return None
         raise CodecError(path, "null is not allowed here")
 

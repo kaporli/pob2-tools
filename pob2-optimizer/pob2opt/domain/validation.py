@@ -23,10 +23,11 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field as dc_field
-from typing import Any, Iterable, Sequence
+from typing import Any, Iterable, Protocol, Sequence
 
 from jsonschema.exceptions import best_match
 
+from . import identity
 from .absent import ABSENT
 from .codec import CodecError, NotANumber, from_jsonable, to_jsonable
 from .enums import (
@@ -100,14 +101,40 @@ class RecordInvalid(ValueError):
 
 # ----------------------------------------------------------- record index ===
 
-@dataclass
-class RecordIndex:
+#: Every namespace a reference can resolve into. ``ANY_RECORD`` is the union,
+#: used where contracts.md allows a field to name more than one kind of thing.
+NAMESPACES = (
+    "record_ids", "blob_hashes", "catalog_hashes", "item_hashes",
+    "build_hashes", "rotation_hashes", "manifest_hashes", "listing_ids",
+    "source_document_ids", "patch_profile_ids", "scenario_ids",
+    "rotation_ids", "evaluation_ids", "manifest_ids", "gap_ids",
+    "mechanic_ids",
+)
+ANY_RECORD = "any_record"
+
+
+class ReferenceIndex(Protocol):
     """What a reference is allowed to resolve to.
 
-    An empty index means "do not check references", which is what a parser
-    does before its output is placed in a corpus. A populated index is the
-    second semantic pass contracts.md asks for: every cross-record reference
-    must resolve inside the exported run or corpus.
+    Two implementations exist: :class:`RecordIndex` holds sets in memory, and
+    ``pob2opt.storage.StoreIndex`` answers the same question with indexed SQL
+    so a corpus does not have to be materialized to validate one record.
+    """
+
+    def contains(self, namespace: str, value: str) -> bool:
+        ...  # pragma: no cover - protocol
+
+
+@dataclass
+class RecordIndex:
+    """An in-memory corpus of known identifiers.
+
+    Passing ``index=None`` to :func:`validate_record` skips reference checking
+    entirely, which is what acquisition and parsing do before their output is
+    accepted anywhere. Passing an index, **including an empty one**, means
+    "resolve against this corpus": an empty corpus resolves nothing. Those are
+    different statements and conflating them hid unresolved references
+    (review finding P01-R03).
     """
 
     record_ids: set[str] = dc_field(default_factory=set)
@@ -115,6 +142,8 @@ class RecordIndex:
     catalog_hashes: set[str] = dc_field(default_factory=set)
     item_hashes: set[str] = dc_field(default_factory=set)
     build_hashes: set[str] = dc_field(default_factory=set)
+    rotation_hashes: set[str] = dc_field(default_factory=set)
+    manifest_hashes: set[str] = dc_field(default_factory=set)
     listing_ids: set[str] = dc_field(default_factory=set)
     source_document_ids: set[str] = dc_field(default_factory=set)
     patch_profile_ids: set[str] = dc_field(default_factory=set)
@@ -125,12 +154,13 @@ class RecordIndex:
     gap_ids: set[str] = dc_field(default_factory=set)
     mechanic_ids: set[str] = dc_field(default_factory=set)
 
-    #: Checking is off until something is added, so a bare index is inert.
-    enabled: bool = False
+    def contains(self, namespace: str, value: str) -> bool:
+        if namespace == ANY_RECORD:
+            return any(value in getattr(self, name) for name in NAMESPACES)
+        return value in getattr(self, namespace)
 
     def add(self, record: Any) -> "RecordIndex":
         kind = kind_of(record)
-        self.enabled = True
         rid = getattr(record, "record_id", None)
         if rid is not None:
             self.record_ids.add(rid)
@@ -147,28 +177,37 @@ class RecordIndex:
         }.get(kind)
         if bucket is not None:
             getattr(self, bucket[0]).add(getattr(record, bucket[1]))
-        if kind == "source_document":
-            self.blob_hashes.add(record.blob_hash)
         if kind == "item_instance":
             self.item_hashes.add(record.item_hash)
         if kind == "build_spec":
             self.build_hashes.add(record.build_hash)
-        # Only a catalog or the profile that pinned it vouches for a catalog
-        # hash. An item citing a catalog is not evidence the catalog exists.
-        if kind in ("game_catalog", "patch_profile"):
+        # Content identities are derived, not stored fields, so they are
+        # computed here rather than read off the record.
+        if kind == "rotation_policy":
+            self.rotation_hashes.add(identity.rotation_hash(record))
+        if kind == "run_manifest":
+            self.manifest_hashes.add(identity.manifest_hash(record))
+        # Only the catalog itself provides a catalog hash. A patch profile
+        # pins one and an item cites one; neither is evidence that the
+        # catalog was exported into this corpus.
+        if kind == "game_catalog":
             self.catalog_hashes.add(record.catalog_hash)
+        # A SourceDocument naming a blob is not evidence the bytes are here.
+        # Only ``add_blob``, called by whoever actually holds them, says that.
         return self
 
     def add_blob(self, blob_hash: str) -> "RecordIndex":
-        self.enabled = True
         self.blob_hashes.add(blob_hash)
         return self
 
     @classmethod
-    def from_records(cls, records: Iterable[Any]) -> "RecordIndex":
+    def from_records(cls, records: Iterable[Any],
+                     blob_hashes: Iterable[str] = ()) -> "RecordIndex":
         index = cls()
         for record in records:
             index.add(record)
+        for blob_hash in blob_hashes:
+            index.add_blob(blob_hash)
         return index
 
 
@@ -190,13 +229,11 @@ def validate_record(
 
     if isinstance(record, dict):
         data = record
-        instance = None
     else:
         try:
             data = to_jsonable(record)
         except CodecError as exc:
             return ValidationReport(kind, (_codec_error(exc),))
-        instance = record
 
     # 1. version
     try:
@@ -213,12 +250,16 @@ def validate_record(
     if errors:
         return ValidationReport(kind, errors)
 
-    # 3. shape
-    if instance is None:
-        try:
-            instance = from_jsonable(RECORD_TYPES[kind], data)
-        except CodecError as exc:
-            return ValidationReport(kind, (_codec_error(exc),))
+    # 3. shape. Always decoded, including when a dataclass was passed in: an
+    # instance built by hand can hold a wire value where a typed one belongs
+    # (``status="ok"`` instead of ``ResultStatus.OK``), and the semantic pass
+    # would then fail with a bare AttributeError instead of a report
+    # (review finding P01-R02). Semantics only ever see a decoded record, and
+    # ``report.record`` is the canonical instance callers should persist.
+    try:
+        instance = from_jsonable(RECORD_TYPES[kind], data)
+    except CodecError as exc:
+        return ValidationReport(kind, (_codec_error(exc),))
 
     # 4. semantics
     semantic = tuple(_semantic_errors(kind, data, instance, index))
@@ -286,7 +327,9 @@ def _semantic_errors(kind, data, record, index):
     checker = _PER_KIND.get(kind)
     if checker is not None:
         yield from checker(record)
-    if index is not None and index.enabled:
+    # ``index is None`` means "do not check references"; an empty index means
+    # "resolve against an empty corpus", which resolves nothing.
+    if index is not None:
         yield from _reference_errors(kind, record, index)
 
 
@@ -693,16 +736,149 @@ _PER_KIND = {
 
 # -- references -------------------------------------------------------------
 
+#: Identifier-shaped fields that are deliberately **not** resolved, and why.
+#: Every such field on every record is either traversed by :func:`_references`
+#: below or listed here. The completeness test in
+#: ``tests/unit/test_p01_t03_references.py`` fails when a new field is
+#: neither, so "unchecked" can never quietly become "forgotten".
+UNCHECKED_REFERENCE_FIELDS: dict[tuple[str, str], str] = {
+    # Record types that do not exist yet. Each names the task that creates it.
+    ("source_document", "source_manifest_id"):
+        "a SourceAdapter capability manifest; P03-T01 owns that record type",
+    ("aggregate_result", "sensitivity_result_ids"):
+        "sensitivity results are a P06-T04 record type that does not exist yet",
+    ("data_gap", "sensitivity_result_id"):
+        "the same absent P06-T04 record type",
+    ("observation", "build_family_id"):
+        "families are assigned by P09-T03; no record type yet",
+    ("run_request", "item_pool_ids"):
+        "item pools are a P05-T03 record type that does not exist yet",
+    ("build_spec", "variant_id"): "deduplication metadata assigned by P04",
+    ("build_spec", "family_id"): "deduplication metadata assigned by P09",
+
+    # Catalog entities and model names, not records in this corpus.
+    ("mechanic_claim", "subject_ids"):
+        "catalog entity ids such as a skill or a modifier, not records",
+    ("build_spec", "class_id"): "a catalog entity",
+    ("build_spec", "ascendancy_id"): "a catalog entity",
+    ("run_request", "class_id"): "a catalog entity",
+    ("scenario_spec", "spatial_model_id"): "a model name owned by P07",
+    ("scenario_spec", "movement_model_id"): "a model name owned by P07",
+    ("scenario_spec", "incoming_damage_model_id"): "a model name owned by P07",
+    ("aggregate_result", "objective_id"): "a scoring objective name owned by P10",
+    ("aggregate_result", "suite_id"): "a scenario-suite name owned by P09",
+    ("run_manifest", "scenario_suite_id"): "a suite name owned by P09",
+    ("parse_result", "parser_id"): "a parser name, not a record",
+    ("mechanic_rule", "implementation_ref"):
+        "a Python import path resolved by P06 and P07, not a record",
+    ("mechanic_rule", "required_input_paths"):
+        "JSON Pointers into a build, not record identifiers",
+
+    # Provider and tooling labels.
+    ("patch_profile", "league_id"): "a league name from the provider",
+    ("patch_profile", "patch_id"): "a patch name from the provider",
+    ("listing", "league_id"): "a league name from the provider",
+    ("observation", "operator_id"): "a pseudonym, deliberately not a record",
+    ("observation", "trial_id"): "an operator-local label for one trial",
+    ("review_record", "task_or_gate_id"): "a task or gate name, not a record",
+    ("review_record", "invalidated_gates"): "gate names",
+    ("review_record", "next_task_ids"): "task ids from the delivery plan",
+    ("review_record", "implementation_commit"): "a git commit, not a record",
+    ("run_manifest", "accepted_gate_ids"): "gate names such as G0, not records",
+
+    # Working-tree digests and derived identities, not stored content.
+    ("patch_profile", "pob_dirty_hash"): "a working-tree digest, not content",
+    ("run_manifest", "software_dirty_hash"): "a working-tree digest, not content",
+    ("evaluation_result", "cache_key"):
+        "a derived content identity recomputed by the evaluator",
+    ("checkpoint", "candidate_archive_hashes"):
+        "search-archive artifacts owned by P08",
+
+    # Task rows live in their own table, not in the corpus.
+    ("checkpoint", "run_id"):
+        "validated against the run by storage.validate_checkpoint, which has "
+        "the manifest that a bare record does not",
+    ("checkpoint", "queued_task_ids"): "task rows, not corpus records",
+    ("checkpoint", "completed_task_ids"): "task rows, not corpus records",
+
+
+    # Catalog entities, provider labels and version control.
+    ("item_instance", "base_id"): "a catalog entity",
+    ("source_document", "external_id"):
+        "the provider identifier for the page",
+    ("source_document", "author_id"): "an author handle from the provider",
+    ("patch_profile", "pob_commit"): "a git commit of the engine",
+    ("run_manifest", "software_commit"): "a git commit, not a record",
+    ("run_manifest", "dependency_hashes"):
+        "cache-key inputs (see cache.py), not references into the corpus",
+    ("checkpoint", "next_generation_id"): "a counter",
+    ("mechanic_rule", "mechanic_id"):
+        "this rule provides the mechanic id that other records cite",
+}
+
+
+#: Content hashes a record *provides* rather than cites.
+_OWN_CONTENT_HASH = {
+    "item_instance": "item_hash",
+    "build_spec": "build_hash",
+    "game_catalog": "catalog_hash",
+}
+
+
+def own_identity_fields(kind: str) -> set[str]:
+    """Fields that are this record's own identity, not a reference out.
+
+    ``record_id``, the domain id it must equal, and the content hash the
+    record provides. ``_identity_errors`` checks the first two agree; none
+    of them is resolved against the corpus, because a record cannot be
+    evidence for itself.
+    """
+    fields = {"record_id"}
+    domain_field = DOMAIN_ID_FIELDS.get(kind)
+    if domain_field is not None:
+        fields.add(domain_field)
+    content_hash_field = _OWN_CONTENT_HASH.get(kind)
+    if content_hash_field is not None:
+        fields.add(content_hash_field)
+    return fields
+
+
 def _reference_errors(kind, record, index):
     for path, value, namespace in _references(kind, record):
         if value is None:
             continue
-        known = getattr(index, namespace)
-        if value not in known:
+        if not index.contains(namespace, value):
             yield ValidationError(
                 "unresolved_reference", path,
                 "%r does not resolve to a known %s in this corpus or run"
-                % (value, namespace.rstrip("s").replace("_", " ")), "semantic")
+                % (value, _namespace_label(namespace)), "semantic")
+
+
+#: Readable names for error messages. Naive singularization turned
+#: "catalog_hashes" into "catalog hashe".
+_NAMESPACE_LABELS = {
+    ANY_RECORD: "record",
+    "record_ids": "record",
+    "blob_hashes": "stored payload",
+    "catalog_hashes": "catalog",
+    "item_hashes": "item",
+    "build_hashes": "build",
+    "rotation_hashes": "rotation",
+    "manifest_hashes": "run manifest",
+    "listing_ids": "listing",
+    "source_document_ids": "source document",
+    "patch_profile_ids": "patch profile",
+    "scenario_ids": "scenario",
+    "rotation_ids": "rotation",
+    "evaluation_ids": "evaluation",
+    "manifest_ids": "run",
+    "gap_ids": "gap",
+    "mechanic_ids": "mechanic rule",
+}
+
+
+def _namespace_label(namespace: str) -> str:
+    return _NAMESPACE_LABELS.get(namespace, namespace.replace("_", " "))
 
 
 def _each(path, values, namespace):
@@ -710,25 +886,75 @@ def _each(path, values, namespace):
         yield "%s/%d" % (path, i), value, namespace
 
 
+def _evidence(path, values):
+    """Evidence resolves against any record in the corpus.
+
+    A source document, a parse result, a claim or an independent observation
+    can all be cited as evidence, so these use the union namespace rather
+    than one specific kind.
+    """
+    return _each(path, values, ANY_RECORD)
+
+
 def _references(kind, record):
+    """Every cross-record and blob reference, with the namespace it resolves in.
+
+    Paths are JSON Pointers into the record, so an unresolved reference names
+    the exact field a person has to fix.
+    """
     if hasattr(record, "provenance_ids"):
-        yield from _each("/provenance_ids", record.provenance_ids, "record_ids")
+        yield from _each("/provenance_ids", record.provenance_ids, ANY_RECORD)
+
     if kind == "source_document":
         yield "/blob_hash", record.blob_hash, "blob_hashes"
+
     elif kind == "acquisition_result":
         yield "/source_document_id", record.source_document_id, "source_document_ids"
+
     elif kind == "patch_profile":
         yield "/catalog_hash", record.catalog_hash, "catalog_hashes"
+        yield from _evidence("/patch_evidence_ids", record.patch_evidence_ids)
+        yield from _evidence("/compatibility_evidence_ids",
+                             record.compatibility_evidence_ids)
+        rules = record.character_rules
+        yield from _evidence("/character_rules/evidence_ids", rules.evidence_ids)
+        yield from _each("/character_rules/missing_rule_gap_ids",
+                         rules.missing_rule_gap_ids, "gap_ids")
+        for i, budget in enumerate(rules.point_budgets):
+            yield from _evidence(
+                "/character_rules/point_budgets/%d/evidence_ids" % i,
+                budget.evidence_ids)
+        for i, slot in enumerate(rules.slots):
+            yield from _evidence("/character_rules/slots/%d/evidence_ids" % i,
+                                 slot.evidence_ids)
+        for i, restriction in enumerate(rules.support_restrictions):
+            yield from _evidence(
+                "/character_rules/support_restrictions/%d/evidence_ids" % i,
+                restriction.evidence_ids)
+        yield from _evidence("/character_rules/weapon_sets/evidence_ids",
+                             rules.weapon_sets.evidence_ids)
+
     elif kind == "game_catalog":
         yield "/patch_profile_id", record.patch_profile_id, "patch_profile_ids"
+        yield from _evidence("/source_evidence_ids", record.source_evidence_ids)
+        for table in sorted(record.entities):
+            for i, entity in enumerate(record.entities[table]):
+                yield from _each(
+                    "/entities/%s/%d/rule_references" % (table, i),
+                    entity.rule_references, "mechanic_ids")
+
     elif kind == "item_instance":
         yield "/catalog_hash", record.catalog_hash, "catalog_hashes"
         yield "/source_document_id", record.source_document_id, "source_document_ids"
+
     elif kind == "listing":
         yield "/item_hash", record.item_hash, "item_hashes"
         yield "/source_document_id", record.source_document_id, "source_document_ids"
+
     elif kind == "build_spec":
         yield "/catalog_hash", record.catalog_hash, "catalog_hashes"
+        yield from _evidence("/progression/evidence_ids",
+                             record.progression.evidence_ids)
         for slot, content in sorted(record.equipment.items()):
             if content is None:
                 continue
@@ -737,38 +963,80 @@ def _references(kind, record):
         for i, group in enumerate(record.skill_groups):
             yield ("/skill_groups/%d/source_item_hash" % i,
                    group.source_item_hash, "item_hashes")
+        for key in sorted(record.config):
+            yield from _evidence("/config/%s/evidence_ids" % key,
+                                 record.config[key].evidence_ids)
         yield from _each("/rotation_ids", record.rotation_ids, "rotation_ids")
         yield from _each("/source_document_ids", record.source_document_ids,
                          "source_document_ids")
         yield from _each("/raw_blob_hashes", record.raw_blob_hashes, "blob_hashes")
+
     elif kind == "parse_result":
         yield "/source_document_id", record.source_document_id, "source_document_ids"
-        yield from _each("/record_ids", record.record_ids, "record_ids")
+        yield from _each("/record_ids", record.record_ids, ANY_RECORD)
+
     elif kind == "mechanic_claim":
         yield "/source_document_id", record.source_document_id, "source_document_ids"
+        yield from _each("/dependencies", record.dependencies, ANY_RECORD)
+        yield from _evidence("/evidence_ids", record.evidence_ids)
+
+    elif kind == "mechanic_rule":
+        yield from _each("/patch_profile_ids", record.patch_profile_ids,
+                         "patch_profile_ids")
+        yield from _each("/dependency_ids", record.dependency_ids, "mechanic_ids")
+        yield from _evidence("/evidence_ids", record.evidence_ids)
+
     elif kind == "data_gap":
+        yield from _each("/subject_ids", record.subject_ids, ANY_RECORD)
         yield from _each("/mechanic_ids", record.mechanic_ids, "mechanic_ids")
-        yield from _each("/affected_evaluation_ids", record.affected_evaluation_ids,
-                         "evaluation_ids")
+        yield from _each("/affected_evaluation_ids",
+                         record.affected_evaluation_ids, "evaluation_ids")
+        yield from _evidence("/resolution_evidence_ids",
+                             record.resolution_evidence_ids)
+
     elif kind == "scenario_spec":
         yield "/patch_profile_id", record.patch_profile_id, "patch_profile_ids"
         yield "/reference_build_id", record.reference_build_id, "build_hashes"
         yield "/reference_result_id", record.reference_result_id, "evaluation_ids"
+        yield from _evidence("/evidence_ids", record.evidence_ids)
+        for i, target in enumerate(record.target_entities):
+            if target.position is not None:
+                yield from _evidence(
+                    "/target_entities/%d/position/conversion_evidence_ids" % i,
+                    target.position.conversion_evidence_ids)
+
     elif kind == "evaluation_result":
         yield "/build_hash", record.build_hash, "build_hashes"
+        yield "/rotation_hash", record.rotation_hash, "rotation_hashes"
         yield "/scenario_id", record.scenario_id, "scenario_ids"
         yield "/manifest_id", record.manifest_id, "manifest_ids"
         yield "/trace_blob_hash", record.trace_blob_hash, "blob_hashes"
         yield from _each("/gap_ids", record.gap_ids, "gap_ids")
         yield from _each("/rule_ids", record.rule_ids, "mechanic_ids")
+        yield from _each("/assumption_ids", record.assumption_ids, ANY_RECORD)
+
     elif kind == "aggregate_result":
         yield "/build_hash", record.build_hash, "build_hashes"
+        yield "/rotation_hash", record.rotation_hash, "rotation_hashes"
         yield "/manifest_id", record.manifest_id, "manifest_ids"
         yield from _each("/evaluation_ids", record.evaluation_ids, "evaluation_ids")
+        for i, gate in enumerate(record.scenario_gates):
+            yield ("/scenario_gates/%d/scenario_id" % i, gate.scenario_id,
+                   "scenario_ids")
+
     elif kind == "observation":
         yield "/build_hash", record.build_hash, "build_hashes"
         yield "/patch_profile_id", record.patch_profile_id, "patch_profile_ids"
         yield "/scenario_id", record.scenario_id, "scenario_ids"
         yield "/rotation_id", record.rotation_id, "rotation_ids"
+        yield from _evidence("/raw_evidence_ids", record.raw_evidence_ids)
+
     elif kind == "run_manifest":
         yield "/patch_profile_id", record.patch_profile_id, "patch_profile_ids"
+        yield from _each("/source_snapshot_ids", record.source_snapshot_ids,
+                         "source_document_ids")
+        yield from _each("/market_snapshot_ids", record.market_snapshot_ids,
+                         "listing_ids")
+
+    elif kind == "checkpoint":
+        yield "/manifest_hash", record.manifest_hash, "manifest_hashes"

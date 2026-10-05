@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-05",
+  "task": "P01",
+  "specification_version": "1.0",
+  "pr": "https://github.com/kaporli/pob2-tools/pull/3",
+  "reviewed_commit": "ae4303ee8db334c6d07a73f92a606dd77d5649f5",
+  "base_commit": "6dfb75d2b16f02ae5f1e918b7b54f92a10205e5d",
+  "verdict": "changes_required",
+  "checks": [
+    {
+      "description": "Seven new P01 test modules",
+      "python": "3.12.4",
+      "passed": 328,
+      "exit_code": 0
+    },
+    {
+      "command": "python -m pytest tests/unit tests/integration -q",
+      "python": "3.12.4",
+      "passed": 444,
+      "xfailed": 8,
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/pr2-validation/py310-a/Scripts/python.exe -m pytest tests/unit tests/integration -q",
+      "python": "3.10.22",
+      "passed": 444,
+      "xfailed": 8,
+      "exit_code": 0
+    },
+    {
+      "command": "python scripts/generate_schemas.py --check",
+      "schemas_matched": 20,
+      "exit_code": 0
+    }
+  ],
+  "ci": {
+    "run_id": 37225559956,
+    "py310_job_id": 111504370209,
+    "py312_job_id": 111504370105,
+    "both_jobs_succeeded": true
+  },
+  "probe_command": "python docs/evidence/P01/review-ae4303e-probes.py",
+  "observations": {
+    "cancelled_completion": {
+      "before": "cancelled",
+      "after": "completed"
+    },
+    "second_scenario_task": {
+      "accepted": false,
+      "error": "IntegrityError",
+      "message": "UNIQUE constraint failed: task.run_id, task.generation_id, task.candidate_id"
+    },
+    "dangling_normalized_build": {
+      "inserted": true,
+      "unresolved_paths": [
+        "/provenance_ids/0",
+        "/catalog_hash",
+        "/equipment/fixture-slot-weapon/item_hash",
+        "/equipment/fixture-slot-weapon/listing_id",
+        "/rotation_ids/0",
+        "/source_document_ids/0",
+        "/raw_blob_hashes/0"
+      ]
+    },
+    "incomplete_bundle": {
+      "run_id": "fixture-run-1",
+      "manifest_hash": "3a31286f24c1c9740217603b1ca5d48ca7858bdd4ba0e08cd0016f60d5c5c189",
+      "blobs_declared": 0,
+      "records_declared": 1,
+      "missing_blobs": [],
+      "missing_records": [],
+      "readable": true
+    },
+    "nullable_item": {
+      "validation_ok": true,
+      "stored": true,
+      "read_ok": false,
+      "error": "CodecError",
+      "message": "/properties/unknown_property: null is not allowed here"
+    },
+    "unchecked_reference_fields": {
+      "patch_evidence": {
+        "validation_ok": true,
+        "paths": []
+      },
+      "mechanic_dependency": {
+        "validation_ok": true,
+        "paths": []
+      },
+      "manifest_snapshot": {
+        "validation_ok": true,
+        "paths": []
+      }
+    },
+    "string_enum_instance": {
+      "raised": true,
+      "error": "AttributeError",
+      "message": "'str' object has no attribute 'value'"
+    },
+    "aggregate_seed_collision": {
+      "aggregate_keys_equal": true,
+      "evaluation_keys_differ": true
+    }
+  },
+  "findings": [
+    {
+      "id": "P01-R01",
+      "priority": "P1",
+      "summary": "Late result changes cancelled task to completed."
+    },
+    {
+      "id": "P01-R02",
+      "priority": "P1",
+      "summary": "Validated and persisted Any/null values cannot be decoded on read."
+    },
+    {
+      "id": "P01-R03",
+      "priority": "P1",
+      "summary": "Incomplete reference graph is admitted to normalized storage and reported as a readable bundle."
+    },
+    {
+      "id": "P01-R04",
+      "priority": "P2",
+      "summary": "Unique candidate/generation index prevents multiple evaluation tasks for one candidate."
+    },
+    {
+      "id": "P01-R05",
+      "priority": "P2",
+      "summary": "Aggregate cache identity omits changing constituent evaluation dependencies."
+    }
+  ],
+  "application_code_changed": false,
+  "github_review_posted": false,
+  "merged": false,
+  "limitations": [
+    "Engine suite not rerun: change is domain/storage only.",
+    "Wheel packaging claim inspected in configuration but not independently rebuilt.",
+    "No live providers or gameplay evidence exercised."
+  ],
+  "execution_evidence_date": "2026-10-04"
+}

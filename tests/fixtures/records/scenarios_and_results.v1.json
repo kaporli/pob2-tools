@@ -30,7 +30,7 @@
               "y": 0.0,
               "unit": "fixture_unit",
               "conversion_evidence_ids": [
-                "fixture-evidence-1"
+                "fixture-source-1"
               ]
             },
             "targetable_windows": [
@@ -80,7 +80,7 @@
         ],
         "resource_gates": [],
         "evidence_ids": [
-          "fixture-evidence-1"
+          "fixture-source-1"
         ],
         "validation_status": "fixture_checked"
       },
@@ -191,7 +191,7 @@
           "fixture-run-1"
         ],
         "evaluation_id": "fixture-evaluation-1",
-        "cache_key": "f5f37b176a181def663ba82edda2e311b77ae33e26237f1230c0679bacf148b0",
+        "cache_key": "75cc9434f7b21ae26165933bf25f77706f6e330ce1fdff9db9f755283d1facbf",
         "build_hash": "a8e3574b7bf047bedd86e41ce6e5d7ecbec7629c65439af572afeed325ca048d",
         "rotation_hash": "5f68f7550a7d87a9bdbfef1d3c7953b0e60a7a34f9441f12c482e48dbb52bfc8",
         "scenario_id": "fixture-clear-dense",
@@ -361,7 +361,7 @@
           "completion_time_s": 9.5
         },
         "raw_evidence_ids": [
-          "fixture-evidence-2"
+          "fixture-source-2"
         ],
         "measurement_uncertainty": {
           "timer_resolution_s": 0.2

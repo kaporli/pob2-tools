@@ -99,6 +99,72 @@ def records() -> dict[str, Any]:
             for kind, payload in valid_payloads().items()}
 
 
+def extra_records() -> list[Any]:
+    """Valid records that exist only so the reference graph closes.
+
+    The capture behind the independent observation, and the acquisition that
+    produced it. They are indexed and validated like any other record but are
+    not the one documented example of their kind.
+    """
+    from pob2opt.domain import RECORD_TYPES, from_jsonable
+
+    out = []
+    for doc in load_files().values():
+        for entry in doc.get("extra_records", []):
+            out.append(from_jsonable(RECORD_TYPES[entry["kind"]],
+                                     entry["record"]))
+    return out
+
+
+def all_records() -> list[Any]:
+    """Every valid fixture record: the documented examples plus the extras."""
+    return list(records().values()) + extra_records()
+
+
+def closed_index():
+    """A corpus in which every fixture reference resolves."""
+    from pob2opt.domain import RecordIndex
+
+    return RecordIndex.from_records(all_records(), blob_payloads())
+
+
+#: Kinds that reference each other and therefore import as one batch.
+#: patch_profile cites the catalog that cites it, and also cites a gap in
+#: another table, so no insertion order would satisfy all three.
+CORE_BATCH = (
+    "patch_profile", "game_catalog", "item_instance", "listing", "build_spec",
+    "scenario_spec", "rotation_policy", "mechanic_claim", "mechanic_rule",
+    "parse_result", "data_gap", "run_manifest", "observation",
+)
+
+
+def seed_corpus(store, *, with_results: bool = True) -> dict[str, Any]:
+    """Load the whole closed fixture graph into a store, in dependency order.
+
+    Every reference resolves afterwards, so the store is a corpus a run can
+    actually be built from. Returns the records by kind.
+    """
+    R = records()
+    payloads = blob_payloads()
+
+    for record in [R["source_document"]] + [
+            r for r in extra_records() if type(r).__name__ == "SourceDocument"]:
+        store.ingest_source(payloads[record.blob_hash], record)
+    for record in [R["acquisition_result"]] + [
+            r for r in extra_records()
+            if type(r).__name__ == "AcquisitionResult"]:
+        store.put_acquisition_result(record)
+
+    store.import_batch([R[kind] for kind in CORE_BATCH])
+    if with_results:
+        store.commit_evaluation(None, R["evaluation_result"])
+        store.put_normalized(R["aggregate_result"])
+    return R
+
+
+
+
+
 def blob_payloads() -> dict[str, bytes]:
     """The original bytes the fixture source documents were acquired from."""
     out: dict[str, bytes] = {}

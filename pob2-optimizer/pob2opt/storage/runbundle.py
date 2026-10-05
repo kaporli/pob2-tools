@@ -25,12 +25,27 @@ bundle also states what it depended on.
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field as dc_field
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
-from ..domain import RECORD_TYPES, from_jsonable, manifest_hash, to_jsonable
-from .errors import CheckpointMismatch, RecordNotFound, StorageError
+from ..domain import (
+    RECORD_TYPES,
+    from_jsonable,
+    manifest_hash,
+    rotation_hash,
+    to_jsonable,
+)
+from ..domain.records import kind_of
+from ..domain.validation import ANY_RECORD, _references
+from .errors import (
+    BlobCorrupt,
+    BlobNotFound,
+    CheckpointMismatch,
+    IncompleteBundle,
+    RecordNotFound,
+    StorageError,
+)
 from .repositories import BLOB_DIRECTORY, RunStore
 
 MANIFEST_NAME = "manifest.json"
@@ -43,10 +58,17 @@ class CopyReport:
     normalized: tuple[str, ...]
     blobs: tuple[str, ...]
     reused_blobs: tuple[str, ...]
+    #: Dependencies the corpus could not supply, by bucket. Non-empty means
+    #: the bundle is incomplete and self_check will say so.
+    unresolved: dict[str, tuple[str, ...]] = dc_field(default_factory=dict)
 
     @property
     def total(self) -> int:
         return len(self.sources) + len(self.normalized) + len(self.blobs)
+
+    @property
+    def complete(self) -> bool:
+        return not self.unresolved
 
 
 class RunBundle:
@@ -68,7 +90,11 @@ class RunBundle:
             (root / directory).mkdir(parents=True, exist_ok=True)
         store = RunStore.open(root, **kwargs)
         digest = manifest_hash(manifest)
-        store.put_run(manifest, digest)
+        # The manifest is written before the content it describes is copied
+        # in, so its own references cannot resolve yet. ``self_check`` is
+        # where the bundle has to prove closure, and it validates the
+        # manifest with everything else.
+        store.put_run(manifest, digest, require_references=False)
         (root / MANIFEST_NAME).write_text(
             json.dumps(to_jsonable(manifest), indent=2, ensure_ascii=False,
                        sort_keys=True) + "\n",
@@ -127,61 +153,149 @@ class RunBundle:
     def copy_references(self, corpus: RunStore, *,
                         source_ids: Sequence[str] = (),
                         normalized_ids: Sequence[str] = (),
-                        blob_hashes: Iterable[str] = ()) -> CopyReport:
+                        blob_hashes: Iterable[str] = (),
+                        transitive: bool = True) -> CopyReport:
         """Copy the records and payloads this run needs into its own bundle.
 
-        Every blob referenced by a copied source document comes with it, so
-        the bundle can still produce the original bytes after the corpus is
-        gone.
+        With ``transitive`` (the default) the seeds are closed over their
+        reference graph: asking for a build brings its catalog, its equipped
+        items and their listings, the rotation, the gaps it depends on, the
+        source documents and the raw payload blobs. Copying only the seeds
+        produced a bundle that called itself readable while none of the
+        build dependencies were present (review finding P01-R03).
+
+        A dependency the corpus cannot supply is reported in
+        ``CopyReport.unresolved`` rather than silently dropped, and
+        :meth:`self_check` then refuses to call the bundle readable.
         """
-        wanted_blobs = set(blob_hashes)
-        copied_sources: list[str] = []
-        copied_normalized: list[str] = []
+        if transitive:
+            seeds, blobs, unresolved = self._closure(
+                corpus, source_ids, normalized_ids, blob_hashes)
+        else:
+            seeds, unresolved = {}, {}
+            blobs = set(blob_hashes)
+            for bucket, ids in (("source", source_ids),
+                                ("record", normalized_ids)):
+                for identifier in ids:
+                    record = _fetch(corpus, bucket, identifier)
+                    if record is None:
+                        unresolved.setdefault(bucket, []).append(identifier)
+                    else:
+                        seeds[(bucket, identifier)] = record
+
         new_blobs: list[str] = []
         reused: list[str] = []
+        copied_sources: list[str] = []
+        other_records: list[Any] = []
 
-        for record_id in source_ids:
-            record = corpus.get_source(record_id)
+        for (bucket, identifier), record in seeds.items():
+            if bucket != "source":
+                other_records.append(record)
+                continue
             blob_hash = getattr(record, "blob_hash", None)
             if blob_hash is None:
                 # An acquisition attempt has no payload of its own.
                 self.store.put_acquisition_result(record)
-            else:
-                written = self.store.ingest_source(
-                    corpus.read_payload(blob_hash), record).blob
-                (reused if written.reused else new_blobs).append(blob_hash)
-                wanted_blobs.add(blob_hash)
-            copied_sources.append(record_id)
+                copied_sources.append(identifier)
+                continue
+            payload = _read_payload(corpus, blob_hash)
+            if payload is None:
+                unresolved.setdefault("blob", []).append(blob_hash)
+                continue
+            written = self.store.ingest_source(payload, record).blob
+            (reused if written.reused else new_blobs).append(blob_hash)
+            blobs.add(blob_hash)
+            copied_sources.append(identifier)
 
-        for blob_hash in sorted(wanted_blobs - set(new_blobs) - set(reused)):
-            written = self.store.blobs.put(corpus.read_payload(blob_hash))
+        for blob_hash in sorted(blobs - set(new_blobs) - set(reused)):
+            payload = _read_payload(corpus, blob_hash)
+            if payload is None:
+                unresolved.setdefault("blob", []).append(blob_hash)
+                continue
+            written = self.store.blobs.put(payload)
             (reused if written.reused else new_blobs).append(blob_hash)
 
-        for record_id in normalized_ids:
-            self.store.put_normalized(corpus.get_normalized(record_id))
-            copied_normalized.append(record_id)
+        # One batch, so records that reference each other resolve together.
+        copied_records: list[str] = []
+        if other_records:
+            self.store.import_batch(other_records, require_references=False)
+            copied_records = [_record_id(r) for r in other_records]
 
         self.store.add_run_references(self.run_id, "source", copied_sources)
-        self.store.add_run_references(self.run_id, "normalized", copied_normalized)
-        self.store.add_run_references(self.run_id, "blob", sorted(wanted_blobs))
-        return CopyReport(tuple(copied_sources), tuple(copied_normalized),
-                          tuple(new_blobs), tuple(reused))
+        self.store.add_run_references(self.run_id, "normalized", copied_records)
+        self.store.add_run_references(self.run_id, "blob", sorted(blobs))
+        return CopyReport(tuple(copied_sources), tuple(copied_records),
+                          tuple(new_blobs), tuple(reused),
+                          {k: tuple(v) for k, v in sorted(unresolved.items())})
+
+    def _closure(self, corpus: RunStore, source_ids, normalized_ids,
+                 blob_hashes):
+        """Walk the reference graph from the seeds through the corpus."""
+        blobs = set(blob_hashes)
+        unresolved: dict[str, list[str]] = {}
+        found: dict[tuple[str, str], Any] = {}
+
+        lookup = _CorpusLookup(corpus)
+        queue: list[tuple[str, str]] = (
+            [("source", rid) for rid in source_ids]
+            + [("record", rid) for rid in normalized_ids])
+        seen: set[tuple[str, str]] = set()
+
+        while queue:
+            key = queue.pop(0)
+            if key in seen:
+                continue
+            seen.add(key)
+            bucket, identifier = key
+
+            record = _fetch(corpus, bucket, identifier)
+            if record is None:
+                unresolved.setdefault(bucket, []).append(identifier)
+                continue
+            found[key] = record
+
+            for _path, value, namespace in _references(kind_of(record), record):
+                if value is None:
+                    continue
+                if namespace == "blob_hashes":
+                    blobs.add(value)
+                    continue
+                target = lookup.locate(namespace, value)
+                if target is not None and target not in seen:
+                    queue.append(target)
+        return found, blobs, unresolved
 
     def declared_references(self) -> dict[str, list[str]]:
         return {kind: self.store.run_references(self.run_id, kind)
                 for kind in ("source", "normalized", "blob")}
 
     def self_check(self) -> dict[str, Any]:
-        """Confirm the bundle can be read without its corpus.
+        """Can this bundle be read, and does everything in it resolve?
 
-        Verifies every declared blob against its hash and every declared
-        record against the bundle's own database.
+        Three separate questions, reported separately:
+
+        * are the declared blobs present, and do their bytes still hash to
+          their names;
+        * are the declared records present;
+        * does every reference in every stored record, the manifest
+          included, resolve inside this bundle.
+
+        A bundle is ``readable`` only when all three hold. Before the review
+        it answered the first two and called that readable, so a snapshot
+        missing its entire dependency graph passed (P01-R03).
         """
         refs = self.declared_references()
-        missing_blobs = [h for h in refs["blob"] if not self.store.blobs.exists(h)]
+        missing_blobs: list[str] = []
+        corrupt_blobs: list[str] = []
         for blob_hash in refs["blob"]:
-            if blob_hash not in missing_blobs:
-                self.store.read_payload(blob_hash)  # raises on corruption
+            if not self.store.blobs.exists(blob_hash):
+                missing_blobs.append(blob_hash)
+                continue
+            try:
+                self.store.read_payload(blob_hash)
+            except BlobCorrupt:
+                corrupt_blobs.append(blob_hash)
+
         missing_records: list[str] = []
         for record_id in refs["source"]:
             try:
@@ -189,16 +303,101 @@ class RunBundle:
             except RecordNotFound:
                 missing_records.append(record_id)
         for record_id in refs["normalized"]:
-            try:
-                self.store.get_normalized(record_id)
-            except RecordNotFound:
+            if not self.store.has_record(record_id):
                 missing_records.append(record_id)
+
+        unresolved = self.store.unresolved_references()
         return {
             "run_id": self.run_id,
             "manifest_hash": self.manifest_hash,
             "blobs_declared": len(refs["blob"]),
             "records_declared": len(refs["source"]) + len(refs["normalized"]),
             "missing_blobs": missing_blobs,
+            "corrupt_blobs": corrupt_blobs,
             "missing_records": missing_records,
-            "readable": not missing_blobs and not missing_records,
+            "unresolved_references": unresolved,
+            "readable": not (missing_blobs or corrupt_blobs or missing_records
+                             or unresolved),
         }
+
+    def require_readable(self) -> dict[str, Any]:
+        """Raise unless the bundle is complete.
+
+        Use before declaring a run ready to execute: a bundle that cannot
+        resolve its own graph cannot reproduce its results later.
+        """
+        check = self.self_check()
+        if not check["readable"]:
+            raise IncompleteBundle(self.run_id, check)
+        return check
+
+
+def _fetch(store: RunStore, bucket: str, identifier: str) -> Any:
+    try:
+        return (store.get_source(identifier) if bucket == "source"
+                else store.get_record(identifier))
+    except RecordNotFound:
+        return None
+
+
+def _read_payload(store: RunStore, blob_hash: str) -> bytes | None:
+    try:
+        return store.read_payload(blob_hash)
+    except BlobNotFound:
+        return None
+
+
+def _record_id(record: Any) -> str:
+    for attribute in ("record_id", "gap_id", "observation_id", "run_id"):
+        value = getattr(record, attribute, None)
+        if value is not None:
+            return str(value)
+    raise StorageError("%s has no identifier" % kind_of(record))
+
+
+class _CorpusLookup:
+    """Resolve a reference to the corpus row that satisfies it."""
+
+    def __init__(self, corpus: RunStore) -> None:
+        self.corpus = corpus
+        self._table: dict[str, tuple[str, str]] | None = None
+
+    def locate(self, namespace: str, value: str) -> tuple[str, str] | None:
+        if self._table is None:
+            self._table = self._build()
+        return self._table.get(value)
+
+    def _build(self) -> dict[str, tuple[str, str]]:
+        """Map every identifier in the corpus to the row that provides it."""
+        table: dict[str, tuple[str, str]] = {}
+        for row in self.corpus.conn.execute(
+                "SELECT record_id FROM source_record"):
+            table[row["record_id"]] = ("source", row["record_id"])
+        for rid, kind, record in self.corpus.iter_stored():
+            if kind in ("source_document", "acquisition_result"):
+                continue
+            for key in _identifiers_of(kind, record):
+                table.setdefault(key, ("record", rid))
+        return table
+
+
+def _identifiers_of(kind: str, record: Any) -> tuple[str, ...]:
+    """Every identifier a reference could legitimately use to name a record.
+
+    Deliberately not ``catalog_hash`` on an item, a build or a patch
+    profile: those cite a catalog, they do not provide one, and treating a
+    citation as a provider is how a bundle came to believe it held a catalog
+    it had never copied.
+    """
+    keys = [getattr(record, "record_id", None)]
+    for attribute in ("item_hash", "build_hash", "listing_id", "scenario_id",
+                      "rotation_id", "mechanic_id", "gap_id", "evaluation_id",
+                      "observation_id", "run_id"):
+        keys.append(getattr(record, attribute, None))
+    if kind == "game_catalog":
+        keys.append(record.catalog_hash)
+    if kind == "rotation_policy":
+        keys.append(rotation_hash(record))
+    if kind == "run_manifest":
+        keys.append(manifest_hash(record))
+    return tuple(k for k in keys if isinstance(k, str))

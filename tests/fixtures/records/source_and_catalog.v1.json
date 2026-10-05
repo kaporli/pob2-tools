@@ -119,7 +119,7 @@
         "league_id": "fixture-league-1",
         "patch_id": "fixture-patch-1",
         "patch_evidence_ids": [
-          "fixture-evidence-1"
+          "fixture-source-1"
         ],
         "resolved_at": "2026-10-04T12:00:00Z",
         "pob_commit": "0000000000000000000000000000000000000000",
@@ -128,7 +128,7 @@
         "adapter_version": "fixture-adapter-0.1",
         "compatibility": "partial",
         "compatibility_evidence_ids": [
-          "fixture-evidence-1"
+          "fixture-source-1"
         ],
         "character_rules": {
           "level_range": {
@@ -152,7 +152,7 @@
               "passive_points": 10,
               "ascendancy_points": 2,
               "evidence_ids": [
-                "fixture-evidence-1"
+                "fixture-source-1"
               ]
             }
           ],
@@ -164,7 +164,7 @@
               ],
               "weapon_set_id": "fixture-set-1",
               "evidence_ids": [
-                "fixture-evidence-1"
+                "fixture-source-1"
               ]
             }
           ],
@@ -177,7 +177,7 @@
               "max_supports": 2,
               "description": "synthetic restriction",
               "evidence_ids": [
-                "fixture-evidence-1"
+                "fixture-source-1"
               ]
             }
           ],
@@ -192,14 +192,14 @@
             },
             "swap_allowed": true,
             "evidence_ids": [
-              "fixture-evidence-1"
+              "fixture-source-1"
             ]
           },
           "missing_rule_gap_ids": [
             "fixture-gap-1"
           ],
           "evidence_ids": [
-            "fixture-evidence-1"
+            "fixture-source-1"
           ]
         }
       },
@@ -261,7 +261,7 @@
           ]
         },
         "source_evidence_ids": [
-          "fixture-evidence-1"
+          "fixture-source-1"
         ]
       },
       "also_valid": [],
@@ -286,7 +286,61 @@
     }
   },
   "blob_payloads": {
-    "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859": "<!-- SYNTHETIC fixture build payload -->\n"
+    "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859": "<!-- SYNTHETIC fixture build payload -->\n",
+    "ade570335fda5bd6ddd2f27e050925fbcaf9ef0309929a180319bb6d965925e9": "SYNTHETIC fixture capture of one timed trial\n"
   },
+  "extra_records": [
+    {
+      "kind": "acquisition_result",
+      "why": "the capture attempt behind the independent observation",
+      "record": {
+        "schema_version": 1,
+        "record_id": "fixture-acquisition-2",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-run-1"
+        ],
+        "provider": "fixture_operator",
+        "source_ref": "file:///fixture/trial-1.capture",
+        "access_method": "manual_capture",
+        "status": "ok",
+        "source_document_id": "fixture-source-2",
+        "http_status": null,
+        "retry_eligible": false,
+        "diagnostic": null,
+        "attempted_at": "2026-10-04T12:00:00Z"
+      }
+    },
+    {
+      "kind": "source_document",
+      "why": "the raw evidence the independent observation cites",
+      "record": {
+        "schema_version": 1,
+        "record_id": "fixture-source-2",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-acquisition-2"
+        ],
+        "provider": "fixture_operator",
+        "source_url": null,
+        "external_id": "trial-1",
+        "acquired_at": "2026-10-04T12:00:00Z",
+        "published_at": null,
+        "updated_at": null,
+        "access_method": "manual_capture",
+        "media_type": "video/mp4",
+        "blob_hash": "ade570335fda5bd6ddd2f27e050925fbcaf9ef0309929a180319bb6d965925e9",
+        "byte_count": 45,
+        "acquisition_version": "fixture-adapter-0.1",
+        "source_manifest_id": "fixture-manifest-capability-1",
+        "declared_patch": null,
+        "author_id": null,
+        "locale": null,
+        "popularity": [],
+        "redistribution": "restricted"
+      }
+    }
+  ],
+  "extra_records_note": "Valid records that exist so the fixture reference graph closes. They are not the one documented example of their kind, so they carry no invalid variants, but they are indexed and validated like any other record.",
   "blob_payloads_note": "The original bytes behind fixture-source-1, so a storage test can ingest them and get the recorded blob hash back. Decode as UTF-8; the trailing newline is part of the payload."
 }

@@ -50,6 +50,7 @@ class TaskRow:
     run_id: str
     generation_id: int
     candidate_id: str
+    context_key: str
     state: TaskState
     attempt: int
     evaluation_id: str | None
@@ -65,6 +66,7 @@ class TaskRow:
         return cls(
             task_id=row["task_id"], run_id=row["run_id"],
             generation_id=row["generation_id"], candidate_id=row["candidate_id"],
+            context_key=row["context_key"],
             state=TaskState(row["state"]), attempt=row["attempt"],
             evaluation_id=row["evaluation_id"], worker_id=row["worker_id"],
             error=row["error"], enqueued_at=row["enqueued_at"],
@@ -82,8 +84,19 @@ class TaskStore:
     # -- queue -------------------------------------------------------------
 
     def enqueue(self, *, task_id: str, run_id: str, generation_id: int,
-                candidate_id: str, payload: dict[str, Any]) -> bool:
-        """Add one task. Re-enqueueing the same task id is a no-op."""
+                candidate_id: str, payload: dict[str, Any],
+                context_key: str = "") -> bool:
+        """Add one task. Re-enqueueing the same task id is a no-op.
+
+        ``context_key`` is the evaluation context this task will produce,
+        normally ``EvaluationKey.cache_key()``. It does two jobs: it lets one
+        candidate in one generation carry several tasks (clear and boss,
+        screen and detailed, different seeds), and it binds the task to the
+        result, so a worker cannot close it with an unrelated evaluation.
+
+        Left empty, the old behaviour applies: one task per candidate per
+        generation, and no result binding.
+        """
         now = self.clock()
         with transaction(self.conn) as conn:
             if conn.execute("SELECT 1 FROM task WHERE task_id = ?",
@@ -91,9 +104,9 @@ class TaskStore:
                 return False
             conn.execute(
                 "INSERT INTO task (task_id, run_id, generation_id,"
-                " candidate_id, state, attempt, enqueued_at, payload)"
-                " VALUES (?, ?, ?, ?, ?, 0, ?, ?)",
-                (task_id, run_id, generation_id, candidate_id,
+                " candidate_id, context_key, state, attempt, enqueued_at,"
+                " payload) VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?)",
+                (task_id, run_id, generation_id, candidate_id, context_key,
                  TaskState.QUEUED.value, now, canonical_text(payload)))
             self._event(conn, task_id, 0, None, TaskState.QUEUED, "enqueued", now)
         return True

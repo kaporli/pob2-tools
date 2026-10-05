@@ -33,7 +33,11 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "pob2-optimizer"))
 sys.path.insert(0, str(REPO / "tests"))
 
-from record_fixtures import blob_payloads, records  # noqa: E402
+from record_fixtures import (  # noqa: E402
+    blob_payloads,
+    records,
+    seed_corpus,
+)
 
 from pob2opt.domain import EvaluationKey, rotation_hash, scenario_hash  # noqa: E402
 from pob2opt.domain.enums import Fidelity, TaskState  # noqa: E402
@@ -65,10 +69,6 @@ def build(out: Path) -> dict:
     with RunStore.open_corpus(corpus_root) as corpus:
         first = corpus.ingest_source(payload, R["source_document"])
         second = corpus.ingest_source(payload, R["source_document"])
-        for kind in ("game_catalog", "item_instance", "build_spec",
-                     "scenario_spec", "rotation_policy", "mechanic_rule"):
-            corpus.put_normalized(R[kind])
-        corpus.put_gap(R["data_gap"])
         steps.append({
             "step": "ingest",
             "blob_hash": first.blob.blob_hash,
@@ -78,24 +78,40 @@ def build(out: Path) -> dict:
                                                         "FX-1")),
         })
 
+        # A build on its own is a dangling fragment, and storage says so.
+        try:
+            corpus.put_normalized(R["build_spec"])
+            refused = None
+        except Exception as exc:
+            refused = sorted({e.field_path for e in exc.report.errors})
+        steps.append({"step": "dangling_record_refused",
+                      "unresolved_paths": refused})
+
+        seed_corpus(corpus, with_results=False)
+        steps.append({"step": "corpus_closed",
+                      "unresolved_references": corpus.unresolved_references()})
+
     # 2. run bundle copies what it needs ----------------------------------
     with RunStore.open_corpus(corpus_root) as corpus, \
             RunBundle.create(run_root, manifest) as bundle:
-        report = bundle.copy_references(
-            corpus, source_ids=["fixture-source-1"],
-            normalized_ids=["fixture-catalog-1", "fixture-item-1",
-                            "fixture-build-1", "fixture-clear-dense",
-                            "fixture-rotation-clear"])
-        steps.append({"step": "copy_references", "sources": list(report.sources),
-                      "normalized": list(report.normalized),
-                      "blobs": list(report.blobs)})
+        # Only the build and the scenario are named. Their graphs come
+        # with them: catalog, items, listings, rotation, rules, gaps, the
+        # source documents and the raw payload blobs.
+        asked_for = ["fixture-build-1", "fixture-clear-dense"]
+        report = bundle.copy_references(corpus, normalized_ids=asked_for)
+        steps.append({"step": "copy_references",
+                      "asked_for": asked_for,
+                      "sources": sorted(report.sources),
+                      "normalized": sorted(report.normalized),
+                      "blobs": sorted(report.blobs),
+                      "unresolved": report.unresolved})
 
     # 3. the corpus goes away ---------------------------------------------
     shutil.rmtree(corpus_root)
 
     with RunBundle.open(run_root) as bundle:
         steps.append({"step": "corpus_disconnected",
-                      "self_check": bundle.self_check()})
+                      "self_check": bundle.require_readable()})
 
         store, tasks = bundle.store, bundle.store.tasks
         key = EvaluationKey.from_manifest(
@@ -109,11 +125,27 @@ def build(out: Path) -> dict:
                       "reason": miss.reason.value})
 
         # 4. three tasks, one completed, one interrupted -------------------
-        for index in range(3):
-            tasks.enqueue(task_id="demo-task-%d" % (index + 1),
-                          run_id=manifest.run_id, generation_id=1,
-                          candidate_id="demo-candidate-%d" % (index + 1),
-                          payload={"build_hash": R["build_spec"].build_hash})
+        # One candidate, two evaluation contexts, plus a second candidate.
+        tasks.enqueue(task_id="demo-task-1", run_id=manifest.run_id,
+                      generation_id=1, candidate_id="demo-candidate-1",
+                      context_key=key.cache_key(),
+                      payload={"build_hash": R["build_spec"].build_hash,
+                               "scenario_id": "fixture-clear-dense"})
+        screen_key = key.at_fidelity(Fidelity.SCREEN)
+        tasks.enqueue(task_id="demo-task-2", run_id=manifest.run_id,
+                      generation_id=1, candidate_id="demo-candidate-1",
+                      context_key=screen_key.cache_key(),
+                      payload={"build_hash": R["build_spec"].build_hash,
+                               "fidelity": "screen"})
+        tasks.enqueue(task_id="demo-task-3", run_id=manifest.run_id,
+                      generation_id=1, candidate_id="demo-candidate-2",
+                      payload={"build_hash": R["build_spec"].build_hash})
+        steps.append({
+            "step": "two_contexts_for_one_candidate",
+            "tasks": [t.task_id for t in tasks.by_state(
+                manifest.run_id, TaskState.QUEUED)],
+            "candidates": sorted({t.candidate_id for t in tasks.by_state(
+                manifest.run_id, TaskState.QUEUED)})})
 
         checkpoint = replace(
             R["checkpoint"], manifest_hash=bundle.manifest_hash,
@@ -124,9 +156,24 @@ def build(out: Path) -> dict:
         validate_checkpoint(checkpoint, manifest_hash=bundle.manifest_hash,
                             run_id=manifest.run_id)
 
-        tasks.dispatch("demo-task-1", worker_id="demo-worker-1")
+        dispatched = tasks.dispatch("demo-task-1", worker_id="demo-worker-1")
         result = replace(R["evaluation_result"], cache_key=key.cache_key())
-        store.commit_evaluation("demo-task-1", result, run_id=manifest.run_id)
+        store.commit_evaluation("demo-task-1", result, run_id=manifest.run_id,
+                                attempt=dispatched.attempt)
+
+        # A cancelled task cannot be revived by a late result.
+        tasks.dispatch("demo-task-3", worker_id="demo-worker-3")
+        tasks.cancel("demo-task-3", reason="superseded by a better candidate")
+        try:
+            store.commit_evaluation("demo-task-3", result,
+                                    run_id=manifest.run_id)
+            revived = True
+        except Exception:
+            revived = False
+        steps.append({"step": "cancelled_task_stays_cancelled",
+                      "state": tasks.get("demo-task-3").state.value,
+                      "late_result_accepted": revived})
+
         tasks.dispatch("demo-task-2", worker_id="demo-worker-2")
         # The coordinator is interrupted here: demo-task-2 is still running
         # and the checkpoint on disk still says nothing has completed.

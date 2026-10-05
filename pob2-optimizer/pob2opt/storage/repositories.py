@@ -30,19 +30,24 @@ from ..domain import (
     RecordIndex,
     canonical_text,
     from_jsonable,
+    manifest_hash,
     kind_of,
     to_jsonable,
     validate_record,
 )
 from ..domain.cache import decide as decide_cache
-from ..domain.enums import TaskState
+from ..domain.enums import TASK_TRANSITIONS, TaskState
 from .blobs import BlobStore, BlobWrite
+from .index import StoreIndex
 from .database import open_database, transaction, utcnow
 from .errors import (
     CacheKeyConflict,
     DuplicateRecord,
     RecordNotFound,
+    StaleAttempt,
     StorageError,
+    TaskResultMismatch,
+    TaskStateError,
 )
 
 RUN_DATABASE = "run.sqlite"
@@ -135,7 +140,9 @@ class RunStore:
         ingestion of the same bytes reuses. The reverse order would leave a
         record pointing at bytes that were never stored.
         """
-        self._require_valid(document, expected="source_document")
+        # Raw acquisition precedes normalization (contracts.md), so a source
+        # document is stored without resolving its references.
+        document = self._require_valid(document, expected="source_document")
         blob = self.blobs.put(payload)
         if document.blob_hash != blob.blob_hash:
             raise StorageError(
@@ -175,7 +182,7 @@ class RunStore:
 
     def put_acquisition_result(self, result: Any) -> bool:
         """Record an attempt, successful or not. Failures are kept."""
-        self._require_valid(result, expected="acquisition_result")
+        result = self._require_valid(result, expected="acquisition_result")
         with transaction(self.conn) as conn:
             if conn.execute("SELECT 1 FROM source_record WHERE record_id = ?",
                             (result.record_id,)).fetchone():
@@ -221,30 +228,125 @@ class RunStore:
 
     # -- normalized records -------------------------------------------------
 
-    def put_normalized(self, record: Any) -> bool:
+    def put_normalized(self, record: Any, *,
+                       require_references: bool = True) -> bool:
+        """Accept one normalized record.
+
+        References are resolved against this store by default. A record whose
+        catalog, equipment, rotation or raw payload is not here is not
+        normalized data, it is a dangling fragment, and admitting it was how
+        an incomplete bundle came to call itself readable (P01-R03).
+
+        ``require_references=False`` is the explicit staging escape hatch for
+        an import that will be completed in a later call; prefer
+        :meth:`put_normalized_batch`, which resolves within the batch.
+        """
+        return self.put_normalized_batch(
+            [record], require_references=require_references)[record.record_id]
+
+    def put_normalized_batch(self, records: Sequence[Any], *,
+                             require_references: bool = True) -> dict[str, bool]:
+        """Accept several normalized records as one unit."""
+        for record in records:
+            kind = kind_of(record)
+            if kind not in _NORMALIZED_HASHES:
+                raise StorageError("%s is not a normalized record kind" % kind)
+        return self.import_batch(records,
+                                 require_references=require_references)
+
+    def import_batch(self, records: Sequence[Any], *,
+                     require_references: bool = True,
+                     run_id: str | None = None) -> dict[str, bool]:
+        """Accept a set of records of any kind as one validated unit.
+
+        References are resolved against the store **plus the batch**, and
+        everything is written in one transaction. This is what cyclic
+        references need: a patch profile cites the catalog that cites it, and
+        it also cites a gap that lives in another table, so neither an
+        ordering nor a normalized-only batch can import them
+        (review finding P01-R03, point 2).
+        """
+        index = self.reference_index(records) if require_references else None
+        decoded = [self._require_valid(record, index=index)
+                   for record in records]
+
+        created: dict[str, bool] = {}
+        with transaction(self.conn) as conn:
+            for record in decoded:
+                kind = kind_of(record)
+                writer = self._WRITERS.get(kind)
+                if writer is None:
+                    raise StorageError("%s cannot be imported in a batch" % kind)
+                created[_identity_of(record)] = writer(self, conn, record,
+                                                       run_id)
+        return created
+
+    # -- single-record writers, each usable inside a shared transaction ----
+
+    def _write_normalized(self, conn: sqlite3.Connection, record: Any,
+                          _run_id: str | None = None) -> bool:
         kind = kind_of(record)
-        if kind not in _NORMALIZED_HASHES:
-            raise StorageError("%s is not a normalized record kind" % kind)
-        self._require_valid(record)
         hash_field = _NORMALIZED_HASHES[kind]
         payload = canonical_text(to_jsonable(record))
-        with transaction(self.conn) as conn:
-            existing = conn.execute(
-                "SELECT json FROM normalized_record WHERE record_id = ?",
-                (record.record_id,)).fetchone()
-            if existing is not None:
-                if existing["json"] != payload:
-                    raise DuplicateRecord(kind, record.record_id)
-                return False
-            conn.execute(
-                "INSERT INTO normalized_record (record_id, kind, primary_hash,"
-                " catalog_hash, status, created_at, json)"
-                " VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (record.record_id, kind,
-                 getattr(record, hash_field) if hash_field else None,
-                 getattr(record, "catalog_hash", None),
-                 _status_of(record), record.created_at, payload))
+        existing = conn.execute(
+            "SELECT json FROM normalized_record WHERE record_id = ?",
+            (record.record_id,)).fetchone()
+        if existing is not None:
+            if existing["json"] != payload:
+                raise DuplicateRecord(kind, record.record_id)
+            return False
+        conn.execute(
+            "INSERT INTO normalized_record (record_id, kind, primary_hash,"
+            " catalog_hash, status, created_at, json)"
+            " VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (record.record_id, kind,
+             getattr(record, hash_field) if hash_field else None,
+             getattr(record, "catalog_hash", None),
+             _status_of(record), record.created_at, payload))
         return True
+
+    def _write_gap(self, conn: sqlite3.Connection, gap: Any,
+                   _run_id: str | None = None) -> bool:
+        if conn.execute("SELECT 1 FROM data_gap WHERE gap_id = ?",
+                        (gap.gap_id,)).fetchone():
+            return False
+        conn.execute(
+            "INSERT INTO data_gap (gap_id, kind, severity, status,"
+            " created_at, json) VALUES (?, ?, ?, ?, ?, ?)",
+            (gap.gap_id, gap.kind.value, gap.severity.value, gap.status.value,
+             gap.created_at, canonical_text(to_jsonable(gap))))
+        return True
+
+    def _write_observation(self, conn: sqlite3.Connection, observation: Any,
+                           _run_id: str | None = None) -> bool:
+        if conn.execute("SELECT 1 FROM observation WHERE observation_id = ?",
+                        (observation.observation_id,)).fetchone():
+            return False
+        conn.execute(
+            "INSERT INTO observation (observation_id, build_hash, scenario_id,"
+            " dataset_split, outcome, created_at, json)"
+            " VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (observation.observation_id, observation.build_hash,
+             observation.scenario_id, observation.dataset_split.value,
+             observation.outcome.value, observation.created_at,
+             canonical_text(to_jsonable(observation))))
+        return True
+
+    def _write_run(self, conn: sqlite3.Connection, manifest: Any,
+                   _run_id: str | None = None) -> bool:
+        if conn.execute("SELECT 1 FROM run WHERE run_id = ?",
+                        (manifest.run_id,)).fetchone():
+            return False
+        conn.execute(
+            "INSERT INTO run (run_id, manifest_hash, availability_mode,"
+            " stop_status, created_at, json) VALUES (?, ?, ?, 'running', ?, ?)",
+            (manifest.run_id, manifest_hash(manifest),
+             manifest.availability_mode.value, manifest.created_at,
+             canonical_text(to_jsonable(manifest))))
+        return True
+
+    #: Filled in below, once the methods exist.
+    _WRITERS: dict[str, Any] = {}
 
     def get_normalized(self, record_id: str) -> Any:
         row = self.conn.execute(
@@ -253,6 +355,20 @@ class RunStore:
         if row is None:
             raise RecordNotFound("normalized_record", record_id)
         return from_jsonable(RECORD_TYPES[row["kind"]], json.loads(row["json"]))
+
+    def get_record(self, record_id: str) -> Any:
+        """Any persisted record by id, whichever table it lives in."""
+        for _rid, _kind, record in self.iter_stored():
+            if _rid == record_id:
+                return record
+        raise RecordNotFound("record", record_id)
+
+    def has_record(self, record_id: str) -> bool:
+        try:
+            self.get_record(record_id)
+        except RecordNotFound:
+            return False
+        return True
 
     def find_normalized(self, kind: str, primary_hash: str) -> list[Any]:
         rows = self.conn.execute(
@@ -270,19 +386,12 @@ class RunStore:
 
     # -- gaps, observations, runs ------------------------------------------
 
-    def put_gap(self, gap: Any) -> bool:
-        self._require_valid(gap, expected="data_gap")
+    def put_gap(self, gap: Any, *, require_references: bool = True) -> bool:
+        gap = self._require_valid(
+            gap, expected="data_gap",
+            index=self.reference_index([gap]) if require_references else None)
         with transaction(self.conn) as conn:
-            if conn.execute("SELECT 1 FROM data_gap WHERE gap_id = ?",
-                            (gap.gap_id,)).fetchone():
-                return False
-            conn.execute(
-                "INSERT INTO data_gap (gap_id, kind, severity, status,"
-                " created_at, json) VALUES (?, ?, ?, ?, ?, ?)",
-                (gap.gap_id, gap.kind.value, gap.severity.value,
-                 gap.status.value, gap.created_at,
-                 canonical_text(to_jsonable(gap))))
-        return True
+            return self._write_gap(conn, gap)
 
     def open_gaps(self, severity: str | None = None) -> list[Any]:
         sql = "SELECT json FROM data_gap WHERE status = 'open'"
@@ -293,36 +402,34 @@ class RunStore:
         return [from_jsonable(RECORD_TYPES["data_gap"], json.loads(r["json"]))
                 for r in self.conn.execute(sql + " ORDER BY gap_id", params)]
 
-    def put_observation(self, observation: Any) -> bool:
-        self._require_valid(observation, expected="observation")
+    def put_observation(self, observation: Any, *,
+                        require_references: bool = True) -> bool:
+        observation = self._require_valid(
+            observation, expected="observation",
+            index=self.reference_index([observation])
+            if require_references else None)
         with transaction(self.conn) as conn:
-            if conn.execute(
-                    "SELECT 1 FROM observation WHERE observation_id = ?",
-                    (observation.observation_id,)).fetchone():
-                return False
-            conn.execute(
-                "INSERT INTO observation (observation_id, build_hash,"
-                " scenario_id, dataset_split, outcome, created_at, json)"
-                " VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (observation.observation_id, observation.build_hash,
-                 observation.scenario_id, observation.dataset_split.value,
-                 observation.outcome.value, observation.created_at,
-                 canonical_text(to_jsonable(observation))))
-        return True
+            return self._write_observation(conn, observation)
 
-    def put_run(self, manifest: Any, manifest_hash: str) -> bool:
-        self._require_valid(manifest, expected="run_manifest")
+    def put_run(self, manifest: Any, expected_hash: str | None = None, *,
+                require_references: bool = True) -> bool:
+        """Store a run manifest.
+
+        The stored digest is recomputed from the manifest, never taken on
+        trust. ``expected_hash``, when given, is checked against it, so a
+        caller that already computed one finds out here if they disagree.
+        """
+        manifest = self._require_valid(
+            manifest, expected="run_manifest",
+            index=self.reference_index([manifest])
+            if require_references else None)
+        digest = manifest_hash(manifest)
+        if expected_hash is not None and expected_hash != digest:
+            raise StorageError(
+                "manifest %s hashes to %s, not the %s the caller expected"
+                % (manifest.run_id, digest, expected_hash))
         with transaction(self.conn) as conn:
-            if conn.execute("SELECT 1 FROM run WHERE run_id = ?",
-                            (manifest.run_id,)).fetchone():
-                return False
-            conn.execute(
-                "INSERT INTO run (run_id, manifest_hash, availability_mode,"
-                " stop_status, created_at, json) VALUES (?, ?, ?, 'running', ?, ?)",
-                (manifest.run_id, manifest_hash,
-                 manifest.availability_mode.value, manifest.created_at,
-                 canonical_text(to_jsonable(manifest))))
-        return True
+            return self._write_run(conn, manifest)
 
     def get_run(self, run_id: str) -> Any:
         row = self.conn.execute("SELECT json FROM run WHERE run_id = ?",
@@ -364,14 +471,32 @@ class RunStore:
 
     def commit_evaluation(self, task_id: str | None, result: Any, *,
                           run_id: str | None = None,
-                          legacy: bool = False) -> Committed:
+                          legacy: bool = False,
+                          require_references: bool = True,
+                          attempt: int | None = None) -> Committed:
         """Write one result and close its task, in one transaction.
 
         Idempotent on purpose: a repeated completion message for the same
         task and the same evaluation is a no-op, so a duplicate delivery
         cannot create a second result or count one twice.
+
+        Everything else is refused, and refused atomically, so a rejected
+        completion leaves no evaluation row behind:
+
+        * only a ``running`` task may complete. A cancelled, queued or failed
+          task stays as it is; before the review a late result silently
+          revived cancelled work (P01-R01).
+        * when the task carries a ``context_key``, the result must be the
+          evaluation that key names. A worker cannot close a boss task with a
+          clear result.
+        * ``attempt`` says which dispatch produced this result. A result from
+          a superseded attempt, which is what arrives when a worker outlives
+          a recovery, is rejected rather than attributed to the attempt now
+          running. Omit it only when the caller genuinely does not know.
         """
-        self._require_valid(result, expected="evaluation_result")
+        result = self._require_valid(
+            result, expected="evaluation_result",
+            index=self.reference_index([result]) if require_references else None)
         payload = canonical_text(to_jsonable(result))
         now = self.clock()
         with transaction(self.conn) as conn:
@@ -401,24 +526,42 @@ class RunStore:
                 created = True
 
             if task_id is not None:
-                self._close_task(conn, task_id, result.evaluation_id, now)
+                self._close_task(conn, task_id, result, now, attempt)
         return Committed(result.evaluation_id, created)
 
     @staticmethod
-    def _close_task(conn: sqlite3.Connection, task_id: str,
-                    evaluation_id: str, now: str) -> None:
+    def _close_task(conn: sqlite3.Connection, task_id: str, result: Any,
+                    now: str, attempt: int | None) -> None:
         row = conn.execute(
-            "SELECT state, attempt, evaluation_id FROM task WHERE task_id = ?",
-            (task_id,)).fetchone()
+            "SELECT state, attempt, context_key, evaluation_id FROM task"
+            " WHERE task_id = ?", (task_id,)).fetchone()
         if row is None:
             raise RecordNotFound("task", task_id)
-        if row["state"] == TaskState.COMPLETED.value:
+        state = TaskState(row["state"])
+        evaluation_id = result.evaluation_id
+
+        # An exact repeat of a completed task is the duplicate-delivery case
+        # and stays a no-op. A different result for it is a bug.
+        if state is TaskState.COMPLETED:
             if row["evaluation_id"] != evaluation_id:
-                raise StorageError(
-                    "task %s already completed with evaluation %s; it cannot "
-                    "also produce %s" % (task_id, row["evaluation_id"],
-                                         evaluation_id))
+                raise TaskResultMismatch(
+                    task_id, "already completed with evaluation %s; it cannot "
+                    "also produce %s" % (row["evaluation_id"], evaluation_id))
             return
+
+        if TaskState.COMPLETED not in TASK_TRANSITIONS[state]:
+            raise TaskStateError(task_id, state.value,
+                                 TaskState.COMPLETED.value)
+
+        if row["context_key"] and row["context_key"] != result.cache_key:
+            raise TaskResultMismatch(
+                task_id, "expects the evaluation with cache key %s, but %s "
+                "has cache key %s" % (row["context_key"], evaluation_id,
+                                      result.cache_key))
+
+        if attempt is not None and attempt != row["attempt"]:
+            raise StaleAttempt(task_id, attempt, row["attempt"])
+
         conn.execute(
             "UPDATE task SET state = ?, evaluation_id = ?, finished_at = ?,"
             " error = NULL WHERE task_id = ?",
@@ -426,8 +569,8 @@ class RunStore:
         conn.execute(
             "INSERT INTO task_event (task_id, attempt, from_state, to_state,"
             " reason, at) VALUES (?, ?, ?, ?, ?, ?)",
-            (task_id, row["attempt"], row["state"], TaskState.COMPLETED.value,
-             "result committed", now))
+            (task_id, row["attempt"], state.value, TaskState.COMPLETED.value,
+             "result %s committed" % evaluation_id, now))
 
     def evaluation_by_cache_key(self, cache_key: str) -> Any | None:
         row = self.conn.execute(
@@ -475,17 +618,32 @@ class RunStore:
 
     # -- validation --------------------------------------------------------
 
-    def _require_valid(self, record: Any, *, expected: str | None = None) -> None:
+    def _require_valid(self, record: Any, *, expected: str | None = None,
+                       index: Any = None, pending: Sequence[Any] = ()) -> Any:
+        """Validate and return the **decoded** record to persist.
+
+        Returning the decoded instance matters: a hand-built dataclass can
+        hold a wire value where a typed one belongs, and only the decoded
+        record is guaranteed to be the one the schema accepted
+        (review finding P01-R02).
+        """
         kind = kind_of(record)
         if expected is not None and kind != expected:
             raise StorageError("expected a %s, got a %s" % (expected, kind))
-        validate_record(record).raise_for_errors()
+        if index is None and pending:
+            index = StoreIndex.with_pending(self, pending)
+        return validate_record(record, index=index).raise_for_errors()
 
-    def index(self) -> RecordIndex:
-        """Everything stored here, for the semantic reference pass."""
+    def reference_index(self, pending: Sequence[Any] = (),
+                        blob_hashes: Iterable[str] = ()) -> StoreIndex:
+        """Resolve references against this store, plus any pending batch."""
+        return StoreIndex.with_pending(self, pending, blob_hashes)
+
+    def record_index(self) -> RecordIndex:
+        """Materialize every identifier. For reporting, not for a lookup."""
         index = RecordIndex()
-        for row in self.conn.execute("SELECT blob_hash FROM blob"):
-            index.add_blob(row["blob_hash"])
+        for blob_hash in self.blobs.iter_hashes():
+            index.add_blob(blob_hash)
         for table, kind_column in (("source_record", "kind"),
                                    ("normalized_record", "kind")):
             for row in self.conn.execute(
@@ -501,22 +659,63 @@ class RunStore:
                                         json.loads(row["json"])))
         return index
 
-    def validate_stored(self, kinds: Sequence[str] | None = None
-                        ) -> dict[str, Any]:
-        """Re-validate stored records against the current corpus index."""
-        index = self.index()
-        reports: dict[str, Any] = {}
-        for table, kind_column in (("source_record", "kind"),
-                                   ("normalized_record", "kind")):
+    def iter_stored(self, kinds: Sequence[str] | None = None
+                    ) -> Iterator[tuple[str, str, Any]]:
+        """Every persisted record, as ``(record_id, kind, record)``.
+
+        All of them, not only the source and normalized tables: evaluations,
+        gaps, observations and manifests carry references too.
+        """
+        tables = (("source_record", None), ("normalized_record", None),
+                  ("evaluation", "evaluation_result"), ("data_gap", "data_gap"),
+                  ("observation", "observation"), ("run", "run_manifest"))
+        for table, fixed_kind in tables:
+            column = "kind" if fixed_kind is None else "'%s' AS kind" % fixed_kind
+            id_column = {"evaluation": "evaluation_id", "data_gap": "gap_id",
+                         "observation": "observation_id", "run": "run_id",
+                         }.get(table, "record_id")
             for row in self.conn.execute(
-                    "SELECT record_id, %s AS kind, json FROM %s"
-                    % (kind_column, table)):
+                    "SELECT %s AS rid, %s, json FROM %s"
+                    % (id_column, column, table)):
                 if kinds is not None and row["kind"] not in kinds:
                     continue
-                record = from_jsonable(RECORD_TYPES[row["kind"]],
-                                       json.loads(row["json"]))
-                reports[row["record_id"]] = validate_record(record, index=index)
-        return reports
+                yield (row["rid"], row["kind"],
+                       from_jsonable(RECORD_TYPES[row["kind"]],
+                                     json.loads(row["json"])))
+
+    def validate_stored(self, kinds: Sequence[str] | None = None
+                        ) -> dict[str, Any]:
+        """Re-validate every stored record against this store as a corpus."""
+        index = self.reference_index()
+        return {rid: validate_record(record, index=index)
+                for rid, _kind, record in self.iter_stored(kinds)}
+
+    def unresolved_references(self) -> dict[str, list[str]]:
+        """``record_id -> unresolved field paths``, empty when closed."""
+        out: dict[str, list[str]] = {}
+        for rid, report in self.validate_stored().items():
+            paths = [e.field_path for e in report.errors
+                     if e.code == "unresolved_reference"]
+            if paths:
+                out[rid] = paths
+        return out
+
+
+def _identity_of(record: Any) -> str:
+    """The id a batch result is keyed by."""
+    for attribute in ("record_id", "gap_id", "observation_id", "run_id"):
+        value = getattr(record, attribute, None)
+        if value is not None:
+            return str(value)
+    raise StorageError("%s has no identifier" % kind_of(record))
+
+
+RunStore._WRITERS = dict(
+    {kind: RunStore._write_normalized for kind in _NORMALIZED_HASHES},
+    data_gap=RunStore._write_gap,
+    observation=RunStore._write_observation,
+    run_manifest=RunStore._write_run,
+)
 
 
 def _status_of(record: Any) -> str | None:

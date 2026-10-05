@@ -67,14 +67,16 @@
     },
     {
       "path": "records/source_and_catalog.v1.json",
-      "sha256": "cdf391b1050ec221a2f204bc6e7e8af776d4224f8cc1ba98732bc12f14b7304c",
-      "bytes": 9366,
+      "sha256": "b8b8515939e646999e2ee3c526ed2773e768f6bd9573dd965dd69ed760ff23bd",
+      "bytes": 11412,
       "origin": "synthetic",
       "author": "P01-T01",
       "description": "Valid and invalid SourceDocument, AcquisitionResult, PatchProfile and GameCatalog examples, plus the original bytes behind the fixture source.",
       "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
         "tests/unit/test_p01_t01_records.py",
         "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
         "tests/unit/test_p01_t03_storage.py",
         "tests/unit/test_p01_t04_cache.py",
         "tests/unit/test_p01_t05_tasks.py"
@@ -83,14 +85,16 @@
     },
     {
       "path": "records/items_and_builds.v1.json",
-      "sha256": "b86eb77387d7d6b9dda97ac6c774a969e68d36f4253dd0852dfc3042b268f84e",
-      "bytes": 12422,
+      "sha256": "03b3103c25b42477a293894d744508ba6d948f34ddd3c5f13558a0c295860f65",
+      "bytes": 12420,
       "origin": "synthetic",
       "author": "P01-T01",
       "description": "Valid and invalid ItemInstance, Listing, BuildSpec and ParseResult examples, including the cases that keep item and listing identity apart.",
       "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
         "tests/unit/test_p01_t01_records.py",
         "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
         "tests/unit/test_p01_t03_storage.py",
         "tests/unit/test_p01_t04_cache.py",
         "tests/unit/test_p01_t05_tasks.py"
@@ -99,14 +103,16 @@
     },
     {
       "path": "records/mechanics_and_gaps.v1.json",
-      "sha256": "2efb751c24f90269cce2caa415efd7593f047e7447ff2ba287fe5155257a1c81",
-      "bytes": 5320,
+      "sha256": "81fcbca47bd3cb57368c677cfa77e4e9e075b30c25da43584dc1185679cdf944",
+      "bytes": 5318,
       "origin": "synthetic",
       "author": "P01-T01",
       "description": "Valid and invalid MechanicClaim, MechanicRule and DataGap examples, including evidence requests too vague to collect.",
       "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
         "tests/unit/test_p01_t01_records.py",
         "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
         "tests/unit/test_p01_t03_storage.py",
         "tests/unit/test_p01_t04_cache.py",
         "tests/unit/test_p01_t05_tasks.py"
@@ -115,14 +121,16 @@
     },
     {
       "path": "records/scenarios_and_results.v1.json",
-      "sha256": "5bcd5b8f14693a115547d8e44c8992729fcf25425aeed140c8eda5b42877d42e",
-      "bytes": 12715,
+      "sha256": "2750344cc184f4261a89cf675f32b34e679437b5f9bd723d775bfda870032956",
+      "bytes": 12709,
       "origin": "synthetic",
       "author": "P01-T01",
       "description": "Valid and invalid ScenarioSpec, RotationPolicy, EvaluationResult, AggregateResult and Observation examples.",
       "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
         "tests/unit/test_p01_t01_records.py",
         "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
         "tests/unit/test_p01_t03_storage.py",
         "tests/unit/test_p01_t04_cache.py",
         "tests/unit/test_p01_t05_tasks.py"
@@ -137,8 +145,10 @@
       "author": "P01-T01",
       "description": "Valid and invalid RunRequest, RunManifest, Checkpoint and ReviewRecord examples, including an unresolved worker count in a frozen manifest.",
       "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
         "tests/unit/test_p01_t01_records.py",
         "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
         "tests/unit/test_p01_t03_storage.py",
         "tests/unit/test_p01_t04_cache.py",
         "tests/unit/test_p01_t05_tasks.py"

@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from record_fixtures import records
+from record_fixtures import records, seed_corpus
 
 from pob2opt.domain import manifest_hash
 from pob2opt.domain.enums import StopStatus, TaskState
@@ -43,7 +43,13 @@ RESULT = R["evaluation_result"]
 
 @pytest.fixture
 def bundle(tmp_path: Path) -> RunBundle:
+    """A bundle holding the whole fixture corpus, so results can be committed.
+
+    An EvaluationResult names a build, a rotation, a scenario, a gap and a
+    rule; a bundle that holds none of them cannot accept one.
+    """
     with RunBundle.create(tmp_path / RUN_ID, MANIFEST) as created:
+        seed_corpus(created.store, with_results=False)
         yield created
 
 
@@ -110,16 +116,32 @@ def test_dispatching_a_task_that_is_already_running_is_refused(bundle):
         tasks.dispatch(task_id, worker_id="worker-2")
 
 
-def test_task_ids_generations_and_candidates_are_unique(bundle: RunBundle):
+def test_task_identity_is_the_candidate_plus_its_evaluation_context(bundle):
+    """Revised after review finding P01-R04.
+
+    This test used to assert that one candidate in one generation could only
+    ever have one task, which refused a boss scenario after a clear one.
+    Identity is the candidate *and* the context it is evaluated under.
+    """
     tasks = bundle.store.tasks
     seed_tasks(bundle, 1)
+
+    # The same task id is still a no-op.
     assert tasks.enqueue(task_id="fixture-task-1", run_id=RUN_ID,
                          generation_id=1, candidate_id="other",
                          payload={}) is False
+
+    # The same candidate with no context key is still one task.
     with pytest.raises(sqlite3.IntegrityError):
         tasks.enqueue(task_id="fixture-task-9", run_id=RUN_ID,
                       generation_id=1, candidate_id="fixture-candidate-1",
                       payload={})
+
+    # The same candidate under a different context is a different task.
+    assert tasks.enqueue(task_id="fixture-task-9", run_id=RUN_ID,
+                         generation_id=1, candidate_id="fixture-candidate-1",
+                         payload={}, context_key="a" * 64) is True
+    assert tasks.get("fixture-task-9").context_key == "a" * 64
 
 
 def test_claim_next_takes_one_task_at_a_time(bundle: RunBundle):

@@ -44,25 +44,43 @@ defences. The defences are the transaction boundary in
 `RunStore.ingest_source` and the `UNIQUE` index on `evaluation.cache_key`;
 these queries confirm they held.
 
+`schema_version` now reports two migrations. Migration 2 replaced the unique
+`(run_id, generation_id, candidate_id)` index with a non-unique grouping
+index plus a unique `(run_id, generation_id, candidate_id, context_key)`.
+Migration 1 was not edited: a database already at v1 upgrades in place, and
+`tests/unit/test_p01_t03_storage.py::test_a_v1_database_upgrades_to_v2_without_losing_tasks`
+proves the existing rows survive with an empty context key.
+
 ## Recorded output from the example run
 
-Three tasks were queued. One completed, one was interrupted while running and
-recovered, one was never dispatched. A duplicate completion message for the
-finished task was delivered after the restart.
+Three tasks were queued: two evaluation contexts for one candidate and a
+third for another candidate. One completed, one was interrupted while
+running and recovered, and the third was cancelled and then had a late
+result delivered to it. A duplicate completion message for the finished
+task was delivered after the restart.
 
 ### `task_counts_by_state`
 
 | run_id | state | tasks |
 |---|---|---|
+| fixture-run-1 | cancelled | 1 |
 | fixture-run-1 | completed | 1 |
-| fixture-run-1 | queued | 2 |
+| fixture-run-1 | queued | 1 |
+
+The cancelled task stayed cancelled. The late result delivered to it was
+refused with `TaskStateError` and left no evaluation row, which is review
+finding P01-R01.
 
 ### `unfinished_tasks`
 
 | task_id | generation | candidate | state | attempt | dispatched_at |
 |---|---|---|---|---|---|
-| demo-task-2 | 1 | demo-candidate-2 | queued | 1 | null |
-| demo-task-3 | 1 | demo-candidate-3 | queued | 0 | null |
+| demo-task-2 | 1 | demo-candidate-1 | queued | 1 | null |
+
+`demo-task-1` and `demo-task-2` are two evaluation contexts for the same
+candidate in the same generation, which migration 2 allows and migration 1
+refused (review finding P01-R04). They are distinguished by `context_key`,
+not by inventing a second candidate id.
 
 `demo-task-2` is queued again with `attempt = 1`: the interrupted attempt is
 still counted, so a candidate that keeps crashing stays visible rather than
@@ -93,11 +111,15 @@ result was committed.
 | run_id | kind | refs |
 |---|---|---|
 | fixture-run-1 | blob | 1 |
-| fixture-run-1 | normalized | 5 |
-| fixture-run-1 | source | 1 |
+| fixture-run-1 | normalized | 11 |
+| fixture-run-1 | source | 2 |
 
-The corpus was deleted after this copy and the bundle still read every one of
-them: see `corpus_disconnected` in `demo-run.json`.
+Two records were asked for, `fixture-build-1` and `fixture-clear-dense`;
+eleven were copied, because `copy_references` closes over the reference
+graph. The corpus was then deleted and the bundle still resolved every
+reference: `corpus_disconnected` in `demo-run.json` records
+`require_readable()`, which raises rather than returning an optimistic
+answer (review finding P01-R03).
 
 ### `legacy_imports_are_labelled`
 

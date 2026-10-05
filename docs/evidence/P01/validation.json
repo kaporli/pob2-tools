@@ -1,21 +1,25 @@
 {
   "schema_version": 1,
   "task": "P01",
-  "recorded_on": "2026-10-04",
+  "revision": "repair of review findings P01-R01 through P01-R05",
+  "recorded_on": "2026-10-05",
   "specification_version": "1.0",
-  "what_this_is": "Offline test and check results for the P01 delivery, recorded on the development machine described in docs/evidence/P00/environment.md. Every record, hash and run exercised by these suites is SYNTHETIC. No PoB engine, no provider and no gameplay measurement is involved, so nothing here is evidence about PoE 2 mechanics or about practical performance.",
+  "review": "docs/reviews/P01.md",
+  "reviewed_commit": "ae4303ee8db334c6d07a73f92a606dd77d5649f5",
+  "what_this_is": "Test and check results for the P01 repair, recorded on the development machine described in docs/evidence/P00/environment.md. Every record and run exercised is SYNTHETIC: no PoB engine, no provider and no gameplay measurement is involved, so nothing here is evidence about PoE 2 mechanics or about practical performance.",
+  "counting_note": "JUnit reports an expected failure as a skip. The unit runs are 542 passed and 7 strict xfails, all P00 characterizations waiting on P02 and P08. The default run adds 34 engine skips and 1 integration xfail.",
   "runs": [
     {
       "what": "offline unit suite",
-      "interpreter": "CPython 3.12.4 (development interpreter)",
+      "interpreter": "CPython 3.12.4 (development)",
       "command": "python -m pytest tests/unit",
       "result": {
-        "tests": 446,
-        "passed": 439,
+        "tests": 549,
+        "passed": 542,
         "failures": 0,
         "errors": 0,
         "skipped": 7,
-        "time_s": 4.56
+        "time_s": 5.72
       }
     },
     {
@@ -23,12 +27,12 @@
       "interpreter": "CPython 3.10.22 (clean locked venv .venv/pr2-validation/py310-a)",
       "command": ".venv/pr2-validation/py310-a/Scripts/python.exe -m pytest tests/unit",
       "result": {
-        "tests": 446,
-        "passed": 439,
+        "tests": 549,
+        "passed": 542,
         "failures": 0,
         "errors": 0,
         "skipped": 7,
-        "time_s": 4.42
+        "time_s": 5.88
       }
     },
     {
@@ -36,27 +40,40 @@
       "interpreter": "CPython 3.12.4 (clean locked venv .venv/pr2-validation/py312-a)",
       "command": ".venv/pr2-validation/py312-a/Scripts/python.exe -m pytest tests/unit",
       "result": {
-        "tests": 446,
-        "passed": 439,
+        "tests": 549,
+        "passed": 542,
         "failures": 0,
         "errors": 0,
         "skipped": 7,
-        "time_s": 4.36
+        "time_s": 5.76
+      }
+    },
+    {
+      "what": "the nine P01 test modules only",
+      "interpreter": "CPython 3.12.4 (development)",
+      "command": "python -m pytest tests/unit/test_p01_*.py",
+      "result": {
+        "tests": 431,
+        "passed": 431,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_s": 3.7
       }
     },
     {
       "what": "everything selectable by default (unit, integration, engine)",
-      "interpreter": "CPython 3.12.4 (development interpreter)",
+      "interpreter": "CPython 3.12.4 (development)",
       "command": "python -m pytest",
       "result": {
-        "tests": 486,
-        "passed": 444,
+        "tests": 589,
+        "passed": 547,
         "failures": 0,
         "errors": 0,
         "skipped": 42,
-        "time_s": 4.38
+        "time_s": 5.8
       },
-      "note": "34 skips are the engine group: POB2_ROOT is unset in this run and the external/PathOfBuilding-PoE2 submodule is still absent. P01 touches no engine code, so a skip here is not a P01 result."
+      "note": "34 skips are the engine group: POB2_ROOT is unset and the external/PathOfBuilding-PoE2 submodule is still absent. P01 touches no engine code, so a skip there is not a P01 result."
     }
   ],
   "checks": [
@@ -79,17 +96,94 @@
       "output": "verified 39 locked distributions on Python 3.12"
     },
     {
-      "check": "schemas/v1 ships inside the built wheel",
-      "command": "python -m pip wheel --no-deps --no-build-isolation -w <tmp> ./pob2-optimizer",
-      "exit_code": 0,
-      "output": "pob2_optimizer-0.1.0-py3-none-any.whl contains 20 files under pob2opt/schemas/v1/, 10 under pob2opt/domain/ and 10 under pob2opt/storage/"
-    },
-    {
       "check": "end-to-end example reproduces the recorded evidence",
       "command": "python scripts/p01_demo_run.py",
       "exit_code": 0,
-      "output": "writes docs/evidence/P01/demo-run.json; tests/unit/test_p01_demo_run.py re-runs it and compares"
+      "output": "writes docs/evidence/P01/demo-run.json; tests/unit/test_p01_demo_run.py re-runs and compares"
     }
   ],
-  "counting_note": "JUnit reports an expected failure as a skip. The unit runs are 439 passed and 7 strict xfails, all of which are P00 characterizations waiting on P02 and P08, not P01 work. The default run adds 34 engine skips and 1 integration xfail."
+  "review_findings_reproduced_then_repaired": {
+    "cancelled_completion": {
+      "before": "cancelled",
+      "after": "cancelled",
+      "refused_with": "TaskStateError",
+      "evaluation_rows": 0
+    },
+    "second_scenario_task": {
+      "accepted": true
+    },
+    "dangling_normalized_build": {
+      "inserted": false,
+      "unresolved_paths": [
+        "/catalog_hash",
+        "/config/fixture_condition/evidence_ids/0",
+        "/equipment/fixture-slot-weapon/item_hash",
+        "/equipment/fixture-slot-weapon/listing_id",
+        "/progression/evidence_ids/0",
+        "/provenance_ids/0",
+        "/raw_blob_hashes/0",
+        "/rotation_ids/0",
+        "/source_document_ids/0"
+      ]
+    },
+    "incomplete_bundle": {
+      "blobs_declared": 0,
+      "records_declared": 1,
+      "missing_blobs": [],
+      "missing_records": [],
+      "readable": false,
+      "unresolved_reference_count": 12
+    },
+    "transitive_copy": {
+      "asked_for": [
+        "fixture-build-1",
+        "fixture-clear-dense"
+      ],
+      "normalized_copied": 11,
+      "sources_copied": 2,
+      "unresolved": {},
+      "readable": true
+    },
+    "nullable_item": {
+      "validation_ok": true,
+      "stored": true,
+      "read_ok": true,
+      "null_preserved": true
+    },
+    "unchecked_reference_fields": {
+      "patch_evidence": {
+        "validation_ok": false,
+        "paths": [
+          "/patch_evidence_ids/0"
+        ]
+      },
+      "mechanic_dependency": {
+        "validation_ok": false,
+        "paths": [
+          "/dependency_ids/0"
+        ]
+      },
+      "manifest_snapshot": {
+        "validation_ok": false,
+        "paths": [
+          "/source_snapshot_ids/0"
+        ]
+      }
+    },
+    "string_enum_instance": {
+      "raised": false,
+      "ok": true,
+      "decoded_to_enum": true
+    },
+    "aggregate_seed_collision": {
+      "aggregate_keys_equal": false,
+      "evaluation_keys_differ": true
+    }
+  },
+  "probe_command": "python docs/evidence/P01/review-repair-probes.py",
+  "historical_probe": {
+    "script": "docs/evidence/P01/review-ae4303e-probes.py",
+    "results": "docs/evidence/P01/review-ae4303e.json",
+    "note": "The reviewer's script is kept unchanged as evidence about ae4303e. Against the repaired code it now stops at its first probe, because an empty run bundle no longer accepts an evaluation whose build, rotation and scenario it does not hold. That refusal is the P01-R03 fix."
+  }
 }

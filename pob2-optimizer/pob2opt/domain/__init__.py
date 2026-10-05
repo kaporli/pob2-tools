@@ -20,6 +20,7 @@ from __future__ import annotations
 from .absent import ABSENT, Absent, is_present
 from .cache import (
     DEPENDENCY_FIELDS,
+    AggregateComponent,
     AggregateKey,
     CacheDecision,
     EvaluationKey,
@@ -59,6 +60,8 @@ from .schemas import (
     validator_for,
 )
 from .validation import (
+    ANY_RECORD,
+    NAMESPACES,
     RecordIndex,
     RecordInvalid,
     ValidationError,
@@ -69,9 +72,11 @@ from .validation import (
 )
 
 __all__ = [
-    "ABSENT", "Absent", "AggregateKey", "CacheDecision", "CodecError",
+    "ABSENT", "Absent", "AggregateComponent", "AggregateKey",
+    "CacheDecision", "CodecError",
     "DEPENDENCY_FIELDS", "EvaluationKey", "RECORD_KINDS", "RECORD_TYPES",
-    "RecordIndex", "RecordInvalid", "SCHEMA_VERSION",
+    "ANY_RECORD", "NAMESPACES", "RecordIndex", "RecordInvalid",
+    "SCHEMA_VERSION",
     "SUPPORTED_SCHEMA_VERSIONS", "UnknownRecordKind", "UnknownSchemaVersion",
     "ValidationError", "ValidationReport", "available_kinds",
     "baseline_suite_hash", "build_hash", "build_identity", "canonical_json",

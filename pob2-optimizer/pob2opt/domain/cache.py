@@ -36,7 +36,7 @@ unanswerable after the fact.
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
 
 from .enums import CacheOutcome, CacheReason, Fidelity
 from .identity import content_hash
@@ -127,59 +127,80 @@ class EvaluationKey:
         )
 
 
+@dataclass(frozen=True, slots=True, order=True)
+class AggregateComponent:
+    """One evaluation an aggregate score was computed from."""
+
+    scenario_id: str
+    evaluation_cache_key: str
+
+    def identity(self) -> dict[str, Any]:
+        return {"scenario_id": self.scenario_id,
+                "evaluation_cache_key": self.evaluation_cache_key}
+
+    @classmethod
+    def of(cls, scenario_id: str, key: "EvaluationKey") -> "AggregateComponent":
+        return cls(scenario_id, key.cache_key())
+
+
 @dataclass(frozen=True, slots=True)
 class AggregateKey:
-    """An aggregate score additionally depends on objective and baselines."""
+    """The identity of one aggregate score.
+
+    Derived from the **complete set of component evaluation identities**,
+    plus the objective and the baseline suite the components are scored
+    against. Every other dependency - patch, catalog, engine, calibration,
+    registry, fidelity, seed - reaches this key through the component cache
+    keys, which is why they are not repeated as fields.
+
+    Listing only the manifest-level hashes was not enough: changing the run
+    seed moved every evaluation key and left the aggregate key unchanged, so
+    an aggregate computed from different simulation outcomes reused the old
+    identity (review finding P01-R05).
+
+    Components are sorted, so the same set in a different order is the same
+    aggregate and does not cause a spurious miss.
+    """
 
     build_hash: str
     rotation_hash: str
-    patch_profile_hash: str
-    catalog_hash: str
-    pob_commit: str
-    pob_dirty_hash: str | None
-    adapter_version: str
-    mechanics_registry_hash: str
-    calibration_hash: str
-    evaluator_version: str
     objective_hash: str
     baseline_suite_hash: str
+    components: tuple[AggregateComponent, ...]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "components", tuple(sorted(self.components)))
 
     def identity(self) -> dict[str, Any]:
         return {
             "build_hash": self.build_hash,
             "rotation_hash": self.rotation_hash,
-            "patch_profile_hash": self.patch_profile_hash,
-            "catalog_hash": self.catalog_hash,
-            "pob_commit": self.pob_commit,
-            "pob_dirty_hash": self.pob_dirty_hash,
-            "adapter_version": self.adapter_version,
-            "mechanics_registry_hash": self.mechanics_registry_hash,
-            "calibration_hash": self.calibration_hash,
-            "evaluator_version": self.evaluator_version,
             "objective_hash": self.objective_hash,
             "baseline_suite_hash": self.baseline_suite_hash,
+            "components": [c.identity() for c in self.components],
         }
 
     def cache_key(self) -> str:
         return content_hash(self.identity())
 
     @classmethod
-    def from_manifest(cls, manifest: Any, *, build_hash: str,
-                      rotation_hash: str) -> "AggregateKey":
+    def from_components(cls, manifest: Any, *, build_hash: str,
+                        rotation_hash: str,
+                        components: Iterable[AggregateComponent]
+                        ) -> "AggregateKey":
+        """Build from the evaluations that actually produced the score."""
         deps = manifest.dependency_hashes
+        resolved = tuple(components)
+        if not resolved:
+            raise ValueError(
+                "an aggregate score has no identity without the evaluations "
+                "it was computed from")
         return cls(
             build_hash=build_hash,
             rotation_hash=rotation_hash,
-            patch_profile_hash=deps.patch_profile_hash,
-            catalog_hash=deps.catalog_hash,
-            pob_commit=deps.pob_commit,
-            pob_dirty_hash=deps.pob_dirty_hash,
-            adapter_version=deps.adapter_version,
-            mechanics_registry_hash=deps.mechanics_registry_hash,
-            calibration_hash=deps.calibration_hash,
-            evaluator_version=deps.evaluator_version,
             objective_hash=deps.objective_hash,
             baseline_suite_hash=deps.baseline_suite_hash,
+            components=resolved,
         )
 
 

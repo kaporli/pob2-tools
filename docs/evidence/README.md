@@ -28,3 +28,6 @@ them separate.
 | `P01/validation.json` | P01 | Offline test runs on CPython 3.10 and 3.12, plus the schema, lock, packaging and example checks |
 | `P01/demo-run.json` | P01 | Recorded output of the end-to-end example: ingest, bundle, corpus disconnect, interruption, resume, cache and legacy import |
 | `P01/inspection-queries.md` | P01-T05 | The documented read-only queries a reviewer runs against a run database, with the example's output |
+| `P01/review-ae4303e-probes.py` | P01 review | The reviewer's adversarial probe script for commit `ae4303e`; kept unchanged |
+| `P01/review-ae4303e.json` | P01 review | The observations that script recorded, which the repair reproduced before fixing |
+| `P01/review-repair-probes.py` | P01 repair | The same questions asked of the repaired code |

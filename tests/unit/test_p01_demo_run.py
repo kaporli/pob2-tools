@@ -37,14 +37,46 @@ def test_the_bundle_is_readable_without_its_corpus(demo: dict):
     check = step(demo, "corpus_disconnected")["self_check"]
     assert check["readable"] is True
     assert check["missing_blobs"] == [] and check["missing_records"] == []
-    assert check["records_declared"] == 6
+    assert check["unresolved_references"] == {}
+
+
+def test_a_dangling_record_is_refused_with_its_field_paths(demo: dict):
+    """Review finding P01-R03."""
+    refused = step(demo, "dangling_record_refused")["unresolved_paths"]
+    assert "/catalog_hash" in refused
+    assert "/equipment/fixture-slot-weapon/item_hash" in refused
+    assert step(demo, "corpus_closed")["unresolved_references"] == {}
+
+
+def test_asking_for_a_build_copies_its_whole_graph(demo: dict):
+    copied = step(demo, "copy_references")
+    assert copied["asked_for"] == ["fixture-build-1", "fixture-clear-dense"]
+    assert copied["unresolved"] == {}
+    for dependency in ("fixture-catalog-1", "fixture-item-1",
+                       "fixture-listing-1", "fixture-rotation-clear"):
+        assert dependency in copied["normalized"], dependency
+    assert "fixture-source-1" in copied["sources"]
+
+
+def test_one_candidate_carries_several_evaluation_tasks(demo: dict):
+    """Review finding P01-R04."""
+    contexts = step(demo, "two_contexts_for_one_candidate")
+    assert contexts["tasks"] == ["demo-task-1", "demo-task-2", "demo-task-3"]
+    assert contexts["candidates"] == ["demo-candidate-1", "demo-candidate-2"]
+
+
+def test_a_cancelled_task_is_not_revived_by_a_late_result(demo: dict):
+    """Review finding P01-R01."""
+    cancelled = step(demo, "cancelled_task_stays_cancelled")
+    assert cancelled["state"] == "cancelled"
+    assert cancelled["late_result_accepted"] is False
 
 
 def test_resume_keeps_the_completed_result_exactly_once(demo: dict):
     resume = step(demo, "resume")
     assert resume["already_completed"] == ["demo-task-1"]
     assert resume["recovered_from_running"] == ["demo-task-2"]
-    assert resume["to_dispatch"] == ["demo-task-2", "demo-task-3"]
+    assert resume["to_dispatch"] == ["demo-task-2"]
     assert resume["duplicate_message_created_a_second_result"] is False
     assert resume["evaluation_rows"] == 1
 
