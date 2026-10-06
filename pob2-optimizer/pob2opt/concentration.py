@@ -19,6 +19,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import sys
 
 _CALIB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "calibration.json")
 
@@ -49,17 +50,25 @@ DEFAULT_CONSTANTS = {
 }
 
 
+#: Archetypes `classify` can return and the multipliers are defined for.
+#: "unknown" is deliberately absent: an unrecognised delivery geometry is a
+#: gap, and 1.0 would be the most favourable answer available (P02-T04).
+KNOWN_ARCHETYPES = frozenset(DEFAULT_CONSTANTS["st_fudge"]) - {"unknown"}
+
+
 def load_constants() -> dict:
     if os.path.exists(_CALIB_PATH):
         try:
             data = json.load(open(_CALIB_PATH, encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            print("pob2opt: ignoring unreadable %s (%s: %s)"
+                  % (_CALIB_PATH, type(exc).__name__, exc), file=sys.stderr)
+        else:
             c = json.loads(json.dumps(DEFAULT_CONSTANTS))  # deep copy
             c.update({k: v for k, v in data.get("constants", {}).items() if k not in ("st_fudge", "clear_fudge")})
             for k in ("st_fudge", "clear_fudge"):
                 c[k].update(data.get("constants", {}).get(k, {}))
             return c
-        except Exception:
-            pass
     return json.loads(json.dumps(DEFAULT_CONSTANTS))
 
 
@@ -155,9 +164,16 @@ def clear_mult(arch: str, prim: dict, c: dict) -> float:
 
 
 def honest(prim: dict, pob_dps: float, constants: dict = None):
-    """Return {archetype, single_target, clear} honest numbers."""
+    """Return {archetype, single_target, clear} for a delivery geometry.
+
+    An unrecognised archetype returns None for both numbers. It used to return
+    the input unchanged through a 1.0 fudge, which is the most favourable
+    answer there is and indistinguishable from a measured one (P02-T04).
+    """
     c = constants or load_constants()
     arch = classify(prim)
+    if arch not in KNOWN_ARCHETYPES:
+        return {"archetype": arch, "single_target": None, "clear": None}
     st = pob_dps * single_target_mult(arch, prim, c, boss=True)
     clr = pob_dps * single_target_mult(arch, prim, c, boss=False) * clear_mult(arch, prim, c)
     return {"archetype": arch, "single_target": st, "clear": clr}

@@ -49,7 +49,18 @@ local function buildSummary()
 		local id = slot.selItemId
 		if id and id > 0 and build.itemsTab.items[id] then equipped = equipped + 1 end
 	end
+	-- P02-T04: CombinedDPS is AverageDamage for skills whose data sets
+	-- showAverage, and TotalDPS for the rest, so the same key is damage per
+	-- use for some skills and damage per second for others. Report the flag
+	-- rather than leaving the unit to be guessed. nil means "not reported".
+	local showAverage = nil
+	local env = build.calcsTab and build.calcsTab.mainEnv
+	local active = env and env.player and env.player.mainSkill
+	if active and active.skillData then
+		showAverage = active.skillData.showAverage and true or false
+	end
 	return {
+		mainSkillShowAverage = showAverage,
 		buildName = build.buildName,
 		class = spec and spec.curClassName or nil,
 		ascendancy = spec and spec.curAscendClassName or nil,

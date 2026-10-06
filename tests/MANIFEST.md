@@ -58,6 +58,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T02 catalog export (offline) | `python -m pob2opt.cli catalog export --profile docs/evidence/P02/catalog-profile-request.json --out DIR --rows docs/evidence/P02/catalog-rows-slice.json` | Nothing | The same export over the committed row slice. No PoB, no network. |
 | P02-T02 evidence | `python scripts/p02_t02_evidence.py` | PoB | Not a test; rewrites `docs/evidence/P02/catalog-export.json` and `catalog-rows-slice.json`. Without a checkout the summary records `unavailable`. |
 | P02-T03 evidence | `python scripts/p02_t03_evidence.py` | PoB for the `pob_derived` section | Not a test; rewrites `docs/evidence/P02/legality.json`: the verdict for every fixture case, and one real import validated in the pinned engine. Without a checkout that section records `unavailable`. |
+| P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
 
 Selecting the PoB checkout:
 
@@ -114,6 +115,8 @@ none yet).
 | `test_p02_t02_catalog.py` | P02-T02 offline lane: the real exporter over the committed row slice. Bundle self-validation, sample builds resolving, duplicate display names staying distinct, upstream commit changing the context identity, every compatibility verdict including the one path to `verified`, a historical pinned profile staying historical, and each missing upstream rule being a gap rather than a constant. No PoB, no network. |
 | `test_p02_t02_catalog_cli.py` | P02-T02 `pob2opt catalog export` as a command: bundle layout, blobs matching their documents, exit codes 0, 2 and 3, an unknown request key, a missing release directory, and the doctor's `patch_profile_owner` claim now naming a command that exists. |
 | `test_p02_t03_legality.py` | P02-T03 offline lane: one fixture case per rule, each violating that rule alone, the legal boundary beside it, and one combined case. Also that an unknown always cites a gap, that a check that did not run is unknown, that attributes and Spirit together are not a verdict, that nothing is repaired, and that the shipped profile's empty slot categories make equipment undecidable. No PoB, no network. |
+| `test_p02_t04_primitive_semantics.py` | P02-T04 declaration rules: one owner and one unit per primitive, no engine key claimed twice, every inventoried category covered, a missing native output as a gap, and `CombinedDPS` unresolved until the engine flag that decides its unit is present. No PoB. |
+| `test_p02_t04_rotation_estimates.py` | P02-T04 F02 repair through the real `task_tier`: setup time reduces the sustained estimate, an unrelated condition scales the rotation instead of replacing it, an unknown reload duty or delivery geometry is a gap, the deprecated `floor`/`ceiling`/`honest_*` names carry a legacy status, and the arithmetic stays in `pob2opt.legacy_estimates`. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -133,6 +136,7 @@ none yet).
 | `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout and helper identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, recovery from it without a blank character, A-B-A with B read, two documents under one build hash, configuration isolation between evaluations, forced termination and replacement. |
 | `test_p02_t02_catalog_engine.py` | P02-T02 against the real engine: the typed Lua catalog operations paging stably over every table, an unknown table refused as `unsupported` without killing the worker, a catalog read leaving a loaded build untouched, the behaviour fixtures actually running, a PoB-saved build resolving completely, duplicate display names surviving as distinct entities, and a replay of the captured rows reproducing the live catalog hash. |
 | `test_p02_t03_legality_engine.py` | P02-T03 against the real engine: `legality_state` reporting the allocation, equipment and calculated pools the engine holds, a document PoB imports cleanly still being illegal, a record whose claims its own document does not produce, connectivity decided against the real passive tree, and a legality read leaving a loaded build untouched. |
+| `test_p02_t04_primitive_semantics.py` | P02-T04 against the real engine: thirteen controlled fixture documents settling what each primitive contains. `TotalDPS` as damage per use times the rate, hit probability and crit already inside damage per use, extra projectiles changing nothing, damage over time as a duration-independent rate, five meta gems leaving the socketed spell's cadence unchanged, a cooldown becoming the use rate, and `CombinedDPS` switching unit with `showAverage`. |
 
 ### `tests/fixtures`
 
@@ -184,6 +188,23 @@ P02-T01 working tree, PoB `ce566ea`:
 
 The earlier P00 figures, for comparison: 91/34/13, 121/17, 86/12 and 30/104/4
 at commit `6290674`.
+
+Specification version 1.0, 2026-10-06, repository commit `0df64dd` plus the
+P02-T04 working tree, PoB `ce566ea`:
+
+| Command | Result |
+|---|---|
+| `python -m pytest` (no `POB2_ROOT`) | 673 passed, 67 skipped, 3 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 739 passed, 4 xfailed |
+| `python -m pytest tests/unit` | 668 passed, 2 xfailed |
+| `python -m pytest tests/integration` | 5 passed, 1 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 66 passed, 676 deselected, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+
+The two F02 xfails are gone: P02-T04 repaired the path, so
+`test_repaired_concentration_consumes_the_rotation_adjusted_dps` and
+`test_repaired_single_target_responds_to_rotation_quality` are plain passes
+and the three characterizations beside them were migrated in place.
 
 Every `xfail` is `strict` and names the repair task that will turn it into a
 pass. A non-strict xfail is not used anywhere: an expectation that passes early
