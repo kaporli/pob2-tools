@@ -1,0 +1,1373 @@
+{
+ "declared_checks": [
+  "class_membership",
+  "ascendancy_membership",
+  "character_level",
+  "passive_point_budget",
+  "ascendancy_point_budget",
+  "passive_connectivity",
+  "passive_choices",
+  "passive_socketed_entities",
+  "equipment_slots",
+  "equipment_hands",
+  "item_requirements",
+  "item_construction",
+  "skill_restrictions",
+  "support_restrictions",
+  "gem_levels",
+  "reservation_resources",
+  "weapon_set_rules",
+  "post_import_verification"
+ ],
+ "kind": "mixed",
+ "not_a_claim": "A record of what the legality validator answered. The synthetic section is invented input validated against a profile exported from invented rows. The PoB-derived section is one real import in the pinned checkout. Neither is a gameplay measurement, and an `unknown` verdict is a statement about this software's evidence rather than about Path of Exile 2.",
+ "pob_derived": {
+  "catalog_hash": "e82da2ea8a9cb567693f15d848f3f322f0ba5149f560687ebb44da7d63d3ba6f",
+  "document": "docs/evidence/P02/sample-build-ranger-quarterstaff.xml",
+  "imported_state": {
+   "allocated_nodes": [
+    1140,
+    2955,
+    7628,
+    10909,
+    13241,
+    13828,
+    15182,
+    15507,
+    16489,
+    16725,
+    17468,
+    21755,
+    22558,
+    22616,
+    27373,
+    28002,
+    28370,
+    28556,
+    28800,
+    32194,
+    36629,
+    41646,
+    47157,
+    48401,
+    48635,
+    48670,
+    49657,
+    50459,
+    51052,
+    51921,
+    53405,
+    54127,
+    54417,
+    54818,
+    55933,
+    59881,
+    63526
+   ],
+   "ascendancy": "None",
+   "ascendancy_id": 0,
+   "ascendancy_nodes": [],
+   "ascendancy_points_used": 0,
+   "build_hash": "p02t03/evidence-sample",
+   "calculated": true,
+   "class": "Ranger",
+   "class_id": 2,
+   "document_hash": "47e5acb75ab190df97aba1b50ff1c3e650f0187a4803595803070df83020cf8a",
+   "items": {
+    "Weapon 1": "poe2/slots/Weapon 1"
+   },
+   "jewel_sockets_used": 1,
+   "level": 29,
+   "measured": {
+    "attributes": {
+     "dexterity": 15.0,
+     "intelligence": 7.0,
+     "strength": 162.0
+    },
+    "pools": {
+     "life": {
+      "pool": "life",
+      "reserved": 0.0,
+      "total": 743.0,
+      "unreserved": 743.0
+     },
+     "mana": {
+      "pool": "mana",
+      "reserved": 0.0,
+      "total": 168.0,
+      "unreserved": 168.0
+     },
+     "spirit": {
+      "pool": "spirit",
+      "reserved": 0.0,
+      "total": 100.0,
+      "unreserved": 100.0
+     }
+    },
+    "source": "pob_import"
+   },
+   "points_used": 36,
+   "socket_groups": 1,
+   "unreadable_node_keys": [],
+   "weapon_set_points_used": [
+    0,
+    0
+   ]
+  },
+  "kind": "PoB-derived",
+  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+  "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+  "report": {
+   "build_hash": "p02t03/evidence-sample",
+   "catalog_hash": "e82da2ea8a9cb567693f15d848f3f322f0ba5149f560687ebb44da7d63d3ba6f",
+   "checks": [
+    {
+     "check_id": "class_membership",
+     "decision": "legal",
+     "summary": "class poe2/classes/2 is one of the profile's classes"
+    },
+    {
+     "check_id": "ascendancy_membership",
+     "decision": "legal",
+     "summary": "the build declares no ascendancy and allocates none"
+    },
+    {
+     "check_id": "character_level",
+     "decision": "legal",
+     "summary": "level 29 is inside the legal range 1 to 100"
+    },
+    {
+     "check_id": "passive_point_budget",
+     "decision": "unknown",
+     "summary": "the check did not run, so it decided nothing"
+    },
+    {
+     "check_id": "ascendancy_point_budget",
+     "decision": "legal",
+     "summary": "no ascendancy passive is allocated"
+    },
+    {
+     "check_id": "passive_connectivity",
+     "decision": "legal",
+     "summary": "all 37 allocated nodes reach the class start node poe2/passive_nodes/50459"
+    },
+    {
+     "check_id": "passive_choices",
+     "decision": "legal",
+     "summary": "the build makes no passive choice"
+    },
+    {
+     "check_id": "passive_socketed_entities",
+     "decision": "legal",
+     "summary": "nothing is socketed into the tree"
+    },
+    {
+     "check_id": "equipment_slots",
+     "decision": "unknown",
+     "summary": "1 occupied slot(s) examined"
+    },
+    {
+     "check_id": "equipment_hands",
+     "decision": "unknown",
+     "summary": "the check did not run, so it decided nothing"
+    },
+    {
+     "check_id": "item_requirements",
+     "decision": "legal",
+     "summary": "1 equipped item(s) checked against level 29"
+    },
+    {
+     "check_id": "item_construction",
+     "decision": "legal",
+     "summary": "1 equipped item(s) examined for construction"
+    },
+    {
+     "check_id": "skill_restrictions",
+     "decision": "legal",
+     "summary": "the build has no skill group"
+    },
+    {
+     "check_id": "support_restrictions",
+     "decision": "legal",
+     "summary": "no socket group carries a support"
+    },
+    {
+     "check_id": "gem_levels",
+     "decision": "legal",
+     "summary": "the build has no skill entry"
+    },
+    {
+     "check_id": "reservation_resources",
+     "decision": "legal",
+     "summary": "3 pool(s) decided from a pob_import measurement"
+    },
+    {
+     "check_id": "weapon_set_rules",
+     "decision": "legal",
+     "summary": "the build declares no weapon set"
+    },
+    {
+     "check_id": "post_import_verification",
+     "decision": "legal",
+     "summary": "verified against the engine after an exact load of document 47e5acb75ab1: 37 allocated nodes, 0 ascendancy nodes, 1 equipped items"
+    }
+   ],
+   "cited_gap_ids": [
+    "gap/p02-t02/quest-passive-point-rewards",
+    "gap/p02-t02/slot-accepted-base-categories"
+   ],
+   "constraints": [
+    {
+     "allowed": 100.0,
+     "basis": "character_rules/level_range",
+     "decision": "legal",
+     "gap_ids": [],
+     "name": "character_level",
+     "rule_ids": [
+      "character_rules/level_range"
+     ],
+     "used": 29.0
+    },
+    {
+     "allowed": null,
+     "basis": "character_rules/point_budgets/budget/levelling/level-29 counts levelling points only; the quest reward total is a gap",
+     "decision": "unknown",
+     "gap_ids": [
+      "gap/p02-t02/quest-passive-point-rewards"
+     ],
+     "name": "passive_points",
+     "rule_ids": [
+      "budget/levelling/level-29"
+     ],
+     "used": 36.0
+    },
+    {
+     "allowed": 8.0,
+     "basis": "nothing is allocated",
+     "decision": "legal",
+     "gap_ids": [],
+     "name": "ascendancy_points",
+     "rule_ids": [],
+     "used": 0.0
+    },
+    {
+     "allowed": 5.0,
+     "basis": "no socket group carries a support",
+     "decision": "legal",
+     "gap_ids": [],
+     "name": "supports_per_group",
+     "rule_ids": [],
+     "used": 0.0
+    },
+    {
+     "allowed": 100.0,
+     "basis": "engine measurement (pob_import)",
+     "decision": "legal",
+     "gap_ids": [],
+     "name": "spirit_reservation",
+     "rule_ids": [],
+     "used": 0.0
+    },
+    {
+     "allowed": 168.0,
+     "basis": "engine measurement (pob_import)",
+     "decision": "legal",
+     "gap_ids": [],
+     "name": "mana_reservation",
+     "rule_ids": [],
+     "used": 0.0
+    },
+    {
+     "allowed": 743.0,
+     "basis": "engine measurement (pob_import)",
+     "decision": "legal",
+     "gap_ids": [],
+     "name": "life_reservation",
+     "rule_ids": [],
+     "used": 0.0
+    }
+   ],
+   "legality": "unknown",
+   "notes": [
+    "an attribute or Spirit result is two of the 18 declared checks; passing them is not a legality verdict",
+    "allocation read from the engine; equipment read from the engine"
+   ],
+   "patch_profile_id": "patch-profile/unknown-patch/e82da2ea8a9cb567",
+   "raised_gap_ids": [],
+   "unknowns": [
+    {
+     "check_id": "passive_point_budget",
+     "code": "passive_points_above_levelling_budget",
+     "evidence_ids": [],
+     "field_paths": [
+      "/passives/allocated"
+     ],
+     "gap_ids": [
+      "gap/p02-t02/quest-passive-point-rewards"
+     ],
+     "message": "36 ordinary passives are allocated and a level 29 character earns 28 from levelling. Quest rewards add an unknown number on top, so this is over the sourced lower bound and not over a known budget",
+     "rule_id": "budget/levelling/level-29",
+     "subject_ids": []
+    },
+    {
+     "check_id": "equipment_slots",
+     "code": "slot_base_category_undecidable",
+     "evidence_ids": [],
+     "field_paths": [
+      "/equipment/poe2/slots/Weapon 1"
+     ],
+     "gap_ids": [
+      "gap/p02-t02/slot-accepted-base-categories"
+     ],
+     "message": "slot poe2/slots/Weapon 1 declares no accepted base categories, so whether it accepts Fixture Stave was not decided",
+     "rule_id": "poe2/slots/Weapon 1",
+     "subject_ids": [
+      "poe2/slots/Weapon 1"
+     ]
+    },
+    {
+     "check_id": "equipment_hands",
+     "code": "hand_conflict_undecidable",
+     "evidence_ids": [],
+     "field_paths": [
+      "/equipment/poe2/slots/Weapon 1"
+     ],
+     "gap_ids": [
+      "gap/p02-t02/slot-accepted-base-categories"
+     ],
+     "message": "1 weapon slot(s) are occupied and the profile carries no rule for which bases occupy both hands, so two-handed and off-hand conflicts were not decided: poe2/slots/Weapon 1",
+     "rule_id": null,
+     "subject_ids": [
+      "poe2/slots/Weapon 1"
+     ]
+    }
+   ],
+   "validator_version": "p02-t03.0",
+   "violations": []
+  },
+  "status": "measured"
+ },
+ "synthetic": {
+  "case_count": 61,
+  "cases": [
+   {
+    "case": "minimal_legal_record_only",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "Everything decidable from the record alone is legal, and the verdict is still unknown: the build was never imported and no pool was measured."
+   },
+   {
+    "case": "minimal_legal_verified",
+    "cited_gaps": [],
+    "legality": "legal",
+    "unknowns": [],
+    "violations": [],
+    "why": "The same build with the engine's own state and its measured pools. Every declared check answers legal, so the verdict is legal. This is the only shape that can reach it today: a build with equipment cannot, because slot categories are undecidable."
+   },
+   {
+    "case": "level_at_maximum",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "The last legal level passes."
+   },
+   {
+    "case": "level_above_maximum",
+    "cited_gaps": [
+     "gap/p02-t03/missing-point-budget-rule",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "no_passive_budget_rule",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "level_out_of_range"
+    ],
+    "why": "One past the last legal level is illegal, not unknown."
+   },
+   {
+    "case": "level_below_minimum",
+    "cited_gaps": [
+     "gap/p02-t03/missing-point-budget-rule",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "no_passive_budget_rule",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "level_out_of_range"
+    ],
+    "why": "Level zero is below the profile's range."
+   },
+   {
+    "case": "passive_points_exactly_the_levelling_budget",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "Three allocations at level four is exactly the levelling budget and passes."
+   },
+   {
+    "case": "passive_points_above_levelling_budget",
+    "cited_gaps": [
+     "gap/p02-t02/quest-passive-point-rewards",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "passive_points_above_levelling_budget",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "Over the levelling budget is not over the real budget: quest points are a gap, so this is unknown and never illegal."
+   },
+   {
+    "case": "passive_points_exceed_declared_budget",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "passive_points_exceed_declared_budget"
+    ],
+    "why": "When the build declares its own progression budget the check becomes decidable, and three allocations against a declared two is illegal."
+   },
+   {
+    "case": "passive_points_exceed_maximum",
+    "cited_gaps": [
+     "gap/p02-t03/unresolved-catalog-entity",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "allocated_node_not_in_catalog",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "passive_points_exceed_maximum"
+    ],
+    "why": "A hundred ordinary passives is past the profile's sourced maximum of ninety-nine, whatever the quest rewards are."
+   },
+   {
+    "case": "duplicate_passive_allocation",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "duplicate_passive_allocation"
+    ],
+    "why": "The same node allocated twice is rejected rather than counted once."
+   },
+   {
+    "case": "disconnected_passive_allocation",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "disconnected_passive_allocation"
+    ],
+    "why": "An allocated node with no path to the class start node through other allocated nodes."
+   },
+   {
+    "case": "unknown_class",
+    "cited_gaps": [
+     "gap/p02-t03/unresolved-catalog-entity",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "class_start_node_unknown",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "unknown_class"
+    ],
+    "why": "A class the profile's rules do not carry."
+   },
+   {
+    "case": "ascendancy_from_another_class",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "ascendancy_not_on_class"
+    ],
+    "why": "An ascendancy that belongs to a different class."
+   },
+   {
+    "case": "ascendancy_nodes_without_ascendancy",
+    "cited_gaps": [
+     "gap/p02-t02/ascendancy-point-unlock-schedule",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "ascendancy_unlock_schedule_unknown",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "ascendancy_nodes_without_ascendancy"
+    ],
+    "why": "Ascendancy passives allocated while the build declares no ascendancy."
+   },
+   {
+    "case": "ascendancy_points_within_maximum",
+    "cited_gaps": [
+     "gap/p02-t02/ascendancy-point-unlock-schedule",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "ascendancy_unlock_schedule_unknown",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "Two ascendancy points is inside the maximum and the profile has no unlock schedule, so this is unknown and never an automatic acceptance."
+   },
+   {
+    "case": "ascendancy_points_exactly_declared",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "A build that declares its own ascendancy budget makes the check decidable, and two of two passes."
+   },
+   {
+    "case": "ascendancy_points_exceed_maximum",
+    "cited_gaps": [
+     "gap/p02-t03/unresolved-catalog-entity",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "ascendancy_node_not_in_catalog",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "ascendancy_points_exceed_maximum"
+    ],
+    "why": "Nine ascendancy points is past the profile's maximum of eight."
+   },
+   {
+    "case": "ascendancy_nodes_from_two_ascendancies",
+    "cited_gaps": [
+     "gap/p02-t02/ascendancy-point-unlock-schedule",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "ascendancy_unlock_schedule_unknown",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "ascendancy_nodes_from_several_ascendancies"
+    ],
+    "why": "Allocated ascendancy nodes from two different ascendancies."
+   },
+   {
+    "case": "choice_on_unallocated_node",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "choice_on_unallocated_node"
+    ],
+    "why": "A choice recorded for a node the build has not allocated."
+   },
+   {
+    "case": "choice_options_not_exported",
+    "cited_gaps": [
+     "gap/p02-t03/attribute-choice-options",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "choice_options_not_exported",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "The node is allocated and the catalog carries no option list, so the choice is undecidable rather than accepted."
+   },
+   {
+    "case": "socket_into_non_socket_node",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "socketed_into_non_socket_node"
+    ],
+    "why": "A jewel socketed into a notable."
+   },
+   {
+    "case": "socket_into_unallocated_node",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "socket_on_unallocated_node"
+    ],
+    "why": "A jewel socketed into a socket the build has not allocated."
+   },
+   {
+    "case": "socket_into_allocated_socket",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "The legal case: an allocated jewel socket holding a supplied item record."
+   },
+   {
+    "case": "unknown_slot",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "unknown_slot"
+    ],
+    "why": "An equipment slot the profile does not declare."
+   },
+   {
+    "case": "one_item_in_two_slots",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "item_in_two_slots"
+    ],
+    "why": "One item instance cannot fill two slots at once."
+   },
+   {
+    "case": "one_listing_fills_two_slots",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "listing_fills_two_slots"
+    ],
+    "why": "Two distinct items from one listing, which cannot fill two slots at once."
+   },
+   {
+    "case": "slot_base_category_is_undecidable",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "hand_conflict_undecidable",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [],
+    "why": "The blocking gap. The slot rule carries no accepted base categories, so equipment legality is unknown and cites the gap. Nothing here reads the base off the item's name."
+   },
+   {
+    "case": "item_level_requirement_not_met",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "hand_conflict_undecidable",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "item_level_requirement_not_met"
+    ],
+    "why": "A level 32 character wearing an item that requires 33."
+   },
+   {
+    "case": "item_level_requirement_exactly_met",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "hand_conflict_undecidable",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [],
+    "why": "The boundary: level 33 for a requirement of 33 passes."
+   },
+   {
+    "case": "item_attribute_requirement_not_met",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "hand_conflict_undecidable",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "item_attribute_requirement_not_met"
+    ],
+    "why": "The attribute total is measured and is below the item's requirement."
+   },
+   {
+    "case": "item_attribute_total_unmeasured",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/character-attribute-totals",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "attribute_total_unmeasured",
+     "hand_conflict_undecidable",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [],
+    "why": "Without a measurement the attribute requirement is unknown, not met."
+   },
+   {
+    "case": "sourced_market_item_still_needs_its_level",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "hand_conflict_undecidable",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "item_level_requirement_not_met"
+    ],
+    "why": "A listed item is sourced, so it raises no construction question, and it still fails the level check."
+   },
+   {
+    "case": "theoretical_item_construction",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/theoretical-item-construction",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "hand_conflict_undecidable",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable",
+     "theoretical_item_construction"
+    ],
+    "violations": [],
+    "why": "An item traced to no document and no listing. No rule in the profile says whether it can exist, so it is unknown and cannot be accepted."
+   },
+   {
+    "case": "item_parse_invalid",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "item_parse_invalid"
+    ],
+    "why": "An item record that does not describe an item."
+   },
+   {
+    "case": "item_modifiers_unresolved",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/unresolved-item-modifier",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "item_modifiers_unresolved",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [],
+    "why": "A partial item with an unresolved modifier is unknown, not illegal."
+   },
+   {
+    "case": "too_many_sockets",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "too_many_sockets"
+    ],
+    "why": "More sockets than the catalog's base allows."
+   },
+   {
+    "case": "item_record_not_supplied",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/unresolved-catalog-entity",
+     "gap/p02-t03/item-record-not-supplied",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "item_level_requirement_unknown",
+     "item_record_not_supplied",
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [],
+    "why": "An equipped item nobody supplied a record for is unknown, never a pass."
+   },
+   {
+    "case": "hand_slot_is_not_a_weapon_slot",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "hand_slot_is_not_a_weapon_slot"
+    ],
+    "why": "A weapon set binding a hand to a slot that belongs to no weapon set."
+   },
+   {
+    "case": "too_many_hands_in_weapon_set",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "hand_slot_belongs_to_another_set",
+     "too_many_hands_in_weapon_set"
+    ],
+    "why": "Three hands in a two-hand set. The third slot belongs to the other set, which is reported as well."
+   },
+   {
+    "case": "two_hands_in_weapon_set_is_the_boundary",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "Exactly the hands the profile allows, and both belong to that set."
+   },
+   {
+    "case": "unknown_weapon_set",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "unknown_weapon_set"
+    ],
+    "why": "A weapon set the profile does not declare."
+   },
+   {
+    "case": "weapon_set_points_exceed_budget",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "weapon_set_points_exceed_budget"
+    ],
+    "why": "Twenty-five weapon-set passives against a sourced total of twenty-four."
+   },
+   {
+    "case": "weapon_set_points_at_the_budget",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t02/weapon-set-point-unlock-levels",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "weapon_set_point_unlock_unknown"
+    ],
+    "violations": [],
+    "why": "Exactly the sourced total is not illegal, and is still unknown because no rule says when each point is earned."
+   },
+   {
+    "case": "supports_at_the_limit",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "Five distinct supports is the profile's limit and passes."
+   },
+   {
+    "case": "too_many_supports",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "too_many_supports"
+    ],
+    "why": "One past the profile's declared support limit."
+   },
+   {
+    "case": "duplicate_support_in_group",
+    "cited_gaps": [
+     "gap/p02-t03/duplicate-support-rule",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "duplicate_support_in_group",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "The same support twice. The profile carries a count and nothing about repetition, so this is unknown."
+   },
+   {
+    "case": "support_gem_used_as_active_skill",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "support_gem_used_as_active_skill"
+    ],
+    "why": "A support gem in the active skill position."
+   },
+   {
+    "case": "active_gem_used_as_support",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "active_gem_used_as_support"
+    ],
+    "why": "An active skill gem in a support position."
+   },
+   {
+    "case": "main_skill_index_out_of_range",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "main_skill_index_out_of_range"
+    ],
+    "why": "A main skill index past the end of the group."
+   },
+   {
+    "case": "unknown_group_slot",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "unknown_group_slot"
+    ],
+    "why": "A socket group bound to a slot the profile does not declare."
+   },
+   {
+    "case": "item_granted_skill_without_the_item",
+    "cited_gaps": [
+     "gap/p02-t02/skill-level-limit",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "skill_level_limit_unknown"
+    ],
+    "violations": [
+     "item_granted_skill_without_item"
+    ],
+    "why": "A skill granted by an item the build does not wear."
+   },
+   {
+    "case": "item_granted_skill_resolves",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t02/skill-level-limit",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "skill_level_limit_unknown",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [],
+    "why": "The item is worn and one of its modifiers resolves to the granted skill."
+   },
+   {
+    "case": "gem_level_at_natural_maximum",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "A gem at its natural maximum level passes."
+   },
+   {
+    "case": "gem_level_above_natural_maximum",
+    "cited_gaps": [
+     "gap/p02-t02/gem-level-legality",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "gem_above_natural_maximum",
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [],
+    "why": "Above the natural maximum is not illegal: items grant levels past it and the profile has no rule for the highest legal one."
+   },
+   {
+    "case": "gem_level_below_one",
+    "cited_gaps": [
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured"
+    ],
+    "violations": [
+     "gem_level_below_one"
+    ],
+    "why": "A level zero gem is not a gem."
+   },
+   {
+    "case": "skill_without_a_gem",
+    "cited_gaps": [
+     "gap/p02-t02/skill-level-limit",
+     "gap/p02-t03/reservation-measurement",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import",
+     "reservation_not_measured",
+     "skill_level_limit_unknown"
+    ],
+    "violations": [],
+    "why": "A skill with no gem has no gem rule to check, and the profile carries no character-facing skill level limit."
+   },
+   {
+    "case": "reservation_exceeds_pool",
+    "cited_gaps": [
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "not_verified_after_import"
+    ],
+    "violations": [
+     "reservation_exceeds_pool"
+    ],
+    "why": "The engine's unreserved Spirit is negative, which is the only value that shows over-reservation."
+   },
+   {
+    "case": "reservation_within_pool",
+    "cited_gaps": [
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "unknown",
+    "unknowns": [
+     "not_verified_after_import"
+    ],
+    "violations": [],
+    "why": "A measured pool with something left is legal."
+   },
+   {
+    "case": "import_contradicts_the_record",
+    "cited_gaps": [
+     "gap/p02-t02/slot-accepted-base-categories"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "import_allocation_mismatch",
+     "import_equipment_mismatch",
+     "import_level_mismatch"
+    ],
+    "why": "The engine holds a different level, a different allocation and different equipment from the record. The record is not corrected; the difference is the violation."
+   },
+   {
+    "case": "engine_point_count_is_preferred_over_counting_ids",
+    "cited_gaps": [],
+    "legality": "legal",
+    "unknowns": [],
+    "violations": [],
+    "why": "The class start node is allocated and costs no point. With an imported state the budget uses the engine's own count, so four allocated ids at level four is three points and passes."
+   },
+   {
+    "case": "combined_violations",
+    "cited_gaps": [
+     "gap/p02-t03/missing-point-budget-rule",
+     "gap/p02-t02/slot-accepted-base-categories",
+     "gap/p02-t03/unverified-import"
+    ],
+    "legality": "illegal",
+    "unknowns": [
+     "hand_conflict_undecidable",
+     "no_passive_budget_rule",
+     "not_verified_after_import",
+     "slot_base_category_undecidable"
+    ],
+    "violations": [
+     "ascendancy_not_on_class",
+     "disconnected_passive_allocation",
+     "level_out_of_range",
+     "reservation_exceeds_pool",
+     "too_many_supports",
+     "unknown_weapon_set"
+    ],
+    "why": "Six rules broken at once. Every one is named; none masks another."
+   }
+  ],
+  "cases_file": "tests/fixtures/legality/p02_t03_cases.json",
+  "catalog_hash": "69981c3e529897d42f244dec65e4a45190ebd9fd789cd1545135067d884a5789",
+  "kind": "synthetic",
+  "patch_profile_id": "patch-profile/unknown-patch/69981c3e529897d4",
+  "world": "tests/fixtures/legality/p02_t03_world.json"
+ },
+ "validator_gap_templates": [
+  "gap/p02-t03/attribute-choice-options",
+  "gap/p02-t03/catalog-not-supplied",
+  "gap/p02-t03/character-attribute-totals",
+  "gap/p02-t03/duplicate-support-rule",
+  "gap/p02-t03/item-granted-skill-resolution",
+  "gap/p02-t03/item-record-not-supplied",
+  "gap/p02-t03/missing-point-budget-rule",
+  "gap/p02-t03/missing-support-restriction",
+  "gap/p02-t03/missing-weapon-set-rules",
+  "gap/p02-t03/reservation-measurement",
+  "gap/p02-t03/theoretical-item-construction",
+  "gap/p02-t03/unresolved-catalog-entity",
+  "gap/p02-t03/unresolved-item-modifier",
+  "gap/p02-t03/unverified-import"
+ ],
+ "written_at": "2026-10-06T19:26:41Z"
+}

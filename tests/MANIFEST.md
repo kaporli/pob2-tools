@@ -57,6 +57,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T02 catalog export (engine) | `python -m pob2opt.cli catalog export --profile docs/evidence/P02/catalog-profile-request.json --out DIR` | A PoB2 checkout | Not a test; writes a catalog, patch profile, gaps and evidence bundle. Exit 3 without a checkout. |
 | P02-T02 catalog export (offline) | `python -m pob2opt.cli catalog export --profile docs/evidence/P02/catalog-profile-request.json --out DIR --rows docs/evidence/P02/catalog-rows-slice.json` | Nothing | The same export over the committed row slice. No PoB, no network. |
 | P02-T02 evidence | `python scripts/p02_t02_evidence.py` | PoB | Not a test; rewrites `docs/evidence/P02/catalog-export.json` and `catalog-rows-slice.json`. Without a checkout the summary records `unavailable`. |
+| P02-T03 evidence | `python scripts/p02_t03_evidence.py` | PoB for the `pob_derived` section | Not a test; rewrites `docs/evidence/P02/legality.json`: the verdict for every fixture case, and one real import validated in the pinned engine. Without a checkout that section records `unavailable`. |
 
 Selecting the PoB checkout:
 
@@ -112,6 +113,7 @@ none yet).
 | `test_p02_t01_timeout_supervisor.py` | P02-T01 bounded requests, run through `scripts/p02_t01_timeout_probe.py` under a hard outer deadline with process-tree cleanup, so an unenforced bound fails instead of hanging. |
 | `test_p02_t02_catalog.py` | P02-T02 offline lane: the real exporter over the committed row slice. Bundle self-validation, sample builds resolving, duplicate display names staying distinct, upstream commit changing the context identity, every compatibility verdict including the one path to `verified`, a historical pinned profile staying historical, and each missing upstream rule being a gap rather than a constant. No PoB, no network. |
 | `test_p02_t02_catalog_cli.py` | P02-T02 `pob2opt catalog export` as a command: bundle layout, blobs matching their documents, exit codes 0, 2 and 3, an unknown request key, a missing release directory, and the doctor's `patch_profile_owner` claim now naming a command that exists. |
+| `test_p02_t03_legality.py` | P02-T03 offline lane: one fixture case per rule, each violating that rule alone, the legal boundary beside it, and one combined case. Also that an unknown always cites a gap, that a check that did not run is unknown, that attributes and Spirit together are not a verdict, that nothing is repaired, and that the shipped profile's empty slot categories make equipment undecidable. No PoB, no network. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -130,6 +132,7 @@ none yet).
 | `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, and what the dropped affix costs. |
 | `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout and helper identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, recovery from it without a blank character, A-B-A with B read, two documents under one build hash, configuration isolation between evaluations, forced termination and replacement. |
 | `test_p02_t02_catalog_engine.py` | P02-T02 against the real engine: the typed Lua catalog operations paging stably over every table, an unknown table refused as `unsupported` without killing the worker, a catalog read leaving a loaded build untouched, the behaviour fixtures actually running, a PoB-saved build resolving completely, duplicate display names surviving as distinct entities, and a replay of the captured rows reproducing the live catalog hash. |
+| `test_p02_t03_legality_engine.py` | P02-T03 against the real engine: `legality_state` reporting the allocation, equipment and calculated pools the engine holds, a document PoB imports cleanly still being illegal, a record whose claims its own document does not produce, connectivity decided against the real passive tree, and a legality read leaving a loaded build untouched. |
 
 ### `tests/fixtures`
 
@@ -253,3 +256,30 @@ the version string moved. The primitive path did not change. A `PatchProfile`
 pinned to a different adapter is now refused rather than accepted silently,
 which is why the P02-T01 fixtures repin `adapter_version` the way they already
 repinned `pob_commit`.
+
+## P02-T03 legality validation
+
+Specification version 1.0, 2026-10-06, branch `p02-t03-legality` off
+`p02-t02-catalog` (`28796a5`), PoB `ce566ea` with a modified working tree,
+CPython 3.12.4, Windows 11:
+
+| Command | Result |
+|---|---|
+| `python -m pytest tests/unit` | 710 passed, 4 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 715 passed, 71 skipped, 5 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 785 passed, 6 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 70 passed, 720 deselected, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+
+The validator answers eighteen declared checks and the overall verdict is
+`legal` only when every one of them is. On a profile exported from this
+engine a build with any equipment cannot reach that: `SlotRule.accepted_base_categories`
+is empty with a blocking gap, so slot legality is `unknown` and cites it. Six
+more answers are `unknown` for a cited gap rather than guessed: quest passive
+points, the ascendancy unlock schedule, weapon-set point unlock levels, gem
+levels above a natural maximum, a skill with no gem, and the option list of a
+choice node. `docs/evidence/P02/legality.json` has the verdict for every
+fixture case and for one real import.
+
+The adapter is `p02-t03.0`: it can now ask the engine for the legality state
+it holds after a load. The primitive path did not change.

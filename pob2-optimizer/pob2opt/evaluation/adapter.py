@@ -588,6 +588,40 @@ class EngineAdapter:
         self._loaded_generation = self._generation
         return dict(payload.get("values") or {})
 
+    def legality_state(self, build: BuildSpec, profile: PatchProfile, *,
+                       document: BuildDocument | None = None,
+                       blob_hash: str | None = None,
+                       timeout_s: float | None = None
+                       ) -> tuple[dict, BuildDocument]:
+        """Load ``build`` exactly and read the engine's own state (P02-T03).
+
+        Returns the engine payload and the document that produced it, so a
+        caller can record which bytes the state belongs to. The read itself is
+        read-only and does not disturb a loaded build; the load that precedes
+        it does, exactly as ``primitives`` does, and is skipped when the worker
+        already holds this document.
+        """
+        self._check_profile(profile, build)
+        if document is None:
+            document = self._document_for(build, blob_hash)
+        if document.build_hash != build.build_hash:
+            raise EngineInvalidInput(
+                "document %s does not belong to build %s"
+                % (document.build_hash, build.build_hash), stage="document",
+                record_ids=[build.record_id])
+        timeout_s = self.detailed_timeout_s if timeout_s is None else timeout_s
+        self._ensure_worker()
+        deadline = time.monotonic() + timeout_s
+        if (not self._worker_holds_state()
+                or self._loaded_key != document.content_key):
+            load_timeout_s = min(timeout_s, self._remaining(
+                deadline, protocol.OP_LOAD_EXACT_BUILD))
+            self.load_exact_build(document, name=build.name or "exact",
+                                  timeout_s=load_timeout_s, deadline=deadline)
+        payload = self._request(protocol.OP_LEGALITY_STATE, {}, timeout_s,
+                                deadline=deadline)
+        return payload, document
+
     def catalog_page(self, table: str, offset: int = 0,
                      limit: int = protocol.CATALOG_PAGE_ROWS, *,
                      timeout_s: float | None = None) -> dict:

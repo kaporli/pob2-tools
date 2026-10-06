@@ -19,10 +19,11 @@ from ..domain.enums import Fidelity
 
 #: Bumped whenever the adapter changes what it asks the engine for, or how it
 #: interprets the answer. Part of the evaluation cache identity.
-#: p02-t02.0 adds the read-only catalog operation. The primitive path is
-#: unchanged, but the adapter can now ask the engine for something new, which
-#: is what this string is for.
-ADAPTER_VERSION = "p02-t02.0"
+#: p02-t02.0 added the read-only catalog operation. p02-t03.0 adds the
+#: read-only legality-state operation. The primitive path is unchanged in
+#: both, but the adapter can ask the engine for something new, which is what
+#: this string is for.
+ADAPTER_VERSION = "p02-t03.0"
 
 #: Owner of primitive units, included effects and excluded effects.
 PRIMITIVE_SEMANTICS_OWNER = "P02-T04"
@@ -32,10 +33,16 @@ OP_CREATE_BLANK_BUILD = "create_blank_build"
 OP_LOAD_EXACT_BUILD = "load_exact_build"
 OP_PRIMITIVES = "primitives"
 OP_CATALOG_PAGE = "catalog_page"
+OP_LEGALITY_STATE = "legality_state"
 OP_SHUTDOWN = "shutdown"
 
 OPERATIONS = (OP_DESCRIBE, OP_CREATE_BLANK_BUILD, OP_LOAD_EXACT_BUILD,
-              OP_PRIMITIVES, OP_CATALOG_PAGE, OP_SHUTDOWN)
+              OP_PRIMITIVES, OP_CATALOG_PAGE, OP_LEGALITY_STATE, OP_SHUTDOWN)
+
+#: The bootstrap handler behind ``OP_LEGALITY_STATE``. Read-only: it reports
+#: the allocation, equipment, skills and calculated pools the engine holds and
+#: decides nothing (P02-T03).
+LEGALITY_STATE_HANDLER = "legality_state"
 
 #: Catalog tables the engine can enumerate, and the bootstrap handler for
 #: each. ``passive_edges`` is absent on purpose: edges are derived from the

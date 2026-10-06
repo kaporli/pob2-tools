@@ -786,6 +786,159 @@ handlers.catalog_rule_sources = function(args)
 	}
 end
 
+-- ---------------------------------------------------------------- legality
+-- P02-T03. One read of what the engine holds after an import, so legality is
+-- decided against the engine's own state rather than against the document
+-- that was handed to it. PoB accepts documents it does not police, so a clean
+-- import is not proof of legality.
+--
+-- Read-only. Nothing here allocates, equips, repairs or recalculates, and
+-- nothing here decides anything: it reports allocation, equipment, skills and
+-- the calculated pools, and the caller applies the rules.
+
+handlers.legality_state = function(args)
+	local spec = assert(build.spec, "no active passive spec; load or create a build first")
+	local used, ascUsed, secondaryAscUsed, socketsUsed, weaponSet1Used, weaponSet2Used =
+		spec:CountAllocNodes()
+
+	-- Every allocated node id, split into tree and ascendancy. The start
+	-- nodes stay in the lists because they are allocated; they are also
+	-- named on their own so a caller does not have to recognise them. The
+	-- point counts come from the engine's own counter, which excludes them.
+	-- A key that is not a number is reported separately rather than coerced,
+	-- so nothing is lost silently.
+	local allocated, ascendancy, unreadable = {}, {}, {}
+	local classStart, ascendancyStart = nil, nil
+	for id, node in pairs(spec.allocNodes) do
+		local numeric = tonumber(id) or tonumber(node.id)
+		if not numeric then
+			unreadable[#unreadable + 1] = tostring(id)
+		else
+			if node.type == "ClassStart" then
+				classStart = numeric
+			elseif node.type == "AscendClassStart" then
+				ascendancyStart = numeric
+			end
+			if node.ascendancyName then
+				ascendancy[#ascendancy + 1] = numeric
+			else
+				allocated[#allocated + 1] = numeric
+			end
+		end
+	end
+	table.sort(allocated)
+	table.sort(ascendancy)
+	table.sort(unreadable)
+
+	local items = {}
+	for slotName, slot in pairs(build.itemsTab.slots) do
+		local id = slot.selItemId
+		if id and id > 0 and build.itemsTab.items[id] then
+			local item = build.itemsTab.items[id]
+			local socketCount = 0
+			for _ in pairs(item.sockets or {}) do socketCount = socketCount + 1 end
+			items[tostring(slotName)] = {
+				itemId = id,
+				name = item.name,
+				title = item.title,
+				baseName = item.baseName,
+				rarity = item.rarity,
+				type = item.type,
+				subType = item.base and item.base.subType or nil,
+				itemLevel = item.itemLevel,
+				corrupted = item.corrupted and true or false,
+				requirements = copyScalars(item.requirements),
+				sockets = socketCount,
+				weaponSet = slot.weaponSet,
+				slotNum = slot.slotNum,
+			}
+		end
+	end
+
+	local groups = {}
+	for i, group in ipairs(build.skillsTab.socketGroupList) do
+		local gems = {}
+		for j, gem in ipairs(group.gemList or {}) do
+			local gemData = gem.gemId and data.gems and data.gems[gem.gemId] or nil
+			local effect = gemData and gemData.grantedEffect or nil
+			gems[#gems + 1] = {
+				index = j,
+				nameSpec = gem.nameSpec,
+				gemId = gem.gemId,
+				skillId = gem.skillId,
+				variantId = gem.variantId,
+				level = gem.level,
+				quality = gem.quality,
+				enabled = gem.enabled and true or false,
+				support = (effect and effect.support) and true or false,
+				naturalMaxLevel = gemData and gemData.naturalMaxLevel or nil,
+			}
+		end
+		groups[#groups + 1] = {
+			index = i,
+			label = group.displayLabel or group.label,
+			enabled = group.enabled and true or false,
+			slot = group.slot,
+			source = group.source and tostring(group.source) or nil,
+			sourceItem = group.sourceItem
+				and tostring(group.sourceItem.name or group.sourceItem.title) or nil,
+			sourceNode = group.sourceNode
+				and tostring(group.sourceNode.dn or group.sourceNode.id) or nil,
+			gems = gems,
+		}
+	end
+
+	-- The calculated pools and attributes. A value the engine did not
+	-- calculate is absent, never zero: an absent total and a total of zero are
+	-- different answers and the caller must be able to tell them apart.
+	local output = build.calcsTab.mainOutput or {}
+	local pools = {}
+	for _, pool in ipairs({ "Life", "Mana", "Spirit" }) do
+		pools[#pools + 1] = {
+			pool = pool,
+			total = output[pool],
+			reserved = output[pool .. "Reserved"],
+			-- Unreserved is the unclamped difference, so it goes negative when
+			-- a build reserves more than its pool. Reserved is clamped
+			-- upstream and cannot show over-reservation on its own.
+			unreserved = output[pool .. "Unreserved"],
+		}
+	end
+	local attributes = {}
+	for _, attribute in ipairs({ "Str", "Dex", "Int" }) do
+		attributes[#attributes + 1] = { attribute = attribute, value = output[attribute] }
+	end
+
+	return {
+		buildName = build.buildName,
+		class = spec.curClassName,
+		classId = spec.curClassId,
+		ascendancy = spec.curAscendClassName,
+		ascendClassId = spec.curAscendClassId,
+		level = build.characterLevel,
+		levelAutoMode = build.characterLevelAutoMode and true or false,
+		treeVersion = spec.treeVersion,
+		allocatedNodes = allocated,
+		ascendancyNodes = ascendancy,
+		unreadableNodeKeys = unreadable,
+		classStartNode = classStart,
+		ascendancyStartNode = ascendancyStart,
+		pointsUsed = used,
+		ascendancyPointsUsed = ascUsed,
+		secondaryAscendancyPointsUsed = secondaryAscUsed,
+		jewelSocketsUsed = socketsUsed,
+		weaponSet1PointsUsed = weaponSet1Used,
+		weaponSet2PointsUsed = weaponSet2Used,
+		maxWeaponSets = build.maxWeaponSets,
+		items = items,
+		socketGroups = groups,
+		mainSocketGroup = build.mainSocketGroup,
+		pools = pools,
+		attributes = attributes,
+		calculated = build.calcsTab.mainOutput ~= nil,
+	}
+end
+
 -- ---------------------------------------------------------------- dispatch
 
 function MCP_dispatch(name, argsJson)

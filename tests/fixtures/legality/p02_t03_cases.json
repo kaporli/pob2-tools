@@ -1,0 +1,823 @@
+{
+  "kind": "synthetic",
+  "purpose": "One case per legality rule, each one violating that rule on its own, plus the legal boundary value for each rule that has one, plus one case that breaks six rules at once. Every expectation below was written by hand from the rules in the exported profile and from the task description. None of it was produced by running the validator and recording what it said.",
+  "not_a_claim": "The builds, items, node ids and numbers here are invented and go with the invented world in p02_t03_world.json. Nothing here is a Path of Building output, a measurement, or a statement about Path of Exile 2. An expectation of `unknown` is a statement about this software's evidence, not about the game.",
+  "items": {
+    "greataxe": {
+      "base_id": "Iron Greataxe", "display_name": "Invented Greataxe", "rarity": "rare",
+      "item_level": 40, "requirements": {"level": 33, "str": 73},
+      "source_document_id": "source/invented-export", "sockets": 0
+    },
+    "greataxe_unsourced": {
+      "base_id": "Iron Greataxe", "display_name": "Hand-built Greataxe", "rarity": "rare",
+      "item_level": 40, "requirements": {"level": 33, "str": 73},
+      "source_document_id": null, "sockets": 0
+    },
+    "greataxe_listed": {
+      "base_id": "Iron Greataxe", "display_name": "Listed Greataxe", "rarity": "rare",
+      "item_level": 40, "requirements": {"level": 33, "str": 73},
+      "source_document_id": null, "sockets": 0
+    },
+    "tunic": {
+      "base_id": "Linen Tunic", "display_name": "Invented Tunic", "rarity": "magic",
+      "item_level": 25, "requirements": {"level": 20, "dex": 40},
+      "source_document_id": "source/invented-export", "sockets": 0
+    },
+    "ring": {
+      "base_id": "Iron Ring", "display_name": "Invented Ring", "rarity": "normal",
+      "item_level": 1, "requirements": {"level": 1},
+      "source_document_id": "source/invented-export", "sockets": 0
+    },
+    "ring2": {
+      "base_id": "Iron Ring", "display_name": "Second Invented Ring", "rarity": "normal",
+      "item_level": 1, "requirements": {"level": 1},
+      "source_document_id": "source/invented-export", "sockets": 0
+    },
+    "ringskill": {
+      "base_id": "Iron Ring", "display_name": "Ring of Invented Nova", "rarity": "unique",
+      "item_level": 1, "requirements": {"level": 1},
+      "source_document_id": "source/invented-export", "sockets": 0,
+      "modifiers": [
+        {"category": "explicit", "text": "Grants Invented Ring Nova",
+         "resolved_effect_ids": ["InventedRingSkill"], "parse_status": "resolved"}
+      ]
+    },
+    "broken": {
+      "base_id": "Iron Ring", "display_name": "Unreadable Item", "rarity": "rare",
+      "requirements": {"level": 1}, "source_document_id": "source/invented-export",
+      "parse_status": "invalid"
+    },
+    "fuzzy": {
+      "base_id": "Iron Ring", "display_name": "Half-read Ring", "rarity": "rare",
+      "requirements": {"level": 1}, "source_document_id": "source/invented-export",
+      "parse_status": "partial",
+      "modifiers": [
+        {"category": "explicit", "text": "adds invented nonsense",
+         "parse_status": "unresolved"}
+      ]
+    },
+    "sockety": {
+      "base_id": "Iron Ring", "display_name": "Overdrilled Ring", "rarity": "rare",
+      "requirements": {"level": 1}, "source_document_id": "source/invented-export",
+      "sockets": 2
+    },
+    "jewel": {
+      "base_id": null, "display_name": "Invented Jewel", "rarity": "rare",
+      "requirements": {}, "source_document_id": "source/invented-export"
+    }
+  },
+  "base": {
+    "name": "fixture build",
+    "class_id": "poe2/classes/1",
+    "ascendancy_id": null,
+    "level": 4,
+    "allocated": [1001, 1002, 1003],
+    "ascendancy_allocated": [],
+    "choices": {},
+    "socketed": [],
+    "equipment": {},
+    "weapon_sets": [],
+    "skill_groups": []
+  },
+  "cases": [
+    {
+      "id": "minimal_legal_record_only",
+      "why": "Everything decidable from the record alone is legal, and the verdict is still unknown: the build was never imported and no pool was measured.",
+      "build": {},
+      "expect": {
+        "legality": "unknown",
+        "violations": [],
+        "unknowns": ["reservation_not_measured", "not_verified_after_import"],
+        "cited_gaps": ["gap/p02-t03/reservation-measurement",
+                       "gap/p02-t03/unverified-import"],
+        "checks": {"post_import_verification": "unknown",
+                   "reservation_resources": "unknown",
+                   "class_membership": "legal",
+                   "passive_point_budget": "legal"}
+      }
+    },
+    {
+      "id": "minimal_legal_verified",
+      "why": "The same build with the engine's own state and its measured pools. Every declared check answers legal, so the verdict is legal. This is the only shape that can reach it today: a build with equipment cannot, because slot categories are undecidable.",
+      "build": {},
+      "imported": {
+        "class_name": "Warrior", "class_id": 1, "level": 4,
+        "allocated": [1001, 1002, 1003], "points_used": 3,
+        "ascendancy_points_used": 0, "items": {},
+        "pools": {"spirit": {"total": 100, "reserved": 0, "unreserved": 100},
+                  "mana": {"total": 60, "reserved": 0, "unreserved": 60},
+                  "life": {"total": 200, "reserved": 0, "unreserved": 200}},
+        "strength": 120, "dexterity": 40, "intelligence": 40
+      },
+      "expect": {
+        "legality": "legal",
+        "violations": [],
+        "unknowns": [],
+        "checks": {"post_import_verification": "legal",
+                   "reservation_resources": "legal",
+                   "equipment_slots": "legal"}
+      }
+    },
+    {
+      "id": "level_at_maximum",
+      "why": "The last legal level passes.",
+      "build": {"level": 100},
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"character_level": "legal"}}
+    },
+    {
+      "id": "level_above_maximum",
+      "why": "One past the last legal level is illegal, not unknown.",
+      "build": {"level": 101},
+      "expect": {"legality": "illegal", "violations": ["level_out_of_range"],
+                 "checks": {"character_level": "illegal"}}
+    },
+    {
+      "id": "level_below_minimum",
+      "why": "Level zero is below the profile's range.",
+      "build": {"level": 0, "allocated": []},
+      "expect": {"legality": "illegal", "violations": ["level_out_of_range"],
+                 "checks": {"character_level": "illegal"}}
+    },
+    {
+      "id": "passive_points_exactly_the_levelling_budget",
+      "why": "Three allocations at level four is exactly the levelling budget and passes.",
+      "build": {"level": 4, "allocated": [1001, 1002, 1003]},
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"passive_point_budget": "legal"}}
+    },
+    {
+      "id": "passive_points_above_levelling_budget",
+      "why": "Over the levelling budget is not over the real budget: quest points are a gap, so this is unknown and never illegal.",
+      "build": {"level": 2, "allocated": [1001, 1002]},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["passive_points_above_levelling_budget"],
+        "cited_gaps": ["gap/p02-t02/quest-passive-point-rewards"],
+        "checks": {"passive_point_budget": "unknown"}
+      }
+    },
+    {
+      "id": "passive_points_exceed_declared_budget",
+      "why": "When the build declares its own progression budget the check becomes decidable, and three allocations against a declared two is illegal.",
+      "build": {"level": 10, "allocated": [1001, 1002, 1003],
+                "progression": {"normal": 2}},
+      "expect": {"legality": "illegal",
+                 "violations": ["passive_points_exceed_declared_budget"],
+                 "checks": {"passive_point_budget": "illegal"}}
+    },
+    {
+      "id": "passive_points_exceed_maximum",
+      "why": "A hundred ordinary passives is past the profile's sourced maximum of ninety-nine, whatever the quest rewards are.",
+      "build": {"level": 100, "allocated": [], "allocated_range": [9000, 9100]},
+      "expect": {"legality": "illegal",
+                 "violations": ["passive_points_exceed_maximum"],
+                 "unknowns_include": ["allocated_node_not_in_catalog"],
+                 "checks": {"passive_point_budget": "illegal",
+                            "passive_connectivity": "unknown"}}
+    },
+    {
+      "id": "duplicate_passive_allocation",
+      "why": "The same node allocated twice is rejected rather than counted once.",
+      "build": {"level": 10, "allocated": [1001, 1002, 1002]},
+      "expect": {"legality": "illegal",
+                 "violations": ["duplicate_passive_allocation"],
+                 "checks": {"passive_point_budget": "illegal"}}
+    },
+    {
+      "id": "disconnected_passive_allocation",
+      "why": "An allocated node with no path to the class start node through other allocated nodes.",
+      "build": {"level": 10, "allocated": [1001, 1900]},
+      "expect": {"legality": "illegal",
+                 "violations": ["disconnected_passive_allocation"],
+                 "checks": {"passive_connectivity": "illegal"}}
+    },
+    {
+      "id": "unknown_class",
+      "why": "A class the profile's rules do not carry.",
+      "build": {"class_id": "poe2/classes/7"},
+      "expect": {"legality": "illegal", "violations": ["unknown_class"],
+                 "unknowns_include": ["class_start_node_unknown"],
+                 "checks": {"class_membership": "illegal"}}
+    },
+    {
+      "id": "ascendancy_from_another_class",
+      "why": "An ascendancy that belongs to a different class.",
+      "build": {"ascendancy_id": "poe2/ascendancies/2/1"},
+      "expect": {"legality": "illegal",
+                 "violations": ["ascendancy_not_on_class"],
+                 "checks": {"ascendancy_membership": "illegal"}}
+    },
+    {
+      "id": "ascendancy_nodes_without_ascendancy",
+      "why": "Ascendancy passives allocated while the build declares no ascendancy.",
+      "build": {"ascendancy_id": null, "ascendancy_allocated": [1101]},
+      "expect": {"legality": "illegal",
+                 "violations": ["ascendancy_nodes_without_ascendancy"],
+                 "checks": {"ascendancy_membership": "illegal"}}
+    },
+    {
+      "id": "ascendancy_points_within_maximum",
+      "why": "Two ascendancy points is inside the maximum and the profile has no unlock schedule, so this is unknown and never an automatic acceptance.",
+      "build": {"ascendancy_id": "poe2/ascendancies/1/1",
+                "ascendancy_allocated": [1101, 1102]},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["ascendancy_unlock_schedule_unknown"],
+        "cited_gaps": ["gap/p02-t02/ascendancy-point-unlock-schedule"],
+        "checks": {"ascendancy_point_budget": "unknown"}
+      }
+    },
+    {
+      "id": "ascendancy_points_exactly_declared",
+      "why": "A build that declares its own ascendancy budget makes the check decidable, and two of two passes.",
+      "build": {"ascendancy_id": "poe2/ascendancies/1/1",
+                "ascendancy_allocated": [1101, 1102],
+                "progression": {"ascendancy": 2}},
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"ascendancy_point_budget": "legal"}}
+    },
+    {
+      "id": "ascendancy_points_exceed_maximum",
+      "why": "Nine ascendancy points is past the profile's maximum of eight.",
+      "build": {"ascendancy_id": "poe2/ascendancies/1/1",
+                "ascendancy_allocated": [],
+                "ascendancy_allocated_range": [9100, 9109]},
+      "expect": {"legality": "illegal",
+                 "violations": ["ascendancy_points_exceed_maximum"],
+                 "checks": {"ascendancy_point_budget": "illegal"}}
+    },
+    {
+      "id": "ascendancy_nodes_from_two_ascendancies",
+      "why": "Allocated ascendancy nodes from two different ascendancies.",
+      "build": {"ascendancy_id": "poe2/ascendancies/1/1",
+                "ascendancy_allocated": [1101, 1201]},
+      "expect": {"legality": "illegal",
+                 "violations": ["ascendancy_nodes_from_several_ascendancies"],
+                 "checks": {"passive_connectivity": "illegal"}}
+    },
+    {
+      "id": "choice_on_unallocated_node",
+      "why": "A choice recorded for a node the build has not allocated.",
+      "build": {"level": 10, "allocated": [1001, 1002],
+                "choices": {"1003": "Strength"}},
+      "expect": {"legality": "illegal",
+                 "violations": ["choice_on_unallocated_node"],
+                 "checks": {"passive_choices": "illegal"}}
+    },
+    {
+      "id": "choice_options_not_exported",
+      "why": "The node is allocated and the catalog carries no option list, so the choice is undecidable rather than accepted.",
+      "build": {"level": 10, "allocated": [1001, 1005],
+                "choices": {"1005": "Strength"}},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["choice_options_not_exported"],
+        "cited_gaps": ["gap/p02-t03/attribute-choice-options"],
+        "checks": {"passive_choices": "unknown"}
+      }
+    },
+    {
+      "id": "socket_into_non_socket_node",
+      "why": "A jewel socketed into a notable.",
+      "build": {"level": 10, "allocated": [1001, 1002, 1003],
+                "socketed": [{"node_id": 1003, "entity_id": "jewel"}]},
+      "expect": {"legality": "illegal",
+                 "violations": ["socketed_into_non_socket_node"],
+                 "checks": {"passive_socketed_entities": "illegal"}}
+    },
+    {
+      "id": "socket_into_unallocated_node",
+      "why": "A jewel socketed into a socket the build has not allocated.",
+      "build": {"level": 10, "allocated": [1001, 1002],
+                "socketed": [{"node_id": 1004, "entity_id": "jewel"}]},
+      "expect": {"legality": "illegal",
+                 "violations": ["socket_on_unallocated_node"],
+                 "checks": {"passive_socketed_entities": "illegal"}}
+    },
+    {
+      "id": "socket_into_allocated_socket",
+      "why": "The legal case: an allocated jewel socket holding a supplied item record.",
+      "build": {"level": 10, "allocated": [1001, 1002, 1004],
+                "socketed": [{"node_id": 1004, "entity_id": "jewel"}]},
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"passive_socketed_entities": "legal"}}
+    },
+    {
+      "id": "unknown_slot",
+      "why": "An equipment slot the profile does not declare.",
+      "build": {"level": 10, "equipment": {"Backpack": {"item": "ring"}}},
+      "expect": {"legality": "illegal", "violations": ["unknown_slot"],
+                 "checks": {"equipment_slots": "illegal"}}
+    },
+    {
+      "id": "one_item_in_two_slots",
+      "why": "One item instance cannot fill two slots at once.",
+      "build": {"level": 10, "equipment": {"Ring 1": {"item": "ring"},
+                                           "Ring 2": {"item": "ring"}}},
+      "expect": {"legality": "illegal", "violations": ["item_in_two_slots"],
+                 "unknowns_include": ["slot_base_category_undecidable"],
+                 "checks": {"equipment_slots": "illegal"}}
+    },
+    {
+      "id": "one_listing_fills_two_slots",
+      "why": "Two distinct items from one listing, which cannot fill two slots at once.",
+      "build": {"level": 10,
+                "equipment": {"Ring 1": {"item": "ring", "listing": "listing/1"},
+                              "Ring 2": {"item": "ring2", "listing": "listing/1"}}},
+      "expect": {"legality": "illegal",
+                 "violations": ["listing_fills_two_slots"],
+                 "checks": {"equipment_slots": "illegal"}}
+    },
+    {
+      "id": "slot_base_category_is_undecidable",
+      "why": "The blocking gap. The slot rule carries no accepted base categories, so equipment legality is unknown and cites the gap. Nothing here reads the base off the item's name.",
+      "build": {"level": 40, "equipment": {"Weapon 1": {"item": "greataxe"}}},
+      "measured": {"strength": 100, "dexterity": 50, "intelligence": 50},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["slot_base_category_undecidable",
+                             "hand_conflict_undecidable"],
+        "cited_gaps": ["gap/p02-t02/slot-accepted-base-categories"],
+        "checks": {"equipment_slots": "unknown", "equipment_hands": "unknown"}
+      }
+    },
+    {
+      "id": "item_level_requirement_not_met",
+      "why": "A level 32 character wearing an item that requires 33.",
+      "build": {"level": 32, "equipment": {"Weapon 1": {"item": "greataxe"}}},
+      "measured": {"strength": 100, "dexterity": 50, "intelligence": 50},
+      "expect": {"legality": "illegal",
+                 "violations": ["item_level_requirement_not_met"],
+                 "checks": {"item_requirements": "illegal"}}
+    },
+    {
+      "id": "item_level_requirement_exactly_met",
+      "why": "The boundary: level 33 for a requirement of 33 passes.",
+      "build": {"level": 33, "equipment": {"Weapon 1": {"item": "greataxe"}}},
+      "measured": {"strength": 73, "dexterity": 50, "intelligence": 50},
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"item_requirements": "legal"}}
+    },
+    {
+      "id": "item_attribute_requirement_not_met",
+      "why": "The attribute total is measured and is below the item's requirement.",
+      "build": {"level": 40, "equipment": {"Weapon 1": {"item": "greataxe"}}},
+      "measured": {"strength": 72, "dexterity": 50, "intelligence": 50},
+      "expect": {"legality": "illegal",
+                 "violations": ["item_attribute_requirement_not_met"],
+                 "checks": {"item_requirements": "illegal"}}
+    },
+    {
+      "id": "item_attribute_total_unmeasured",
+      "why": "Without a measurement the attribute requirement is unknown, not met.",
+      "build": {"level": 40, "equipment": {"Weapon 1": {"item": "greataxe"}}},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["attribute_total_unmeasured"],
+        "cited_gaps": ["gap/p02-t03/character-attribute-totals"],
+        "checks": {"item_requirements": "unknown"}
+      }
+    },
+    {
+      "id": "sourced_market_item_still_needs_its_level",
+      "why": "A listed item is sourced, so it raises no construction question, and it still fails the level check.",
+      "build": {"level": 32,
+                "equipment": {"Weapon 1": {"item": "greataxe_listed",
+                                           "listing": "listing/7"}}},
+      "measured": {"strength": 100, "dexterity": 50, "intelligence": 50},
+      "expect": {
+        "legality": "illegal",
+        "violations": ["item_level_requirement_not_met"],
+        "unknowns_exclude": ["theoretical_item_construction"],
+        "checks": {"item_requirements": "illegal",
+                   "item_construction": "legal"}
+      }
+    },
+    {
+      "id": "theoretical_item_construction",
+      "why": "An item traced to no document and no listing. No rule in the profile says whether it can exist, so it is unknown and cannot be accepted.",
+      "build": {"level": 40,
+                "equipment": {"Weapon 1": {"item": "greataxe_unsourced"}}},
+      "measured": {"strength": 100, "dexterity": 50, "intelligence": 50},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["theoretical_item_construction"],
+        "cited_gaps": ["gap/p02-t03/theoretical-item-construction"],
+        "checks": {"item_construction": "unknown"}
+      }
+    },
+    {
+      "id": "item_parse_invalid",
+      "why": "An item record that does not describe an item.",
+      "build": {"level": 10, "equipment": {"Ring 1": {"item": "broken"}}},
+      "expect": {"legality": "illegal", "violations": ["item_parse_invalid"],
+                 "checks": {"item_construction": "illegal"}}
+    },
+    {
+      "id": "item_modifiers_unresolved",
+      "why": "A partial item with an unresolved modifier is unknown, not illegal.",
+      "build": {"level": 10, "equipment": {"Ring 1": {"item": "fuzzy"}}},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["item_modifiers_unresolved"],
+        "cited_gaps": ["gap/p02-t03/unresolved-item-modifier"],
+        "checks": {"item_construction": "unknown"}
+      }
+    },
+    {
+      "id": "too_many_sockets",
+      "why": "More sockets than the catalog's base allows.",
+      "build": {"level": 10, "equipment": {"Ring 1": {"item": "sockety"}}},
+      "expect": {"legality": "illegal", "violations": ["too_many_sockets"],
+                 "checks": {"item_construction": "illegal"}}
+    },
+    {
+      "id": "item_record_not_supplied",
+      "why": "An equipped item nobody supplied a record for is unknown, never a pass.",
+      "build": {"level": 10, "equipment": {"Ring 1": {"item": "ghost"}}},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["item_record_not_supplied"],
+        "cited_gaps": ["gap/p02-t03/item-record-not-supplied"],
+        "checks": {"item_construction": "unknown"}
+      }
+    },
+    {
+      "id": "hand_slot_is_not_a_weapon_slot",
+      "why": "A weapon set binding a hand to a slot that belongs to no weapon set.",
+      "build": {"level": 10,
+                "weapon_sets": [{"set_id": "poe2/weapon_sets/1",
+                                 "hands": {"main": "Body Armour"}}]},
+      "expect": {"legality": "illegal",
+                 "violations": ["hand_slot_is_not_a_weapon_slot"],
+                 "checks": {"equipment_hands": "illegal"}}
+    },
+    {
+      "id": "too_many_hands_in_weapon_set",
+      "why": "Three hands in a two-hand set. The third slot belongs to the other set, which is reported as well.",
+      "build": {"level": 10,
+                "weapon_sets": [{"set_id": "poe2/weapon_sets/1",
+                                 "hands": {"main": "Weapon 1",
+                                           "off": "Weapon 2",
+                                           "third": "Weapon 1 Swap"}}]},
+      "expect": {"legality": "illegal",
+                 "violations": ["hand_slot_belongs_to_another_set",
+                                "too_many_hands_in_weapon_set"],
+                 "checks": {"equipment_hands": "illegal"}}
+    },
+    {
+      "id": "two_hands_in_weapon_set_is_the_boundary",
+      "why": "Exactly the hands the profile allows, and both belong to that set.",
+      "build": {"level": 10,
+                "weapon_sets": [{"set_id": "poe2/weapon_sets/1",
+                                 "hands": {"main": "Weapon 1",
+                                           "off": "Weapon 2"}}]},
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"equipment_hands": "legal",
+                            "weapon_set_rules": "legal"}}
+    },
+    {
+      "id": "unknown_weapon_set",
+      "why": "A weapon set the profile does not declare.",
+      "build": {"level": 10,
+                "weapon_sets": [{"set_id": "poe2/weapon_sets/3", "hands": {}}]},
+      "expect": {"legality": "illegal", "violations": ["unknown_weapon_set"],
+                 "checks": {"weapon_set_rules": "illegal"}}
+    },
+    {
+      "id": "weapon_set_points_exceed_budget",
+      "why": "Twenty-five weapon-set passives against a sourced total of twenty-four.",
+      "build": {"level": 100,
+                "weapon_sets": [{"set_id": "poe2/weapon_sets/1",
+                                 "hands": {},
+                                 "passives_range": [8000, 8025]}]},
+      "expect": {"legality": "illegal",
+                 "violations": ["weapon_set_points_exceed_budget"],
+                 "checks": {"weapon_set_rules": "illegal"}}
+    },
+    {
+      "id": "weapon_set_points_at_the_budget",
+      "why": "Exactly the sourced total is not illegal, and is still unknown because no rule says when each point is earned.",
+      "build": {"level": 100,
+                "weapon_sets": [{"set_id": "poe2/weapon_sets/1",
+                                 "hands": {},
+                                 "passives_range": [8000, 8024]}]},
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["weapon_set_point_unlock_unknown"],
+        "cited_gaps": ["gap/p02-t02/weapon-set-point-unlock-levels"],
+        "checks": {"weapon_set_rules": "unknown"}
+      }
+    },
+    {
+      "id": "supports_at_the_limit",
+      "why": "Five distinct supports is the profile's limit and passes.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20,
+                                      "supports": ["Invented/Gems/Support1",
+                                                   "Invented/Gems/Support2",
+                                                   "Invented/Gems/Support3",
+                                                   "Invented/Gems/Support4",
+                                                   "Invented/Gems/Support5"]}]}]
+      },
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"support_restrictions": "legal",
+                            "skill_restrictions": "legal",
+                            "gem_levels": "legal"}}
+    },
+    {
+      "id": "too_many_supports",
+      "why": "One past the profile's declared support limit.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20,
+                                      "supports": ["Invented/Gems/Support1",
+                                                   "Invented/Gems/Support2",
+                                                   "Invented/Gems/Support3",
+                                                   "Invented/Gems/Support4",
+                                                   "Invented/Gems/Support5",
+                                                   "Invented/Gems/Support6"]}]}]
+      },
+      "expect": {"legality": "illegal", "violations": ["too_many_supports"],
+                 "checks": {"support_restrictions": "illegal"}}
+    },
+    {
+      "id": "duplicate_support_in_group",
+      "why": "The same support twice. The profile carries a count and nothing about repetition, so this is unknown.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20,
+                                      "supports": ["Invented/Gems/Support1",
+                                                   "Invented/Gems/Support1"]}]}]
+      },
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["duplicate_support_in_group"],
+        "cited_gaps": ["gap/p02-t03/duplicate-support-rule"],
+        "checks": {"support_restrictions": "unknown"}
+      }
+    },
+    {
+      "id": "support_gem_used_as_active_skill",
+      "why": "A support gem in the active skill position.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedSupport1",
+                                      "gem_id": "Invented/Gems/Support1",
+                                      "level": 20, "supports": []}]}]
+      },
+      "expect": {"legality": "illegal",
+                 "violations": ["support_gem_used_as_active_skill"],
+                 "checks": {"skill_restrictions": "illegal"}}
+    },
+    {
+      "id": "active_gem_used_as_support",
+      "why": "An active skill gem in a support position.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20,
+                                      "supports": ["Invented/Gems/Spark"]}]}]
+      },
+      "expect": {"legality": "illegal",
+                 "violations": ["active_gem_used_as_support"],
+                 "checks": {"skill_restrictions": "illegal"}}
+    },
+    {
+      "id": "main_skill_index_out_of_range",
+      "why": "A main skill index past the end of the group.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 3,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20}]}]
+      },
+      "expect": {"legality": "illegal",
+                 "violations": ["main_skill_index_out_of_range"],
+                 "checks": {"skill_restrictions": "illegal"}}
+    },
+    {
+      "id": "unknown_group_slot",
+      "why": "A socket group bound to a slot the profile does not declare.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Backpack",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20}]}]
+      },
+      "expect": {"legality": "illegal", "violations": ["unknown_group_slot"],
+                 "checks": {"skill_restrictions": "illegal"}}
+    },
+    {
+      "id": "item_granted_skill_without_the_item",
+      "why": "A skill granted by an item the build does not wear.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Ring 1",
+                          "source_item": "ringskill", "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedRingSkill",
+                                      "level": 1}]}]
+      },
+      "expect": {"legality": "illegal",
+                 "violations": ["item_granted_skill_without_item"],
+                 "checks": {"skill_restrictions": "illegal"}}
+    },
+    {
+      "id": "item_granted_skill_resolves",
+      "why": "The item is worn and one of its modifiers resolves to the granted skill.",
+      "build": {
+        "level": 10,
+        "equipment": {"Ring 1": {"item": "ringskill"}},
+        "skill_groups": [{"group_id": "g1", "slot": "Ring 1",
+                          "source_item": "ringskill", "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedRingSkill",
+                                      "level": 1}]}]
+      },
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"skill_restrictions": "legal"}}
+    },
+    {
+      "id": "gem_level_at_natural_maximum",
+      "why": "A gem at its natural maximum level passes.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20}]}]
+      },
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"gem_levels": "legal"}}
+    },
+    {
+      "id": "gem_level_above_natural_maximum",
+      "why": "Above the natural maximum is not illegal: items grant levels past it and the profile has no rule for the highest legal one.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedSpark",
+                                      "gem_id": "Invented/Gems/Spark",
+                                      "level": 11}]}]
+      },
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["gem_above_natural_maximum"],
+        "cited_gaps": ["gap/p02-t02/gem-level-legality"],
+        "checks": {"gem_levels": "unknown"}
+      }
+    },
+    {
+      "id": "gem_level_below_one",
+      "why": "A level zero gem is not a gem.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 0}]}]
+      },
+      "expect": {"legality": "illegal", "violations": ["gem_level_below_one"],
+                 "checks": {"gem_levels": "illegal"}}
+    },
+    {
+      "id": "skill_without_a_gem",
+      "why": "A skill with no gem has no gem rule to check, and the profile carries no character-facing skill level limit.",
+      "build": {
+        "level": 10,
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedRingSkill",
+                                      "level": 5}]}]
+      },
+      "expect": {
+        "legality": "unknown", "violations": [],
+        "unknowns_include": ["skill_level_limit_unknown"],
+        "cited_gaps": ["gap/p02-t02/skill-level-limit"],
+        "checks": {"gem_levels": "unknown"}
+      }
+    },
+    {
+      "id": "reservation_exceeds_pool",
+      "why": "The engine's unreserved Spirit is negative, which is the only value that shows over-reservation.",
+      "build": {"level": 10},
+      "measured": {"pools": {"spirit": {"total": 100, "reserved": 100,
+                                        "unreserved": -30}}},
+      "expect": {"legality": "illegal",
+                 "violations": ["reservation_exceeds_pool"],
+                 "checks": {"reservation_resources": "illegal"}}
+    },
+    {
+      "id": "reservation_within_pool",
+      "why": "A measured pool with something left is legal.",
+      "build": {"level": 10},
+      "measured": {"pools": {"spirit": {"total": 100, "reserved": 40,
+                                        "unreserved": 60}}},
+      "expect": {"legality": "unknown", "violations": [],
+                 "checks": {"reservation_resources": "legal"}}
+    },
+    {
+      "id": "import_contradicts_the_record",
+      "why": "The engine holds a different level, a different allocation and different equipment from the record. The record is not corrected; the difference is the violation.",
+      "build": {"level": 4, "allocated": [1001, 1002, 1003]},
+      "imported": {
+        "class_name": "Warrior", "class_id": 1, "level": 90,
+        "allocated": [1001, 1002], "points_used": 2,
+        "items": {"Ring 1": {"name": "Invented Ring", "baseName": "Iron Ring",
+                             "rarity": "normal", "itemLevel": 1,
+                             "requirements": {"level": 1}, "sockets": 0}},
+        "pools": {"spirit": {"total": 100, "reserved": 0, "unreserved": 100}}
+      },
+      "expect": {
+        "legality": "illegal",
+        "violations": ["import_allocation_mismatch",
+                       "import_equipment_mismatch", "import_level_mismatch"],
+        "checks": {"post_import_verification": "illegal"}
+      }
+    },
+    {
+      "id": "engine_point_count_is_preferred_over_counting_ids",
+      "why": "The class start node is allocated and costs no point. With an imported state the budget uses the engine's own count, so four allocated ids at level four is three points and passes.",
+      "build": {"level": 4, "allocated": [1000, 1001, 1002, 1003]},
+      "imported": {
+        "class_name": "Warrior", "class_id": 1, "level": 4,
+        "allocated": [1000, 1001, 1002, 1003], "class_start_node": 1000,
+        "points_used": 3, "ascendancy_points_used": 0, "items": {},
+        "pools": {"spirit": {"total": 100, "reserved": 0, "unreserved": 100}}
+      },
+      "expect": {
+        "legality": "legal", "violations": [], "unknowns": [],
+        "checks": {"passive_point_budget": "legal",
+                   "post_import_verification": "legal"}
+      }
+    },
+    {
+      "id": "combined_violations",
+      "why": "Six rules broken at once. Every one is named; none masks another.",
+      "build": {
+        "level": 101,
+        "ascendancy_id": "poe2/ascendancies/2/1",
+        "allocated": [1001, 1900],
+        "equipment": {"Weapon 1": {"item": "greataxe"}},
+        "weapon_sets": [{"set_id": "poe2/weapon_sets/3", "hands": {}}],
+        "skill_groups": [{"group_id": "g1", "slot": "Weapon 1",
+                          "main_skill_index": 0,
+                          "skills": [{"skill_id": "InventedCleave",
+                                      "gem_id": "Invented/Gems/Cleave",
+                                      "level": 20,
+                                      "supports": ["Invented/Gems/Support1",
+                                                   "Invented/Gems/Support2",
+                                                   "Invented/Gems/Support3",
+                                                   "Invented/Gems/Support4",
+                                                   "Invented/Gems/Support5",
+                                                   "Invented/Gems/Support6"]}]}]
+      },
+      "measured": {"strength": 100, "dexterity": 50, "intelligence": 50,
+                   "pools": {"spirit": {"total": 100, "reserved": 100,
+                                        "unreserved": -5}}},
+      "expect": {
+        "legality": "illegal",
+        "violations": ["ascendancy_not_on_class",
+                       "disconnected_passive_allocation",
+                       "level_out_of_range",
+                       "reservation_exceeds_pool",
+                       "too_many_supports",
+                       "unknown_weapon_set"],
+        "unknowns_include": ["slot_base_category_undecidable",
+                             "no_passive_budget_rule"],
+        "checks": {"character_level": "illegal",
+                   "ascendancy_membership": "illegal",
+                   "passive_connectivity": "illegal",
+                   "support_restrictions": "illegal",
+                   "weapon_set_rules": "illegal",
+                   "reservation_resources": "illegal",
+                   "equipment_slots": "unknown"}
+      }
+    }
+  ]
+}

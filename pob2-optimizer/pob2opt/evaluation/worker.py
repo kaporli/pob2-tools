@@ -97,6 +97,8 @@ class PobSession:
             return self.primitives(**args)
         if op == protocol.OP_CATALOG_PAGE:
             return self.catalog_page(**args)
+        if op == protocol.OP_LEGALITY_STATE:
+            return self.legality_state(**args)
         raise SessionError(ResultStatus.UNSUPPORTED,
                            "unknown operation %r" % op, stage="dispatch")
 
@@ -176,6 +178,16 @@ class PobSession:
                 stage=stage)
         return self._call(handler, {"offset": int(offset), "limit": int(limit)},
                           stage=stage)
+
+    def legality_state(self) -> dict:
+        """Read what the engine holds after a load (P02-T03).
+
+        Read-only, like ``catalog_page``: it allocates nothing, equips
+        nothing and does not recalculate, so asking for it between two
+        evaluations cannot change a primitive value.
+        """
+        return self._call(protocol.LEGALITY_STATE_HANDLER, {},
+                          stage=protocol.OP_LEGALITY_STATE)
 
     def close(self) -> None:
         close = getattr(self.engine, "close", None)

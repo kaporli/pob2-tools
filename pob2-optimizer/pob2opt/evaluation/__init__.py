@@ -7,7 +7,8 @@ and preparing a blank candidate.
 What is deliberately *not* here:
 
 * primitive units, included and excluded effects - P02-T04;
-* legality validation - P02-T03;
+* legality validation - P02-T03, in the ``legality`` subpackage, which is not
+  imported here: it reads the catalog, and the catalog reads this module;
 * writing a BuildSpec back out as a PoB document - P02-T05;
 * the patch profile, catalog export and compatibility evidence - P02-T02.
 """
