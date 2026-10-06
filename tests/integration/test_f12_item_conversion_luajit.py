@@ -1,14 +1,21 @@
-"""Research finding F12, executed (P00-T04).
+"""Research finding F12 and its repair, executed (P00-T04, P02-T05).
 
-Runs the real ``convert_trade_item`` handler from ``pob2mcp/bootstrap.lua`` under
-a stock LuaJIT and inspects the item string it produces. The handler is pure
-string assembly over the table it is handed, so the two PoB globals it touches
-(``escapeGGGString`` and ``dkjson``) are stubbed by ``lua/convert_probe.lua``.
+Runs the real ``convert_trade_item`` handler from ``pob2mcp/bootstrap.lua``
+under a stock LuaJIT and inspects the item string it produces. The handler is
+pure string assembly over the table it is handed, so the two PoB globals it
+touches (``escapeGGGString`` and ``dkjson``) are stubbed by
+``lua/convert_probe.lua``.
 
-Scope of this evidence: it shows that three normalized modifier categories never
-reach the output. It is NOT evidence about the pinned PoB engine or about how
-PoB would parse the resulting string - that is
-``tests/engine/test_f12_item_conversion_golden.py``.
+The characterization here was that three normalized modifier categories never
+reached the output. P02-T05 repaired that, so the assertions were migrated:
+"fractured, desecrated and crafted are lost" is now "they are written with
+PoB's own markers", and "nothing hints that anything was discarded" is now
+"the handler reports what it could not place". The reason is written here
+rather than in a deleted file.
+
+Scope of this evidence: it shows which lines the handler produces. It is NOT
+evidence about the pinned PoB engine or about how PoB parses the resulting
+string - that is ``tests/engine/test_f12_item_conversion_golden.py``.
 
 Skips with a reason when no ``luajit`` is on PATH.
 """
@@ -29,7 +36,10 @@ pytestmark = pytest.mark.skipif(
     reason="no luajit/lua interpreter on PATH; this probe runs the handler source directly",
 )
 
-DROPPED_CATEGORIES = ("fractured", "desecrated", "crafted")
+#: Categories the original handler dropped, with the marker PoB writes.
+REPAIRED_CATEGORIES = (("fractured", "{fractured}"),
+                       ("desecrated", "{desecrated}"),
+                       ("crafted", "{crafted}"))
 EMITTED_CATEGORIES = ("enchant", "rune", "implicit", "explicit")
 
 
@@ -62,23 +72,31 @@ def fixture_item(fixtures_dir: Path) -> dict:
     return payload["item"]
 
 
-@pytest.fixture(scope="module")
-def converted(repo_root: Path, fixture_item: dict, tmp_path_factory) -> str:
-    tmp = tmp_path_factory.mktemp("f12")
-    item_lua = tmp / "item_table.lua"
-    item_lua.write_text("return " + to_lua(fixture_item) + "\n", encoding="utf-8")
-
+def run_probe(repo_root: Path, item: dict, tmp_path: Path, mode=None) -> str:
+    item_lua = tmp_path / "item_table.lua"
+    item_lua.write_text("return " + to_lua(item) + "\n", encoding="utf-8")
     probe = repo_root / "tests" / "integration" / "lua" / "convert_probe.lua"
     bootstrap = repo_root / "pob2-mcp" / "pob2mcp" / "bootstrap.lua"
-    proc = subprocess.run(
-        [LUAJIT, str(probe), str(bootstrap), str(item_lua)],
-        capture_output=True, text=True, timeout=60,
-    )
+    command = [LUAJIT, str(probe), str(bootstrap), str(item_lua)]
+    if mode is not None:
+        command.append(mode)
+    proc = subprocess.run(command, capture_output=True, text=True, timeout=60)
     assert proc.returncode == 0, proc.stderr
     return proc.stdout
 
 
-# ------------------------------------------------------- current behaviour
+@pytest.fixture(scope="module")
+def converted(repo_root: Path, fixture_item: dict, tmp_path_factory) -> str:
+    return run_probe(repo_root, fixture_item, tmp_path_factory.mktemp("f12"))
+
+
+@pytest.fixture(scope="module")
+def report(repo_root: Path, fixture_item: dict, tmp_path_factory) -> str:
+    return run_probe(repo_root, fixture_item,
+                     tmp_path_factory.mktemp("f12-report"), mode="report")
+
+
+# ------------------------------------------------------- repaired behaviour
 
 def test_the_probe_reproduces_the_supported_categories(converted: str):
     for category in EMITTED_CATEGORIES:
@@ -96,13 +114,19 @@ def test_header_fields_survive_conversion(converted: str):
     assert "LevelReq: 65" in lines
 
 
-def test_fractured_desecrated_and_crafted_modifiers_are_lost(converted: str):
-    """CURRENT behaviour (F12): three real affix categories vanish silently."""
-    for category in DROPPED_CATEGORIES:
-        assert "FIXTUREMOD %s line one" % category not in converted, category
-    # Nothing in the output hints that anything was discarded.
-    assert "unsupported" not in converted.lower()
-    assert "dropped" not in converted.lower()
+def test_fractured_desecrated_and_crafted_modifiers_are_preserved(converted: str):
+    """Was the F12 characterization: the three categories vanished silently."""
+    for category, marker in REPAIRED_CATEGORIES:
+        line = marker + "FIXTUREMOD %s line one" % category
+        assert line in converted.splitlines(), line
+
+
+def test_the_repaired_categories_sit_after_the_implicit_block(converted: str):
+    """PoB reads the lines after ``Implicits: N`` as explicit-area lines."""
+    lines = converted.splitlines()
+    first_explicit = lines.index("FIXTUREMOD explicit line one")
+    for category, marker in REPAIRED_CATEGORIES:
+        assert lines.index(marker + "FIXTUREMOD %s line one" % category) > first_explicit
 
 
 def test_implicit_count_matches_only_the_emitted_implicit_categories(converted: str):
@@ -116,13 +140,28 @@ def test_conversion_does_not_mutate_the_fixture_on_disk(fixtures_dir: Path, conv
     assert payload["item"]["craftedMods"] == [{"description": "FIXTUREMOD crafted line one"}]
 
 
-# ------------------------------------------------------- repaired behaviour
+def test_the_handler_reports_what_it_emitted(report: str):
+    lines = report.splitlines()
+    assert "complete=true" in lines
+    for array in ("enchantMods", "runeMods", "implicitMods", "fracturedMods",
+                  "desecratedMods", "craftedMods"):
+        assert "emitted %s=1" % array in lines, array
+    assert "emitted explicitMods=2" in lines
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F12 repair is P02-T05: fractured, desecrated and crafted modifiers "
-           "must be preserved in the converted item, or reported as unsupported.",
-)
+
+def test_an_unknown_item_field_is_reported_rather_than_dropped(
+        repo_root: Path, fixture_item: dict, tmp_path: Path):
+    """Was: a dropped field left no trace at all."""
+    extended = dict(fixture_item, scourgeMods=[{"description": "FIXTUREMOD scourge"}],
+                    note="~price 1 exalted")
+    report = run_probe(repo_root, extended, tmp_path, mode="report")
+    lines = report.splitlines()
+    assert "complete=false" in lines
+    assert "unsupported scourgeMods" in lines
+    assert "unsupported note" in lines
+
+
 def test_repaired_conversion_preserves_every_modifier_category(converted: str):
-    for category in DROPPED_CATEGORIES:
+    """Was an xfail naming P02-T05. The repair makes it a pass."""
+    for category, _marker in REPAIRED_CATEGORIES:
         assert "FIXTUREMOD %s line one" % category in converted, category

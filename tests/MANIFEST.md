@@ -54,6 +54,8 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T01 failure probe | `python scripts/p02_t01_timeout_probe.py --mode wedge --timeout 2.0` | Nothing | Not a test; one adapter failure case as its own process, so a supervisor can bound it. Modes: `wedge`, `crash`, `revive`. |
 | P02-T01 evidence | `python scripts/p02_t01_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/lifecycle.json`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T01 review probes | `python docs/evidence/P02/review-eca7afe-adversarial-probes.py` | PoB | Not a test; re-asks the review's seven questions. Its recorded answers are the pre-repair ones in `review-eca7afe-adversarial.json`. |
+| P02-T05 evidence | `python scripts/p02_t05_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/roundtrips.json`, `roundtrip-synthetic.xml` and `roundtrip-pob-export.xml`. Without a checkout the `pob` section records `unavailable`. |
+| P02-T05 item conversion report | `luajit tests/integration/lua/convert_probe.lua pob2-mcp/pob2mcp/bootstrap.lua <item.lua> report` | `luajit` | Not a test; prints the repaired `convert_trade_item` completeness report for one item table instead of the item string. |
 
 Selecting the PoB checkout:
 
@@ -94,7 +96,7 @@ none yet).
 | `test_f05_run_identity_and_assumptions.py` | Research F05: phase cache identity, hardcoded league, point-budget guesses, literal result caps. |
 | `test_f10_engine_lifecycle_contract.py` | Research F10 at the API surface: `chdir`, no teardown, no timeout, undifferentiated errors. |
 | `test_f11_worker_wipes_imported_build.py` | Research F11, via a recording engine double. |
-| `test_f12_item_conversion_source.py` | Research F12 from the handler source. |
+| `test_f12_item_conversion_source.py` | Research F12 from the handler source, migrated to the P02-T05 repair: every modifier array the handler reads is emitted, nothing is written back into the caller's item, and the result reports what it could not place. |
 | `test_engine_skip_guard.py` | The CI engine-skip guard rejects a fixture error, a failing test, a collection error, an empty selection, an interrupt, a test that actually ran, and an xfail posing as a runtime skip. |
 | `test_p01_t01_records.py` | P01-T01: every record kind's valid and invalid examples, the four no-value states, unknown schema versions, NaN, unknown and missing fields, unresolved references. |
 | `test_p01_t01_schemas.py` | P01-T01: `schemas/v1` is regenerated from the dataclasses, each schema compiles, `$ref`s resolve locally, no annotation is left unresolved. |
@@ -107,12 +109,15 @@ none yet).
 | `test_p01_demo_run.py` | Re-runs `scripts/p01_demo_run.py` and checks the claims `docs/evidence/P01/demo-run.json` records. |
 | `test_p02_t01_adapter.py` | P02-T01 offline lane: parent working directory, exact versus blank loading, build-document sourcing and blob ambiguity, patch-profile mismatch, typed errors, process replacement, state scoped to the worker generation, fidelity bounds covering the load, pre-spawn path resolution, helper hashing, checkout identity. Synthetic workers only. |
 | `test_p02_t01_timeout_supervisor.py` | P02-T01 bounded requests, run through `scripts/p02_t01_timeout_probe.py` under a hard outer deadline with process-tree cleanup, so an unenforced bound fails instead of hanging. |
+| `test_p02_t05_build_round_trip.py` | P02-T05 offline lane: a BuildSpec exported and reimported, compared on `build_identity`. Enabled and disabled groups, main skill, ordered supports, passive attribute choices, the ordinary/ascendancy split, socketed jewels, weapon sets, the three config value types and an explicitly empty slot. Unsupported fields (trigger nesting, progression, item-granted groups, unnamed catalog IDs) are labelled incomplete and not recommended, with the value preserved in the report. Includes the invariant that a complete export never differs on reimport. |
+| `test_p02_t05_item_round_trip.py` | P02-T05 offline lane: an ItemInstance as PoB item text and back, compared on `item_identity`. Every supported modifier category, modifier line flags, item variants, sockets, omitted optional fields, a modifier line containing a colon. Unsupported: the `unknown` category, a modifier's catalog resolution and roll range, a flag recorded `false`, a requirement other than level, and modifier positions PoB would renumber. |
+| `test_p02_t05_no_mutation.py` | P02-T05: neither direction changes the BuildSpec, the items or the naming table it was given, checked on canonical JSON of the whole input. Includes a monkeypatched mutating exporter, so the guard fails when something does mutate. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
 | File | Covers |
 |---|---|
-| `test_f12_item_conversion_luajit.py` | Runs the real `convert_trade_item` handler under a stock LuaJIT via `lua/convert_probe.lua`. |
+| `test_f12_item_conversion_luajit.py` | Runs the real `convert_trade_item` handler under a stock LuaJIT via `lua/convert_probe.lua`, migrated to the P02-T05 repair: the fractured, desecrated and crafted lines are present with PoB's own markers, they sit after the implicit block, and an unknown item field is reported. The probe's third argument `report` prints the handler's completeness report instead of the item string. |
 
 ### `tests/engine` - requires the PoB runtime
 
@@ -122,8 +127,9 @@ none yet).
 | `test_engine_build_inputs.py` | Legitimate zero full-DPS versus malformed build input (observation P00-OBS-01). |
 | `test_f10_engine_state.py` | Working-directory leak and A-B-A stability in the live engine. |
 | `test_f11_import_is_wiped.py` | What survives `load_build_xml` + `OPT_setup` (and observation P00-OBS-02). |
-| `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, and what the dropped affix costs. |
+| `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, migrated to the P02-T05 repair: PoB reads the recovered lines back in the right category and the previously lost affix now raises the calculated damage. |
 | `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout and helper identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, recovery from it without a blank character, A-B-A with B read, two documents under one build hash, configuration isolation between evaluations, forced termination and replacement. |
+| `test_p02_t05_pob_round_trip.py` | P02-T05 against the real engine: a build PoB saved, imported, exported, loaded back into PoB and saved again. PoB accepts the document and reports the same tree, gear and socket groups; the deterministic primitives agree within the P02-T01 tolerance; `build_identity` is unchanged while the XML bytes are not. Includes a damaged export, so the equality assertions cannot pass on an empty document. |
 
 ### `tests/fixtures`
 
@@ -220,3 +226,34 @@ the repaired behaviour instead:
   `new_blank_worker` (research F11);
 * `load_build_xml` rejects a document PoB cannot read instead of returning a
   default level 1 character (observation P00-OBS-01).
+
+## P02-T05 recorded results
+
+Specification version 1.0, 2026-10-06, branch `p02-t05-roundtrips` off
+`0df64dd`, CPython 3.12.4, Windows 11, PoB `ce566ea`:
+
+| Command | Result |
+|---|---|
+| `python -m pytest tests/unit` | 693 passed, 3 xfailed |
+| `python -m pytest tests/integration` | 9 passed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 59 passed, 705 deselected |
+| `python -m pytest` (with `POB2_ROOT`) | 761 passed, 3 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 702 passed, 59 skipped, 3 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+
+The three strict xfails that named P02-T05 are gone, because the F12 repair
+turned them into ordinary passes:
+
+| Test | Now |
+|---|---|
+| `tests/unit/test_f12_item_conversion_source.py::test_repaired_handler_emits_every_normalized_modifier_array` | passes; every modifier array the handler reads is emitted |
+| `tests/integration/test_f12_item_conversion_luajit.py::test_repaired_conversion_preserves_every_modifier_category` | passes; the three recovered categories are in the item string |
+| `tests/engine/test_f12_item_conversion_golden.py::test_repaired_conversion_preserves_every_modifier_category` | passes; PoB reads them back in the right category |
+
+The three remaining xfails belong to P02-T04 and P08-T01.
+
+One ordering hazard found while running the engine lane: a second
+`Pob2Engine` in the same process shares the native state, so closing the
+throwaway one leaves the session `engine` fixture unusable for every test
+after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
+document in the session engine for that reason.

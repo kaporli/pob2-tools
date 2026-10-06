@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathOfBuilding2>
+	<Build level="84" targetVersion="0_1" viewMode="TREE" mainSocketGroup="1" characterLevelAutoMode="false" className="Huntress" ascendClassName="Ritualist" />
+	<Import />
+	<Calcs />
+	<Skills activeSkillSet="1" sortGemsByDPS="true" sortGemsByDPSField="CombinedDPS">
+		<SkillSet id="1" title="Default">
+			<Skill enabled="true" label="group-main" slot="Weapon 1" set1="true" set2="false" mainActiveSkill="1">
+				<Gem level="20" quality="18" enabled="true" count="1" skillId="FixtureSpearThrow" gemId="Metadata/Fixture/SpearThrow" />
+				<Gem skillId="FixtureSupportTempo" enabled="true" count="1" />
+				<Gem skillId="FixtureSupportConcentrated" enabled="true" count="1" />
+			</Skill>
+			<Skill enabled="false" label="group-disabled" set1="true" set2="true">
+				<Gem level="1" quality="0" enabled="false" count="1" skillId="FixtureHerald" />
+			</Skill>
+		</SkillSet>
+	</Skills>
+	<Tree activeSpec="1">
+		<Spec treeVersion="0_5" secondaryAscendClassId="0" classId="8" ascendClassId="1" nodes="101,102,103,104,201">
+			<WeaponSet1 nodes="102" />
+			<WeaponSet2 nodes="103" />
+			<Sockets>
+				<Socket nodeId="101" itemId="3" />
+			</Sockets>
+			<Overrides>
+				<AttributeOverride strNodes="" dexNodes="104" intNodes="" />
+			</Overrides>
+		</Spec>
+	</Tree>
+	<Items activeItemSet="1" useSecondWeaponSet="false">
+		<Item id="1">
+Rarity: UNIQUE
+FIXTURE Two Variant Helm
+Iron Helm
+Item Level: 70
+Armour: 120
+Sockets: S
+Variant: Pre Fixture
+Variant: Current
+Selected Variant: 2
+Implicits: 1
+FIXTUREMOD helmet implicit
+{variant:1}FIXTUREMOD helmet variant one
+{variant:2}FIXTUREMOD helmet variant two
+</Item>
+		<Item id="2">
+Rarity: RARE
+FIXTURE Category Quarterstaff
+Long Quarterstaff
+Item Level: 82
+Quality: 20
+LevelReq: 65
+Implicits: 3
+{enchant}FIXTUREMOD enchant line
+{rune}FIXTUREMOD rune line
+FIXTUREMOD implicit line
+FIXTUREMOD explicit one
+{unscalable}FIXTUREMOD explicit two
+{fractured}FIXTUREMOD fractured line
+{crafted}FIXTUREMOD crafted line
+{desecrated}FIXTUREMOD desecrated line
+Corrupted
+</Item>
+		<Item id="3">
+Rarity: RARE
+FIXTURE Socketed Jewel
+Emerald
+Item Level: 60
+Implicits: 0
+FIXTUREMOD jewel explicit
+</Item>
+		<ItemSet id="1" title="Default" useSecondWeaponSet="false">
+			<Slot name="Helmet" itemId="1" />
+			<Slot name="Weapon 1" itemId="2" />
+			<Slot name="Weapon 1 Swap" itemId="0" />
+			<Slot name="Weapon 2" itemId="0" />
+		</ItemSet>
+	</Items>
+	<Config activeConfigSet="1">
+		<ConfigSet id="1" title="Default">
+			<Input name="conditionFullLife" boolean="true" />
+			<Input name="enemyIsBoss" string="Boss" />
+			<Input name="multiplierFixtureStacks" number="5" />
+		</ConfigSet>
+	</Config>
+	<Notes />
+	<TreeView searchStr="" zoomLevel="3" zoomX="0" zoomY="0" showStatDifferences="true" />
+</PathOfBuilding2>

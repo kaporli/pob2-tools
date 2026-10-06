@@ -247,11 +247,39 @@ handlers.test_item = function(args)
 	return { name = item.name, diff = diff }
 end
 
+-- Item keys convert_trade_item knows how to place. A key outside this set is
+-- named in the handler's report rather than discarded without trace (P02-T05,
+-- research finding F12).
+local TRADE_ITEM_KNOWN_KEYS = {
+	rarity = true, name = true, typeLine = true, ilvl = true,
+	properties = true, requirements = true, sockets = true,
+	enchantMods = true, runeMods = true, implicitMods = true,
+	explicitMods = true, fracturedMods = true, desecratedMods = true,
+	craftedMods = true,
+	mirrored = true, corrupted = true, doubleCorrupted = true,
+	sanctified = true,
+}
+
 handlers.convert_trade_item = function(args)
 	-- args.item = the `item` object of one trade API fetch result entry
 	-- (ported from TradeQueryRequests:FetchResultBlock)
+	--
+	-- Upstream normalises seven modifier arrays and emits four of them. This
+	-- handler emits all seven, using the same markers PoB's own
+	-- Item:BuildRaw writes, and returns everything it could not place. It
+	-- also no longer writes defaults back into args.item: conversion must
+	-- not mutate the object it was given.
 	local item = assert(args.item, "item object required")
 	local t_insert = table.insert
+	local unsupported = {}
+	local function report(field, reason, value)
+		t_insert(unsupported, { field = field, reason = reason, value = value })
+	end
+	for key in pairs(item) do
+		if not TRADE_ITEM_KNOWN_KEYS[key] then
+			report(key, "no line in the PoB item format carries this field", item[key])
+		end
+	end
 	local spirit, armour, evasion, es, charmSlots, quality, radius, limit
 	if item.properties then
 		for _, property in ipairs(item.properties) do
@@ -264,8 +292,20 @@ handlers.convert_trade_item = function(args)
 			elseif name == "Charm Slots" then charmSlots = property.values[1][1]
 			elseif name == "Radius" then radius = property.values[1][1]
 			elseif name == "Limited to" then limit = property.values[1][1]
+			else report("properties." .. tostring(name), "property name has no PoB item line", property)
 			end
 		end
+	end
+	if item.requirements then
+		for _, requirement in ipairs(item.requirements) do
+			if requirement.name ~= "Level" then
+				report("requirements." .. tostring(requirement.name),
+					"PoB item text carries only the level requirement", requirement)
+			end
+		end
+	end
+	if item.sockets and #item.sockets > 0 then
+		report("sockets", "only the socket count is written; group and type are not", item.sockets)
 	end
 	local rawLines = {}
 	t_insert(rawLines, "Rarity: " .. item.rarity)
@@ -295,13 +335,6 @@ handlers.convert_trade_item = function(args)
 	end
 	if radius then t_insert(rawLines, "Radius: " .. radius) end
 	if limit then t_insert(rawLines, "Limited to: " .. limit) end
-	item.enchantMods = item.enchantMods or {}
-	item.fracturedMods = item.fracturedMods or {}
-	item.desecratedMods = item.desecratedMods or {}
-	item.craftedMods = item.craftedMods or {}
-	item.runeMods = item.runeMods or {}
-	item.implicitMods = item.implicitMods or {}
-	item.explicitMods = item.explicitMods or {}
 	local function processLine(modLine)
 		local s = ""
 		for flagName, flag in pairs(modLine.flags or {}) do
@@ -309,16 +342,33 @@ handlers.convert_trade_item = function(args)
 		end
 		return s .. escapeGGGString(modLine.description or modLine)
 	end
-	t_insert(rawLines, "Implicits: " .. (#item.enchantMods + #item.runeMods + #item.implicitMods))
-	for _, modLine in ipairs(item.enchantMods) do t_insert(rawLines, "{enchant}" .. processLine(modLine)) end
-	for _, modLine in ipairs(item.runeMods) do t_insert(rawLines, "{enchant}{rune}" .. processLine(modLine)) end
-	for _, modLine in ipairs(item.implicitMods) do t_insert(rawLines, processLine(modLine)) end
-	for _, modLine in ipairs(item.explicitMods) do t_insert(rawLines, processLine(modLine)) end
+	-- Every array is read with `or {}` at the point of use, so nothing is
+	-- written back into the caller's table. The implicit count stays the
+	-- three implicit-like categories: PoB reads the lines after it as
+	-- explicits, which is where the other four belong.
+	t_insert(rawLines, "Implicits: " .. (#(item.enchantMods or {}) + #(item.runeMods or {}) + #(item.implicitMods or {})))
+	for _, modLine in ipairs(item.enchantMods or {}) do t_insert(rawLines, "{enchant}" .. processLine(modLine)) end
+	for _, modLine in ipairs(item.runeMods or {}) do t_insert(rawLines, "{enchant}{rune}" .. processLine(modLine)) end
+	for _, modLine in ipairs(item.implicitMods or {}) do t_insert(rawLines, processLine(modLine)) end
+	for _, modLine in ipairs(item.explicitMods or {}) do t_insert(rawLines, processLine(modLine)) end
+	for _, modLine in ipairs(item.fracturedMods or {}) do t_insert(rawLines, "{fractured}" .. processLine(modLine)) end
+	for _, modLine in ipairs(item.desecratedMods or {}) do t_insert(rawLines, "{desecrated}" .. processLine(modLine)) end
+	for _, modLine in ipairs(item.craftedMods or {}) do t_insert(rawLines, "{crafted}" .. processLine(modLine)) end
 	if item.mirrored then t_insert(rawLines, "Mirrored") end
 	if item.doubleCorrupted then t_insert(rawLines, "Twice Corrupted")
 	elseif item.corrupted then t_insert(rawLines, "Corrupted") end
 	if item.sanctified then t_insert(rawLines, "Sanctified") end
-	return { item_string = table.concat(rawLines, "\n") }
+	local emitted = {}
+	for _, key in ipairs({ "enchantMods", "runeMods", "implicitMods", "explicitMods",
+			"fracturedMods", "desecratedMods", "craftedMods" }) do
+		emitted[key] = #(item[key] or {})
+	end
+	return {
+		item_string = table.concat(rawLines, "\n"),
+		emitted_mod_counts = emitted,
+		unsupported = unsupported,
+		complete = #unsupported == 0,
+	}
 end
 
 -- ------------------------------------------------------------------- tree

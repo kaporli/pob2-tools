@@ -38,3 +38,6 @@ them separate.
 | `P02/review_eca7afe_workers.py` | P02-T01 review | The slow-load synthetic worker that parallel set used |
 | `P02/review-eca7afe-recovery-probes.py` | P02-T01 repair | Reproduction of R10 and R11 at HEAD |
 | `P02/review-eca7afe-recovery.json` | P02-T01 repair | Those two cases before and after the repair |
+| `P02/roundtrips.json` | P02-T05 | Build and item round trips. The `synthetic` section is invented fixtures compared by our exporter against our importer; the `pob` section is a build PoB saved, exported, loaded back into the pinned engine and compared on canonical identity and deterministic primitives (PoB-derived) |
+| `P02/roundtrip-synthetic.xml` | P02-T05 | The synthetic supported fixture's exported document. Synthetic: its class, skills and bases are invented, so the pinned PoB will load the file and find none of those entities. It is here to be read, not loaded |
+| `P02/roundtrip-pob-export.xml` | P02-T05 | PoB-derived. Our export of a build PoB itself wrote; this is the document a reviewer loads in the pinned PoB. `docs/worklog/P02-T05.md` gives the two ways to load it |

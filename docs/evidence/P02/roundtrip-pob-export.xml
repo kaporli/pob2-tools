@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathOfBuilding2>
+	<Build level="28" targetVersion="0_1" viewMode="TREE" mainSocketGroup="1" characterLevelAutoMode="false" className="Ranger" ascendClassName="None" />
+	<Import />
+	<Calcs />
+	<Skills activeSkillSet="1" sortGemsByDPS="true" sortGemsByDPSField="CombinedDPS">
+		<SkillSet id="1" title="Default">
+			<Skill enabled="true" label="" slot="Weapon 1" set1="true" set2="false" mainActiveSkill="1">
+				<Gem level="8" quality="0" enabled="true" count="1" skillId="MeleeQuarterstaffPlayer" gemId="Metadata/Items/Gem/SkillGemPlayerDefaultQuarterstaff" />
+			</Skill>
+		</SkillSet>
+	</Skills>
+	<Tree activeSpec="1">
+		<Spec treeVersion="0_5" secondaryAscendClassId="0" classId="2" ascendClassId="0" nodes="1140,2955,7628,10909,13241,13828,15182,15507,16489,16725,17468,21755,22558,22616,27373,28002,28370,28556,32194,36629,41646,47157,48401,48635,48670,49657,50459,51052,51921,53405,54127,54417,54818,55933,59881,63526">
+			<Sockets />
+			<Overrides>
+				<AttributeOverride strNodes="1140,7628,10909,13241,15182,15507,16489,16725,17468,21755,22558,22616,27373,28002,28370,28556,32194,36629,41646,48401,48635,48670,49657,51052,51921,53405,54417,54818,55933,59881,63526" dexNodes="" intNodes="" />
+			</Overrides>
+		</Spec>
+	</Tree>
+	<Items activeItemSet="1" useSecondWeaponSet="false">
+		<Item id="1">
+Rarity: RARE
+FIXTURE P02-T05 Quarterstaff
+Long Quarterstaff
+Item Level: 80
+Quality: 20
+LevelReq: 60
+Implicits: 0
+Adds 60 to 90 Physical Damage
+{crafted}Adds 20 to 30 Fire Damage
+</Item>
+		<ItemSet id="1" title="Default" useSecondWeaponSet="false">
+			<Slot name="Amulet" itemId="0" />
+			<Slot name="Arm 1" itemId="0" />
+			<Slot name="Arm 2" itemId="0" />
+			<Slot name="Belt" itemId="0" />
+			<Slot name="Body Armour" itemId="0" />
+			<Slot name="Boots" itemId="0" />
+			<Slot name="Charm 1" itemId="0" />
+			<Slot name="Charm 2" itemId="0" />
+			<Slot name="Charm 3" itemId="0" />
+			<Slot name="Flask 1" itemId="0" />
+			<Slot name="Flask 2" itemId="0" />
+			<Slot name="Gloves" itemId="0" />
+			<Slot name="Helmet" itemId="0" />
+			<Slot name="Leg 1" itemId="0" />
+			<Slot name="Leg 2" itemId="0" />
+			<Slot name="Ring 1" itemId="0" />
+			<Slot name="Ring 2" itemId="0" />
+			<Slot name="Ring 3" itemId="0" />
+			<Slot name="Weapon 1" itemId="1" />
+			<Slot name="Weapon 1 Swap" itemId="0" />
+			<Slot name="Weapon 2" itemId="0" />
+			<Slot name="Weapon 2 Swap" itemId="0" />
+		</ItemSet>
+	</Items>
+	<Config activeConfigSet="1">
+		<ConfigSet id="1" title="Default" />
+	</Config>
+	<Notes />
+	<TreeView searchStr="" zoomLevel="3" zoomX="0" zoomY="0" showStatDifferences="true" />
+</PathOfBuilding2>
