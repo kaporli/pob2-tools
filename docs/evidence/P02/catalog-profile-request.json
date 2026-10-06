@@ -1,0 +1,8 @@
+{
+ "schema_version": 1,
+ "game": "poe2",
+ "realm": "poe2",
+ "league_id": "Standard",
+ "release_evidence_dir": "docs/evidence/P02/release",
+ "label": "P02-T02 reference export"
+}

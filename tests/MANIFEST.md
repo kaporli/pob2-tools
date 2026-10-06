@@ -54,6 +54,9 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T01 failure probe | `python scripts/p02_t01_timeout_probe.py --mode wedge --timeout 2.0` | Nothing | Not a test; one adapter failure case as its own process, so a supervisor can bound it. Modes: `wedge`, `crash`, `revive`. |
 | P02-T01 evidence | `python scripts/p02_t01_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/lifecycle.json`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T01 review probes | `python docs/evidence/P02/review-eca7afe-adversarial-probes.py` | PoB | Not a test; re-asks the review's seven questions. Its recorded answers are the pre-repair ones in `review-eca7afe-adversarial.json`. |
+| P02-T02 catalog export (engine) | `python -m pob2opt.cli catalog export --profile docs/evidence/P02/catalog-profile-request.json --out DIR` | A PoB2 checkout | Not a test; writes a catalog, patch profile, gaps and evidence bundle. Exit 3 without a checkout. |
+| P02-T02 catalog export (offline) | `python -m pob2opt.cli catalog export --profile docs/evidence/P02/catalog-profile-request.json --out DIR --rows docs/evidence/P02/catalog-rows-slice.json` | Nothing | The same export over the committed row slice. No PoB, no network. |
+| P02-T02 evidence | `python scripts/p02_t02_evidence.py` | PoB | Not a test; rewrites `docs/evidence/P02/catalog-export.json` and `catalog-rows-slice.json`. Without a checkout the summary records `unavailable`. |
 
 Selecting the PoB checkout:
 
@@ -107,6 +110,8 @@ none yet).
 | `test_p01_demo_run.py` | Re-runs `scripts/p01_demo_run.py` and checks the claims `docs/evidence/P01/demo-run.json` records. |
 | `test_p02_t01_adapter.py` | P02-T01 offline lane: parent working directory, exact versus blank loading, build-document sourcing and blob ambiguity, patch-profile mismatch, typed errors, process replacement, state scoped to the worker generation, fidelity bounds covering the load, pre-spawn path resolution, helper hashing, checkout identity. Synthetic workers only. |
 | `test_p02_t01_timeout_supervisor.py` | P02-T01 bounded requests, run through `scripts/p02_t01_timeout_probe.py` under a hard outer deadline with process-tree cleanup, so an unenforced bound fails instead of hanging. |
+| `test_p02_t02_catalog.py` | P02-T02 offline lane: the real exporter over the committed row slice. Bundle self-validation, sample builds resolving, duplicate display names staying distinct, upstream commit changing the context identity, every compatibility verdict including the one path to `verified`, a historical pinned profile staying historical, and each missing upstream rule being a gap rather than a constant. No PoB, no network. |
+| `test_p02_t02_catalog_cli.py` | P02-T02 `pob2opt catalog export` as a command: bundle layout, blobs matching their documents, exit codes 0, 2 and 3, an unknown request key, a missing release directory, and the doctor's `patch_profile_owner` claim now naming a command that exists. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -124,6 +129,7 @@ none yet).
 | `test_f11_import_is_wiped.py` | What survives `load_build_xml` + `OPT_setup` (and observation P00-OBS-02). |
 | `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, and what the dropped affix costs. |
 | `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout and helper identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, recovery from it without a blank character, A-B-A with B read, two documents under one build hash, configuration isolation between evaluations, forced termination and replacement. |
+| `test_p02_t02_catalog_engine.py` | P02-T02 against the real engine: the typed Lua catalog operations paging stably over every table, an unknown table refused as `unsupported` without killing the worker, a catalog read leaving a loaded build untouched, the behaviour fixtures actually running, a PoB-saved build resolving completely, duplicate display names surviving as distinct entities, and a replay of the captured rows reproducing the live catalog hash. |
 
 ### `tests/fixtures`
 
@@ -220,3 +226,30 @@ the repaired behaviour instead:
   `new_blank_worker` (research F11);
 * `load_build_xml` rejects a document PoB cannot read instead of returning a
   default level 1 character (observation P00-OBS-01).
+
+## P02-T02 catalog export
+
+Specification version 1.0, 2026-10-06, branch `p02-t02-catalog` off `origin/main`
+(`0df64dd`), PoB `ce566ea` with a modified working tree, CPython 3.12.4,
+Windows 11:
+
+| Command | Result |
+|---|---|
+| `python -m pytest tests/unit` | 686 passed, 4 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 691 passed, 64 skipped, 5 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 754 passed, 6 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 63 passed, 696 deselected, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+
+The export itself, on that checkout: catalog hash
+`e82da2ea8a9cb567693f15d848f3f322f0ba5149f560687ebb44da7d63d3ba6f`, 24 355
+entities across the ten tables, patch `0.5.5e`, compatibility **partial** for
+four stated reasons, nine gaps, and both sample builds resolving with nothing
+unresolved or ambiguous. `docs/evidence/P02/catalog-export.json` has the
+detail.
+
+The adapter is `p02-t02.0`: it can now ask the engine for a catalog page, so
+the version string moved. The primitive path did not change. A `PatchProfile`
+pinned to a different adapter is now refused rather than accepted silently,
+which is why the P02-T01 fixtures repin `adapter_version` the way they already
+repinned `pob_commit`.

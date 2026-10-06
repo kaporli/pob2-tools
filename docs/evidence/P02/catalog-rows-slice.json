@@ -1,0 +1,8119 @@
+{
+ "adapter_version": "p02-t02.0",
+ "capture_version": 1,
+ "citations": {
+  "engine_release": {
+   "file_sha256": "7e5a8787c2b03c2dc5f16cd4de91517f83040f30741a9134296eb8638f053514",
+   "line": 1,
+   "relative_path": "changelog.txt",
+   "text": "VERSION[0.23.1][2026/07/28]",
+   "values": [
+    "0.23.1",
+    "2026",
+    "07",
+    "28"
+   ]
+  },
+  "level_cap": {
+   "file_sha256": "f894009d3e99975bc67027fa7ada9eb588a6b22336baf813d29cbd05e7a7e812",
+   "line": 1035,
+   "relative_path": "src/Modules/Build.lua",
+   "text": "level = m_min(m_max(PointsUsed + 1 -  self.acts[act].questPoints - extra - m_min(weaponSet1Used, weaponSet2Used), self.acts[act].level), 100)",
+   "values": [
+    "100"
+   ]
+  },
+  "point_maximums": {
+   "file_sha256": "f894009d3e99975bc67027fa7ada9eb588a6b22336baf813d29cbd05e7a7e812",
+   "line": 1031,
+   "relative_path": "src/Modules/Build.lua",
+   "text": "local usedMax, ascMax, secondaryAscMax, level, act = 99 + maxWeaponSets + extra, 8, 8, 1, 0",
+   "values": [
+    "99",
+    "8",
+    "8"
+   ]
+  },
+  "support_socket_limit": {
+   "file_sha256": "049cfc52435f20c607c4517533f33a4ac9bb8d0c26755790bd6be4c810bce396",
+   "line": 2547,
+   "relative_path": "src/Modules/CalcSetup.lua",
+   "text": "if socketedSupportGems > 5 then",
+   "values": [
+    "5"
+   ]
+  }
+ },
+ "kind": "PoB-derived",
+ "not_a_claim": "A bounded slice of the pinned engine's catalog rows, kept so the offline tests can run the real export with no PoB. It is not the catalog: large tables hold only the rows the compatibility fixtures and the sample builds need, plus a few more. A catalog hash computed from this slice is not the catalog hash of a real export. The rows are third-party game data read out of Path of Building: reviewable locally, not for republication.",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+ "recorded_from": {
+  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+  "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181"
+ },
+ "redistribution": "restricted",
+ "rule_sources": {
+  "characterConstants": {
+   "accuracy_rating_+%_final_at_max_distance_scaled": -90,
+   "accuracy_rating_per_level": 6,
+   "actor_scale_+%_limit": 100,
+   "additional_insanity_effects_while_delirious": 1,
+   "base_block_angle_degrees": 210,
+   "base_critical_hit_damage_bonus": 100,
+   "base_evasion_rating": 7,
+   "base_heavy_stun_duration_ms": 3000,
+   "base_knockback_speed_+%": -30,
+   "base_max_fortification": 20,
+   "base_maximum_all_resistances_%": 75,
+   "base_maximum_number_of_stored_corpses": 10,
+   "base_number_of_remote_mines_allowed": 15,
+   "base_number_of_traps_allowed": 15,
+   "base_number_of_weapon_sets": 2,
+   "base_pay_cost_over_start_of_skill_animation": 1,
+   "base_presence_radius": 40,
+   "base_speed": 37,
+   "base_total_number_of_sigils_allowed": 3,
+   "base_weapon_swap_duration_ms": 0,
+   "branching_fissure_max_branch_angle": 80,
+   "branching_fissure_min_branch_angle": 40,
+   "branching_fissure_placement_along_main_fissure_variance_%": 5,
+   "can_evade_spells": 1,
+   "chance_to_deal_triple_damage_%_per_brutal_charge": 3,
+   "character_inherent_mana_regeneration_rate_per_minute_%": 240,
+   "crossbow_ammo_switch_time_ms": 300,
+   "damage_+%_per_10_rampage_stacks": 2,
+   "damage_taken_when_hit_+%_final_per_fortification": -1,
+   "dexterity_per_level": 0,
+   "disable_minion_formation": 1,
+   "dodge_roll_sprint_minimum_time_ms": 100,
+   "dodge_roll_sprint_turn_rate": 150,
+   "elemental_damage_taken_goes_to_energy_shield_over_4_seconds_%_per_absorption_charge": 12,
+   "enable_movement_skill_animation_skipping": 1,
+   "enable_weapon_sets": true,
+   "energy_shield_recharge_rate_per_minute_%": 750,
+   "fixed_frost_wall_limit": 60,
+   "global_resummon_time_ms": 7500,
+   "heat_base_decay_rate_ms": 100,
+   "heat_base_delay_before_decay_ms": 4000,
+   "ignore_talisman_inherent_form_restriction": 1,
+   "intelligence_per_level": 0,
+   "is_player": 1,
+   "level": 1,
+   "life_per_level": 12,
+   "light_stun_threshold_+%_final_per_number_of_times_stunned_in_past_duration_from_ot": 50,
+   "mana_per_level": 4,
+   "max_azurite_debuff_stacks": 10,
+   "max_charged_attack_stacks": 6,
+   "max_delve_degen_stacks": 5000,
+   "max_endurance_charges": 3,
+   "max_fire_beam_stacks": 8,
+   "max_frenzy_charges": 3,
+   "max_frost_nova_stacks": 20,
+   "max_fuse_arrow_orbs": 5,
+   "max_power_charges": 3,
+   "max_rampage_stacks": 1000,
+   "max_steel_ammo": 12,
+   "max_talisman_degen_stacks": 20,
+   "max_viper_strike_orbs": 4,
+   "maximum_blood_scythe_charges": 5,
+   "maximum_briarpatches_allowed": 20,
+   "maximum_caltrops_allowed": 20,
+   "maximum_physical_damage_reduction_%": 90,
+   "maximum_righteous_charges": 5,
+   "maximum_volatility_allowed_default": 200,
+   "melee_defer_damage_prediction": 1,
+   "melee_hit_damage_stun_multiplier_+%_final_from_ot": 50,
+   "melee_strike_bonus_attack_distance": 2,
+   "melee_variation": 1,
+   "mines_invulnerable_for_duration_ms": 2000,
+   "minion_damage_taken_+%_from_arrow_traps_final": 0,
+   "minion_damage_taken_+%_from_guillotine_traps_final": -90,
+   "minion_damage_taken_+%_from_spike_traps_final": -90,
+   "minions_are_immune_to_labyrinth_degen_effect": 0,
+   "minions_have_labyrinth_trap_degen_effect_+%": -90,
+   "movement_velocity_+%_per_10_rampage_stacks": 1,
+   "mtx_max_killcounter_stacks": 30000,
+   "no_extra_bleeding_damage_while_moving": 1,
+   "number_of_banners_allowed": 1,
+   "object_inherent_armour_break_amount_+%_final_against_magic_monsters": 100,
+   "object_inherent_armour_break_amount_+%_final_against_normal_monsters": 200,
+   "object_inherent_base_maximum_block_%_from_ot": 50,
+   "object_innate_minimum_number_of_projectiles_to_fire_is_1": 1,
+   "physical_hit_damage_stun_multiplier_+%_final_from_ot": 50,
+   "player_allow_dodge_roll_cancel": 1,
+   "poise_decay_%_per_second": 50,
+   "poise_decay_delay_ms": 2000,
+   "pvp_shield_damage_+%_final": -15,
+   "quadruped_head_turn_duration_ms": 100,
+   "sprint_end_stun_linger_duration_ms": 200,
+   "sprint_movement_speed_+%": 50,
+   "strength_per_level": 0,
+   "stun_base_duration_override_ms": 500,
+   "stun_threshold_+%_per_brutal_charge": 10,
+   "traps_explode_on_timeout": 1,
+   "traps_invulnerable_for_duration_ms": 2000,
+   "unarmed_base_critical_strike_chance": 500,
+   "x_ms_for_number_of_times_stunned_in_past_duration_from_ot": 4000
+  },
+  "gameConstants": {
+   "AilmentChanceExponent": 1,
+   "AscendancyRespecCost": 5,
+   "AtlasPassiveRespecCost": 5000,
+   "BaseBleedingDuration": 5,
+   "BaseBloodstainedAfterBleedingDuration": 6,
+   "BaseChillDuration": 8,
+   "BaseChillDurationPlayer": 2,
+   "BaseFlammabilityDuration": 8,
+   "BaseFlammabilityDurationPlayer": 4,
+   "BaseIgniteDuration": 4,
+   "BaseInfusionDurationMs": 20000,
+   "BaseMaximumInfusionCount": 3,
+   "BaseMaximumRage": 30,
+   "BasePercentDamageDeflected": 40,
+   "BasePoisonDuration": 2,
+   "BaseRageLossDelayMs": 4000,
+   "BaseRageLossPerMinute": 300,
+   "BaseRequiredEnemiesToBeConsideredSurrounded": 5,
+   "BaseShieldRegenCooldownTimeMs": 4000,
+   "BaseShockDuration": 8,
+   "BaseShockDurationPlayer": 4,
+   "BaseShockMagnitude": 20,
+   "BaseWardRegenerationPercentPerMinute": 300,
+   "BleedingHitDamagePercentPerMinute": 900,
+   "BloodstainedMultiplierWhenMovingOrBleedingAggravated": 2,
+   "BriarpatchDamageTickSpeedWhenWet": 50,
+   "BriarpatchDurationSpeedWhenWet": -50,
+   "ChillEffectMultiplier": 100,
+   "ChillMaxEffect": 50,
+   "ChronomancerDelayedSelfDamageDelayMs": 4000,
+   "CullingStrikeMagicThreshold": 20,
+   "CullingStrikeNormalThreshold": 35,
+   "CullingStrikeRareThreshold": 10,
+   "CullingStrikeUniqueThreshold": 5,
+   "DefaultLowStatusThresholdPercent": 35,
+   "DefaultMaxEvadeChancePercent": 95,
+   "DivinityInherentRegenPercentPerMinute": 1500,
+   "EffectiveMaxDamageForLeech": 40000,
+   "ElectrocuteDamageScale": 1.7,
+   "ElectrocuteDuration": 5000,
+   "ElectrocuteDurationPlayer": 2000,
+   "ElectrocuteModifierDuration": 15,
+   "ElectrocuteThresholdModifier": 500,
+   "EndgameStartLevel": 65,
+   "ExpeditionMonsterModRuneOpulentMoreIIROfRuneMods": 400,
+   "ExpeditionMonsterModRuneOpulentPowerMoreIIROfRuneMods": 400,
+   "FreezeDamageScale": 2.1,
+   "FreezeDamageScalePlayer": 2,
+   "FreezeDuration": 4,
+   "FreezeDurationPlayer": 2,
+   "FreezeModifierDuration": 14,
+   "FreezeThresholdModifier": 500,
+   "GiganticMagnitude": 20,
+   "HeavyStunDamageScale": 0.58,
+   "HeavyStunDamageScalePlayer": 0.65,
+   "HeavyStunModifierDuration": 16.5,
+   "HeavyStunModifierDurationPlayer": 10,
+   "HeavyStunThresholdModifier": 500,
+   "HeavyStunThresholdModifierPlayer": 100,
+   "IdentifiedMagicMultiplier": 1,
+   "IdentifiedRareMultiplier": 2,
+   "IgniteChanceMultiplier": 20,
+   "IgniteHitDamagePercentPerMinute": 1200,
+   "IgniteNonHitFlammabilityModifier": 0.8,
+   "ImpaleMaximumStacks": 60,
+   "ImpalePercentage": 0.3,
+   "InfusionRemnantBaseDuration": 12000,
+   "JaggedGroundMagnitude": -20,
+   "KeystoneAlternateESRecoveryPhysicalDamagePercentageRecoupedAsES": 5,
+   "LightStunMinimumChance": 15,
+   "LightStunMinimumChancePlayer": 15,
+   "LightStunRatioScale": 58,
+   "LightStunRatioScalePlayer": 44,
+   "LineageSupportGemGoldPrice ": 9091,
+   "MaxHideoutDoodads": 750,
+   "MiscAilmentChanceMultiplier": 25,
+   "MobilePriceMultiplier": 0.25,
+   "MonsterAccuracyBase": 28,
+   "MonsterAccuracyImprovement": 2.6,
+   "MonsterAccuracyIncremental": 280,
+   "MonsterArmourBase": 2,
+   "MonsterArmourImprovement": 4.5,
+   "MonsterArmourIncremental": 1.75,
+   "MonsterArmourStrengthRatioMultiplier": 3,
+   "MonsterEvasionBase": 18,
+   "MonsterEvasionDexterityRatioMultiplier": 2,
+   "MonsterEvasionImprovement": 0.75,
+   "MonsterEvasionIncremental": 6,
+   "MonsterIntRatioCovertLifeToEnergyShield": 100,
+   "NonHitFlammabilityPermyriadThresholdToIgnite": 5000,
+   "NumPetrifiedStacksToPetrify": 5,
+   "OldLeechModsEffectiveness": 20,
+   "OpenWeaknessHealthPercentage": 45,
+   "PartyQuantityBonusPerAdditionalPlayer": 0.2,
+   "PartyQuantityBonusPerAdditionalPlayerHardMode": 0.2,
+   "PartyQuantityBonusPerAdditionalPlayerTencent": 0.16,
+   "PartyRarityBonusPerAdditionalPlayer": 0,
+   "PartyRarityBonusPerAdditionalPlayerHardMode": 0,
+   "PartyRarityBonusPerAdditionalPlayerTencent": 0,
+   "PartyUniqueBonusPerAdditionalPlayer": 0.3,
+   "PassiveTreeJewelDistanceMultiplier": 1.2,
+   "PinDamageScale": 4.2,
+   "PinDuration": 3,
+   "PinDurationPlayer": 2,
+   "PinModifierDuration": 13,
+   "PinThresholdModifier": 500,
+   "PlayerAilmentThresholdLifeFactor": 0.5,
+   "PoisonHitDamagePercentPerMinute": 1200,
+   "RitualOfferedTributeRequirement": 30000,
+   "RitualOfferedTributeRequirementQuest": 10000,
+   "SellPriceMultiplier": 0.11,
+   "ShapeshiftRevertingAnimationDurationPlayer": 0,
+   "ShapeshiftVisualsDurationPlayer": 1.2,
+   "ShockChanceMultiplier": 25,
+   "SkillDamageBaseEffectiveness": 3.885209,
+   "SkillDamageIncrementalEffectiveness": 0,
+   "SpellEchoCascadeDelayMs": 500,
+   "SupportGemGoldPrice": 228,
+   "UnholyMightBaseMagnitude": 30,
+   "UnidentifiedMagicMultiplier": 1.5,
+   "UnidentifiedRareMultiplier": 6
+  },
+  "latestTreeVersion": "0_5",
+  "liveTargetVersion": "0_1",
+  "maxActs": 7,
+  "maxWeaponSetPoints": 24,
+  "misc": {
+   "AccuracyFalloffEnd": 90,
+   "AccuracyFalloffStart": 20,
+   "AccuracyPerDexBase": 6,
+   "ArmourRatio": 10,
+   "AvoidChanceCap": 75,
+   "BleedDurationBase": 5,
+   "BleedPercentBase": 0.15,
+   "BlockChanceCap": 90,
+   "BrandAttachmentRangeBase": 30,
+   "BuffExpirationSlowCap": 0.25,
+   "DamageReductionCap": 90,
+   "DeflectEffect": 40,
+   "DeflectionChanceCap": 95,
+   "DodgeChanceCap": 75,
+   "DotDpsCap": 35791394,
+   "EnemyMaxResist": 75,
+   "EnemyPhysicalDamageReductionCap": 75,
+   "EnergyShieldRechargeBase": 0.125,
+   "EnergyShieldRechargeDelay": 4,
+   "EvadeChanceCap": 95,
+   "IgniteDurationBase": 4,
+   "IgnitePercentBase": 0.2,
+   "ImpaleStoredDamageBase": 0.1,
+   "LeechRateBase": 0.02,
+   "LowPoolThreshold": 0.35,
+   "ManaRegenBase": 0.04,
+   "MaxAccuracyRangePenalty": 90,
+   "MaxEnemyLevel": 85,
+   "MaxResistCap": 90,
+   "MeleeStunMult": 0.33,
+   "MinStunChanceNeeded": 20,
+   "MineAuraRadiusBase": 35,
+   "MineDetonationRadiusBase": 60,
+   "MinionBaseStunDuration": 1,
+   "MinionRevivalTimeBase": 7.5,
+   "NegArmourDmgBonusCap": 100,
+   "PhysicalStunMult": 1,
+   "PlayerMovementSpeed": 37,
+   "PoisonDurationBase": 2,
+   "PoisonPercentBase": 0.2,
+   "ProjectileDistanceCap": 150,
+   "PvpElemental1": 0.55,
+   "PvpElemental2": 150,
+   "PvpNonElemental1": 0.57,
+   "PvpNonElemental2": 90,
+   "ResistFloor": -200,
+   "ServerTickRate": 30.30303030303,
+   "ServerTickTime": 0.033,
+   "SpectreBeastDamageFixup": 1.25,
+   "StunBaseDuration": 0.5,
+   "StunBaseMult": 200,
+   "SuppressionChanceCap": 100,
+   "SuppressionEffect": 50,
+   "SurroundedRadiusBase": 30,
+   "TemporalChainsEffectCap": 75,
+   "Transfiguration": 0.3,
+   "TrapTriggerRadiusBase": 10,
+   "ehpCalcMaxDamage": 100000000,
+   "ehpCalcMaxIterationsToCalc": 50,
+   "ehpCalcSpeedUp": 8,
+   "experiencePenaltyMultiplier": 0.06,
+   "maxExperiencePenaltyFreeAreaLevel": 70,
+   "maxHitSmoothingPasses": 8,
+   "maxStatIncrease": 2,
+   "normalEnemyDPSMult": 0.22727272727273,
+   "pinnacleBossDPSMult": 1.8181818181818,
+   "pinnacleBossPen": 3,
+   "stdBossDPSMult": 0.90909090909091,
+   "uberBossDPSMult": 2.3529411764706,
+   "uberBossPen": 8
+  },
+  "questPointRewards": [
+   {
+    "act": 1,
+    "area": "Hunting Grounds",
+    "areaLevel": 10,
+    "cumulativeQuestPoints": 2,
+    "info": "Crowbell",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 1,
+    "area": "Ogham Farmlands",
+    "areaLevel": 12,
+    "cumulativeQuestPoints": 4,
+    "info": "Una's Lute",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 2,
+    "area": "Keth",
+    "areaLevel": 25,
+    "cumulativeQuestPoints": 6,
+    "info": "Kabala",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 2,
+    "area": "Deshar",
+    "areaLevel": 28,
+    "cumulativeQuestPoints": 8,
+    "info": "The Final Letter",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 3,
+    "area": "Jungle Ruins",
+    "areaLevel": 34,
+    "cumulativeQuestPoints": 10,
+    "info": "Mighty Silverfist",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 3,
+    "area": "Aggorat",
+    "areaLevel": 44,
+    "cumulativeQuestPoints": 12,
+    "info": "Blood Sacrifice",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 4,
+    "area": "Isle Of Kin",
+    "areaLevel": 51,
+    "cumulativeQuestPoints": 14,
+    "info": "Blind Beast",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 4,
+    "area": "Trial Of The Ancestors",
+    "areaLevel": 51,
+    "cumulativeQuestPoints": 16,
+    "info": "Hinekora",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 5,
+    "area": "Wolvenhold",
+    "areaLevel": 64,
+    "cumulativeQuestPoints": 18,
+    "info": "Oswin",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 5,
+    "area": "Khari Bazaar",
+    "areaLevel": 61,
+    "cumulativeQuestPoints": 20,
+    "info": "Clearing The Way",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 5,
+    "area": "Howling Caves",
+    "areaLevel": 62,
+    "cumulativeQuestPoints": 22,
+    "info": "Abominable Yeti",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   },
+   {
+    "act": 6,
+    "area": "Kingsmarch",
+    "areaLevel": 62,
+    "cumulativeQuestPoints": 24,
+    "info": "Siege Of Oriath",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points"
+   }
+  ],
+  "questRewards": [
+   {
+    "act": 1,
+    "area": "Clearfell",
+    "areaLevel": 2,
+    "description": "Act 1",
+    "index": 1,
+    "info": "Beira",
+    "stat": "+10% to Cold Resistance",
+    "useConfig": true
+   },
+   {
+    "act": 1,
+    "area": "Hunting Grounds",
+    "areaLevel": 10,
+    "description": "Act 1",
+    "index": 2,
+    "info": "Crowbell",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 1,
+    "area": "Freythorn",
+    "areaLevel": 11,
+    "description": "Act 1",
+    "index": 3,
+    "info": "King In The Mists",
+    "stat": "+30 to Spirit",
+    "useConfig": true
+   },
+   {
+    "act": 1,
+    "area": "Ogham Farmlands",
+    "areaLevel": 12,
+    "description": "Act 1",
+    "index": 4,
+    "info": "Una's Lute",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 1,
+    "area": "Ogham Manor",
+    "areaLevel": 15,
+    "description": "Act 1",
+    "index": 5,
+    "info": "Candlemass",
+    "stat": "+20 to maximum Life",
+    "useConfig": true
+   },
+   {
+    "act": 2,
+    "area": "Keth",
+    "areaLevel": 25,
+    "description": "Act 2",
+    "index": 6,
+    "info": "Kabala",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 2,
+    "area": "Valley of the Titans",
+    "areaLevel": 26,
+    "description": "Act 2",
+    "index": 7,
+    "info": "Medallion",
+    "options": [
+     "30% increased Charm Charges Gained\n\t+1 Charm Slot",
+     "30% increased Charm Effect Duration\n\t+1 Charm Slot"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 2,
+    "area": "Deshar",
+    "areaLevel": 28,
+    "description": "Act 2",
+    "index": 8,
+    "info": "The Final Letter",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 2,
+    "area": "Spires of Deshar",
+    "areaLevel": 30,
+    "description": "Act 2",
+    "index": 9,
+    "info": "Sisters of Garukhan Shrine",
+    "stat": "+10% to Lightning Resistance",
+    "useConfig": true
+   },
+   {
+    "act": 3,
+    "area": "Jungle Ruins",
+    "areaLevel": 34,
+    "description": "Act 3",
+    "index": 10,
+    "info": "Mighty Silverfist",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 3,
+    "area": "Azak Bog",
+    "areaLevel": 36,
+    "description": "Act 3",
+    "index": 11,
+    "info": "Ignagduk",
+    "stat": "+30 to Spirit",
+    "useConfig": true
+   },
+   {
+    "act": 3,
+    "area": "Venom Crypts",
+    "areaLevel": 35,
+    "description": "Act 3",
+    "index": 12,
+    "info": "Venom Draught",
+    "options": [
+     "25% increased Mana Regeneration Rate",
+     "25% increased Stun Threshold",
+     "30% increased Elemental Ailment Threshold"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 3,
+    "area": "Jiquani's Machinarium",
+    "areaLevel": 37,
+    "description": "Act 3",
+    "index": 13,
+    "info": "Blackjaw",
+    "stat": "+10% to Fire Resistance",
+    "useConfig": true
+   },
+   {
+    "act": 3,
+    "area": "Aggorat",
+    "areaLevel": 44,
+    "description": "Act 3",
+    "index": 14,
+    "info": "Blood Sacrifice",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 4,
+    "area": "Isle Of Kin",
+    "areaLevel": 51,
+    "description": "Act 4",
+    "index": 15,
+    "info": "Blind Beast",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 4,
+    "area": "Eye of Hinekora",
+    "areaLevel": 51,
+    "description": "Act 4",
+    "index": 16,
+    "info": "Silent Hall",
+    "stat": "5% increased Maximum Mana",
+    "useConfig": true
+   },
+   {
+    "act": 4,
+    "area": "Eye of Hinekora",
+    "areaLevel": 51,
+    "description": "Act 4",
+    "index": 17,
+    "info": "Tribal Medicine",
+    "options": [
+     "+15% of Armour also applies to Elemental Damage\n\tGain Deflection Rating equal to 12% of Evasion Rating\n\t12% faster start of Energy Shield Recharge",
+     "30% increased Global Armour, Evasion and Energy Shield"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 4,
+    "area": "Halls Of The Dead",
+    "areaLevel": 52,
+    "description": "Act 4",
+    "index": 18,
+    "info": "Tawhoa's Test",
+    "options": [
+     "+5 to Dexterity",
+     "+5% to Lightning Resistance"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 4,
+    "area": "Halls Of The Dead",
+    "areaLevel": 52,
+    "description": "Act 4",
+    "index": 19,
+    "info": "Tasalio's Test",
+    "options": [
+     "+5 to Intelligence",
+     "+5% to Cold Resistance"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 4,
+    "area": "Halls Of The Dead",
+    "areaLevel": 52,
+    "description": "Act 4",
+    "index": 20,
+    "info": "Ngamahu's Test",
+    "options": [
+     "+5 to Strength",
+     "+5% to Fire Resistance"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 4,
+    "area": "Trial Of The Ancestors",
+    "areaLevel": 51,
+    "description": "Act 4",
+    "index": 21,
+    "info": "Hinekora",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 4,
+    "area": "Abandoned Prison",
+    "areaLevel": 51,
+    "description": "Act 4",
+    "index": 22,
+    "info": "Goddess of Justice",
+    "options": [
+     "30% increased Life Recovery from Flasks",
+     "30% increased Mana Recovery from Flasks"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 5,
+    "area": "Wolvenhold",
+    "areaLevel": 64,
+    "description": "Interlude 1",
+    "index": 23,
+    "info": "Oswin",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 5,
+    "area": "Khari Bazaar",
+    "areaLevel": 61,
+    "description": "Interlude 2",
+    "index": 24,
+    "info": "Clearing The Way",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 5,
+    "area": "Khari Crossing",
+    "areaLevel": 61,
+    "description": "Interlude 2",
+    "index": 25,
+    "info": "Molten Shrine",
+    "stat": "5% increased maximum Life",
+    "useConfig": true
+   },
+   {
+    "act": 5,
+    "area": "Qimah",
+    "areaLevel": 63,
+    "description": "Interlude 2",
+    "index": 26,
+    "info": "Seven Pillars",
+    "options": [
+     "+5 to all Attributes",
+     "+5% to all Elemental Resistances",
+     "12% increased Cooldown Recovery Rate",
+     "15% increased Global Armour, Evasion and Energy Shield",
+     "20% increased Presence Area Of Effect",
+     "3% increased Movement Speed",
+     "5% increased Experience Gain\n\t-5% to all Elemental Resistances\n\t3% reduced Movement Speed\n\t15% reduced Global Armour, Evasion and Energy Shield\n\t20% reduced Presence Area Of Effect\n\t12% reduced Cooldown Recovery Rate\n\t5% reduced Attributes"
+    ],
+    "useConfig": true
+   },
+   {
+    "act": 5,
+    "area": "Kriar Village",
+    "areaLevel": 61,
+    "description": "Interlude 3",
+    "index": 27,
+    "info": "Lythara",
+    "stat": "+40 to Spirit",
+    "useConfig": true
+   },
+   {
+    "act": 5,
+    "area": "Howling Caves",
+    "areaLevel": 62,
+    "description": "Interlude 3",
+    "index": 28,
+    "info": "Abominable Yeti",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   },
+   {
+    "act": 6,
+    "area": "Kingsmarch",
+    "areaLevel": 62,
+    "description": "Epilog",
+    "index": 29,
+    "info": "Siege Of Oriath",
+    "questPoints": 2,
+    "stat": "+2 Weapon Set Passive Skill Points",
+    "useConfig": false
+   }
+  ],
+  "table": "rule_sources",
+  "treeVersion": "0_5",
+  "treeVersionList": [
+   "0_1",
+   "0_2",
+   "0_3",
+   "0_4",
+   "0_5"
+  ],
+  "weaponTypeInfo": {
+   "Bow": {
+    "flag": "Bow",
+    "melee": false,
+    "oneHand": false
+   },
+   "Claw": {
+    "flag": "Claw",
+    "melee": true,
+    "oneHand": true
+   },
+   "Crossbow": {
+    "flag": "Crossbow",
+    "melee": false,
+    "oneHand": false
+   },
+   "Dagger": {
+    "flag": "Dagger",
+    "melee": true,
+    "oneHand": true
+   },
+   "Fishing Rod": {
+    "flag": "Fishing",
+    "melee": true,
+    "oneHand": false
+   },
+   "Flail": {
+    "flag": "Flail",
+    "melee": true,
+    "oneHand": true
+   },
+   "None": {
+    "flag": "Unarmed",
+    "melee": true,
+    "oneHand": true
+   },
+   "One Hand Axe": {
+    "flag": "Axe",
+    "melee": true,
+    "oneHand": true
+   },
+   "One Hand Mace": {
+    "flag": "Mace",
+    "melee": true,
+    "oneHand": true
+   },
+   "One Hand Sword": {
+    "flag": "Sword",
+    "melee": true,
+    "oneHand": true
+   },
+   "Spear": {
+    "flag": "Spear",
+    "melee": true,
+    "oneHand": true
+   },
+   "Staff": {
+    "flag": "Staff",
+    "label": "Quarterstaff",
+    "melee": true,
+    "oneHand": false
+   },
+   "Talisman": {
+    "flag": "Talisman",
+    "melee": true,
+    "oneHand": false
+   },
+   "Thrusting One Hand Sword": {
+    "flag": "Sword",
+    "label": "One Hand Sword",
+    "melee": true,
+    "oneHand": true
+   },
+   "Two Hand Axe": {
+    "flag": "Axe",
+    "melee": true,
+    "oneHand": false
+   },
+   "Two Hand Mace": {
+    "flag": "Mace",
+    "melee": true,
+    "oneHand": false
+   },
+   "Two Hand Sword": {
+    "flag": "Sword",
+    "melee": true,
+    "oneHand": false
+   },
+   "Wand": {
+    "flag": "Wand",
+    "melee": false,
+    "oneHand": true
+   },
+   "Warstaff": {
+    "flag": "Warstaff",
+    "melee": true,
+    "oneHand": false
+   }
+  }
+ },
+ "tables": {
+  "classes": [
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Infernalist",
+      "index": 1,
+      "name": "Infernalist"
+     },
+     {
+      "id": "Blood Mage",
+      "index": 2,
+      "name": "Blood Mage"
+     },
+     {
+      "id": "Lich",
+      "index": 3,
+      "name": "Lich"
+     },
+     {
+      "id": "Abyssal Lich",
+      "index": 4,
+      "name": "Abyssal Lich"
+     }
+    ],
+    "base_dex": 7,
+    "base_int": 15,
+    "base_str": 7,
+    "classId": 1,
+    "name": "Witch",
+    "startNodeId": 54447
+   },
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Deadeye",
+      "index": 1,
+      "name": "Deadeye"
+     },
+     {
+      "id": "Pathfinder",
+      "index": 2,
+      "name": "Pathfinder"
+     }
+    ],
+    "base_dex": 15,
+    "base_int": 7,
+    "base_str": 7,
+    "classId": 2,
+    "name": "Ranger",
+    "startNodeId": 50459
+   },
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Titan",
+      "index": 1,
+      "name": "Titan"
+     },
+     {
+      "id": "Warbringer",
+      "index": 2,
+      "name": "Warbringer"
+     },
+     {
+      "id": "Smith of Kitava",
+      "index": 3,
+      "name": "Smith of Kitava"
+     }
+    ],
+    "base_dex": 7,
+    "base_int": 7,
+    "base_str": 15,
+    "classId": 6,
+    "name": "Warrior",
+    "startNodeId": 47175
+   },
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Stormweaver",
+      "index": 1,
+      "name": "Stormweaver"
+     },
+     {
+      "id": "Chronomancer",
+      "index": 2,
+      "name": "Chronomancer"
+     },
+     {
+      "id": "Disciple of Varashta",
+      "index": 3,
+      "name": "Disciple of Varashta"
+     }
+    ],
+    "base_dex": 7,
+    "base_int": 15,
+    "base_str": 7,
+    "classId": 7,
+    "name": "Sorceress",
+    "startNodeId": 54447
+   },
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Amazon",
+      "index": 1,
+      "name": "Amazon"
+     },
+     {
+      "id": "Spirit Walker",
+      "index": 2,
+      "name": "Spirit Walker"
+     },
+     {
+      "id": "Ritualist",
+      "index": 3,
+      "name": "Ritualist"
+     }
+    ],
+    "base_dex": 15,
+    "base_int": 7,
+    "base_str": 7,
+    "classId": 8,
+    "name": "Huntress",
+    "startNodeId": 50459
+   },
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Tactician",
+      "index": 1,
+      "name": "Tactician"
+     },
+     {
+      "id": "Witchhunter",
+      "index": 2,
+      "name": "Witchhunter"
+     },
+     {
+      "id": "Gemling Legionnaire",
+      "index": 3,
+      "name": "Gemling Legionnaire"
+     }
+    ],
+    "base_dex": 11,
+    "base_int": 7,
+    "base_str": 11,
+    "classId": 9,
+    "name": "Mercenary",
+    "startNodeId": 50986
+   },
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Martial Artist",
+      "index": 1,
+      "name": "Martial Artist"
+     },
+     {
+      "id": "Invoker",
+      "index": 2,
+      "name": "Invoker"
+     },
+     {
+      "id": "Acolyte of Chayula",
+      "index": 3,
+      "name": "Acolyte of Chayula"
+     }
+    ],
+    "base_dex": 11,
+    "base_int": 11,
+    "base_str": 7,
+    "classId": 10,
+    "name": "Monk",
+    "startNodeId": 44683
+   },
+   {
+    "ascendancies": [
+     {
+      "index": 0,
+      "name": "None"
+     },
+     {
+      "id": "Oracle",
+      "index": 1,
+      "name": "Oracle"
+     },
+     {
+      "id": "Shaman",
+      "index": 2,
+      "name": "Shaman"
+     }
+    ],
+    "base_dex": 7,
+    "base_int": 11,
+    "base_str": 11,
+    "classId": 11,
+    "name": "Druid",
+    "startNodeId": 61525
+   }
+  ],
+  "config_variables": [
+   {
+    "defaultIndex": 7,
+    "hasApply": false,
+    "label": "Elemental Resistance penalty:",
+    "options": [
+     {
+      "label": "Act 1 (0%)",
+      "value": 0
+     },
+     {
+      "label": "Act 2 (-10%)",
+      "value": -10
+     },
+     {
+      "label": "Act 3 (-20%)",
+      "value": -20
+     },
+     {
+      "label": "Act 4 (-30%)",
+      "value": -30
+     },
+     {
+      "label": "Act 5 (-40%)",
+      "value": -40
+     },
+     {
+      "label": "Act 6 (-50%)",
+      "value": -50
+     },
+     {
+      "label": "Endgame (-60%)",
+      "value": -60
+     }
+    ],
+    "position": 2,
+    "section": "General",
+    "type": "list",
+    "var": "resistancePenalty"
+   },
+   {
+    "hasApply": true,
+    "ifSkillData": "explodeCorpse",
+    "label": "Enemy Corpse ^xE05030Life:",
+    "position": 3,
+    "section": "General",
+    "type": "count",
+    "var": "detonateDeadCorpseLife"
+   },
+   {
+    "defaultState": 100,
+    "hasApply": true,
+    "ifSkillData": "currentManaPercentage",
+    "label": "Current ^x7070FFMana^7 %:",
+    "position": 4,
+    "section": "General",
+    "type": "count",
+    "var": "multiplierCurrentManaPercentage"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "Stationary",
+    "label": "Time spent stationary",
+    "position": 5,
+    "section": "General",
+    "type": "count",
+    "var": "conditionStationary"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "Moving",
+    "label": "Are you always moving?",
+    "position": 6,
+    "section": "General",
+    "type": "check",
+    "var": "conditionMoving"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "FullLife",
+    "label": "Are you always on Full ^xE05030Life?",
+    "position": 7,
+    "section": "General",
+    "type": "check",
+    "var": "conditionFullLife"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "LowLife",
+    "label": "Are you always on Low ^xE05030Life?",
+    "position": 8,
+    "section": "General",
+    "type": "check",
+    "var": "conditionLowLife"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "FullMana",
+    "label": "Are you always on Full ^x7070FFMana?",
+    "position": 9,
+    "section": "General",
+    "type": "check",
+    "var": "conditionFullMana"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "LowMana",
+    "label": "Are you always on Low ^x7070FFMana?",
+    "position": 10,
+    "section": "General",
+    "type": "check",
+    "var": "conditionLowMana"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "FullEnergyShield",
+    "label": "Are you always on Full ^x88FFFFEnergy Shield?",
+    "position": 11,
+    "section": "General",
+    "type": "check",
+    "var": "conditionFullEnergyShield"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "LowEnergyShield",
+    "label": "Are you always on Low ^x88FFFFEnergy Shield?",
+    "position": 12,
+    "section": "General",
+    "type": "check",
+    "var": "conditionLowEnergyShield"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "HaveEnergyShield",
+    "label": "Do you always have ^x88FFFFEnergy Shield?",
+    "position": 13,
+    "section": "General",
+    "type": "check",
+    "var": "conditionHaveEnergyShield"
+   },
+   {
+    "defaultPlaceholderState": 100,
+    "hasApply": true,
+    "ifCond": "UseCurrentEnergyShield",
+    "label": "Current ^x88FFFFEnergy Shield^7 percentage:",
+    "position": 14,
+    "section": "General",
+    "type": "count",
+    "var": "multiplierCurrentEnergyShield"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "LowRunicWard",
+    "label": "Are you on low ^xFFFF77Runic Ward?",
+    "position": 15,
+    "section": "General",
+    "type": "check",
+    "var": "conditionLowRunicWard"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "MissingRunicWard",
+    "label": "Are you missing ^xFFFF77Runic Ward?",
+    "position": 16,
+    "section": "General",
+    "type": "check",
+    "var": "conditionMissingRunicWard"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "NoRunicWard",
+    "label": "Do you have no ^xFFFF77Runic Ward?",
+    "position": 17,
+    "section": "General",
+    "type": "check",
+    "var": "conditionNoRunicWard"
+   },
+   {
+    "hasApply": true,
+    "ifMinionCond": "FullLife",
+    "label": "Are your Minions always on Full ^xE05030Life?",
+    "position": 18,
+    "section": "General",
+    "type": "check",
+    "var": "minionsConditionFullLife"
+   },
+   {
+    "hasApply": true,
+    "ifMinionCond": "FullEnergyShield",
+    "label": "Minion is always on Full ^x88FFFFEnergy Shield?",
+    "position": 19,
+    "section": "General",
+    "type": "check",
+    "var": "minionsConditionFullEnergyShield"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "MinionsCreatedRecently",
+    "label": "Have your Minions been created Recently?",
+    "position": 20,
+    "section": "General",
+    "type": "check",
+    "var": "minionsConditionCreatedRecently"
+   },
+   {
+    "hasApply": false,
+    "label": "Ailment calculation mode:",
+    "options": [
+     {
+      "label": "Average",
+      "value": "AVERAGE"
+     },
+     {
+      "label": "Crits Only",
+      "value": "CRIT"
+     }
+    ],
+    "position": 21,
+    "section": "General",
+    "type": "list",
+    "var": "ailmentMode"
+   },
+   {
+    "hasApply": false,
+    "label": "Cooldown calculation mode:",
+    "options": [
+     {
+      "label": "Base",
+      "value": "BASE"
+     },
+     {
+      "label": "Average",
+      "value": "AVERAGE"
+     }
+    ],
+    "position": 22,
+    "section": "General",
+    "type": "list",
+    "var": "cooldownMode"
+   },
+   {
+    "hasApply": false,
+    "ifFlag": "randomPhys",
+    "label": "Random element mode:",
+    "options": [
+     {
+      "label": "Average",
+      "value": "AVERAGE"
+     },
+     {
+      "label": "^xB97123Fire",
+      "value": "FIRE"
+     },
+     {
+      "label": "^x3F6DB3Cold",
+      "value": "COLD"
+     },
+     {
+      "label": "^xADAA47Lightning",
+      "value": "LIGHTNING"
+     }
+    ],
+    "position": 23,
+    "section": "General",
+    "type": "list",
+    "var": "physMode"
+   },
+   {
+    "hasApply": true,
+    "ifCond": [
+     "LifeRegenBurstAvg",
+     "LifeRegenBurstFull"
+    ],
+    "label": "^xE05030Life ^7regen calculation mode:",
+    "options": [
+     {
+      "label": "Minimum",
+      "value": "MIN"
+     },
+     {
+      "label": "Average",
+      "value": "AVERAGE"
+     },
+     {
+      "label": "Burst",
+      "value": "FULL"
+     }
+    ],
+    "position": 24,
+    "section": "General",
+    "type": "list",
+    "var": "lifeRegenMode"
+   },
+   {
+    "defaultIndex": 2,
+    "hasApply": true,
+    "ifCond": "AverageResourceGain",
+    "label": "Resource gain calculation mode:",
+    "options": [
+     {
+      "label": "Minimum",
+      "value": "MIN"
+     },
+     {
+      "label": "Average",
+      "value": "AVERAGE"
+     },
+     {
+      "label": "Maximum",
+      "value": "MAX"
+     }
+    ],
+    "position": 25,
+    "section": "General",
+    "type": "list",
+    "var": "resourceGainMode"
+   },
+   {
+    "hasApply": false,
+    "label": "EHP calc unlucky:",
+    "options": [
+     {
+      "label": "Average",
+      "value": 1
+     },
+     {
+      "label": "Unlucky",
+      "value": 2
+     },
+     {
+      "label": "Very Unlucky",
+      "value": 4
+     }
+    ],
+    "position": 26,
+    "section": "General",
+    "type": "list",
+    "var": "EHPUnluckyWorstOf"
+   },
+   {
+    "hasApply": false,
+    "label": "Disable EHP gain on block/suppress:",
+    "position": 27,
+    "section": "General",
+    "type": "check",
+    "var": "DisableEHPGainOnBlock"
+   },
+   {
+    "hasApply": true,
+    "ifCond": [
+     "ArmourMax",
+     "ArmourAvg"
+    ],
+    "label": "Armour calculation mode:",
+    "options": [
+     {
+      "label": "Minimum",
+      "value": "MIN"
+     },
+     {
+      "label": "Average",
+      "value": "AVERAGE"
+     },
+     {
+      "label": "Maximum",
+      "value": "MAX"
+     }
+    ],
+    "position": 28,
+    "section": "General",
+    "type": "list",
+    "var": "armourCalculationMode"
+   },
+   {
+    "hasApply": true,
+    "label": "Boosted calc mode:",
+    "options": [
+     {
+      "label": "Average",
+      "value": "AVERAGE"
+     },
+     {
+      "label": "Max Hit",
+      "value": "MAX"
+     }
+    ],
+    "position": 29,
+    "section": "General",
+    "type": "list",
+    "var": "warcryMode"
+   },
+   {
+    "hasApply": true,
+    "ifCond": "EVBypass",
+    "label": "Disable Emperor's Vigilance Bypass",
+    "position": 30,
+    "section": "General",
+    "type": "check",
+    "var": "EVBypass"
+   },
+   {
+    "hasApply": false,
+    "label": "Don't disable items",
+    "position": 31,
+    "section": "General",
+    "type": "check",
+    "var": "ignoreItemDisablers"
+   },
+   {
+    "hasApply": false,
+    "label": "Ignore Jewel Limits",
+    "position": 32,
+    "section": "General",
+    "type": "check",
+    "var": "ignoreJewelLimits"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Arcane Cloak",
+    "label": "Include in ^x7070FFMana ^7spent Recently?",
+    "position": 35,
+    "section": "Skill Options",
+    "type": "check",
+    "var": "arcaneCloakUsedRecentlyCheck"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Arc",
+    "label": "Lightning Infused?",
+    "position": 37,
+    "section": "Skill Options",
+    "type": "check",
+    "var": "arcLightningInfused"
+   },
+   {
+    "hasApply": true,
+    "ifFlag": "EldritchEmpowerment",
+    "label": "Are you Sacrificing?",
+    "position": 39,
+    "section": "Skill Options",
+    "type": "check",
+    "var": "eldritchEmpowermentSacrifice"
+   },
+   {
+    "hasApply": true,
+    "ifFlag": "UnwillingOffering",
+    "label": "Power of Culled Enemy?",
+    "position": 41,
+    "section": "Skill Options",
+    "type": "count",
+    "var": "unwillingOfferingPower"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Aspect of the Avian",
+    "label": "Is Avian's Might active?",
+    "position": 43,
+    "section": "Skill Options",
+    "type": "check",
+    "var": "aspectOfTheAvianAviansMight"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Aspect of the Avian",
+    "label": "Is Avian's Flight active?",
+    "position": 44,
+    "section": "Skill Options",
+    "type": "check",
+    "var": "aspectOfTheAvianAviansFlight"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Aspect of the Cat",
+    "label": "Is Cat's Stealth active?",
+    "position": 46,
+    "section": "Skill Options",
+    "type": "check",
+    "var": "aspectOfTheCatCatsStealth"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Aspect of the Cat",
+    "label": "Is Cat's Agility active?",
+    "position": 47,
+    "section": "Skill Options",
+    "type": "check",
+    "var": "aspectOfTheCatCatsAgility"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Aspect of the Crab",
+    "label": "# of Crab Barriers (if not maximum):",
+    "position": 49,
+    "section": "Skill Options",
+    "type": "count",
+    "var": "overrideCrabBarriers"
+   },
+   {
+    "hasApply": true,
+    "ifSkill": "Aspect of the Spider",
+    "label": "# of Spider's Web Stacks:",
+    "position": 51,
+    "section": "Skill Options",
+    "type": "count",
+    "var": "aspectOfTheSpiderWebStacks"
+   }
+  ],
+  "gems": [
+   {
+    "baseTypeName": "Quarterstaff Strike",
+    "gameId": "Metadata/Items/Gem/SkillGemPlayerDefaultQuarterstaff",
+    "gemType": "Attack",
+    "grantedEffectId": "MeleeQuarterstaffPlayer",
+    "grantedEffectName": "Quarterstaff Strike",
+    "id": "Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff",
+    "isSupport": false,
+    "name": "Quarterstaff Strike",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "AoE, Melee, Strike",
+    "tags": [
+     "area",
+     "attack",
+     "grants_active_skill",
+     "melee",
+     "strike"
+    ],
+    "tier": 0,
+    "variantId": "PlayerDefaultQuarterstaff"
+   },
+   {
+    "baseTypeName": "Spark",
+    "gameId": "Metadata/Items/Gems/SkillGemSpark",
+    "gemType": "Spell",
+    "grantedEffectId": "SparkPlayer",
+    "grantedEffectName": "Spark",
+    "id": "Metadata/Items/Gems/SkillGemSpark",
+    "isSupport": false,
+    "name": "Spark",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Projectile, Lightning, Duration, Repeatable",
+    "tags": [
+     "duration",
+     "grants_active_skill",
+     "intelligence",
+     "lightning",
+     "projectile",
+     "repeatable",
+     "spell"
+    ],
+    "tier": 1,
+    "variantId": "Spark"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAbidingHex",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAbidingHexPlayer",
+    "grantedEffectName": "Abiding Hex",
+    "id": "Metadata/Items/Gems/SkillGemAbidingHexSupport",
+    "isSupport": true,
+    "name": "Abiding Hex",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Curse",
+    "tags": [
+     "curse",
+     "support"
+    ],
+    "tier": 2,
+    "variantId": "AbidingHexSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAcrimony",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAcrimonyPlayer",
+    "grantedEffectName": "Acrimony",
+    "id": "Metadata/Items/Gems/SkillGemAcrimonySupport",
+    "isSupport": true,
+    "name": "Acrimony",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "",
+    "tags": [
+     "support"
+    ],
+    "tier": 2,
+    "variantId": "AcrimonySupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemChaosInfusion",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAddedChaosDamagePlayer",
+    "grantedEffectName": "Chaos Attunement",
+    "id": "Metadata/Items/Gems/SkillGemAddedChaosDamageSupport",
+    "isSupport": true,
+    "name": "Chaos Attunement",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Chaos",
+    "tags": [
+     "chaos",
+     "support"
+    ],
+    "tier": 3,
+    "variantId": "AddedChaosDamageSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemColdInfusion",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAddedColdDamagePlayer",
+    "grantedEffectName": "Cold Attunement",
+    "id": "Metadata/Items/Gems/SkillGemAddedColdDamageSupport",
+    "isSupport": true,
+    "name": "Cold Attunement",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Cold",
+    "tags": [
+     "cold",
+     "support"
+    ],
+    "tier": 1,
+    "variantId": "AddedColdDamageSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemFireInfusion",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAddedFireDamagePlayer",
+    "grantedEffectName": "Fire Attunement",
+    "id": "Metadata/Items/Gems/SkillGemAddedFireDamageSupport",
+    "isSupport": true,
+    "name": "Fire Attunement",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Fire",
+    "tags": [
+     "fire",
+     "support"
+    ],
+    "tier": 1,
+    "variantId": "AddedFireDamageSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemLightningInfusion",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAddedLightningDamagePlayer",
+    "grantedEffectName": "Lightning Attunement",
+    "id": "Metadata/Items/Gems/SkillGemAddedLightningDamageSupport",
+    "isSupport": true,
+    "name": "Lightning Attunement",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Lightning",
+    "tags": [
+     "lightning",
+     "support"
+    ],
+    "tier": 1,
+    "variantId": "AddedLightningDamageSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAdhere",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAdhesiveGrenadesPlayer",
+    "grantedEffectName": "Adhesive Grenades I",
+    "id": "Metadata/Items/Gems/SkillGemAdhesiveGrenadesSupport",
+    "isSupport": true,
+    "name": "Adhesive Grenades I",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Grenade",
+    "tags": [
+     "grenade",
+     "support"
+    ],
+    "tier": 2,
+    "variantId": "AdhesiveGrenadesSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAdhereTwo",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAdhesiveGrenadesPlayerTwo",
+    "grantedEffectName": "Adhesive Grenades II",
+    "id": "Metadata/Items/Gems/SkillGemAdhesiveGrenadesSupportTwo",
+    "isSupport": true,
+    "name": "Adhesive Grenades II",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Grenade",
+    "tags": [
+     "grenade",
+     "support"
+    ],
+    "tier": 3,
+    "variantId": "AdhesiveGrenadesSupportTwo"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAdmixture",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAdmixturePlayer",
+    "grantedEffectName": "Admixture",
+    "id": "Metadata/Items/Gems/SkillGemAdmixtureSupport",
+    "isSupport": true,
+    "name": "Admixture",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Physical, Chaos",
+    "tags": [
+     "chaos",
+     "physical",
+     "support"
+    ],
+    "tier": 2,
+    "variantId": "AdmixtureSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAdvancingStorm",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAdvancingStormPlayer",
+    "grantedEffectName": "Advancing Storm",
+    "id": "Metadata/Items/Gems/SkillGemAdvancingStormSupport",
+    "isSupport": true,
+    "name": "Advancing Storm",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Storm",
+    "tags": [
+     "storm",
+     "support"
+    ],
+    "tier": 4,
+    "variantId": "AdvancingStormSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemAftershock",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAftershockChancePlayer",
+    "grantedEffectName": "Aftershock I",
+    "id": "Metadata/Items/Gems/SkillGemAftershockChanceSupport",
+    "isSupport": true,
+    "name": "Aftershock I",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Attack, Melee, Slam",
+    "tags": [
+     "attack",
+     "melee",
+     "slam",
+     "support"
+    ],
+    "tier": 2,
+    "variantId": "AftershockChanceSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemAftershockTwo",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAftershockChancePlayerTwo",
+    "grantedEffectName": "Aftershock II",
+    "id": "Metadata/Items/Gems/SkillGemAftershockChanceSupportTwo",
+    "isSupport": true,
+    "name": "Aftershock II",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Attack, Melee, Slam",
+    "tags": [
+     "attack",
+     "melee",
+     "slam",
+     "support"
+    ],
+    "tier": 4,
+    "variantId": "AftershockChanceSupportTwo"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemAhnsCitadel",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAhnsCitadelPlayer",
+    "grantedEffectName": "Ahn's Citadel",
+    "id": "Metadata/Items/Gems/SkillGemAhnsCitadelSupport",
+    "isSupport": true,
+    "name": "Ahn's Citadel",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Lineage",
+    "tags": [
+     "lineage",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "AhnsCitadelSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemAilithLineage",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAilithLineagePlayer",
+    "grantedEffectName": "Ailith's Chimes",
+    "id": "Metadata/Items/Gems/SkillGemAilithLineageSupport",
+    "isSupport": true,
+    "name": "Ailith's Chimes",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Lineage",
+    "tags": [
+     "lineage",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "AilithLineageSupport"
+   },
+   {
+    "baseTypeName": "Alchemist's Boon",
+    "gameId": "Metadata/Items/Gem/SkillGemAlchemistsBoon",
+    "gemType": "Buff",
+    "grantedEffectId": "AlchemistsBoonPlayer",
+    "grantedEffectName": "Alchemist's Boon",
+    "id": "Metadata/Items/Gems/SkillGemAlchemistsBoon",
+    "isSupport": false,
+    "name": "Alchemist's Boon",
+    "naturalMaxLevel": 20,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Persistent, Aura",
+    "tags": [
+     "aura",
+     "buff",
+     "dexterity",
+     "grants_active_skill",
+     "persistent"
+    ],
+    "tier": 14,
+    "variantId": "AlchemistsBoon"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAlignment",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAlignmentPlayer",
+    "grantedEffectName": "Alignment I",
+    "id": "Metadata/Items/Gems/SkillGemAlignmentSupport",
+    "isSupport": true,
+    "name": "Alignment I",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Attack, Projectile",
+    "tags": [
+     "attack",
+     "projectile",
+     "support"
+    ],
+    "tier": 3,
+    "variantId": "AlignmentSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAlignmentThree",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAlignmentPlayerThree",
+    "grantedEffectName": "Alignment III",
+    "id": "Metadata/Items/Gems/SkillGemAlignmentSupportThree",
+    "isSupport": true,
+    "name": "Alignment III",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Attack, Projectile",
+    "tags": [
+     "attack",
+     "projectile",
+     "support"
+    ],
+    "tier": 5,
+    "variantId": "AlignmentSupportThree"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAlignmentTwo",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAlignmentPlayerTwo",
+    "grantedEffectName": "Alignment II",
+    "id": "Metadata/Items/Gems/SkillGemAlignmentSupportTwo",
+    "isSupport": true,
+    "name": "Alignment II",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Attack, Projectile",
+    "tags": [
+     "attack",
+     "projectile",
+     "support"
+    ],
+    "tier": 4,
+    "variantId": "AlignmentSupportTwo"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAmanamusTithe",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmanamusTithePlayer",
+    "grantedEffectName": "Amanamu's Tithe",
+    "id": "Metadata/Items/Gems/SkillGemAmanamusTitheSupport",
+    "isSupport": true,
+    "name": "Amanamu's Tithe",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Lineage, Minion, Persistent",
+    "tags": [
+     "lineage",
+     "minion",
+     "persistent",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "AmanamusTitheSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAmbrosia",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmbrosiaPlayer",
+    "grantedEffectName": "Ambrosia",
+    "id": "Metadata/Items/Gems/SkillGemAmbrosiaSupport",
+    "isSupport": true,
+    "name": "Ambrosia",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "",
+    "tags": [
+     "support"
+    ],
+    "tier": 2,
+    "variantId": "AmbrosiaSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAmbrosiaTwo",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmbrosiaPlayerTwo",
+    "grantedEffectName": "Ambrosia II",
+    "id": "Metadata/Items/Gems/SkillGemAmbrosiaSupportTwo",
+    "isSupport": true,
+    "name": "Ambrosia II",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "",
+    "tags": [
+     "support"
+    ],
+    "tier": 3,
+    "variantId": "AmbrosiaSupportTwo"
+   },
+   {
+    "gameId": "Metadata/Items/Gems/SupportGemAmbush",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmbushPlayer",
+    "grantedEffectName": "Ambush",
+    "id": "Metadata/Items/Gems/SkillGemAmbushSupport",
+    "isSupport": true,
+    "name": "Ambush",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "",
+    "tags": [
+     "support"
+    ],
+    "tier": 1,
+    "variantId": "AmbushSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAmmoConservation",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmmoConservationPlayer",
+    "grantedEffectName": "Ammo Conservation I",
+    "id": "Metadata/Items/Gems/SkillGemAmmoConservationSupport",
+    "isSupport": true,
+    "name": "Ammo Conservation I",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Ammunition, Projectile",
+    "tags": [
+     "ammunition",
+     "projectile",
+     "support"
+    ],
+    "tier": 2,
+    "variantId": "AmmoConservationSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAmmoConservationFour",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmmoConservationPlayerFour",
+    "grantedEffectName": "Arjun's Medal",
+    "id": "Metadata/Items/Gems/SkillGemAmmoConservationSupportFour",
+    "isSupport": true,
+    "name": "Arjun's Medal",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Lineage, Ammunition, Projectile",
+    "tags": [
+     "ammunition",
+     "lineage",
+     "projectile",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "AmmoConservationSupportFour"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAmmoConservationThree",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmmoConservationPlayerThree",
+    "grantedEffectName": "Ammo Conservation III",
+    "id": "Metadata/Items/Gems/SkillGemAmmoConservationSupportThree",
+    "isSupport": true,
+    "name": "Ammo Conservation III",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Ammunition, Projectile",
+    "tags": [
+     "ammunition",
+     "projectile",
+     "support"
+    ],
+    "tier": 5,
+    "variantId": "AmmoConservationSupportThree"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAmmoConservationTwo",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAmmoConservationPlayerTwo",
+    "grantedEffectName": "Ammo Conservation II",
+    "id": "Metadata/Items/Gems/SkillGemAmmoConservationSupportTwo",
+    "isSupport": true,
+    "name": "Ammo Conservation II",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Ammunition, Projectile",
+    "tags": [
+     "ammunition",
+     "projectile",
+     "support"
+    ],
+    "tier": 4,
+    "variantId": "AmmoConservationSupportTwo"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAncestralAid",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAncestralAidPlayer",
+    "grantedEffectName": "Ancestral Aid",
+    "id": "Metadata/Items/Gems/SkillGemAncestralAidSupport",
+    "isSupport": true,
+    "name": "Ancestral Aid",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Attack, Melee, Strike, Conditional",
+    "tags": [
+     "attack",
+     "conditional",
+     "melee",
+     "strike",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "AncestralAidSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAncestralCall",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAncestralCallPlayer",
+    "grantedEffectName": "Ancestral Call I",
+    "id": "Metadata/Items/Gems/SkillGemAncestralCallSupport",
+    "isSupport": true,
+    "name": "Ancestral Call I",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Attack, Melee, Strike",
+    "tags": [
+     "attack",
+     "melee",
+     "strike",
+     "support"
+    ],
+    "tier": 4,
+    "variantId": "AncestralCallSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemAncestralCallTwo",
+    "gemType": "Support",
+    "grantedEffectId": "SupportAncestralCallPlayerTwo",
+    "grantedEffectName": "Ancestral Call II",
+    "id": "Metadata/Items/Gems/SkillGemAncestralCallSupportTwo",
+    "isSupport": true,
+    "name": "Ancestral Call II",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Attack, Melee, Strike",
+    "tags": [
+     "attack",
+     "melee",
+     "strike",
+     "support"
+    ],
+    "tier": 5,
+    "variantId": "AncestralCallSupportTwo"
+   },
+   {
+    "baseTypeName": "Ancestral Cry",
+    "gameId": "Metadata/Items/Gem/SkillGemAncestralCry",
+    "gemType": "Warcry",
+    "grantedEffectId": "AncestralCryPlayer",
+    "grantedEffectName": "Ancestral Cry",
+    "id": "Metadata/Items/Gems/SkillGemAncestralCry",
+    "isSupport": false,
+    "name": "Ancestral Cry",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Attack, Buff, AoE, Melee, Slam, Projectile, Trigger, Fire, Duration, Nova, Conditional",
+    "tags": [
+     "area",
+     "attack",
+     "buff",
+     "conditional",
+     "duration",
+     "fire",
+     "grants_active_skill",
+     "melee",
+     "nova",
+     "projectile",
+     "slam",
+     "strength",
+     "trigger",
+     "warcry"
+    ],
+    "tier": 13,
+    "variantId": "AncestralCry"
+   },
+   {
+    "baseTypeName": "Ancestral Spirits",
+    "gameId": "Metadata/Items/Gem/SkillGemAscendancyAncestralSpirits",
+    "gemType": "Minion",
+    "grantedEffectId": "AncestralSpiritsPlayer",
+    "grantedEffectName": "Ancestral Spirits",
+    "id": "Metadata/Items/Gems/SkillGemAncestralSpriits",
+    "isSupport": false,
+    "name": "Ancestral Spirits",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Trigger, Duration",
+    "tags": [
+     "duration",
+     "grants_active_skill",
+     "minion",
+     "trigger"
+    ],
+    "tier": 0,
+    "variantId": "AncestralSpriits"
+   },
+   {
+    "baseTypeName": "Ancestral Warrior Totem",
+    "gameId": "Metadata/Items/Gems/SkillGemAncestralWarriorTotem",
+    "gemType": "Totem",
+    "grantedEffectId": "AncestralWarriorTotemPlayer",
+    "grantedEffectName": "Ancestral Warrior Totem",
+    "id": "Metadata/Items/Gems/SkillGemAncestralWarriorTotem",
+    "isSupport": false,
+    "name": "Ancestral Warrior Totem",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 100,
+    "tagString": "Attack, AoE, Melee, Duration, Conditional, Meta",
+    "tags": [
+     "area",
+     "attack",
+     "conditional",
+     "duration",
+     "grants_active_skill",
+     "melee",
+     "meta",
+     "strength",
+     "totem"
+    ],
+    "tier": 13,
+    "variantId": "AncestralWarriorTotem"
+   },
+   {
+    "baseTypeName": "Wildwood's Gifts",
+    "gameId": "Metadata/Items/Gems/SkillGemAncientGifts",
+    "gemType": "Buff",
+    "grantedEffectId": "AncientGiftsPlayer",
+    "grantedEffectName": "Wildwood's Gifts",
+    "id": "Metadata/Items/Gems/SkillGemAncientGifts",
+    "isSupport": false,
+    "name": "Wildwood's Gifts",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Persistent, Remnant",
+    "tags": [
+     "buff",
+     "grants_active_skill",
+     "persistent",
+     "remnant"
+    ],
+    "tier": 0,
+    "variantId": "AncientGifts"
+   },
+   {
+    "baseTypeName": "Animus Exchange",
+    "gameId": "Metadata/Items/Gems/SkillGemAnimusExchange",
+    "gemType": "Spell",
+    "grantedEffectId": "AnimusExchangePlayer",
+    "grantedEffectName": "Animus Exchange",
+    "id": "Metadata/Items/Gems/SkillGemAnimusExchange",
+    "isSupport": false,
+    "name": "Animus Exchange",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "",
+    "tags": [
+     "grants_active_skill",
+     "spell"
+    ],
+    "tier": 0,
+    "variantId": "AnimusExchange"
+   },
+   {
+    "baseTypeName": "Animus Splinters",
+    "gameId": "Metadata/Items/Gems/SkillGemAnimusSplinters",
+    "gemType": "Meta",
+    "grantedEffectId": "MetaAnimusSplintersPlayer",
+    "grantedEffectName": "Animus Splinters",
+    "id": "Metadata/Items/Gems/SkillGemAnimusSplinters",
+    "isSupport": false,
+    "name": "Animus Splinters",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "",
+    "tags": [
+     "grants_active_skill",
+     "meta"
+    ],
+    "tier": 0,
+    "variantId": "AnimusSplinters"
+   },
+   {
+    "baseTypeName": "Apocalypse",
+    "gameId": "Metadata/Items/Gems/SkillGemAscendancyApocalypse",
+    "gemType": "Buff",
+    "grantedEffectId": "ApocalypsePlayer",
+    "grantedEffectName": "Apocalypse",
+    "id": "Metadata/Items/Gems/SkillGemApocalypse",
+    "isSupport": false,
+    "name": "Apocalypse",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Spell, AoE, Trigger, Lightning, Cold, Fire, Duration, Conditional, Storm",
+    "tags": [
+     "area",
+     "buff",
+     "cold",
+     "conditional",
+     "duration",
+     "fire",
+     "grants_active_skill",
+     "lightning",
+     "spell",
+     "storm",
+     "trigger"
+    ],
+    "tier": 0,
+    "variantId": "Apocalypse"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemArakaalisLust",
+    "gemType": "Support",
+    "grantedEffectId": "SupportArakaalisLustPlayer",
+    "grantedEffectName": "Arakaali's Lust",
+    "id": "Metadata/Items/Gems/SkillGemArakaalisLustSupport",
+    "isSupport": true,
+    "name": "Arakaali's Lust",
+    "naturalMaxLevel": 1,
+    "reqDex": 100,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Lineage",
+    "tags": [
+     "lineage",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "ArakaalisLustSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemArbitersIgnition",
+    "gemType": "Support",
+    "grantedEffectId": "SupportArbitersIgnitionPlayer",
+    "grantedEffectName": "Arbiter's Ignition",
+    "id": "Metadata/Items/Gems/SkillGemArbitersIngitionSupport",
+    "isSupport": true,
+    "name": "Arbiter's Ignition",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Lineage, Spell, Fire",
+    "tags": [
+     "fire",
+     "lineage",
+     "spell",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "ArbitersIngitionSupport"
+   },
+   {
+    "gameId": "Metadata/Items/Gem/SupportGemArbitersReach",
+    "gemType": "Support",
+    "grantedEffectId": "ArbitersReachWardPlayer",
+    "grantedEffectName": "Arbiter's Reach",
+    "id": "Metadata/Items/Gems/SkillGemArbitersReachSupport",
+    "isSupport": true,
+    "name": "Arbiter's Reach",
+    "naturalMaxLevel": 1,
+    "reqDex": 0,
+    "reqInt": 0,
+    "reqStr": 0,
+    "tagString": "Lineage, Buff, Persistent, Duration",
+    "tags": [
+     "buff",
+     "duration",
+     "lineage",
+     "persistent",
+     "support"
+    ],
+    "tier": 0,
+    "variantId": "ArbitersReachSupport"
+   },
+   {
+    "baseTypeName": "Arc",
+    "gameId": "Metadata/Items/Gems/SkillGemArc",
+    "gemType": "Spell",
+    "grantedEffectId": "ArcPlayer",
+    "grantedEffectName": "Arc",
+    "id": "Metadata/Items/Gems/SkillGemArc",
+    "isSupport": false,
+    "name": "Arc",
+    "naturalMaxLevel": 20,
+    "reqDex": 0,
+    "reqInt": 100,
+    "reqStr": 0,
+    "tagString": "Projectile, Lightning, Chaining, Repeatable",
+    "tags": [
+     "chaining",
+     "grants_active_skill",
+     "intelligence",
+     "lightning",
+     "projectile",
+     "repeatable",
+     "spell"
+    ],
+    "tier": 5,
+    "variantId": "Arc"
+   }
+  ],
+  "granted_skills": [
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "MeleeQuarterstaffPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:MeleeQuarterstaffPlayer",
+    "name": "Quarterstaff Strike",
+    "skillTypes": [
+     "1",
+     "20",
+     "21",
+     "8",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "ABTTProcessionBannerDrain",
+    "levelCount": 1,
+    "modSource": "Skill:ABTTProcessionBannerDrain",
+    "name": "Banner",
+    "skillTypes": [
+     "2",
+     "31",
+     "5",
+     "83",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "AcidicConcoctionPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AcidicConcoctionPlayer",
+    "name": "Acidic Concoction",
+    "skillTypes": [
+     "1",
+     "141",
+     "175",
+     "192",
+     "27",
+     "3",
+     "31",
+     "57",
+     "8"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "AlchemistsBoonPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AlchemistsBoonPlayer",
+    "name": "Alchemist's Boon",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "39",
+     "5",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "AlignFatePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AlignFatePlayer",
+    "name": "Align Fate",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "148",
+     "233",
+     "267",
+     "5",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "AmazonTriggerElementalSurgePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AmazonTriggerElementalSurgePlayer",
+    "name": "Elemental Surge",
+    "skillTypes": [
+     "1",
+     "218",
+     "223",
+     "28",
+     "29",
+     "30",
+     "31",
+     "37",
+     "50",
+     "8",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0.8,
+    "hidden": false,
+    "id": "AncestralCryPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AncestralCryPlayer",
+    "name": "Ancestral Cry",
+    "skillTypes": [
+     "131",
+     "141",
+     "148",
+     "172",
+     "194",
+     "28",
+     "32",
+     "5",
+     "63",
+     "8",
+     "85",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "AncestralCryProjectilePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AncestralCryProjectilePlayer",
+    "name": "Volcanic Eruption",
+    "skillTypes": [
+     "1",
+     "162",
+     "192",
+     "218",
+     "28",
+     "3",
+     "31",
+     "37",
+     "50",
+     "8",
+     "83",
+     "91"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "AncestralCryShockwavePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AncestralCryShockwavePlayer",
+    "name": "Volcanic Steps",
+    "skillTypes": [
+     "1",
+     "20",
+     "218",
+     "28",
+     "31",
+     "37",
+     "50",
+     "8",
+     "83",
+     "93"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0,
+    "hidden": false,
+    "id": "AncestralSpiritsPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AncestralSpiritsPlayer",
+    "name": "Ancestral Spirits",
+    "skillTypes": [
+     "31",
+     "37",
+     "50",
+     "6",
+     "77",
+     "83",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0.5,
+    "hidden": false,
+    "id": "AncestralWarriorTotemPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AncestralWarriorTotemPlayer",
+    "name": "Ancestral Warrior Totem",
+    "skillTypes": [
+     "122",
+     "131",
+     "14",
+     "16",
+     "165",
+     "172",
+     "194",
+     "20",
+     "222",
+     "25",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "AncientGiftsPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AncientGiftsPlayer",
+    "name": "Wildwood's Gifts",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "182",
+     "5",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0.6,
+    "hidden": false,
+    "id": "AnimusExchangePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AnimusExchangePlayer",
+    "name": "Animus Exchange",
+    "skillTypes": [
+     "141",
+     "2",
+     "31",
+     "91"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0,
+    "hidden": true,
+    "id": "ApocalypseColdPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ApocalypseColdPlayer",
+    "name": "Hailstorm",
+    "skillTypes": [
+     "2",
+     "254",
+     "29",
+     "31",
+     "37",
+     "50",
+     "7",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0,
+    "hidden": true,
+    "id": "ApocalypseFirePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ApocalypseFirePlayer",
+    "name": "Meteor",
+    "skillTypes": [
+     "2",
+     "28",
+     "31",
+     "37",
+     "50",
+     "7",
+     "8"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0,
+    "hidden": true,
+    "id": "ApocalypseLightningPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ApocalypseLightningPlayer",
+    "name": "Crash Lightning",
+    "skillTypes": [
+     "2",
+     "30",
+     "31",
+     "37",
+     "50",
+     "7",
+     "8"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "ApocalypsePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ApocalypsePlayer",
+    "name": "Apocalypse",
+    "skillTypes": [
+     "141",
+     "194",
+     "2",
+     "32",
+     "5",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "ApplyTangmazuSwarmAuraPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ApplyTangmazuSwarmAuraPlayer",
+    "name": "Winged Entropy",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "185",
+     "39",
+     "5",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "hidden": false,
+    "id": "ArbitersReachWardPlayer",
+    "levelCount": 1,
+    "modSource": "Skill:ArbitersReachWardPlayer",
+    "name": "Arbiter's Reach",
+    "skillTypes": [],
+    "support": true
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1.1,
+    "hidden": false,
+    "id": "ArcPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArcPlayer",
+    "name": "Arc",
+    "skillTypes": [
+     "125",
+     "14",
+     "141",
+     "15",
+     "16",
+     "19",
+     "2",
+     "22",
+     "234",
+     "3",
+     "30",
+     "31",
+     "7"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1.25,
+    "hidden": true,
+    "id": "ArcSkeletonMageMinion",
+    "levelCount": 1,
+    "modSource": "Skill:ArcSkeletonMageMinion",
+    "name": "Arc",
+    "skillTypes": [
+     "125",
+     "14",
+     "141",
+     "15",
+     "16",
+     "19",
+     "2",
+     "22",
+     "234",
+     "30",
+     "31",
+     "7",
+     "72",
+     "8"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "ArchmagePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArchmagePlayer",
+    "name": "Archmage",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "30",
+     "5",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "ArchonOfChayulaPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArchonOfChayulaPlayer",
+    "name": "Archon of Chayula",
+    "skillTypes": [
+     "141",
+     "194",
+     "5",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0,
+    "hidden": true,
+    "id": "ArchonOfChayulaTornadoPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArchonOfChayulaTornadoPlayer",
+    "name": "Chayula's Will",
+    "skillTypes": [
+     "1",
+     "14",
+     "15",
+     "254",
+     "27",
+     "31",
+     "37",
+     "42",
+     "50",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0,
+    "hidden": false,
+    "id": "ArcticArmourPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArcticArmourPlayer",
+    "name": "Arctic Armour",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "152",
+     "186",
+     "2",
+     "29",
+     "5",
+     "7",
+     "83",
+     "91"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "ArmourBreakerPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArmourBreakerPlayer",
+    "name": "Armour Breaker",
+    "skillTypes": [
+     "1",
+     "15",
+     "20",
+     "21",
+     "27",
+     "8",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "ArmourExplosionPlayer",
+    "levelCount": 1,
+    "modSource": "Skill:ArmourExplosionPlayer",
+    "name": "Armour Explosion",
+    "skillTypes": [
+     "1",
+     "115",
+     "218",
+     "28",
+     "31",
+     "37",
+     "50",
+     "7",
+     "8",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0.6,
+    "hidden": false,
+    "id": "ArmourPiercingBoltsAmmoPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArmourPiercingBoltsAmmoPlayer",
+    "name": "Load Armour Piercing Rounds",
+    "skillTypes": [
+     "1",
+     "117",
+     "130",
+     "141"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "ArmourPiercingBoltsPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArmourPiercingBoltsPlayer",
+    "name": "Armour Piercing Rounds",
+    "skillTypes": [
+     "1",
+     "116",
+     "14",
+     "141",
+     "15",
+     "16",
+     "27",
+     "3",
+     "41",
+     "57",
+     "58"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "ArtilleryBallistaPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArtilleryBallistaPlayer",
+    "name": "Artillery Ballista",
+    "skillTypes": [
+     "114",
+     "14",
+     "141",
+     "145",
+     "16",
+     "165",
+     "25",
+     "57",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "ArtilleryBallistaProjectilePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:ArtilleryBallistaProjectilePlayer",
+    "name": "Ballista Bolt",
+    "skillTypes": [
+     "1",
+     "11",
+     "152",
+     "175",
+     "184",
+     "192",
+     "258",
+     "41",
+     "62",
+     "8",
+     "83",
+     "84",
+     "90",
+     "96"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "AttritionPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AttritionPlayer",
+    "name": "Attrition",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "5",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "AzmeriFabricationDespair",
+    "levelCount": 1,
+    "modSource": "Skill:AzmeriFabricationDespair",
+    "name": "Despair",
+    "skillTypes": [
+     "14",
+     "141",
+     "15",
+     "16",
+     "2",
+     "22",
+     "234",
+     "31",
+     "42",
+     "56",
+     "69",
+     "72",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "AzmeriFabricationEnfeeble",
+    "levelCount": 1,
+    "modSource": "Skill:AzmeriFabricationEnfeeble",
+    "name": "Enfeeble",
+    "skillTypes": [
+     "14",
+     "141",
+     "15",
+     "16",
+     "2",
+     "22",
+     "226",
+     "234",
+     "31",
+     "56",
+     "69",
+     "72",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "AzmeriFabricationTemporalChains",
+    "levelCount": 1,
+    "modSource": "Skill:AzmeriFabricationTemporalChains",
+    "name": "Temporal Chains",
+    "skillTypes": [
+     "14",
+     "141",
+     "15",
+     "16",
+     "2",
+     "22",
+     "234",
+     "31",
+     "56",
+     "69",
+     "72",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "AzmeriPictBowRainOfSpores",
+    "levelCount": 1,
+    "modSource": "Skill:AzmeriPictBowRainOfSpores",
+    "name": "Toxic Rain",
+    "skillTypes": [
+     "1",
+     "11",
+     "14",
+     "15",
+     "16",
+     "184",
+     "192",
+     "31",
+     "35",
+     "41",
+     "42",
+     "58",
+     "62",
+     "7",
+     "8",
+     "83",
+     "9",
+     "90"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": true,
+    "id": "AzmerianSwarmAttack",
+    "levelCount": 1,
+    "modSource": "Skill:AzmerianSwarmAttack",
+    "name": "Basic Attack",
+    "skillTypes": [
+     "1",
+     "20",
+     "21",
+     "3",
+     "41",
+     "57",
+     "58",
+     "83"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0,
+    "hidden": false,
+    "id": "AzmerianSwarmPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:AzmerianSwarmPlayer",
+    "name": "Azmerian Swarms",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "145",
+     "27",
+     "28",
+     "29",
+     "30",
+     "5",
+     "6",
+     "77",
+     "83",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "BallLightningPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:BallLightningPlayer",
+    "name": "Ball Lightning",
+    "skillTypes": [
+     "14",
+     "141",
+     "15",
+     "152",
+     "16",
+     "167",
+     "2",
+     "22",
+     "234",
+     "3",
+     "30",
+     "31",
+     "57",
+     "7",
+     "72",
+     "8",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 1,
+    "hidden": false,
+    "id": "BarkskinPlayer",
+    "levelCount": 40,
+    "modSource": "Skill:BarkskinPlayer",
+    "name": "Barkskin",
+    "skillTypes": [
+     "12",
+     "120",
+     "140",
+     "5",
+     "83",
+     "9"
+    ],
+    "support": false
+   },
+   {
+    "baseFlags": [],
+    "castTime": 0.7,
+    "hidden": false,
+    "id": "BarragePlayer",
+    "levelCount": 40,
+    "modSource": "Skill:BarragePlayer",
+    "name": "Barrage",
+    "skillTypes": [
+     "119",
+     "131",
+     "141",
+     "148",
+     "171",
+     "197",
+     "2",
+     "5",
+     "9",
+     "91"
+    ],
+    "support": false
+   }
+  ],
+  "item_bases": [
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "16% increased Melee Strike Range with this weapon",
+    "name": "Long Quarterstaff",
+    "quality": 20,
+    "req": {
+     "dex": 9
+    },
+    "socketLimit": 4,
+    "subType": "Warstaff",
+    "tags": [
+     "default",
+     "ezomyte_basetype",
+     "two_hand_weapon",
+     "twohand",
+     "warstaff",
+     "weapon"
+    ],
+    "type": "Staff",
+    "weapon": {
+     "AttackRateBase": 1.4,
+     "CritChanceBase": 10,
+     "PhysicalMax": 18,
+     "PhysicalMin": 9,
+     "Range": 14
+    }
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": true,
+    "name": "Aberrant Sledge",
+    "quality": 20,
+    "req": {
+     "level": 70,
+     "str": 163
+    },
+    "socketLimit": 4,
+    "tags": [
+     "default",
+     "mace",
+     "two_hand_weapon",
+     "twohand",
+     "weapon"
+    ],
+    "type": "Two Hand Mace",
+    "weapon": {
+     "AttackRateBase": 1.2,
+     "CritChanceBase": 5,
+     "PhysicalMax": 154,
+     "PhysicalMin": 74,
+     "Range": 15
+    }
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "-1 Prefix Modifier allowed\n-1 Suffix Modifier allowed\n{variant:1}Grants Skill: Level (1-20) Cast on Elemental Ailment\n{variant:2}Grants Skill: Level (1-20) Cast on Critical\n{variant:3}Grants Skill: Level (1-20) Cast on Dodge\n{variant:4}Grants Skill: Level (1-20) Rhoa Mount\n{variant:5}Grants Skill: Level (1-20) Archmage\n{variant:6}Grants Skill: Level (1-20) Trinity\n{variant:7}Grants Skill: Level (1-20) Eternal Rage",
+    "name": "Absent Amulet",
+    "req": {
+     "level": 50
+    },
+    "tags": [
+     "amulet",
+     "default"
+    ],
+    "type": "Amulet",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 496,
+     "MovementPenalty": 0.05
+    },
+    "flask": [],
+    "hidden": false,
+    "implicit": "Regenerate (1.5-2.5)% of maximum Life per second",
+    "name": "Abyssal Cuirass",
+    "quality": 20,
+    "req": {
+     "level": 73,
+     "str": 121
+    },
+    "socketLimit": 4,
+    "subType": "Armour",
+    "tags": [
+     "armour",
+     "body_armour",
+     "default",
+     "str_armour"
+    ],
+    "type": "Body Armour",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "name": "Abyssal Flail",
+    "quality": 20,
+    "req": {
+     "int": 36,
+     "level": 65,
+     "str": 89
+    },
+    "socketLimit": 3,
+    "tags": [
+     "default",
+     "flail",
+     "one_hand_weapon",
+     "onehand",
+     "weapon"
+    ],
+    "type": "Flail",
+    "weapon": {
+     "AttackRateBase": 1.45,
+     "CritChanceBase": 10,
+     "PhysicalMax": 66,
+     "PhysicalMin": 36,
+     "Range": 13
+    }
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "Inflict Abyssal Wasting on Hit",
+    "name": "Abyssal Signet",
+    "req": [],
+    "tags": [
+     "default",
+     "genesis_tree_caster",
+     "genesis_tree_minion",
+     "ring"
+    ],
+    "type": "Ring",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "Grants Skill: Level (1-20) Decompose",
+    "name": "Acrid Wand",
+    "quality": 20,
+    "req": {
+     "int": 60,
+     "level": 33
+    },
+    "socketLimit": 3,
+    "tags": [
+     "default",
+     "onehand",
+     "wand"
+    ],
+    "type": "Wand",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "name": "Adherent Bow",
+    "quality": 20,
+    "req": {
+     "dex": 104,
+     "level": 59
+    },
+    "socketLimit": 4,
+    "tags": [
+     "bow",
+     "default",
+     "ranged",
+     "two_hand_weapon",
+     "twohand",
+     "weapon"
+    ],
+    "type": "Bow",
+    "weapon": {
+     "AttackRateBase": 1.2,
+     "ChaosMax": 32,
+     "ChaosMin": 14,
+     "CritChanceBase": 5,
+     "PhysicalMax": 59,
+     "PhysicalMin": 35,
+     "Range": 120
+    }
+   },
+   {
+    "armour": {
+     "Armour": 98,
+     "EnergyShield": 27
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Adherent Cuffs",
+    "quality": 20,
+    "req": {
+     "int": 55,
+     "level": 80,
+     "str": 55
+    },
+    "socketLimit": 3,
+    "subType": "Armour/Energy Shield",
+    "tags": [
+     "armour",
+     "default",
+     "gloves",
+     "karui_basetype",
+     "str_int_armour"
+    ],
+    "type": "Gloves",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 96,
+     "EnergyShield": 28
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Adherent Leggings",
+    "quality": 20,
+    "req": {
+     "int": 34,
+     "level": 45,
+     "str": 34
+    },
+    "socketLimit": 3,
+    "subType": "Armour/Energy Shield",
+    "tags": [
+     "armour",
+     "boots",
+     "default",
+     "str_int_armour"
+    ],
+    "type": "Boots",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "EnergyShield": 127,
+     "MovementPenalty": 0.03
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Adherent's Raiment",
+    "quality": 20,
+    "req": {
+     "int": 94,
+     "level": 59
+    },
+    "socketLimit": 4,
+    "subType": "Energy Shield",
+    "tags": [
+     "armour",
+     "body_armour",
+     "default",
+     "int_armour"
+    ],
+    "type": "Body Armour",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "EnergyShield": 45
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Adorned Gloves",
+    "quality": 20,
+    "req": {
+     "int": 80,
+     "level": 65
+    },
+    "socketLimit": 3,
+    "subType": "Energy Shield",
+    "tags": [
+     "armour",
+     "default",
+     "gloves",
+     "int_armour"
+    ],
+    "type": "Gloves",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "EnergyShield": 23,
+     "Evasion": 74
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Adorned Wraps",
+    "quality": 20,
+    "req": {
+     "dex": 41,
+     "int": 41,
+     "level": 59
+    },
+    "socketLimit": 3,
+    "subType": "Evasion/Energy Shield",
+    "tags": [
+     "armour",
+     "default",
+     "dex_int_armour",
+     "gloves"
+    ],
+    "type": "Gloves",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "BlockChance": 20,
+     "Evasion": 148
+    },
+    "flask": [],
+    "hidden": false,
+    "implicit": "Grants Skill: Parry",
+    "name": "Aegis Buckler",
+    "quality": 20,
+    "req": {
+     "dex": 91,
+     "level": 65
+    },
+    "socketLimit": 3,
+    "subType": "Evasion",
+    "tags": [
+     "armour",
+     "buckler",
+     "default",
+     "dex_armour",
+     "dex_shield",
+     "shield"
+    ],
+    "type": "Shield",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "+(12-18)% to Block chance",
+    "name": "Aegis Quarterstaff",
+    "quality": 20,
+    "req": {
+     "dex": 127,
+     "int": 50,
+     "level": 79
+    },
+    "socketLimit": 4,
+    "subType": "Warstaff",
+    "tags": [
+     "default",
+     "two_hand_weapon",
+     "twohand",
+     "warstaff",
+     "weapon"
+    ],
+    "type": "Staff",
+    "weapon": {
+     "AttackRateBase": 1.4,
+     "CritChanceBase": 10,
+     "PhysicalMax": 97,
+     "PhysicalMin": 58,
+     "Range": 14
+    }
+   },
+   {
+    "armour": {
+     "Armour": 27,
+     "EnergyShield": 10
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Aged Cuffs",
+    "quality": 20,
+    "req": {
+     "int": 13,
+     "level": 16,
+     "str": 13
+    },
+    "socketLimit": 3,
+    "subType": "Armour/Energy Shield",
+    "tags": [
+     "armour",
+     "default",
+     "gloves",
+     "maraketh_basetype",
+     "str_int_armour"
+    ],
+    "type": "Gloves",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 145,
+     "BlockChance": 26,
+     "MovementPenalty": 0.03
+    },
+    "flask": [],
+    "hidden": false,
+    "implicit": "Grants Skill: Raise Shield",
+    "name": "Aged Tower Shield",
+    "quality": 20,
+    "req": {
+     "level": 45,
+     "str": 64
+    },
+    "socketLimit": 3,
+    "subType": "Armour",
+    "tags": [
+     "armour",
+     "default",
+     "shield",
+     "str_armour",
+     "str_shield"
+    ],
+    "type": "Shield",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "Always Hits",
+    "name": "Akoyan Club",
+    "quality": 20,
+    "req": {
+     "level": 78,
+     "str": 163
+    },
+    "socketLimit": 3,
+    "tags": [
+     "default",
+     "karui_basetype",
+     "mace",
+     "one_hand_weapon",
+     "onehand",
+     "weapon"
+    ],
+    "type": "One Hand Mace",
+    "weapon": {
+     "AttackRateBase": 1.45,
+     "CritChanceBase": 5,
+     "PhysicalMax": 76,
+     "PhysicalMin": 46,
+     "Range": 13
+    }
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "Grants Skill: Spear Throw",
+    "name": "Akoyan Spear",
+    "quality": 20,
+    "req": {
+     "dex": 127,
+     "int": 90,
+     "level": 78,
+     "str": 50
+    },
+    "socketLimit": 3,
+    "tags": [
+     "default",
+     "karui_basetype",
+     "one_hand_weapon",
+     "onehand",
+     "spear",
+     "weapon"
+    ],
+    "type": "Spear",
+    "weapon": {
+     "AttackRateBase": 1.6,
+     "CritChanceBase": 7,
+     "PhysicalMax": 72,
+     "PhysicalMin": 39,
+     "Range": 15
+    }
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "name": "Alloy Crossbow",
+    "quality": 20,
+    "req": {
+     "dex": 28,
+     "level": 26,
+     "str": 28
+    },
+    "socketLimit": 4,
+    "tags": [
+     "crossbow",
+     "default",
+     "maraketh_basetype",
+     "ranged",
+     "two_hand_weapon",
+     "twohand",
+     "weapon"
+    ],
+    "type": "Crossbow",
+    "weapon": {
+     "AttackRateBase": 1.7,
+     "CritChanceBase": 5,
+     "PhysicalMax": 50,
+     "PhysicalMin": 12,
+     "Range": 120,
+     "ReloadTimeBase": 0.7
+    }
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "+(14-18)% to Block chance",
+    "name": "Alpha Talisman",
+    "quality": 20,
+    "req": {
+     "int": 72,
+     "level": 75,
+     "str": 98
+    },
+    "socketLimit": 4,
+    "tags": [
+     "default",
+     "maraketh_basetype",
+     "talisman",
+     "two_hand_weapon",
+     "twohand",
+     "weapon"
+    ],
+    "type": "Talisman",
+    "weapon": {
+     "AttackRateBase": 1.3,
+     "CritChanceBase": 9,
+     "PhysicalMax": 94,
+     "PhysicalMin": 63,
+     "Range": 12
+    }
+   },
+   {
+    "armour": {
+     "EnergyShield": 95,
+     "MovementPenalty": 0.03
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Altar Robe",
+    "quality": 20,
+    "req": {
+     "int": 65,
+     "level": 40
+    },
+    "socketLimit": 4,
+    "subType": "Energy Shield",
+    "tags": [
+     "armour",
+     "body_armour",
+     "default",
+     "int_armour",
+     "vaal_basetype"
+    ],
+    "type": "Body Armour",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "+(10-15) to Strength",
+    "name": "Amber Amulet",
+    "req": {
+     "level": 8
+    },
+    "tags": [
+     "amulet",
+     "default"
+    ],
+    "type": "Amulet",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "Used when you take Chaos damage from a Hit",
+    "name": "Amethyst Charm",
+    "quality": 20,
+    "req": {
+     "level": 40
+    },
+    "tags": [
+     "default",
+     "flask",
+     "utility_flask"
+    ],
+    "type": "Charm",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "+(7-13)% to Chaos Resistance",
+    "name": "Amethyst Ring",
+    "req": {
+     "level": 20
+    },
+    "tags": [
+     "default",
+     "genesis_tree_caster",
+     "genesis_tree_minion",
+     "ring"
+    ],
+    "type": "Ring",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 160,
+     "BlockChance": 26,
+     "MovementPenalty": 0.03
+    },
+    "flask": [],
+    "hidden": false,
+    "implicit": "Grants Skill: Raise Shield",
+    "name": "Ancestor Tower Shield",
+    "quality": 20,
+    "req": {
+     "level": 50,
+     "str": 71
+    },
+    "socketLimit": 3,
+    "subType": "Armour",
+    "tags": [
+     "armour",
+     "default",
+     "karui_basetype",
+     "shield",
+     "str_armour",
+     "str_shield"
+    ],
+    "type": "Shield",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 214,
+     "Evasion": 194,
+     "MovementPenalty": 0.04
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Ancestral Mail",
+    "quality": 20,
+    "req": {
+     "dex": 44,
+     "level": 50,
+     "str": 44
+    },
+    "socketLimit": 4,
+    "subType": "Armour/Evasion",
+    "tags": [
+     "armour",
+     "body_armour",
+     "default",
+     "karui_basetype",
+     "str_dex_armour"
+    ],
+    "type": "Body Armour",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "EnergyShield": 109
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Ancestral Tiara",
+    "quality": 20,
+    "req": {
+     "int": 115,
+     "level": 80
+    },
+    "socketLimit": 3,
+    "subType": "Energy Shield",
+    "tags": [
+     "armour",
+     "default",
+     "helmet",
+     "int_armour",
+     "karui_basetype"
+    ],
+    "type": "Helmet",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "EnergyShield": 46,
+     "Evasion": 132,
+     "MovementPenalty": 0.03
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Anchorite Garb",
+    "quality": 20,
+    "req": {
+     "dex": 31,
+     "int": 31,
+     "level": 33
+    },
+    "socketLimit": 4,
+    "subType": "Evasion/Energy Shield",
+    "tags": [
+     "armour",
+     "body_armour",
+     "default",
+     "dex_int_armour",
+     "vaal_basetype"
+    ],
+    "type": "Body Armour",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "BlockChance": 20,
+     "Evasion": 178
+    },
+    "flask": [],
+    "hidden": false,
+    "implicit": "Grants Skill: Parry",
+    "name": "Ancient Buckler",
+    "quality": 20,
+    "req": {
+     "dex": 107,
+     "level": 75
+    },
+    "socketLimit": 3,
+    "subType": "Evasion",
+    "tags": [
+     "armour",
+     "buckler",
+     "default",
+     "dex_armour",
+     "dex_shield",
+     "shield"
+    ],
+    "type": "Shield",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 89,
+     "EnergyShield": 25
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Ancient Cuffs",
+    "quality": 20,
+    "req": {
+     "int": 48,
+     "level": 70,
+     "str": 48
+    },
+    "socketLimit": 3,
+    "subType": "Armour/Energy Shield",
+    "tags": [
+     "armour",
+     "default",
+     "gloves",
+     "str_int_armour"
+    ],
+    "type": "Gloves",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 89,
+     "Evasion": 81
+    },
+    "flask": [],
+    "hidden": true,
+    "name": "Ancient Gauntlets",
+    "quality": 20,
+    "req": {
+     "dex": 52,
+     "level": 70,
+     "str": 52
+    },
+    "socketLimit": 3,
+    "subType": "Armour/Evasion",
+    "tags": [
+     "armour",
+     "default",
+     "gloves",
+     "str_dex_armour"
+    ],
+    "type": "Gloves",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "name": "Ancient Greatblade",
+    "quality": 20,
+    "req": {
+     "dex": 49,
+     "level": 49,
+     "str": 49
+    },
+    "socketLimit": 4,
+    "tags": [
+     "default",
+     "sword",
+     "two_hand_weapon",
+     "twohand",
+     "weapon"
+    ],
+    "type": "Two Hand Sword",
+    "weapon": {
+     "AttackRateBase": 1.25,
+     "CritChanceBase": 5,
+     "PhysicalMax": 103,
+     "PhysicalMin": 55,
+     "Range": 16
+    }
+   },
+   {
+    "armour": {
+     "Armour": 134,
+     "EnergyShield": 37
+    },
+    "flask": [],
+    "hidden": true,
+    "name": "Ancient Leggings",
+    "quality": 20,
+    "req": {
+     "int": 56,
+     "level": 65,
+     "str": 56
+    },
+    "socketLimit": 3,
+    "subType": "Armour/Energy Shield",
+    "tags": [
+     "armour",
+     "boots",
+     "default",
+     "str_int_armour"
+    ],
+    "type": "Boots",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 273,
+     "EnergyShield": 76,
+     "MovementPenalty": 0.04
+    },
+    "flask": [],
+    "hidden": true,
+    "name": "Ancient Mail",
+    "quality": 20,
+    "req": {
+     "int": 67,
+     "level": 70,
+     "str": 67
+    },
+    "socketLimit": 4,
+    "subType": "Armour/Energy Shield",
+    "tags": [
+     "armour",
+     "body_armour",
+     "default",
+     "str_int_armour"
+    ],
+    "type": "Body Armour",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 137
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Ancient Mitts",
+    "quality": 20,
+    "req": {
+     "level": 54,
+     "str": 67
+    },
+    "socketLimit": 3,
+    "subType": "Armour",
+    "tags": [
+     "armour",
+     "default",
+     "gloves",
+     "str_armour"
+    ],
+    "type": "Gloves",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "Armour": 179,
+     "Evasion": 163
+    },
+    "flask": [],
+    "hidden": true,
+    "name": "Ancient Visor",
+    "quality": 20,
+    "req": {
+     "dex": 59,
+     "level": 65,
+     "str": 59
+    },
+    "socketLimit": 3,
+    "subType": "Armour/Evasion",
+    "tags": [
+     "armour",
+     "default",
+     "helmet",
+     "str_dex_armour"
+    ],
+    "type": "Helmet",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "name": "Anima Quarterstaff",
+    "quality": 20,
+    "req": {
+     "dex": 72,
+     "int": 29,
+     "level": 52
+    },
+    "socketLimit": 4,
+    "subType": "Warstaff",
+    "tags": [
+     "default",
+     "two_hand_weapon",
+     "twohand",
+     "warstaff",
+     "weapon"
+    ],
+    "type": "Staff",
+    "weapon": {
+     "AttackRateBase": 1.4,
+     "CritChanceBase": 10,
+     "PhysicalMax": 79,
+     "PhysicalMin": 47,
+     "Range": 14
+    }
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "Used when you become Poisoned",
+    "name": "Antidote Charm",
+    "quality": 20,
+    "req": {
+     "level": 24
+    },
+    "tags": [
+     "default",
+     "flask",
+     "utility_flask"
+    ],
+    "type": "Charm",
+    "weapon": []
+   },
+   {
+    "armour": {
+     "EnergyShield": 18
+    },
+    "flask": [],
+    "hidden": false,
+    "name": "Antler Focus",
+    "quality": 20,
+    "req": {
+     "int": 17,
+     "level": 10
+    },
+    "socketLimit": 3,
+    "tags": [
+     "armour",
+     "default",
+     "ezomyte_basetype",
+     "focus",
+     "int_armour"
+    ],
+    "type": "Focus",
+    "weapon": []
+   },
+   {
+    "armour": [],
+    "flask": [],
+    "hidden": false,
+    "implicit": "Crushes Enemies on Hit",
+    "name": "Anvil Maul",
+    "quality": 20,
+    "req": {
+     "level": 67,
+     "str": 134
+    },
+    "socketLimit": 4,
+    "tags": [
+     "default",
+     "mace",
+     "two_hand_weapon",
+     "twohand",
+     "weapon"
+    ],
+    "type": "Two Hand Mace",
+    "weapon": {
+     "AttackRateBase": 1.05,
+     "CritChanceBase": 5,
+     "PhysicalMax": 136,
+     "PhysicalMin": 101,
+     "Range": 15
+    }
+   }
+  ],
+  "item_modifiers": [
+   {
+    "affix": "Herbal",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse1",
+    "level": 1,
+    "lines": [
+     "Recover (8-12) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Floral",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse2",
+    "level": 14,
+    "lines": [
+     "Recover (35-52) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Blooming",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse3",
+    "level": 26,
+    "lines": [
+     "Recover (63-92) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Sprouting",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse4",
+    "level": 36,
+    "lines": [
+     "Recover (96-130) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Petaled",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse5",
+    "level": 47,
+    "lines": [
+     "Recover (134-180) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Botanic",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse6",
+    "level": 58,
+    "lines": [
+     "Recover (185-230) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Natural",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse7",
+    "level": 67,
+    "lines": [
+     "Recover (235-280) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Evergreen",
+    "group": "Charm",
+    "id": "CharmGainLifeOnUse8",
+    "level": 76,
+    "lines": [
+     "Recover (285-350) Life when Used"
+    ],
+    "modTags": [
+     "charm",
+     "life",
+     "resource"
+    ],
+    "statOrder": [
+     "926"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Drizzling",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse1",
+    "level": 1,
+    "lines": [
+     "Recover (16-24) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Soaked",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse2",
+    "level": 14,
+    "lines": [
+     "Recover (33-50) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Mistbound",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse3",
+    "level": 26,
+    "lines": [
+     "Recover (55-75) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Tidebound",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse4",
+    "level": 36,
+    "lines": [
+     "Recover (80-110) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Aqueous",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse5",
+    "level": 47,
+    "lines": [
+     "Recover (115-145) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Flooded",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse6",
+    "level": 58,
+    "lines": [
+     "Recover (150-180) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Oceanic",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse7",
+    "level": 67,
+    "lines": [
+     "Recover (185-225) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Raindancer's",
+    "group": "Charm",
+    "id": "CharmGainManaOnUse8",
+    "level": 76,
+    "lines": [
+     "Recover (230-300) Mana when Used"
+    ],
+    "modTags": [
+     "charm",
+     "mana",
+     "resource"
+    ],
+    "statOrder": [
+     "927"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Sunny",
+    "group": "Charm",
+    "id": "CharmGuardWhileActive1",
+    "level": 10,
+    "lines": [
+     "Also grants (44-66) Guard"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "925"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Dawnlit",
+    "group": "Charm",
+    "id": "CharmGuardWhileActive2",
+    "level": 21,
+    "lines": [
+     "Also grants (85-128) Guard"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "925"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Bright",
+    "group": "Charm",
+    "id": "CharmGuardWhileActive3",
+    "level": 36,
+    "lines": [
+     "Also grants (148-200) Guard"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "925"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Vibrant",
+    "group": "Charm",
+    "id": "CharmGuardWhileActive4",
+    "level": 48,
+    "lines": [
+     "Also grants (205-260) Guard"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "925"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Lustrous",
+    "group": "Charm",
+    "id": "CharmGuardWhileActive5",
+    "level": 60,
+    "lines": [
+     "Also grants (265-350) Guard"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "925"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Sunburst",
+    "group": "Charm",
+    "id": "CharmGuardWhileActive6",
+    "level": 75,
+    "lines": [
+     "Also grants (355-500) Guard"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "925"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Investigator's",
+    "group": "Charm",
+    "id": "CharmIncreasedDuration1",
+    "level": 1,
+    "lines": [
+     "(16-20)% increased Duration"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "928"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Analyst's",
+    "group": "Charm",
+    "id": "CharmIncreasedDuration2",
+    "level": 20,
+    "lines": [
+     "(21-25)% increased Duration"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "928"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Examiner's",
+    "group": "Charm",
+    "id": "CharmIncreasedDuration3",
+    "level": 42,
+    "lines": [
+     "(26-30)% increased Duration"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "928"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Clinician's",
+    "group": "Charm",
+    "id": "CharmIncreasedDuration4",
+    "level": 61,
+    "lines": [
+     "(31-35)% increased Duration"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "928"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "Experimenter's",
+    "group": "Charm",
+    "id": "CharmIncreasedDuration5",
+    "level": 78,
+    "lines": [
+     "(36-40)% increased Duration"
+    ],
+    "modTags": [
+     "charm"
+    ],
+    "statOrder": [
+     "928"
+    ],
+    "tradeHashes": [],
+    "type": "Prefix",
+    "weightKey": [
+     "utility_flask",
+     "default"
+    ],
+    "weightVal": [
+     1,
+     0
+    ]
+   },
+   {
+    "affix": "of the Medic",
+    "group": "Charm",
+    "id": "FlaskChanceRechargeOnKill1",
+    "level": 8,
+    "lines": [
+     "(21-25)% Chance to gain a Charge when you kill an enemy"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1071"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Doctor",
+    "group": "Charm",
+    "id": "FlaskChanceRechargeOnKill2",
+    "level": 26,
+    "lines": [
+     "(26-30)% Chance to gain a Charge when you kill an enemy"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1071"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Surgeon",
+    "group": "Charm",
+    "id": "FlaskChanceRechargeOnKill3",
+    "level": 45,
+    "lines": [
+     "(31-35)% Chance to gain a Charge when you kill an enemy"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1071"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Constant",
+    "group": "Charm",
+    "id": "FlaskChargesAddedIncreasePercent1",
+    "level": 1,
+    "lines": [
+     "(23-30)% increased Charges gained"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1072"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Continuous",
+    "group": "Charm",
+    "id": "FlaskChargesAddedIncreasePercent2_",
+    "level": 13,
+    "lines": [
+     "(31-38)% increased Charges gained"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1072"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Endless",
+    "group": "Charm",
+    "id": "FlaskChargesAddedIncreasePercent3_",
+    "level": 33,
+    "lines": [
+     "(39-46)% increased Charges gained"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1072"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Bottomless",
+    "group": "Charm",
+    "id": "FlaskChargesAddedIncreasePercent4_",
+    "level": 48,
+    "lines": [
+     "(47-54)% increased Charges gained"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1072"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Perpetual",
+    "group": "Charm",
+    "id": "FlaskChargesAddedIncreasePercent5__",
+    "level": 63,
+    "lines": [
+     "(55-62)% increased Charges gained"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1072"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Eternal",
+    "group": "Charm",
+    "id": "FlaskChargesAddedIncreasePercent6",
+    "level": 82,
+    "lines": [
+     "(63-70)% increased Charges gained"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1072"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Apprentice",
+    "group": "Charm",
+    "id": "FlaskChargesUsed1",
+    "level": 1,
+    "lines": [
+     "(15-17)% reduced Charges per use"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1073"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Practitioner",
+    "group": "Charm",
+    "id": "FlaskChargesUsed2",
+    "level": 14,
+    "lines": [
+     "(18-20)% reduced Charges per use"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1073"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Mixologist",
+    "group": "Charm",
+    "id": "FlaskChargesUsed3__",
+    "level": 34,
+    "lines": [
+     "(21-23)% reduced Charges per use"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1073"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   },
+   {
+    "affix": "of the Distiller",
+    "group": "Charm",
+    "id": "FlaskChargesUsed4__",
+    "level": 49,
+    "lines": [
+     "(24-26)% reduced Charges per use"
+    ],
+    "modTags": [
+     "flask"
+    ],
+    "statOrder": [
+     "1073"
+    ],
+    "tradeHashes": [],
+    "type": "Suffix",
+    "weightKey": [
+     "default"
+    ],
+    "weightVal": [
+     1
+    ]
+   }
+  ],
+  "passive_nodes": [
+   {
+    "group": 931,
+    "id": 1140,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     13828,
+     15507
+    ],
+    "name": "Attribute",
+    "orbit": 2,
+    "orbitIndex": 22,
+    "skill": 1140,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity25",
+    "type": "Normal"
+   },
+   {
+    "group": 445,
+    "id": 2955,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     28002,
+     28800
+    ],
+    "name": "Projectile Damage",
+    "orbit": 2,
+    "orbitIndex": 0,
+    "skill": 2955,
+    "stats": [
+     "10% increased Projectile Damage"
+    ],
+    "stringId": "projectiles37",
+    "type": "Normal"
+   },
+   {
+    "group": 710,
+    "id": 7628,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     28370,
+     36170,
+     41646,
+     44707,
+     55231
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 30,
+    "skill": 7628,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength38",
+    "type": "Normal"
+   },
+   {
+    "group": 926,
+    "id": 10909,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     16489,
+     33053,
+     48401
+    ],
+    "name": "Attribute",
+    "orbit": 3,
+    "orbitIndex": 8,
+    "skill": 10909,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity31",
+    "type": "Normal"
+   },
+   {
+    "group": 951,
+    "id": 11230,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": true,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     17672
+    ],
+    "name": "Ritual Cadence",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 11230,
+    "stats": [
+     "Invocation Skills cannot gain Energy while Triggering Spells",
+     "Invocation Skills instead Trigger Spells every 2 seconds",
+     "Invoked Spells consume 50% less Energy"
+    ],
+    "stringId": "passive_keystone_auto_invocation",
+    "type": "Keystone"
+   },
+   {
+    "group": 677,
+    "id": 13241,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     39732,
+     48670,
+     51921,
+     55746
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 48,
+    "skill": 13241,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength41",
+    "type": "Normal"
+   },
+   {
+    "group": 919,
+    "id": 13828,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1140,
+     49691,
+     50459
+    ],
+    "name": "Evasion",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 13828,
+    "stats": [
+     "+16 to Evasion Rating"
+    ],
+    "stringId": "evasion11",
+    "type": "Normal"
+   },
+   {
+    "group": 771,
+    "id": 15182,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     54127,
+     54818
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 15182,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "attributes45",
+    "type": "Normal"
+   },
+   {
+    "group": 931,
+    "id": 15507,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1140,
+     48401
+    ],
+    "name": "Attribute",
+    "orbit": 3,
+    "orbitIndex": 10,
+    "skill": 15507,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity24_",
+    "type": "Normal"
+   },
+   {
+    "group": 926,
+    "id": 16489,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     10909,
+     28556,
+     48568,
+     49799
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 30,
+    "skill": 16489,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity33",
+    "type": "Normal"
+   },
+   {
+    "group": 510,
+    "id": 16725,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     27373,
+     36163,
+     36629,
+     54811
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 16725,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength21",
+    "type": "Normal"
+   },
+   {
+    "group": 499,
+    "id": 17468,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     22616,
+     53405
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 48,
+    "skill": 17468,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength57",
+    "type": "Normal"
+   },
+   {
+    "group": 829,
+    "id": 21755,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     9825,
+     11410,
+     19223,
+     24009,
+     48635,
+     52274,
+     54127,
+     61281,
+     62051
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 21755,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity13",
+    "type": "Normal"
+   },
+   {
+    "group": 499,
+    "id": 22558,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     20547,
+     48745,
+     51052,
+     55933,
+     62378
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 66,
+    "skill": 22558,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength9",
+    "type": "Normal"
+   },
+   {
+    "group": 499,
+    "id": 22616,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     14654,
+     17468,
+     19122,
+     41615,
+     48631,
+     51052
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 54,
+    "skill": 22616,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength11",
+    "type": "Normal"
+   },
+   {
+    "group": 557,
+    "id": 27373,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     16725,
+     22928,
+     51369,
+     53405,
+     64284
+    ],
+    "name": "Attribute",
+    "orbit": 5,
+    "orbitIndex": 51,
+    "skill": 27373,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength19",
+    "type": "Normal"
+   },
+   {
+    "group": 444,
+    "id": 28002,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     2653,
+     2955,
+     18441,
+     20499,
+     32194,
+     42452,
+     49547,
+     49938
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 28002,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "attributes31",
+    "type": "Normal"
+   },
+   {
+    "group": 824,
+    "id": 28370,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     7628,
+     10247,
+     11916,
+     14997,
+     37450,
+     63526
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 39,
+    "skill": 28370,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength36",
+    "type": "Normal"
+   },
+   {
+    "group": 926,
+    "id": 28556,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     16489,
+     53996,
+     59881
+    ],
+    "name": "Attribute",
+    "orbit": 3,
+    "orbitIndex": 12,
+    "skill": 28556,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength43",
+    "type": "Normal"
+   },
+   {
+    "group": 445,
+    "id": 28800,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     2955,
+     55308
+    ],
+    "name": "Projectile Damage",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 28800,
+    "stats": [
+     "10% increased Projectile Damage"
+    ],
+    "stringId": "projectiles38_",
+    "type": "Normal"
+   },
+   {
+    "group": 597,
+    "id": 32194,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     28002,
+     29652,
+     36478,
+     49357,
+     50558,
+     55933
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 60,
+    "skill": 32194,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "intelligence34",
+    "type": "Normal"
+   },
+   {
+    "group": 612,
+    "id": 36629,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     16725,
+     26532,
+     44659,
+     51921,
+     53373
+    ],
+    "name": "Attribute",
+    "orbit": 5,
+    "orbitIndex": 45,
+    "skill": 36629,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength22",
+    "type": "Normal"
+   },
+   {
+    "group": 693,
+    "id": 41646,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     6714,
+     7628,
+     14091,
+     17867,
+     48670
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 41646,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength39_",
+    "type": "Normal"
+   },
+   {
+    "group": 752,
+    "id": 47157,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     516,
+     54818,
+     61347
+    ],
+    "name": "Projectile Damage",
+    "orbit": 7,
+    "orbitIndex": 12,
+    "skill": 47157,
+    "stats": [
+     "Projectiles deal 15% increased Damage with Hits against Enemies further than 6m"
+    ],
+    "stringId": "projectiles31",
+    "type": "Normal"
+   },
+   {
+    "group": 931,
+    "id": 48401,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     10909,
+     15507,
+     35987,
+     61312
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 30,
+    "skill": 48401,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity23_",
+    "type": "Normal"
+   },
+   {
+    "group": 828,
+    "id": 48635,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     21755,
+     28361,
+     43444,
+     63526
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 48635,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "attributes30_",
+    "type": "Normal"
+   },
+   {
+    "group": 683,
+    "id": 48670,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1865,
+     13241,
+     41646,
+     43895,
+     49231,
+     51299,
+     53589
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 42,
+    "skill": 48670,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength40_",
+    "type": "Normal"
+   },
+   {
+    "group": 823,
+    "id": 49657,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     14572,
+     43578,
+     54417,
+     57774,
+     58109,
+     63526
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 33,
+    "skill": 49657,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity30_",
+    "type": "Normal"
+   },
+   {
+    "group": 912,
+    "id": 50459,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1583,
+     13828,
+     36365,
+     41736,
+     46990,
+     56651,
+     63493
+    ],
+    "name": "RANGER",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 50459,
+    "stats": [],
+    "stringId": "ranger596",
+    "type": "ClassStart"
+   },
+   {
+    "group": 499,
+    "id": 51052,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     761,
+     22558,
+     22616,
+     51183
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 60,
+    "skill": 51052,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength10",
+    "type": "Normal"
+   },
+   {
+    "group": 655,
+    "id": 51921,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     4882,
+     5920,
+     13241,
+     36629
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 54,
+    "skill": 51921,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength42",
+    "type": "Normal"
+   },
+   {
+    "group": 499,
+    "id": 53405,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     8693,
+     16090,
+     17468,
+     26798,
+     27373,
+     31419
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 42,
+    "skill": 53405,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength58",
+    "type": "Normal"
+   },
+   {
+    "group": 834,
+    "id": 54127,
+    "isAscendancyStart": false,
+    "isJewelSocket": true,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     15182,
+     21755,
+     54282,
+     56978
+    ],
+    "name": "Jewel Socket",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 54127,
+    "stats": [],
+    "stringId": "jewel_slot1975",
+    "type": "Socket"
+   },
+   {
+    "group": 823,
+    "id": 54417,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     49657,
+     59881
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 21,
+    "skill": 54417,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity29",
+    "type": "Normal"
+   },
+   {
+    "group": 751,
+    "id": 54818,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     2864,
+     12526,
+     15182,
+     18801,
+     31566,
+     47157,
+     65322
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 54818,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength80",
+    "type": "Normal"
+   },
+   {
+    "group": 597,
+    "id": 55933,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     10372,
+     22558,
+     32194,
+     37629,
+     39540,
+     60886
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 48,
+    "skill": 55933,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength8",
+    "type": "Normal"
+   },
+   {
+    "group": 844,
+    "id": 59881,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     28556,
+     42500,
+     44605,
+     54417
+    ],
+    "name": "Attribute",
+    "orbit": 6,
+    "orbitIndex": 16,
+    "skill": 59881,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "dexterity28",
+    "type": "Normal"
+   },
+   {
+    "group": 832,
+    "id": 63526,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     7788,
+     28370,
+     38003,
+     48635,
+     49657
+    ],
+    "name": "Attribute",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 63526,
+    "stats": [
+     "+5 to any Attribute"
+    ],
+    "stringId": "strength37",
+    "type": "Normal"
+   },
+   {
+    "group": 1069,
+    "id": 4,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     11578,
+     48833
+    ],
+    "name": "Shock Chance",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 4,
+    "stats": [
+     "15% increased chance to Shock"
+    ],
+    "stringId": "lightning14",
+    "type": "Normal"
+   },
+   {
+    "ascendancyName": "Pathfinder",
+    "group": 1571,
+    "id": 16,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1583,
+     41619
+    ],
+    "name": "Life Flask Charges",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 16,
+    "stats": [
+     "20% increased Life Flask Charges gained"
+    ],
+    "stringId": "AscendancyRanger3Small6",
+    "type": "Normal"
+   },
+   {
+    "ascendancyName": "Deadeye",
+    "group": 1552,
+    "id": 30,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     3987
+    ],
+    "name": "Gathering Winds",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 30,
+    "stats": [
+     "Gain Tailwind on Skill use",
+     "Lose all Tailwind when Hit"
+    ],
+    "stringId": "AscendancyRanger1Notable3",
+    "type": "Notable"
+   },
+   {
+    "ascendancyName": "Pathfinder",
+    "group": 1579,
+    "id": 40,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     39292
+    ],
+    "name": "Sustainable Practices",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 40,
+    "stats": [
+     "50% of Evasion Rating also grants Elemental Damage reduction"
+    ],
+    "stringId": "AscendancyRanger3Notable5",
+    "type": "Notable"
+   },
+   {
+    "group": 194,
+    "id": 52,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": true,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     39131
+    ],
+    "name": "Zealot's Oath",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 52,
+    "stats": [
+     "Energy Shield does not Recharge",
+     "Excess Life Recovery from Regeneration is applied to Energy Shield"
+    ],
+    "stringId": "passive_keystone_zealots_oath",
+    "type": "Keystone"
+   },
+   {
+    "group": 1138,
+    "id": 55,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     13030
+    ],
+    "name": "Fast Acting Toxins",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 55,
+    "stats": [
+     "Damaging Ailments deal damage 12% faster"
+    ],
+    "stringId": "ailments38",
+    "type": "Notable"
+   },
+   {
+    "ascendancyName": "Lich",
+    "group": 1215,
+    "id": 59,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     8611
+    ],
+    "name": "Incessant Cacophony",
+    "orbit": 8,
+    "orbitIndex": 50,
+    "skill": 59,
+    "stats": [
+     "Curses you inflict have infinite Duration",
+     "You can apply an additional Curse"
+    ],
+    "stringId": "AscendancyWitch3Notable9",
+    "type": "Notable"
+   },
+   {
+    "group": 1442,
+    "id": 60,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1801,
+     19338,
+     58426
+    ],
+    "name": "Blind Chance",
+    "orbit": 2,
+    "orbitIndex": 13,
+    "skill": 60,
+    "stats": [
+     "5% chance to Blind Enemies on Hit"
+    ],
+    "stringId": "blind2",
+    "type": "Normal"
+   },
+   {
+    "group": 93,
+    "id": 65,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     15698,
+     36504
+    ],
+    "name": "Freeze Buildup",
+    "orbit": 2,
+    "orbitIndex": 7,
+    "skill": 65,
+    "stats": [
+     "15% increased Freeze Buildup"
+    ],
+    "stringId": "chill_and_freeze19_",
+    "type": "Normal"
+   },
+   {
+    "group": 493,
+    "id": 71,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     15114,
+     62376
+    ],
+    "name": "Physical Damage and Reduced Duration",
+    "orbit": 7,
+    "orbitIndex": 17,
+    "skill": 71,
+    "stats": [
+     "4% reduced Skill Effect Duration",
+     "8% increased Physical Damage"
+    ],
+    "stringId": "physical58",
+    "type": "Normal"
+   },
+   {
+    "ascendancyName": "Acolyte of Chayula",
+    "group": 1582,
+    "id": 74,
+    "isAscendancyStart": true,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1347,
+     17923,
+     24475,
+     25779,
+     25885,
+     36788,
+     44683
+    ],
+    "name": "Acolyte of Chayula",
+    "orbit": 9,
+    "orbitIndex": 24,
+    "skill": 74,
+    "stats": [],
+    "stringId": "AscendancyMonk3Start",
+    "type": "AscendClassStart"
+   },
+   {
+    "group": 946,
+    "id": 94,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     52241
+    ],
+    "name": "Efficient Killing",
+    "orbit": 7,
+    "orbitIndex": 4,
+    "skill": 94,
+    "stats": [
+     "15% increased Mana Regeneration Rate",
+     "Recover 2% of maximum Mana on Kill"
+    ],
+    "stringId": "mana_regeneration49",
+    "type": "Notable"
+   },
+   {
+    "group": 525,
+    "id": 95,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     1433,
+     8737
+    ],
+    "name": "Minion Damage",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 95,
+    "stats": [
+     "Minions deal 10% increased Damage"
+    ],
+    "stringId": "minion_offence41",
+    "type": "Normal"
+   },
+   {
+    "group": 826,
+    "id": 97,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     14254,
+     52442,
+     59779,
+     59915
+    ],
+    "name": "Attack Speed",
+    "orbit": 2,
+    "orbitIndex": 0,
+    "skill": 97,
+    "stats": [
+     "3% increased Attack Speed"
+    ],
+    "stringId": "attack_speed2_",
+    "type": "Normal"
+   },
+   {
+    "ascendancyName": "Smith of Kitava",
+    "group": 20,
+    "id": 110,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     9988
+    ],
+    "name": "Internal Layer",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 110,
+    "stats": [
+     "Body Armour grants Hits against you have 100% reduced Critical Damage Bonus"
+    ],
+    "stringId": "AscendancyWarrior3Notable6_10",
+    "type": "Notable"
+   },
+   {
+    "group": 920,
+    "id": 116,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     6715
+    ],
+    "name": "Insightfulness",
+    "orbit": 7,
+    "orbitIndex": 13,
+    "skill": 116,
+    "stats": [
+     "12% increased Mana Regeneration Rate",
+     "18% increased maximum Energy Shield",
+     "6% increased Intelligence"
+    ],
+    "stringId": "energy_shield34_",
+    "type": "Notable"
+   },
+   {
+    "group": 1247,
+    "id": 144,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     26598,
+     28086,
+     61246
+    ],
+    "name": "Elemental Damage and Freeze Buildup",
+    "orbit": 5,
+    "orbitIndex": 12,
+    "skill": 144,
+    "stats": [
+     "10% increased Freeze Buildup",
+     "8% increased Elemental Damage"
+    ],
+    "stringId": "elemental27",
+    "type": "Normal"
+   },
+   {
+    "group": 616,
+    "id": 151,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     24753,
+     34747,
+     56567
+    ],
+    "name": "Accuracy",
+    "orbit": 7,
+    "orbitIndex": 5,
+    "skill": 151,
+    "stats": [
+     "16% increased Accuracy Rating at Close Range"
+    ],
+    "stringId": "accuracy6",
+    "type": "Normal"
+   },
+   {
+    "group": 1504,
+    "id": 178,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     28044,
+     43088
+    ],
+    "name": "Herald Reservation",
+    "orbit": 5,
+    "orbitIndex": 30,
+    "skill": 178,
+    "stats": [
+     "8% increased Reservation Efficiency of Herald Skills"
+    ],
+    "stringId": "heralds14",
+    "type": "Normal"
+   },
+   {
+    "group": 669,
+    "id": 229,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     39461,
+     46365
+    ],
+    "name": "Minion Damage and Life",
+    "orbit": 2,
+    "orbitIndex": 6,
+    "skill": 229,
+    "stats": [
+     "Minions deal 6% increased Damage",
+     "Minions have 6% increased maximum Life"
+    ],
+    "stringId": "minion_reservation15_",
+    "type": "Normal"
+   },
+   {
+    "group": 1219,
+    "id": 240,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [],
+    "name": "Lightning Mastery",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 240,
+    "stats": [],
+    "stringId": "mastery_lightning150",
+    "type": "OnlyImage"
+   },
+   {
+    "group": 1020,
+    "id": 244,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     52354,
+     58814,
+     63731
+    ],
+    "name": "Attack Damage",
+    "orbit": 4,
+    "orbitIndex": 66,
+    "skill": 244,
+    "stats": [
+     "16% increased Attack Damage against Rare or Unique Enemies"
+    ],
+    "stringId": "boss_slaying2_",
+    "type": "Normal"
+   },
+   {
+    "group": 537,
+    "id": 259,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [],
+    "name": "Attack Mastery",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 259,
+    "stats": [],
+    "stringId": "mastery_attack8",
+    "type": "OnlyImage"
+   },
+   {
+    "group": 1472,
+    "id": 261,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     1073,
+     5048
+    ],
+    "name": "Toxic Sludge",
+    "orbit": 3,
+    "orbitIndex": 13,
+    "skill": 261,
+    "stats": [
+     "40% increased Duration of Poisons you inflict against Slowed Enemies"
+    ],
+    "stringId": "poison41",
+    "type": "Notable"
+   },
+   {
+    "group": 196,
+    "id": 270,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     27980,
+     56219
+    ],
+    "name": "Rage Decay",
+    "orbit": 2,
+    "orbitIndex": 6,
+    "skill": 270,
+    "stats": [
+     "Inherent loss of Rage is 15% slower"
+    ],
+    "stringId": "rage37",
+    "type": "Normal"
+   },
+   {
+    "group": 312,
+    "id": 290,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     19936,
+     37619
+    ],
+    "name": "Fire Damage",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 290,
+    "stats": [
+     "12% increased Fire Damage"
+    ],
+    "stringId": "fire72",
+    "type": "Normal"
+   },
+   {
+    "group": 474,
+    "id": 292,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [],
+    "name": "Life Mastery",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 292,
+    "stats": [],
+    "stringId": "mastery_life135",
+    "type": "OnlyImage"
+   },
+   {
+    "group": 270,
+    "id": 296,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     4140,
+     8145,
+     12992,
+     30959
+    ],
+    "name": "Elemental Penetration",
+    "orbit": 7,
+    "orbitIndex": 18,
+    "skill": 296,
+    "stats": [
+     "Damage Penetrates 3% of Enemy Elemental Resistances"
+    ],
+    "stringId": "oracle7",
+    "type": "Normal"
+   },
+   {
+    "group": 758,
+    "id": 315,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     13425,
+     33216
+    ],
+    "name": "Bleeding Duration",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 315,
+    "stats": [
+     "10% increased Bleeding Duration"
+    ],
+    "stringId": "bleed1",
+    "type": "Normal"
+   },
+   {
+    "group": 1505,
+    "id": 326,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     2113,
+     31449
+    ],
+    "name": "Quarterstaff Critical Chance",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 326,
+    "stats": [
+     "10% increased Critical Hit Chance with Quarterstaves"
+    ],
+    "stringId": "quarterstaff12",
+    "type": "Normal"
+   },
+   {
+    "group": 1344,
+    "id": 327,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     9652,
+     58779
+    ],
+    "name": "Evasion and Energy Shield",
+    "orbit": 2,
+    "orbitIndex": 12,
+    "skill": 327,
+    "stats": [
+     "12% increased Evasion Rating",
+     "12% increased maximum Energy Shield"
+    ],
+    "stringId": "deflect63",
+    "type": "Normal"
+   },
+   {
+    "group": 1529,
+    "id": 328,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     21112,
+     25992,
+     60764
+    ],
+    "name": "Bow Accuracy Rating",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 328,
+    "stats": [
+     "10% increased Accuracy Rating with Bows"
+    ],
+    "stringId": "bow8",
+    "type": "Normal"
+   },
+   {
+    "group": 1310,
+    "id": 331,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     32891,
+     42103
+    ],
+    "name": "Deflection and Evasion",
+    "orbit": 2,
+    "orbitIndex": 3,
+    "skill": 331,
+    "stats": [
+     "8% increased Evasion Rating",
+     "Gain Deflection Rating equal to 4% of Evasion Rating"
+    ],
+    "stringId": "deflect38",
+    "type": "Normal"
+   },
+   {
+    "group": 1354,
+    "id": 336,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     4806,
+     37304
+    ],
+    "name": "Storm Swell",
+    "orbit": 3,
+    "orbitIndex": 15,
+    "skill": 336,
+    "stats": [
+     "Damage Penetrates 15% Cold Resistance",
+     "Damage Penetrates 8% Lightning Resistance"
+    ],
+    "stringId": "cold_penetration22",
+    "type": "Notable"
+   },
+   {
+    "group": 954,
+    "id": 338,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     38069
+    ],
+    "name": "Invocated Limit",
+    "orbit": 1,
+    "orbitIndex": 6,
+    "skill": 338,
+    "stats": [
+     "Invocated skills have 30% increased Maximum Energy"
+    ],
+    "stringId": "triggers19",
+    "type": "Notable"
+   },
+   {
+    "group": 767,
+    "id": 354,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     21077,
+     48429
+    ],
+    "name": "Grenade Cooldown Recovery Rate",
+    "orbit": 3,
+    "orbitIndex": 16,
+    "skill": 354,
+    "stats": [
+     "15% increased Cooldown Recovery Rate for Grenade Skills"
+    ],
+    "stringId": "grenades6",
+    "type": "Normal"
+   },
+   {
+    "group": 791,
+    "id": 364,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     2847,
+     6287,
+     49285,
+     57816
+    ],
+    "name": "All Attributes",
+    "orbit": 2,
+    "orbitIndex": 4,
+    "skill": 364,
+    "stats": [
+     "+3 to all Attributes"
+    ],
+    "stringId": "attributes107",
+    "type": "Normal"
+   },
+   {
+    "group": 388,
+    "id": 372,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": true,
+    "linked": [
+     14655
+    ],
+    "name": "Heatproof",
+    "orbit": 7,
+    "orbitIndex": 6,
+    "skill": 372,
+    "stats": [
+     "+30% of Armour also applies to Fire Damage",
+     "10% increased Armour",
+     "30% reduced Magnitude of Ignite on you"
+    ],
+    "stringId": "armour17",
+    "type": "Notable"
+   },
+   {
+    "group": 136,
+    "id": 375,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     12276,
+     52829
+    ],
+    "name": "Mace Damage",
+    "orbit": 7,
+    "orbitIndex": 17,
+    "skill": 375,
+    "stats": [
+     "15% increased Damage with Maces"
+    ],
+    "stringId": "mace10",
+    "type": "Normal"
+   },
+   {
+    "ascendancyName": "Oracle",
+    "group": 35,
+    "id": 378,
+    "isAscendancyStart": false,
+    "isJewelSocket": false,
+    "isKeystone": false,
+    "isMastery": false,
+    "isNotable": false,
+    "linked": [
+     34313,
+     55135
+    ],
+    "name": "Critical Hit Chance",
+    "orbit": 0,
+    "orbitIndex": 0,
+    "skill": 378,
+    "stats": [
+     "12% increased Critical Hit Chance"
+    ],
+    "stringId": "AscendancyDruid1Small8",
+    "type": "Normal"
+   }
+  ],
+  "slots": [
+   {
+    "label": "Amulet",
+    "name": "Amulet",
+    "slotName": "Amulet"
+   },
+   {
+    "label": "Arm 1",
+    "name": "Arm 1",
+    "slotName": "Arm 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Arm 2",
+    "name": "Arm 2",
+    "slotName": "Arm 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Belt",
+    "name": "Belt",
+    "slotName": "Belt"
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Belt Jewel Socket 1",
+    "parentSlot": "Belt",
+    "slotName": "Belt Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Belt Jewel Socket 2",
+    "parentSlot": "Belt",
+    "slotName": "Belt Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Belt Jewel Socket 3",
+    "parentSlot": "Belt",
+    "slotName": "Belt Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Belt Jewel Socket 4",
+    "parentSlot": "Belt",
+    "slotName": "Belt Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Belt Jewel Socket 5",
+    "parentSlot": "Belt",
+    "slotName": "Belt Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Belt Jewel Socket 6",
+    "parentSlot": "Belt",
+    "slotName": "Belt Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "label": "Body Armour",
+    "name": "Body Armour",
+    "slotName": "Body Armour"
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Body Armour Jewel Socket 1",
+    "parentSlot": "Body Armour",
+    "slotName": "Body Armour Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Body Armour Jewel Socket 2",
+    "parentSlot": "Body Armour",
+    "slotName": "Body Armour Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Body Armour Jewel Socket 3",
+    "parentSlot": "Body Armour",
+    "slotName": "Body Armour Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Body Armour Jewel Socket 4",
+    "parentSlot": "Body Armour",
+    "slotName": "Body Armour Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Body Armour Jewel Socket 5",
+    "parentSlot": "Body Armour",
+    "slotName": "Body Armour Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Body Armour Jewel Socket 6",
+    "parentSlot": "Body Armour",
+    "slotName": "Body Armour Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "label": "Boots",
+    "name": "Boots",
+    "slotName": "Boots"
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Boots Jewel Socket 1",
+    "parentSlot": "Boots",
+    "slotName": "Boots Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Boots Jewel Socket 2",
+    "parentSlot": "Boots",
+    "slotName": "Boots Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Boots Jewel Socket 3",
+    "parentSlot": "Boots",
+    "slotName": "Boots Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Boots Jewel Socket 4",
+    "parentSlot": "Boots",
+    "slotName": "Boots Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Boots Jewel Socket 5",
+    "parentSlot": "Boots",
+    "slotName": "Boots Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Boots Jewel Socket 6",
+    "parentSlot": "Boots",
+    "slotName": "Boots Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "label": "Charm 1",
+    "name": "Charm 1",
+    "slotName": "Charm 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Charm 2",
+    "name": "Charm 2",
+    "slotName": "Charm 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Charm 3",
+    "name": "Charm 3",
+    "slotName": "Charm 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Flask 1",
+    "name": "Flask 1",
+    "slotName": "Flask 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Flask 2",
+    "name": "Flask 2",
+    "slotName": "Flask 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Gloves",
+    "name": "Gloves",
+    "slotName": "Gloves"
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Gloves Jewel Socket 1",
+    "parentSlot": "Gloves",
+    "slotName": "Gloves Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Gloves Jewel Socket 2",
+    "parentSlot": "Gloves",
+    "slotName": "Gloves Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Gloves Jewel Socket 3",
+    "parentSlot": "Gloves",
+    "slotName": "Gloves Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Gloves Jewel Socket 4",
+    "parentSlot": "Gloves",
+    "slotName": "Gloves Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Gloves Jewel Socket 5",
+    "parentSlot": "Gloves",
+    "slotName": "Gloves Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Gloves Jewel Socket 6",
+    "parentSlot": "Gloves",
+    "slotName": "Gloves Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "label": "Helmet",
+    "name": "Helmet",
+    "slotName": "Helmet"
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Helmet Jewel Socket 1",
+    "parentSlot": "Helmet",
+    "slotName": "Helmet Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Helmet Jewel Socket 2",
+    "parentSlot": "Helmet",
+    "slotName": "Helmet Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Helmet Jewel Socket 3",
+    "parentSlot": "Helmet",
+    "slotName": "Helmet Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Helmet Jewel Socket 4",
+    "parentSlot": "Helmet",
+    "slotName": "Helmet Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Helmet Jewel Socket 5",
+    "parentSlot": "Helmet",
+    "slotName": "Helmet Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Helmet Jewel Socket 6",
+    "parentSlot": "Helmet",
+    "slotName": "Helmet Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 11184",
+    "nodeId": 11184,
+    "slotName": "Jewel 11184",
+    "slotNum": 11184
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 17788",
+    "nodeId": 17788,
+    "slotName": "Jewel 17788",
+    "slotNum": 17788
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 21984",
+    "nodeId": 21984,
+    "slotName": "Jewel 21984",
+    "slotNum": 21984
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 23960",
+    "nodeId": 23960,
+    "slotName": "Jewel 23960",
+    "slotNum": 23960
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 2491",
+    "nodeId": 2491,
+    "slotName": "Jewel 2491",
+    "slotNum": 2491
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 26178",
+    "nodeId": 26178,
+    "slotName": "Jewel 26178",
+    "slotNum": 26178
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 26196",
+    "nodeId": 26196,
+    "slotName": "Jewel 26196",
+    "slotNum": 26196
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 26725",
+    "nodeId": 26725,
+    "slotName": "Jewel 26725",
+    "slotNum": 26725
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 32763",
+    "nodeId": 32763,
+    "slotName": "Jewel 32763",
+    "slotNum": 32763
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 3367",
+    "nodeId": 3367,
+    "slotName": "Jewel 3367",
+    "slotNum": 3367
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 39087",
+    "nodeId": 39087,
+    "slotName": "Jewel 39087",
+    "slotNum": 39087
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 46882",
+    "nodeId": 46882,
+    "slotName": "Jewel 46882",
+    "slotNum": 46882
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 54127",
+    "nodeId": 54127,
+    "slotName": "Jewel 54127",
+    "slotNum": 54127
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 55190",
+    "nodeId": 55190,
+    "slotName": "Jewel 55190",
+    "slotNum": 55190
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 60735",
+    "nodeId": 60735,
+    "slotName": "Jewel 60735",
+    "slotNum": 60735
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 61419",
+    "nodeId": 61419,
+    "slotName": "Jewel 61419",
+    "slotNum": 61419
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 61834",
+    "nodeId": 61834,
+    "slotName": "Jewel 61834",
+    "slotNum": 61834
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 62152",
+    "nodeId": 62152,
+    "slotName": "Jewel 62152",
+    "slotNum": 62152
+   },
+   {
+    "label": "Socket",
+    "name": "Jewel 7960",
+    "nodeId": 7960,
+    "slotName": "Jewel 7960",
+    "slotNum": 7960
+   },
+   {
+    "label": "Leg 1",
+    "name": "Leg 1",
+    "slotName": "Leg 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Leg 2",
+    "name": "Leg 2",
+    "slotName": "Leg 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Ring 1",
+    "name": "Ring 1",
+    "slotName": "Ring 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Ring 1 Jewel Socket 1",
+    "parentSlot": "Ring 1",
+    "slotName": "Ring 1 Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Ring 1 Jewel Socket 2",
+    "parentSlot": "Ring 1",
+    "slotName": "Ring 1 Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Ring 1 Jewel Socket 3",
+    "parentSlot": "Ring 1",
+    "slotName": "Ring 1 Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Ring 1 Jewel Socket 4",
+    "parentSlot": "Ring 1",
+    "slotName": "Ring 1 Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Ring 1 Jewel Socket 5",
+    "parentSlot": "Ring 1",
+    "slotName": "Ring 1 Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Ring 1 Jewel Socket 6",
+    "parentSlot": "Ring 1",
+    "slotName": "Ring 1 Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "label": "Ring 2",
+    "name": "Ring 2",
+    "slotName": "Ring 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Ring 2 Jewel Socket 1",
+    "parentSlot": "Ring 2",
+    "slotName": "Ring 2 Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Ring 2 Jewel Socket 2",
+    "parentSlot": "Ring 2",
+    "slotName": "Ring 2 Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Ring 2 Jewel Socket 3",
+    "parentSlot": "Ring 2",
+    "slotName": "Ring 2 Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Ring 2 Jewel Socket 4",
+    "parentSlot": "Ring 2",
+    "slotName": "Ring 2 Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Ring 2 Jewel Socket 5",
+    "parentSlot": "Ring 2",
+    "slotName": "Ring 2 Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Ring 2 Jewel Socket 6",
+    "parentSlot": "Ring 2",
+    "slotName": "Ring 2 Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "label": "Ring 3",
+    "name": "Ring 3",
+    "slotName": "Ring 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #1",
+    "name": "Ring 3 Jewel Socket 1",
+    "parentSlot": "Ring 3",
+    "slotName": "Ring 3 Jewel Socket 1",
+    "slotNum": 1
+   },
+   {
+    "label": "Jewel #2",
+    "name": "Ring 3 Jewel Socket 2",
+    "parentSlot": "Ring 3",
+    "slotName": "Ring 3 Jewel Socket 2",
+    "slotNum": 2
+   },
+   {
+    "label": "Jewel #3",
+    "name": "Ring 3 Jewel Socket 3",
+    "parentSlot": "Ring 3",
+    "slotName": "Ring 3 Jewel Socket 3",
+    "slotNum": 3
+   },
+   {
+    "label": "Jewel #4",
+    "name": "Ring 3 Jewel Socket 4",
+    "parentSlot": "Ring 3",
+    "slotName": "Ring 3 Jewel Socket 4",
+    "slotNum": 4
+   },
+   {
+    "label": "Jewel #5",
+    "name": "Ring 3 Jewel Socket 5",
+    "parentSlot": "Ring 3",
+    "slotName": "Ring 3 Jewel Socket 5",
+    "slotNum": 5
+   },
+   {
+    "label": "Jewel #6",
+    "name": "Ring 3 Jewel Socket 6",
+    "parentSlot": "Ring 3",
+    "slotName": "Ring 3 Jewel Socket 6",
+    "slotNum": 6
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Weapon 1",
+    "name": "Weapon 1",
+    "slotName": "Weapon 1",
+    "slotNum": 1,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #1",
+    "name": "Weapon 1 Jewel Socket 1",
+    "parentSlot": "Weapon 1",
+    "slotName": "Weapon 1 Jewel Socket 1",
+    "slotNum": 1,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #2",
+    "name": "Weapon 1 Jewel Socket 2",
+    "parentSlot": "Weapon 1",
+    "slotName": "Weapon 1 Jewel Socket 2",
+    "slotNum": 2,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #3",
+    "name": "Weapon 1 Jewel Socket 3",
+    "parentSlot": "Weapon 1",
+    "slotName": "Weapon 1 Jewel Socket 3",
+    "slotNum": 3,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #4",
+    "name": "Weapon 1 Jewel Socket 4",
+    "parentSlot": "Weapon 1",
+    "slotName": "Weapon 1 Jewel Socket 4",
+    "slotNum": 4,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #5",
+    "name": "Weapon 1 Jewel Socket 5",
+    "parentSlot": "Weapon 1",
+    "slotName": "Weapon 1 Jewel Socket 5",
+    "slotNum": 5,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #6",
+    "name": "Weapon 1 Jewel Socket 6",
+    "parentSlot": "Weapon 1",
+    "slotName": "Weapon 1 Jewel Socket 6",
+    "slotNum": 6,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Weapon 1",
+    "name": "Weapon 1 Swap",
+    "slotName": "Weapon 1 Swap",
+    "slotNum": 1,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #1",
+    "name": "Weapon 1 Swap Jewel Socket 1",
+    "parentSlot": "Weapon 1 Swap",
+    "slotName": "Weapon 1 Swap Jewel Socket 1",
+    "slotNum": 1,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #2",
+    "name": "Weapon 1 Swap Jewel Socket 2",
+    "parentSlot": "Weapon 1 Swap",
+    "slotName": "Weapon 1 Swap Jewel Socket 2",
+    "slotNum": 2,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #3",
+    "name": "Weapon 1 Swap Jewel Socket 3",
+    "parentSlot": "Weapon 1 Swap",
+    "slotName": "Weapon 1 Swap Jewel Socket 3",
+    "slotNum": 3,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #4",
+    "name": "Weapon 1 Swap Jewel Socket 4",
+    "parentSlot": "Weapon 1 Swap",
+    "slotName": "Weapon 1 Swap Jewel Socket 4",
+    "slotNum": 4,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #5",
+    "name": "Weapon 1 Swap Jewel Socket 5",
+    "parentSlot": "Weapon 1 Swap",
+    "slotName": "Weapon 1 Swap Jewel Socket 5",
+    "slotNum": 5,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #6",
+    "name": "Weapon 1 Swap Jewel Socket 6",
+    "parentSlot": "Weapon 1 Swap",
+    "slotName": "Weapon 1 Swap Jewel Socket 6",
+    "slotNum": 6,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Weapon 2",
+    "name": "Weapon 2",
+    "slotName": "Weapon 2",
+    "slotNum": 2,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #1",
+    "name": "Weapon 2 Jewel Socket 1",
+    "parentSlot": "Weapon 2",
+    "slotName": "Weapon 2 Jewel Socket 1",
+    "slotNum": 1,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #2",
+    "name": "Weapon 2 Jewel Socket 2",
+    "parentSlot": "Weapon 2",
+    "slotName": "Weapon 2 Jewel Socket 2",
+    "slotNum": 2,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #3",
+    "name": "Weapon 2 Jewel Socket 3",
+    "parentSlot": "Weapon 2",
+    "slotName": "Weapon 2 Jewel Socket 3",
+    "slotNum": 3,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #4",
+    "name": "Weapon 2 Jewel Socket 4",
+    "parentSlot": "Weapon 2",
+    "slotName": "Weapon 2 Jewel Socket 4",
+    "slotNum": 4,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #5",
+    "name": "Weapon 2 Jewel Socket 5",
+    "parentSlot": "Weapon 2",
+    "slotName": "Weapon 2 Jewel Socket 5",
+    "slotNum": 5,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #6",
+    "name": "Weapon 2 Jewel Socket 6",
+    "parentSlot": "Weapon 2",
+    "slotName": "Weapon 2 Jewel Socket 6",
+    "slotNum": 6,
+    "weaponSet": 1
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Weapon 2",
+    "name": "Weapon 2 Swap",
+    "slotName": "Weapon 2 Swap",
+    "slotNum": 2,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #1",
+    "name": "Weapon 2 Swap Jewel Socket 1",
+    "parentSlot": "Weapon 2 Swap",
+    "slotName": "Weapon 2 Swap Jewel Socket 1",
+    "slotNum": 1,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #2",
+    "name": "Weapon 2 Swap Jewel Socket 2",
+    "parentSlot": "Weapon 2 Swap",
+    "slotName": "Weapon 2 Swap Jewel Socket 2",
+    "slotNum": 2,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #3",
+    "name": "Weapon 2 Swap Jewel Socket 3",
+    "parentSlot": "Weapon 2 Swap",
+    "slotName": "Weapon 2 Swap Jewel Socket 3",
+    "slotNum": 3,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #4",
+    "name": "Weapon 2 Swap Jewel Socket 4",
+    "parentSlot": "Weapon 2 Swap",
+    "slotName": "Weapon 2 Swap Jewel Socket 4",
+    "slotNum": 4,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #5",
+    "name": "Weapon 2 Swap Jewel Socket 5",
+    "parentSlot": "Weapon 2 Swap",
+    "slotName": "Weapon 2 Swap Jewel Socket 5",
+    "slotNum": 5,
+    "weaponSet": 2
+   },
+   {
+    "acceptsItemType": "weapon",
+    "label": "Jewel #6",
+    "name": "Weapon 2 Swap Jewel Socket 6",
+    "parentSlot": "Weapon 2 Swap",
+    "slotName": "Weapon 2 Swap Jewel Socket 6",
+    "slotNum": 6,
+    "weaponSet": 2
+   }
+  ]
+ }
+}

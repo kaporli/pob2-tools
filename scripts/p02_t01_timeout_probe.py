@@ -32,8 +32,9 @@ for path in (REPO / "pob2-optimizer", REPO / "pob2-mcp", REPO / "tests"):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineCrash,  # noqa: E402
-                                EngineTimeout, EngineState, CheckoutIdentity, WorkerSpec)
+from pob2opt.evaluation import (ADAPTER_VERSION, BuildDocument,  # noqa: E402
+                                CheckoutIdentity, EngineAdapter, EngineCrash,
+                                EngineState, EngineTimeout, WorkerSpec)
 from pob2opt.evaluation.protocol import OP_CREATE_BLANK_BUILD  # noqa: E402
 
 ENTRY = "synthetic_workers:SyntheticSession"
@@ -46,8 +47,14 @@ def evaluation_probe(mode: str, bound: float) -> dict:
     """One evaluation budget, with an independent outer supervisor in pytest."""
     from record_fixtures import records
 
+    import dataclasses
+
     examples = records()
-    build, profile = examples["build_spec"], examples["patch_profile"]
+    build = examples["build_spec"]
+    # Repinned for the same reason the adapter tests repin it: since P02-T02
+    # the adapter refuses a profile produced by a different adapter.
+    profile = dataclasses.replace(examples["patch_profile"],
+                                  adapter_version=ADAPTER_VERSION)
     delays = {
         "combined": {"load_exact_build": 0.7, "primitives": 0.7},
         "slow_load": {"load_exact_build": 2},

@@ -38,3 +38,8 @@ them separate.
 | `P02/review_eca7afe_workers.py` | P02-T01 review | The slow-load synthetic worker that parallel set used |
 | `P02/review-eca7afe-recovery-probes.py` | P02-T01 repair | Reproduction of R10 and R11 at HEAD |
 | `P02/review-eca7afe-recovery.json` | P02-T01 repair | Those two cases before and after the repair |
+| `P02/catalog-export.json` | P02-T02 | PoB-derived. What one real `catalog export` produced: entity counts, catalog hash, evaluation context hash, the compatibility report and why the verdict is `partial`, the character rules, and every gap with its needed evidence |
+| `P02/catalog-rows-slice.json` | P02-T02 | PoB-derived, and a slice, not the catalog. Bounded engine rows so the offline tests run the real export with no PoB. A catalog hash computed from it is not an export's catalog hash. Marked `restricted`: third-party game data, reviewable locally |
+| `P02/catalog-profile-request.json` | P02-T02 | The `--profile` request the reference export uses |
+| `P02/release/` | P02-T02 | Captures of official Path of Exile 2 patch-notes pages, one file per page, `restricted`. The export resolves the live patch from these and from nothing else; see the README there |
+| `P02/sample-build-ranger-quarterstaff.xml` | P02-T02 | PoB-derived. A build the pinned engine saved itself, used to show the exported entities resolve a real saved build. Its weapon rolls are invented |

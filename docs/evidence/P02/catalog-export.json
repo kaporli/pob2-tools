@@ -1,0 +1,491 @@
+{
+ "adapter_version": "p02-t02.0",
+ "catalog_hash": "e82da2ea8a9cb567693f15d848f3f322f0ba5149f560687ebb44da7d63d3ba6f",
+ "character_rules": {
+  "class_ascendancies": {
+   "poe2/classes/1": [
+    "poe2/ascendancies/1/1",
+    "poe2/ascendancies/1/2",
+    "poe2/ascendancies/1/3",
+    "poe2/ascendancies/1/4"
+   ],
+   "poe2/classes/10": [
+    "poe2/ascendancies/10/1",
+    "poe2/ascendancies/10/2",
+    "poe2/ascendancies/10/3"
+   ],
+   "poe2/classes/11": [
+    "poe2/ascendancies/11/1",
+    "poe2/ascendancies/11/2"
+   ],
+   "poe2/classes/2": [
+    "poe2/ascendancies/2/1",
+    "poe2/ascendancies/2/2"
+   ],
+   "poe2/classes/6": [
+    "poe2/ascendancies/6/1",
+    "poe2/ascendancies/6/2",
+    "poe2/ascendancies/6/3"
+   ],
+   "poe2/classes/7": [
+    "poe2/ascendancies/7/1",
+    "poe2/ascendancies/7/2",
+    "poe2/ascendancies/7/3"
+   ],
+   "poe2/classes/8": [
+    "poe2/ascendancies/8/1",
+    "poe2/ascendancies/8/2",
+    "poe2/ascendancies/8/3"
+   ],
+   "poe2/classes/9": [
+    "poe2/ascendancies/9/1",
+    "poe2/ascendancies/9/2",
+    "poe2/ascendancies/9/3"
+   ]
+  },
+  "gem_level_limit": 20,
+  "level_range": [
+   1,
+   100
+  ],
+  "missing_rule_gap_ids": [
+   "gap/p02-t02/ascendancy-point-unlock-schedule",
+   "gap/p02-t02/catalog-predates-current-patch",
+   "gap/p02-t02/gem-level-legality",
+   "gap/p02-t02/quest-passive-point-rewards",
+   "gap/p02-t02/release-evidence-not-verbatim",
+   "gap/p02-t02/skill-level-limit",
+   "gap/p02-t02/slot-accepted-base-categories",
+   "gap/p02-t02/unpinned-checkout",
+   "gap/p02-t02/weapon-set-point-unlock-levels"
+  ],
+  "point_budget_count": 102,
+  "point_budget_rule_ids_sample": [
+   "budget/levelling/level-1",
+   "budget/levelling/level-2",
+   "budget/levelling/level-3",
+   "budget/levelling/level-100",
+   "budget/ascendancy/maximum",
+   "budget/weapon-set/all-quest-rewards"
+  ],
+  "skill_level_limit": null,
+  "slot_count": 113,
+  "support_restrictions": [
+   {
+    "description": "At most 5 non-hidden support gems in one socket group. Upstream warns above this number and still calculates the build, so this is the engine's declared limit and not proof that the game rejects a sixth support.",
+    "max_supports": 5,
+    "restriction_id": "support/socket-group-limit"
+   }
+  ],
+  "weapon_sets": {
+   "hands_per_set": {
+    "poe2/weapon_sets/1": 2,
+    "poe2/weapon_sets/2": 2
+   },
+   "set_ids": [
+    "poe2/weapon_sets/1",
+    "poe2/weapon_sets/2"
+   ],
+   "swap_allowed": true
+  }
+ },
+ "compatibility": "partial",
+ "compatibility_report": {
+  "compatibility": "partial",
+  "counts": {
+   "absent": 0,
+   "match": 18,
+   "mismatch": 0,
+   "unchecked": 0
+  },
+  "fixture_set_version": 1,
+  "outcomes": [
+   {
+    "detail": "poe2/classes/8 present in classes",
+    "expected": "poe2/classes/8",
+    "fixture_id": "avail/class/huntress",
+    "kind": "availability",
+    "observed": "poe2/classes/8",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/classes/1 present in classes",
+    "expected": "poe2/classes/1",
+    "fixture_id": "avail/class/witch",
+    "kind": "availability",
+    "observed": "poe2/classes/1",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/ascendancies/8/1 present in ascendancies",
+    "expected": "poe2/ascendancies/8/1",
+    "fixture_id": "avail/ascendancy/amazon",
+    "kind": "availability",
+    "observed": "poe2/ascendancies/8/1",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/gems/Metadata/Items/Gems/SkillGemSpark present in gems",
+    "expected": "poe2/gems/Metadata/Items/Gems/SkillGemSpark",
+    "fixture_id": "avail/gem/spark",
+    "kind": "availability",
+    "observed": "poe2/gems/Metadata/Items/Gems/SkillGemSpark",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff present in gems",
+    "expected": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff",
+    "fixture_id": "avail/gem/quarterstaff-strike",
+    "kind": "availability",
+    "observed": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/item_bases/Long Quarterstaff present in item_bases",
+    "expected": "poe2/item_bases/Long Quarterstaff",
+    "fixture_id": "avail/item_base/long-quarterstaff",
+    "kind": "availability",
+    "observed": "poe2/item_bases/Long Quarterstaff",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/slots/Weapon 1 present in slots",
+    "expected": "poe2/slots/Weapon 1",
+    "fixture_id": "avail/slot/weapon-1",
+    "kind": "availability",
+    "observed": "poe2/slots/Weapon 1",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/config_variables/resistancePenalty present in config_variables",
+    "expected": "poe2/config_variables/resistancePenalty",
+    "fixture_id": "avail/config/resistance-penalty",
+    "kind": "availability",
+    "observed": "poe2/config_variables/resistancePenalty",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/passive_nodes/11230 present in passive_nodes",
+    "expected": "poe2/passive_nodes/11230",
+    "fixture_id": "avail/passive/keystone-ritual-cadence",
+    "kind": "availability",
+    "observed": "poe2/passive_nodes/11230",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/slots/Weapon 1.weaponSet unchanged",
+    "expected": 1,
+    "fixture_id": "field/slot/weapon-1-set",
+    "kind": "field",
+    "observed": 1,
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/item_bases/Long Quarterstaff.type unchanged",
+    "expected": "Staff",
+    "fixture_id": "field/item_base/long-quarterstaff-type",
+    "kind": "field",
+    "observed": "Staff",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/gems/Metadata/Items/Gems/SkillGemSpark.isSupport unchanged",
+    "expected": false,
+    "fixture_id": "field/gem/spark-is-not-support",
+    "kind": "field",
+    "observed": false,
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/classes/8.startNodeId unchanged",
+    "expected": 50459,
+    "fixture_id": "field/class/huntress-start-node",
+    "kind": "field",
+    "observed": 50459,
+    "outcome": "match"
+   },
+   {
+    "detail": "table passive_nodes holds 4914 entities",
+    "expected": 4000,
+    "fixture_id": "count/passive_nodes",
+    "kind": "count",
+    "observed": 4914,
+    "outcome": "match"
+   },
+   {
+    "detail": "table gems holds 966 entities",
+    "expected": 800,
+    "fixture_id": "count/gems",
+    "kind": "count",
+    "observed": 966,
+    "outcome": "match"
+   },
+   {
+    "detail": "table item_modifiers holds 9388 entities",
+    "expected": 7000,
+    "fixture_id": "count/item_modifiers",
+    "kind": "count",
+    "observed": 9388,
+    "outcome": "match"
+   },
+   {
+    "detail": "table config_variables holds 564 entities",
+    "expected": 450,
+    "fixture_id": "count/config_variables",
+    "kind": "count",
+    "observed": 564,
+    "outcome": "match"
+   },
+   {
+    "detail": "8 value(s) within 1e-09 relative tolerance",
+    "expected": {
+     "Armour": 0,
+     "Dex": 15,
+     "Evasion": 7,
+     "Int": 7,
+     "Life": 405,
+     "Mana": 164,
+     "Spirit": 100,
+     "Str": 7
+    },
+    "fixture_id": "behaviour/level-28-huntress-defences",
+    "kind": "behaviour",
+    "observed": {
+     "Armour": 0,
+     "Dex": 15,
+     "Evasion": 7,
+     "Int": 7,
+     "Life": 405,
+     "Mana": 164,
+     "Spirit": 100,
+     "Str": 7
+    },
+    "outcome": "match"
+   }
+  ],
+  "reasons": [
+   "the engine data release (2026-07-28) predates patch 0.5.5e (2026-10-06), so content introduced by that patch is not in this catalog",
+   "the release evidence is a summary, not a byte-exact capture of the official page",
+   "the running checkout is not a clean pinned tree",
+   "blocking gaps remain open: gap/p02-t02/slot-accepted-base-categories"
+  ],
+  "recorded_from": {
+   "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+   "pob_release": "0.23.1",
+   "pob_release_date": "2026-07-28",
+   "recorded_at": "2026-10-06",
+   "recorded_by": "P02-T02",
+   "tree_version": "0_5"
+  }
+ },
+ "entity_counts": {
+  "ascendancies": 23,
+  "classes": 8,
+  "config_variables": 564,
+  "gems": 966,
+  "granted_skills": 1436,
+  "item_bases": 1756,
+  "item_modifiers": 9388,
+  "passive_edges": 5187,
+  "passive_nodes": 4914,
+  "slots": 113
+ },
+ "evaluation_context_hash": "e986ff5595706b18c5dda18cb35da8db715bfb617359d2a6cc0a4b84b8e15230",
+ "evidence_ids": [
+  "evidence/export/invocation",
+  "evidence/pob/source/citations",
+  "evidence/pob/source/point_maximums",
+  "evidence/pob/source/level_cap",
+  "evidence/pob/data/class-ascendancies",
+  "evidence/pob/data/weapon-set-quest-points",
+  "evidence/pob/data/slots",
+  "evidence/pob/source/support_socket_limit",
+  "evidence/pob/data/weapon-set-constants",
+  "evidence/pob/data/gem-natural-max-levels",
+  "evidence/release/0.5.5e",
+  "evidence/export/compatibility",
+  "evidence/export/catalog-read"
+ ],
+ "exporter_version": "p02-t02.0",
+ "gap_ids": [
+  "gap/p02-t02/weapon-set-point-unlock-levels",
+  "gap/p02-t02/quest-passive-point-rewards",
+  "gap/p02-t02/ascendancy-point-unlock-schedule",
+  "gap/p02-t02/slot-accepted-base-categories",
+  "gap/p02-t02/gem-level-legality",
+  "gap/p02-t02/skill-level-limit",
+  "gap/p02-t02/catalog-predates-current-patch",
+  "gap/p02-t02/release-evidence-not-verbatim",
+  "gap/p02-t02/unpinned-checkout"
+ ],
+ "gaps": [
+  {
+   "collection_method": "source lookup",
+   "explanation": "Upstream records 24 weapon-set passive points across 12 quest rewards, each with the level of the area the quest is in. An area level is not the character level at which the reward is obtainable, so the budget is exported as a total and not as a schedule.",
+   "gap_id": "gap/p02-t02/weapon-set-point-unlock-levels",
+   "kind": "unsupported_rule",
+   "needed_evidence": "for each quest that grants weapon-set passive skill points in the resolved patch, the quest name, the act and the minimum character level at which a character can complete it, from the official patch notes or the in-game quest list",
+   "severity": "informational"
+  },
+  {
+   "collection_method": "source lookup",
+   "explanation": "No entry in the engine's quest reward data grants ordinary passive skill points: the point-granting entries all grant weapon-set passive points. The exported budget therefore counts levelling points only, and a character's real passive total is higher by an unknown amount. The legacy pob2opt/cli.py estimate of (level - 1) + 8 is not sourced from anything and is deliberately not promoted to a rule here.",
+   "gap_id": "gap/p02-t02/quest-passive-point-rewards",
+   "kind": "unsupported_rule",
+   "needed_evidence": "the list of quests granting ordinary passive skill points in the resolved patch, each with its act, the quest name and the number of points granted, from the official patch notes or the in-game quest reward screen",
+   "severity": "ranking_sensitive"
+  },
+  {
+   "collection_method": "source lookup",
+   "explanation": "Upstream carries the ascendancy point maximum (8) but no rule for when each point is earned. The only progression hint in the engine is a labyrinth suggestion its own comment calls a recommendation for beginners. A build below the maximum therefore has no sourced budget.",
+   "gap_id": "gap/p02-t02/ascendancy-point-unlock-schedule",
+   "kind": "unsupported_rule",
+   "needed_evidence": "for the resolved patch, each trial or quest that grants ascendancy points, the number granted and the minimum character level at which it can be completed, from the official patch notes",
+   "severity": "ranking_sensitive"
+  },
+  {
+   "collection_method": "engine implementation",
+   "explanation": "The engine's slot table names 113 slots and which of them belong to a weapon set. It does not say which item base categories each slot accepts, so every exported slot rule has an empty category list and equipment legality cannot be decided from this profile.",
+   "gap_id": "gap/p02-t02/slot-accepted-base-categories",
+   "kind": "missing_input",
+   "needed_evidence": "for each equipment slot, the set of item base types it accepts and the hand or slot conflicts it creates, read from the engine's own item-to-slot matching code and confirmed against one fixture item per base type",
+   "severity": "blocking"
+  },
+  {
+   "collection_method": "engine implementation",
+   "explanation": "gem_level_limit is the highest natural maximum level in the engine's gem data (20). It is not a legality cap: items and passives grant levels above a gem's natural maximum, and upstream carries no single number for the highest legal level.",
+   "gap_id": "gap/p02-t02/gem-level-legality",
+   "kind": "unsupported_rule",
+   "needed_evidence": "the rule relating a gem's natural maximum level to the highest level it can reach with item and passive grants in the resolved patch, confirmed with one fixture build per grant source",
+   "severity": "informational"
+  },
+  {
+   "collection_method": "source lookup",
+   "explanation": "The engine carries per-skill level tables but no character-facing limit on a skill's level that is separate from its gem, so skill_level_limit is exported as unknown.",
+   "gap_id": "gap/p02-t02/skill-level-limit",
+   "kind": "missing_input",
+   "needed_evidence": "whether the resolved patch caps an active skill's level independently of its gem level, and the cap if it does, from the official patch notes",
+   "severity": "informational"
+  },
+  {
+   "collection_method": "source lookup",
+   "explanation": "The engine data release is dated 2026-07-28 and patch 0.5.5e was published 2026-10-06, so any entity, skill or modifier that patch introduced is absent from this catalog. The export cannot list what is missing, only that something is.",
+   "gap_id": "gap/p02-t02/catalog-predates-current-patch",
+   "kind": "stale_patch",
+   "needed_evidence": "the official patch notes for every patch published after 2026-07-28, listing added or changed classes, ascendancies, skills, support gems and item bases, and a Path of Building release that includes them",
+   "severity": "ranking_sensitive"
+  },
+  {
+   "collection_method": "import request",
+   "explanation": "The release evidence for patch 0.5.5e is a summary capture made by assistant_web_fetch_summary, not a byte-exact copy of the official page. It is enough to name the patch and never enough to certify compatibility.",
+   "gap_id": "gap/p02-t02/release-evidence-not-verbatim",
+   "kind": "missing_input",
+   "needed_evidence": "a byte-exact capture of https://www.pathofexile.com/forum/view-thread/4009785, stored with its retrieval timestamp and content hash",
+   "severity": "informational"
+  },
+  {
+   "collection_method": "engine implementation",
+   "explanation": "The engine checkout this catalog was read from is not a clean pinned tree (commit ce566eac45ea8a86477f513c7ee65a1ebe60014e, working-tree digest 063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181), so the catalog cannot be reproduced from the commit alone.",
+   "gap_id": "gap/p02-t02/unpinned-checkout",
+   "kind": "missing_input",
+   "needed_evidence": "a clean checkout of the pinned Path of Building commit with no local modifications, and a re-export whose catalog hash matches this one",
+   "severity": "informational"
+  }
+ ],
+ "kind": "PoB-derived",
+ "league_id": "Standard",
+ "not_a_claim": "Read out of the pinned Path of Building checkout. Nothing here is a gameplay measurement, and a matching catalog is not evidence that the engine models the live game patch.",
+ "patch_id": "0.5.5e",
+ "patch_profile_id": "patch-profile/0.5.5e/e82da2ea8a9cb567",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+ "reader": {
+  "adapter_version": "p02-t02.0",
+  "helper_lua_hashes": [
+   [
+    "opt_helpers.lua",
+    "f6e3fd74b486f6072bf285e31f77bc5ce492ace03a408512ada883907ba67149"
+   ],
+   [
+    "tree_lib.lua",
+    "d6b30d7d90b72561f2416a79914eea7657d9dee33b593109379fea1bcf9f3681"
+   ]
+  ],
+  "kind": "pob_engine",
+  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+  "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+  "pob_root": "C:\\Users\\Elias\\PycharmProjects\\PathOfBuilding-PoE2"
+ },
+ "resolutions": {
+  "sample-build-ranger-quarterstaff.xml": {
+   "ambiguous": [],
+   "complete": true,
+   "counts": {
+    "class": 1,
+    "gem": 1,
+    "granted_skill": 1,
+    "item_base": 1,
+    "passive_node": 37,
+    "slot": 1
+   },
+   "resolved": {
+    "class:2": "poe2/classes/2",
+    "gem:Metadata/Items/Gem/SkillGemPlayerDefaultQuarterstaff": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff",
+    "granted_skill:MeleeQuarterstaffPlayer": "poe2/granted_skills/MeleeQuarterstaffPlayer",
+    "item_base:Long Quarterstaff": "poe2/item_bases/Long Quarterstaff",
+    "passive_node:10909": "poe2/passive_nodes/10909",
+    "passive_node:1140": "poe2/passive_nodes/1140",
+    "passive_node:13241": "poe2/passive_nodes/13241",
+    "passive_node:13828": "poe2/passive_nodes/13828",
+    "passive_node:15182": "poe2/passive_nodes/15182",
+    "passive_node:15507": "poe2/passive_nodes/15507",
+    "passive_node:16489": "poe2/passive_nodes/16489",
+    "passive_node:16725": "poe2/passive_nodes/16725",
+    "passive_node:17468": "poe2/passive_nodes/17468",
+    "passive_node:21755": "poe2/passive_nodes/21755",
+    "passive_node:22558": "poe2/passive_nodes/22558",
+    "passive_node:22616": "poe2/passive_nodes/22616",
+    "passive_node:27373": "poe2/passive_nodes/27373",
+    "passive_node:28002": "poe2/passive_nodes/28002",
+    "passive_node:28370": "poe2/passive_nodes/28370",
+    "passive_node:28556": "poe2/passive_nodes/28556",
+    "passive_node:28800": "poe2/passive_nodes/28800",
+    "passive_node:2955": "poe2/passive_nodes/2955",
+    "passive_node:32194": "poe2/passive_nodes/32194",
+    "passive_node:36629": "poe2/passive_nodes/36629",
+    "passive_node:41646": "poe2/passive_nodes/41646",
+    "passive_node:47157": "poe2/passive_nodes/47157",
+    "passive_node:48401": "poe2/passive_nodes/48401",
+    "passive_node:48635": "poe2/passive_nodes/48635",
+    "passive_node:48670": "poe2/passive_nodes/48670",
+    "passive_node:49657": "poe2/passive_nodes/49657",
+    "passive_node:50459": "poe2/passive_nodes/50459",
+    "passive_node:51052": "poe2/passive_nodes/51052",
+    "passive_node:51921": "poe2/passive_nodes/51921",
+    "passive_node:53405": "poe2/passive_nodes/53405",
+    "passive_node:54127": "poe2/passive_nodes/54127",
+    "passive_node:54417": "poe2/passive_nodes/54417",
+    "passive_node:54818": "poe2/passive_nodes/54818",
+    "passive_node:55933": "poe2/passive_nodes/55933",
+    "passive_node:59881": "poe2/passive_nodes/59881",
+    "passive_node:63526": "poe2/passive_nodes/63526",
+    "passive_node:7628": "poe2/passive_nodes/7628",
+    "slot:Weapon 1": "poe2/slots/Weapon 1"
+   },
+   "unresolved": []
+  },
+  "zero_dps_huntress.xml": {
+   "ambiguous": [],
+   "complete": true,
+   "counts": {
+    "class": 1
+   },
+   "resolved": {
+    "class:8": "poe2/classes/8"
+   },
+   "unresolved": []
+  }
+ },
+ "validation_errors": [],
+ "written_at": "2026-10-06T18:33:54Z"
+}

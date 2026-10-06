@@ -16,9 +16,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["pob2opt", "pob2opt.domain", "pob2opt.storage"]
+packages = ["pob2opt", "pob2opt.catalog", "pob2opt.domain", "pob2opt.storage"]
 
 [tool.setuptools.package-data]
 # schemas/v1 ships with the package so a record can be validated from an
 # installed wheel, not only from a source checkout.
-pob2opt = ["lua/*.lua", "schemas/v1/*.json"]
+pob2opt = ["lua/*.lua", "schemas/v1/*.json", "catalog/fixtures/*.json"]

@@ -30,7 +30,8 @@ from engine_helpers import FIXTURE_WEAPON
 from record_fixtures import records
 
 from pob2opt.domain.enums import ResultStatus
-from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineCrash,
+from pob2opt.evaluation import (ADAPTER_VERSION, BuildDocument, EngineAdapter,
+                                EngineCrash,
                                 EngineInvalidInput, EngineInternalError, EngineState,
                                 MappingBuildDocuments, kill_process_tree,
                                 pob_worker_spec, resolve_checkout)
@@ -149,7 +150,8 @@ def build_and_profile(pob_root: Path):
     checkout = resolve_checkout(pob_root)
     build = dataclasses.replace(records()["build_spec"], build_hash=BUILD_HASH)
     profile = dataclasses.replace(records()["patch_profile"],
-                                  pob_commit=checkout.commit)
+                                  pob_commit=checkout.commit,
+                                  adapter_version=ADAPTER_VERSION)
     return build, profile
 
 

@@ -514,9 +514,20 @@ def _doctor(argv):
     return doctor.main(argv)
 
 
+def _catalog(argv):
+    """`pob2opt catalog export` (P02-T02). Imported lazily so the legacy
+    pipeline does not pay for the engine boundary on every invocation."""
+    if not argv or argv[0] != "export":
+        print("usage: pob2opt catalog export --profile FILE --out DIR",
+              file=sys.stderr)
+        return 2
+    from .catalog import cli as catalog_cli
+    return catalog_cli.main(argv[1:])
+
+
 #: Subcommands from docs/specs/interfaces.md. These never touch PHASES; the
 #: legacy phase pipeline keeps its own parser and its existing behavior.
-NEW_COMMANDS = {"doctor": _doctor}
+NEW_COMMANDS = {"doctor": _doctor, "catalog": _catalog}
 
 
 def main(argv=None):

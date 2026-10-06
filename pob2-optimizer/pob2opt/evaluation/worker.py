@@ -95,6 +95,8 @@ class PobSession:
             return self.load_exact_build(**args)
         if op == protocol.OP_PRIMITIVES:
             return self.primitives(**args)
+        if op == protocol.OP_CATALOG_PAGE:
+            return self.catalog_page(**args)
         raise SessionError(ResultStatus.UNSUPPORTED,
                            "unknown operation %r" % op, stage="dispatch")
 
@@ -152,6 +154,29 @@ class PobSession:
         return {"values": values, "summary": summary,
                 "stat_keys": sorted(values) if keys is None else list(keys)}
 
+    def catalog_page(self, table: str, offset: int = 0,
+                     limit: int = protocol.CATALOG_PAGE_ROWS) -> dict:
+        """Read one page of a catalog table (P02-T02).
+
+        Read-only: the handlers behind this never touch the build, so a
+        catalog read in the middle of an evaluation cannot change what the
+        next primitive read returns. An unknown table is refused here rather
+        than passed to the engine as a handler name.
+        """
+        stage = protocol.OP_CATALOG_PAGE
+        if table == protocol.CATALOG_RULE_SOURCES:
+            return self._call(protocol.CATALOG_RULE_SOURCES_HANDLER, {},
+                              stage=stage)
+        handler = protocol.CATALOG_HANDLERS.get(table)
+        if handler is None:
+            raise SessionError(
+                ResultStatus.UNSUPPORTED,
+                "unknown catalog table %r; known tables are %s"
+                % (table, ", ".join(sorted(protocol.CATALOG_HANDLERS))),
+                stage=stage)
+        return self._call(handler, {"offset": int(offset), "limit": int(limit)},
+                          stage=stage)
+
     def close(self) -> None:
         close = getattr(self.engine, "close", None)
         if close is not None:
@@ -185,10 +210,39 @@ def _read_text(path: str) -> str:
 
 # -- spawn entry point --------------------------------------------------------
 
+def _silence_stdout() -> None:
+    """Point this process's stdout at the null device, file descriptor and all.
+
+    Rebinding ``sys.stdout`` is not enough: PoB's Lua writes through the OS
+    handle, so its startup text lands on the inherited descriptor and
+    corrupts a parent that writes JSON to its own stdout. The worker never
+    answers on stdout, so nothing is lost. Failure is not fatal: the engine
+    still works, the parent's stdout is just noisy, and saying so on stderr
+    is better than refusing to evaluate.
+    """
+    try:
+        sys.stdout.flush()
+    except (ValueError, OSError) as exc:
+        # Nothing buffered is worth reporting: stdout is about to become the
+        # null device, and a closed or detached stream here means there was
+        # no output to lose. Named rather than swallowed (P02-T01-R09).
+        del exc
+    try:
+        null = os.open(os.devnull, os.O_WRONLY)
+        try:
+            os.dup2(null, 1)
+        finally:
+            os.close(null)
+    except OSError as exc:
+        print("pob2opt worker: could not silence stdout (%s); engine output "
+              "may reach the parent's stdout" % exc, file=sys.stderr)
+    sys.stdout = open(os.devnull, "w")
+
+
 def worker_main(entry: str, conn, config: dict) -> None:
     """Serve requests until shutdown, a fatal session error or a broken pipe."""
     if config.get("quiet", _QUIET_DEFAULT):
-        sys.stdout = open(os.devnull, "w")
+        _silence_stdout()
 
     try:
         session = resolve_session_factory(entry)(config)

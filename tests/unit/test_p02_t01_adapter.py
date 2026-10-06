@@ -74,9 +74,15 @@ def fixture_build():
 
 @pytest.fixture()
 def fixture_profile():
-    """The P01 profile, repinned to the commit the synthetic checkout reports."""
+    """The P01 profile, repinned to this adapter and the synthetic checkout.
+
+    ``adapter_version`` is repinned for the same reason ``pob_commit`` is:
+    since P02-T02 the adapter refuses a profile produced by a different
+    adapter, so the shared fixture's placeholder value would be rejected.
+    """
     return dataclasses.replace(records()["patch_profile"],
-                               pob_commit=SYNTHETIC_COMMIT)
+                               pob_commit=SYNTHETIC_COMMIT,
+                               adapter_version=ADAPTER_VERSION)
 
 
 @pytest.fixture()

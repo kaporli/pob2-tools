@@ -416,6 +416,376 @@ handlers.eval = function(args)
 	return fn()
 end
 
+-- ----------------------------------------------------------------- catalog
+-- P02-T02. Typed read-only enumeration of the loaded game data. Every handler
+-- below returns the same envelope:
+--
+--   { table = <name>, total = <rows>, offset = <first row returned>,
+--     next_offset = <nil when the page is the last>, rows = { ... } }
+--
+-- Rows are ordered by a sorted native key so paging is stable and two runs
+-- over the same checkout produce the same bytes. Nothing here writes to the
+-- build, so a catalog read cannot disturb an evaluation in the same engine.
+-- Names are reported as they appear upstream; these handlers never merge two
+-- entities that share a display name.
+
+local CATALOG_PAGE_DEFAULT = 500
+local CATALOG_PAGE_MAX = 5000
+
+local function catalogPage(args, keys, build_row, name)
+	table.sort(keys)
+	local total = #keys
+	local offset = tonumber(args and args.offset) or 0
+	if offset < 0 then offset = 0 end
+	local limit = tonumber(args and args.limit) or CATALOG_PAGE_DEFAULT
+	if limit < 1 then limit = 1 end
+	if limit > CATALOG_PAGE_MAX then limit = CATALOG_PAGE_MAX end
+	local rows = {}
+	local last = math.min(offset + limit, total)
+	for i = offset + 1, last do
+		rows[#rows + 1] = build_row(keys[i])
+	end
+	return {
+		table = name,
+		total = total,
+		offset = offset,
+		next_offset = last < total and last or nil,
+		rows = rows,
+	}
+end
+
+local function sortedStrings(t)
+	local out = {}
+	for _, v in ipairs(t or {}) do out[#out + 1] = tostring(v) end
+	table.sort(out)
+	return out
+end
+
+local function copyScalars(t)
+	local out = {}
+	for k, v in pairs(t or {}) do
+		local tv = type(v)
+		if tv == "number" or tv == "string" or tv == "boolean" then out[tostring(k)] = v end
+	end
+	return out
+end
+
+local function requireTree()
+	local spec = assert(build.spec, "no active passive spec; load or create a build first")
+	return assert(spec.tree, "the active spec has no tree data")
+end
+
+handlers.catalog_classes = function(args)
+	local tree = requireTree()
+	local keys = {}
+	for classId in pairs(tree.classes or {}) do keys[#keys + 1] = tonumber(classId) end
+	return catalogPage(args, keys, function(classId)
+		local cls = tree.classes[classId]
+		local ascendancies = {}
+		for index, asc in pairs(cls.ascendancies or {}) do
+			ascendancies[#ascendancies + 1] = {
+				index = tonumber(index),
+				id = asc.id,
+				name = asc.name,
+				flavourText = asc.flavourText,
+			}
+		end
+		table.sort(ascendancies, function(a, b) return (a.index or 0) < (b.index or 0) end)
+		return {
+			classId = classId,
+			name = cls.name,
+			base_str = cls.base_str,
+			base_dex = cls.base_dex,
+			base_int = cls.base_int,
+			startNodeId = cls.startNodeId,
+			ascendancies = ascendancies,
+		}
+	end, "classes")
+end
+
+handlers.catalog_passive_nodes = function(args)
+	local tree = requireTree()
+	local keys = {}
+	for id, node in pairs(tree.nodes or {}) do
+		if tonumber(id) then keys[#keys + 1] = tonumber(id) end
+	end
+	return catalogPage(args, keys, function(id)
+		local node = tree.nodes[id]
+		local linked = {}
+		for _, other in ipairs(node.linkedId or {}) do
+			if tonumber(other) then linked[#linked + 1] = tonumber(other) end
+		end
+		table.sort(linked)
+		return {
+			id = tonumber(id),
+			name = node.dn,
+			stringId = node.stringId,
+			type = node.type,
+			ascendancyName = node.ascendancyName,
+			isAscendancyStart = node.isAscendancyStart and true or false,
+			isNotable = node.isNotable and true or false,
+			isKeystone = node.type == "Keystone",
+			isMastery = node.type == "Mastery",
+			isJewelSocket = node.type == "Socket",
+			skill = node.skill,
+			group = node.g,
+			orbit = node.orbit,
+			orbitIndex = node.orbitIndex,
+			stats = sortedStrings(node.sd),
+			linked = linked,
+		}
+	end, "passive_nodes")
+end
+
+handlers.catalog_gems = function(args)
+	local keys = {}
+	for id in pairs(data.gems or {}) do keys[#keys + 1] = tostring(id) end
+	return catalogPage(args, keys, function(id)
+		local gem = data.gems[id]
+		local effect = gem.grantedEffect
+		return {
+			id = id,
+			name = gem.name,
+			baseTypeName = gem.baseTypeName,
+			gameId = gem.gameId,
+			variantId = gem.variantId,
+			gemType = gem.gemType,
+			tier = gem.Tier,
+			naturalMaxLevel = gem.naturalMaxLevel,
+			reqStr = gem.reqStr,
+			reqDex = gem.reqDex,
+			reqInt = gem.reqInt,
+			tagString = gem.tagString,
+			tags = sortedStrings((function()
+				local list = {}
+				for tag, on in pairs(gem.tags or {}) do if on then list[#list + 1] = tag end end
+				return list
+			end)()),
+			grantedEffectId = gem.grantedEffectId,
+			isSupport = (effect and effect.support) and true or false,
+			grantedEffectName = effect and effect.name or nil,
+		}
+	end, "gems")
+end
+
+handlers.catalog_granted_skills = function(args)
+	local keys = {}
+	for id in pairs(data.skills or {}) do keys[#keys + 1] = tostring(id) end
+	return catalogPage(args, keys, function(id)
+		local skill = data.skills[id]
+		local levels = 0
+		for _ in pairs(skill.levels or {}) do levels = levels + 1 end
+		return {
+			id = id,
+			name = skill.name,
+			support = skill.support and true or false,
+			hidden = skill.hidden and true or false,
+			castTime = skill.castTime,
+			modSource = skill.modSource,
+			baseFlags = copyScalars(skill.baseFlags),
+			skillTypes = sortedStrings((function()
+				local list = {}
+				for kind, on in pairs(skill.skillTypes or {}) do
+					if on then list[#list + 1] = tostring(kind) end
+				end
+				return list
+			end)()),
+			levelCount = levels,
+		}
+	end, "granted_skills")
+end
+
+handlers.catalog_item_bases = function(args)
+	local keys = {}
+	for name in pairs(data.itemBases or {}) do keys[#keys + 1] = tostring(name) end
+	return catalogPage(args, keys, function(name)
+		local base = data.itemBases[name]
+		return {
+			name = name,
+			type = base.type,
+			subType = base.subType,
+			socketLimit = base.socketLimit,
+			quality = base.quality,
+			hidden = base.hidden and true or false,
+			implicit = base.implicit,
+			req = copyScalars(base.req),
+			tags = sortedStrings((function()
+				local list = {}
+				for tag, on in pairs(base.tags or {}) do if on then list[#list + 1] = tag end end
+				return list
+			end)()),
+			armour = copyScalars(base.armour),
+			weapon = copyScalars(base.weapon),
+			flask = copyScalars(base.flask),
+		}
+	end, "item_bases")
+end
+
+handlers.catalog_item_modifiers = function(args)
+	-- data.itemMods is a table of named mod groups, so the native key is the
+	-- pair (group, id). Both are reported; neither alone is unique.
+	local keys = {}
+	local index = {}
+	for group, mods in pairs(data.itemMods or {}) do
+		for id in pairs(mods) do
+			local key = tostring(group) .. "\0" .. tostring(id)
+			keys[#keys + 1] = key
+			index[key] = { group = tostring(group), id = tostring(id) }
+		end
+	end
+	return catalogPage(args, keys, function(key)
+		local at = index[key]
+		local mod = data.itemMods[at.group][at.id]
+		local lines = {}
+		for i, line in ipairs(mod) do lines[i] = tostring(line) end
+		return {
+			group = at.group,
+			id = at.id,
+			type = mod.type,
+			affix = mod.affix,
+			level = mod.level,
+			lines = lines,
+			modTags = sortedStrings(mod.modTags),
+			statOrder = sortedStrings(mod.statOrder),
+			tradeHashes = sortedStrings(mod.tradeHashes),
+			weightKey = mod.weightKey,
+			weightVal = mod.weightVal,
+		}
+	end, "item_modifiers")
+end
+
+handlers.catalog_slots = function(args)
+	local keys = {}
+	for name in pairs(build.itemsTab.slots or {}) do keys[#keys + 1] = tostring(name) end
+	return catalogPage(args, keys, function(name)
+		local slot = build.itemsTab.slots[name]
+		return {
+			name = name,
+			slotName = slot.slotName,
+			label = slot.label,
+			weaponSet = slot.weaponSet,
+			nodeId = slot.nodeId,
+			slotNum = slot.slotNum,
+			parentSlot = slot.parentSlot and slot.parentSlot.slotName or nil,
+			acceptsItemType = slot.weaponSet and "weapon" or nil,
+		}
+	end, "slots")
+end
+
+handlers.catalog_config_variables = function(args)
+	-- ConfigOptions is an ordered list of section markers and variables. The
+	-- section a variable belongs to is the last marker before it, so the list
+	-- is walked in order and each variable keeps its own position.
+	local varList = package.loaded["Modules.ConfigOptions"] or require("Modules.ConfigOptions")
+	local entries = {}
+	local section = nil
+	for position, entry in ipairs(varList) do
+		if entry.section then
+			section = entry.section
+		elseif entry.var then
+			local options = nil
+			if entry.list then
+				options = {}
+				for i, option in ipairs(entry.list) do
+					options[i] = { value = option.val, label = option.label }
+				end
+			end
+			entries[#entries + 1] = {
+				var = entry.var,
+				position = position,
+				section = section,
+				type = entry.type,
+				label = entry.label,
+				ifCond = entry.ifCond,
+				ifMinionCond = entry.ifMinionCond,
+				ifEnemyCond = entry.ifEnemyCond,
+				ifFlag = entry.ifFlag,
+				ifSkill = entry.ifSkill,
+				ifSkillData = entry.ifSkillData,
+				ifSkillList = entry.ifSkillList and sortedStrings(entry.ifSkillList) or nil,
+				ifMult = entry.ifMult,
+				ifOption = entry.ifOption,
+				defaultIndex = entry.defaultIndex,
+				defaultState = (type(entry.defaultState) ~= "table"
+					and type(entry.defaultState) ~= "function") and entry.defaultState or nil,
+				defaultPlaceholderState = (type(entry.defaultPlaceholderState) ~= "table"
+					and type(entry.defaultPlaceholderState) ~= "function")
+					and entry.defaultPlaceholderState or nil,
+				hasApply = entry.apply ~= nil,
+				options = options,
+			}
+		end
+	end
+	local keys = {}
+	local index = {}
+	for _, entry in ipairs(entries) do
+		local key = string.format("%06d\0%s", entry.position, entry.var)
+		keys[#keys + 1] = key
+		index[key] = entry
+	end
+	return catalogPage(args, keys, function(key) return index[key] end, "config_variables")
+end
+
+handlers.catalog_rule_sources = function(args)
+	-- The upstream facts the character rules are read from. Reported as data,
+	-- not as rules: deciding what they mean is the exporter's job, and a fact
+	-- that upstream does not carry is absent here rather than filled in.
+	local acts = {}
+	local running = 0
+	for _, quest in ipairs(data.questRewards or {}) do
+		if quest.questPoints then
+			running = running + quest.questPoints
+			acts[#acts + 1] = {
+				act = quest.Act,
+				type = quest.Type,
+				area = quest.Area,
+				areaLevel = quest.AreaLevel,
+				info = quest.Info,
+				stat = quest.Stat,
+				questPoints = quest.questPoints,
+				cumulativeQuestPoints = running,
+			}
+		end
+	end
+	local rewards = {}
+	for i, quest in ipairs(data.questRewards or {}) do
+		rewards[i] = {
+			index = i,
+			act = quest.Act,
+			type = quest.Type,
+			description = quest.Description,
+			area = quest.Area,
+			areaLevel = quest.AreaLevel,
+			info = quest.Info,
+			stat = quest.Stat,
+			questPoints = quest.questPoints,
+			useConfig = quest.useConfig and true or false,
+			options = quest.Options and sortedStrings(quest.Options) or nil,
+		}
+	end
+	return {
+		table = "rule_sources",
+		treeVersion = build.spec and build.spec.treeVersion or nil,
+		latestTreeVersion = latestTreeVersion,
+		liveTargetVersion = liveTargetVersion,
+		treeVersionList = sortedStrings(treeVersionList),
+		maxWeaponSetPoints = build.maxWeaponSets,
+		maxActs = build.maxActs,
+		questPointRewards = acts,
+		questRewards = rewards,
+		characterConstants = copyScalars(data.characterConstants),
+		gameConstants = copyScalars(data.gameConstants),
+		misc = copyScalars(data.misc),
+		weaponTypeInfo = (function()
+			local out = {}
+			for name, info in pairs(data.weaponTypeInfo or {}) do
+				out[tostring(name)] = copyScalars(info)
+			end
+			return out
+		end)(),
+	}
+end
+
 -- ---------------------------------------------------------------- dispatch
 
 function MCP_dispatch(name, argsJson)

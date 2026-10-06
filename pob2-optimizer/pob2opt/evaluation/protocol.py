@@ -19,7 +19,10 @@ from ..domain.enums import Fidelity
 
 #: Bumped whenever the adapter changes what it asks the engine for, or how it
 #: interprets the answer. Part of the evaluation cache identity.
-ADAPTER_VERSION = "p02-t01.2"
+#: p02-t02.0 adds the read-only catalog operation. The primitive path is
+#: unchanged, but the adapter can now ask the engine for something new, which
+#: is what this string is for.
+ADAPTER_VERSION = "p02-t02.0"
 
 #: Owner of primitive units, included effects and excluded effects.
 PRIMITIVE_SEMANTICS_OWNER = "P02-T04"
@@ -28,10 +31,34 @@ OP_DESCRIBE = "describe"
 OP_CREATE_BLANK_BUILD = "create_blank_build"
 OP_LOAD_EXACT_BUILD = "load_exact_build"
 OP_PRIMITIVES = "primitives"
+OP_CATALOG_PAGE = "catalog_page"
 OP_SHUTDOWN = "shutdown"
 
 OPERATIONS = (OP_DESCRIBE, OP_CREATE_BLANK_BUILD, OP_LOAD_EXACT_BUILD,
-              OP_PRIMITIVES, OP_SHUTDOWN)
+              OP_PRIMITIVES, OP_CATALOG_PAGE, OP_SHUTDOWN)
+
+#: Catalog tables the engine can enumerate, and the bootstrap handler for
+#: each. ``passive_edges`` is absent on purpose: edges are derived from the
+#: node rows rather than read twice from the tree (P02-T02).
+CATALOG_HANDLERS = {
+    "classes": "catalog_classes",
+    "passive_nodes": "catalog_passive_nodes",
+    "gems": "catalog_gems",
+    "granted_skills": "catalog_granted_skills",
+    "item_bases": "catalog_item_bases",
+    "item_modifiers": "catalog_item_modifiers",
+    "slots": "catalog_slots",
+    "config_variables": "catalog_config_variables",
+}
+
+#: Not a paged table: one structured read of the upstream facts the character
+#: rules are derived from.
+CATALOG_RULE_SOURCES = "rule_sources"
+CATALOG_RULE_SOURCES_HANDLER = "catalog_rule_sources"
+
+#: Rows per engine request. Measured at ~80 ms and ~1.8 MB for 5000 passive
+#: nodes on the pinned checkout, so this is a comfort margin, not a limit.
+CATALOG_PAGE_ROWS = 2000
 
 #: Defaults from `docs/specs/interfaces.md`. Both are configurable per adapter
 #: and the value actually used is recorded on the snapshot.
