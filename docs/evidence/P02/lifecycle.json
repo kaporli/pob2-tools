@@ -1,0 +1,151 @@
+{
+ "adapter_version": "p02-t01.1",
+ "pob": {
+  "aba": {
+   "agreement": {
+    "compared_keys": 675,
+    "keys_outside_tolerance": [],
+    "within_tolerance": true,
+    "worst_absolute_delta": 0.0,
+    "worst_key": null,
+    "worst_relative_delta": 0.0
+   },
+   "b_document": "the same build with a stronger fixture weapon",
+   "semantics_owner": "P02-T04",
+   "semantics_status": "undeclared",
+   "tolerance": {
+    "absolute": 1e-09,
+    "relative": 1e-06
+   }
+  },
+  "create_blank_build": {
+   "allocated_nodes": 1,
+   "ascendancy": "None",
+   "class_name": "Ranger",
+   "equipped_items": 0,
+   "level": 1,
+   "name": "Help, I'm stuck in Path of Building!",
+   "opt_setup_called": true,
+   "socket_groups": 0
+  },
+  "forced_termination": {
+   "diagnostic": "worker 13108 is gone: worker process exited (exit code 1)",
+   "killed_pid": 13108,
+   "new_process": true,
+   "observed": "engine_crash",
+   "replacement_completed_the_task": {
+    "allocated_nodes": 36,
+    "ascendancy": "None",
+    "class_name": "Ranger",
+    "equipped_items": 1,
+    "level": 28,
+    "name": "exact",
+    "opt_setup_called": false,
+    "socket_groups": 1
+   },
+   "replacement_pid": 7160
+  },
+  "identity": {
+   "adapter_version": "p02-t01.1",
+   "dirty_reason": "working tree differs from the pinned commit",
+   "is_pinned": false,
+   "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+   "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+   "pob_root": "C:\\Users\\Elias\\PycharmProjects\\PathOfBuilding-PoE2",
+   "worker_cwd": "C:\\Users\\Elias\\PycharmProjects\\PathOfBuilding-PoE2\\src"
+  },
+  "load_exact_build": {
+   "allocated_nodes": 36,
+   "ascendancy": "None",
+   "class_name": "Ranger",
+   "equipped_items": 1,
+   "level": 28,
+   "name": "exact",
+   "opt_setup_called": false,
+   "socket_groups": 1
+  },
+  "parent_cwd_after": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+  "parent_cwd_before": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+  "parent_cwd_unchanged": true,
+  "replacements": 1,
+  "status": "recorded",
+  "what_this_is": "PoB-derived engine behaviour. Deterministic primitive agreement only; not a gameplay measurement and not a performance claim.",
+  "worker_cwd_differs_from_parent": true,
+  "worker_pids": [
+   13108,
+   7160
+  ]
+ },
+ "recorded_at_utc": "2026-10-06T12:09:13.319983+00:00",
+ "schema_version": 1,
+ "specification_version": "1.0",
+ "synthetic": {
+  "hard_outer_deadline_s": 90.0,
+  "probes": {
+   "crash": {
+    "diagnostic": "worker 3068 died during create_blank_build (exit code 70)",
+    "exit_code": 0,
+    "expected": "engine_crash",
+    "first_worker_pid": 3068,
+    "mode": "crash",
+    "observed": "engine_crash",
+    "ok": true,
+    "parent_cwd_after": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+    "parent_cwd_before": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+    "stage": "create_blank_build",
+    "timeout_s": 2.0,
+    "worker_alive_after": false,
+    "worker_pids": [
+     3068
+    ]
+   },
+   "revive": {
+    "diagnostic": "worker 10260 died during create_blank_build (exit code 70)",
+    "exit_code": 0,
+    "expected": "engine_crash",
+    "first_worker_pid": 10260,
+    "generation": 2,
+    "mode": "revive",
+    "new_process": true,
+    "observed": "engine_crash",
+    "ok": true,
+    "parent_cwd_after": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+    "parent_cwd_before": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+    "replacements": 1,
+    "revived_load": {
+     "allocated_nodes": 7,
+     "equipped_items": 2,
+     "opt_setup_called": false,
+     "socket_groups": 3
+    },
+    "second_worker_pid": 31448,
+    "stage": "create_blank_build",
+    "timeout_s": 2.0,
+    "worker_alive_after": false,
+    "worker_pids": [
+     10260,
+     31448
+    ]
+   },
+   "wedge": {
+    "diagnostic": "worker 8392 did not answer create_blank_build within 2.000s; the process was terminated",
+    "exit_code": 0,
+    "expected": "timeout",
+    "first_worker_pid": 8392,
+    "mode": "wedge",
+    "observed": "timeout",
+    "ok": true,
+    "parent_cwd_after": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+    "parent_cwd_before": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+    "stage": "create_blank_build",
+    "timeout_s": 2.0,
+    "worker_alive_after": false,
+    "worker_pids": [
+     8392
+    ]
+   }
+  },
+  "what_this_is": "Synthetic workers from tests/synthetic_workers.py. No PoB, no network, no game value."
+ },
+ "task": "P02-T01"
+}

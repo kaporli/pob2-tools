@@ -51,6 +51,8 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | Schema freshness | `python scripts/generate_schemas.py --check` | Nothing | Fails when `pob2opt/schemas/v1` no longer matches `pob2opt/domain/records.py`. Regenerate with the same command minus `--check`. |
 | P01 end-to-end example | `python scripts/p01_demo_run.py` | Nothing | Not a test; rewrites `docs/evidence/P01/demo-run.json`. `tests/unit/test_p01_demo_run.py` re-runs it and compares. |
 | P01 review probes | `python docs/evidence/P01/review-repair-probes.py` | Nothing | Not a test; re-asks the review's questions of the repaired code. The reviewer's original `review-ae4303e-probes.py` is kept unchanged as evidence about `ae4303e`. |
+| P02-T01 failure probe | `python scripts/p02_t01_timeout_probe.py --mode wedge --timeout 2.0` | Nothing | Not a test; one adapter failure case as its own process, so a supervisor can bound it. Modes: `wedge`, `crash`, `revive`. |
+| P02-T01 evidence | `python scripts/p02_t01_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/lifecycle.json`. Without a checkout the `pob` section records `unavailable`. |
 
 Selecting the PoB checkout:
 
@@ -102,6 +104,8 @@ none yet).
 | `test_p01_t05_tasks.py` | P01-T05: task states and transitions, the four interruption points, checkpoint validation, and all 15 documented inspection queries. |
 | `test_p01_review_regressions.py` | The five defects in `docs/reviews/P01.md`, each with the probe that found it: cancelled-task revival, null in a free-form field, incomplete bundles, one candidate with several evaluation tasks, and aggregate cache collisions. |
 | `test_p01_demo_run.py` | Re-runs `scripts/p01_demo_run.py` and checks the claims `docs/evidence/P01/demo-run.json` records. |
+| `test_p02_t01_adapter.py` | P02-T01 offline lane: parent working directory, exact versus blank loading, build-document sourcing, patch-profile mismatch, typed errors, process replacement, pre-spawn path resolution, checkout identity. Synthetic workers only. |
+| `test_p02_t01_timeout_supervisor.py` | P02-T01 bounded requests, run through `scripts/p02_t01_timeout_probe.py` under a hard outer deadline with process-tree cleanup, so an unenforced bound fails instead of hanging. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -118,6 +122,7 @@ none yet).
 | `test_f10_engine_state.py` | Working-directory leak and A-B-A stability in the live engine. |
 | `test_f11_import_is_wiped.py` | What survives `load_build_xml` + `OPT_setup` (and observation P00-OBS-02). |
 | `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, and what the dropped affix costs. |
+| `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, A-B-A agreement, forced termination and replacement. |
 
 ### `tests/fixtures`
 
@@ -150,16 +155,19 @@ Lua runtime writes to the process stdout handle directly.
 
 ## Recorded results
 
-Specification version 1.0, 2026-10-04, repository commit `6290674` plus the P00
-working tree, PoB `ce566ea`:
+Specification version 1.0, 2026-10-06, repository commit `5ba4b9a` plus the
+P02-T01 working tree, PoB `ce566ea`:
 
 | Command | Result |
 |---|---|
-| `python -m pytest` (no `POB2_ROOT`) | 91 passed, 34 skipped, 13 xfailed |
-| `python -m pytest` (with `POB2_ROOT`) | 121 passed, 17 xfailed |
-| `python -m pytest tests/unit` | 86 passed, 12 xfailed |
-| `python -m pytest -m engine` (with `POB2_ROOT`) | 30 passed, 104 deselected, 4 xfailed |
-| Clean install from `lock-py312-win_amd64.txt` in an empty venv, then `pip check` and `pytest tests/unit tests/integration` | `No broken requirements found.`; 66 passed, 13 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 602 passed, 42 skipped, 5 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 643 passed, 6 xfailed |
+| `python -m pytest tests/unit` | 597 passed, 4 xfailed |
+| `python -m pytest tests/integration` | 5 passed, 1 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 41 passed, 607 deselected, 1 xfailed |
+
+The earlier P00 figures, for comparison: 91/34/13, 121/17, 86/12 and 30/104/4
+at commit `6290674`.
 
 Every `xfail` is `strict` and names the repair task that will turn it into a
 pass. A non-strict xfail is not used anywhere: an expectation that passes early
@@ -181,17 +189,27 @@ The snapshots are test-double data, not accepted P01 record schemas or evidence
 of production preparation. P08 owns the mapping from actual validated records
 to the test observation format; no production return type is imposed by P00.
 
-P02-T01 must replace its missing-service check with these acceptance cases:
+P02-T01 replaced its missing-service check with these acceptance cases:
 
-1. Evaluate valid P01 build/state/profile fixtures and assert unchanged parent
-   cwd, including a synthetic worker which changes its own cwd.
-2. Use a synthetic wedged worker and assert a typed bounded timeout. Run the
-   test probe under an independent process supervisor with a hard outer deadline
-   and process-tree cleanup, so a broken implementation fails instead of hanging.
-3. Force worker death, then prove the next valid request completes in a different
-   process. A reset of the same process does not satisfy the check.
-4. Exercise actual PoB evaluations under `tests/engine`, with runtime prerequisites;
-   keep the synthetic worker lane offline. No public `evaluate_raw` API is required.
+| Case | Where |
+|---|---|
+| 1. Parent working directory unchanged, including a worker that moves its own | `tests/unit/test_p02_t01_adapter.py`, `tests/engine/test_p02_t01_engine_adapter.py` |
+| 2. Wedged worker, typed bounded timeout, hard outer deadline and process-tree cleanup | `tests/unit/test_p02_t01_timeout_supervisor.py` with `scripts/p02_t01_timeout_probe.py` |
+| 3. Forced worker death, next request completes in a *different* process | `tests/unit/test_p02_t01_adapter.py`, `tests/engine/test_p02_t01_engine_adapter.py` |
+| 4. Real PoB evaluations, synthetic lane stays offline | `tests/engine/test_p02_t01_engine_adapter.py` |
 
-This explicitly defers production lifecycle coverage to P02 instead of passing
-invalid None inputs or executing an unbounded Lua loop in an offline unit test.
+No public `evaluate_raw` was added. The two F11 unit expectations and the F10
+and F11 engine expectations were migrated rather than deleted; each migrated
+test says what changed and why, and the `tests/unit/test_f10_engine_lifecycle_contract.py`
+placeholder now asserts that the three covering files exist.
+
+Three characterizations recorded defects that P02-T01 fixed, so they now pin
+the repaired behaviour instead:
+
+* `pob2mcp.engine.Pob2Engine` has a deterministic `close` and a `PobEngineClosed`
+  state (it previously had no teardown at all);
+* `pob2opt.engine_worker.Worker.__init__` loads the document and stops;
+  `create_blank_build` is the separate destructive step, reached through
+  `new_blank_worker` (research F11);
+* `load_build_xml` rejects a document PoB cannot read instead of returning a
+  default level 1 character (observation P00-OBS-01).

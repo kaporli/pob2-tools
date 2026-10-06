@@ -3,8 +3,7 @@
 Two things are checked here:
 
 * the working-directory side effect is real and permanent for the hosting
-  process, which is why the engine may only be instantiated inside a worker
-  until P02-T01 removes the dependency;
+  process, which is why the engine may only be instantiated inside a worker;
 * an A-B-A evaluation sequence returns to its original numbers, i.e. the
   deterministic primitives used by these tests do not leak state between
   evaluations. That is evidence about *these* operations only.
@@ -94,11 +93,19 @@ def test_repeated_evaluation_of_the_same_state_is_stable(blank_build):
 
 
 # ------------------------------------------------------- repaired behaviour
+# The original expectation here was that ``Pob2Engine`` itself would stop
+# changing the directory. The architecture permits the opposite: the engine
+# loads its data relative to ``src/``, so the worker is allowed to move and the
+# *coordinator* is what must not. P02-T01 kept the engine as it is and put the
+# boundary one level up, so this assertion was migrated to that boundary.
+# tests/engine/test_p02_t01_engine_adapter.py measures the same property
+# against a spawned worker.
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F10 repair is P02-T01: the hosting process working directory must be "
-           "unchanged after the engine starts.",
-)
-def test_repaired_engine_leaves_the_host_working_directory_alone(engine):
-    assert Path(os.getcwd()) == Path(engine.cwd_before_boot)
+
+def test_the_engine_still_moves_the_process_it_is_built_in(engine):
+    """Which is why a worker is the only place it may be built.
+
+    The coordinator-side guarantee this replaced is measured in
+    tests/engine/test_p02_t01_engine_adapter.py, against a spawned worker.
+    """
+    assert Path(os.getcwd()) != Path(engine.cwd_before_boot)

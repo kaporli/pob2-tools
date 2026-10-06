@@ -31,3 +31,4 @@ them separate.
 | `P01/review-ae4303e-probes.py` | P01 review | The reviewer's adversarial probe script for commit `ae4303e`; kept unchanged |
 | `P01/review-ae4303e.json` | P01 review | The observations that script recorded, which the repair reproduced before fixing |
 | `P01/review-repair-probes.py` | P01 repair | The same questions asked of the repaired code |
+| `P02/lifecycle.json` | P02-T01 | Engine boundary behaviour: the three offline failure probes (synthetic), then real-engine identity, exact versus blank loading, A-B-A agreement and forced termination (PoB-derived) |

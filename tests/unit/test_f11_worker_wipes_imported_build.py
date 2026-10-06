@@ -1,15 +1,19 @@
-"""Research finding F11, characterized (P00-T04).
+"""Research finding F11 and its repair (P00-T04 characterization, P02-T01 fix).
 
-``pob2opt.engine_worker.Worker`` loads a character XML and then immediately
-calls ``OPT_setup``, which resets the passive tree, disables every socket group
-and clears every item slot. Nothing of the imported character survives, so the
-same code path cannot be used to evaluate a community build faithfully.
+``pob2opt.engine_worker.Worker`` used to load a character XML and then
+immediately call ``OPT_setup``, which resets the passive tree, disables every
+socket group and clears every item slot. Nothing of the imported character
+survived, so that code path could not evaluate a community build faithfully.
+
+P02-T01 split the two steps. Construction now loads the document and stops;
+``create_blank_build`` is the separate, explicitly destructive operation that
+the legacy phase pipeline calls through ``new_blank_worker``. The assertions
+that pinned the old combined sequence were migrated accordingly: they now pin
+the split, because the previous behaviour is the defect.
 
 These tests use a recording double in place of ``Pob2Engine``; no PoB runtime is
-involved. ``tests/engine/test_f11_import_is_wiped.py`` proves the same thing
-against the real engine. The repair is P02-T01 ("Define ``load_exact_build``
-separately from ``create_blank_build``; exact loading must not call
-``OPT_setup``").
+involved. ``tests/engine/test_f11_import_is_wiped.py`` measures the same thing
+against the real engine.
 """
 
 from __future__ import annotations
@@ -72,13 +76,33 @@ def recording_worker(monkeypatch):
 
 # ------------------------------------------------------- current behaviour
 
-def test_worker_init_loads_the_build_then_calls_opt_setup(recording_worker):
+def test_worker_init_loads_the_build_and_stops_there(recording_worker):
+    """Migrated by P02-T01: construction used to call OPT_setup as well."""
     _, engine = recording_worker
     transcript = engine.transcript
 
     assert "call:load_build_xml" in transcript
-    setup_calls = [i for i, step in enumerate(transcript) if step.startswith("eval:return OPT_setup")]
-    assert setup_calls, "expected OPT_setup to run during Worker.__init__"
+    assert not [s for s in transcript if s.startswith("eval:return OPT_setup")]
+
+
+def test_the_legacy_entry_point_still_clears_the_build_before_searching(monkeypatch):
+    """The destructive step did not disappear; it became explicit and named."""
+    engines: list[RecordingEngine] = []
+
+    def factory(pob_root):
+        engine = RecordingEngine(pob_root)
+        engines.append(engine)
+        return engine
+
+    import pob2mcp.engine as real_engine_module
+
+    monkeypatch.setattr(real_engine_module, "Pob2Engine", factory)
+    engine_worker.new_blank_worker("FIXTURE-POB-ROOT", "", BUILD_XML, 60, 0)
+    transcript = engines[0].transcript
+
+    setup_calls = [i for i, step in enumerate(transcript)
+                   if step.startswith("eval:return OPT_setup")]
+    assert setup_calls, "the legacy pipeline still needs a blank candidate"
     assert transcript.index("call:load_build_xml") < setup_calls[0]
 
 
@@ -111,21 +135,23 @@ def test_opt_setup_source_clears_tree_groups_and_items(repo_root: Path):
 
 # ------------------------------------------------------- repaired behaviour
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F11 repair is P02-T01: loading an exact build must not call OPT_setup, "
-           "which clears the tree, the socket groups and the equipment.",
-)
-def test_repaired_exact_load_does_not_reset_the_character(recording_worker):
-    _, engine = recording_worker
-    assert not [s for s in engine.transcript if s.startswith("eval:return OPT_setup")]
+def test_exact_loading_does_not_reset_the_character(recording_worker):
+    worker, engine = recording_worker
+    before = len(engine.calls)
+    worker.load_exact_build()
+
+    new_steps = engine.transcript[before:]
+    assert "call:load_build_xml" in new_steps
+    assert not [s for s in new_steps if s.startswith("eval:return OPT_setup")]
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F11 repair is P02-T01: blank-candidate construction and faithful "
-           "import must be separate, named operations on the adapter.",
-)
-def test_repaired_adapter_separates_blank_and_exact_loading():
+def test_blank_and_exact_loading_are_separate_named_operations():
     assert hasattr(engine_worker.Worker, "load_exact_build")
     assert hasattr(engine_worker.Worker, "create_blank_build")
+
+
+def test_the_production_adapter_offers_the_same_split():
+    from pob2opt.evaluation import EngineAdapter
+
+    assert hasattr(EngineAdapter, "load_exact_build")
+    assert hasattr(EngineAdapter, "create_blank_build")

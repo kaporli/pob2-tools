@@ -1,10 +1,14 @@
 """Research finding F11 against the real engine (P00-T04).
 
-``pob2opt.engine_worker.Worker.__init__`` runs ``load_build_xml`` and then
-``OPT_setup``. This reproduces that exact pair of calls on a build that has a
-passive tree, an equipped item and a socket group, and measures what survives.
+``pob2opt.engine_worker.Worker.__init__`` used to run ``load_build_xml`` and
+then ``OPT_setup``. This reproduces that exact pair of calls on a build that
+has a passive tree, an equipped item and a socket group, and measures what
+survives, because ``OPT_setup`` is still the right preparation for a blank
+candidate and has to keep working.
 
-The repair is P02-T01: exact loading must not call ``OPT_setup``.
+P02-T01 repaired the import path by not calling ``OPT_setup`` at all, so the
+repaired expectation at the bottom exercises the adapter rather than asking
+``OPT_setup`` to behave differently.
 """
 
 from __future__ import annotations
@@ -91,17 +95,26 @@ def test_the_requested_level_is_honoured_when_auto_mode_is_off(
 
 
 # ------------------------------------------------------- repaired behaviour
+# Migrated by P02-T01. The original expectation called ``OPT_setup`` and asked
+# the character to survive it, which would have required changing what
+# ``OPT_setup`` means. The repair was to stop calling it on the import path, so
+# the expectation now exercises that path instead.
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="F11 repair is P02-T01: a faithful import path must keep the tree, "
-           "the equipment and the socket groups of the imported build.",
-)
-def test_repaired_import_path_keeps_the_character(
+
+def test_loading_without_opt_setup_keeps_the_whole_character(
         blank_build, populated_build_xml, opt_helpers_source):
-    blank_build.call("load_build_xml", {"xml": populated_build_xml, "name": "import"})
-    blank_build.eval_lua(opt_helpers_source)
-    blank_build.eval_lua("return OPT_setup(%d, %d)" % (CHAR_LEVEL, RESIST_PENALTY))
+    """The import path, minus the one call that was doing the damage.
 
-    assert allocated_count(blank_build) > 1
-    assert equipped_count(blank_build) == 1
+    Loading the helper Lua is what the worker still does; only ``OPT_setup``
+    is gone. The adapter equivalent, in its own worker process, is
+    tests/engine/test_p02_t01_engine_adapter.py.
+    """
+    blank_build.call("load_build_xml", {"xml": populated_build_xml, "name": "import"})
+    nodes = allocated_count(blank_build)
+    items = equipped_count(blank_build)
+    assert nodes > 1 and items == 1
+
+    blank_build.eval_lua(opt_helpers_source)
+
+    assert allocated_count(blank_build) == nodes
+    assert equipped_count(blank_build) == items

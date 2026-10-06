@@ -5,10 +5,11 @@ Two inputs the pipeline must keep apart:
 * a valid build that simply has no skill - its full-DPS total is a real zero;
 * a malformed build document - which must not look like a successful load.
 
-The second case is an observation recorded by P00-T04 (P00-OBS-01): the current
-``load_build_xml`` accepts truncated, invalid XML and silently returns a default
-character, so "nothing was imported" is indistinguishable from "a level 1
-character was imported".
+The second case is observation P00-OBS-01, repaired by P02-T01.
+``load_build_xml`` used to accept truncated, invalid XML and silently return a
+default character, so "nothing was imported" was indistinguishable from "a
+level 1 character was imported". It now raises, because PoB signals a document
+it cannot read only by setting a UI prompt and carrying on.
 """
 
 from __future__ import annotations
@@ -57,37 +58,32 @@ def test_zero_full_dps_is_not_the_same_as_zero_hit_damage(blank_build, zero_dps_
 
 # ------------------------------------------------------- malformed input
 
-def test_malformed_xml_is_accepted_and_yields_a_default_character(
+def test_malformed_xml_is_rejected_instead_of_loading_a_default_character(
         blank_build, malformed_xml: str):
-    """CURRENT behaviour (observation P00-OBS-01): no error, no signal."""
-    summary = blank_build.call("load_build_xml", {"xml": malformed_xml, "name": "bad"})
-
-    assert summary["level"] == 1
-    assert summary["passivePointsUsed"] == 0
-    # The declared class in the document is Huntress; what loads is not.
-    assert "Huntress" in malformed_xml
-    assert summary["class"] != "Huntress"
-
-
-def test_nothing_distinguishes_a_failed_import_from_a_real_level_one_build(
-        blank_build, malformed_xml: str):
-    bad = blank_build.call("load_build_xml", {"xml": malformed_xml, "name": "bad"})
-    fresh = blank_build.call("new_build")
-
-    assert bad["level"] == fresh["level"]
-    assert bad["class"] == fresh["class"]
-    assert bad["passivePointsUsed"] == fresh["passivePointsUsed"]
-
-
-# ------------------------------------------------------- repaired behaviour
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="P00-OBS-01 repair belongs with P02-T01/P04-T01: malformed build input "
-           "must produce a typed invalid_input result, not a default character.",
-)
-def test_repaired_malformed_import_is_rejected(blank_build, malformed_xml: str):
+    """Repaired P00-OBS-01. It previously returned a level 1 character."""
     from pob2mcp.engine import PobEngineError
 
+    with pytest.raises(PobEngineError) as excinfo:
+        blank_build.call("load_build_xml", {"xml": malformed_xml, "name": "bad"})
+
+    assert "invalid build document" in str(excinfo.value)
+    # The reason the document was rejected is named, not just "failed".
+    assert "unclosed element" in str(excinfo.value)
+
+
+def test_the_declared_class_is_never_quietly_replaced_by_the_default_one(
+        blank_build, malformed_xml: str):
+    from pob2mcp.engine import PobEngineError
+
+    assert "Huntress" in malformed_xml
     with pytest.raises(PobEngineError):
         blank_build.call("load_build_xml", {"xml": malformed_xml, "name": "bad"})
+
+    # A real new build is still reachable, and is clearly a different request.
+    fresh = blank_build.call("new_build")
+    assert fresh["level"] == 1
+    assert fresh["class"] != "Huntress"
+
+
+# The typed ``invalid_input`` this produces at the adapter boundary is covered
+# by tests/engine/test_p02_t01_engine_adapter.py.

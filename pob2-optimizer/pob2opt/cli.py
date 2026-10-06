@@ -87,7 +87,7 @@ def get_gems(args):
     if cached and not args.force:
         return cached
     resist = -20 if args.level < 45 else -30
-    w = engine_worker.Worker(args.pob_root, args.mcp_path, args.build_xml, args.level, resist)
+    w = engine_worker.new_blank_worker(args.pob_root, args.mcp_path, args.build_xml, args.level, resist)
     gems = w.gems()
     save_phase(args.out, "gems", gems)
     return gems
@@ -98,7 +98,7 @@ def phase_harvest(args):
         return load_phase(args.out, "harvest")
     from pob2opt import engine_worker, harvest
     resist = -20 if args.level < 45 else -30
-    w = engine_worker.Worker(args.pob_root, args.mcp_path, args.build_xml, args.level, resist)
+    w = engine_worker.new_blank_worker(args.pob_root, args.mcp_path, args.build_xml, args.level, resist)
     data = harvest.harvest_all(args.mcp_path, w, args.league, args.level, args.budget, log=log)
     save_phase(args.out, "harvest", data)
     return data
@@ -297,7 +297,7 @@ def phase_buildarounds(args):
     screen = load_phase(args.out, "screen") or []
     rank_order = [r["gem"] for r in phases.rank_tiered(screen, args.tier_weights)]
     resist = -20 if args.level < 45 else -30
-    w = engine_worker.Worker(args.pob_root, args.mcp_path, args.build_xml, args.level, resist)
+    w = engine_worker.new_blank_worker(args.pob_root, args.mcp_path, args.build_xml, args.level, resist)
     found = w.lua(r"""
     local out = {}
     for utype, list in pairs(build.data.uniques) do
