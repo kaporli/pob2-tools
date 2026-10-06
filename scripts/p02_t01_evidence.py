@@ -108,6 +108,12 @@ def compare(first: dict, second: dict) -> dict:
             "within_tolerance": not mismatched}
 
 
+def first_provenance(adapter, build, profile, document):
+    """Where the evaluated document came from, and what was not verified."""
+    return adapter.primitives(build, EngineState(), profile,
+                              document=document).document
+
+
 def pob_section(pob_root: Path) -> dict:
     import dataclasses
 
@@ -135,6 +141,7 @@ def pob_section(pob_root: Path) -> dict:
             "pob_dirty_hash": identity.pob_dirty_hash,
             "dirty_reason": checkout.reason,
             "adapter_version": identity.adapter_version,
+            "helper_lua_hashes": dict(identity.helper_lua_hashes),
             "worker_cwd": identity.worker_cwd, "is_pinned": identity.is_pinned}
         out["worker_cwd_differs_from_parent"] = (
             identity.worker_cwd != parent_cwd_before)
@@ -142,18 +149,51 @@ def pob_section(pob_root: Path) -> dict:
         document = BuildDocument(build_hash, xml)
         exact = adapter.load_exact_build(document)
         out["load_exact_build"] = dataclasses.asdict(exact)
+        out["document_provenance"] = dataclasses.asdict(
+            first_provenance(adapter, build, profile, document))
         blank = adapter.create_blank_build(level=28)
         out["create_blank_build"] = dataclasses.asdict(blank)
 
+        # A, B, A with B actually read. Comparing two A readings without ever
+        # looking at B cannot tell a working A-B-A from an adapter that
+        # ignores every load after the first (P02-T01-R02).
         first = adapter.primitives(build, EngineState(), profile, document=document)
-        adapter.load_exact_build(BuildDocument("p02t01-evidence-b", stronger))
-        second = adapter.primitives(build, EngineState(), profile, document=document)
+        middle = adapter.primitives(build, EngineState(), profile,
+                                    document=BuildDocument(build_hash, stronger))
+        second = adapter.primitives(build, EngineState(), profile,
+                                    document=document)
+        probe_key = "TotalDPS"
         out["aba"] = {
             "b_document": "the same build with a stronger fixture weapon",
             "tolerance": {"relative": REL_TOLERANCE, "absolute": ABS_TOLERANCE},
+            "probe_key": probe_key,
+            "a_first": first.values.get(probe_key),
+            "b": middle.values.get(probe_key),
+            "a_second": second.values.get(probe_key),
+            "b_differs": middle.values.get(probe_key) != first.values.get(probe_key),
             "agreement": compare(dict(first.values), dict(second.values)),
             "semantics_status": first.semantics_status,
             "semantics_owner": first.semantics_owner,
+        }
+
+        # Configuration must not survive into an evaluation that did not ask
+        # for it (P02-T01-R01).
+        base = adapter.primitives(build, EngineState(), profile, document=document)
+        configured = adapter.primitives(
+            build, EngineState(config={"enemyIsBoss": "Boss"}), profile,
+            document=document)
+        restored = adapter.primitives(build, EngineState(), profile,
+                                      document=document)
+        changed = [k for k in base.values
+                   if base.values[k] != configured.values.get(k)]
+        leaked = [k for k in base.values
+                  if base.values[k] != restored.values.get(k)]
+        out["state_isolation"] = {
+            "config_applied": {"enemyIsBoss": "Boss"},
+            "keys_changed_by_config": len(changed),
+            "keys_still_changed_afterwards": len(leaked),
+            "leaked_keys": leaked[:10],
+            "isolated": not leaked,
         }
 
         first_pid = adapter.identity().worker_pid

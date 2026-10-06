@@ -2,6 +2,8 @@
  "adapter_version": "p02-t01.1",
  "pob": {
   "aba": {
+   "a_first": 47.222385956304,
+   "a_second": 47.222385956304,
    "agreement": {
     "compared_keys": 675,
     "keys_outside_tolerance": [],
@@ -10,7 +12,10 @@
     "worst_key": null,
     "worst_relative_delta": 0.0
    },
+   "b": 106.83562856206,
+   "b_differs": true,
    "b_document": "the same build with a stronger fixture weapon",
+   "probe_key": "TotalDPS",
    "semantics_owner": "P02-T04",
    "semantics_status": "undeclared",
    "tolerance": {
@@ -28,9 +33,19 @@
    "opt_setup_called": true,
    "socket_groups": 0
   },
+  "document_provenance": {
+   "blob_hash": null,
+   "build_hash": "p02t01-evidence-build",
+   "content_hash": "ca98dc109e03fe05d3c860816d192889c57e6a513055d415d89168d5c71cf428",
+   "reloaded": false,
+   "source": "caller_supplied",
+   "unverified": [
+    "the loaded character was not cross-checked against the BuildSpec; that needs the catalog mapping owned by P02-T02"
+   ]
+  },
   "forced_termination": {
-   "diagnostic": "worker 13108 is gone: worker process exited (exit code 1)",
-   "killed_pid": 13108,
+   "diagnostic": "worker 1780 is gone: worker process exited (exit code 1)",
+   "killed_pid": 1780,
    "new_process": true,
    "observed": "engine_crash",
    "replacement_completed_the_task": {
@@ -43,11 +58,15 @@
     "opt_setup_called": false,
     "socket_groups": 1
    },
-   "replacement_pid": 7160
+   "replacement_pid": 14884
   },
   "identity": {
    "adapter_version": "p02-t01.1",
    "dirty_reason": "working tree differs from the pinned commit",
+   "helper_lua_hashes": {
+    "opt_helpers.lua": "f6e3fd74b486f6072bf285e31f77bc5ce492ace03a408512ada883907ba67149",
+    "tree_lib.lua": "d6b30d7d90b72561f2416a79914eea7657d9dee33b593109379fea1bcf9f3681"
+   },
    "is_pinned": false,
    "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
    "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
@@ -68,25 +87,34 @@
   "parent_cwd_before": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
   "parent_cwd_unchanged": true,
   "replacements": 1,
+  "state_isolation": {
+   "config_applied": {
+    "enemyIsBoss": "Boss"
+   },
+   "isolated": true,
+   "keys_changed_by_config": 56,
+   "keys_still_changed_afterwards": 0,
+   "leaked_keys": []
+  },
   "status": "recorded",
   "what_this_is": "PoB-derived engine behaviour. Deterministic primitive agreement only; not a gameplay measurement and not a performance claim.",
   "worker_cwd_differs_from_parent": true,
   "worker_pids": [
-   13108,
-   7160
+   1780,
+   14884
   ]
  },
- "recorded_at_utc": "2026-10-06T12:09:13.319983+00:00",
+ "recorded_at_utc": "2026-10-06T12:41:41.252419+00:00",
  "schema_version": 1,
  "specification_version": "1.0",
  "synthetic": {
   "hard_outer_deadline_s": 90.0,
   "probes": {
    "crash": {
-    "diagnostic": "worker 3068 died during create_blank_build (exit code 70)",
+    "diagnostic": "worker 30656 died during create_blank_build (exit code 70)",
     "exit_code": 0,
     "expected": "engine_crash",
-    "first_worker_pid": 3068,
+    "first_worker_pid": 30656,
     "mode": "crash",
     "observed": "engine_crash",
     "ok": true,
@@ -96,14 +124,14 @@
     "timeout_s": 2.0,
     "worker_alive_after": false,
     "worker_pids": [
-     3068
+     30656
     ]
    },
    "revive": {
-    "diagnostic": "worker 10260 died during create_blank_build (exit code 70)",
+    "diagnostic": "worker 21640 died during create_blank_build (exit code 70)",
     "exit_code": 0,
     "expected": "engine_crash",
-    "first_worker_pid": 10260,
+    "first_worker_pid": 21640,
     "generation": 2,
     "mode": "revive",
     "new_process": true,
@@ -118,20 +146,20 @@
      "opt_setup_called": false,
      "socket_groups": 3
     },
-    "second_worker_pid": 31448,
+    "second_worker_pid": 1896,
     "stage": "create_blank_build",
     "timeout_s": 2.0,
     "worker_alive_after": false,
     "worker_pids": [
-     10260,
-     31448
+     21640,
+     1896
     ]
    },
    "wedge": {
-    "diagnostic": "worker 8392 did not answer create_blank_build within 2.000s; the process was terminated",
+    "diagnostic": "worker 29576 did not answer create_blank_build within 2.000s; the process was terminated",
     "exit_code": 0,
     "expected": "timeout",
-    "first_worker_pid": 8392,
+    "first_worker_pid": 29576,
     "mode": "wedge",
     "observed": "timeout",
     "ok": true,
@@ -141,7 +169,7 @@
     "timeout_s": 2.0,
     "worker_alive_after": false,
     "worker_pids": [
-     8392
+     29576
     ]
    }
   },

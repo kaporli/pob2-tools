@@ -102,6 +102,14 @@ def adapter(pob_root: Path):
 
 
 @pytest.fixture(scope="module")
+def stronger_xml(populated_xml: str) -> str:
+    """The same build with a stronger fixture weapon."""
+    stronger = populated_xml.replace("60 to 90", "120 to 180")
+    assert stronger != populated_xml, "the fixture weapon roll was not found"
+    return stronger
+
+
+@pytest.fixture(scope="module")
 def document(populated_xml: str) -> BuildDocument:
     return BuildDocument(build_hash=BUILD_HASH, xml=populated_xml)
 
@@ -172,6 +180,30 @@ def test_a_malformed_document_is_invalid_input_not_a_default_character(
     assert not adapter.worker_alive
 
 
+def test_the_evaluation_after_a_rejected_document_is_not_a_blank_character(
+        adapter, document, build_and_profile, populated_xml):
+    """Regression for P02-T01-R10.
+
+    The replacement worker holds PoB's default build. Skipping the load
+    because the *previous* worker had the document returned a level 1
+    character's numbers under the requested build's hash.
+    """
+    build, profile = build_and_profile
+    adapter.documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
+    before = adapter.primitives(build, EngineState(), profile)
+
+    malformed = "<PathOfBuilding2><Build unclosed="
+    with pytest.raises(EngineInvalidInput):
+        adapter.load_exact_build(BuildDocument("malformed-2", malformed))
+
+    after = adapter.primitives(build, EngineState(), profile)
+
+    assert after.document.reloaded is True
+    assert after.loaded.allocated_nodes == before.loaded.allocated_nodes > 1
+    assert after.loaded.equipped_items == before.loaded.equipped_items == 1
+    assert_values_match(before.values, after.values)
+
+
 # ----------------------------------------------------------- A-B-A stability
 
 def assert_values_match(first: dict, second: dict) -> None:
@@ -186,26 +218,86 @@ def assert_values_match(first: dict, second: dict) -> None:
 
 
 def test_aba_through_the_adapter_returns_identical_primitives(
-        adapter, document, build_and_profile, populated_xml):
+        adapter, document, build_and_profile, populated_xml, stronger_xml):
+    """A, then B, then A again, reading all three.
+
+    B's numbers are read and asserted different. Without that the comparison
+    cannot tell a working A-B-A from an adapter that ignores every load after
+    the first, which is exactly the defect review finding P02-T01-R01 found.
+    """
     build, profile = build_and_profile
-    documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
-    adapter.documents = documents
+    adapter.documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
     state = EngineState()
 
     first = adapter.primitives(build, state, profile)
-
-    stronger = populated_xml.replace("60 to 90", "120 to 180")
-    assert stronger != populated_xml, "B must differ, or A-B-A proves nothing"
-    adapter.load_exact_build(BuildDocument("p02t01-engine-b", stronger))
     middle = adapter.primitives(build, state, profile,
+                                document=BuildDocument(BUILD_HASH, stronger_xml))
+    second = adapter.primitives(build, state, profile,
                                 document=BuildDocument(BUILD_HASH, populated_xml))
 
-    adapter.load_exact_build(BuildDocument("p02t01-engine-b", stronger))
-    adapter.load_exact_build(document)
-    second = adapter.primitives(build, state, profile)
-
+    assert middle.values["TotalDPS"] > first.values["TotalDPS"], (
+        "B must differ, or A-B-A proves nothing")
     assert_values_match(first.values, second.values)
-    assert_values_match(first.values, middle.values)
+
+
+def test_two_documents_sharing_a_build_hash_are_not_confused(
+        adapter, build_and_profile, populated_xml, stronger_xml):
+    """Regression for P02-T01-R01.
+
+    ``build_hash`` is caller-supplied and does not determine the content. The
+    adapter previously cached the load on it and answered the second document
+    with the first one's numbers.
+    """
+    build, profile = build_and_profile
+    adapter.documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
+
+    weak = adapter.primitives(build, EngineState(), profile,
+                              document=BuildDocument(BUILD_HASH, populated_xml))
+    strong = adapter.primitives(build, EngineState(), profile,
+                                document=BuildDocument(BUILD_HASH, stronger_xml))
+
+    assert weak.document.content_hash != strong.document.content_hash
+    assert strong.values["TotalDPS"] > weak.values["TotalDPS"]
+    assert strong.document.reloaded is True
+
+
+def test_configuration_does_not_leak_into_the_next_evaluation(
+        adapter, build_and_profile, populated_xml):
+    """Regression for P02-T01-R01.
+
+    PoB keeps configuration in its own table and nothing clears it, so an
+    evaluation that skipped the reload used to inherit the previous call's
+    settings. 56 output keys stayed changed.
+    """
+    build, profile = build_and_profile
+    adapter.documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
+
+    before = adapter.primitives(build, EngineState(), profile)
+    configured = adapter.primitives(
+        build, EngineState(config={"enemyIsBoss": "Boss"}), profile)
+    after = adapter.primitives(build, EngineState(), profile)
+
+    changed = [k for k in before.values
+               if before.values[k] != configured.values.get(k)]
+    assert changed, "the configuration must actually change something"
+    assert_values_match(before.values, after.values)
+
+
+def test_an_identical_repeated_request_does_not_reload(adapter, build_and_profile,
+                                                       populated_xml, stronger_xml):
+    """The fix must not become "reload always"; that would hide a real cost."""
+    build, profile = build_and_profile
+    adapter.documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
+    # Displace whatever an earlier test left loaded, so "reloaded" below is
+    # about this test and not about the module-scoped adapter's history.
+    adapter.load_exact_build(BuildDocument("p02t01-displace", stronger_xml))
+
+    first = adapter.primitives(build, EngineState(), profile)
+    repeat = adapter.primitives(build, EngineState(), profile)
+
+    assert first.document.reloaded is True
+    assert repeat.document.reloaded is False
+    assert_values_match(first.values, repeat.values)
 
 
 def test_repeating_one_request_is_stable(adapter, document, build_and_profile,
@@ -226,6 +318,16 @@ def test_a_snapshot_declares_no_primitive_semantics(adapter, build_and_profile,
 
     assert snapshot.semantics_status == "undeclared"
     assert snapshot.values, "the engine did answer; only the units are missing"
+    # What was not checked is recorded rather than implied (P02-T01-R03).
+    assert snapshot.document.unverified
+
+
+def test_the_identity_names_the_helper_scripts_that_ran(adapter):
+    """Regression for P02-T01-R06."""
+    names = dict(adapter.identity().helper_lua_hashes)
+
+    assert set(names) == {"opt_helpers.lua", "tree_lib.lua"}
+    assert all(len(digest) == 64 for digest in names.values())
 
 
 # ------------------------------------------------------- forced termination

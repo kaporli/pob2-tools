@@ -16,6 +16,7 @@ Lua state. The rules this module exists to keep:
 
 from __future__ import annotations
 
+import hashlib
 import os
 import subprocess
 import sys
@@ -34,8 +35,9 @@ from .documents import BuildDocumentStore
 from .errors import (EngineCrash, EngineError, EngineInternalError,
                      EngineInvalidInput, EngineProfileMismatch, EngineTimeout,
                      error_from_wire)
-from .protocol import (ADAPTER_VERSION, BuildDocument, EngineIdentity,
-                       EngineState, LoadedBuild, PrimitiveSnapshot)
+from .protocol import (ADAPTER_VERSION, BuildDocument, DocumentProvenance,
+                       EngineIdentity, EngineState, LoadedBuild,
+                       PrimitiveSnapshot)
 from .worker import worker_main
 
 #: The default session factory: the real PoB engine.
@@ -58,6 +60,10 @@ class WorkerSpec:
     entry: str = DEFAULT_ENTRY
     pob_root: str | None = None
     helper_lua: tuple[str, ...] = ()
+    #: (basename, sha256) per helper, hashed in the parent before the spawn.
+    #: The helpers run inside every engine, so a value produced with a
+    #: different helper is a different value (P02-T01-R06).
+    helper_lua_hashes: tuple[tuple[str, str], ...] = ()
     default_stat_keys: tuple[str, ...] | None = None
     quiet: bool = True
     extra: Mapping[str, Any] = field(default_factory=dict)
@@ -71,6 +77,19 @@ class WorkerSpec:
         return config
 
 
+def helper_digest(path: Path) -> str:
+    """SHA-256 of a helper script as the worker will hand it to Lua.
+
+    Hashed after newline translation, not over the raw bytes: the worker reads
+    these files as text, so a CRLF checkout and an LF checkout send the engine
+    identical source and must produce identical identities. Hashing the bytes
+    made the identity depend on how git checked the file out. This also agrees
+    with the ``helper_lua_sha256`` values P00 recorded.
+    """
+    return hashlib.sha256(
+        path.read_text(encoding="utf-8").encode("utf-8")).hexdigest()
+
+
 def pob_worker_spec(pob_root: str | os.PathLike[str], *,
                     helper_lua: Sequence[str] = DEFAULT_HELPER_LUA,
                     **kwargs) -> WorkerSpec:
@@ -80,6 +99,7 @@ def pob_worker_spec(pob_root: str | os.PathLike[str], *,
         raise EngineInvalidInput("PoB checkout not found at %s" % root,
                                  stage="spawn")
     resolved: list[str] = []
+    hashes: list[tuple[str, str]] = []
     for name in helper_lua:
         path = Path(name)
         path = path if path.is_absolute() else _LUA_DIR / path
@@ -88,26 +108,38 @@ def pob_worker_spec(pob_root: str | os.PathLike[str], *,
             raise EngineInvalidInput("helper Lua not found at %s" % path,
                                      stage="spawn")
         resolved.append(str(path))
+        hashes.append((path.name, helper_digest(path)))
     return WorkerSpec(entry=DEFAULT_ENTRY, pob_root=str(root),
-                      helper_lua=tuple(resolved), **kwargs)
+                      helper_lua=tuple(resolved),
+                      helper_lua_hashes=tuple(hashes), **kwargs)
 
 
 # -- process handle -----------------------------------------------------------
 
-def kill_process_tree(pid: int, process=None) -> None:
-    """Best effort, never raises. A leaked worker is worse than a noisy kill."""
+def kill_process_tree(pid: int, process=None) -> list[str]:
+    """Best effort, never raises. A leaked worker is worse than a noisy kill.
+
+    Returns what went wrong instead of discarding it, so a worker that could
+    not be killed is recorded on the handle rather than silently assumed dead
+    (P02-T01-R09).
+    """
+    problems: list[str] = []
     if sys.platform == "win32":
         try:
             subprocess.run(["taskkill", "/F", "/T", "/PID", str(pid)],
                            capture_output=True, timeout=KILL_GRACE_S, check=False)
-        except (OSError, subprocess.SubprocessError):
-            pass
+        except (OSError, subprocess.SubprocessError) as exc:
+            problems.append("taskkill failed: %s: %s" % (type(exc).__name__, exc))
     if process is not None and process.is_alive():
         try:
             process.kill()
-        except (OSError, ValueError):
-            pass
+        except (OSError, ValueError) as exc:
+            problems.append("kill failed: %s: %s" % (type(exc).__name__, exc))
         process.join(KILL_GRACE_S)
+        if process.is_alive():
+            problems.append("process %s is still alive after %.0fs"
+                            % (pid, KILL_GRACE_S))
+    return problems
 
 
 class WorkerHandle:
@@ -198,13 +230,15 @@ class WorkerHandle:
             return
         self.dead = True
         self.reported = reported
-        self.death_reason = reason
+        problems: list[str] = []
         if self.pid is not None:
-            kill_process_tree(self.pid, self.process)
+            problems.extend(kill_process_tree(self.pid, self.process))
         try:
             self._parent_conn.close()
-        except OSError:
-            pass
+        except OSError as exc:
+            problems.append("closing the pipe failed: %s" % exc)
+        self.death_reason = ("%s (%s)" % (reason, "; ".join(problems))
+                             if problems else reason)
 
     def close(self) -> None:
         """Ask the worker to shut down; kill it if it will not.
@@ -252,8 +286,17 @@ class EngineAdapter:
             spec.pob_root or ".")
         self._handle: WorkerHandle | None = None
         self._generation = 0
-        self._loaded_build_hash: str | None = None
+        #: What the worker's Lua state actually holds: the content key of the
+        #: loaded document and the state applied on top of it. Keyed on
+        #: content because ``build_hash`` is caller-supplied and two documents
+        #: can share one (review finding P02-T01-R01).
+        self._loaded_key: tuple[str, str] | None = None
+        self._applied_state: dict | None = None
         self._loaded: LoadedBuild | None = None
+        #: Which worker generation holds it. A later generation is a fresh
+        #: engine with PoB's default blank build, however recently the
+        #: previous one was loaded (P02-T01-R10).
+        self._loaded_generation: int | None = None
         self._identity: EngineIdentity | None = None
         #: Every process this adapter has owned, oldest first.
         self.worker_pids: list[int] = []
@@ -331,25 +374,53 @@ class EngineAdapter:
     def _request(self, op: str, args: dict | None, timeout_s: float):
         handle = self._ensure_worker()
         try:
-            return handle.request(op, args, timeout_s)
-        except (EngineTimeout, EngineCrash):
-            # The handle already terminated the process; the next request
-            # starts a fresh one rather than reusing a state nobody trusts.
-            self._forget_loaded_build()
+            result = handle.request(op, args, timeout_s)
+        except EngineError as exc:
+            if handle.dead:
+                # The handle terminated the process, for any reason: a
+                # timeout, a crash, or a fatal error such as a malformed
+                # document. The next request starts a fresh engine, which
+                # holds nothing (P02-T01-R10).
+                self._forget_loaded_build()
+            # Annotate, never replace. Raising a directory error out of a
+            # finally block would demote the failure that explains the missing
+            # result to __context__ (P02-T01-R07).
+            moved = self._parent_cwd_drift()
+            if moved:
+                exc.diagnostic = "%s; also %s" % (exc.diagnostic, moved)
             raise
-        finally:
-            self._assert_parent_cwd(op)
+        self._assert_parent_cwd(op)
+        return result
+
+    def _parent_cwd_drift(self) -> str | None:
+        current = os.getcwd()
+        if current == self.parent_cwd:
+            return None
+        return ("the coordinator working directory moved from %s to %s"
+                % (self.parent_cwd, current))
 
     def _forget_loaded_build(self) -> None:
-        self._loaded_build_hash = None
+        self._loaded_key = None
+        self._applied_state = None
         self._loaded = None
+        self._loaded_generation = None
+
+    def _worker_holds_state(self) -> bool:
+        """True only if the process that did the loading is still serving.
+
+        Checked before deciding to skip a load. Without it a worker replaced
+        after a fatal error answers the next request from a blank character
+        while the snapshot still carries the requested build's hash.
+        """
+        return (self._handle is not None and self._handle.alive
+                and self._loaded_generation == self._generation
+                and self._loaded is not None)
 
     def _assert_parent_cwd(self, stage: str) -> None:
-        current = os.getcwd()
-        if current != self.parent_cwd:
-            raise EngineInternalError(
-                "the coordinator working directory moved from %s to %s during %s"
-                % (self.parent_cwd, current, stage), stage=stage)
+        moved = self._parent_cwd_drift()
+        if moved:
+            raise EngineInternalError("%s during %s" % (moved, stage),
+                                      stage=stage)
 
     # -- operations -------------------------------------------------------
 
@@ -362,6 +433,7 @@ class EngineAdapter:
             pob_commit=self.checkout.commit,
             pob_dirty_hash=self.checkout.dirty_hash,
             adapter_version=ADAPTER_VERSION,
+            helper_lua_hashes=self.spec.helper_lua_hashes,
             worker_pid=int(described.get("pid") or 0),
             worker_cwd=described.get("cwd") or "",
             generation=self._generation)
@@ -376,25 +448,37 @@ class EngineAdapter:
         self._forget_loaded_build()
         return LoadedBuild.from_wire(payload)
 
-    def load_exact_build(self, document: BuildDocument,
-                         name: str = "exact") -> LoadedBuild:
-        """Load a build document unchanged. Never clears the character."""
+    def load_exact_build(self, document: BuildDocument, name: str = "exact",
+                         *, timeout_s: float | None = None) -> LoadedBuild:
+        """Load a build document unchanged. Never clears the character.
+
+        ``timeout_s`` lets an evaluation apply its own fidelity bound to the
+        load it performs. Without that a screen-fidelity call declaring 30
+        seconds could spend the detailed bound loading and still report
+        success (P02-T01-R11).
+        """
         payload = self._request(protocol.OP_LOAD_EXACT_BUILD,
                                 {"xml": document.xml, "name": name},
-                                self.detailed_timeout_s)
+                                self.detailed_timeout_s if timeout_s is None
+                                else timeout_s)
         loaded = LoadedBuild.from_wire(payload)
         if loaded.opt_setup_called:
             raise EngineInternalError(
                 "exact load reported OPT_setup; the imported build was cleared",
                 stage=protocol.OP_LOAD_EXACT_BUILD)
-        self._loaded_build_hash = document.build_hash
+        self._loaded_key = document.content_key
+        # A fresh load carries no applied state; anything else would make the
+        # next evaluation inherit the previous one's configuration.
+        self._applied_state = EngineState().to_wire()
         self._loaded = loaded
+        self._loaded_generation = self._generation
         return loaded
 
     def primitives(self, build: BuildSpec, state: EngineState,
                    profile: PatchProfile, *,
                    fidelity: Fidelity = Fidelity.SCREEN,
-                   document: BuildDocument | None = None) -> PrimitiveSnapshot:
+                   document: BuildDocument | None = None,
+                   blob_hash: str | None = None) -> PrimitiveSnapshot:
         """Load ``build`` exactly, apply ``state``, read the engine outputs.
 
         The returned values carry no declared units: P02-T04 owns the primitive
@@ -402,7 +486,7 @@ class EngineAdapter:
         """
         self._check_profile(profile, build)
         if document is None:
-            document = self._document_for(build)
+            document = self._document_for(build, blob_hash)
         if document.build_hash != build.build_hash:
             raise EngineInvalidInput(
                 "document %s does not belong to build %s"
@@ -411,12 +495,22 @@ class EngineAdapter:
 
         timeout_s = protocol.timeout_for(fidelity, self.screen_timeout_s,
                                          self.detailed_timeout_s)
+        wanted = state.to_wire()
         started = time.monotonic()
-        if self._loaded_build_hash != document.build_hash or self._loaded is None:
-            loaded = self.load_exact_build(document, name=build.name or "exact")
+        # Reload unless the worker already holds exactly this document with
+        # exactly this state. PoB keeps configuration in its own table and
+        # nothing clears it, so a changed state needs a fresh document, not
+        # just a different set_config call (P02-T01-R01).
+        reloaded = (not self._worker_holds_state()
+                    or self._loaded_key != document.content_key
+                    or self._applied_state != wanted)
+        if reloaded:
+            loaded = self.load_exact_build(document, name=build.name or "exact",
+                                           timeout_s=timeout_s)
         else:
             loaded = self._loaded
-        payload = self._request(protocol.OP_PRIMITIVES, state.to_wire(), timeout_s)
+        payload = self._request(protocol.OP_PRIMITIVES, wanted, timeout_s)
+        self._applied_state = wanted
         duration_ms = int((time.monotonic() - started) * 1000)
 
         summary = payload.get("summary") or {}
@@ -426,20 +520,23 @@ class EngineAdapter:
             values=dict(payload.get("values") or {}),
             stat_keys=tuple(payload.get("stat_keys") or ()),
             identity=self.identity(),
-            state_applied=state.to_wire(),
+            state_applied=wanted,
             loaded=LoadedBuild.from_wire(summary),
+            document=DocumentProvenance.of(document, reloaded=reloaded),
             timeout_s=timeout_s,
+            load_timeout_s=timeout_s if reloaded else None,
             duration_ms=duration_ms)
 
     # -- checks -----------------------------------------------------------
 
-    def _document_for(self, build: BuildSpec) -> BuildDocument:
+    def _document_for(self, build: BuildSpec,
+                      blob_hash: str | None) -> BuildDocument:
         if self.documents is None:
             raise EngineInvalidInput(
                 "no build document store is configured; pass document= or "
                 "construct the adapter with documents=", stage="document",
                 record_ids=[build.record_id])
-        return self.documents.document_for(build)
+        return self.documents.document_for(build, blob_hash)
 
     def _check_profile(self, profile: PatchProfile, build: BuildSpec) -> None:
         if self.checkout.commit is None:

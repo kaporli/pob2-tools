@@ -1,0 +1,48 @@
+{
+ "after_repair": {
+  "fatal_load_recovery": {
+   "after_loaded": {
+    "allocated_nodes": 36,
+    "ascendancy": "None",
+    "class_name": "Ranger",
+    "equipped_items": 1,
+    "level": 28,
+    "name": "SYNTHETIC Fixture Build",
+    "opt_setup_called": false,
+    "socket_groups": 1
+   },
+   "after_reloaded": true,
+   "before_loaded": {
+    "allocated_nodes": 36,
+    "ascendancy": "None",
+    "class_name": "Ranger",
+    "equipped_items": 1,
+    "level": 28,
+    "name": "SYNTHETIC Fixture Build",
+    "opt_setup_called": false,
+    "socket_groups": 1
+   },
+   "blank_after_recovery": false,
+   "failure": {
+    "stage": "load_exact_build",
+    "status": "invalid_input"
+   },
+   "values_changed": false
+  },
+  "synthetic_screen_deadline": {
+   "declared_screen_timeout_s": 0.1,
+   "elapsed_s": 0.406,
+   "returned_success": false,
+   "stage": "load_exact_build",
+   "status": "timeout"
+  }
+ },
+ "before_repair": "docs/evidence/P02/review-eca7afe-probes.json",
+ "findings": {
+  "fatal_load_recovery": "P02-T01-R10",
+  "synthetic_screen_deadline": "P02-T01-R11"
+ },
+ "schema_version": 1,
+ "task": "P02-T01",
+ "what_this_is": "Reproduction of the two defects recorded in review-eca7afe-probes.json (fatal_load_recovery and synthetic_screen_deadline), re-run against the repaired code. PoB-derived; not a gameplay measurement."
+}

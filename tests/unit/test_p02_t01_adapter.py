@@ -13,6 +13,7 @@ file is a game value or engine output.
 from __future__ import annotations
 
 import dataclasses
+import json
 import os
 import shutil
 from pathlib import Path
@@ -22,15 +23,18 @@ import pytest
 from record_fixtures import blob_payloads, records
 
 from pob2opt.domain.enums import Fidelity, ResultStatus
+from pob2opt.evaluation import EngineTimeout
 from pob2opt.evaluation import (ADAPTER_VERSION, BlobBuildDocuments,
                                 BuildDocument, CheckoutIdentity, EngineAdapter,
-                                EngineCrash, EngineInvalidInput,
-                                EngineProfileMismatch, EngineState,
-                                EngineUnsupported, MappingBuildDocuments,
-                                WorkerSpec, pob_worker_spec, redact_diagnostic,
+                                EngineCrash, EngineInternalError,
+                                EngineInvalidInput, EngineProfileMismatch,
+                                EngineState, EngineUnsupported,
+                                MappingBuildDocuments, WorkerSpec,
+                                helper_digest, kill_process_tree,
+                                pob_worker_spec, redact_diagnostic,
                                 resolve_checkout, timeout_for)
 from pob2opt.evaluation.protocol import (DETAILED_TIMEOUT_S, OP_CREATE_BLANK_BUILD,
-                                         SCREEN_TIMEOUT_S)
+                                         OP_LOAD_EXACT_BUILD, SCREEN_TIMEOUT_S)
 from pob2opt.storage.blobs import BlobStore
 
 ENTRY = "synthetic_workers:SyntheticSession"
@@ -365,7 +369,7 @@ def test_a_missing_helper_script_is_refused_before_a_process_is_started(tmp_path
 # ------------------------------------------------------- checkout resolution
 
 def test_an_unversioned_directory_reports_an_unknown_commit(tmp_path):
-    identity = resolve_checkout(tmp_path, use_cache=False)
+    identity = resolve_checkout(tmp_path)
 
     assert identity.commit is None
     assert identity.is_pinned is False
@@ -373,7 +377,7 @@ def test_an_unversioned_directory_reports_an_unknown_commit(tmp_path):
 
 
 def test_a_missing_directory_is_unknown_not_an_exception(tmp_path):
-    identity = resolve_checkout(tmp_path / "absent", use_cache=False)
+    identity = resolve_checkout(tmp_path / "absent")
 
     assert identity.commit is None
     assert "not found" in identity.reason
@@ -381,7 +385,7 @@ def test_a_missing_directory_is_unknown_not_an_exception(tmp_path):
 
 def test_a_clean_checkout_reports_a_bare_commit_and_no_dirty_hash(tmp_path):
     root = make_git_repo(tmp_path / "clean")
-    identity = resolve_checkout(root, use_cache=False)
+    identity = resolve_checkout(root)
 
     assert identity.commit and identity.commit.strip() == identity.commit
     assert len(identity.commit) == 40
@@ -392,7 +396,7 @@ def test_a_clean_checkout_reports_a_bare_commit_and_no_dirty_hash(tmp_path):
 def test_an_untracked_file_makes_the_checkout_unpinned(tmp_path):
     root = make_git_repo(tmp_path / "dirty")
     (root / "scratch.txt").write_text("left behind by an earlier session\n")
-    identity = resolve_checkout(root, use_cache=False)
+    identity = resolve_checkout(root)
 
     assert identity.dirty_hash is not None
     assert identity.is_pinned is False
@@ -414,3 +418,290 @@ def make_git_repo(root: Path) -> Path:
         subprocess.run([git, "-C", str(root), *argv], check=True,
                        capture_output=True, env=env)
     return root
+
+
+def test_a_checkout_modified_after_the_first_resolve_is_not_reported_clean(tmp_path):
+    """Regression for P02-T01-R05.
+
+    A process-wide cache kept answering "clean" after the tree changed, so
+    every identity recorded afterwards was wrong for the life of the process.
+    """
+    root = make_git_repo(tmp_path / "later")
+    assert resolve_checkout(root).dirty_hash is None
+
+    (root / "appeared.txt").write_text("mid-run\n", encoding="utf-8")
+
+    assert resolve_checkout(root).dirty_hash is not None
+
+
+def test_no_process_wide_checkout_cache_remains():
+    from pob2opt.evaluation import checkout as checkout_module
+
+    assert not hasattr(checkout_module, "_CACHE")
+
+
+# ------------------------------------------------- document store repairs
+
+def test_two_raw_blobs_are_an_ambiguity_not_a_position_contest(tmp_path,
+                                                               fixture_build):
+    """Regression for P02-T01-R04. Index 0 used to win silently."""
+    store = BlobStore(tmp_path / "blobs")
+    first = store.put(b"<PathOfBuilding2>FIRST</PathOfBuilding2>")
+    second = store.put(b"<PathOfBuilding2>SECOND</PathOfBuilding2>")
+    build = dataclasses.replace(
+        fixture_build, raw_blob_hashes=[first.blob_hash, second.blob_hash])
+
+    with pytest.raises(EngineInvalidInput, match="references 2 raw blobs"):
+        BlobBuildDocuments(store).document_for(build)
+
+
+def test_an_explicitly_selected_blob_is_loaded(tmp_path, fixture_build):
+    store = BlobStore(tmp_path / "blobs")
+    first = store.put(b"<PathOfBuilding2>FIRST</PathOfBuilding2>")
+    second = store.put(b"<PathOfBuilding2>SECOND</PathOfBuilding2>")
+    build = dataclasses.replace(
+        fixture_build, raw_blob_hashes=[first.blob_hash, second.blob_hash])
+
+    document = BlobBuildDocuments(store).document_for(build, second.blob_hash)
+
+    assert "SECOND" in document.xml
+    assert document.blob_hash == second.blob_hash
+    assert document.source == "stored_blob"
+
+
+def test_a_blob_the_build_does_not_reference_is_refused(tmp_path, fixture_build):
+    store = BlobStore(tmp_path / "blobs")
+    store.put(b"<PathOfBuilding2>FIRST</PathOfBuilding2>")
+
+    with pytest.raises(EngineInvalidInput, match="does not reference"):
+        BlobBuildDocuments(store).document_for(fixture_build, "0" * 64)
+
+
+def test_a_missing_blob_is_invalid_input(tmp_path, fixture_build):
+    with pytest.raises(EngineInvalidInput, match="unavailable"):
+        BlobBuildDocuments(BlobStore(tmp_path / "empty")).document_for(fixture_build)
+
+
+def test_a_corrupt_blob_is_invalid_input(tmp_path, fixture_build):
+    store = BlobStore(tmp_path / "blobs")
+    write = store.put(b"<PathOfBuilding2>ORIGINAL</PathOfBuilding2>")
+    build = dataclasses.replace(fixture_build, raw_blob_hashes=[write.blob_hash])
+    write.path.write_bytes(b"something else entirely")
+
+    with pytest.raises(EngineInvalidInput, match="unavailable"):
+        BlobBuildDocuments(store).document_for(build)
+
+
+def test_a_defect_inside_the_blob_store_is_internal_not_invalid_input(fixture_build):
+    """Regression for P02-T01-R03.
+
+    A TypeError in the store used to be reported as "the raw document blob is
+    unavailable", which blames the build for the caller's bug.
+    """
+    class BrokenStore:
+        def get(self, blob_hash):
+            raise TypeError("a defect in the store, not a bad document")
+
+    with pytest.raises(EngineInternalError) as excinfo:
+        BlobBuildDocuments(BrokenStore()).document_for(fixture_build)
+
+    assert excinfo.value.status is ResultStatus.INTERNAL_ERROR
+    assert "TypeError" in excinfo.value.diagnostic
+    assert "unavailable" not in excinfo.value.diagnostic
+
+
+# ------------------------------------------------------- snapshot metadata
+
+def test_a_document_carries_a_content_key_that_build_hash_alone_does_not():
+    """Regression for P02-T01-R01, at the value level."""
+    weak = BuildDocument("same-hash", "<Build>weak</Build>")
+    strong = BuildDocument("same-hash", "<Build>strong</Build>")
+
+    assert weak.build_hash == strong.build_hash
+    assert weak.content_key != strong.content_key
+
+
+def test_a_snapshot_records_where_its_document_came_from(adapter, documents,
+                                                         fixture_build,
+                                                         fixture_profile):
+    adapter.documents = documents
+    snapshot = adapter.primitives(fixture_build, EngineState(), fixture_profile)
+
+    assert snapshot.document.source == "caller_supplied"
+    assert snapshot.document.content_hash
+    assert snapshot.document.reloaded is True
+    assert snapshot.document.unverified, "what was not checked must be recorded"
+
+
+def test_a_snapshot_reports_the_load_bound_as_well_as_its_own(adapter, documents,
+                                                              fixture_build,
+                                                              fixture_profile):
+    """Regression for P02-T01-R08."""
+    adapter.documents = documents
+    snapshot = adapter.primitives(fixture_build, EngineState(), fixture_profile)
+
+    assert snapshot.timeout_s == REQUEST_TIMEOUT_S
+    assert snapshot.load_timeout_s == REQUEST_TIMEOUT_S
+
+
+def test_the_helper_hashes_are_resolved_before_the_spawn(tmp_path):
+    """Regression for P02-T01-R06."""
+    root = tmp_path / "checkout"
+    (root / "runtime").mkdir(parents=True)
+    spec = pob_worker_spec(root)
+
+    assert dict(spec.helper_lua_hashes).keys() == {"opt_helpers.lua",
+                                                   "tree_lib.lua"}
+    assert all(len(digest) == 64 for _, digest in spec.helper_lua_hashes)
+
+
+def test_the_helper_hash_does_not_depend_on_how_git_checked_the_file_out(tmp_path):
+    """The worker reads these as text, so CRLF and LF must hash the same.
+
+    Hashing raw bytes made the engine identity differ between a Windows and a
+    Linux checkout of an identical file, which would split any cache built on
+    it. The expected value is the one P00 recorded for this same file.
+    """
+    crlf = tmp_path / "crlf.lua"
+    lf = tmp_path / "lf.lua"
+    body = b"-- helper\nreturn true\n"
+    lf.write_bytes(body)
+    crlf.write_bytes(body.replace(b"\n", b"\r\n"))
+
+    assert helper_digest(crlf) == helper_digest(lf)
+
+
+def test_the_helper_hash_matches_the_value_p00_recorded(repo_root: Path):
+    recorded = json.loads(
+        (repo_root / "docs" / "evidence" / "P00" / "measurements.json").read_text(
+            encoding="utf-8"))["fixture_identity"]["helper_lua_sha256"]
+    lua_dir = repo_root / "pob2-optimizer" / "pob2opt" / "lua"
+
+    for name, digest in recorded.items():
+        assert helper_digest(lua_dir / name) == digest, name
+
+
+def test_a_changed_helper_changes_the_engine_identity(tmp_path):
+    root = tmp_path / "checkout"
+    (root / "runtime").mkdir(parents=True)
+    helper = tmp_path / "edited.lua"
+    helper.write_text("-- one byte of difference\n", encoding="utf-8")
+    other = tmp_path / "edited2.lua"
+    other.write_text("-- one byte of difference!\n", encoding="utf-8")
+
+    first = pob_worker_spec(root, helper_lua=(str(helper),))
+    second = pob_worker_spec(root, helper_lua=(str(other),))
+
+    assert first.helper_lua_hashes != second.helper_lua_hashes
+
+
+# ----------------------------------------------------------- error hygiene
+
+def test_no_unexplained_pass_handler_remains_in_the_package(repo_root: Path):
+    """Regression for P02-T01-R09. architecture.md forbids a bare pass here."""
+    import re
+
+    package = repo_root / "pob2-optimizer" / "pob2opt" / "evaluation"
+    pattern = re.compile(r"except[^\n]*:\n\s*pass\b")
+    offenders = []
+    for path in sorted(package.glob("*.py")):
+        source = path.read_text(encoding="utf-8")
+        for match in pattern.finditer(source):
+            offenders.append("%s:%d" % (path.name,
+                                        source[:match.start()].count("\n") + 1))
+    assert not offenders, offenders
+
+
+# ------------------------------------------- state after a worker is replaced
+
+def test_a_replaced_worker_does_not_inherit_the_previous_one_s_build(
+        documents, fixture_build, fixture_profile):
+    """Regression for P02-T01-R10.
+
+    The parent tracked "which build is loaded" without tracking *where*. A
+    worker replaced after a failure answered the next evaluation from a fresh
+    engine holding PoB's default build, while the snapshot still carried the
+    requested build's hash.
+    """
+    adapter = make_adapter()
+    adapter.documents = documents
+    try:
+        first = adapter.primitives(fixture_build, EngineState(), fixture_profile)
+        assert first.document.reloaded is True
+
+        kill_process_tree(adapter.worker_pid, adapter._handle.process)
+        with pytest.raises(EngineCrash):
+            adapter.primitives(fixture_build, EngineState(), fixture_profile)
+
+        second = adapter.primitives(fixture_build, EngineState(), fixture_profile)
+        assert second.document.reloaded is True, (
+            "a new worker holds nothing; skipping the load would evaluate a "
+            "build it never received")
+        assert second.values == first.values
+    finally:
+        adapter.close()
+
+
+def test_the_loaded_state_is_scoped_to_the_worker_generation(documents,
+                                                             fixture_build,
+                                                             fixture_profile):
+    adapter = make_adapter()
+    adapter.documents = documents
+    try:
+        adapter.primitives(fixture_build, EngineState(), fixture_profile)
+        adapter.restart_worker()
+
+        after = adapter.primitives(fixture_build, EngineState(), fixture_profile)
+
+        assert after.document.reloaded is True
+        assert after.identity.generation == 2
+    finally:
+        adapter.close()
+
+
+# ---------------------------------------------- the fidelity bound is a bound
+
+def test_the_screen_bound_covers_the_load_in_the_same_call(documents,
+                                                           fixture_build,
+                                                           fixture_profile):
+    """Regression for P02-T01-R11.
+
+    A screen-fidelity evaluation declaring 30 s used to spend the detailed
+    bound inside its load and still report success, so the declared bound was
+    not a bound on the operation the caller asked for.
+    """
+    spec = WorkerSpec(entry=ENTRY, pob_root=None,
+                      extra={"slow_on": OP_LOAD_EXACT_BUILD, "slow_s": 2.0})
+    adapter = EngineAdapter(spec, documents=documents,
+                            checkout=synthetic_checkout(),
+                            screen_timeout_s=0.3,
+                            detailed_timeout_s=REQUEST_TIMEOUT_S,
+                            start_timeout_s=START_TIMEOUT_S)
+    try:
+        with pytest.raises(EngineTimeout) as excinfo:
+            adapter.primitives(fixture_build, EngineState(), fixture_profile,
+                               fidelity=Fidelity.SCREEN)
+        assert excinfo.value.stage == OP_LOAD_EXACT_BUILD
+        assert excinfo.value.status is ResultStatus.TIMEOUT
+    finally:
+        adapter.close()
+
+
+def test_a_detailed_evaluation_still_gets_the_detailed_bound(documents,
+                                                             fixture_build,
+                                                             fixture_profile):
+    spec = WorkerSpec(entry=ENTRY, pob_root=None,
+                      extra={"slow_on": OP_LOAD_EXACT_BUILD, "slow_s": 0.5})
+    adapter = EngineAdapter(spec, documents=documents,
+                            checkout=synthetic_checkout(),
+                            screen_timeout_s=0.3,
+                            detailed_timeout_s=REQUEST_TIMEOUT_S,
+                            start_timeout_s=START_TIMEOUT_S)
+    try:
+        snapshot = adapter.primitives(fixture_build, EngineState(),
+                                      fixture_profile,
+                                      fidelity=Fidelity.DETAILED)
+        assert snapshot.timeout_s == REQUEST_TIMEOUT_S
+        assert snapshot.load_timeout_s == REQUEST_TIMEOUT_S
+    finally:
+        adapter.close()

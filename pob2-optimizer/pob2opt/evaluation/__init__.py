@@ -15,7 +15,7 @@ What is deliberately *not* here:
 from __future__ import annotations
 
 from .adapter import (DEFAULT_ENTRY, EngineAdapter, WorkerHandle, WorkerSpec,
-                      kill_process_tree, pob_worker_spec)
+                      helper_digest, kill_process_tree, pob_worker_spec)
 from .checkout import CheckoutIdentity, resolve_checkout
 from .documents import (BlobBuildDocuments, BuildDocumentStore,
                         MappingBuildDocuments)
@@ -23,16 +23,19 @@ from .errors import (EngineCrash, EngineError, EngineInternalError,
                      EngineInvalidInput, EngineProfileMismatch, EngineTimeout,
                      EngineUnsupported, redact_diagnostic)
 from .protocol import (ADAPTER_VERSION, PRIMITIVE_SEMANTICS_OWNER,
-                       BuildDocument, EngineIdentity, EngineState, LoadedBuild,
-                       PrimitiveSnapshot, timeout_for)
+                       BuildDocument, DocumentProvenance, EngineIdentity,
+                       EngineState, LoadedBuild, PrimitiveSnapshot,
+                       timeout_for)
 
 __all__ = [
     "ADAPTER_VERSION", "PRIMITIVE_SEMANTICS_OWNER", "DEFAULT_ENTRY",
     "BlobBuildDocuments", "BuildDocument", "BuildDocumentStore",
-    "CheckoutIdentity", "EngineAdapter", "EngineCrash", "EngineError",
+    "CheckoutIdentity", "DocumentProvenance", "EngineAdapter", "EngineCrash",
+    "EngineError",
     "EngineIdentity", "EngineInternalError", "EngineInvalidInput",
     "EngineProfileMismatch", "EngineState", "EngineTimeout",
     "EngineUnsupported", "LoadedBuild", "MappingBuildDocuments",
-    "PrimitiveSnapshot", "WorkerHandle", "WorkerSpec", "kill_process_tree",
+    "PrimitiveSnapshot", "WorkerHandle", "WorkerSpec", "helper_digest",
+    "kill_process_tree",
     "pob_worker_spec", "redact_diagnostic", "resolve_checkout", "timeout_for",
 ]

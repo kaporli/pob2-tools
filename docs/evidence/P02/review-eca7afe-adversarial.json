@@ -1,0 +1,118 @@
+{
+ "findings": {
+  "probe1_b_differs": "P02-T01-R01 and R02",
+  "probe2_config_leak": "P02-T01-R01",
+  "probe3_document_identity": "concern, deferred to P02-T02",
+  "probe4_multiple_blobs": "P02-T01-R04",
+  "probe5_broken_store": "P02-T01-R03",
+  "probe6_stale_cache": "P02-T01-R05",
+  "probe7_identity_inputs": "P02-T01-R06"
+ },
+ "probe_script": "docs/evidence/P02/review-eca7afe-probes.py",
+ "recorded_on": "2026-10-06",
+ "results": {
+  "probe1_b_differs": {
+   "a1_TotalDPS": 47.222385956304,
+   "a1_equals_a2": true,
+   "a2_TotalDPS": 47.222385956304,
+   "b_TotalDPS": 47.222385956304,
+   "b_actually_differs": false,
+   "note": "the committed A-B-A test never reads B's values at all"
+  },
+  "probe2_config_leak": {
+   "keys_changed_by_config": 56,
+   "keys_still_changed_after_empty_state": 56,
+   "leaks": true,
+   "sample_changed": {
+    "AccuracyHitChance": [
+     52,
+     98
+    ],
+    "AverageBurstDamage": [
+     25.946365910057,
+     183.41272836188
+    ],
+    "AverageDamage": [
+     25.946365910057,
+     183.41272836188
+    ],
+    "AverageEvadeChance": [
+     0,
+     2
+    ],
+    "AverageNotHitChance": [
+     0,
+     2
+    ]
+   },
+   "sample_leaked": {
+    "AccuracyHitChance": [
+     52,
+     98
+    ],
+    "AverageBurstDamage": [
+     25.946365910057,
+     183.41272836188
+    ],
+    "AverageDamage": [
+     25.946365910057,
+     183.41272836188
+    ],
+    "AverageEvadeChance": [
+     0,
+     2
+    ],
+    "AverageNotHitChance": [
+     0,
+     2
+    ]
+   }
+  },
+  "probe3_document_identity": {
+   "build_hash": "probe-build",
+   "classes_agree": false,
+   "document_hash_used": "probe-build",
+   "loaded_class": "Ranger",
+   "note": "BlobBuildDocuments sets document.build_hash from the same BuildSpec, so the equality check can never fail for the production store",
+   "spec_class_id": "fixture-class-a"
+  },
+  "probe4_multiple_blobs": {
+   "blob_count": 2,
+   "chosen": "first",
+   "note": "no rule declared; index 0 wins silently",
+   "xml": "<PathOfBuilding2>FIRST</PathOfBuilding2>"
+  },
+  "probe5_broken_store": {
+   "diagnostic": "raw document blob 18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859 is unavailable: a defect in the caller, not a bad document",
+   "note": "a TypeError inside the store is reported as invalid_input",
+   "raised": "EngineInvalidInput",
+   "status": "invalid_input"
+  },
+  "probe6_stale_cache": {
+   "after_modification_dirty_hash": null,
+   "clean_dirty_hash": null,
+   "still_reports_clean": true,
+   "uncached": true
+  },
+  "probe7_identity_inputs": {
+   "helper_lua_in_spec": [
+    "opt_helpers.lua",
+    "tree_lib.lua"
+   ],
+   "identity_fields": [
+    "pob_root",
+    "pob_commit",
+    "pob_dirty_hash",
+    "adapter_version",
+    "worker_pid",
+    "worker_cwd",
+    "generation"
+   ],
+   "note": "helper Lua is injected into every engine but appears in no identity field"
+  }
+ },
+ "reviewed_commit": "eca7afe",
+ "schema_version": 1,
+ "task": "P02-T01",
+ "what_this_is": "Adversarial probe results against the reviewed implementation eca7afe, recorded BEFORE the repairs. Kept unchanged as the evidence the review findings rest on. The engine section is PoB-derived (checkout ce566ea); nothing here is a gameplay measurement."
+}

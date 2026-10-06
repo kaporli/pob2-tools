@@ -252,7 +252,15 @@ def _close_quietly(session) -> None:
 
 
 def _send(conn, payload: dict) -> None:
+    """Answer the parent, or report to stderr if the pipe is already gone.
+
+    A broken pipe here means the parent has terminated this worker, so it is
+    not waiting for the answer and there is no channel left to raise on. The
+    condition is named rather than swallowed, because architecture.md forbids
+    an unexplained pass handler on a production boundary (P02-T01-R09).
+    """
     try:
         conn.send(payload)
-    except (BrokenPipeError, OSError):
-        pass
+    except (BrokenPipeError, OSError) as exc:
+        print("pob2opt worker: parent pipe closed before the reply was sent "
+              "(%s: %s)" % (type(exc).__name__, exc), file=sys.stderr)

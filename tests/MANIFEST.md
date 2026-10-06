@@ -53,6 +53,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P01 review probes | `python docs/evidence/P01/review-repair-probes.py` | Nothing | Not a test; re-asks the review's questions of the repaired code. The reviewer's original `review-ae4303e-probes.py` is kept unchanged as evidence about `ae4303e`. |
 | P02-T01 failure probe | `python scripts/p02_t01_timeout_probe.py --mode wedge --timeout 2.0` | Nothing | Not a test; one adapter failure case as its own process, so a supervisor can bound it. Modes: `wedge`, `crash`, `revive`. |
 | P02-T01 evidence | `python scripts/p02_t01_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/lifecycle.json`. Without a checkout the `pob` section records `unavailable`. |
+| P02-T01 review probes | `python docs/evidence/P02/review-eca7afe-adversarial-probes.py` | PoB | Not a test; re-asks the review's seven questions. Its recorded answers are the pre-repair ones in `review-eca7afe-adversarial.json`. |
 
 Selecting the PoB checkout:
 
@@ -104,7 +105,7 @@ none yet).
 | `test_p01_t05_tasks.py` | P01-T05: task states and transitions, the four interruption points, checkpoint validation, and all 15 documented inspection queries. |
 | `test_p01_review_regressions.py` | The five defects in `docs/reviews/P01.md`, each with the probe that found it: cancelled-task revival, null in a free-form field, incomplete bundles, one candidate with several evaluation tasks, and aggregate cache collisions. |
 | `test_p01_demo_run.py` | Re-runs `scripts/p01_demo_run.py` and checks the claims `docs/evidence/P01/demo-run.json` records. |
-| `test_p02_t01_adapter.py` | P02-T01 offline lane: parent working directory, exact versus blank loading, build-document sourcing, patch-profile mismatch, typed errors, process replacement, pre-spawn path resolution, checkout identity. Synthetic workers only. |
+| `test_p02_t01_adapter.py` | P02-T01 offline lane: parent working directory, exact versus blank loading, build-document sourcing and blob ambiguity, patch-profile mismatch, typed errors, process replacement, state scoped to the worker generation, fidelity bounds covering the load, pre-spawn path resolution, helper hashing, checkout identity. Synthetic workers only. |
 | `test_p02_t01_timeout_supervisor.py` | P02-T01 bounded requests, run through `scripts/p02_t01_timeout_probe.py` under a hard outer deadline with process-tree cleanup, so an unenforced bound fails instead of hanging. |
 
 ### `tests/integration` - local tools, still no PoB and no network
@@ -122,7 +123,7 @@ none yet).
 | `test_f10_engine_state.py` | Working-directory leak and A-B-A stability in the live engine. |
 | `test_f11_import_is_wiped.py` | What survives `load_build_xml` + `OPT_setup` (and observation P00-OBS-02). |
 | `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, and what the dropped affix costs. |
-| `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, A-B-A agreement, forced termination and replacement. |
+| `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout and helper identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, recovery from it without a blank character, A-B-A with B read, two documents under one build hash, configuration isolation between evaluations, forced termination and replacement. |
 
 ### `tests/fixtures`
 
@@ -160,11 +161,11 @@ P02-T01 working tree, PoB `ce566ea`:
 
 | Command | Result |
 |---|---|
-| `python -m pytest` (no `POB2_ROOT`) | 602 passed, 42 skipped, 5 xfailed |
-| `python -m pytest` (with `POB2_ROOT`) | 643 passed, 6 xfailed |
-| `python -m pytest tests/unit` | 597 passed, 4 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 622 passed, 47 skipped, 5 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 668 passed, 6 xfailed |
+| `python -m pytest tests/unit` | 617 passed, 4 xfailed |
 | `python -m pytest tests/integration` | 5 passed, 1 xfailed |
-| `python -m pytest -m engine` (with `POB2_ROOT`) | 41 passed, 607 deselected, 1 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 46 passed, 627 deselected, 1 xfailed |
 
 The earlier P00 figures, for comparison: 91/34/13, 121/17, 86/12 and 30/104/4
 at commit `6290674`.

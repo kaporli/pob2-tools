@@ -11,6 +11,7 @@ cannot mistake a raw PoB field for a defined primitive.
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass, field
 from typing import Any, Mapping
 
@@ -52,11 +53,31 @@ class BuildDocument:
 
     ``xml`` is the stored original, not a regeneration: P02-T05 owns writing a
     BuildSpec back out, and nothing here may pretend to do it.
+
+    ``source`` says where the bytes came from. ``stored_blob`` is the build's
+    own immutable payload; ``caller_supplied`` is a document handed in
+    directly, which nothing can trace back to the build.
     """
 
     build_hash: str
     xml: str
     blob_hash: str | None = None
+    source: str = "caller_supplied"
+
+    @property
+    def content_hash(self) -> str:
+        """SHA-256 of the document itself, which is what the engine loads."""
+        return hashlib.sha256(self.xml.encode("utf-8")).hexdigest()
+
+    @property
+    def content_key(self) -> tuple[str, str]:
+        """What identifies a loaded state. ``build_hash`` alone does not.
+
+        ``build_hash`` is caller-supplied and two different documents can
+        carry the same one, so caching a load on it returns the first
+        document's numbers for the second document (P02-T01-R01).
+        """
+        return (self.build_hash, self.content_hash)
 
 
 @dataclass(frozen=True, slots=True)
@@ -88,6 +109,9 @@ class EngineIdentity:
     pob_commit: str | None
     pob_dirty_hash: str | None
     adapter_version: str
+    #: (basename, sha256) for each helper script loaded into the Lua state.
+    #: adapter_version is hand-maintained; these are the code that ran.
+    helper_lua_hashes: tuple[tuple[str, str], ...]
     worker_pid: int
     worker_cwd: str
     #: Incremented every time the adapter had to replace the worker process.
@@ -129,6 +153,34 @@ class LoadedBuild:
 
 
 @dataclass(frozen=True, slots=True)
+class DocumentProvenance:
+    """Which document produced a snapshot, and how far it can be trusted.
+
+    ``build_matches_document`` is deliberately absent: comparing PoB's class
+    name to ``BuildSpec.class_id`` needs the catalog mapping, which is
+    P02-T02. Recording what was *not* verified is the honest alternative to
+    implying a check that does not exist.
+    """
+
+    build_hash: str
+    content_hash: str
+    blob_hash: str | None
+    source: str
+    #: False when the worker already held this exact document and state.
+    reloaded: bool
+    unverified: tuple[str, ...] = (
+        "the loaded character was not cross-checked against the BuildSpec; "
+        "that needs the catalog mapping owned by P02-T02",)
+
+    @classmethod
+    def of(cls, document: BuildDocument, *, reloaded: bool) -> "DocumentProvenance":
+        return cls(build_hash=document.build_hash,
+                   content_hash=document.content_hash,
+                   blob_hash=document.blob_hash, source=document.source,
+                   reloaded=reloaded)
+
+
+@dataclass(frozen=True, slots=True)
 class PrimitiveSnapshot:
     """Raw engine outputs plus the provenance needed to trust or discard them."""
 
@@ -138,7 +190,12 @@ class PrimitiveSnapshot:
     identity: EngineIdentity
     state_applied: Mapping[str, Any]
     loaded: LoadedBuild
+    document: DocumentProvenance
+    #: Bound on the primitives request itself.
     timeout_s: float
+    #: Bound on the load inside the same call, or None when nothing reloaded.
+    #: ``duration_ms`` spans both.
+    load_timeout_s: float | None
     duration_ms: int
     #: Until P02-T04 publishes the inventory, no value here has declared units.
     semantics_owner: str = PRIMITIVE_SEMANTICS_OWNER

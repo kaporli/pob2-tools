@@ -30,6 +30,9 @@ class SyntheticSession:
     ``wedge``         block forever on ``wedge_on``
     ``die``           leave the process immediately on ``die_on``
     ``startup_fail``  raise while being constructed
+
+    ``slow_on``/``slow_s`` delay one operation without wedging it, which is
+    how a bound that does not cover that operation becomes visible.
     """
 
     def __init__(self, config: dict) -> None:
@@ -37,6 +40,8 @@ class SyntheticSession:
         self.behavior = config.get("behavior", "ok")
         self.wedge_on = config.get("wedge_on")
         self.die_on = config.get("die_on")
+        self.slow_on = config.get("slow_on")
+        self.slow_s = float(config.get("slow_s", 0.0))
         self.loaded_xml: str | None = None
         self.opt_setup_calls = 0
         self.closed = False
@@ -56,6 +61,8 @@ class SyntheticSession:
     def handle(self, op: str, args: dict):
         self._maybe_wedge(op)
         self._maybe_die(op)
+        if self.slow_on == op and self.slow_s:
+            time.sleep(self.slow_s)
         if op == "describe":
             return {"pid": os.getpid(), "cwd": self.cwd,
                     "pob_root": self.config.get("pob_root") or SYNTHETIC_MARKER,

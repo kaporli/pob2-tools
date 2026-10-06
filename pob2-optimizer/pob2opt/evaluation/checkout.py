@@ -34,20 +34,17 @@ class CheckoutIdentity:
         return bool(self.commit) and self.dirty_hash is None
 
 
-_CACHE: dict[str, CheckoutIdentity] = {}
+def resolve_checkout(root: str | os.PathLike[str]) -> CheckoutIdentity:
+    """Resolve the checkout at ``root``. Unknown stays unknown.
 
-
-def resolve_checkout(root: str | os.PathLike[str], *,
-                     use_cache: bool = True) -> CheckoutIdentity:
-    """Resolve the checkout at ``root``. Unknown stays unknown."""
-    resolved = str(Path(root).resolve())
-    if use_cache and resolved in _CACHE:
-        return _CACHE[resolved]
-
-    identity = _resolve(resolved)
-    if use_cache:
-        _CACHE[resolved] = identity
-    return identity
+    Deliberately not cached across calls. A process-wide cache kept reporting
+    a clean tree after the checkout was edited mid-run, so every snapshot
+    taken afterwards carried an identity that was no longer true
+    (P02-T01-R05). ``EngineAdapter`` resolves once and keeps the result on the
+    instance, which is the right scope; one ``git`` call per adapter is not
+    worth that hazard.
+    """
+    return _resolve(str(Path(root).resolve()))
 
 
 def _resolve(root: str) -> CheckoutIdentity:
