@@ -339,14 +339,25 @@ def test_repeating_one_request_is_stable(adapter, document, build_and_profile,
                             adapter.primitives(build, EngineState(), profile).values)
 
 
-def test_a_snapshot_declares_no_primitive_semantics(adapter, build_and_profile,
-                                                    populated_xml):
+def test_a_snapshot_declares_its_primitive_semantics(adapter, build_and_profile,
+                                                     populated_xml):
+    """Migrated by P02-T04, which published the inventory this waited for.
+
+    The P02-T01 version asserted ``semantics_status == "undeclared"``: the
+    engine answered but no value had units. The declaration now exists, so the
+    same guarantee is that each value the snapshot hands out carries a unit and
+    an owner, and that what PoB does not supply is a gap rather than a number.
+    """
     build, profile = build_and_profile
     adapter.documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
     snapshot = adapter.primitives(build, EngineState(), profile)
 
-    assert snapshot.semantics_status == "undeclared"
-    assert snapshot.values, "the engine did answer; only the units are missing"
+    assert snapshot.semantics_status == "declared"
+    assert snapshot.values, "the engine did answer"
+    assert snapshot.declared(), "and its values now have units"
+    assert all(d.unit for d in snapshot.declared().values())
+    assert any(g.primitive_id == "sustained_damage_per_second"
+               for g in snapshot.gaps())
     # What was not checked is recorded rather than implied (P02-T01-R03).
     assert snapshot.document.unverified
 

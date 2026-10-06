@@ -39,8 +39,22 @@ DEFAULT_BUILD = os.environ.get(
 )
 
 
+from pob2opt import legacy_estimates
+
+
 def log(*a):
     print(*a, file=sys.stderr, flush=True)
+
+
+def _num(row, name: str) -> str:
+    """Render a legacy estimate, or "unknown" when there is none.
+
+    The report used to substitute the uncorrected engine number, or zero, for a
+    missing estimate. Both read as measurements of the build, which is what
+    P02-T04 removes: an absent estimate is reported as absent.
+    """
+    value = legacy_estimates.legacy_value(row, name)
+    return "unknown" if value is None else f"{value:.0f}"
 
 
 def load_phase(out_dir, name):
@@ -113,7 +127,7 @@ def phase_screen(args):
     tasks = phases.build_screen_tasks(gems, uniques, limit=args.limit, char_level=args.level)
     log(f"screen: {len(tasks)} tasks")
     results = [r for r in run_pool(args, tasks, "screen") if r and not r.get("skip") and not r.get("error")]
-    results.sort(key=lambda r: -r["ceiling"])
+    results.sort(key=lambda r: legacy_estimates.sort_key(r, legacy_estimates.CONDITION_ON_KEY))
     save_phase(args.out, "screen", results)
     return results
 
@@ -127,7 +141,7 @@ def phase_combos(args):
     tasks = phases.build_combo_tasks(gems, screen, limit=args.limit)
     log(f"combos: {len(tasks)} tasks")
     results = [r for r in run_pool(args, tasks, "combos") if r and not r.get("skip") and not r.get("error")]
-    results.sort(key=lambda r: -r["ceiling"])
+    results.sort(key=lambda r: legacy_estimates.sort_key(r, legacy_estimates.CONDITION_ON_KEY))
     save_phase(args.out, "combos", results)
     return results
 
@@ -141,7 +155,7 @@ def phase_triggers(args):
     tasks = phases.build_trigger_tasks(gems, screen, limit=args.limit)
     log(f"triggers: {len(tasks)} tasks")
     results = [r for r in run_pool(args, tasks, "triggers") if r and not r.get("skip") and not r.get("error")]
-    results.sort(key=lambda r: -r["ceiling"])
+    results.sort(key=lambda r: legacy_estimates.sort_key(r, legacy_estimates.CONDITION_ON_KEY))
     save_phase(args.out, "triggers", results)
     return results
 
@@ -153,7 +167,7 @@ def phase_stack(args):
     gems = get_gems(args)
     screen = load_phase(args.out, "screen") or []
     combos = load_phase(args.out, "combos") or []
-    top = sorted(screen + combos, key=lambda r: -r["ceiling"])
+    top = sorted(screen + combos, key=lambda r: legacy_estimates.sort_key(r, legacy_estimates.CONDITION_ON_KEY))
     tasks = phases.build_stack_tasks(top, gems, limit=args.limit)
     log(f"stack: {len(tasks)} tasks")
     results = [r for r in run_pool(args, tasks, "stack") if r and not r.get("skip") and not r.get("error")]
@@ -177,14 +191,14 @@ def phase_finals(args):
             break
         top.append(row["best"])
         seen.add(row["gem"])
-    for r in sorted(combos, key=lambda r: -r["ceiling"]):
+    for r in sorted(combos, key=lambda r: legacy_estimates.sort_key(r, legacy_estimates.CONDITION_ON_KEY)):
         if len(top) >= args.top + max(2, args.top // 2):
             break
         if r["payoff"] not in seen:
             top.append(r)
             seen.add(r["payoff"])
     triggers = load_phase(args.out, "triggers") or []
-    for r in sorted(triggers, key=lambda r: -r["ceiling"])[:2]:
+    for r in sorted(triggers, key=lambda r: legacy_estimates.sort_key(r, legacy_estimates.CONDITION_ON_KEY))[:2]:
         key = (r["meta"], r["inner"])
         if key not in seen:
             top.append(r)
@@ -211,7 +225,7 @@ def phase_finals(args):
         }))
     log(f"finals: {len(tasks)} candidates")
     results = [r for r in run_pool(args, tasks, "finals") if r and not r.get("error")]
-    results.sort(key=lambda r: -r["ceiling"])
+    results.sort(key=lambda r: legacy_estimates.sort_key(r, legacy_estimates.CONDITION_ON_KEY))
     for i, r in enumerate(results):
         xml = r.pop("xml", None)
         if xml:
@@ -239,14 +253,17 @@ def phase_report(args):
             lines.append(f"| {i+1} | {r['gem']} | {r['min']:.0f} | {r['med']:.0f} | {r['bis']:.0f} | {r['score']:.3f} |")
         lines.append("")
     lines.append("## Finalists (fully optimized: supports + tree + attributes)")
-    lines.append("| # | Build | Floor DPS | Ceiling DPS | Assumptions | File |")
+    lines.append("| # | Build | Conditions off | Conditions on | Assumptions | File |")
     lines.append("|---|---|---|---|---|---|")
     for i, r in enumerate(finals):
         name = r["main"] + ((" + " + "+".join(r["enablers"])) if r.get("enablers") else "")
         if r.get("stack"):
             name += " & " + ", ".join(r["stack"])
-        lines.append(f"| {i+1} | {name} @ {r['weapon']} | {r['floor']:.0f} | {r['ceiling']:.0f} | "
-                     f"{', '.join(r['assumptions']) or '-'} | {os.path.basename(r.get('xml_file', ''))} |")
+        lines.append(f"| {i+1} | {name} @ {r['weapon']} | "
+                     f"{_num(r, legacy_estimates.CONDITION_OFF_KEY)} | "
+                     f"{_num(r, legacy_estimates.CONDITION_ON_KEY)} | "
+                     f"{', '.join(r.get('assumptions') or []) or '-'} | "
+                     f"{os.path.basename(r.get('xml_file', ''))} |")
     def dedupe(rows, key):
         seen, out = set(), []
         for r in rows:
@@ -260,24 +277,30 @@ def phase_report(args):
     lines.append("")
     lines.append("## Top raw screens (single skill)")
     for r in dedupe(screen, lambda r: r["gem"])[:15]:
-        lines.append(f"- {r['ceiling']:.0f} (floor {r['floor']:.0f}) {r['gem']} @ {r['weapon']}")
+        lines.append(f"- {_num(r, legacy_estimates.CONDITION_ON_KEY)} (conditions off "
+                     f"{_num(r, legacy_estimates.CONDITION_OFF_KEY)}) {r['gem']} @ {r['weapon']}")
     lines.append("")
     lines.append("## Top combos (enabler -> payoff)")
     for r in dedupe(combos, lambda r: (r["payoff"], tuple(r["enablers"])))[:15]:
-        lines.append(f"- {r['ceiling']:.0f} (floor {r['floor']:.0f}) {'+'.join(r['enablers'])} -> {r['payoff']} [{r['mechanic']}]")
+        lines.append(f"- {_num(r, legacy_estimates.CONDITION_ON_KEY)} (conditions off "
+                     f"{_num(r, legacy_estimates.CONDITION_OFF_KEY)}) "
+                     f"{'+'.join(r['enablers'])} -> {r['payoff']} [{r['mechanic']}]")
     triggers = load_phase(args.out, "triggers") or []
     if triggers:
         lines.append("")
         lines.append("## Top trigger wraps (meta-gem > socketed spell)")
         for r in dedupe(triggers, lambda r: (r["meta"], r["inner"]))[:10]:
             act = f" (+{r['activator']})" if r.get("activator") else ""
-            lines.append(f"- {r['ceiling']:.0f} (floor {r['floor']:.0f}) {r['meta']} > {r['inner']}{act}")
+            lines.append(f"- {_num(r, legacy_estimates.CONDITION_ON_KEY)} (conditions off "
+                         f"{_num(r, legacy_estimates.CONDITION_OFF_KEY)}) "
+                         f"{r['meta']} > {r['inner']}{act} — trigger cadence not modelled")
     gated = [r for r in screen if r.get("gated")]
     if gated:
         lines.append("")
         lines.append("## Burst-rotation payoffs (Glory/stun-gated — per-window numbers, NOT sustained DPS)")
-        for r in dedupe(sorted(gated, key=lambda x: -x["ceiling"]), lambda r: r["gem"])[:6]:
-            lines.append(f"- {r['ceiling']:.0f} per window: {r['gem']} @ {r['weapon']} — needs its resource loop "
+        for r in dedupe(sorted(gated, key=lambda x: legacy_estimates.sort_key(x, legacy_estimates.CONDITION_ON_KEY)), lambda r: r["gem"])[:6]:
+            lines.append(f"- {_num(r, legacy_estimates.CONDITION_ON_KEY)} per window: "
+                         f"{r['gem']} @ {r['weapon']} — needs its resource loop "
                          f"(heavy stuns/ignites); pair with a generator and judge by rotation, not this number")
     text = "\n".join(lines)
     with open(os.path.join(args.out, "report.md"), "w", encoding="utf-8") as f:
@@ -351,11 +374,11 @@ def phase_buildarounds(args):
     for r, t in zip(results, tasks):
         r["buildaround"] = t[1]["buildaround"]
         r.pop("xml", None)
-    results.sort(key=lambda r: -(r.get("rotation_dps") or 0))
+    results.sort(key=lambda r: legacy_estimates.sort_key(r, "rotation_dps"))
     save_phase(args.out, "buildarounds", results)
     for r in results[:10]:
         if not r.get("illegal"):
-            log(f"  {r.get('rotation_dps', 0):7.0f}  {r.get('buildaround')} -> {r['main']}")
+            log(f"  {_num(r, 'rotation_dps'):>7}  {r.get('buildaround')} -> {r['main']}")
     return results
 
 
@@ -411,23 +434,25 @@ def phase_tierlist(args):
         }))
 
     combo_best = {}
-    for r in sorted(combos, key=lambda x: -x["ceiling"]):
+    for r in sorted(combos, key=lambda x: legacy_estimates.sort_key(x, legacy_estimates.CONDITION_ON_KEY)):
         combo_best.setdefault(r["payoff"], r)
     # multi-skill archetypes enter as first-class rows (fix #4): top combos first
-    for r in sorted(combos, key=lambda x: -x["ceiling"])[:8]:
+    for r in sorted(combos, key=lambda x: legacy_estimates.sort_key(x, legacy_estimates.CONDITION_ON_KEY))[:8]:
         g = gem_by_name.get(r["payoff"], {})
         add(r["payoff"], r["enablers"], r.get("weapon_spec"), bool(g.get("minion")))
     for row in rank:
         main = row["gem"]
         g = gem_by_name.get(main, {})
         combo = combo_best.get(main)
-        enablers = combo["enablers"] if combo and combo["ceiling"] > row["med"] * 1.1 else []
+        combo_on = (legacy_estimates.legacy_value(combo, legacy_estimates.CONDITION_ON_KEY)
+                    if combo else None)
+        enablers = combo["enablers"] if combo_on is not None and combo_on > row["med"] * 1.1 else []
         spec = (combo or {}).get("weapon_spec") or (row["best"] or {}).get("weapon_spec")
         add(main, enablers, spec, bool(g.get("minion")))
     log(f"tierlist: {len(tasks)} builds")
     results = [r for r in run_pool(args, tasks, "tierlist") if r and not r.get("skip") and not r.get("error")]
     legal = [r for r in results if not r.get("illegal")]
-    legal.sort(key=lambda r: -r["rotation_dps"])
+    legal.sort(key=lambda r: legacy_estimates.sort_key(r, "rotation_dps"))
     for i, r in enumerate(legal):
         xml = r.pop("xml", None)
         if xml:
@@ -438,27 +463,42 @@ def phase_tierlist(args):
     save_phase(args.out, "tierlist", {"legal": legal, "illegal": [r for r in results if r.get("illegal")]})
     def tbl(rows, key, label):
         out = [f"## {label}",
-               "| # | Build | Archetype | Boss (honest) | Clear | PoB (raw) | File |",
+               "| # | Build | Archetype | Single-target estimate | Clear estimate | "
+               "Rotation DPS | File |",
                "|---|---|---|---|---|---|---|"]
-        for i, r in enumerate(sorted(rows, key=lambda r: -(r.get(key) or 0))[:15]):
+        for i, r in enumerate(sorted(rows, key=lambda r: legacy_estimates.sort_key(r, key))[:15]):
             name = r["main"] + ((" + " + "+".join(r["enablers"])) if r["enablers"] else "")
-            honest = r.get("honest_single_target")
-            if honest is None:
-                honest = r.get("realistic_dps") or r.get("rotation_dps") or 0
-            out.append(f"| {i+1} | {name} @ {r['weapon']} | {r.get('archetype','?')} | {honest:.0f} | "
-                       f"{r.get('clear_score', 0):.0f} | {r['rotation_dps']:.0f} | {r.get('xml_file','')} |")
+            out.append(f"| {i+1} | {name} @ {r['weapon']} | {r.get('archetype') or '?'} | "
+                       f"{_num(r, legacy_estimates.SINGLE_TARGET_KEY)} | "
+                       f"{_num(r, legacy_estimates.CLEAR_KEY)} | "
+                       f"{_num(r, 'rotation_dps')} | {r.get('xml_file','')} |")
         return out
-    def honest_of(r):
-        h = r.get("honest_single_target")
-        return h if h is not None else (r.get("realistic_dps") or r.get("rotation_dps") or 0)
-    st_best = max(legal, key=honest_of) if legal else None
-    cl_best = max(legal, key=lambda r: r.get("clear_score") or 0) if legal else None
-    lines = [f"# Tier list — level {args.level}, ~1ex gear, concentration-corrected dual-axis", ""]
+
+    def ranked_first(rows, key):
+        """The best row that actually has this estimate, or None.
+
+        A row without one used to fall back to the uncorrected engine number,
+        which is the defect F02 names. It is now simply not ranked.
+        """
+        for row in sorted(rows, key=lambda r: legacy_estimates.sort_key(r, key)):
+            if legacy_estimates.legacy_value(row, key) is not None:
+                return row
+        return None
+
+    st_best = ranked_first(legal, legacy_estimates.SINGLE_TARGET_KEY)
+    cl_best = ranked_first(legal, legacy_estimates.CLEAR_KEY)
+    lines = [f"# Tier list — level {args.level}, ~1ex gear, rotation-corrected dual-axis", ""]
     if st_best and cl_best:
-        lines += [f"**Recommended pair — bosser: `{st_best['main']}` ({honest_of(st_best):.0f} honest single-target) "
-                  f"· mapper: `{cl_best['main']}` ({cl_best.get('clear_score',0):.0f} clear)**",
-                  "*Boss (honest) = PoB raw × concentration model (scatter/hit-rate). PoB (raw) shown for reference.*", ""]
-    lines += tbl(legal, "honest_single_target", "By SINGLE-TARGET (bossing, honest)") + [""] + tbl(legal, "clear_score", "By CLEAR (mapping)")
+        lines += [f"**Recommended pair — bosser: `{st_best['main']}` "
+                  f"({_num(st_best, legacy_estimates.SINGLE_TARGET_KEY)} single-target estimate) "
+                  f"· mapper: `{cl_best['main']}` "
+                  f"({_num(cl_best, legacy_estimates.CLEAR_KEY)} clear estimate)**",
+                  "*Single-target estimate = rotation-corrected DPS x the concentration model "
+                  "(scatter/hit-rate), scaled by the measured effect of the conditions this "
+                  f"build self-applies. Status: {legacy_estimates.LEGACY_STATUS}; P07 replaces "
+                  "it. Rotation DPS is shown for reference.*", ""]
+    lines += (tbl(legal, legacy_estimates.SINGLE_TARGET_KEY, "By SINGLE-TARGET estimate")
+              + [""] + tbl(legal, legacy_estimates.CLEAR_KEY, "By CLEAR estimate"))
     if len(results) > len(legal):
         lines.append("")
         lines.append(f"Excluded as illegal (requirements unmet): "

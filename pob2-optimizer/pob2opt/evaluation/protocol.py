@@ -4,9 +4,10 @@ The wire itself is plain JSON-able dicts. The parent turns them into the frozen
 dataclasses below; a synthetic worker therefore needs no import of this module
 and no PoB runtime, which is what keeps the offline lane offline.
 
-Nothing here declares units or semantic ownership for a primitive value. That
-inventory is P02-T04; until it exists every snapshot says so, so a caller
-cannot mistake a raw PoB field for a defined primitive.
+Units and semantic ownership live in ``primitives.py`` (P02-T04). A snapshot
+reports them through ``declared()`` and reports everything the engine did not
+supply through ``gaps()``; a raw value is still available, but reading one
+without its declaration is now a choice the caller makes explicitly.
 """
 
 from __future__ import annotations
@@ -16,13 +17,15 @@ from dataclasses import dataclass, field
 from typing import Any, Mapping
 
 from ..domain.enums import Fidelity
+from .primitives import (SEMANTICS_OWNER, SEMANTICS_VERSION, DeclaredPrimitive,
+                         PrimitiveGap, declare)
 
 #: Bumped whenever the adapter changes what it asks the engine for, or how it
 #: interprets the answer. Part of the evaluation cache identity.
 ADAPTER_VERSION = "p02-t01.2"
 
 #: Owner of primitive units, included effects and excluded effects.
-PRIMITIVE_SEMANTICS_OWNER = "P02-T04"
+PRIMITIVE_SEMANTICS_OWNER = SEMANTICS_OWNER
 
 OP_DESCRIBE = "describe"
 OP_CREATE_BLANK_BUILD = "create_blank_build"
@@ -137,9 +140,17 @@ class LoadedBuild:
     #: True only for ``create_blank_build``. An exact load that reports True is
     #: a defect, not a configuration choice.
     opt_setup_called: bool
+    #: PoB's ``skillData.showAverage`` for the main skill, or None when the
+    #: engine did not report it. It decides the unit of ``CombinedDPS``
+    #: (damage per use when true, damage per second when false), so None keeps
+    #: that primitive unresolved instead of guessing a factor of the use rate.
+    main_skill_show_average: bool | None = None
+    #: Which skill the outputs belong to, as PoB names it.
+    main_skill: str | None = None
 
     @classmethod
     def from_wire(cls, payload: Mapping[str, Any]) -> "LoadedBuild":
+        show_average = payload.get("mainSkillShowAverage")
         return cls(
             name=payload.get("buildName"),
             class_name=payload.get("class"),
@@ -149,6 +160,9 @@ class LoadedBuild:
             equipped_items=int(payload.get("equippedItems") or 0),
             socket_groups=int(payload.get("socketGroups") or 0),
             opt_setup_called=bool(payload.get("optSetupCalled")),
+            main_skill_show_average=(None if show_average is None
+                                     else bool(show_average)),
+            main_skill=payload.get("mainSkill"),
         )
 
 
@@ -198,10 +212,28 @@ class PrimitiveSnapshot:
     #: This is part of timeout_s, not an additional allowance.
     load_timeout_s: float | None
     duration_ms: int
-    #: Until P02-T04 publishes the inventory, no value here has declared units.
+    #: Units, included effects and excluded effects come from
+    #: ``pob2opt.evaluation.primitives``; this names its owner and version.
     semantics_owner: str = PRIMITIVE_SEMANTICS_OWNER
-    semantics_status: str = "undeclared"
+    semantics_status: str = "declared"
+    semantics_version: str = SEMANTICS_VERSION
 
     def numeric(self) -> dict[str, float]:
         return {k: float(v) for k, v in self.values.items()
                 if isinstance(v, (int, float)) and not isinstance(v, bool)}
+
+    def declared(self) -> dict[str, DeclaredPrimitive]:
+        """Every primitive this snapshot can supply, with its unit."""
+        return self._split()[0]
+
+    def gaps(self) -> tuple[PrimitiveGap, ...]:
+        """Every primitive it cannot. A gap is never replaced by a constant."""
+        return self._split()[1]
+
+    def primitive(self, primitive_id: str) -> DeclaredPrimitive | None:
+        """One declared primitive, or None. None means missing, not zero."""
+        return self.declared().get(primitive_id)
+
+    def _split(self):
+        return declare(self.values,
+                       show_average=self.loaded.main_skill_show_average)

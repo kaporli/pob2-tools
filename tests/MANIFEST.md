@@ -54,6 +54,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T01 failure probe | `python scripts/p02_t01_timeout_probe.py --mode wedge --timeout 2.0` | Nothing | Not a test; one adapter failure case as its own process, so a supervisor can bound it. Modes: `wedge`, `crash`, `revive`. |
 | P02-T01 evidence | `python scripts/p02_t01_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/lifecycle.json`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T01 review probes | `python docs/evidence/P02/review-eca7afe-adversarial-probes.py` | PoB | Not a test; re-asks the review's seven questions. Its recorded answers are the pre-repair ones in `review-eca7afe-adversarial.json`. |
+| P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
 
 Selecting the PoB checkout:
 
@@ -107,6 +108,8 @@ none yet).
 | `test_p01_demo_run.py` | Re-runs `scripts/p01_demo_run.py` and checks the claims `docs/evidence/P01/demo-run.json` records. |
 | `test_p02_t01_adapter.py` | P02-T01 offline lane: parent working directory, exact versus blank loading, build-document sourcing and blob ambiguity, patch-profile mismatch, typed errors, process replacement, state scoped to the worker generation, fidelity bounds covering the load, pre-spawn path resolution, helper hashing, checkout identity. Synthetic workers only. |
 | `test_p02_t01_timeout_supervisor.py` | P02-T01 bounded requests, run through `scripts/p02_t01_timeout_probe.py` under a hard outer deadline with process-tree cleanup, so an unenforced bound fails instead of hanging. |
+| `test_p02_t04_primitive_semantics.py` | P02-T04 declaration rules: one owner and one unit per primitive, no engine key claimed twice, every inventoried category covered, a missing native output as a gap, and `CombinedDPS` unresolved until the engine flag that decides its unit is present. No PoB. |
+| `test_p02_t04_rotation_estimates.py` | P02-T04 F02 repair through the real `task_tier`: setup time reduces the sustained estimate, an unrelated condition scales the rotation instead of replacing it, an unknown reload duty or delivery geometry is a gap, the deprecated `floor`/`ceiling`/`honest_*` names carry a legacy status, and the arithmetic stays in `pob2opt.legacy_estimates`. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -124,6 +127,7 @@ none yet).
 | `test_f11_import_is_wiped.py` | What survives `load_build_xml` + `OPT_setup` (and observation P00-OBS-02). |
 | `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, and what the dropped affix costs. |
 | `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout and helper identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, recovery from it without a blank character, A-B-A with B read, two documents under one build hash, configuration isolation between evaluations, forced termination and replacement. |
+| `test_p02_t04_primitive_semantics.py` | P02-T04 against the real engine: thirteen controlled fixture documents settling what each primitive contains. `TotalDPS` as damage per use times the rate, hit probability and crit already inside damage per use, extra projectiles changing nothing, damage over time as a duration-independent rate, five meta gems leaving the socketed spell's cadence unchanged, a cooldown becoming the use rate, and `CombinedDPS` switching unit with `showAverage`. |
 
 ### `tests/fixtures`
 
@@ -175,6 +179,23 @@ P02-T01 working tree, PoB `ce566ea`:
 
 The earlier P00 figures, for comparison: 91/34/13, 121/17, 86/12 and 30/104/4
 at commit `6290674`.
+
+Specification version 1.0, 2026-10-06, repository commit `0df64dd` plus the
+P02-T04 working tree, PoB `ce566ea`:
+
+| Command | Result |
+|---|---|
+| `python -m pytest` (no `POB2_ROOT`) | 673 passed, 67 skipped, 3 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 739 passed, 4 xfailed |
+| `python -m pytest tests/unit` | 668 passed, 2 xfailed |
+| `python -m pytest tests/integration` | 5 passed, 1 xfailed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 66 passed, 676 deselected, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+
+The two F02 xfails are gone: P02-T04 repaired the path, so
+`test_repaired_concentration_consumes_the_rotation_adjusted_dps` and
+`test_repaired_single_target_responds_to_rotation_quality` are plain passes
+and the three characterizations beside them were migrated in place.
 
 Every `xfail` is `strict` and names the repair task that will turn it into a
 pass. A non-strict xfail is not used anywhere: an expectation that passes early

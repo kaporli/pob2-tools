@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 
-from . import policy
+from . import legacy_estimates, policy
 
 WT_TO_CAT = {
     "Spear": ("Spear", False), "Bow": ("Bow", True), "Crossbow": ("Crossbow", True),
@@ -59,22 +59,30 @@ def _equip_for(worker, weapon_spec):
     return label
 
 
-def _floor_ceiling(worker):
+def _condition_off_on(worker):
+    """Measure with every scoped condition on, then with every one off.
+
+    These were called "ceiling" and "floor". They are not bounds: they are two
+    measurements under two declared configurations, which is what the current
+    names say (P02-T04).
+    """
     scoped = worker.scoped_configs()
-    ceil_vals = policy.ceiling_values(scoped)
-    floor_vals = policy.floor_values(scoped)
-    for var, val in ceil_vals.items():
+    on_vals = policy.ceiling_values(scoped)
+    off_vals = policy.floor_values(scoped)
+    for var, val in on_vals.items():
         worker.set_config(var, val)
-    m_ceil = worker.metrics()
-    for var, val in floor_vals.items():
+    m_on = worker.metrics()
+    for var, val in off_vals.items():
         worker.set_config(var, val)
-    m_floor = worker.metrics()
-    # restore neutral (floor) state
-    return m_floor, m_ceil, sorted(ceil_vals)
+    m_off = worker.metrics()
+    # the worker is left in the condition-off state
+    return legacy_estimates.condition_estimates(
+        _score(m_off), _score(m_on), sorted(on_vals))
 
 
 def _score(m):
-    return max(m["dps"], m["full"])
+    """The legacy screening number, with its units checked (P02-T04)."""
+    return legacy_estimates.screen_score(m)
 
 
 # ---------------------------------------------------------------- worker tasks
@@ -88,13 +96,12 @@ def task_screen(worker, p):
         return {"gem": p["gem"], "skip": "gem not found"}
     worker.set_main(gi)
     try:
-        m_floor, m_ceil, assumptions = _floor_ceiling(worker)
+        estimates = _condition_off_on(worker)
     finally:
         worker.remove_group(gi)
     return {"gem": p["gem"], "weapon": weapon, "weapon_spec": p.get("weapon"),
             "tier": p.get("tier", "min"), "gated": p.get("gated", False),
-            "floor": _score(m_floor), "ceiling": _score(m_ceil),
-            "assumptions": assumptions, "minion": p.get("minion", False)}
+            "minion": p.get("minion", False), **estimates}
 
 
 def task_combo(worker, p):
@@ -113,13 +120,12 @@ def task_combo(worker, p):
         return {"payoff": p["payoff"], "skip": "gem not found"}
     worker.set_main(gi)
     try:
-        m_floor, m_ceil, assumptions = _floor_ceiling(worker)
+        estimates = _condition_off_on(worker)
     finally:
         for g in reversed(gis + [gi]):
             worker.remove_group(g)
     return {"payoff": p["payoff"], "enablers": p["enablers"], "mechanic": p.get("mechanic"),
-            "weapon": weapon, "weapon_spec": p.get("weapon"),
-            "floor": _score(m_floor), "ceiling": _score(m_ceil), "assumptions": assumptions}
+            "weapon": weapon, "weapon_spec": p.get("weapon"), **estimates}
 
 
 def task_trigger(worker, p):
@@ -140,13 +146,16 @@ def task_trigger(worker, p):
     # main skill = the triggered inner spell (skill index 2 in a wrapped group)
     worker.set_main(gi, 2)
     try:
-        m_floor, m_ceil, assumptions = _floor_ceiling(worker)
+        estimates = _condition_off_on(worker)
     finally:
         for g in reversed(gis + [gi]):
             worker.remove_group(g)
+    # P02-T04 fixture F-TRIG: no meta gem in the pinned catalog marked the
+    # socketed spell triggered, so these numbers are the spell cast directly.
+    estimates["estimate_gaps"] = ["trigger_cadence_not_modelled"]
     return {"meta": p["meta"], "inner": p["inner"], "activator": p.get("activator"),
             "weapon": weapon, "weapon_spec": p.get("weapon"), "mechanic": "trigger_wrap",
-            "floor": _score(m_floor), "ceiling": _score(m_ceil), "assumptions": assumptions}
+            **estimates}
 
 
 def task_stack(worker, p):
@@ -207,22 +216,23 @@ def task_final(worker, p):
         except Exception:
             pass
     tree = worker.optimize_tree(p["points"], p["asc_points"], p.get("swap_rounds", 12))
-    m_ceil = worker.metrics()
+    m_on = worker.metrics()
     for entry in scoped:
         var = entry["var"]
         if var in assumption_vars:
             worker.set_config(var, False if entry["type"] == "check" else 0)
-    m_floor = worker.metrics()
+    m_off = worker.metrics()
     for var, val in assumption_vars.items():
         worker.set_config(var, val)
     xml = worker.save_xml()
+    estimates = legacy_estimates.condition_estimates(
+        _score(m_off), _score(m_on), sorted(assumption_vars))
     return {"main": p["main"], "enablers": p.get("enablers", []), "stack": p.get("stack", []),
             "weapon": weapon, "supports": sup["chosen"], "ascendancy": tree["ascendancy"],
-            "tree_points": tree["points"], "assumptions": sorted(assumption_vars),
-            "ceiling": _score(m_ceil), "floor": _score(m_floor),
-            "life": m_ceil.get("life"), "requirements": {k: m_ceil.get(k) for k in
+            "tree_points": tree["points"],
+            "life": m_on.get("life"), "requirements": {k: m_on.get(k) for k in
                 ("str", "dex", "int", "reqStr", "reqDex", "reqInt")},
-            "xml": xml}
+            "xml": xml, **estimates}
 
 
 def task_tier(worker, p):
@@ -297,6 +307,7 @@ def task_tier(worker, p):
             pr["role"] = "item_granted"
         else:
             pr["role"] = "persistent"
+    rotation_gaps: list[str] = []
     if p.get("minion"):
         for pr in prims:
             if pr["role"] == "main":
@@ -310,20 +321,32 @@ def task_tier(worker, p):
         if kind == "consume_stack" and p.get("enablers"):
             classification["stack_builder"] = p["enablers"][0]
         rot = policy.rotation_dps(prims, classification)
-        # reload duty for clip weapons (data-driven: boltCount/reloadTime)
+        # reload duty for clip weapons (data-driven: boltCount/reloadTime).
+        # A clip weapon whose attack rate the engine did not report has an
+        # unknown duty, and 1.0 would be the most favourable answer, so the
+        # Lua returns nothing and the row records a gap (P02-T04).
         clip = worker.lua("""
         local s = build.calcsTab.mainEnv.player.mainSkill
         local sd = s and s.skillData or {}
         local o = build.calcsTab.mainOutput
-        if sd.boltCount and sd.reloadTime and o.Speed and o.Speed > 0 then
-          local fire = sd.boltCount / o.Speed
-          return { duty = fire / (fire + sd.reloadTime) }
+        if sd.boltCount and sd.reloadTime then
+          if o.Speed and o.Speed > 0 then
+            local fire = sd.boltCount / o.Speed
+            return { duty = fire / (fire + sd.reloadTime), reason = "clip weapon" }
+          end
+          return { reason = "clip weapon with no reported attack rate" }
         end
-        return { duty = 1 }
+        return { duty = 1, reason = "not a clip weapon" }
         """)
-        rot["dps"] *= clip.get("duty", 1)
+        duty = clip.get("duty")
+        if duty is None:
+            rotation_gaps.append("reload_duty_unknown: %s"
+                                 % clip.get("reason", "no reason reported"))
+            rot["dps"] = None
+        else:
+            rot["dps"] *= duty
         # gauge skills: burst window + lockout, filled by the best same-weapon skill
-        if kind == "gauge":
+        if kind == "gauge" and rot["dps"] is not None:
             t_up, t_lock = policy.GAUGE_CONSTANTS.get(p["main"], policy.GAUGE_DEFAULT)
             measured = p["main"] in policy.GAUGE_CONSTANTS
             burst_dps = rot["dps"]
@@ -349,42 +372,51 @@ def task_tier(worker, p):
                              f"{filler_best[1] or 'none'} {filler_best[0]:.0f} for {t_lock}s lockout"}
             if filler_best[1]:
                 rot["filler"] = filler_best[1]
-    # realistic-combat DPS: enable enemy conditions the build self-applies
+    # Enemy conditions the build self-applies. Measured as a ratio of the same
+    # engine output read twice, so the unit cancels, and applied as a
+    # multiplier on the rotation rather than as a replacement for it. Replacing
+    # it is research finding F02: the rotation correction was thrown away here.
     realistic = None
+    uplift = None
+    uplift_gap = None
+    enabled_conditions: list[str] = []
     try:
         prof = worker.lua("return OPT_damage_profile()")
+        bare = worker.metrics().get("dps")
         for var, gate in policy.COMBAT_CONDITIONS:
             if prof.get(gate):
                 worker.set_config(var, True)
+                enabled_conditions.append(var)
         realistic = worker.metrics().get("dps")
-        # leave conditions on for the saved file (realistic default), but the
-        # rotation/floor numbers above were measured bare
-    except Exception:
-        pass
+        uplift, uplift_gap = legacy_estimates.condition_uplift(
+            bare, realistic, enabled_conditions)
+        # the conditions stay on for the saved file; the rotation and the
+        # condition-off numbers above were measured without them
+    except Exception as exc:
+        uplift_gap = "%s: %s: %s" % (legacy_estimates.GAP_NO_UPLIFT,
+                                     type(exc).__name__, exc)
     xml = worker.save_xml()
-    # concentration model: honest single-target vs clear from delivery geometry
-    from . import concentration
+    geom = None
+    geometry_gap = None
     try:
         geom = worker.lua("return OPT_geometry()")
-        base_dps = realistic if realistic else rot["dps"]
-        hon = concentration.honest(geom, base_dps)
-        honest_st = hon["single_target"]
-        honest_clear = hon["clear"]
-        archetype = hon["archetype"]
-    except Exception:
-        honest_st = realistic or rot["dps"]
-        honest_clear = policy.clear_score(m)
-        archetype = "unknown"
-    clear = honest_clear
+    except Exception as exc:
+        geometry_gap = "%s: %s: %s" % (legacy_estimates.GAP_NO_GEOMETRY,
+                                       type(exc).__name__, exc)
+    estimates = legacy_estimates.sustained_estimates(
+        rot["dps"], geom, uplift, uplift_gap=uplift_gap,
+        geometry_gap=geometry_gap)
+    estimates["estimate_gaps"] = (rotation_gaps + rot.get("assumptions", [])
+                                  + estimates["estimate_gaps"])
     return {"main": p["main"], "enablers": p.get("enablers", []), "weapon": weapon,
             "offhand": off, "spirit": spirit_added, "ascendancy": tree["ascendancy"],
-            "pob_dps": max(m["dps"], m["full"]), "rotation_dps": rot["dps"],
-            "realistic_dps": realistic, "clear_score": clear,
-            "honest_single_target": honest_st, "archetype": archetype,
+            "pob_dps": _score(m), "realistic_dps": realistic,
+            "conditions_enabled": enabled_conditions,
             "rotation_kind": rot["cycle"], "rotation_detail": rot["detail"],
+            "rotation_saturated": bool(rot.get("saturated")),
             "life": m.get("life"), "minion": p.get("minion", False),
             "requirements": {k: m.get(k) for k in ("str", "dex", "int", "reqStr", "reqDex", "reqInt")},
-            "xml": xml}
+            "xml": xml, **estimates}
 
 
 # ---------------------------------------------------------------- task builders
@@ -449,12 +481,13 @@ def rank_tiered(screen, weights=(0.25, 0.5, 0.25)):
     tier fall back to the next-lower tier's value."""
     per_gem = {}
     for r in screen:
-        if r.get("ceiling") is None or r.get("gated"):
+        on = legacy_estimates.legacy_value(r, legacy_estimates.CONDITION_ON_KEY)
+        if on is None or r.get("gated"):
             continue
         g = per_gem.setdefault(r["gem"], {})
         t = r.get("tier", "min")
-        if r["ceiling"] >= g.get(t, (-1, None))[0]:
-            g[t] = (r["ceiling"], r)
+        if on >= g.get(t, (-1, None))[0]:
+            g[t] = (on, r)
     rows = []
     for gem, tiers in per_gem.items():
         v_min = tiers.get("min", (0, None))[0]
@@ -476,11 +509,12 @@ def build_combo_tasks(gems, top_screen, limit=None):
     MEDIUM-tier spec from the screen phase (medium-weighted headline)."""
     best_weapon = {}
     for r in top_screen:
-        if "gem" in r and r.get("ceiling") is not None:
+        on = legacy_estimates.legacy_value(r, legacy_estimates.CONDITION_ON_KEY)
+        if "gem" in r and on is not None:
             # prefer med tier; fall back to whatever exists
             pref = {"med": 2, "bis": 1, "min": 0}.get(r.get("tier", "min"), 0)
             cur = best_weapon.get(r["gem"])
-            key = (pref, r["ceiling"])
+            key = (pref, on)
             if cur is None or key > cur[0]:
                 best_weapon[r["gem"]] = (key, r.get("weapon_spec"))
     provides, consumes = {}, {}

@@ -13,8 +13,9 @@ highest-damage build for a character by sweeping:
   Spirit feasibility enforced
 - full pipeline for the finalists: greedy supports (compat-checked), passive
   tree hill-climb with ascendancy selection, attribute-requirement repair,
-  honest **floor/ceiling** DPS for every conditional mechanic (PoB config vars
-  scoped to your skills — ceiling = all conditions up, floor = none)
+  a **condition-off / condition-on** pair of DPS estimates for every
+  conditional mechanic (PoB config vars scoped to your skills: condition-on =
+  all conditions up, condition-off = none)
 
 ## Setup
 
@@ -43,30 +44,37 @@ pob2opt combos  --level 60 --out runs\l60
 pob2opt report  --level 60 --out runs\l60
 ```
 
-Output: `<out>/report.md` (ranked table with floor/ceiling DPS and the
-assumption list per build) plus `build_NN_<skill>.xml` files importable into
-Path of Building 2.
+Output: `<out>/report.md` (ranked table with the condition-off and
+condition-on estimates and the assumption list per build) plus
+`build_NN_<skill>.xml` files importable into Path of Building 2.
 
 Phases checkpoint to `<out>/<phase>.json`; delete a file or pass `--force` to
 redo that phase. `--workers N` controls parallel engine processes (each takes
 ~1 GB RAM and ~20 s to boot).
 
-## Honesty model
+## Estimate model
 
 Every conditional mechanic (whirlwind stages, curse present, charges, corpse
-availability...) is reported as a floor/ceiling pair instead of a single
-number. The ceiling assumes perfect uptime of every condition PoB scopes to
-your active skills; the floor assumes none. Real play sits in between and the
-gap tells you how rotation-dependent a build is.
+availability...) is reported as a condition-off and a condition-on estimate
+instead of a single number. Condition-on assumes perfect uptime of every
+condition PoB scopes to your active skills; condition-off assumes none. Real
+play sits in between and the gap tells you how rotation-dependent a build is.
+These are not bounds, which is why they are no longer called floor and
+ceiling; `floor` and `ceiling` survive in the phase JSON as deprecated
+aliases. Every row carries `estimate_status: legacy_heuristic_unvalidated`:
+this is the legacy comparison path that P07 replaces.
 
 Known limits:
 - Some cross-skill empowerments are not modeled by PoB itself (e.g. Barrage's
   repeat on the next attack) — such combos are UNDERstated.
 - Trigger meta-gem wraps (`triggers` phase, Cast on X > spell) are constructed
-  correctly but PoB does not differentiate trigger/energy rates without
-  per-build hand configuration — all metas currently score identically, so
-  treat that phase as a build-construction aid, not a ranking.
+  correctly, but the pinned PoB data declares no trigger rate for any of them,
+  so the socketed spell is scored exactly as if you cast it yourself and every
+  meta scores identically. Measured in `docs/evidence/P02/primitives.md`
+  (fixture F-TRIG). Treat that phase as a build-construction aid, not a
+  ranking.
 - Glory/stun-gated ultimates are reported per burst window in their own report
   section; judge them by rotation, not sustained DPS.
-- Count-type conditions only enter ceilings when listed in `policy.COUNT_CAPS`;
+- Count-type conditions only enter the condition-on estimate when listed in
+  `policy.COUNT_CAPS`;
   trade listings go stale.

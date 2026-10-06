@@ -68,6 +68,9 @@ class FakeWorker:
     def reset(self):
         self._record("reset")
 
+    def maybe_reset(self, every: int = 50):
+        self._record("maybe_reset", every)
+
     def lua(self, code: str):
         self._record("lua", code)
         if "OPT_quest_bonuses" in code:
