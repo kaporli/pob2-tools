@@ -541,7 +541,7 @@ def test_a_snapshot_reports_the_load_bound_as_well_as_its_own(adapter, documents
     snapshot = adapter.primitives(fixture_build, EngineState(), fixture_profile)
 
     assert snapshot.timeout_s == REQUEST_TIMEOUT_S
-    assert snapshot.load_timeout_s == REQUEST_TIMEOUT_S
+    assert 0 < snapshot.load_timeout_s <= REQUEST_TIMEOUT_S
 
 
 def test_the_helper_hashes_are_resolved_before_the_spawn(tmp_path):
@@ -702,6 +702,29 @@ def test_a_detailed_evaluation_still_gets_the_detailed_bound(documents,
                                       fixture_profile,
                                       fidelity=Fidelity.DETAILED)
         assert snapshot.timeout_s == REQUEST_TIMEOUT_S
-        assert snapshot.load_timeout_s == REQUEST_TIMEOUT_S
+        assert 0 < snapshot.load_timeout_s <= REQUEST_TIMEOUT_S
     finally:
         adapter.close()
+
+
+@pytest.mark.parametrize("operation", ["primitives", "load_exact_build", "create_blank_build"])
+def test_partial_mutation_error_invalidates_reusable_state(operation, fixture_build,
+                                                          fixture_profile, documents):
+    spec = WorkerSpec(entry="synthetic_workers:StatefulFailureSession")
+    with EngineAdapter(spec, checkout=synthetic_checkout(), documents=documents) as live:
+        before = live.primitives(fixture_build, EngineState(), fixture_profile)
+        assert before.values == {"setting": 7, "skill": 1}
+        with pytest.raises(EngineInternalError):
+            if operation == "primitives":
+                live.primitives(fixture_build,
+                                EngineState(config={"setting": 120}, main_skill=(999, 1)),
+                                fixture_profile)
+            elif operation == "load_exact_build":
+                live.load_exact_build(documents.document_for(fixture_build), name="fail_load")
+            else:
+                live.create_blank_build(28)
+        assert live.worker_alive  # A nonfatal error must still invalidate state.
+        after = live.primitives(fixture_build, EngineState(), fixture_profile)
+        assert after.document.reloaded
+        assert after.values == before.values
+        assert after.state_applied == before.state_applied

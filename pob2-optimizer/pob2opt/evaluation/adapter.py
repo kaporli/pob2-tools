@@ -371,8 +371,17 @@ class EngineAdapter:
 
     # -- requests ---------------------------------------------------------
 
-    def _request(self, op: str, args: dict | None, timeout_s: float):
+    def _request(self, op: str, args: dict | None, timeout_s: float,
+                 *, deadline: float | None = None):
+        # Once mutation starts, neither a nonfatal error nor a malformed reply
+        # may leave the old state marked reusable. Successful operations
+        # publish their known state only after the complete response is checked.
+        if op in (protocol.OP_LOAD_EXACT_BUILD, protocol.OP_CREATE_BLANK_BUILD,
+                  protocol.OP_PRIMITIVES):
+            self._forget_loaded_build()
         handle = self._ensure_worker()
+        if deadline is not None:
+            timeout_s = min(timeout_s, self._remaining(deadline, op))
         try:
             result = handle.request(op, args, timeout_s)
         except EngineError as exc:
@@ -382,6 +391,7 @@ class EngineAdapter:
                 # document. The next request starts a fresh engine, which
                 # holds nothing (P02-T01-R10).
                 self._forget_loaded_build()
+                self._identity = None
             # Annotate, never replace. Raising a directory error out of a
             # finally block would demote the failure that explains the missing
             # result to __context__ (P02-T01-R07).
@@ -390,7 +400,20 @@ class EngineAdapter:
                 exc.diagnostic = "%s; also %s" % (exc.diagnostic, moved)
             raise
         self._assert_parent_cwd(op)
+        if deadline is not None:
+            self._remaining(deadline, op)
         return result
+
+    def _remaining(self, deadline: float, stage: str) -> float:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            if self._handle is not None:
+                self._handle.discard("evaluation deadline exhausted at %s" % stage)
+            self._forget_loaded_build()
+            self._identity = None
+            raise EngineTimeout("evaluation deadline exhausted; worker terminated",
+                                stage=stage)
+        return remaining
 
     def _parent_cwd_drift(self) -> str | None:
         current = os.getcwd()
@@ -424,10 +447,11 @@ class EngineAdapter:
 
     # -- operations -------------------------------------------------------
 
-    def identity(self) -> EngineIdentity:
+    def identity(self, *, deadline: float | None = None) -> EngineIdentity:
         if self._identity is not None and self._handle is not None                 and self._handle.alive:
             return self._identity
-        described = self._request(protocol.OP_DESCRIBE, {}, self.screen_timeout_s)
+        described = self._request(protocol.OP_DESCRIBE, {}, self.screen_timeout_s,
+                                  deadline=deadline)
         self._identity = EngineIdentity(
             pob_root=described.get("pob_root") or (self.spec.pob_root or ""),
             pob_commit=self.checkout.commit,
@@ -449,7 +473,8 @@ class EngineAdapter:
         return LoadedBuild.from_wire(payload)
 
     def load_exact_build(self, document: BuildDocument, name: str = "exact",
-                         *, timeout_s: float | None = None) -> LoadedBuild:
+                         *, timeout_s: float | None = None,
+                         deadline: float | None = None) -> LoadedBuild:
         """Load a build document unchanged. Never clears the character.
 
         ``timeout_s`` lets an evaluation apply its own fidelity bound to the
@@ -460,7 +485,7 @@ class EngineAdapter:
         payload = self._request(protocol.OP_LOAD_EXACT_BUILD,
                                 {"xml": document.xml, "name": name},
                                 self.detailed_timeout_s if timeout_s is None
-                                else timeout_s)
+                                else timeout_s, deadline=deadline)
         loaded = LoadedBuild.from_wire(payload)
         if loaded.opt_setup_called:
             raise EngineInternalError(
@@ -496,7 +521,11 @@ class EngineAdapter:
         timeout_s = protocol.timeout_for(fidelity, self.screen_timeout_s,
                                          self.detailed_timeout_s)
         wanted = state.to_wire()
+        # Boot has its own explicit startup allowance. Everything after boot,
+        # including loading and any identity request, shares this deadline.
+        self._ensure_worker()
         started = time.monotonic()
+        deadline = started + timeout_s
         # Reload unless the worker already holds exactly this document with
         # exactly this state. PoB keeps configuration in its own table and
         # nothing clears it, so a changed state needs a fresh document, not
@@ -505,27 +534,35 @@ class EngineAdapter:
                     or self._loaded_key != document.content_key
                     or self._applied_state != wanted)
         if reloaded:
+            load_timeout_s = self._remaining(deadline, protocol.OP_LOAD_EXACT_BUILD)
             loaded = self.load_exact_build(document, name=build.name or "exact",
-                                           timeout_s=timeout_s)
+                                           timeout_s=load_timeout_s, deadline=deadline)
         else:
+            load_timeout_s = None
             loaded = self._loaded
-        payload = self._request(protocol.OP_PRIMITIVES, wanted, timeout_s)
-        self._applied_state = wanted
-        duration_ms = int((time.monotonic() - started) * 1000)
+        payload = self._request(protocol.OP_PRIMITIVES, wanted, timeout_s,
+                                deadline=deadline)
+        identity = self.identity(deadline=deadline)
 
         summary = payload.get("summary") or {}
         summary.setdefault("optSetupCalled", loaded.opt_setup_called)
-        return PrimitiveSnapshot(
+        snapshot = PrimitiveSnapshot(
             build_hash=build.build_hash,
             values=dict(payload.get("values") or {}),
             stat_keys=tuple(payload.get("stat_keys") or ()),
-            identity=self.identity(),
+            identity=identity,
             state_applied=wanted,
             loaded=LoadedBuild.from_wire(summary),
             document=DocumentProvenance.of(document, reloaded=reloaded),
             timeout_s=timeout_s,
-            load_timeout_s=timeout_s if reloaded else None,
-            duration_ms=duration_ms)
+            load_timeout_s=load_timeout_s,
+            duration_ms=int((time.monotonic() - started) * 1000))
+        self._remaining(deadline, protocol.OP_PRIMITIVES)
+        self._loaded_key = document.content_key
+        self._applied_state = wanted
+        self._loaded = loaded
+        self._loaded_generation = self._generation
+        return snapshot
 
     # -- checks -----------------------------------------------------------
 

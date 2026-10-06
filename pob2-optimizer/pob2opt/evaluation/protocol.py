@@ -19,7 +19,7 @@ from ..domain.enums import Fidelity
 
 #: Bumped whenever the adapter changes what it asks the engine for, or how it
 #: interprets the answer. Part of the evaluation cache identity.
-ADAPTER_VERSION = "p02-t01.1"
+ADAPTER_VERSION = "p02-t01.2"
 
 #: Owner of primitive units, included effects and excluded effects.
 PRIMITIVE_SEMANTICS_OWNER = "P02-T04"
@@ -191,10 +191,11 @@ class PrimitiveSnapshot:
     state_applied: Mapping[str, Any]
     loaded: LoadedBuild
     document: DocumentProvenance
-    #: Bound on the primitives request itself.
+    #: Total evaluation allowance, excluding separately bounded worker startup
+    #: and timeout cleanup. Loading, primitives and identity share this budget.
     timeout_s: float
-    #: Bound on the load inside the same call, or None when nothing reloaded.
-    #: ``duration_ms`` spans both.
+    #: Remaining evaluation budget when loading began, or None without a load.
+    #: This is part of timeout_s, not an additional allowance.
     load_timeout_s: float | None
     duration_ms: int
     #: Until P02-T04 publishes the inventory, no value here has declared units.

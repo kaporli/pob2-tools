@@ -89,3 +89,25 @@ def test_the_next_request_after_a_crash_runs_in_a_different_process(repo_root: P
     # The replacement finished real work, and did it without clearing a build.
     assert report["revived_load"]["opt_setup_called"] is False
     assert report["revived_load"]["allocated_nodes"] > 0
+
+
+@pytest.mark.parametrize("mode,stage", [
+    ("combined", "primitives"), ("slow_load", "load_exact_build"),
+    ("slow_primitives", "primitives"), ("slow_identity", "describe"),
+    ("wedged_load", "load_exact_build"),
+])
+def test_evaluation_stages_share_one_deadline_and_recover(repo_root, mode, stage):
+    report = run_probe(repo_root, mode)
+    assert report["observed"] == "timeout"
+    assert report["stage"] == stage
+    assert not report["worker_alive_after"]
+    assert report["new_process"] and report["reloaded"]
+    # Windows taskkill and process joining each have a 10-second cleanup grace.
+    assert report["elapsed_s"] < REQUEST_BOUND_S + 20
+
+
+def test_multi_stage_evaluation_that_fits_the_budget_succeeds(repo_root):
+    report = run_probe(repo_root, "within_budget")
+    assert report["observed"] == "success"
+    assert report["timeout_s"] == REQUEST_BOUND_S
+    assert report["worker_alive_after"]

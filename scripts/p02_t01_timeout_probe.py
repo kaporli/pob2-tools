@@ -24,6 +24,7 @@ import argparse
 import json
 import os
 import sys
+import time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -32,11 +33,59 @@ for path in (REPO / "pob2-optimizer", REPO / "pob2-mcp", REPO / "tests"):
         sys.path.insert(0, str(path))
 
 from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineCrash,  # noqa: E402
-                                EngineTimeout, WorkerSpec)
+                                EngineTimeout, EngineState, CheckoutIdentity, WorkerSpec)
 from pob2opt.evaluation.protocol import OP_CREATE_BLANK_BUILD  # noqa: E402
 
 ENTRY = "synthetic_workers:SyntheticSession"
 DOCUMENT = BuildDocument(build_hash="probe-build", xml="<SyntheticBuild/>")
+EVALUATION_MODES = ("combined", "slow_load", "slow_primitives", "slow_identity",
+                    "within_budget", "wedged_load")
+
+
+def evaluation_probe(mode: str, bound: float) -> dict:
+    """One evaluation budget, with an independent outer supervisor in pytest."""
+    from record_fixtures import records
+
+    examples = records()
+    build, profile = examples["build_spec"], examples["patch_profile"]
+    delays = {
+        "combined": {"load_exact_build": 0.7, "primitives": 0.7},
+        "slow_load": {"load_exact_build": 2},
+        "slow_primitives": {"primitives": 2},
+        "slow_identity": {"load_exact_build": 0.7, "describe": 0.7},
+        "within_budget": {"load_exact_build": 0.1, "primitives": 0.1},
+        "wedged_load": {},
+    }[mode]
+    extra = {"stage_delays": {op: seconds * bound for op, seconds in delays.items()}}
+    if mode == "wedged_load":
+        extra.update(behavior="wedge", wedge_on="load_exact_build")
+    spec = WorkerSpec(entry="synthetic_workers:TimedStagesSession", extra=extra)
+    checkout = CheckoutIdentity("SYNTHETIC", profile.pob_commit, None)
+    document = BuildDocument(build.build_hash, "<SyntheticBuild/>")
+    with EngineAdapter(spec, checkout=checkout, screen_timeout_s=bound,
+                       detailed_timeout_s=bound * 4, start_timeout_s=60) as adapter:
+        first_pid = adapter.restart_worker()  # Startup is separately bounded.
+        start = time.monotonic()
+        try:
+            snapshot = adapter.primitives(build, EngineState(), profile, document=document)
+            observed, stage = "success", None
+        except EngineTimeout as exc:
+            observed, stage = exc.status.value, exc.stage
+        report = {"mode": mode, "observed": observed, "stage": stage,
+                  "elapsed_s": time.monotonic() - start,
+                  "worker_alive_after": adapter.worker_alive}
+        if mode == "within_budget":
+            report["ok"] = observed == "success" and report["elapsed_s"] < bound
+            if observed == "success":
+                report["timeout_s"] = snapshot.timeout_s
+        else:
+            report["ok"] = observed == "timeout" and not adapter.worker_alive
+            adapter.spec = WorkerSpec(entry=ENTRY)
+            recovered = adapter.primitives(build, EngineState(), profile, document=document)
+            report["new_process"] = first_pid != recovered.identity.worker_pid
+            report["reloaded"] = recovered.document.reloaded
+            report["ok"] = report["ok"] and report["new_process"] and report["reloaded"]
+        return report
 
 
 def spec_for(mode: str) -> WorkerSpec:
@@ -51,11 +100,16 @@ def spec_for(mode: str) -> WorkerSpec:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=("wedge", "crash", "revive"),
+    parser.add_argument("--mode", choices=("wedge", "crash", "revive") + EVALUATION_MODES,
                         required=True)
     parser.add_argument("--timeout", type=float, default=2.0,
                         help="per-request bound the adapter must enforce")
     args = parser.parse_args(argv)
+
+    if args.mode in EVALUATION_MODES:
+        report = evaluation_probe(args.mode, args.timeout)
+        print(json.dumps(report, sort_keys=True))
+        return 0 if report["ok"] else 1
 
     expected = "timeout" if args.mode == "wedge" else "engine_crash"
     report = {"mode": args.mode, "timeout_s": args.timeout, "expected": expected,

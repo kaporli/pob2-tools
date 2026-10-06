@@ -130,3 +130,40 @@ class SyntheticSession:
         # crash, and the parent must notice through the pipe, not a message.
         sys.stdout.flush()
         os._exit(int(self.config.get("exit_code", 70)))
+
+
+class StatefulFailureSession(SyntheticSession):
+    """Mutates before nonfatal failure, so cached state must be invalidated."""
+
+    def __init__(self, config):
+        super().__init__(config)
+        self.applied = {"setting": 7, "skill": 1}
+
+    def handle(self, op, args):
+        from pob2opt.domain.enums import ResultStatus
+        from pob2opt.evaluation.worker import SessionError
+
+        if op == "primitives":
+            self.applied.update(dict(args.get("config") or []))
+            if args.get("main_skill"):
+                self.applied["skill"] = args["main_skill"][0]
+                raise SessionError(ResultStatus.INTERNAL_ERROR, "partial mutation",
+                                   stage=op)
+            result = super().handle(op, args)
+            result["values"] = dict(self.applied)
+            return result
+        result = super().handle(op, args)
+        if op == "load_exact_build":
+            self.applied = {"setting": 7, "skill": 1}
+        if op == "create_blank_build" or args.get("name") == "fail_load":
+            self.applied = {"setting": 999, "skill": 999}
+            raise SessionError(ResultStatus.INTERNAL_ERROR, "partial mutation", stage=op)
+        return result
+
+
+class TimedStagesSession(SyntheticSession):
+    """Independent delays per operation, reset on a new healthy worker."""
+
+    def handle(self, op, args):
+        time.sleep(self.config.get("stage_delays", {}).get(op, 0))
+        return super().handle(op, args)

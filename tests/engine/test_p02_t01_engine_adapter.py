@@ -21,6 +21,7 @@ import dataclasses
 import faulthandler
 import os
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
@@ -30,11 +31,39 @@ from record_fixtures import records
 
 from pob2opt.domain.enums import ResultStatus
 from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineCrash,
-                                EngineInvalidInput, EngineState,
+                                EngineInvalidInput, EngineInternalError, EngineState,
                                 MappingBuildDocuments, kill_process_tree,
                                 pob_worker_spec, resolve_checkout)
 
 pytestmark = pytest.mark.engine
+
+
+@pytest.mark.parametrize("document_enemy_level", [None, 90])
+def test_partial_state_failure_restores_document_baseline(
+        adapter, build_and_profile, populated_xml, document_enemy_level):
+    build, profile = build_and_profile
+    xml = populated_xml
+    if document_enemy_level is not None:
+        tree = ET.fromstring(xml)
+        config = tree.find("Config")
+        assert config is not None
+        for element in list(config):
+            if element.get("name") == "enemyLevel":
+                config.remove(element)
+        ET.SubElement(config, "Input", name="enemyLevel", number=str(document_enemy_level))
+        xml = ET.tostring(tree, encoding="unicode")
+    document = BuildDocument(build.build_hash, xml)
+    before = adapter.primitives(build, EngineState(), profile, document=document)
+    with pytest.raises(EngineInternalError) as failure:
+        adapter.primitives(build, EngineState(config={"enemyLevel": 120},
+                                             main_skill=(999999, 1)),
+                           profile, document=document)
+    assert failure.value.stage == "primitives:set_main_skill"
+    after = adapter.primitives(build, EngineState(), profile, document=document)
+    assert after.document.reloaded
+    assert after.state_applied == before.state_applied
+    assert after.loaded == before.loaded
+    assert_values_match(before.values, after.values)
 
 #: P02-T01 acceptance tolerance for deterministic primitives.
 REL_TOLERANCE = 1e-6

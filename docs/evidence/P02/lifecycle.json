@@ -1,5 +1,5 @@
 {
- "adapter_version": "p02-t01.1",
+ "adapter_version": "p02-t01.2",
  "pob": {
   "aba": {
    "a_first": 47.222385956304,
@@ -44,8 +44,8 @@
    ]
   },
   "forced_termination": {
-   "diagnostic": "worker 1780 is gone: worker process exited (exit code 1)",
-   "killed_pid": 1780,
+   "diagnostic": "worker 12924 is gone: worker process exited (exit code 1)",
+   "killed_pid": 12924,
    "new_process": true,
    "observed": "engine_crash",
    "replacement_completed_the_task": {
@@ -58,10 +58,10 @@
     "opt_setup_called": false,
     "socket_groups": 1
    },
-   "replacement_pid": 14884
+   "replacement_pid": 26988
   },
   "identity": {
-   "adapter_version": "p02-t01.1",
+   "adapter_version": "p02-t01.2",
    "dirty_reason": "working tree differs from the pinned commit",
    "helper_lua_hashes": {
     "opt_helpers.lua": "f6e3fd74b486f6072bf285e31f77bc5ce492ace03a408512ada883907ba67149",
@@ -100,21 +100,21 @@
   "what_this_is": "PoB-derived engine behaviour. Deterministic primitive agreement only; not a gameplay measurement and not a performance claim.",
   "worker_cwd_differs_from_parent": true,
   "worker_pids": [
-   1780,
-   14884
+   12924,
+   26988
   ]
  },
- "recorded_at_utc": "2026-10-06T12:41:41.252419+00:00",
+ "recorded_at_utc": "2026-10-06T17:22:40.804017+00:00",
  "schema_version": 1,
  "specification_version": "1.0",
  "synthetic": {
   "hard_outer_deadline_s": 90.0,
   "probes": {
    "crash": {
-    "diagnostic": "worker 30656 died during create_blank_build (exit code 70)",
+    "diagnostic": "worker 23448 died during create_blank_build (exit code 70)",
     "exit_code": 0,
     "expected": "engine_crash",
-    "first_worker_pid": 30656,
+    "first_worker_pid": 23448,
     "mode": "crash",
     "observed": "engine_crash",
     "ok": true,
@@ -124,14 +124,14 @@
     "timeout_s": 2.0,
     "worker_alive_after": false,
     "worker_pids": [
-     30656
+     23448
     ]
    },
    "revive": {
-    "diagnostic": "worker 21640 died during create_blank_build (exit code 70)",
+    "diagnostic": "worker 27660 died during create_blank_build (exit code 70)",
     "exit_code": 0,
     "expected": "engine_crash",
-    "first_worker_pid": 21640,
+    "first_worker_pid": 27660,
     "generation": 2,
     "mode": "revive",
     "new_process": true,
@@ -146,20 +146,20 @@
      "opt_setup_called": false,
      "socket_groups": 3
     },
-    "second_worker_pid": 1896,
+    "second_worker_pid": 14248,
     "stage": "create_blank_build",
     "timeout_s": 2.0,
     "worker_alive_after": false,
     "worker_pids": [
-     21640,
-     1896
+     27660,
+     14248
     ]
    },
    "wedge": {
-    "diagnostic": "worker 29576 did not answer create_blank_build within 2.000s; the process was terminated",
+    "diagnostic": "worker 24460 did not answer create_blank_build within 2.000s; the process was terminated",
     "exit_code": 0,
     "expected": "timeout",
-    "first_worker_pid": 29576,
+    "first_worker_pid": 24460,
     "mode": "wedge",
     "observed": "timeout",
     "ok": true,
@@ -169,7 +169,7 @@
     "timeout_s": 2.0,
     "worker_alive_after": false,
     "worker_pids": [
-     29576
+     24460
     ]
    }
   },
