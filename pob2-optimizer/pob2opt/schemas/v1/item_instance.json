@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/item_instance.json",
+  "title": "ItemInstance",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "item_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "catalog_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "base_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "rarity": {
+      "type": "string",
+      "minLength": 1
+    },
+    "item_level": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer"
+      }
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": {}
+    },
+    "modifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ItemModifier"
+      }
+    },
+    "sockets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Socket"
+      }
+    },
+    "flags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "raw_text": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_document_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parse_status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial",
+        "invalid"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "item_hash",
+    "catalog_hash",
+    "base_id",
+    "display_name",
+    "rarity",
+    "item_level",
+    "requirements",
+    "properties",
+    "modifiers",
+    "sockets",
+    "flags",
+    "raw_text",
+    "source_document_id",
+    "parse_status"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ItemModifier": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": [
+            "implicit",
+            "explicit",
+            "enchant",
+            "rune",
+            "fractured",
+            "crafted",
+            "desecrated",
+            "unknown"
+          ]
+        },
+        "source_position": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string"
+        },
+        "native_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resolved_effect_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ValueRange"
+          }
+        },
+        "flags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "parse_status": {
+          "type": "string",
+          "enum": [
+            "resolved",
+            "unresolved",
+            "ambiguous"
+          ]
+        }
+      },
+      "required": [
+        "category",
+        "source_position",
+        "text",
+        "native_id",
+        "resolved_effect_ids",
+        "values",
+        "flags",
+        "parse_status"
+      ],
+      "additionalProperties": false
+    },
+    "Socket": {
+      "type": "object",
+      "properties": {
+        "socket_id": {
+          "type": "string"
+        },
+        "group": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "colour": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "contents_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "socket_id",
+        "group",
+        "colour",
+        "contents_id"
+      ],
+      "additionalProperties": false
+    },
+    "ValueRange": {
+      "type": "object",
+      "properties": {
+        "rolled": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "minimum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "maximum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "rolled",
+        "minimum",
+        "maximum"
+      ],
+      "additionalProperties": false,
+      "description": "A modifier value and the range it rolled inside. All parts nullable."
+    }
+  }
+}

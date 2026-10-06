@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/acquisition_result.json",
+  "title": "AcquisitionResult",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provider": {
+      "type": "string"
+    },
+    "source_ref": {
+      "type": "string"
+    },
+    "access_method": {
+      "type": "string",
+      "enum": [
+        "local_file",
+        "public_page",
+        "documented_api",
+        "provider_export",
+        "manual_capture"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "not_found",
+        "access_blocked",
+        "rate_limited",
+        "invalid_response",
+        "timeout",
+        "unsupported_access"
+      ]
+    },
+    "source_document_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "http_status": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "retry_eligible": {
+      "type": "boolean"
+    },
+    "diagnostic": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "attempted_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "provider",
+    "source_ref",
+    "access_method",
+    "status",
+    "source_document_id",
+    "http_status",
+    "retry_eligible",
+    "diagnostic",
+    "attempted_at"
+  ],
+  "additionalProperties": false,
+  "description": "A network or file attempt. A failure never carries a SourceDocument."
+}

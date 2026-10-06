@@ -72,6 +72,12 @@ jobs:
           cat doctor.json
           if [ "$code" != "0" ] && [ "$code" != "3" ]; then exit "$code"; fi
 
+      - name: Persisted schemas match the record dataclasses
+        # pob2opt/schemas/v1 is generated from pob2opt/domain/records.py
+        # (P01-T01). A field added without regenerating would validate here
+        # and fail wherever the record is actually persisted.
+        run: python scripts/generate_schemas.py --check
+
       - name: Offline unit tests
         run: python -m pytest tests/unit -ra --junitxml=unit-junit.xml
 
@@ -113,7 +119,8 @@ jobs:
             echo "## Offline lane (Python ${{ matrix.python-version }})"
             echo
             echo "Covered: a clean install from \`$LOCK\`, \`pip check\`, the doctor"
-            echo "diagnostics, tests/unit and tests/integration."
+            echo "diagnostics, the generated-schema freshness check, tests/unit"
+            echo "and tests/integration."
             echo
             echo "### Engine lane"
             echo

@@ -3,7 +3,10 @@ name = "pob2-optimizer"
 version = "0.1.0"
 description = "Exhaustive Path of Building 2 build-space optimizer: skills, combos, summoners, multi-entity DPS, trade items"
 requires-python = ">=3.10"
-dependencies = ["requests>=2.31"]
+# jsonschema validates every persisted record (architecture.md, P01-T01).
+# It is a runtime dependency, not a test-only one: pob2opt.domain.schemas
+# imports it. Exact versions are pinned per interpreter in requirements/.
+dependencies = ["requests>=2.31", "jsonschema>=4.21"]
 
 [project.scripts]
 pob2opt = "pob2opt.cli:main"
@@ -13,7 +16,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["pob2opt"]
+packages = ["pob2opt", "pob2opt.domain", "pob2opt.storage"]
 
 [tool.setuptools.package-data]
-pob2opt = ["lua/*.lua"]
+# schemas/v1 ships with the package so a record can be validated from an
+# installed wheel, not only from a source checkout.
+pob2opt = ["lua/*.lua", "schemas/v1/*.json"]

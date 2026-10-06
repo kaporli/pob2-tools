@@ -1,0 +1,346 @@
+{
+  "kind": "synthetic",
+  "purpose": "Acquisition and patch records: what was fetched, from where, under which declared patch, and the entity catalog pinned to it.",
+  "not_a_claim": "Every identifier, number and text string here is invented to exercise record validation. None is a PoE 2 entity, a PoB output, a provider response or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
+  "schema_version": 1,
+  "patch_format": "Each invalid and also_valid case is the valid record with the listed JSON Pointer paths replaced. The value \"__remove__\" deletes the key; \"__nan__\" and \"__inf__\" insert the float values JSON itself cannot hold.",
+  "records": {
+    "source_document": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-source-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-acquisition-1"
+        ],
+        "provider": "fixture_provider",
+        "source_url": null,
+        "external_id": "FX-1",
+        "acquired_at": "2026-10-04T12:00:00Z",
+        "published_at": null,
+        "updated_at": null,
+        "access_method": "local_file",
+        "media_type": "application/xml",
+        "blob_hash": "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859",
+        "byte_count": 41,
+        "acquisition_version": "fixture-adapter-0.1",
+        "source_manifest_id": "fixture-manifest-capability-1",
+        "declared_patch": null,
+        "author_id": null,
+        "locale": null,
+        "popularity": [],
+        "redistribution": "restricted"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "unknown access method",
+          "patch": {
+            "/access_method": "scraped_anyway"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/access_method"
+        },
+        {
+          "name": "no provenance at all",
+          "patch": {
+            "/provenance_ids": []
+          },
+          "expect_code": "missing_provenance",
+          "expect_path": "/provenance_ids"
+        },
+        {
+          "name": "negative byte count",
+          "patch": {
+            "/byte_count": -1
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/byte_count"
+        }
+      ]
+    },
+    "acquisition_result": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-acquisition-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-run-1"
+        ],
+        "provider": "fixture_provider",
+        "source_ref": "file:///fixture/build.xml",
+        "access_method": "local_file",
+        "status": "ok",
+        "source_document_id": "fixture-source-1",
+        "http_status": null,
+        "retry_eligible": false,
+        "diagnostic": null,
+        "attempted_at": "2026-10-04T12:00:00Z"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "a timeout that still names a stored document",
+          "patch": {
+            "/status": "timeout",
+            "/http_status": null
+          },
+          "expect_code": "fabricated_source_document",
+          "expect_path": "/source_document_id"
+        },
+        {
+          "name": "a successful acquisition with nothing stored",
+          "patch": {
+            "/source_document_id": null
+          },
+          "expect_code": "missing_source_document",
+          "expect_path": "/source_document_id"
+        },
+        {
+          "name": "unknown acquisition status",
+          "patch": {
+            "/status": "probably_fine"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/status"
+        }
+      ]
+    },
+    "patch_profile": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-profile-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-source-1"
+        ],
+        "game": "poe2",
+        "realm": "fixture-realm",
+        "league_id": "fixture-league-1",
+        "patch_id": "fixture-patch-1",
+        "patch_evidence_ids": [
+          "fixture-source-1"
+        ],
+        "resolved_at": "2026-10-04T12:00:00Z",
+        "pob_commit": "0000000000000000000000000000000000000000",
+        "pob_dirty_hash": null,
+        "catalog_hash": "0ca331a45dd4dc21991c8d4c7b144e900c220f74a8156ae55773fe028b48826a",
+        "adapter_version": "fixture-adapter-0.1",
+        "compatibility": "partial",
+        "compatibility_evidence_ids": [
+          "fixture-source-1"
+        ],
+        "character_rules": {
+          "level_range": {
+            "minimum": 1,
+            "maximum": 100
+          },
+          "class_ascendancies": {
+            "fixture-class-a": [
+              "fixture-asc-a1"
+            ]
+          },
+          "gem_level_limit": null,
+          "skill_level_limit": null,
+          "point_budgets": [
+            {
+              "rule_id": "fixture-budget-1",
+              "level": 100,
+              "required_progression_flags": [
+                "fixture-quest-1"
+              ],
+              "passive_points": 10,
+              "ascendancy_points": 2,
+              "evidence_ids": [
+                "fixture-source-1"
+              ]
+            }
+          ],
+          "slots": [
+            {
+              "slot_id": "fixture-slot-weapon",
+              "accepted_base_categories": [
+                "fixture-base-cat"
+              ],
+              "weapon_set_id": "fixture-set-1",
+              "evidence_ids": [
+                "fixture-source-1"
+              ]
+            }
+          ],
+          "support_restrictions": [
+            {
+              "restriction_id": "fixture-restriction-1",
+              "applies_to": [
+                "fixture-skill-1"
+              ],
+              "max_supports": 2,
+              "description": "synthetic restriction",
+              "evidence_ids": [
+                "fixture-source-1"
+              ]
+            }
+          ],
+          "weapon_sets": {
+            "set_ids": [
+              "fixture-set-1",
+              "fixture-set-2"
+            ],
+            "hands_per_set": {
+              "fixture-set-1": 2,
+              "fixture-set-2": 2
+            },
+            "swap_allowed": true,
+            "evidence_ids": [
+              "fixture-source-1"
+            ]
+          },
+          "missing_rule_gap_ids": [
+            "fixture-gap-1"
+          ],
+          "evidence_ids": [
+            "fixture-source-1"
+          ]
+        }
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "verified compatibility with no evidence",
+          "patch": {
+            "/compatibility": "verified",
+            "/compatibility_evidence_ids": []
+          },
+          "expect_code": "unevidenced_compatibility",
+          "expect_path": "/compatibility_evidence_ids"
+        },
+        {
+          "name": "a point budget asserted without evidence",
+          "patch": {
+            "/character_rules/point_budgets/0/evidence_ids": []
+          },
+          "expect_code": "unevidenced_rule",
+          "expect_path": "/character_rules/point_budgets/0/evidence_ids"
+        },
+        {
+          "name": "level range runs backwards",
+          "patch": {
+            "/character_rules/level_range/minimum": 100,
+            "/character_rules/level_range/maximum": 1
+          },
+          "expect_code": "inverted_level_range",
+          "expect_path": "/character_rules/level_range"
+        }
+      ]
+    },
+    "game_catalog": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-catalog-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-profile-1"
+        ],
+        "catalog_hash": "0ca331a45dd4dc21991c8d4c7b144e900c220f74a8156ae55773fe028b48826a",
+        "patch_profile_id": "fixture-profile-1",
+        "entities": {
+          "classes": [
+            {
+              "entity_id": "fixture-class-a",
+              "display_names": [
+                "Fixture Class A"
+              ],
+              "aliases": [],
+              "raw_reference": {
+                "synthetic": true
+              },
+              "rule_references": [
+                "fixture-mechanic-1"
+              ]
+            }
+          ]
+        },
+        "source_evidence_ids": [
+          "fixture-source-1"
+        ]
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "an entity table nothing downstream can read",
+          "patch": {
+            "/entities/fixture_homemade_table": []
+          },
+          "expect_code": "unknown_catalog_table",
+          "expect_path": "/entities/fixture_homemade_table"
+        },
+        {
+          "name": "an entity with no stable identifier",
+          "patch": {
+            "/entities/classes/0/entity_id": "__remove__"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/entities/classes/0"
+        }
+      ]
+    }
+  },
+  "blob_payloads": {
+    "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859": "<!-- SYNTHETIC fixture build payload -->\n",
+    "ade570335fda5bd6ddd2f27e050925fbcaf9ef0309929a180319bb6d965925e9": "SYNTHETIC fixture capture of one timed trial\n"
+  },
+  "extra_records": [
+    {
+      "kind": "acquisition_result",
+      "why": "the capture attempt behind the independent observation",
+      "record": {
+        "schema_version": 1,
+        "record_id": "fixture-acquisition-2",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-run-1"
+        ],
+        "provider": "fixture_operator",
+        "source_ref": "file:///fixture/trial-1.capture",
+        "access_method": "manual_capture",
+        "status": "ok",
+        "source_document_id": "fixture-source-2",
+        "http_status": null,
+        "retry_eligible": false,
+        "diagnostic": null,
+        "attempted_at": "2026-10-04T12:00:00Z"
+      }
+    },
+    {
+      "kind": "source_document",
+      "why": "the raw evidence the independent observation cites",
+      "record": {
+        "schema_version": 1,
+        "record_id": "fixture-source-2",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-acquisition-2"
+        ],
+        "provider": "fixture_operator",
+        "source_url": null,
+        "external_id": "trial-1",
+        "acquired_at": "2026-10-04T12:00:00Z",
+        "published_at": null,
+        "updated_at": null,
+        "access_method": "manual_capture",
+        "media_type": "video/mp4",
+        "blob_hash": "ade570335fda5bd6ddd2f27e050925fbcaf9ef0309929a180319bb6d965925e9",
+        "byte_count": 45,
+        "acquisition_version": "fixture-adapter-0.1",
+        "source_manifest_id": "fixture-manifest-capability-1",
+        "declared_patch": null,
+        "author_id": null,
+        "locale": null,
+        "popularity": [],
+        "redistribution": "restricted"
+      }
+    }
+  ],
+  "extra_records_note": "Valid records that exist so the fixture reference graph closes. They are not the one documented example of their kind, so they carry no invalid variants, but they are indexed and validated like any other record.",
+  "blob_payloads_note": "The original bytes behind fixture-source-1, so a storage test can ingest them and get the recorded blob hash back. Decode as UTF-8; the trailing newline is part of the payload."
+}

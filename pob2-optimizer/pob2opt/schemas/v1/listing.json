@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/listing.json",
+  "title": "Listing",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "listing_id": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "realm": {
+      "type": "string"
+    },
+    "league_id": {
+      "type": "string"
+    },
+    "item_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "price_amount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^-?\\d+(\\.\\d+)?$"
+    },
+    "price_currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "listed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "observed_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "last_checked_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "availability": {
+      "type": "string",
+      "enum": [
+        "observed",
+        "rechecked",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    "listing_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_document_id": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "listing_id",
+    "provider",
+    "realm",
+    "league_id",
+    "item_hash",
+    "price_amount",
+    "price_currency",
+    "listed_at",
+    "observed_at",
+    "last_checked_at",
+    "availability",
+    "listing_url",
+    "source_document_id",
+    "quantity"
+  ],
+  "additionalProperties": false
+}

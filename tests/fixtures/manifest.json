@@ -64,6 +64,96 @@
         "tests/engine/test_f12_item_conversion_golden.py"
       ],
       "caveat": "Field names mirror bootstrap.lua's reads; no live trade response was fetched. Mod text is invented."
+    },
+    {
+      "path": "records/source_and_catalog.v1.json",
+      "sha256": "b8b8515939e646999e2ee3c526ed2773e768f6bd9573dd965dd69ed760ff23bd",
+      "bytes": 11412,
+      "origin": "synthetic",
+      "author": "P01-T01",
+      "description": "Valid and invalid SourceDocument, AcquisitionResult, PatchProfile and GameCatalog examples, plus the original bytes behind the fixture source.",
+      "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
+        "tests/unit/test_p01_t01_records.py",
+        "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
+        "tests/unit/test_p01_t03_storage.py",
+        "tests/unit/test_p01_t04_cache.py",
+        "tests/unit/test_p01_t05_tasks.py"
+      ],
+      "caveat": "Hand-authored against contracts.md. Recorded content hashes (item_hash, build_hash, cache_key, manifest_hash) are re-derived by the P01 tests, so an identity-projection change fails there rather than drifting silently. No identifier, number or text in it names real PoE 2 content."
+    },
+    {
+      "path": "records/items_and_builds.v1.json",
+      "sha256": "03b3103c25b42477a293894d744508ba6d948f34ddd3c5f13558a0c295860f65",
+      "bytes": 12420,
+      "origin": "synthetic",
+      "author": "P01-T01",
+      "description": "Valid and invalid ItemInstance, Listing, BuildSpec and ParseResult examples, including the cases that keep item and listing identity apart.",
+      "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
+        "tests/unit/test_p01_t01_records.py",
+        "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
+        "tests/unit/test_p01_t03_storage.py",
+        "tests/unit/test_p01_t04_cache.py",
+        "tests/unit/test_p01_t05_tasks.py"
+      ],
+      "caveat": "Hand-authored against contracts.md. Recorded content hashes (item_hash, build_hash, cache_key, manifest_hash) are re-derived by the P01 tests, so an identity-projection change fails there rather than drifting silently. No identifier, number or text in it names real PoE 2 content."
+    },
+    {
+      "path": "records/mechanics_and_gaps.v1.json",
+      "sha256": "81fcbca47bd3cb57368c677cfa77e4e9e075b30c25da43584dc1185679cdf944",
+      "bytes": 5318,
+      "origin": "synthetic",
+      "author": "P01-T01",
+      "description": "Valid and invalid MechanicClaim, MechanicRule and DataGap examples, including evidence requests too vague to collect.",
+      "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
+        "tests/unit/test_p01_t01_records.py",
+        "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
+        "tests/unit/test_p01_t03_storage.py",
+        "tests/unit/test_p01_t04_cache.py",
+        "tests/unit/test_p01_t05_tasks.py"
+      ],
+      "caveat": "Hand-authored against contracts.md. Recorded content hashes (item_hash, build_hash, cache_key, manifest_hash) are re-derived by the P01 tests, so an identity-projection change fails there rather than drifting silently. No identifier, number or text in it names real PoE 2 content."
+    },
+    {
+      "path": "records/scenarios_and_results.v1.json",
+      "sha256": "2750344cc184f4261a89cf675f32b34e679437b5f9bd723d775bfda870032956",
+      "bytes": 12709,
+      "origin": "synthetic",
+      "author": "P01-T01",
+      "description": "Valid and invalid ScenarioSpec, RotationPolicy, EvaluationResult, AggregateResult and Observation examples.",
+      "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
+        "tests/unit/test_p01_t01_records.py",
+        "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
+        "tests/unit/test_p01_t03_storage.py",
+        "tests/unit/test_p01_t04_cache.py",
+        "tests/unit/test_p01_t05_tasks.py"
+      ],
+      "caveat": "Hand-authored against contracts.md. Recorded content hashes (item_hash, build_hash, cache_key, manifest_hash) are re-derived by the P01 tests, so an identity-projection change fails there rather than drifting silently. No identifier, number or text in it names real PoE 2 content."
+    },
+    {
+      "path": "records/runs_and_review.v1.json",
+      "sha256": "8ee18a283ae0846a458fc0118671c94c6d45e6eba614f5afd11d5cd484238f47",
+      "bytes": 8392,
+      "origin": "synthetic",
+      "author": "P01-T01",
+      "description": "Valid and invalid RunRequest, RunManifest, Checkpoint and ReviewRecord examples, including an unresolved worker count in a frozen manifest.",
+      "used_by": [
+        "tests/unit/test_p01_review_regressions.py",
+        "tests/unit/test_p01_t01_records.py",
+        "tests/unit/test_p01_t02_identity.py",
+        "tests/unit/test_p01_t03_references.py",
+        "tests/unit/test_p01_t03_storage.py",
+        "tests/unit/test_p01_t04_cache.py",
+        "tests/unit/test_p01_t05_tasks.py"
+      ],
+      "caveat": "Hand-authored against contracts.md. Recorded content hashes (item_hash, build_hash, cache_key, manifest_hash) are re-derived by the P01 tests, so an identity-projection change fails there rather than drifting silently. No identifier, number or text in it names real PoE 2 content."
     }
   ]
 }

@@ -1,0 +1,467 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/build_spec.json",
+  "title": "BuildSpec",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "build_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "catalog_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "declared_patch": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "class_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ascendancy_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "progression": {
+      "$ref": "#/$defs/Progression"
+    },
+    "equipment": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/EquipmentSlot"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "weapon_sets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/WeaponSet"
+      }
+    },
+    "passives": {
+      "$ref": "#/$defs/Passives"
+    },
+    "skill_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SkillGroup"
+      }
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ConfigValue"
+      }
+    },
+    "rotation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_document_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "variant_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "family_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "raw_blob_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "parse_status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial",
+        "invalid"
+      ]
+    },
+    "unresolved_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/UnresolvedRef"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "build_hash",
+    "catalog_hash",
+    "declared_patch",
+    "name",
+    "class_id",
+    "ascendancy_id",
+    "level",
+    "progression",
+    "equipment",
+    "weapon_sets",
+    "passives",
+    "skill_groups",
+    "config",
+    "rotation_ids",
+    "source_document_ids",
+    "variant_id",
+    "family_id",
+    "raw_blob_hashes",
+    "parse_status",
+    "unresolved_refs"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ConfigValue": {
+      "type": "object",
+      "properties": {
+        "value": {},
+        "origin": {
+          "type": "string",
+          "enum": [
+            "source",
+            "scenario",
+            "derived",
+            "manual"
+          ]
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "value",
+        "origin",
+        "verified",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentSlot": {
+      "type": "object",
+      "properties": {
+        "item_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "listing_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "item_hash",
+        "listing_id"
+      ],
+      "additionalProperties": false
+    },
+    "Passives": {
+      "type": "object",
+      "properties": {
+        "allocated": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ascendancy_allocated": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "choices": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "socketed": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SocketedEntity"
+          }
+        }
+      },
+      "required": [
+        "allocated",
+        "ascendancy_allocated",
+        "choices",
+        "socketed"
+      ],
+      "additionalProperties": false
+    },
+    "Progression": {
+      "type": "object",
+      "properties": {
+        "quest_flags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "reward_flags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "normal_point_budget": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "ascendancy_point_budget": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "quest_flags",
+        "reward_flags",
+        "normal_point_budget",
+        "ascendancy_point_budget",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "SkillEntry": {
+      "type": "object",
+      "properties": {
+        "skill_id": {
+          "type": "string"
+        },
+        "gem_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "quality": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "support_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "triggered": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SkillEntry"
+          }
+        }
+      },
+      "required": [
+        "skill_id",
+        "gem_id",
+        "level",
+        "quality",
+        "enabled",
+        "support_ids",
+        "triggered"
+      ],
+      "additionalProperties": false
+    },
+    "SkillGroup": {
+      "type": "object",
+      "properties": {
+        "group_id": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "slot_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_item_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "weapon_set_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "main_skill_index": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SkillEntry"
+          }
+        }
+      },
+      "required": [
+        "group_id",
+        "enabled",
+        "slot_id",
+        "source_item_hash",
+        "weapon_set_id",
+        "main_skill_index",
+        "skills"
+      ],
+      "additionalProperties": false
+    },
+    "SocketedEntity": {
+      "type": "object",
+      "properties": {
+        "node_id": {
+          "type": "string"
+        },
+        "entity_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "node_id",
+        "entity_id"
+      ],
+      "additionalProperties": false
+    },
+    "UnresolvedRef": {
+      "type": "object",
+      "properties": {
+        "field_path": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "field_path",
+        "reference",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "WeaponSet": {
+      "type": "object",
+      "properties": {
+        "set_id": {
+          "type": "string"
+        },
+        "hand_slots": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "passive_allocations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "set_id",
+        "hand_slots",
+        "passive_allocations"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

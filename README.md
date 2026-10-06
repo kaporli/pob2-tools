@@ -10,6 +10,9 @@ patched LuaJIT (`runtime/lua51.dll`) through `ctypes` and call into its Lua.
 
 ```
 ┌─ pob2-optimizer  — exhaustive build-space search / optimization
+│    domain/  — validated records, canonical hashing, cache identity (P01)
+│    storage/ — SQLite repositories, immutable blobs, run bundles, task state
+│    schemas/v1/ — the JSON Schemas, generated from domain/records.py
 │    cli.py · engine_worker.py (one engine per worker process) · concentration.py
 │    policy.py · calibration.py · ladder.py · harvest.py · lua/opt_helpers.lua
 │    └── imports ▼
@@ -84,6 +87,7 @@ python -m pip install --no-deps --no-build-isolation -e ./pob2-mcp -e ./pob2-opt
 python scripts/lock_dependencies.py --check
 
 python -m pob2opt.cli doctor --json          # what can this machine do?
+python scripts/generate_schemas.py --check   # schemas/v1 matches domain/records.py
 python -m pytest tests/unit                  # offline; no PoB, no network
 python -m pytest -m engine -ra               # needs a PoB checkout, else skips
 ```

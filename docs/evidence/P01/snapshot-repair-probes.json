@@ -1,0 +1,102 @@
+{
+  "review-5068871-probes.py": {
+    "source_corpus_valid": true,
+    "copy_aggregate": {
+      "complete": true
+    },
+    "listing_before_item": {
+      "source_corpus_valid": true,
+      "copy_complete": true,
+      "item_copied": true,
+      "readable": true,
+      "unresolved": {}
+    },
+    "acquisition_as_source_document": {
+      "memory_index_ok": false,
+      "memory_errors": [
+        "/source_document_ids/0"
+      ],
+      "sql_index_ok": false,
+      "inserted": "RecordInvalid",
+      "bundle_readable": true
+    }
+  },
+  "review-repair-probes.py": {
+    "cancelled_completion": {
+      "before": "cancelled",
+      "after": "cancelled",
+      "refused_with": "TaskStateError",
+      "evaluation_rows": 0
+    },
+    "second_scenario_task": {
+      "accepted": true
+    },
+    "dangling_normalized_build": {
+      "inserted": false,
+      "unresolved_paths": [
+        "/catalog_hash",
+        "/config/fixture_condition/evidence_ids/0",
+        "/equipment/fixture-slot-weapon/item_hash",
+        "/equipment/fixture-slot-weapon/listing_id",
+        "/progression/evidence_ids/0",
+        "/provenance_ids/0",
+        "/raw_blob_hashes/0",
+        "/rotation_ids/0",
+        "/source_document_ids/0"
+      ]
+    },
+    "incomplete_bundle": {
+      "blobs_declared": 0,
+      "records_declared": 1,
+      "missing_blobs": [],
+      "missing_records": [],
+      "readable": false,
+      "unresolved_reference_count": 12
+    },
+    "transitive_copy": {
+      "asked_for": [
+        "fixture-build-1",
+        "fixture-clear-dense"
+      ],
+      "normalized_copied": 11,
+      "sources_copied": 2,
+      "unresolved": {},
+      "readable": true
+    },
+    "nullable_item": {
+      "validation_ok": true,
+      "stored": true,
+      "read_ok": true,
+      "null_preserved": true
+    },
+    "unchecked_reference_fields": {
+      "patch_evidence": {
+        "validation_ok": false,
+        "paths": [
+          "/patch_evidence_ids/0"
+        ]
+      },
+      "mechanic_dependency": {
+        "validation_ok": false,
+        "paths": [
+          "/dependency_ids/0"
+        ]
+      },
+      "manifest_snapshot": {
+        "validation_ok": false,
+        "paths": [
+          "/source_snapshot_ids/0"
+        ]
+      }
+    },
+    "string_enum_instance": {
+      "raised": false,
+      "ok": true,
+      "decoded_to_enum": true
+    },
+    "aggregate_seed_collision": {
+      "aggregate_keys_equal": false,
+      "evaluation_keys_differ": true
+    }
+  }
+}

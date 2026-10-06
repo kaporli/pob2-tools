@@ -1,0 +1,403 @@
+{
+  "kind": "synthetic",
+  "purpose": "What is simulated, how it is played, what one evaluation produced, how a candidate aggregates, and what an independent trial measured.",
+  "not_a_claim": "Every identifier, number and text string here is invented to exercise record validation. None is a PoE 2 entity, a PoB output, a provider response or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
+  "schema_version": 1,
+  "patch_format": "Each invalid and also_valid case is the valid record with the listed JSON Pointer paths replaced. The value \"__remove__\" deletes the key; \"__nan__\" and \"__inf__\" insert the float values JSON itself cannot hold.",
+  "records": {
+    "scenario_spec": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-clear-dense",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-profile-1"
+        ],
+        "scenario_id": "fixture-clear-dense",
+        "version": "1",
+        "category": "clear",
+        "kind": "synthetic",
+        "patch_profile_id": "fixture-profile-1",
+        "target_entities": [
+          {
+            "entity_id": "fixture-target-1",
+            "catalog_entity_id": null,
+            "count": 10,
+            "health": 100.0,
+            "defenses": {},
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "unit": "fixture_unit",
+              "conversion_evidence_ids": [
+                "fixture-source-1"
+              ]
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 10.0
+              }
+            ]
+          }
+        ],
+        "initial_state": {
+          "fixture_resource": 10
+        },
+        "event_schedule": [
+          {
+            "event_id": "fixture-event-1",
+            "at_s": 0.0,
+            "kind": "spawn",
+            "payload": {}
+          }
+        ],
+        "spatial_model_id": "fixture-spatial-replay",
+        "movement_model_id": "fixture-movement-replay",
+        "duration_limit_s": 10.0,
+        "completion_condition": {
+          "kind": "all_targets_dead",
+          "parameters": {}
+        },
+        "incoming_damage_model_id": "fixture-damage-none",
+        "allowed_preparation": {
+          "action_ids": [],
+          "duration_limit_s": null
+        },
+        "rng_seeds": [
+          1
+        ],
+        "reference_build_id": null,
+        "reference_result_id": null,
+        "capability_floor_ratio": 0.5,
+        "survival_gates": [
+          {
+            "gate_id": "fixture-survival",
+            "metric_path": "/metrics/survival/deaths",
+            "comparison": "eq",
+            "value": 0.0
+          }
+        ],
+        "resource_gates": [],
+        "evidence_ids": [
+          "fixture-source-1"
+        ],
+        "validation_status": "fixture_checked"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "a negative time limit",
+          "patch": {
+            "/duration_limit_s": -10.0
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/duration_limit_s"
+        },
+        {
+          "name": "an event scheduled after the scenario ends",
+          "patch": {
+            "/event_schedule/0/at_s": 99.0
+          },
+          "expect_code": "event_after_limit",
+          "expect_path": "/event_schedule/0/at_s"
+        },
+        {
+          "name": "a targetable window that ends before it starts",
+          "patch": {
+            "/target_entities/0/targetable_windows/0/start_s": 9.0,
+            "/target_entities/0/targetable_windows/0/end_s": 1.0
+          },
+          "expect_code": "inverted_window",
+          "expect_path": "/target_entities/0/targetable_windows/0"
+        },
+        {
+          "name": "a position with no declared unit",
+          "patch": {
+            "/target_entities/0/position/unit": ""
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/target_entities/0/position/unit"
+        }
+      ]
+    },
+    "rotation_policy": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-rotation-clear",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-build-1"
+        ],
+        "rotation_id": "fixture-rotation-clear",
+        "version": "1",
+        "name": "SYNTHETIC clear policy",
+        "category": "clear",
+        "rules": [
+          {
+            "rule_index": 0,
+            "action_id": "fixture-action-1",
+            "action": "use_skill",
+            "skill_id": "fixture-skill-1",
+            "target_selector": "nearest",
+            "weapon_set_id": "fixture-set-1",
+            "predicate": {
+              "operator": "all",
+              "operands": [
+                {
+                  "operator": "gte",
+                  "path": "/resources/fixture_resource",
+                  "value": 10
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "a comparison that also carries operands",
+          "patch": {
+            "/rules/0/predicate/operands/0/operands": []
+          },
+          "expect_code": "misplaced_operands",
+          "expect_path": "/rules/0/predicate/operands/0/operands"
+        },
+        {
+          "name": "an operator outside the v1 vocabulary",
+          "patch": {
+            "/rules/0/predicate/operator": "whenever"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/rules/0/predicate/operator"
+        },
+        {
+          "name": "a use_skill rule that names no skill",
+          "patch": {
+            "/rules/0/skill_id": null
+          },
+          "expect_code": "missing_skill",
+          "expect_path": "/rules/0/skill_id"
+        }
+      ]
+    },
+    "evaluation_result": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-evaluation-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-run-1"
+        ],
+        "evaluation_id": "fixture-evaluation-1",
+        "cache_key": "75cc9434f7b21ae26165933bf25f77706f6e330ce1fdff9db9f755283d1facbf",
+        "build_hash": "a8e3574b7bf047bedd86e41ce6e5d7ecbec7629c65439af572afeed325ca048d",
+        "rotation_hash": "5f68f7550a7d87a9bdbfef1d3c7953b0e60a7a34f9441f12c482e48dbb52bfc8",
+        "scenario_id": "fixture-clear-dense",
+        "manifest_id": "fixture-run-1",
+        "fidelity": "detailed",
+        "seed": 20261004,
+        "status": "ok",
+        "legality": "legal",
+        "coverage": "partial",
+        "validation": "synthetic_only",
+        "metrics": {
+          "completion": "success",
+          "completion_time_s": 8.0,
+          "damage_dealt": 1000.0,
+          "resource_starvation_s": 0.0,
+          "preparation_time_s": 1.0,
+          "actions_per_minute": 60.0,
+          "weapon_switches": 0,
+          "minimum_resources": {
+            "fixture_resource": 0.0
+          },
+          "survival": null
+        },
+        "gap_ids": [
+          "fixture-gap-1"
+        ],
+        "assumption_ids": [],
+        "rule_ids": [
+          "fixture-mechanic-1"
+        ],
+        "trace_blob_hash": null,
+        "duration_ms": 1200,
+        "error": null
+      },
+      "also_valid": [
+        {
+          "name": "zero damage until timeout is a legitimate failed evaluation",
+          "patch": {
+            "/metrics/damage_dealt": 0.0,
+            "/metrics/completion": "timeout",
+            "/metrics/completion_time_s": null
+          }
+        }
+      ],
+      "invalid": [
+        {
+          "name": "a screening calculation reporting a completion time",
+          "patch": {
+            "/fidelity": "screen"
+          },
+          "expect_code": "screen_cannot_time_an_encounter",
+          "expect_path": "/metrics/completion_time_s"
+        },
+        {
+          "name": "a null metric with no gap to explain it",
+          "patch": {
+            "/metrics/damage_dealt": null,
+            "/gap_ids": []
+          },
+          "expect_code": "unexplained_missing_metric",
+          "expect_path": "/metrics/damage_dealt"
+        },
+        {
+          "name": "a timeout with no error detail",
+          "patch": {
+            "/status": "timeout"
+          },
+          "expect_code": "missing_error_detail",
+          "expect_path": "/error"
+        },
+        {
+          "name": "a negative duration",
+          "patch": {
+            "/metrics/resource_starvation_s": -1.0
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/metrics/resource_starvation_s"
+        }
+      ]
+    },
+    "aggregate_result": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-aggregate-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-run-1"
+        ],
+        "aggregate_id": "fixture-aggregate-1",
+        "build_hash": "a8e3574b7bf047bedd86e41ce6e5d7ecbec7629c65439af572afeed325ca048d",
+        "rotation_hash": "5f68f7550a7d87a9bdbfef1d3c7953b0e60a7a34f9441f12c482e48dbb52bfc8",
+        "manifest_id": "fixture-run-1",
+        "objective_id": "fixture-objective-balanced",
+        "suite_id": "fixture-suite-1",
+        "category_scores": {
+          "clear": null,
+          "boss": null
+        },
+        "balanced_score": null,
+        "scenario_gates": [
+          {
+            "scenario_id": "fixture-clear-dense",
+            "ratio": null,
+            "passed": null,
+            "reason": "boss scenarios not evaluated"
+          }
+        ],
+        "eligible": false,
+        "strength_label": null,
+        "recommendation_status": "unresolved",
+        "sensitivity_result_ids": [],
+        "evaluation_ids": [
+          "fixture-evaluation-1"
+        ],
+        "exclusion_reasons": [
+          "required boss evaluations are missing"
+        ]
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "a balanced score built on an unresolved category",
+          "patch": {
+            "/balanced_score": 1.0
+          },
+          "expect_code": "fabricated_balanced_score",
+          "expect_path": "/balanced_score"
+        },
+        {
+          "name": "an excluded candidate with no stated reason",
+          "patch": {
+            "/exclusion_reasons": []
+          },
+          "expect_code": "unexplained_exclusion",
+          "expect_path": "/exclusion_reasons"
+        },
+        {
+          "name": "a strength label on a candidate that did not qualify",
+          "patch": {
+            "/strength_label": "balanced"
+          },
+          "expect_code": "label_without_eligibility",
+          "expect_path": "/strength_label"
+        }
+      ]
+    },
+    "observation": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-observation-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-run-1"
+        ],
+        "observation_id": "fixture-observation-1",
+        "build_hash": "a8e3574b7bf047bedd86e41ce6e5d7ecbec7629c65439af572afeed325ca048d",
+        "patch_profile_id": "fixture-profile-1",
+        "scenario_id": "fixture-clear-dense",
+        "rotation_id": "fixture-rotation-clear",
+        "operator_id": "operator-a",
+        "trial_id": "trial-1",
+        "measured_at": "2026-10-04T12:00:00Z",
+        "measurement_method": "manual_timer",
+        "outcome": "success",
+        "censoring_reason": null,
+        "metrics": {
+          "completion_time_s": 9.5
+        },
+        "raw_evidence_ids": [
+          "fixture-source-2"
+        ],
+        "measurement_uncertainty": {
+          "timer_resolution_s": 0.2
+        },
+        "deviations": [],
+        "dataset_split": "holdout",
+        "build_family_id": null,
+        "review_status": "proposed"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "a PoB calculation offered as a gameplay observation",
+          "patch": {
+            "/measurement_method": "pob_calculation"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/measurement_method"
+        },
+        {
+          "name": "a censored trial with no reason",
+          "patch": {
+            "/outcome": "censored"
+          },
+          "expect_code": "unexplained_censoring",
+          "expect_path": "/censoring_reason"
+        },
+        {
+          "name": "an observation with no raw evidence",
+          "patch": {
+            "/raw_evidence_ids": []
+          },
+          "expect_code": "unevidenced_observation",
+          "expect_path": "/raw_evidence_ids"
+        }
+      ]
+    }
+  }
+}

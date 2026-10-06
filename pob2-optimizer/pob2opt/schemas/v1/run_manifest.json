@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/run_manifest.json",
+  "title": "RunManifest",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "spec_version": {
+      "type": "string"
+    },
+    "software_commit": {
+      "type": "string"
+    },
+    "software_dirty_hash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "resolved_request": {
+      "$ref": "run_request.json"
+    },
+    "patch_profile_id": {
+      "type": "string"
+    },
+    "dependency_hashes": {
+      "$ref": "#/$defs/DependencyHashes"
+    },
+    "source_snapshot_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "market_snapshot_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rng_seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "search_parameters": {
+      "type": "object",
+      "additionalProperties": {}
+    },
+    "worker_limit": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "memory_limit_mb": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "time_budget_s": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "hardware_summary": {
+      "type": "object",
+      "additionalProperties": {}
+    },
+    "scenario_suite_id": {
+      "type": "string"
+    },
+    "accepted_gate_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "availability_mode": {
+      "type": "string",
+      "enum": [
+        "live_market",
+        "offline_snapshot"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "run_id",
+    "spec_version",
+    "software_commit",
+    "software_dirty_hash",
+    "resolved_request",
+    "patch_profile_id",
+    "dependency_hashes",
+    "source_snapshot_ids",
+    "market_snapshot_ids",
+    "rng_seed",
+    "search_parameters",
+    "worker_limit",
+    "memory_limit_mb",
+    "time_budget_s",
+    "hardware_summary",
+    "scenario_suite_id",
+    "accepted_gate_ids",
+    "availability_mode"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "DependencyHashes": {
+      "type": "object",
+      "properties": {
+        "patch_profile_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "catalog_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "pob_commit": {
+          "type": "string"
+        },
+        "pob_dirty_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "adapter_version": {
+          "type": "string"
+        },
+        "mechanics_registry_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "calibration_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "evaluator_version": {
+          "type": "string"
+        },
+        "objective_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "baseline_suite_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "patch_profile_hash",
+        "catalog_hash",
+        "pob_commit",
+        "pob_dirty_hash",
+        "adapter_version",
+        "mechanics_registry_hash",
+        "calibration_hash",
+        "evaluator_version",
+        "objective_hash",
+        "baseline_suite_hash"
+      ],
+      "additionalProperties": false,
+      "description": "Every input that changes an evaluation's identity (architecture.md)."
+    }
+  }
+}

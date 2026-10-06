@@ -25,3 +25,9 @@ them separate.
 | `P00/baseline/` | P00-T01 | Inventory and copies of pre-existing legacy run output; historical, not validated |
 | `P00/findings.md` | P00-T04 | Characterization of research findings F02, F05, F10, F11, F12 and four new observations |
 | `P00/measurements.json` | P00-T04 | Engine timings, memory and A-B-A, with hardware |
+| `P01/validation.json` | P01 | Offline test runs on CPython 3.10 and 3.12, plus the schema, lock, packaging and example checks |
+| `P01/demo-run.json` | P01 | Recorded output of the end-to-end example: ingest, bundle, corpus disconnect, interruption, resume, cache and legacy import |
+| `P01/inspection-queries.md` | P01-T05 | The documented read-only queries a reviewer runs against a run database, with the example's output |
+| `P01/review-ae4303e-probes.py` | P01 review | The reviewer's adversarial probe script for commit `ae4303e`; kept unchanged |
+| `P01/review-ae4303e.json` | P01 review | The observations that script recorded, which the repair reproduced before fixing |
+| `P01/review-repair-probes.py` | P01 repair | The same questions asked of the repaired code |

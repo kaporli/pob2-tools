@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/mechanic_claim.json",
+  "title": "MechanicClaim",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subject_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claim_text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "source_document_id": {
+      "type": "string"
+    },
+    "source_locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "applies_to_patch": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "corroborated",
+        "contradicted",
+        "superseded"
+      ]
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "subject_ids",
+    "claim_text",
+    "source_document_id",
+    "source_locator",
+    "applies_to_patch",
+    "dependencies",
+    "status",
+    "evidence_ids"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/rotation_policy.json",
+  "title": "RotationPolicy",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rotation_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "clear",
+        "boss"
+      ]
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RotationRule"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "rotation_id",
+    "version",
+    "name",
+    "category",
+    "rules"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "Predicate": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "type": "string",
+          "enum": [
+            "all",
+            "any",
+            "not",
+            "eq",
+            "ne",
+            "lt",
+            "lte",
+            "gt",
+            "gte"
+          ]
+        },
+        "operands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Predicate"
+          }
+        },
+        "path": {
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "operator"
+      ],
+      "additionalProperties": false,
+      "description": "A structured condition. Never source code, never evaluated as text."
+    },
+    "RotationRule": {
+      "type": "object",
+      "properties": {
+        "rule_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "action_id": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "use_skill",
+            "switch_weapon_set",
+            "move",
+            "wait"
+          ]
+        },
+        "skill_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_selector": {
+          "type": "string"
+        },
+        "weapon_set_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "predicate": {
+          "$ref": "#/$defs/Predicate"
+        }
+      },
+      "required": [
+        "rule_index",
+        "action_id",
+        "action",
+        "skill_id",
+        "target_selector",
+        "weapon_set_id",
+        "predicate"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

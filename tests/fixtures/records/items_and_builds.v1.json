@@ -1,0 +1,405 @@
+{
+  "kind": "synthetic",
+  "purpose": "Item, listing, build and parse records, including the cases where item identity and listing identity must stay apart.",
+  "not_a_claim": "Every identifier, number and text string here is invented to exercise record validation. None is a PoE 2 entity, a PoB output, a provider response or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
+  "schema_version": 1,
+  "patch_format": "Each invalid and also_valid case is the valid record with the listed JSON Pointer paths replaced. The value \"__remove__\" deletes the key; \"__nan__\" and \"__inf__\" insert the float values JSON itself cannot hold.",
+  "records": {
+    "item_instance": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-item-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-source-1"
+        ],
+        "item_hash": "dbf501729ab6ca575dab619a900c0037bb9766baf1930c1283d5c3f9b7d7f7c4",
+        "catalog_hash": "0ca331a45dd4dc21991c8d4c7b144e900c220f74a8156ae55773fe028b48826a",
+        "base_id": "fixture-base-1",
+        "display_name": "Shared Name",
+        "rarity": "rare",
+        "item_level": 80,
+        "requirements": {
+          "fixture_attribute": 50
+        },
+        "properties": {
+          "fixture_damage": 100
+        },
+        "modifiers": [
+          {
+            "category": "explicit",
+            "source_position": 0,
+            "text": "SYNTHETIC adds 10 fixture damage",
+            "native_id": "fixture-mod-1",
+            "resolved_effect_ids": [
+              "fixture-effect-1"
+            ],
+            "values": [
+              {
+                "rolled": 10.0,
+                "minimum": 5.0,
+                "maximum": 15.0
+              }
+            ],
+            "flags": {
+              "fixture_flag": true
+            },
+            "parse_status": "resolved"
+          }
+        ],
+        "sockets": [
+          {
+            "socket_id": "fixture-socket-1",
+            "group": 0,
+            "colour": null,
+            "contents_id": null
+          }
+        ],
+        "flags": {
+          "corrupted": false
+        },
+        "raw_text": "SYNTHETIC item text",
+        "source_document_id": "fixture-source-1",
+        "parse_status": "complete"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "two modifiers claiming the same source position",
+          "patch": {
+            "/modifiers/-": {
+              "category": "explicit",
+              "source_position": 0,
+              "text": "SYNTHETIC second modifier",
+              "native_id": null,
+              "resolved_effect_ids": [],
+              "values": [],
+              "flags": {},
+              "parse_status": "resolved"
+            }
+          },
+          "expect_code": "duplicate_source_position",
+          "expect_path": "/modifiers/1/source_position"
+        },
+        {
+          "name": "a modifier category outside the preserved set",
+          "patch": {
+            "/modifiers/0/category": "probably_explicit"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/modifiers/0/category"
+        },
+        {
+          "name": "a roll range that runs backwards",
+          "patch": {
+            "/modifiers/0/values/0/minimum": 15.0,
+            "/modifiers/0/values/0/maximum": 5.0
+          },
+          "expect_code": "inverted_range",
+          "expect_path": "/modifiers/0/values/0"
+        },
+        {
+          "name": "NaN hidden in a free-form property map",
+          "patch": {
+            "/properties/fixture_damage": "__nan__"
+          },
+          "expect_code": "not_a_number",
+          "expect_path": "/properties/fixture_damage"
+        }
+      ]
+    },
+    "listing": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-listing-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-source-1"
+        ],
+        "listing_id": "fixture-listing-1",
+        "provider": "fixture_provider",
+        "realm": "fixture-realm",
+        "league_id": "fixture-league-1",
+        "item_hash": "dbf501729ab6ca575dab619a900c0037bb9766baf1930c1283d5c3f9b7d7f7c4",
+        "price_amount": "5",
+        "price_currency": "fixture-exalted",
+        "listed_at": null,
+        "observed_at": "2026-10-04T12:00:00Z",
+        "last_checked_at": "2026-10-04T12:00:00Z",
+        "availability": "observed",
+        "listing_url": null,
+        "source_document_id": "fixture-source-1",
+        "quantity": 1
+      },
+      "also_valid": [
+        {
+          "name": "an unknown price stays null, it is not zero",
+          "patch": {
+            "/price_amount": null,
+            "/price_currency": null
+          }
+        },
+        {
+          "name": "an unavailable listing keeps its last known item",
+          "patch": {
+            "/availability": "unavailable"
+          }
+        }
+      ],
+      "invalid": [
+        {
+          "name": "a price as a float instead of a decimal string",
+          "patch": {
+            "/price_amount": 5.0
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/price_amount"
+        },
+        {
+          "name": "a listing that offers nothing",
+          "patch": {
+            "/quantity": 0
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/quantity"
+        },
+        {
+          "name": "unknown availability",
+          "patch": {
+            "/availability": "probably_there"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/availability"
+        },
+        {
+          "name": "a schema version this build does not implement",
+          "patch": {
+            "/schema_version": 2
+          },
+          "expect_code": "unsupported_schema_version",
+          "expect_path": "/schema_version"
+        }
+      ]
+    },
+    "build_spec": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-build-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-source-1"
+        ],
+        "build_hash": "a8e3574b7bf047bedd86e41ce6e5d7ecbec7629c65439af572afeed325ca048d",
+        "catalog_hash": "0ca331a45dd4dc21991c8d4c7b144e900c220f74a8156ae55773fe028b48826a",
+        "declared_patch": null,
+        "name": "SYNTHETIC Fixture Build",
+        "class_id": "fixture-class-a",
+        "ascendancy_id": "fixture-asc-a1",
+        "level": 100,
+        "progression": {
+          "quest_flags": {
+            "fixture-quest-1": true
+          },
+          "reward_flags": {
+            "fixture-reward-1": false
+          },
+          "normal_point_budget": 10,
+          "ascendancy_point_budget": 2,
+          "evidence_ids": [
+            "fixture-source-1"
+          ]
+        },
+        "equipment": {
+          "fixture-slot-weapon": {
+            "item_hash": "dbf501729ab6ca575dab619a900c0037bb9766baf1930c1283d5c3f9b7d7f7c4",
+            "listing_id": "fixture-listing-1"
+          },
+          "fixture-slot-helmet": null
+        },
+        "weapon_sets": [
+          {
+            "set_id": "fixture-set-1",
+            "hand_slots": {
+              "main_hand": "fixture-slot-weapon",
+              "off_hand": null
+            },
+            "passive_allocations": [
+              "fixture-node-9"
+            ]
+          }
+        ],
+        "passives": {
+          "allocated": [
+            "fixture-node-1",
+            "fixture-node-2"
+          ],
+          "ascendancy_allocated": [
+            "fixture-asc-node-1"
+          ],
+          "choices": {
+            "fixture-node-2": "fixture-choice-dex"
+          },
+          "socketed": [
+            {
+              "node_id": "fixture-node-1",
+              "entity_id": "fixture-jewel-1"
+            }
+          ]
+        },
+        "skill_groups": [
+          {
+            "group_id": "fixture-group-1",
+            "enabled": true,
+            "slot_id": "fixture-slot-weapon",
+            "source_item_hash": null,
+            "weapon_set_id": "fixture-set-1",
+            "main_skill_index": 0,
+            "skills": [
+              {
+                "skill_id": "fixture-skill-1",
+                "gem_id": "fixture-gem-1",
+                "level": 20,
+                "quality": 0,
+                "enabled": true,
+                "support_ids": [
+                  "fixture-support-1"
+                ],
+                "triggered": []
+              }
+            ]
+          }
+        ],
+        "config": {
+          "fixture_condition": {
+            "value": true,
+            "origin": "source",
+            "verified": false,
+            "evidence_ids": [
+              "fixture-source-1"
+            ]
+          }
+        },
+        "rotation_ids": [
+          "fixture-rotation-clear"
+        ],
+        "source_document_ids": [
+          "fixture-source-1"
+        ],
+        "variant_id": "fixture-variant-1",
+        "family_id": null,
+        "raw_blob_hashes": [
+          "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859"
+        ],
+        "parse_status": "complete",
+        "unresolved_refs": []
+      },
+      "also_valid": [
+        {
+          "name": "an explicitly empty slot is null, not a missing key",
+          "patch": {
+            "/equipment/fixture-slot-weapon": null
+          }
+        }
+      ],
+      "invalid": [
+        {
+          "name": "the same passive allocated twice",
+          "patch": {
+            "/passives/allocated": [
+              "fixture-node-1",
+              "fixture-node-1"
+            ]
+          },
+          "expect_code": "duplicate_allocation",
+          "expect_path": "/passives/allocated/1"
+        },
+        {
+          "name": "equipment pointing at an item that is not in the corpus",
+          "patch": {
+            "/equipment/fixture-slot-weapon/item_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+          },
+          "expect_code": "unresolved_reference",
+          "expect_path": "/equipment/fixture-slot-weapon/item_hash"
+        },
+        {
+          "name": "a complete parse that still has unresolved references",
+          "patch": {
+            "/unresolved_refs": [
+              {
+                "field_path": "/equipment/fixture-slot-boots",
+                "reference": "fixture-missing-item",
+                "reason": "no catalog entry"
+              }
+            ]
+          },
+          "expect_code": "inconsistent_parse_status",
+          "expect_path": "/parse_status"
+        },
+        {
+          "name": "metadata-only import with no original payload",
+          "patch": {
+            "/raw_blob_hashes": []
+          },
+          "expect_code": "missing_raw_payload",
+          "expect_path": "/raw_blob_hashes"
+        }
+      ]
+    },
+    "parse_result": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-parse-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-source-1"
+        ],
+        "status": "partial",
+        "parser_id": "fixture-parser",
+        "parser_version": "0.1",
+        "source_document_id": "fixture-source-1",
+        "record_ids": [
+          "fixture-build-1",
+          "fixture-item-1"
+        ],
+        "field_coverage": [
+          {
+            "domain": "items",
+            "present": 3,
+            "resolved": 2,
+            "missing": 1
+          }
+        ],
+        "issues": [
+          {
+            "code": "unresolved_modifier",
+            "field_path": "/modifiers/2",
+            "source_locator": "line 17",
+            "explanation": "SYNTHETIC: no catalog entry for this text"
+          }
+        ],
+        "raw_extensions": {
+          "fixture_unknown_field": "kept verbatim"
+        }
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "more fields resolved than were present",
+          "patch": {
+            "/field_coverage/0/resolved": 9
+          },
+          "expect_code": "impossible_coverage",
+          "expect_path": "/field_coverage/0/resolved"
+        },
+        {
+          "name": "a complete parse that also reported issues",
+          "patch": {
+            "/status": "complete"
+          },
+          "expect_code": "inconsistent_parse_status",
+          "expect_path": "/status"
+        }
+      ]
+    }
+  }
+}

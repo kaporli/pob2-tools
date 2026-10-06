@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/observation.json",
+  "title": "Observation",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "observation_id": {
+      "type": "string"
+    },
+    "build_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "patch_profile_id": {
+      "type": "string"
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "rotation_id": {
+      "type": "string"
+    },
+    "operator_id": {
+      "type": "string"
+    },
+    "trial_id": {
+      "type": "string"
+    },
+    "measured_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "measurement_method": {
+      "type": "string",
+      "enum": [
+        "manual_timer",
+        "video_frame_count",
+        "client_log",
+        "instrumented_capture"
+      ]
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failure",
+        "censored"
+      ]
+    },
+    "censoring_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "number",
+          "null"
+        ]
+      }
+    },
+    "raw_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "measurement_uncertainty": {
+      "type": "object",
+      "additionalProperties": {}
+    },
+    "deviations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dataset_split": {
+      "type": "string",
+      "enum": [
+        "calibration",
+        "validation",
+        "holdout"
+      ]
+    },
+    "build_family_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "review_status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "observation_id",
+    "build_hash",
+    "patch_profile_id",
+    "scenario_id",
+    "rotation_id",
+    "operator_id",
+    "trial_id",
+    "measured_at",
+    "measurement_method",
+    "outcome",
+    "censoring_reason",
+    "metrics",
+    "raw_evidence_ids",
+    "measurement_uncertainty",
+    "deviations",
+    "dataset_split",
+    "build_family_id",
+    "review_status"
+  ],
+  "additionalProperties": false
+}

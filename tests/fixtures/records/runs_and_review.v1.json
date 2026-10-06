@@ -1,0 +1,254 @@
+{
+  "kind": "synthetic",
+  "purpose": "The request a run starts from, the manifest it freezes, the checkpoint it resumes from, and the reviewer's verdict record.",
+  "not_a_claim": "Every identifier, number and text string here is invented to exercise record validation. None is a PoE 2 entity, a PoB output, a provider response or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
+  "schema_version": 1,
+  "patch_format": "Each invalid and also_valid case is the valid record with the listed JSON Pointer paths replaced. The value \"__remove__\" deletes the key; \"__nan__\" and \"__inf__\" insert the float values JSON itself cannot hold.",
+  "records": {
+    "run_request": {
+      "valid": {
+        "schema_version": 1,
+        "game": "poe2",
+        "class": "fixture-class-a",
+        "level": 100,
+        "patch_selection": "fixture-patch-1",
+        "league_selection": "fixture-league-1",
+        "mode": "offline_items",
+        "budget": null,
+        "scenario_suite": "fixture/suite.json",
+        "catalog_profile": "fixture/profile.json",
+        "corpus_path": "fixture/corpus",
+        "item_pool_ids": [
+          "fixture-pool-1"
+        ],
+        "seed": 20261004,
+        "time_budget_s": 14400,
+        "workers": 2,
+        "memory_limit_mb": 8192,
+        "allow_weapon_switch": true,
+        "allow_external_gear_swap": false,
+        "execution_profile": "skilled_manual"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "theoretical mode before its legality rules exist",
+          "patch": {
+            "/mode": "theoretical"
+          },
+          "expect_code": "mode_disabled",
+          "expect_path": "/mode"
+        },
+        {
+          "name": "an empty required item pool",
+          "patch": {
+            "/item_pool_ids": []
+          },
+          "expect_code": "unresolved_item_pool",
+          "expect_path": "/item_pool_ids"
+        },
+        {
+          "name": "an invented run mode",
+          "patch": {
+            "/mode": "whatever_is_cheapest"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/mode"
+        }
+      ]
+    },
+    "run_manifest": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-run-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-profile-1"
+        ],
+        "run_id": "fixture-run-1",
+        "spec_version": "1.0",
+        "software_commit": "0000000000000000000000000000000000000000",
+        "software_dirty_hash": null,
+        "resolved_request": {
+          "schema_version": 1,
+          "game": "poe2",
+          "class": "fixture-class-a",
+          "level": 100,
+          "patch_selection": "fixture-patch-1",
+          "league_selection": "fixture-league-1",
+          "mode": "offline_items",
+          "budget": null,
+          "scenario_suite": "fixture/suite.json",
+          "catalog_profile": "fixture/profile.json",
+          "corpus_path": "fixture/corpus",
+          "item_pool_ids": [
+            "fixture-pool-1"
+          ],
+          "seed": 20261004,
+          "time_budget_s": 14400,
+          "workers": 2,
+          "memory_limit_mb": 8192,
+          "allow_weapon_switch": true,
+          "allow_external_gear_swap": false,
+          "execution_profile": "skilled_manual"
+        },
+        "patch_profile_id": "fixture-profile-1",
+        "dependency_hashes": {
+          "patch_profile_hash": "48bc1170644309d2c646d6860f7f33b048a1a14d600201b3e33cd4a9be814c9b",
+          "catalog_hash": "0ca331a45dd4dc21991c8d4c7b144e900c220f74a8156ae55773fe028b48826a",
+          "pob_commit": "0000000000000000000000000000000000000000",
+          "pob_dirty_hash": null,
+          "adapter_version": "fixture-adapter-0.1",
+          "mechanics_registry_hash": "166203e4ea29a6f0b2178f2e1240112b42220f60d86acb26cb76409f8922d006",
+          "calibration_hash": "8685e9c8f74d64b1f607dc1a7d82532abe5093ba97a1d681a3c70c83d46a4564",
+          "evaluator_version": "fixture-evaluator-0.1",
+          "objective_hash": "38ff3d0b7d466a4b3e2f4cc51267d493f121e213abeabb69584dbeef7ffca527",
+          "baseline_suite_hash": "a45a8541fe010b07147983e1297173f426ad94cf9d8eacc4fa314ae4b6463bcf"
+        },
+        "source_snapshot_ids": [
+          "fixture-source-1"
+        ],
+        "market_snapshot_ids": [],
+        "rng_seed": 20261004,
+        "search_parameters": {
+          "fixture_population": 4
+        },
+        "worker_limit": 2,
+        "memory_limit_mb": 8192,
+        "time_budget_s": 14400,
+        "hardware_summary": {
+          "fixture_cpu": "synthetic"
+        },
+        "scenario_suite_id": "fixture-suite-1",
+        "accepted_gate_ids": [
+          "G0"
+        ],
+        "availability_mode": "offline_snapshot"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "workers left unresolved in a frozen manifest",
+          "patch": {
+            "/resolved_request/workers": "auto"
+          },
+          "expect_code": "unresolved_workers",
+          "expect_path": "/resolved_request/workers"
+        },
+        {
+          "name": "patch selection left as current",
+          "patch": {
+            "/resolved_request/patch_selection": "current"
+          },
+          "expect_code": "unresolved_patch",
+          "expect_path": "/resolved_request/patch_selection"
+        }
+      ]
+    },
+    "checkpoint": {
+      "valid": {
+        "schema_version": 1,
+        "created_at": "2026-10-04T12:00:00Z",
+        "run_id": "fixture-run-1",
+        "manifest_hash": "3a31286f24c1c9740217603b1ca5d48ca7858bdd4ba0e08cd0016f60d5c5c189",
+        "completed_generation": 1,
+        "candidate_archive_hashes": [
+          "4afcc292a3cafe7b7b96efed5d25864775c1498518524b947a63f017b723b2b2"
+        ],
+        "queued_task_ids": [
+          "fixture-task-2"
+        ],
+        "completed_task_ids": [
+          "fixture-task-1"
+        ],
+        "rng_states": {
+          "candidate": "0001"
+        },
+        "accumulated_search_time_s": 12.5,
+        "next_generation_id": 2,
+        "stop_status": "running"
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "a task that is both queued and completed",
+          "patch": {
+            "/queued_task_ids": [
+              "fixture-task-1"
+            ]
+          },
+          "expect_code": "task_in_two_states",
+          "expect_path": "/queued_task_ids"
+        },
+        {
+          "name": "a completed task counted twice",
+          "patch": {
+            "/completed_task_ids": [
+              "fixture-task-1",
+              "fixture-task-1"
+            ]
+          },
+          "expect_code": "duplicate_completed_task",
+          "expect_path": "/completed_task_ids/1"
+        }
+      ]
+    },
+    "review_record": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "fixture-review-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-run-1"
+        ],
+        "task_or_gate_id": "P01-T01",
+        "spec_version": "1.0",
+        "implementation_commit": "0000000000000000000000000000000000000000",
+        "verdict": "changes_required",
+        "reviewer": "fixture reviewer",
+        "reviewed_at": "2026-10-04T12:00:00Z",
+        "commands_run": [
+          "python -m pytest tests/unit"
+        ],
+        "evidence_paths": [
+          "docs/evidence/P01/example.json"
+        ],
+        "findings": [
+          {
+            "finding_id": "F1",
+            "severity": "P2",
+            "location": "pob2opt/domain/records.py:1",
+            "description": "SYNTHETIC finding",
+            "repair_acceptance": "SYNTHETIC acceptance case"
+          }
+        ],
+        "residual_limits": [
+          "synthetic"
+        ],
+        "invalidated_gates": [],
+        "next_task_ids": [
+          "P01-T02"
+        ]
+      },
+      "also_valid": [],
+      "invalid": [
+        {
+          "name": "a verdict outside the lifecycle",
+          "patch": {
+            "/verdict": "looks_fine"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/verdict"
+        },
+        {
+          "name": "findings omitted entirely",
+          "patch": {
+            "/findings": "__remove__"
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/"
+        }
+      ]
+    }
+  }
+}

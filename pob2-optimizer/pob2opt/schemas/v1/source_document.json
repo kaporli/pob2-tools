@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/source_document.json",
+  "title": "SourceDocument",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "external_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "acquired_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "published_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "access_method": {
+      "type": "string",
+      "enum": [
+        "local_file",
+        "public_page",
+        "documented_api",
+        "provider_export",
+        "manual_capture"
+      ]
+    },
+    "media_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "blob_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "byte_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "acquisition_version": {
+      "type": "string"
+    },
+    "source_manifest_id": {
+      "type": "string"
+    },
+    "declared_patch": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "author_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "locale": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "popularity": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PopularitySignal"
+      }
+    },
+    "redistribution": {
+      "type": "string",
+      "enum": [
+        "allowed",
+        "restricted",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "provider",
+    "source_url",
+    "external_id",
+    "acquired_at",
+    "published_at",
+    "updated_at",
+    "access_method",
+    "media_type",
+    "blob_hash",
+    "byte_count",
+    "acquisition_version",
+    "source_manifest_id",
+    "declared_patch",
+    "author_id",
+    "locale",
+    "popularity",
+    "redistribution"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "PopularitySignal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        },
+        "observed_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "observed_at"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,319 @@
+{
+  "steps": [
+    {
+      "step": "ingest",
+      "blob_hash": "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859",
+      "first_write_reused_an_existing_blob": false,
+      "second_write_reused_an_existing_blob": true,
+      "source_records": 1
+    },
+    {
+      "step": "dangling_record_refused",
+      "unresolved_paths": [
+        "/catalog_hash",
+        "/equipment/fixture-slot-weapon/item_hash",
+        "/equipment/fixture-slot-weapon/listing_id",
+        "/rotation_ids/0"
+      ]
+    },
+    {
+      "step": "corpus_closed",
+      "unresolved_references": {}
+    },
+    {
+      "step": "copy_references",
+      "asked_for": [
+        "fixture-build-1",
+        "fixture-clear-dense"
+      ],
+      "sources": [
+        "fixture-acquisition-1",
+        "fixture-source-1"
+      ],
+      "normalized": [
+        "fixture-build-1",
+        "fixture-catalog-1",
+        "fixture-claim-1",
+        "fixture-clear-dense",
+        "fixture-gap-1",
+        "fixture-item-1",
+        "fixture-listing-1",
+        "fixture-profile-1",
+        "fixture-rotation-clear",
+        "fixture-rule-1",
+        "fixture-run-1"
+      ],
+      "blobs": [
+        "18c092404c16610422ffb1f50b02499473ccde92cad4292532772040af37d859"
+      ],
+      "unresolved": {}
+    },
+    {
+      "step": "corpus_disconnected",
+      "self_check": {
+        "run_id": "fixture-run-1",
+        "manifest_hash": "3a31286f24c1c9740217603b1ca5d48ca7858bdd4ba0e08cd0016f60d5c5c189",
+        "blobs_declared": 1,
+        "records_declared": 13,
+        "missing_blobs": [],
+        "corrupt_blobs": [],
+        "missing_records": [],
+        "unresolved_references": {},
+        "readable": true
+      }
+    },
+    {
+      "step": "cold_cache",
+      "outcome": "miss",
+      "reason": "no_entry"
+    },
+    {
+      "step": "two_contexts_for_one_candidate",
+      "tasks": [
+        "demo-task-1",
+        "demo-task-2",
+        "demo-task-3"
+      ],
+      "candidates": [
+        "demo-candidate-1",
+        "demo-candidate-2"
+      ]
+    },
+    {
+      "step": "cancelled_task_stays_cancelled",
+      "state": "cancelled",
+      "late_result_accepted": false
+    },
+    {
+      "step": "checkpoint_is_stale",
+      "checkpoint_completed_task_ids": [],
+      "database_completed_task_ids": [
+        "demo-task-1"
+      ]
+    },
+    {
+      "step": "resume",
+      "recovered_from_running": [
+        "demo-task-2"
+      ],
+      "to_dispatch": [
+        "demo-task-2"
+      ],
+      "already_completed": [
+        "demo-task-1"
+      ],
+      "duplicate_message_created_a_second_result": false,
+      "evaluation_rows": 1
+    },
+    {
+      "step": "legacy_import",
+      "phase": "gems",
+      "cache_eligible": false,
+      "blob_hash": "51511a9d69099169d0059337622197cbffb99366fad4a39496b258f6b1d37aaf"
+    },
+    {
+      "step": "warm_cache",
+      "detailed": [
+        "hit",
+        "exact_match"
+      ],
+      "screen": [
+        "miss",
+        "no_entry"
+      ]
+    }
+  ],
+  "inspection_queries": {
+    "schema_version": [
+      {
+        "version": 1,
+        "name": "initial records, evaluations, gaps, runs and task state",
+        "applied_at": "2026-10-05T19:10:22.271Z"
+      },
+      {
+        "version": 2,
+        "name": "task context key: one candidate, several evaluations",
+        "applied_at": "2026-10-05T19:10:22.271Z"
+      }
+    ],
+    "task_counts_by_state": [
+      {
+        "run_id": "fixture-run-1",
+        "state": "cancelled",
+        "tasks": 1
+      },
+      {
+        "run_id": "fixture-run-1",
+        "state": "completed",
+        "tasks": 1
+      },
+      {
+        "run_id": "fixture-run-1",
+        "state": "queued",
+        "tasks": 1
+      }
+    ],
+    "unfinished_tasks": [
+      {
+        "task_id": "demo-task-2",
+        "generation_id": 1,
+        "candidate_id": "demo-candidate-1",
+        "state": "queued",
+        "attempt": 1,
+        "dispatched_at": null
+      }
+    ],
+    "task_history": [
+      {
+        "task_id": "demo-task-1",
+        "attempt": 0,
+        "from_state": null,
+        "to_state": "queued",
+        "reason": "enqueued",
+        "at": "2026-10-05T19:10:22.326Z"
+      },
+      {
+        "task_id": "demo-task-2",
+        "attempt": 0,
+        "from_state": null,
+        "to_state": "queued",
+        "reason": "enqueued",
+        "at": "2026-10-05T19:10:22.326Z"
+      },
+      {
+        "task_id": "demo-task-3",
+        "attempt": 0,
+        "from_state": null,
+        "to_state": "queued",
+        "reason": "enqueued",
+        "at": "2026-10-05T19:10:22.327Z"
+      },
+      {
+        "task_id": "demo-task-1",
+        "attempt": 1,
+        "from_state": "queued",
+        "to_state": "running",
+        "reason": "dispatched to demo-worker-1",
+        "at": "2026-10-05T19:10:22.329Z"
+      },
+      {
+        "task_id": "demo-task-1",
+        "attempt": 1,
+        "from_state": "running",
+        "to_state": "completed",
+        "reason": "result fixture-evaluation-1 committed",
+        "at": "2026-10-05T19:10:22.340Z"
+      },
+      {
+        "task_id": "demo-task-3",
+        "attempt": 1,
+        "from_state": "queued",
+        "to_state": "running",
+        "reason": "dispatched to demo-worker-3",
+        "at": "2026-10-05T19:10:22.340Z"
+      },
+      {
+        "task_id": "demo-task-3",
+        "attempt": 1,
+        "from_state": "running",
+        "to_state": "cancelled",
+        "reason": "superseded by a better candidate",
+        "at": "2026-10-05T19:10:22.341Z"
+      },
+      {
+        "task_id": "demo-task-2",
+        "attempt": 1,
+        "from_state": "queued",
+        "to_state": "running",
+        "reason": "dispatched to demo-worker-2",
+        "at": "2026-10-05T19:10:22.342Z"
+      },
+      {
+        "task_id": "demo-task-2",
+        "attempt": 1,
+        "from_state": "running",
+        "to_state": "queued",
+        "reason": "interrupted attempt 1 returned to the queue",
+        "at": "2026-10-05T19:10:22.343Z"
+      }
+    ],
+    "completed_results_once_each": [
+      {
+        "task_id": "demo-task-1",
+        "evaluation_id": "fixture-evaluation-1",
+        "rows_per_task": 1
+      }
+    ],
+    "duplicate_evaluations_by_cache_key": [],
+    "cache_decisions": [
+      {
+        "reason": "no_entry",
+        "outcome": "miss",
+        "decisions": 2
+      },
+      {
+        "reason": "exact_match",
+        "outcome": "hit",
+        "decisions": 1
+      }
+    ],
+    "cache_misses_in_detail": [
+      {
+        "cache_key": "75cc9434f7b21ae26165933bf25f77706f6e330ce1fdff9db9f755283d1facbf",
+        "reason": "no_entry",
+        "rejected_cache_key": null,
+        "detail": null,
+        "decided_at": "2026-10-05T19:10:22.324Z"
+      },
+      {
+        "cache_key": "1dee4e796105054ebfb1300a497c2724e8c24a3f8022179ed7629b49c7db0d6b",
+        "reason": "no_entry",
+        "rejected_cache_key": null,
+        "detail": null,
+        "decided_at": "2026-10-05T19:10:22.349Z"
+      }
+    ],
+    "orphan_blob_rows": [],
+    "source_versions_per_external_id": [
+      {
+        "provider": "fixture_provider",
+        "external_id": "FX-1",
+        "versions": 1,
+        "distinct_payloads": 1
+      }
+    ],
+    "open_blocking_gaps": [
+      {
+        "gap_id": "fixture-gap-1",
+        "kind": "unsupported_rule",
+        "severity": "blocking"
+      }
+    ],
+    "legacy_imports_are_labelled": [
+      {
+        "import_id": "legacy:gems:51511a9d69099169",
+        "phase": "gems",
+        "source_path": "C:\\Users\\Elias\\AppData\\Local\\Temp\\pob2opt-p01-31am76o2\\legacy\\gems.json",
+        "imported_at": "2026-10-05T19:10:22.347Z"
+      }
+    ],
+    "evaluations_marked_legacy": [],
+    "run_declared_references": [
+      {
+        "run_id": "fixture-run-1",
+        "kind": "blob",
+        "refs": 1
+      },
+      {
+        "run_id": "fixture-run-1",
+        "kind": "normalized",
+        "refs": 11
+      },
+      {
+        "run_id": "fixture-run-1",
+        "kind": "source",
+        "refs": 2
+      }
+    ]
+  }
+}
