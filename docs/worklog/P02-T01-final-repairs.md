@@ -36,4 +36,11 @@ Evidence is synthetic or PoB-derived for synthetic fixtures, not gameplay measur
 
 ## Remaining scope
 
+Hosted run 37503363871 passed Python 3.10 but exposed floating-point roundoff
+on Python 3.12: remaining-time metadata could read `20.00000000000003` for a
+20-second allowance. The worker request was already capped. The recorded load
+allowance is now capped too, and the existing metadata regression injects a
+clock value that deterministically reproduces the rounding case. This does
+not loosen the deadline or change the test count.
+
 Only P02-T01 acceptance is requested. Content-level engine pinning and patch profiles remain T02, legality T03, primitive units/ownership T04 and export fidelity T05. Concurrent workers, actual native crashes and end-to-end gameplay accuracy are not established here. No owner preference or contract change is required for these repairs.

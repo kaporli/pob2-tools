@@ -2,6 +2,7 @@
 
 - PR: [#4](https://github.com/kaporli/pob2-tools/pull/4), specification 1.0.
 - Verified implementation: `478aaae4606d32e35bed1ef3e47001659792a665`.
+- Follow-up: load-allowance metadata is capped against floating-point deadline roundoff, with a deterministic clock regression; see the repair handoff's hosted-CI note.
 - Author/reviewer: Codex, 2026-10-06. This verifies my own repairs; it is not a separate engineer's review.
 - Verdict: **accepted for P02-T01 scope**, conditional on successful hosted checks for the PR head before merge.
 

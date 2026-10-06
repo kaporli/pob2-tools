@@ -534,7 +534,10 @@ class EngineAdapter:
                     or self._loaded_key != document.content_key
                     or self._applied_state != wanted)
         if reloaded:
-            load_timeout_s = self._remaining(deadline, protocol.OP_LOAD_EXACT_BUILD)
+            # Floating-point deadline subtraction can exceed the original
+            # allowance by a few ulps even before any time has elapsed.
+            load_timeout_s = min(timeout_s, self._remaining(
+                deadline, protocol.OP_LOAD_EXACT_BUILD))
             loaded = self.load_exact_build(document, name=build.name or "exact",
                                            timeout_s=load_timeout_s, deadline=deadline)
         else:

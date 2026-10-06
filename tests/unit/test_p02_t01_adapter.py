@@ -535,10 +535,19 @@ def test_a_snapshot_records_where_its_document_came_from(adapter, documents,
 
 def test_a_snapshot_reports_the_load_bound_as_well_as_its_own(adapter, documents,
                                                               fixture_build,
-                                                              fixture_profile):
-    """Regression for P02-T01-R08."""
+                                                              fixture_profile,
+                                                              monkeypatch):
+    """R08 metadata stays within the allowance even after deadline roundoff."""
+    from types import SimpleNamespace
+
     adapter.documents = documents
-    snapshot = adapter.primitives(fixture_build, EngineState(), fixture_profile)
+    adapter.identity()  # Bootstrap before injecting the coordinator clock.
+    tick = 12.2
+    assert (tick + REQUEST_TIMEOUT_S) - tick > REQUEST_TIMEOUT_S
+    with monkeypatch.context() as patch:
+        patch.setattr("pob2opt.evaluation.adapter.time",
+                      SimpleNamespace(monotonic=lambda: tick))
+        snapshot = adapter.primitives(fixture_build, EngineState(), fixture_profile)
 
     assert snapshot.timeout_s == REQUEST_TIMEOUT_S
     assert 0 < snapshot.load_timeout_s <= REQUEST_TIMEOUT_S
