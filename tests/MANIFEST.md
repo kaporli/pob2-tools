@@ -59,6 +59,8 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T02 evidence | `python scripts/p02_t02_evidence.py` | PoB | Not a test; rewrites `docs/evidence/P02/catalog-export.json` and `catalog-rows-slice.json`. Without a checkout the summary records `unavailable`. |
 | P02-T03 evidence | `python scripts/p02_t03_evidence.py` | PoB for the `pob_derived` section | Not a test; rewrites `docs/evidence/P02/legality.json`: the verdict for every fixture case, and one real import validated in the pinned engine. Without a checkout that section records `unavailable`. |
 | P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
+| P02-T05 evidence | `python scripts/p02_t05_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/roundtrips.json`, `roundtrip-synthetic.xml` and `roundtrip-pob-export.xml`. Without a checkout the `pob` section records `unavailable`. |
+| P02-T05 item conversion report | `luajit tests/integration/lua/convert_probe.lua pob2-mcp/pob2mcp/bootstrap.lua <item.lua> report` | `luajit` | Not a test; prints the repaired `convert_trade_item` completeness report for one item table instead of the item string. |
 
 Selecting the PoB checkout:
 
@@ -99,7 +101,7 @@ none yet).
 | `test_f05_run_identity_and_assumptions.py` | Research F05: phase cache identity, hardcoded league, point-budget guesses, literal result caps. |
 | `test_f10_engine_lifecycle_contract.py` | Research F10 at the API surface: `chdir`, no teardown, no timeout, undifferentiated errors. |
 | `test_f11_worker_wipes_imported_build.py` | Research F11, via a recording engine double. |
-| `test_f12_item_conversion_source.py` | Research F12 from the handler source. |
+| `test_f12_item_conversion_source.py` | Research F12 from the handler source, migrated to the P02-T05 repair: every modifier array the handler reads is emitted, nothing is written back into the caller's item, and the result reports what it could not place. |
 | `test_engine_skip_guard.py` | The CI engine-skip guard rejects a fixture error, a failing test, a collection error, an empty selection, an interrupt, a test that actually ran, and an xfail posing as a runtime skip. |
 | `test_p01_t01_records.py` | P01-T01: every record kind's valid and invalid examples, the four no-value states, unknown schema versions, NaN, unknown and missing fields, unresolved references. |
 | `test_p01_t01_schemas.py` | P01-T01: `schemas/v1` is regenerated from the dataclasses, each schema compiles, `$ref`s resolve locally, no annotation is left unresolved. |
@@ -117,12 +119,15 @@ none yet).
 | `test_p02_t03_legality.py` | P02-T03 offline lane: one fixture case per rule, each violating that rule alone, the legal boundary beside it, and one combined case. Also that an unknown always cites a gap, that a check that did not run is unknown, that attributes and Spirit together are not a verdict, that nothing is repaired, and that the shipped profile's empty slot categories make equipment undecidable. No PoB, no network. |
 | `test_p02_t04_primitive_semantics.py` | P02-T04 declaration rules: one owner and one unit per primitive, no engine key claimed twice, every inventoried category covered, a missing native output as a gap, and `CombinedDPS` unresolved until the engine flag that decides its unit is present. No PoB. |
 | `test_p02_t04_rotation_estimates.py` | P02-T04 F02 repair through the real `task_tier`: setup time reduces the sustained estimate, an unrelated condition scales the rotation instead of replacing it, an unknown reload duty or delivery geometry is a gap, the deprecated `floor`/`ceiling`/`honest_*` names carry a legacy status, and the arithmetic stays in `pob2opt.legacy_estimates`. |
+| `test_p02_t05_build_round_trip.py` | P02-T05 offline lane: a BuildSpec exported and reimported, compared on `build_identity`. Enabled and disabled groups, main skill, ordered supports, passive attribute choices, the ordinary/ascendancy split, socketed jewels, weapon sets, the three config value types and an explicitly empty slot. Unsupported fields (trigger nesting, progression, item-granted groups, unnamed catalog IDs) are labelled incomplete and not recommended, with the value preserved in the report. Includes the invariant that a complete export never differs on reimport. |
+| `test_p02_t05_item_round_trip.py` | P02-T05 offline lane: an ItemInstance as PoB item text and back, compared on `item_identity`. Every supported modifier category, modifier line flags, item variants, sockets, omitted optional fields, a modifier line containing a colon. Unsupported: the `unknown` category, a modifier's catalog resolution and roll range, a flag recorded `false`, a requirement other than level, and modifier positions PoB would renumber. |
+| `test_p02_t05_no_mutation.py` | P02-T05: neither direction changes the BuildSpec, the items or the naming table it was given, checked on canonical JSON of the whole input. Includes a monkeypatched mutating exporter, so the guard fails when something does mutate. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
 | File | Covers |
 |---|---|
-| `test_f12_item_conversion_luajit.py` | Runs the real `convert_trade_item` handler under a stock LuaJIT via `lua/convert_probe.lua`. |
+| `test_f12_item_conversion_luajit.py` | Runs the real `convert_trade_item` handler under a stock LuaJIT via `lua/convert_probe.lua`, migrated to the P02-T05 repair: the fractured, desecrated and crafted lines are present with PoB's own markers, they sit after the implicit block, and an unknown item field is reported. The probe's third argument `report` prints the handler's completeness report instead of the item string. |
 
 ### `tests/engine` - requires the PoB runtime
 
@@ -132,11 +137,12 @@ none yet).
 | `test_engine_build_inputs.py` | Legitimate zero full-DPS versus malformed build input (observation P00-OBS-01). |
 | `test_f10_engine_state.py` | Working-directory leak and A-B-A stability in the live engine. |
 | `test_f11_import_is_wiped.py` | What survives `load_build_xml` + `OPT_setup` (and observation P00-OBS-02). |
-| `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, and what the dropped affix costs. |
+| `test_f12_item_conversion_golden.py` | The same conversion inside the pinned engine, migrated to the P02-T05 repair: PoB reads the recovered lines back in the right category and the previously lost affix now raises the calculated damage. |
 | `test_p02_t01_engine_adapter.py` | P02-T01 against the real engine: worker/coordinator working directories, checkout and helper identity, exact load keeping tree/gear/groups, blank build still clearing them, malformed document as typed `invalid_input`, recovery from it without a blank character, A-B-A with B read, two documents under one build hash, configuration isolation between evaluations, forced termination and replacement. |
 | `test_p02_t02_catalog_engine.py` | P02-T02 against the real engine: the typed Lua catalog operations paging stably over every table, an unknown table refused as `unsupported` without killing the worker, a catalog read leaving a loaded build untouched, the behaviour fixtures actually running, a PoB-saved build resolving completely, duplicate display names surviving as distinct entities, and a replay of the captured rows reproducing the live catalog hash. |
 | `test_p02_t03_legality_engine.py` | P02-T03 against the real engine: `legality_state` reporting the allocation, equipment and calculated pools the engine holds, a document PoB imports cleanly still being illegal, a record whose claims its own document does not produce, connectivity decided against the real passive tree, and a legality read leaving a loaded build untouched. |
 | `test_p02_t04_primitive_semantics.py` | P02-T04 against the real engine: thirteen controlled fixture documents settling what each primitive contains. `TotalDPS` as damage per use times the rate, hit probability and crit already inside damage per use, extra projectiles changing nothing, damage over time as a duration-independent rate, five meta gems leaving the socketed spell's cadence unchanged, a cooldown becoming the use rate, and `CombinedDPS` switching unit with `showAverage`. |
+| `test_p02_t05_pob_round_trip.py` | P02-T05 against the real engine: a build PoB saved, imported, exported, loaded back into PoB and saved again. PoB accepts the document and reports the same tree, gear and socket groups; the deterministic primitives agree within the P02-T01 tolerance; `build_identity` is unchanged while the XML bytes are not. Includes a damaged export, so the equality assertions cannot pass on an empty document. |
 
 ### `tests/fixtures`
 
@@ -272,8 +278,8 @@ four stated reasons, nine gaps, and both sample builds resolving with nothing
 unresolved or ambiguous. `docs/evidence/P02/catalog-export.json` has the
 detail.
 
-The adapter is `p02-t02.0`: it can now ask the engine for a catalog page, so
-the version string moved. The primitive path did not change. A `PatchProfile`
+The adapter can now ask the engine for a catalog page, so the version string
+moved. The primitive path did not change. A `PatchProfile`
 pinned to a different adapter is now refused rather than accepted silently,
 which is why the P02-T01 fixtures repin `adapter_version` the way they already
 repinned `pob_commit`.
@@ -302,5 +308,29 @@ levels above a natural maximum, a skill with no gem, and the option list of a
 choice node. `docs/evidence/P02/legality.json` has the verdict for every
 fixture case and for one real import.
 
-The adapter is `p02-t03.0`: it can now ask the engine for the legality state
-it holds after a load. The primitive path did not change.
+The adapter can now ask the engine for the legality state it holds after a
+load. The primitive path did not change.
+
+P02-T02, T03 and T04 each bumped `ADAPTER_VERSION` on their own branch. The
+integrated adapter is none of those three, so it is `p02.1`: a cached result
+stamped with one task's string would name an adapter that never ran.
+## P02-T05 recorded results
+Specification version 1.0, 2026-10-06, branch `p02-t05-roundtrips` off
+`0df64dd`, CPython 3.12.4, Windows 11, PoB `ce566ea`:
+| `python -m pytest tests/unit` | 693 passed, 3 xfailed |
+| `python -m pytest tests/integration` | 9 passed |
+| `python -m pytest -m engine` (with `POB2_ROOT`) | 59 passed, 705 deselected |
+| `python -m pytest` (with `POB2_ROOT`) | 761 passed, 3 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 702 passed, 59 skipped, 3 xfailed |
+The three strict xfails that named P02-T05 are gone, because the F12 repair
+turned them into ordinary passes:
+| Test | Now |
+| `tests/unit/test_f12_item_conversion_source.py::test_repaired_handler_emits_every_normalized_modifier_array` | passes; every modifier array the handler reads is emitted |
+| `tests/integration/test_f12_item_conversion_luajit.py::test_repaired_conversion_preserves_every_modifier_category` | passes; the three recovered categories are in the item string |
+| `tests/engine/test_f12_item_conversion_golden.py::test_repaired_conversion_preserves_every_modifier_category` | passes; PoB reads them back in the right category |
+The three remaining xfails belong to P02-T04 and P08-T01.
+One ordering hazard found while running the engine lane: a second
+`Pob2Engine` in the same process shares the native state, so closing the
+throwaway one leaves the session `engine` fixture unusable for every test
+after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
+document in the session engine for that reason.

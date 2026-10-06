@@ -22,7 +22,7 @@ from p02_t04_primitive_fixtures import (META_GEMS, build_fixture_documents,
 from record_fixtures import records
 
 from pob2opt.domain.enums import Fidelity
-from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineState,
+from pob2opt.evaluation import (ADAPTER_VERSION, BuildDocument, EngineAdapter, EngineState,
                                 pob_worker_spec, resolve_checkout)
 
 pytestmark = pytest.mark.engine
@@ -54,8 +54,12 @@ def adapter(pob_root):
 def build_and_profile(pob_root):
     checkout = resolve_checkout(pob_root)
     build = dataclasses.replace(records()["build_spec"], build_hash=BUILD_HASH)
+    # adapter_version is repinned for the same reason pob_commit is: P02-T02
+    # made the adapter refuse a profile pinned to a different adapter, and the
+    # shared fixture profile names neither this commit nor this adapter.
     profile = dataclasses.replace(records()["patch_profile"],
-                                  pob_commit=checkout.commit)
+                                  pob_commit=checkout.commit,
+                                  adapter_version=ADAPTER_VERSION)
     return build, profile
 
 

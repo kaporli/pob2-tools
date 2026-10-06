@@ -22,11 +22,16 @@ from .primitives import (SEMANTICS_OWNER, SEMANTICS_VERSION, DeclaredPrimitive,
 
 #: Bumped whenever the adapter changes what it asks the engine for, or how it
 #: interprets the answer. Part of the evaluation cache identity.
+#:
+#: Not named after one task. P02-T02, T03 and T04 each bumped it on their own
+#: branch, so no single task's string describes the integrated adapter; a
+#: cached result stamped "p02-t03.0" would claim an adapter that never ran.
+#: Bump this whenever any of them changes again.
 #: p02-t02.0 added the read-only catalog operation. p02-t03.0 adds the
 #: read-only legality-state operation. The primitive path is unchanged in
 #: both, but the adapter can ask the engine for something new, which is what
 #: this string is for.
-ADAPTER_VERSION = "p02-t03.0"
+ADAPTER_VERSION = "p02.1"
 
 #: Owner of primitive units, included effects and excluded effects.
 PRIMITIVE_SEMANTICS_OWNER = SEMANTICS_OWNER

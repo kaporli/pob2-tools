@@ -1,0 +1,488 @@
+{
+ "task": "P02-T05",
+ "spec_version": "1.0",
+ "generated_at": "2026-10-06T18:23:48Z",
+ "comparison": "canonical identity from pob2opt.domain.identity, not XML bytes: the editor assigns new internal numeric IDs",
+ "synthetic": {
+  "what_this_is": "SYNTHETIC. Invented catalog IDs, PoB names, modifier text and numbers, compared by our exporter against our importer. No PoB, no network, no game value.",
+  "declared_support": {
+   "build": {
+    "round_trips": [
+     "class_id, ascendancy_id, level",
+     "equipment, including an explicitly empty slot",
+     "weapon sets: hand slots and per-set passive allocations",
+     "passive allocations, the ordinary and ascendancy split, and attribute choices",
+     "jewel sockets on passive nodes",
+     "skill groups: order, enabled flag, slot, weapon-set binding, main skill index, and each skill with its ordered supports",
+     "config values of type boolean, number and string"
+    ],
+    "not_representable": [
+     "progression: PoB records no quest or reward flags and no point budgets",
+     "SkillGroup.source_item_hash: PoB regenerates an item-granted group from the item, and an unknown source string makes it discard the group",
+     "SkillEntry.triggered: a PoB socket group is a flat gem list with no nesting",
+     "a passive choice that is not one of Strength, Dexterity or Intelligence",
+     "more than two weapon sets",
+     "BuildSpec.name, variant_id, family_id, rotation_ids, source_document_ids, declared_patch and unresolved_refs: metadata the build identity excludes"
+    ]
+   },
+   "item": {
+    "round_trips": [
+     "rarity",
+     "display_name",
+     "base_id (through CatalogNaming.base_names)",
+     "item_level",
+     "requirements['level']",
+     "sockets (colour and order)",
+     "every ModifierCategory except unknown",
+     "modifier text",
+     "modifier line flags disabled/mutated/unscalable",
+     "item variants and the selected variant",
+     "the item flags corrupted, double_corrupted, mirrored, sanctified"
+    ],
+    "not_representable": [
+     "ModifierCategory.unknown: PoB has no marker for it",
+     "ItemModifier.native_id, resolved_effect_ids, parse_status: PoB text carries no catalog resolution",
+     "ItemModifier.values: a roll range can only be written in PoB's advanced-copy form, which marks the whole item crafted",
+     "a flag recorded false: PoB writes only the positive line, so false and absent become the same document",
+     "requirements other than level",
+     "Socket.contents_id and a socket_id that is not its index",
+     "modifier source positions that are not 0..n-1 in block order"
+    ]
+   }
+  },
+  "builds": {
+   "item_granted_group": {
+    "status": "incomplete",
+    "recommended_deliverable": false,
+    "build_hash_before": "553ed8faf176932499681f417653261a996545ccfb85c71d023aaeddf7c7eed7",
+    "build_hash_after": "7bf63a5ec142d586a6cd568019dbbbd6bd46feae20b378fd13f054565c3be4ea",
+    "identity_preserved": false,
+    "differences": [
+     {
+      "path": "/skill_groups/0/source_item_hash",
+      "before": "dd7c60b4364130e9fd4c1bfb0afaf465c33953f193389172bc5c858729031bf6",
+      "after": null
+     },
+     {
+      "path": "/weapon_sets/0",
+      "before": null,
+      "after": {
+       "set_id": "set-main",
+       "hand_slots": {
+        "main_hand": "slot-weapon1",
+        "off_hand": null
+       },
+       "passive_allocations": []
+      }
+     }
+    ],
+    "item_differences": {},
+    "export": {
+     "completeness": "incomplete",
+     "recommended_deliverable": false,
+     "unsupported": [
+      {
+       "field_path": "/name",
+       "kind": "not_representable",
+       "reason": "a PoB document does not carry this; build identity excludes it too",
+       "preserved": "SYNTHETIC P02-T05 build",
+       "affects_identity": false
+      },
+      {
+       "field_path": "/weapon_sets",
+       "kind": "not_representable",
+       "reason": "equipment fills PoB weapon set 1, so the document reads back a weapon set this build does not declare",
+       "preserved": {
+        "main_hand": "slot-weapon1",
+        "off_hand": null
+       },
+       "affects_identity": true
+      },
+      {
+       "field_path": "/skill_groups/0/source_item_hash",
+       "kind": "not_representable",
+       "reason": "PoB regenerates an item-granted group from the item itself and discards a group whose source string it does not recognise",
+       "preserved": "dd7c60b4364130e9fd4c1bfb0afaf465c33953f193389172bc5c858729031bf6",
+       "affects_identity": true
+      }
+     ]
+    }
+   },
+   "progression": {
+    "status": "incomplete",
+    "recommended_deliverable": false,
+    "build_hash_before": "eefbbd4f1478ae069ce6d290a9f562b59258c51fa91644591675b5c12ecd7bcb",
+    "build_hash_after": "e9f1c92d59b8d293adf4261c2d18e25aeb3e56e74aff33e9bdf8d697ed5180c6",
+    "identity_preserved": false,
+    "differences": [
+     {
+      "path": "/progression/ascendancy_point_budget",
+      "before": 8,
+      "after": null
+     },
+     {
+      "path": "/progression/normal_point_budget",
+      "before": 99,
+      "after": null
+     },
+     {
+      "path": "/progression/quest_flags/fixture-quest-1",
+      "before": true,
+      "after": null
+     },
+     {
+      "path": "/progression/reward_flags/fixture-reward-1",
+      "before": false,
+      "after": null
+     }
+    ],
+    "item_differences": {},
+    "export": {
+     "completeness": "incomplete",
+     "recommended_deliverable": false,
+     "unsupported": [
+      {
+       "field_path": "/name",
+       "kind": "not_representable",
+       "reason": "a PoB document does not carry this; build identity excludes it too",
+       "preserved": "SYNTHETIC P02-T05 build",
+       "affects_identity": false
+      },
+      {
+       "field_path": "/progression",
+       "kind": "not_representable",
+       "reason": "PoB records no quest or reward flags and no point budgets, so none of this reads back",
+       "preserved": {
+        "quest_flags": {
+         "fixture-quest-1": true
+        },
+        "reward_flags": {
+         "fixture-reward-1": false
+        },
+        "normal_point_budget": 99,
+        "ascendancy_point_budget": 8
+       },
+       "affects_identity": true
+      }
+     ]
+    }
+   },
+   "supported": {
+    "status": "faithful",
+    "recommended_deliverable": true,
+    "build_hash_before": "48bb0ab02bbb205abf0c8028685db37bac3dddb45727bde04282877f96fe0845",
+    "build_hash_after": "48bb0ab02bbb205abf0c8028685db37bac3dddb45727bde04282877f96fe0845",
+    "identity_preserved": true,
+    "differences": [],
+    "item_differences": {},
+    "export": {
+     "completeness": "complete",
+     "recommended_deliverable": true,
+     "unsupported": [
+      {
+       "field_path": "/name",
+       "kind": "not_representable",
+       "reason": "a PoB document does not carry this; build identity excludes it too",
+       "preserved": "SYNTHETIC P02-T05 build",
+       "affects_identity": false
+      },
+      {
+       "field_path": "/source_document_ids",
+       "kind": "not_representable",
+       "reason": "provenance is not part of a PoB document",
+       "preserved": [
+        "fixture-source-1"
+       ],
+       "affects_identity": false
+      },
+      {
+       "field_path": "/equipment/slot-helmet/listing_id",
+       "kind": "not_representable",
+       "reason": "a PoB document records no listing; build identity excludes it too",
+       "preserved": "fixture-listing-1",
+       "affects_identity": false
+      },
+      {
+       "field_path": "/skill_groups/0/skills/0/support_ids/0",
+       "kind": "partial",
+       "reason": "BuildSpec carries no level or quality for a support gem, so the document omits both and PoB applies its default",
+       "preserved": "support-tempo",
+       "affects_identity": false
+      },
+      {
+       "field_path": "/skill_groups/0/skills/0/support_ids/1",
+       "kind": "partial",
+       "reason": "BuildSpec carries no level or quality for a support gem, so the document omits both and PoB applies its default",
+       "preserved": "support-conc",
+       "affects_identity": false
+      }
+     ]
+    }
+   },
+   "trigger_nested": {
+    "status": "incomplete",
+    "recommended_deliverable": false,
+    "build_hash_before": "21ce3986845e9ff0f1ecf679c49ce4a22dba717e94a33b29a1024ff3f719cd96",
+    "build_hash_after": "ec426e955f29645947f569a171fed26596e28d3f6ecc29b7b8d1d472909822e6",
+    "identity_preserved": false,
+    "differences": [
+     {
+      "path": "/skill_groups/0/skills/0/triggered/0",
+      "before": {
+       "skill_id": "skill-trigger",
+       "gem_id": null,
+       "level": 10,
+       "quality": 0,
+       "enabled": true,
+       "support_ids": [],
+       "triggered": []
+      },
+      "after": null
+     }
+    ],
+    "item_differences": {},
+    "export": {
+     "completeness": "incomplete",
+     "recommended_deliverable": false,
+     "unsupported": [
+      {
+       "field_path": "/name",
+       "kind": "not_representable",
+       "reason": "a PoB document does not carry this; build identity excludes it too",
+       "preserved": "SYNTHETIC P02-T05 build",
+       "affects_identity": false
+      },
+      {
+       "field_path": "/skill_groups/0/skills/0/triggered",
+       "kind": "not_representable",
+       "reason": "a PoB socket group is a flat gem list with no trigger nesting; the nested skills would read back as siblings",
+       "preserved": [
+        "skill-trigger"
+       ],
+       "affects_identity": true
+      }
+     ]
+    }
+   },
+   "unresolved_catalog": {
+    "status": "incomplete",
+    "recommended_deliverable": false,
+    "build_hash_before": "6f6aa4f0a222dcc5fe6c0e19d82c6193a7d648b1c108d745c613601ea3cb88ab",
+    "build_hash_after": "0f1795ee84cc97fefbd584a0f27e8d4b238b15b04945326953d10107e3854a08",
+    "identity_preserved": false,
+    "differences": [
+     {
+      "path": "/ascendancy_id",
+      "before": "asc-not-in-the-table",
+      "after": null
+     },
+     {
+      "path": "/class_id",
+      "before": "class-not-in-the-table",
+      "after": ""
+     },
+     {
+      "path": "/passives/allocated/0",
+      "before": "node-not-in-the-table",
+      "after": null
+     }
+    ],
+    "item_differences": {},
+    "export": {
+     "completeness": "incomplete",
+     "recommended_deliverable": false,
+     "unsupported": [
+      {
+       "field_path": "/name",
+       "kind": "not_representable",
+       "reason": "a PoB document does not carry this; build identity excludes it too",
+       "preserved": "SYNTHETIC P02-T05 build",
+       "affects_identity": false
+      },
+      {
+       "field_path": "/class_id",
+       "kind": "unresolved_name",
+       "reason": "CatalogNaming.class_tree_ids has no numeric tree class ID",
+       "preserved": "class-not-in-the-table",
+       "affects_identity": true
+      },
+      {
+       "field_path": "/ascendancy_id",
+       "kind": "unresolved_name",
+       "reason": "CatalogNaming.ascendancy_tree_ids has no numeric tree ascendancy ID",
+       "preserved": "asc-not-in-the-table",
+       "affects_identity": true
+      },
+      {
+       "field_path": "/passives/allocated",
+       "kind": "unresolved_name",
+       "reason": "CatalogNaming.node_ids has no native tree node for this passive; PoB reads Spec@nodes as integers only",
+       "preserved": "node-not-in-the-table",
+       "affects_identity": true
+      },
+      {
+       "field_path": "/class_id",
+       "kind": "unresolved_name",
+       "reason": "CatalogNaming.class_names has no PoB class name",
+       "preserved": "class-not-in-the-table",
+       "affects_identity": true
+      },
+      {
+       "field_path": "/ascendancy_id",
+       "kind": "unresolved_name",
+       "reason": "CatalogNaming.ascendancy_names has no PoB ascendancy name",
+       "preserved": "asc-not-in-the-table",
+       "affects_identity": true
+      }
+     ]
+    }
+   }
+  },
+  "items": {
+   "every_category_weapon": {
+    "text": "Rarity: RARE\nFIXTURE Category Quarterstaff\nLong Quarterstaff\nItem Level: 82\nQuality: 20\nLevelReq: 65\nImplicits: 3\n{enchant}FIXTUREMOD enchant line\n{rune}FIXTUREMOD rune line\nFIXTUREMOD implicit line\nFIXTUREMOD explicit one\n{unscalable}FIXTUREMOD explicit two\n{fractured}FIXTUREMOD fractured line\n{crafted}FIXTUREMOD crafted line\n{desecrated}FIXTUREMOD desecrated line\nCorrupted",
+    "completeness": "complete",
+    "recommended_deliverable": true,
+    "unsupported": []
+   },
+   "false_flag": {
+    "text": "Rarity: RARE\nFIXTURE False Flag\nLong Quarterstaff\nImplicits: 0\nFIXTUREMOD plain line",
+    "completeness": "incomplete",
+    "recommended_deliverable": false,
+    "unsupported": [
+     {
+      "field_path": "/flags/corrupted",
+      "kind": "not_representable",
+      "reason": "PoB writes only the positive line, so a flag recorded false cannot be told from an absent one",
+      "preserved": false,
+      "affects_identity": true
+     }
+    ]
+   },
+   "resolved_modifier": {
+    "text": "Rarity: RARE\nFIXTURE Resolved Modifier\nLong Quarterstaff\nImplicits: 0\nFIXTUREMOD resolved line",
+    "completeness": "incomplete",
+    "recommended_deliverable": false,
+    "unsupported": [
+     {
+      "field_path": "/modifiers/0/native_id",
+      "kind": "not_representable",
+      "reason": "PoB item text carries no catalog modifier ID",
+      "preserved": "fixture-native-1",
+      "affects_identity": true
+     },
+     {
+      "field_path": "/modifiers/0/resolved_effect_ids",
+      "kind": "not_representable",
+      "reason": "PoB item text carries no resolved effect references",
+      "preserved": [
+       "fixture-effect-1"
+      ],
+      "affects_identity": true
+     },
+     {
+      "field_path": "/modifiers/0/values",
+      "kind": "not_representable",
+      "reason": "a roll range is writable only in PoB's advanced-copy form, which marks the whole item crafted",
+      "preserved": [
+       [
+        12.0,
+        10.0,
+        15.0
+       ]
+      ],
+      "affects_identity": true
+     },
+     {
+      "field_path": "/modifiers/0/parse_status",
+      "kind": "not_representable",
+      "reason": "a PoB document records no parse status; every line reads back as resolved",
+      "preserved": "ambiguous",
+      "affects_identity": true
+     }
+    ]
+   },
+   "socketed_jewel": {
+    "text": "Rarity: RARE\nFIXTURE Socketed Jewel\nEmerald\nItem Level: 60\nImplicits: 0\nFIXTUREMOD jewel explicit",
+    "completeness": "complete",
+    "recommended_deliverable": true,
+    "unsupported": []
+   },
+   "unknown_category": {
+    "text": "Rarity: RARE\nFIXTURE Unknown Category\nLong Quarterstaff\nImplicits: 0",
+    "completeness": "incomplete",
+    "recommended_deliverable": false,
+    "unsupported": [
+     {
+      "field_path": "/modifiers/0/category",
+      "kind": "not_representable",
+      "reason": "PoB item text has no marker for the unknown category",
+      "preserved": "FIXTUREMOD unknown source line",
+      "affects_identity": true
+     }
+    ]
+   },
+   "variant_helmet": {
+    "text": "Rarity: UNIQUE\nFIXTURE Two Variant Helm\nIron Helm\nItem Level: 70\nArmour: 120\nSockets: S\nVariant: Pre Fixture\nVariant: Current\nSelected Variant: 2\nImplicits: 1\nFIXTUREMOD helmet implicit\n{variant:1}FIXTUREMOD helmet variant one\n{variant:2}FIXTUREMOD helmet variant two",
+    "completeness": "complete",
+    "recommended_deliverable": true,
+    "unsupported": []
+   }
+  }
+ },
+ "pob": {
+  "status": "recorded",
+  "what_this_is": "PoB-derived. A build PoB saved, exported by pob2opt, loaded back into the pinned engine and compared on canonical identity. Not a gameplay measurement.",
+  "pob_root": "C:\\Users\\Elias\\PycharmProjects\\PathOfBuilding-PoE2",
+  "exported_document": "roundtrip-pob-export.xml",
+  "export": {
+   "completeness": "complete",
+   "recommended_deliverable": true,
+   "unsupported": []
+  },
+  "summary_before": {
+   "allocatedNodes": 36,
+   "ascendancy": "None",
+   "buildName": "MCP Build",
+   "class": "Ranger",
+   "equippedItems": 1,
+   "level": 28,
+   "mainSkill": "Quarterstaff Strike",
+   "mainSocketGroup": 1,
+   "passivePointsUsed": 35,
+   "socketGroups": 1
+  },
+  "summary_after": {
+   "allocatedNodes": 36,
+   "ascendancy": "None",
+   "buildName": "MCP Build",
+   "class": "Ranger",
+   "equippedItems": 1,
+   "level": 28,
+   "mainSkill": "Quarterstaff Strike",
+   "mainSocketGroup": 1,
+   "passivePointsUsed": 35,
+   "socketGroups": 1
+  },
+  "summary_matches": true,
+  "primitives": {
+   "keys_compared": 655,
+   "keys_missing_after": [],
+   "worst_absolute_delta": 0.0,
+   "worst_relative_delta": 0.0,
+   "tolerance": {
+    "relative": 1e-06,
+    "absolute": 1e-09
+   },
+   "within_tolerance": true
+  },
+  "identity": {
+   "build_hash_before": "1c698cc43cea507073bef9c1c6a09f2812f4d7b56f804ccc0f1db3a915555441",
+   "build_hash_after": "1c698cc43cea507073bef9c1c6a09f2812f4d7b56f804ccc0f1db3a915555441",
+   "differences": [],
+   "identical": true
+  },
+  "xml_bytes_identical": false,
+  "xml_byte_note": "PoB assigns its own internal numeric item and node IDs, so byte equality is not the test."
+ }
+}

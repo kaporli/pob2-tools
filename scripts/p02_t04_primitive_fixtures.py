@@ -221,7 +221,7 @@ def build_fixture_documents(pob_root) -> dict[str, str]:
 def read_fixtures(pob_root, documents: dict[str, str]) -> dict:
     """Evaluate every fixture through the adapter and collect the outputs."""
     from pob2opt.domain.enums import Fidelity
-    from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineState,
+    from pob2opt.evaluation import (ADAPTER_VERSION, BuildDocument, EngineAdapter, EngineState,
                                     pob_worker_spec, resolve_checkout)
 
     from record_fixtures import records
@@ -229,8 +229,12 @@ def read_fixtures(pob_root, documents: dict[str, str]) -> dict:
     checkout = resolve_checkout(pob_root)
     build = dataclasses.replace(records()["build_spec"],
                                 build_hash="p02t04-primitive-fixture")
+    # adapter_version is repinned for the same reason pob_commit is: P02-T02
+    # made the adapter refuse a profile pinned to a different adapter, and the
+    # shared fixture profile names neither this commit nor this adapter.
     profile = dataclasses.replace(records()["patch_profile"],
-                                  pob_commit=checkout.commit)
+                                  pob_commit=checkout.commit,
+                                  adapter_version=ADAPTER_VERSION)
     out: dict[str, dict] = {}
     adapter = EngineAdapter(pob_worker_spec(pob_root),
                             screen_timeout_s=600.0, detailed_timeout_s=600.0,

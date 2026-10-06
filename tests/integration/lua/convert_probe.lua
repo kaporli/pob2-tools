@@ -7,9 +7,14 @@
 -- assembly over the table it is given. Only the presence or absence of modifier
 -- lines is asserted on, which the stubs cannot affect.
 --
--- usage: luajit convert_probe.lua <bootstrap.lua> <item_table.lua>
+-- usage: luajit convert_probe.lua <bootstrap.lua> <item_table.lua> [report]
+--
+-- With the third argument `report`, the probe prints the handler's own
+-- completeness report instead of the item string: one `complete=` line, one
+-- `emitted <array>=<count>` line per modifier array and one
+-- `unsupported <field>` line per field the handler could not place (P02-T05).
 
-local bootstrapPath, itemPath = ...
+local bootstrapPath, itemPath, mode = ...
 assert(bootstrapPath and itemPath, "usage: convert_probe.lua <bootstrap.lua> <item_table.lua>")
 
 escapeGGGString = function(s) return tostring(s) end
@@ -38,4 +43,18 @@ assert(handlers.convert_trade_item, "convert_trade_item handler missing")
 
 local item = assert(loadfile(itemPath))()
 local result = handlers.convert_trade_item({ item = item })
+if mode == "report" then
+	io.write("complete=", tostring(result.complete), "\n")
+	local keys = {}
+	for key in pairs(result.emitted_mod_counts or {}) do keys[#keys + 1] = key end
+	table.sort(keys)
+	for _, key in ipairs(keys) do
+		io.write("emitted ", key, "=", tostring(result.emitted_mod_counts[key]), "\n")
+	end
+	local fields = {}
+	for _, entry in ipairs(result.unsupported or {}) do fields[#fields + 1] = entry.field end
+	table.sort(fields)
+	for _, name in ipairs(fields) do io.write("unsupported ", name, "\n") end
+	return
+end
 io.write(result.item_string)
