@@ -1,0 +1,361 @@
+{
+  "what_this_is": "PoB-derived synthetic fixture behavior, not gameplay evidence",
+  "checkout": {
+    "root": "C:\\Users\\Elias\\PycharmProjects\\PathOfBuilding-PoE2",
+    "commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+    "reason": "working tree differs from the pinned commit"
+  },
+  "state_aba": {
+    "requested_final_state": {
+      "config": [],
+      "main_skill": null,
+      "stat_keys": null
+    },
+    "baseline_to_configured": {
+      "AccuracyHitChance": [
+        52,
+        50
+      ],
+      "AverageBurstDamage": [
+        25.946365910057,
+        24.555087187335
+      ],
+      "AverageDamage": [
+        25.946365910057,
+        24.555087187335
+      ],
+      "ChaosEnemyDamage": [
+        391.79,
+        426.3
+      ],
+      "ChaosTakenDamage": [
+        391.79,
+        426.3
+      ],
+      "ChaosTakenHit": [
+        391.79,
+        426.3
+      ],
+      "ColdEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "ColdTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "ColdTakenHit": [
+        1469.2125,
+        1600.1475
+      ],
+      "CombinedAvg": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "CombinedDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "CritChance": [
+        5.2,
+        5
+      ],
+      "EHPSurvivalTime": [
+        0.088546224823831,
+        0.081306012585192
+      ],
+      "EnemyAilmentThreshold": [
+        71303,
+        79967
+      ],
+      "FireEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "FireTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "FireTakenHit": [
+        1469.2125,
+        1600.1475
+      ],
+      "HeavyStunBuildupAvg": [
+        0.0004883772262334,
+        0.00041895028600778
+      ],
+      "HitChance": [
+        52,
+        50
+      ],
+      "LightningEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "LightningTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "LightningTakenHit": [
+        1469.2125,
+        1600.1475
+      ],
+      "NumberOfDamagingHits": [
+        0.12649460689119,
+        0.11615144655027
+      ],
+      "NumberOfMitigatedDamagingHits": [
+        0.12649460689119,
+        0.11615144655027
+      ],
+      "PhysicalEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "PhysicalStoredCombinedAvg": [
+        194.62,
+        194.25
+      ],
+      "PhysicalTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "PhysicalTakenHit": [
+        979.475,
+        1066.765
+      ],
+      "TotalDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "TotalEHP": [
+        537.09610085998,
+        537.08428884847
+      ],
+      "TotalNumberOfHits": [
+        0.12649460689119,
+        0.11615144655027
+      ],
+      "WithBleedDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "WithIgniteDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "WithPoisonDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "totalEnemyDamage": [
+        4309.69,
+        4693.36
+      ],
+      "totalEnemyDamageIn": [
+        4246,
+        4624
+      ],
+      "totalTakenDamage": [
+        4309.69,
+        4693.36
+      ],
+      "totalTakenHit": [
+        5778.9025,
+        6293.5075
+      ]
+    },
+    "baseline_to_repeated": {
+      "AccuracyHitChance": [
+        52,
+        50
+      ],
+      "AverageBurstDamage": [
+        25.946365910057,
+        24.555087187335
+      ],
+      "AverageDamage": [
+        25.946365910057,
+        24.555087187335
+      ],
+      "ChaosEnemyDamage": [
+        391.79,
+        426.3
+      ],
+      "ChaosTakenDamage": [
+        391.79,
+        426.3
+      ],
+      "ChaosTakenHit": [
+        391.79,
+        426.3
+      ],
+      "ColdEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "ColdTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "ColdTakenHit": [
+        1469.2125,
+        1600.1475
+      ],
+      "CombinedAvg": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "CombinedDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "CritChance": [
+        5.2,
+        5
+      ],
+      "EHPSurvivalTime": [
+        0.088546224823831,
+        0.081306012585192
+      ],
+      "EnemyAilmentThreshold": [
+        71303,
+        79967
+      ],
+      "FireEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "FireTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "FireTakenHit": [
+        1469.2125,
+        1600.1475
+      ],
+      "HeavyStunBuildupAvg": [
+        0.0004883772262334,
+        0.00041895028600778
+      ],
+      "HitChance": [
+        52,
+        50
+      ],
+      "LightningEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "LightningTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "LightningTakenHit": [
+        1469.2125,
+        1600.1475
+      ],
+      "NumberOfDamagingHits": [
+        0.12649460689119,
+        0.11615144655027
+      ],
+      "NumberOfMitigatedDamagingHits": [
+        0.12649460689119,
+        0.11615144655027
+      ],
+      "PhysicalEnemyDamage": [
+        979.475,
+        1066.765
+      ],
+      "PhysicalStoredCombinedAvg": [
+        194.62,
+        194.25
+      ],
+      "PhysicalTakenDamage": [
+        979.475,
+        1066.765
+      ],
+      "PhysicalTakenHit": [
+        979.475,
+        1066.765
+      ],
+      "TotalDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "TotalEHP": [
+        537.09610085998,
+        537.08428884847
+      ],
+      "TotalNumberOfHits": [
+        0.12649460689119,
+        0.11615144655027
+      ],
+      "WithBleedDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "WithIgniteDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "WithPoisonDPS": [
+        47.222385956304,
+        44.690258680949
+      ],
+      "totalEnemyDamage": [
+        4309.69,
+        4693.36
+      ],
+      "totalEnemyDamageIn": [
+        4246,
+        4624
+      ],
+      "totalTakenDamage": [
+        4309.69,
+        4693.36
+      ],
+      "totalTakenHit": [
+        5778.9025,
+        6293.5075
+      ]
+    },
+    "baseline_to_explicit_reload": {}
+  },
+  "fatal_load_recovery": {
+    "failure": {
+      "status": "invalid_input",
+      "stage": "load_exact_build"
+    },
+    "worker_alive_after_error": false,
+    "pid_changed": true,
+    "before": {
+      "name": "SYNTHETIC Fixture Build",
+      "class_name": "Ranger",
+      "ascendancy": "None",
+      "level": 28,
+      "allocated_nodes": 36,
+      "equipped_items": 1,
+      "socket_groups": 1,
+      "opt_setup_called": false
+    },
+    "after": {
+      "name": "Unnamed build",
+      "class_name": "Ranger",
+      "ascendancy": "None",
+      "level": 1,
+      "allocated_nodes": 1,
+      "equipped_items": 0,
+      "socket_groups": 0,
+      "opt_setup_called": false
+    },
+    "values_changed": true,
+    "returned_build_hash": "a8e3574b7bf047bedd86e41ce6e5d7ecbec7629c65439af572afeed325ca048d"
+  },
+  "synthetic_screen_deadline": {
+    "returned_success": true,
+    "elapsed_s": 1.0,
+    "declared_timeout_s": 0.1,
+    "reported_duration_ms": 1000
+  }
+}

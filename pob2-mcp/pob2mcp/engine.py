@@ -42,6 +42,10 @@ class PobEngineError(RuntimeError):
     pass
 
 
+class PobEngineClosed(PobEngineError):
+    """The Lua state was closed. A closed engine is never reopened."""
+
+
 class Pob2Engine:
     def __init__(self, pob_root: str = DEFAULT_POB_ROOT):
         self.pob_root = os.path.abspath(pob_root)
@@ -71,6 +75,7 @@ class Pob2Engine:
         ]
         lua.lua_tolstring.restype = ctypes.c_void_p
         lua.lua_settop.argtypes = [ctypes.c_void_p, ctypes.c_int]
+        lua.lua_close.argtypes = [ctypes.c_void_p]
 
         self._lua = lua
         self._L = lua.luaL_newstate()
@@ -94,6 +99,30 @@ class Pob2Engine:
         )
         with open(_BOOTSTRAP, "r", encoding="utf-8") as f:
             self._dostring(f.read())
+
+    # -- lifetime ------------------------------------------------------------
+
+    def close(self) -> None:
+        """Free the Lua state. Idempotent; a closed engine stays closed.
+
+        The owning process normally exits right afterwards, so this exists for
+        the deterministic teardown P02-T01 requires: after it, every call fails
+        with a typed error instead of touching a freed pointer.
+        """
+        with self._lock:
+            state, self._L = self._L, None
+            if state is not None:
+                self._lua.lua_close(state)
+
+    @property
+    def closed(self) -> bool:
+        return self._L is None
+
+    def __enter__(self) -> "Pob2Engine":
+        return self
+
+    def __exit__(self, *exc_info) -> None:
+        self.close()
 
     # -- low level -----------------------------------------------------------
 
@@ -122,6 +151,8 @@ class Pob2Engine:
         payload = json.dumps(args or {}).encode("utf-8")
         with self._lock:
             lua, L = self._lua, self._L
+            if L is None:
+                raise PobEngineClosed("engine is closed; start a new worker")
             lua.lua_getfield(L, LUA_GLOBALSINDEX, b"MCP_dispatch")
             name = fn.encode("utf-8")
             lua.lua_pushlstring(L, name, len(name))

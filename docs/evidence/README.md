@@ -31,3 +31,10 @@ them separate.
 | `P01/review-ae4303e-probes.py` | P01 review | The reviewer's adversarial probe script for commit `ae4303e`; kept unchanged |
 | `P01/review-ae4303e.json` | P01 review | The observations that script recorded, which the repair reproduced before fixing |
 | `P01/review-repair-probes.py` | P01 repair | The same questions asked of the repaired code |
+| `P02/lifecycle.json` | P02-T01 | Engine boundary behaviour: the three offline failure probes (synthetic), then real-engine identity, exact versus blank loading, A-B-A with B read, state isolation, document provenance and forced termination (PoB-derived) |
+| `P02/review-eca7afe-adversarial-probes.py` | P02-T01 review | The seven adversarial probes run against `eca7afe`; kept unchanged |
+| `P02/review-eca7afe-adversarial.json` | P02-T01 review | What those probes recorded before the repairs, mapped to findings R01 and R03 to R06 |
+| `P02/review-eca7afe-probes.json` | P02-T01 review | A parallel review's probe output for the same commit, written by another run; the source of findings R10 and R11. Its probe script was lost (see the review) |
+| `P02/review_eca7afe_workers.py` | P02-T01 review | The slow-load synthetic worker that parallel set used |
+| `P02/review-eca7afe-recovery-probes.py` | P02-T01 repair | Reproduction of R10 and R11 at HEAD |
+| `P02/review-eca7afe-recovery.json` | P02-T01 repair | Those two cases before and after the repair |

@@ -30,13 +30,34 @@ class Worker:
         self.e = Pob2Engine(pob_root)
         self.char_level = char_level
         self.build_xml = build_xml
-        self.e.call("load_build_xml", {"xml": build_xml, "name": "opt"})
+        self.resist_penalty = resist_penalty
+        self.tasks_done = 0
+        # Construction loads the build and nothing else. Clearing it is
+        # ``create_blank_build``, which the legacy phase pipeline calls
+        # explicitly (research F11: the two used to be the same step, so an
+        # imported character was always wiped).
+        self.load_exact_build()
+
+    def _load_helpers(self):
         for name in ("opt_helpers.lua", "tree_lib.lua"):
             with open(os.path.join(_LUA_DIR, name), encoding="utf-8") as f:
                 self.e.eval_lua(f.read())
-        self.e.eval_lua(f"return OPT_setup({char_level}, {resist_penalty})")
-        self.resist_penalty = resist_penalty
-        self.tasks_done = 0
+
+    def load_exact_build(self, build_xml: str | None = None):
+        """Load a build document as it is. Never calls ``OPT_setup``."""
+        xml = self.build_xml if build_xml is None else build_xml
+        self.e.call("load_build_xml", {"xml": xml, "name": "opt"})
+        self._load_helpers()
+        return True
+
+    def create_blank_build(self):
+        """Clear tree, groups and equipment to get an empty candidate.
+
+        This is the destructive half of the old constructor, kept because the
+        legacy phase pipeline searches from a blank character.
+        """
+        return self.e.eval_lua(
+            f"return OPT_setup({self.char_level}, {self.resist_penalty})")
 
     def maybe_reset(self, every: int = 50):
         """Periodic full reset to shed accumulated items/groups; cheap group
@@ -54,12 +75,13 @@ class Worker:
         return self.e.call(fn, args)
 
     def reset(self):
-        """Fresh character state (cheap relative to engine boot)."""
-        self.e.call("load_build_xml", {"xml": self.build_xml, "name": "opt"})
-        for name in ("opt_helpers.lua", "tree_lib.lua"):
-            with open(os.path.join(_LUA_DIR, name), encoding="utf-8") as f:
-                self.e.eval_lua(f.read())
-        self.e.eval_lua(f"return OPT_setup({self.char_level}, {self.resist_penalty})")
+        """Fresh blank candidate (cheap relative to engine boot).
+
+        Legacy search state only. After a native crash this is not a recovery
+        path: P02-T01's ``EngineAdapter`` replaces the whole process instead.
+        """
+        self.load_exact_build()
+        self.create_blank_build()
 
     def equip(self, raw: str, slot: str):
         return self.lua(f"return OPT_equip({json.dumps(raw)}, {json.dumps(slot)})")
@@ -106,13 +128,21 @@ class Worker:
         return self.lua("return OPT_save_xml()")["xml"]
 
 
+def new_blank_worker(pob_root, mcp_path, build_xml, char_level, resist_penalty):
+    """The legacy entry: load the base build, then clear it for searching."""
+    worker = Worker(pob_root, mcp_path, build_xml, char_level, resist_penalty)
+    worker.create_blank_build()
+    return worker
+
+
 # -- multiprocessing plumbing --------------------------------------------------
 
 def init_worker(pob_root, mcp_path, build_xml, char_level, resist_penalty):
     global ENGINE, CHAR_LEVEL
     # silence the engine's console spam inside workers
     sys.stdout = open(os.devnull, "w")
-    ENGINE = Worker(pob_root, mcp_path, build_xml, char_level, resist_penalty)
+    ENGINE = new_blank_worker(pob_root, mcp_path, build_xml, char_level,
+                              resist_penalty)
     CHAR_LEVEL = char_level
 
 

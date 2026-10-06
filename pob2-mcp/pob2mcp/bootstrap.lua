@@ -40,6 +40,15 @@ local function buildSummary()
 		local s = mainGroup.displaySkillList[mainGroup.mainActiveSkill]
 		if s then mainSkillName = s.activeEffect.grantedEffect.name end
 	end
+	local allocated = 0
+	if spec and spec.allocNodes then
+		for _ in pairs(spec.allocNodes) do allocated = allocated + 1 end
+	end
+	local equipped = 0
+	for _, slot in pairs(build.itemsTab.slots) do
+		local id = slot.selItemId
+		if id and id > 0 and build.itemsTab.items[id] then equipped = equipped + 1 end
+	end
 	return {
 		buildName = build.buildName,
 		class = spec and spec.curClassName or nil,
@@ -48,6 +57,11 @@ local function buildSummary()
 		passivePointsUsed = used,
 		mainSocketGroup = build.mainSocketGroup,
 		mainSkill = mainSkillName,
+		-- P02-T01 counts what survived a load, so a caller never has to infer
+		-- "something was imported" from the absence of an error.
+		allocatedNodes = allocated,
+		equippedItems = equipped,
+		socketGroups = #build.skillsTab.socketGroupList,
 	}
 end
 
@@ -58,9 +72,27 @@ handlers.new_build = function(args)
 	return buildSummary()
 end
 
+-- PoB reports a document it cannot read by raising a UI prompt and then
+-- carrying on with a default level 1 character (observation P00-OBS-01). The
+-- prompt is the only signal, so clear it, load, and turn a new one into an
+-- error: a failed import must never be indistinguishable from a real build.
+local function takePromptMsg()
+	local prompt = __mainObject__ and __mainObject__.promptMsg
+	if not prompt then return nil end
+	__mainObject__.promptMsg = nil
+	local text = tostring(prompt):gsub("%^%d", ""):gsub("%^x%x%x%x%x%x%x", "")
+	text = text:gsub("Press Enter.*", ""):gsub("%s+", " ")
+	return (text:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 handlers.load_build_xml = function(args)
 	assert(type(args.xml) == "string", "xml required")
+	takePromptMsg()
 	loadBuildFromXML(args.xml, args.name or "MCP Build")
+	local failure = takePromptMsg()
+	if failure then
+		error("invalid build document: " .. failure, 0)
+	end
 	recalc()
 	return buildSummary()
 end
