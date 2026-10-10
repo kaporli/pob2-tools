@@ -565,9 +565,16 @@ def _catalog(argv):
     return catalog_cli.main(argv[1:])
 
 
+def _ingest(argv):
+    """`pob2opt ingest` (P03-T02). Imported lazily: acquisition must not pay
+    for the legacy phase pipeline, and it never needs PoB."""
+    from .acquisition import cli as acquisition_cli
+    return acquisition_cli.main(argv)
+
+
 #: Subcommands from docs/specs/interfaces.md. These never touch PHASES; the
 #: legacy phase pipeline keeps its own parser and its existing behavior.
-NEW_COMMANDS = {"doctor": _doctor, "catalog": _catalog}
+NEW_COMMANDS = {"doctor": _doctor, "catalog": _catalog, "ingest": _ingest}
 
 
 def main(argv=None):

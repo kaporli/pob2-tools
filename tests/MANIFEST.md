@@ -61,6 +61,8 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
 | P02-T05 evidence | `python scripts/p02_t05_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/roundtrips.json`, `roundtrip-synthetic.xml` and `roundtrip-pob-export.xml`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T05 item conversion report | `luajit tests/integration/lua/convert_probe.lua pob2-mcp/pob2mcp/bootstrap.lua <item.lua> report` | `luajit` | Not a test; prints the repaired `convert_trade_item` completeness report for one item table instead of the item string. |
+| P03-T02 ingest | `python -m pob2opt.cli ingest --provider NAME --input PATH_OR_URL --corpus DIR` | Nothing | Not a test; stores one input as a raw record. A URL needs `--allow-host`: no host is approved by default. Exit 3 for blocked/missing/unapproved access, 4 for a malformed or timed-out one. |
+| P03-T02 evidence | `python scripts/p03_t02_evidence.py` | Nothing | Not a test; rewrites `docs/evidence/P03/acquisition.json` from a scripted transport. No provider, no socket, no PoB. |
 
 Selecting the PoB checkout:
 
@@ -122,6 +124,8 @@ none yet).
 | `test_p02_t05_build_round_trip.py` | P02-T05 offline lane: a BuildSpec exported and reimported, compared on `build_identity`. Enabled and disabled groups, main skill, ordered supports, passive attribute choices, the ordinary/ascendancy split, socketed jewels, weapon sets, the three config value types and an explicitly empty slot. Unsupported fields (trigger nesting, progression, item-granted groups, unnamed catalog IDs) are labelled incomplete and not recommended, with the value preserved in the report. Includes the invariant that a complete export never differs on reimport. |
 | `test_p02_t05_item_round_trip.py` | P02-T05 offline lane: an ItemInstance as PoB item text and back, compared on `item_identity`. Every supported modifier category, modifier line flags, item variants, sockets, omitted optional fields, a modifier line containing a colon. Unsupported: the `unknown` category, a modifier's catalog resolution and roll range, a flag recorded `false`, a requirement other than level, and modifier positions PoB would renumber. |
 | `test_p02_t05_no_mutation.py` | P02-T05: neither direction changes the BuildSpec, the items or the naming table it was given, checked on canonical JSON of the whole input. Includes a monkeypatched mutating exporter, so the guard fails when something does mutate. |
+| `test_p03_t02_local.py` | P03-T02 local acquisition: XML, HTML, JSON and a build code each round trip to a raw record with a matching hash; the same bytes are one blob and one document however often they arrive; a missing file, an unknown kind, malformed JSON, unsafe XML, a truncated or oversized build code and an oversized file each get a typed status and write nothing. Also the `ingest` command, the engine-free import checked in a fresh interpreter, and the rule that nothing acquired is ever executed, checked on the syntax tree. |
+| `test_p03_t02_http.py` | P03-T02 shared HTTP layer, transport injected: the empty-by-default host allow list, refusals for plain http, another host, credentials in a URL and a redirect off the list; 403, 404, 429, an oversized body, a timeout and malformed content as typed statuses that store nothing; the 10/30 second timeouts and 20 MiB cap reaching the transport; a provider tightening but never loosening them; three attempts for a transient failure and one for the rest; a short retry delay waited in full and a long one scheduled rather than cut; conditional requests and 304; and that no token reaches a blob, a record, a log line or the state file. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -334,3 +338,16 @@ One ordering hazard found while running the engine lane: a second
 throwaway one leaves the session `engine` fixture unusable for every test
 after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
 document in the session engine for that reason.
+## P03-T02 recorded results
+Specification version 1.0, 2026-10-10, branch `p03-t02-acquisition` off
+`c2c2d02`, CPython 3.12.4, Windows 11, no PoB checkout present:
+| Command | Result |
+| `python -m pytest tests/unit` | 917 passed, 1 xfailed |
+| `python -m pytest` | 926 passed, 99 skipped, 1 xfailed |
+| `python -m pytest -m network` | 1026 deselected, 0 collected |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+| `python scripts/p03_t02_evidence.py` | wrote `docs/evidence/P03/acquisition.json` |
+The 99 skips are the engine lane: this worktree has no PoB checkout. P03-T02
+adds no engine test and needs none. The `-m network` line is the point of the
+marker: acquisition ships no test that would contact a provider, so selecting
+that marker collects nothing.
