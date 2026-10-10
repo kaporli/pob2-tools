@@ -18,19 +18,19 @@ What is measured:
 from __future__ import annotations
 
 import dataclasses
-import faulthandler
 import os
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
 
-from engine_helpers import FIXTURE_WEAPON
 from record_fixtures import records
 
 from pob2opt.domain.enums import ResultStatus
-from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineCrash,
+from pob2opt.evaluation import (ADAPTER_VERSION, BuildDocument, EngineAdapter,
+                                EngineCrash,
                                 EngineInvalidInput, EngineInternalError, EngineState,
                                 MappingBuildDocuments, kill_process_tree,
                                 pob_worker_spec, resolve_checkout)
@@ -83,39 +83,28 @@ BUILD_HASH = "p02t01-engine-fixture"
 def populated_xml(pob_root: Path, tmp_path_factory) -> str:
     """A build with a tree, an item and a socket group, saved by PoB itself.
 
-    Built in a throwaway engine of its own, then closed, so the adapter under
-    test never sees a document this suite did not create and the coordinator's
-    working directory is back where it started before any worker is spawned.
-
-    Native-fault diagnostics are redirected for the duration for the reason
-    tests/conftest.py gives: LuaJIT raises SEH 0xe24c4a02 during ordinary error
-    unwinding and faulthandler prints a traceback for every one.
+    Built in a separate process by
+    ``scripts/p02_t01_build_fixture_document.py``. Two native engines in one
+    process share state through PoB's runtime, and closing a throwaway one has
+    been observed to leave the session engine unusable for every test after
+    it; the combined unit-plus-engine run failed intermittently while this
+    fixture built its document in process. Out of process there is no
+    interaction, and the pytest process's working directory never moves, which
+    is what the coordinator-cwd assertions below rely on.
     """
-    from pob2mcp.engine import Pob2Engine
-
-    log_path = tmp_path_factory.mktemp("p02t01-faults") / "faulthandler.log"
-    log = log_path.open("w", encoding="utf-8", errors="replace")
-    was_enabled = faulthandler.is_enabled()
-    faulthandler.enable(file=log, all_threads=True)
-    before = os.getcwd()
-    engine = None
-    try:
-        engine = Pob2Engine(str(pob_root))
-        engine.call("new_build")
-        nodes = engine.call("search_nodes", {"text": "projectile damage",
-                                             "limit": 5})
-        engine.call("alloc_nodes", {"ids": [n["id"] for n in nodes[:2]]})
-        engine.call("equip_item", {"raw": FIXTURE_WEAPON, "slot": "Weapon 1"})
-        return engine.call("save_build_xml")["xml"]
-    finally:
-        if engine is not None:
-            engine.close()
-        os.chdir(before)
-        if was_enabled:
-            faulthandler.enable(file=sys.stderr, all_threads=True)
-        else:  # pragma: no cover - pytest enables it by default
-            faulthandler.disable()
-        log.close()
+    out = tmp_path_factory.mktemp("p02t01-fixture") / "populated.xml"
+    script = Path(__file__).resolve().parents[2] / "scripts" / \
+        "p02_t01_build_fixture_document.py"
+    completed = subprocess.run(
+        [sys.executable, str(script), str(out)],
+        cwd=str(script.parent.parent), capture_output=True, text=True,
+        env=dict(os.environ, POB2_ROOT=str(pob_root)), timeout=600)
+    if completed.returncode != 0 or not out.is_file():
+        raise AssertionError(
+            "fixture document build failed (exit %s)\nstdout: %s\nstderr: %s"
+            % (completed.returncode, completed.stdout[-2000:],
+               completed.stderr[-2000:]))
+    return out.read_text(encoding="utf-8")
 
 
 @pytest.fixture(scope="module")
@@ -149,7 +138,8 @@ def build_and_profile(pob_root: Path):
     checkout = resolve_checkout(pob_root)
     build = dataclasses.replace(records()["build_spec"], build_hash=BUILD_HASH)
     profile = dataclasses.replace(records()["patch_profile"],
-                                  pob_commit=checkout.commit)
+                                  pob_commit=checkout.commit,
+                                  adapter_version=ADAPTER_VERSION)
     return build, profile
 
 
@@ -339,14 +329,25 @@ def test_repeating_one_request_is_stable(adapter, document, build_and_profile,
                             adapter.primitives(build, EngineState(), profile).values)
 
 
-def test_a_snapshot_declares_no_primitive_semantics(adapter, build_and_profile,
-                                                    populated_xml):
+def test_a_snapshot_declares_its_primitive_semantics(adapter, build_and_profile,
+                                                     populated_xml):
+    """Migrated by P02-T04, which published the inventory this waited for.
+
+    The P02-T01 version asserted ``semantics_status == "undeclared"``: the
+    engine answered but no value had units. The declaration now exists, so the
+    same guarantee is that each value the snapshot hands out carries a unit and
+    an owner, and that what PoB does not supply is a gap rather than a number.
+    """
     build, profile = build_and_profile
     adapter.documents = MappingBuildDocuments({BUILD_HASH: populated_xml})
     snapshot = adapter.primitives(build, EngineState(), profile)
 
-    assert snapshot.semantics_status == "undeclared"
-    assert snapshot.values, "the engine did answer; only the units are missing"
+    assert snapshot.semantics_status == "declared"
+    assert snapshot.values, "the engine did answer"
+    assert snapshot.declared(), "and its values now have units"
+    assert all(d.unit for d in snapshot.declared().values())
+    assert any(g.primitive_id == "sustained_damage_per_second"
+               for g in snapshot.gaps())
     # What was not checked is recorded rather than implied (P02-T01-R03).
     assert snapshot.document.unverified
 

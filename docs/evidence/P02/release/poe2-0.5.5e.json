@@ -1,0 +1,17 @@
+{
+ "capture_version": 1,
+ "provider": "pathofexile.com",
+ "source_url": "https://www.pathofexile.com/forum/view-thread/4009785",
+ "captured_at": "2026-10-06T00:00:00Z",
+ "fidelity": "summary",
+ "capture_method": "assistant_web_fetch_summary",
+ "game": "poe2",
+ "realm": "poe2",
+ "patch_id": "0.5.5e",
+ "patch_published_at": "2026-10-06T01:32:07Z",
+ "title": "0.5.5e Patch Notes",
+ "author": "Alexander_GGG",
+ "redistribution": "restricted",
+ "excerpt": "Added a new Texture Quality setting for machines with low VRAM.\nFixed a bug where killing some specific bosses would prevent Ritual encounters from starting.\nFixed a bug where the Tomb of the Fallen Knight could not be accessed.",
+ "notes": "Official Early Access Patch Notes thread, read on 2026-10-06. This is a SUMMARY, not a byte-exact capture: the page was fetched and reduced by a language model, so the excerpt is a reported reading of the first three bullet lines rather than stored source bytes. Enough to name the live patch; never enough to certify compatibility. The forum listing on the same day showed 0.5.5e as the newest thread, above 0.5.5d (2026-09-28), 0.5.5c (2026-09-18), 0.5.5b (2026-09-11) and 0.5.5 (2026-09-03)."
+}

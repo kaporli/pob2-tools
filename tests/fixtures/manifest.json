@@ -154,6 +154,31 @@
         "tests/unit/test_p01_t05_tasks.py"
       ],
       "caveat": "Hand-authored against contracts.md. Recorded content hashes (item_hash, build_hash, cache_key, manifest_hash) are re-derived by the P01 tests, so an identity-projection change fails there rather than drifting silently. No identifier, number or text in it names real PoE 2 content."
+    },
+    {
+      "path": "legality/p02_t03_world.json",
+      "sha256": "20378870c699ec16e936c70fee5f6332060e5008d2468c7dbfbcd9a8755ef180",
+      "bytes": 10006,
+      "origin": "synthetic",
+      "author": "P02-T03",
+      "description": "An invented game world in the row shapes the engine reports: two classes, a fourteen-node tree with one isolated node, a jewel socket, a choice node with no option list, eight gems, three item bases and the slot table. The real P02-T02 exporter turns it into a GameCatalog and a PatchProfile for the legality tests.",
+      "used_by": [
+        "tests/unit/test_p02_t03_legality.py",
+        "tests/legality_fixtures.py"
+      ],
+      "caveat": "Every id, name and number is invented. The citations the tests pair it with are real and come from docs/evidence/P02/catalog-rows-slice.json; these rows are not, and nothing here says anything about Path of Exile 2."
+    },
+    {
+      "path": "legality/p02_t03_cases.json",
+      "sha256": "6b7a1a730e17b4a0b76663a898e7776f1666948faf1b014b8267b58b0060c271",
+      "bytes": 38986,
+      "origin": "synthetic",
+      "author": "P02-T03",
+      "description": "One legality case per rule, each violating that rule alone, with the legal boundary value beside it and one combined case breaking six rules at once. Each case carries the violations, unknowns, cited gaps and per-check decisions it expects.",
+      "used_by": [
+        "tests/unit/test_p02_t03_legality.py"
+      ],
+      "caveat": "The expectations were written by hand from the exported rules and the task description, not produced by running the validator. The builds and items are invented and none of them is a measurement."
     }
   ]
 }

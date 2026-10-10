@@ -400,8 +400,11 @@ def check_pob_runtime(pob_root: Path) -> Check:
 def check_pob_profile(pob_root: Path) -> Check:
     """Layout and version evidence for the selected checkout.
 
-    Reports what the checkout *is*. It does not approve it for a game patch:
-    pinning a patch profile and proving PoB compatibility is P02-T02.
+    Reports what the checkout *is*. It does not approve it for a game patch.
+    Pinning a patch profile is `pob2opt catalog export` (P02-T02), which
+    resolves the patch from stored official release evidence and compares the
+    catalog against a fixture set. A manifest version read here is the Path
+    of Building release, not the game patch, and is never either of those.
     """
     data: dict[str, Any] = {"markers": {}, "version_evidence": {}}
     if not pob_root.is_dir():
@@ -424,14 +427,16 @@ def check_pob_profile(pob_root: Path) -> Check:
             encoding="utf-8", errors="replace").strip()
     data["patch_profile_approved"] = False
     data["patch_profile_owner"] = "P02-T02"
+    data["patch_profile_command"] = (
+        "pob2opt catalog export --profile FILE --out DIR")
     if absent:
         return Check("pob_profile", INCOMPATIBLE,
                      "Checkout is missing required PoB2 layout entries: "
                      + ", ".join(absent) + ".",
                      blocks=("engine",), data=data)
     return Check("pob_profile", OK,
-                 "Checkout layout matches PoB2; no patch profile is approved yet "
-                 "(P02-T02 owns that).", data=data)
+                 "Checkout layout matches PoB2. This check approves no patch "
+                 "profile; run `pob2opt catalog export` to pin one.", data=data)
 
 
 def check_pob_catalog(pob_root: Path) -> Check:

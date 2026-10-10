@@ -1,0 +1,9 @@
+{
+  "python": "3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]",
+  "pob_checkout": {
+    "root": "C:\\Users\\Elias\\PycharmProjects\\PathOfBuilding-PoE2",
+    "commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+    "reason": "working tree differs from the pinned commit"
+  }
+}

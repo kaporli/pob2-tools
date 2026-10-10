@@ -567,6 +567,100 @@ class EngineAdapter:
         self._loaded_generation = self._generation
         return snapshot
 
+    def probe(self, document: BuildDocument, state: EngineState | None = None,
+              *, timeout_s: float | None = None) -> dict:
+        """Load a document and read raw engine outputs, with no profile.
+
+        For the P02-T02 compatibility fixtures, which run while the profile
+        is being produced and so cannot be checked against one. It returns a
+        plain mapping, not a ``PrimitiveSnapshot``: there is no BuildSpec
+        behind these numbers and nothing may treat them as an evaluation.
+        """
+        state = state or EngineState()
+        timeout_s = self.detailed_timeout_s if timeout_s is None else timeout_s
+        self.load_exact_build(document, name="catalog-probe",
+                              timeout_s=timeout_s)
+        wanted = state.to_wire()
+        payload = self._request(protocol.OP_PRIMITIVES, wanted, timeout_s)
+        self._loaded_key = document.content_key
+        self._applied_state = wanted
+        self._loaded = LoadedBuild.from_wire(payload.get("summary") or {})
+        self._loaded_generation = self._generation
+        return dict(payload.get("values") or {})
+
+    def legality_state(self, build: BuildSpec, profile: PatchProfile, *,
+                       document: BuildDocument | None = None,
+                       blob_hash: str | None = None,
+                       timeout_s: float | None = None
+                       ) -> tuple[dict, BuildDocument]:
+        """Load ``build`` exactly and read the engine's own state (P02-T03).
+
+        Returns the engine payload and the document that produced it, so a
+        caller can record which bytes the state belongs to. The read itself is
+        read-only and does not disturb a loaded build; the load that precedes
+        it does, exactly as ``primitives`` does, and is skipped when the worker
+        already holds this document.
+        """
+        self._check_profile(profile, build)
+        if document is None:
+            document = self._document_for(build, blob_hash)
+        if document.build_hash != build.build_hash:
+            raise EngineInvalidInput(
+                "document %s does not belong to build %s"
+                % (document.build_hash, build.build_hash), stage="document",
+                record_ids=[build.record_id])
+        timeout_s = self.detailed_timeout_s if timeout_s is None else timeout_s
+        self._ensure_worker()
+        deadline = time.monotonic() + timeout_s
+        if (not self._worker_holds_state()
+                or self._loaded_key != document.content_key):
+            load_timeout_s = min(timeout_s, self._remaining(
+                deadline, protocol.OP_LOAD_EXACT_BUILD))
+            self.load_exact_build(document, name=build.name or "exact",
+                                  timeout_s=load_timeout_s, deadline=deadline)
+        payload = self._request(protocol.OP_LEGALITY_STATE, {}, timeout_s,
+                                deadline=deadline)
+        return payload, document
+
+    def catalog_page(self, table: str, offset: int = 0,
+                     limit: int = protocol.CATALOG_PAGE_ROWS, *,
+                     timeout_s: float | None = None) -> dict:
+        """One page of a catalog table, as the engine reports it (P02-T02).
+
+        Read-only, so it is not in the set of operations that invalidate the
+        tracked load: a catalog read between two evaluations does not force a
+        reload and does not change what the engine holds.
+        """
+        return self._request(protocol.OP_CATALOG_PAGE,
+                             {"table": table, "offset": int(offset),
+                              "limit": int(limit)},
+                             self.detailed_timeout_s if timeout_s is None
+                             else timeout_s)
+
+    def catalog_rows(self, table: str, *,
+                     page_rows: int = protocol.CATALOG_PAGE_ROWS,
+                     timeout_s: float | None = None) -> list[dict]:
+        """Every row of a catalog table, paged until the engine says it ends.
+
+        Stops when the engine stops reporting a next offset. A page that does
+        not advance is an internal error rather than an endless loop.
+        """
+        rows: list[dict] = []
+        offset = 0
+        while True:
+            page = self.catalog_page(table, offset, page_rows,
+                                     timeout_s=timeout_s)
+            rows.extend(page.get("rows") or ())
+            nxt = page.get("next_offset")
+            if nxt is None:
+                return rows
+            nxt = int(nxt)
+            if nxt <= offset:
+                raise EngineInternalError(
+                    "catalog table %s did not advance past offset %d"
+                    % (table, offset), stage=protocol.OP_CATALOG_PAGE)
+            offset = nxt
+
     # -- checks -----------------------------------------------------------
 
     def _document_for(self, build: BuildSpec,
@@ -579,6 +673,14 @@ class EngineAdapter:
         return self.documents.document_for(build, blob_hash)
 
     def _check_profile(self, profile: PatchProfile, build: BuildSpec) -> None:
+        # The profile records which adapter produced its catalog. A profile
+        # pinned to another adapter was accepted silently before P02-T02,
+        # which the P02-T01 review flagged as this task's to decide.
+        if profile.adapter_version != ADAPTER_VERSION:
+            raise EngineProfileMismatch(
+                "profile %s pins adapter %s but this adapter is %s"
+                % (profile.record_id, profile.adapter_version, ADAPTER_VERSION),
+                stage="profile", record_ids=[profile.record_id])
         if self.checkout.commit is None:
             if self.require_pinned_checkout:
                 raise EngineProfileMismatch(

@@ -4,9 +4,10 @@ The wire itself is plain JSON-able dicts. The parent turns them into the frozen
 dataclasses below; a synthetic worker therefore needs no import of this module
 and no PoB runtime, which is what keeps the offline lane offline.
 
-Nothing here declares units or semantic ownership for a primitive value. That
-inventory is P02-T04; until it exists every snapshot says so, so a caller
-cannot mistake a raw PoB field for a defined primitive.
+Units and semantic ownership live in ``primitives.py`` (P02-T04). A snapshot
+reports them through ``declared()`` and reports everything the engine did not
+supply through ``gaps()``; a raw value is still available, but reading one
+without its declaration is now a choice the caller makes explicitly.
 """
 
 from __future__ import annotations
@@ -16,22 +17,63 @@ from dataclasses import dataclass, field
 from typing import Any, Mapping
 
 from ..domain.enums import Fidelity
+from .primitives import (SEMANTICS_OWNER, SEMANTICS_VERSION, DeclaredPrimitive,
+                         PrimitiveGap, declare)
 
 #: Bumped whenever the adapter changes what it asks the engine for, or how it
 #: interprets the answer. Part of the evaluation cache identity.
-ADAPTER_VERSION = "p02-t01.2"
+#:
+#: Not named after one task. P02-T02, T03 and T04 each bumped it on their own
+#: branch, so no single task's string describes the integrated adapter; a
+#: cached result stamped "p02-t03.0" would claim an adapter that never ran.
+#: Bump this whenever any of them changes again.
+#: p02-t02.0 added the read-only catalog operation. p02-t03.0 adds the
+#: read-only legality-state operation. The primitive path is unchanged in
+#: both, but the adapter can ask the engine for something new, which is what
+#: this string is for.
+ADAPTER_VERSION = "p02.1"
 
 #: Owner of primitive units, included effects and excluded effects.
-PRIMITIVE_SEMANTICS_OWNER = "P02-T04"
+PRIMITIVE_SEMANTICS_OWNER = SEMANTICS_OWNER
 
 OP_DESCRIBE = "describe"
 OP_CREATE_BLANK_BUILD = "create_blank_build"
 OP_LOAD_EXACT_BUILD = "load_exact_build"
 OP_PRIMITIVES = "primitives"
+OP_CATALOG_PAGE = "catalog_page"
+OP_LEGALITY_STATE = "legality_state"
 OP_SHUTDOWN = "shutdown"
 
 OPERATIONS = (OP_DESCRIBE, OP_CREATE_BLANK_BUILD, OP_LOAD_EXACT_BUILD,
-              OP_PRIMITIVES, OP_SHUTDOWN)
+              OP_PRIMITIVES, OP_CATALOG_PAGE, OP_LEGALITY_STATE, OP_SHUTDOWN)
+
+#: The bootstrap handler behind ``OP_LEGALITY_STATE``. Read-only: it reports
+#: the allocation, equipment, skills and calculated pools the engine holds and
+#: decides nothing (P02-T03).
+LEGALITY_STATE_HANDLER = "legality_state"
+
+#: Catalog tables the engine can enumerate, and the bootstrap handler for
+#: each. ``passive_edges`` is absent on purpose: edges are derived from the
+#: node rows rather than read twice from the tree (P02-T02).
+CATALOG_HANDLERS = {
+    "classes": "catalog_classes",
+    "passive_nodes": "catalog_passive_nodes",
+    "gems": "catalog_gems",
+    "granted_skills": "catalog_granted_skills",
+    "item_bases": "catalog_item_bases",
+    "item_modifiers": "catalog_item_modifiers",
+    "slots": "catalog_slots",
+    "config_variables": "catalog_config_variables",
+}
+
+#: Not a paged table: one structured read of the upstream facts the character
+#: rules are derived from.
+CATALOG_RULE_SOURCES = "rule_sources"
+CATALOG_RULE_SOURCES_HANDLER = "catalog_rule_sources"
+
+#: Rows per engine request. Measured at ~80 ms and ~1.8 MB for 5000 passive
+#: nodes on the pinned checkout, so this is a comfort margin, not a limit.
+CATALOG_PAGE_ROWS = 2000
 
 #: Defaults from `docs/specs/interfaces.md`. Both are configurable per adapter
 #: and the value actually used is recorded on the snapshot.
@@ -137,9 +179,17 @@ class LoadedBuild:
     #: True only for ``create_blank_build``. An exact load that reports True is
     #: a defect, not a configuration choice.
     opt_setup_called: bool
+    #: PoB's ``skillData.showAverage`` for the main skill, or None when the
+    #: engine did not report it. It decides the unit of ``CombinedDPS``
+    #: (damage per use when true, damage per second when false), so None keeps
+    #: that primitive unresolved instead of guessing a factor of the use rate.
+    main_skill_show_average: bool | None = None
+    #: Which skill the outputs belong to, as PoB names it.
+    main_skill: str | None = None
 
     @classmethod
     def from_wire(cls, payload: Mapping[str, Any]) -> "LoadedBuild":
+        show_average = payload.get("mainSkillShowAverage")
         return cls(
             name=payload.get("buildName"),
             class_name=payload.get("class"),
@@ -149,6 +199,9 @@ class LoadedBuild:
             equipped_items=int(payload.get("equippedItems") or 0),
             socket_groups=int(payload.get("socketGroups") or 0),
             opt_setup_called=bool(payload.get("optSetupCalled")),
+            main_skill_show_average=(None if show_average is None
+                                     else bool(show_average)),
+            main_skill=payload.get("mainSkill"),
         )
 
 
@@ -198,10 +251,28 @@ class PrimitiveSnapshot:
     #: This is part of timeout_s, not an additional allowance.
     load_timeout_s: float | None
     duration_ms: int
-    #: Until P02-T04 publishes the inventory, no value here has declared units.
+    #: Units, included effects and excluded effects come from
+    #: ``pob2opt.evaluation.primitives``; this names its owner and version.
     semantics_owner: str = PRIMITIVE_SEMANTICS_OWNER
-    semantics_status: str = "undeclared"
+    semantics_status: str = "declared"
+    semantics_version: str = SEMANTICS_VERSION
 
     def numeric(self) -> dict[str, float]:
         return {k: float(v) for k, v in self.values.items()
                 if isinstance(v, (int, float)) and not isinstance(v, bool)}
+
+    def declared(self) -> dict[str, DeclaredPrimitive]:
+        """Every primitive this snapshot can supply, with its unit."""
+        return self._split()[0]
+
+    def gaps(self) -> tuple[PrimitiveGap, ...]:
+        """Every primitive it cannot. A gap is never replaced by a constant."""
+        return self._split()[1]
+
+    def primitive(self, primitive_id: str) -> DeclaredPrimitive | None:
+        """One declared primitive, or None. None means missing, not zero."""
+        return self.declared().get(primitive_id)
+
+    def _split(self):
+        return declare(self.values,
+                       show_average=self.loaded.main_skill_show_average)

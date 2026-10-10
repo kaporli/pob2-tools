@@ -125,7 +125,8 @@ def pob_section(pob_root: Path) -> dict:
     build_hash = "p02t01-evidence-build"
     build = dataclasses.replace(records()["build_spec"], build_hash=build_hash)
     profile = dataclasses.replace(records()["patch_profile"],
-                                  pob_commit=checkout.commit)
+                                  pob_commit=checkout.commit,
+                                  adapter_version=ADAPTER_VERSION)
 
     parent_cwd_before = os.getcwd()
     adapter = EngineAdapter(pob_worker_spec(pob_root), start_timeout_s=600.0,

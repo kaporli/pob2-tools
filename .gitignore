@@ -22,3 +22,6 @@ token.json
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Subagent worktrees, created by the Claude Code Agent tool.
+.claude/worktrees/

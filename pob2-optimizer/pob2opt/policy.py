@@ -165,17 +165,19 @@ def classify_rotation(description: str) -> str:
 def rotation_dps(primitives: list, classification: dict) -> dict:
     """primitives: [{skill, avgUse, castTime, speed, combined, duration, cooldown,
     persistent, role}] where role in main|enabler|persistent|spirit.
-    Returns {dps, cycle, detail}. First-order model:
+    Returns {dps, cycle, detail, assumptions, saturated}. First-order model:
     - persistent/spirit skills contribute their full DPS (they act while you rotate)
     - enablers cost amortized cast time (per duration, per cooldown, or per cycle)
     - main skill casts fill the remaining time; special gates change the period.
     """
     main = next((p for p in primitives if p["role"] == "main"), None)
     if not main or not main.get("combined"):
-        return {"dps": 0, "cycle": 0, "detail": "no main"}
+        return {"dps": 0, "cycle": 0, "detail": "no main",
+                "assumptions": ["no main skill primitive"], "saturated": False}
     t_main = main.get("castTime") or (1.0 / main["speed"] if main.get("speed") else 1.0)
     kind = classification.get("kind", "spam")
     detail = [f"main {main['skill']} cast {t_main:.2f}s, kind={kind}"]
+    assumptions: list[str] = []
     passive_dps = 0.0
     overhead = 0.0
     builders_time = 0.0
@@ -196,11 +198,25 @@ def rotation_dps(primitives: list, classification: dict) -> dict:
         else:
             overhead += t / 6.0  # assume recast every ~6s when no duration known
             detail.append(f"enabler {p['skill']}: {t:.2f}s per ~6s (assumed)")
+            assumptions.append(f"{p['skill']} recast period assumed 6s; the "
+                               "engine reported neither a cooldown nor a duration")
+    overhead_raw = overhead
     overhead = min(overhead, 0.6)
+    saturated = overhead_raw > overhead
+    if saturated:
+        # The bound is a property of this first-order model, not a measurement.
+        # Past it, more setup time stops reducing the number, so the row says so
+        # instead of letting a flat response look like a real answer (P02-T04).
+        assumptions.append("enabler overhead %.2f clamped to 0.60 by the legacy "
+                           "model; further setup time does not reduce this "
+                           "estimate" % overhead_raw)
     if kind == "curse_detonate":
         curse = next((p for p in primitives if p["role"] == "enabler" and p.get("duration")), None)
         cd = (curse.get("duration") or 7.5) if curse else 7.5
         tc = (curse.get("castTime") or 0.7) if curse else 0.7
+        if not curse or not curse.get("duration"):
+            assumptions.append("curse duration assumed 7.5s and cast time 0.7s; "
+                               "no enabler primitive carried them")
         period = max(cd / 2 + tc + t_main, t_main / (1 - overhead) if overhead < 1 else t_main)
         per_cycle = (main.get("avgUse") or 0) + (main.get("dot_per_use") or 0)
         dps = per_cycle / period * (1) + passive_dps
@@ -211,10 +227,17 @@ def rotation_dps(primitives: list, classification: dict) -> dict:
         dps = per_cycle / max(period, t_main) + passive_dps
         detail.append(f"stack gate: period {period:.2f}s, {per_cycle:.0f}/cycle")
     else:
-        uptime = max(0.4, 1.0 - overhead - (builders_time / (builders_time + 4 * t_main) if builders_time else 0))
+        raw_uptime = 1.0 - overhead - (builders_time / (builders_time + 4 * t_main) if builders_time else 0)
+        uptime = max(0.4, raw_uptime)
+        if uptime > raw_uptime:
+            saturated = True
+            assumptions.append("uptime %.2f raised to the legacy model's 0.40 "
+                               "floor; further setup time does not reduce this "
+                               "estimate" % raw_uptime)
         dps = (main.get("combined") or 0) * uptime + passive_dps
         detail.append(f"uptime {uptime:.2f}")
-    return {"dps": dps, "cycle": kind, "detail": "; ".join(detail)}
+    return {"dps": dps, "cycle": kind, "detail": "; ".join(detail),
+            "assumptions": assumptions, "saturated": saturated}
 
 
 def clear_score(m: dict, pack_cap: int = 9):

@@ -1,0 +1,157 @@
+{
+ "fixture_set_version": 1,
+ "kind": "PoB-derived",
+ "not_a_claim": "Every expectation here was read from the pinned Path of Building checkout named in recorded_from. None of it is a gameplay measurement, and none of it is evidence that the engine models the live game patch. The set answers one question: does this engine still answer the way the engine these values were recorded from answered?",
+ "recorded_from": {
+  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+  "pob_release": "0.23.1",
+  "pob_release_date": "2026-07-28",
+  "tree_version": "0_5",
+  "recorded_at": "2026-10-06",
+  "recorded_by": "P02-T02"
+ },
+ "fixtures": [
+  {
+   "fixture_id": "avail/class/huntress",
+   "kind": "availability",
+   "table": "classes",
+   "entity_id": "poe2/classes/8",
+   "display_name": "Huntress",
+   "why": "The class the initial release covers. If its tree index moves, every saved build that names classId 8 means something else."
+  },
+  {
+   "fixture_id": "avail/class/witch",
+   "kind": "availability",
+   "table": "classes",
+   "entity_id": "poe2/classes/1",
+   "display_name": "Witch"
+  },
+  {
+   "fixture_id": "avail/ascendancy/amazon",
+   "kind": "availability",
+   "table": "ascendancies",
+   "entity_id": "poe2/ascendancies/8/1",
+   "display_name": "Amazon",
+   "why": "Ascendancy identity is the class index plus the ascendancy index, so an inserted ascendancy renames every later one."
+  },
+  {
+   "fixture_id": "avail/gem/spark",
+   "kind": "availability",
+   "table": "gems",
+   "entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSpark",
+   "display_name": "Spark"
+  },
+  {
+   "fixture_id": "avail/gem/quarterstaff-strike",
+   "kind": "availability",
+   "table": "gems",
+   "entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff",
+   "display_name": "Quarterstaff Strike",
+   "why": "A default weapon skill: present in any saved build that equips a quarterstaff, so an import depends on it resolving."
+  },
+  {
+   "fixture_id": "avail/item_base/long-quarterstaff",
+   "kind": "availability",
+   "table": "item_bases",
+   "entity_id": "poe2/item_bases/Long Quarterstaff",
+   "display_name": "Long Quarterstaff"
+  },
+  {
+   "fixture_id": "avail/slot/weapon-1",
+   "kind": "availability",
+   "table": "slots",
+   "entity_id": "poe2/slots/Weapon 1",
+   "display_name": "Weapon 1"
+  },
+  {
+   "fixture_id": "avail/config/resistance-penalty",
+   "kind": "availability",
+   "table": "config_variables",
+   "entity_id": "poe2/config_variables/resistancePenalty",
+   "why": "Configuration metadata the optimizer sets. A renamed variable is silently ignored by the engine, so its absence must be noticed here."
+  },
+  {
+   "fixture_id": "avail/passive/keystone-ritual-cadence",
+   "kind": "availability",
+   "table": "passive_nodes",
+   "entity_id": "poe2/passive_nodes/11230",
+   "display_name": "Ritual Cadence"
+  },
+  {
+   "fixture_id": "field/slot/weapon-1-set",
+   "kind": "field",
+   "table": "slots",
+   "entity_id": "poe2/slots/Weapon 1",
+   "path": "weaponSet",
+   "expected": 1,
+   "why": "Which slots belong to a weapon set is the only weapon-set fact the slot table carries."
+  },
+  {
+   "fixture_id": "field/item_base/long-quarterstaff-type",
+   "kind": "field",
+   "table": "item_bases",
+   "entity_id": "poe2/item_bases/Long Quarterstaff",
+   "path": "type",
+   "expected": "Staff",
+   "why": "Recorded, not remembered. The first value written here was Quarterstaff and the fixture rejected it: upstream files this base under type Staff with subType Warstaff."
+  },
+  {
+   "fixture_id": "field/gem/spark-is-not-support",
+   "kind": "field",
+   "table": "gems",
+   "entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSpark",
+   "path": "isSupport",
+   "expected": false
+  },
+  {
+   "fixture_id": "field/class/huntress-start-node",
+   "kind": "field",
+   "table": "classes",
+   "entity_id": "poe2/classes/8",
+   "path": "startNodeId",
+   "expected": 50459
+  },
+  {
+   "fixture_id": "count/passive_nodes",
+   "kind": "count",
+   "table": "passive_nodes",
+   "minimum": 4000,
+   "why": "A floor, not an equality: upstream adds nodes between releases, and a catalog that lost most of the tree is a different failure from one that gained a few."
+  },
+  {
+   "fixture_id": "count/gems",
+   "kind": "count",
+   "table": "gems",
+   "minimum": 800
+  },
+  {
+   "fixture_id": "count/item_modifiers",
+   "kind": "count",
+   "table": "item_modifiers",
+   "minimum": 7000
+  },
+  {
+   "fixture_id": "count/config_variables",
+   "kind": "count",
+   "table": "config_variables",
+   "minimum": 450
+  },
+  {
+   "fixture_id": "behaviour/level-28-huntress-defences",
+   "kind": "behaviour",
+   "relative_tolerance": 1e-9,
+   "expected": {
+    "Life": 405,
+    "Mana": 164,
+    "Spirit": 100,
+    "Str": 7,
+    "Dex": 15,
+    "Int": 7,
+    "Evasion": 7,
+    "Armour": 0
+   },
+   "why": "Availability alone cannot tell a renamed field from a changed formula. These are the engine's own answers for one fixed document, so a changed life-per-level or class base attribute shows up as a mismatch even when every entity is still present.",
+   "document": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PathOfBuilding2>\n\t<Build ascendClassName=\"None\" characterLevelAutoMode=\"false\" className=\"Huntress\" level=\"28\" mainSocketGroup=\"1\" targetVersion=\"0_1\" viewMode=\"TREE\"/>\n\t<Import/>\n\t<Calcs/>\n\t<Skills activeSkillSet=\"1\" sortGemsByDPS=\"true\" sortGemsByDPSField=\"CombinedDPS\">\n\t\t<SkillSet id=\"1\" title=\"Default\"/>\n\t</Skills>\n\t<Tree activeSpec=\"1\">\n\t\t<Spec ascendClassId=\"0\" classId=\"8\" nodes=\"\" secondaryAscendClassId=\"nil\" treeVersion=\"0_5\">\n\t\t\t<Sockets/>\n\t\t\t<Overrides/>\n\t\t</Spec>\n\t</Tree>\n\t<Items activeItemSet=\"1\">\n\t\t<ItemSet useSecondWeaponSet=\"false\" id=\"1\"/>\n\t</Items>\n\t<Config/>\n\t<Notes/>\n\t<TreeView searchStr=\"\" showStatDifferences=\"true\" zoomLevel=\"3\" zoomX=\"0\" zoomY=\"0\"/>\n</PathOfBuilding2>\n"
+  }
+ ]
+}

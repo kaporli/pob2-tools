@@ -1,0 +1,162 @@
+{
+  "kind": "synthetic",
+  "purpose": "A small invented game world in the row shapes the pinned engine reports, so the real P02-T02 exporter can turn it into a real GameCatalog and PatchProfile for the P02-T03 legality tests. Two classes, a ten-node tree with one deliberately isolated node, one jewel socket, one choice node with no option list, a handful of gems and supports, three item bases and the slot table a weapon-set rule needs.",
+  "not_a_claim": "Every id, name, number and link here is invented. Nothing is read from Path of Building, nothing is a measurement, and nothing here says anything about Path of Exile 2. The citations the tests pair this with are real and come from docs/evidence/P02/catalog-rows-slice.json; these rows are not.",
+  "tables": {
+    "classes": [
+      {
+        "classId": 1,
+        "name": "Warrior",
+        "base_str": 20,
+        "base_dex": 10,
+        "base_int": 10,
+        "startNodeId": 1000,
+        "ascendancies": [
+          {"index": 0, "id": "None", "name": "None"},
+          {"index": 1, "id": "Warbringer", "name": "Warbringer"},
+          {"index": 2, "id": "Titan", "name": "Titan"}
+        ]
+      },
+      {
+        "classId": 2,
+        "name": "Ranger",
+        "base_str": 10,
+        "base_dex": 20,
+        "base_int": 10,
+        "startNodeId": 2000,
+        "ascendancies": [
+          {"index": 0, "id": "None", "name": "None"},
+          {"index": 1, "id": "Deadeye", "name": "Deadeye"}
+        ]
+      }
+    ],
+    "passive_nodes": [
+      {"id": 1000, "name": "Warrior", "stringId": "warrior-start", "type": "ClassStart",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": [], "linked": [1001, 1005]},
+      {"id": 1001, "name": "Might", "stringId": "might1", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": ["+10 to invented Strength"], "linked": [1000, 1002]},
+      {"id": 1002, "name": "Vigour", "stringId": "vigour1", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": ["+10 to invented Life"], "linked": [1001, 1003, 1004]},
+      {"id": 1003, "name": "Crushing Blows", "stringId": "crushing1", "type": "Notable",
+       "isNotable": true, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": ["20% increased invented damage"], "linked": [1002]},
+      {"id": 1004, "name": "Jewel Socket", "stringId": "socket1", "type": "Socket",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": true,
+       "isAscendancyStart": false, "stats": [], "linked": [1002]},
+      {"id": 1005, "name": "Attribute", "stringId": "attribute1", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": ["+5 to any invented Attribute"], "linked": [1000]},
+      {"id": 1100, "name": "Warbringer", "stringId": "warbringer-start", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": true, "ascendancyName": "Warbringer", "stats": [], "linked": [1101]},
+      {"id": 1101, "name": "Call of Steel", "stringId": "warbringer1", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "ascendancyName": "Warbringer", "stats": [], "linked": [1100, 1102]},
+      {"id": 1102, "name": "Hold the Line", "stringId": "warbringer2", "type": "Notable",
+       "isNotable": true, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "ascendancyName": "Warbringer", "stats": [], "linked": [1101]},
+      {"id": 1200, "name": "Titan", "stringId": "titan-start", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": true, "ascendancyName": "Titan", "stats": [], "linked": [1201]},
+      {"id": 1201, "name": "Colossal Capacity", "stringId": "titan1", "type": "Notable",
+       "isNotable": true, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "ascendancyName": "Titan", "stats": [], "linked": [1200]},
+      {"id": 1900, "name": "Far Shore", "stringId": "island1", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": [], "linked": []},
+      {"id": 2000, "name": "Ranger", "stringId": "ranger-start", "type": "ClassStart",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": [], "linked": [2001]},
+      {"id": 2001, "name": "Keen Eye", "stringId": "keen1", "type": "Normal",
+       "isNotable": false, "isKeystone": false, "isMastery": false, "isJewelSocket": false,
+       "isAscendancyStart": false, "stats": [], "linked": [2000]}
+    ],
+    "gems": [
+      {"id": "Invented/Gems/Cleave", "name": "Cleave", "baseTypeName": "Cleave",
+       "gameId": "Invented/Cleave", "gemType": "Attack", "naturalMaxLevel": 20,
+       "grantedEffectId": "InventedCleave", "grantedEffectName": "Cleave",
+       "isSupport": false, "reqStr": 20, "reqDex": 0, "reqInt": 0,
+       "tags": ["attack", "melee"], "tagString": "Attack, Melee"},
+      {"id": "Invented/Gems/Spark", "name": "Spark", "baseTypeName": "Spark",
+       "gameId": "Invented/Spark", "gemType": "Spell", "naturalMaxLevel": 10,
+       "grantedEffectId": "InventedSpark", "grantedEffectName": "Spark",
+       "isSupport": false, "reqStr": 0, "reqDex": 0, "reqInt": 20,
+       "tags": ["spell"], "tagString": "Spell"},
+      {"id": "Invented/Gems/Support1", "name": "Added Invented Damage",
+       "naturalMaxLevel": 20, "grantedEffectId": "InventedSupport1",
+       "isSupport": true, "tags": ["support"], "tagString": "Support"},
+      {"id": "Invented/Gems/Support2", "name": "Invented Faster Attacks",
+       "naturalMaxLevel": 20, "grantedEffectId": "InventedSupport2",
+       "isSupport": true, "tags": ["support"], "tagString": "Support"},
+      {"id": "Invented/Gems/Support3", "name": "Invented Area", "naturalMaxLevel": 20,
+       "grantedEffectId": "InventedSupport3", "isSupport": true,
+       "tags": ["support"], "tagString": "Support"},
+      {"id": "Invented/Gems/Support4", "name": "Invented Fork", "naturalMaxLevel": 20,
+       "grantedEffectId": "InventedSupport4", "isSupport": true,
+       "tags": ["support"], "tagString": "Support"},
+      {"id": "Invented/Gems/Support5", "name": "Invented Pierce", "naturalMaxLevel": 20,
+       "grantedEffectId": "InventedSupport5", "isSupport": true,
+       "tags": ["support"], "tagString": "Support"},
+      {"id": "Invented/Gems/Support6", "name": "Invented Chain", "naturalMaxLevel": 20,
+       "grantedEffectId": "InventedSupport6", "isSupport": true,
+       "tags": ["support"], "tagString": "Support"}
+    ],
+    "granted_skills": [
+      {"id": "InventedCleave", "name": "Cleave", "support": false, "hidden": false,
+       "castTime": 1.0, "skillTypes": ["Attack", "Melee"], "levelCount": 20},
+      {"id": "InventedSpark", "name": "Spark", "support": false, "hidden": false,
+       "castTime": 0.7, "skillTypes": ["Spell"], "levelCount": 10},
+      {"id": "InventedRingSkill", "name": "Ring Nova", "support": false, "hidden": false,
+       "castTime": 1.0, "skillTypes": ["Spell"], "levelCount": 1}
+    ],
+    "item_bases": [
+      {"name": "Iron Greataxe", "type": "Two Handed Axe", "subType": "Axe",
+       "socketLimit": 2, "quality": 20, "hidden": false,
+       "req": {"level": 33, "str": 73, "dex": 0, "int": 0},
+       "tags": ["two_hand_weapon", "axe"], "weapon": {"PhysicalMin": 10, "PhysicalMax": 20}},
+      {"name": "Linen Tunic", "type": "Body Armour", "subType": "Evasion",
+       "socketLimit": 2, "quality": 20, "hidden": false,
+       "req": {"level": 20, "str": 0, "dex": 40, "int": 0},
+       "tags": ["body_armour"], "armour": {"Evasion": 100}},
+      {"name": "Iron Ring", "type": "Ring", "subType": "", "socketLimit": 0,
+       "quality": 0, "hidden": false,
+       "req": {"level": 1, "str": 0, "dex": 0, "int": 0}, "tags": ["ring"]}
+    ],
+    "item_modifiers": [],
+    "slots": [
+      {"name": "Weapon 1", "slotName": "Weapon 1", "label": "Weapon 1", "weaponSet": 1, "slotNum": 1},
+      {"name": "Weapon 2", "slotName": "Weapon 2", "label": "Weapon 2", "weaponSet": 1, "slotNum": 2},
+      {"name": "Weapon 1 Swap", "slotName": "Weapon 1", "label": "Weapon 1 (Swap)", "weaponSet": 2, "slotNum": 1},
+      {"name": "Weapon 2 Swap", "slotName": "Weapon 2", "label": "Weapon 2 (Swap)", "weaponSet": 2, "slotNum": 2},
+      {"name": "Body Armour", "slotName": "Body Armour", "label": "Body Armour"},
+      {"name": "Helmet", "slotName": "Helmet", "label": "Helmet"},
+      {"name": "Amulet", "slotName": "Amulet", "label": "Amulet"},
+      {"name": "Ring 1", "slotName": "Ring 1", "label": "Ring 1", "slotNum": 1},
+      {"name": "Ring 2", "slotName": "Ring 2", "label": "Ring 2", "slotNum": 2}
+    ],
+    "config_variables": []
+  },
+  "rule_sources": {
+    "maxWeaponSetPoints": 24,
+    "maxActs": 3,
+    "treeVersion": "invented_1",
+    "questPointRewards": [
+      {"act": 1, "area": "Invented Shore", "areaLevel": 2, "questPoints": 12,
+       "cumulativeQuestPoints": 12, "info": "invented reward"},
+      {"act": 2, "area": "Invented Keep", "areaLevel": 20, "questPoints": 12,
+       "cumulativeQuestPoints": 24, "info": "invented reward"}
+    ],
+    "questRewards": [],
+    "characterConstants": {
+      "base_number_of_weapon_sets": 2,
+      "enable_weapon_sets": true,
+      "base_weapon_swap_duration_ms": 500
+    },
+    "gameConstants": {},
+    "misc": {},
+    "weaponTypeInfo": {}
+  }
+}

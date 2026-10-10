@@ -74,9 +74,15 @@ def fixture_build():
 
 @pytest.fixture()
 def fixture_profile():
-    """The P01 profile, repinned to the commit the synthetic checkout reports."""
+    """The P01 profile, repinned to this adapter and the synthetic checkout.
+
+    ``adapter_version`` is repinned for the same reason ``pob_commit`` is:
+    since P02-T02 the adapter refuses a profile produced by a different
+    adapter, so the shared fixture's placeholder value would be rejected.
+    """
     return dataclasses.replace(records()["patch_profile"],
-                               pob_commit=SYNTHETIC_COMMIT)
+                               pob_commit=SYNTHETIC_COMMIT,
+                               adapter_version=ADAPTER_VERSION)
 
 
 @pytest.fixture()
@@ -123,14 +129,25 @@ def test_evaluating_a_fixture_build_returns_a_snapshot_with_provenance(
     assert snapshot.timeout_s == SCREEN_TIMEOUT_S or snapshot.timeout_s == REQUEST_TIMEOUT_S
 
 
-def test_a_snapshot_never_claims_declared_primitive_semantics(
+def test_a_snapshot_names_the_owner_of_its_primitive_semantics(
         adapter, documents, fixture_build, fixture_profile):
-    """Units and ownership are P02-T04; nothing here may imply they exist."""
+    """Migrated by P02-T04, which published the inventory this waited for.
+
+    The P02-T01 version asserted ``semantics_status == "undeclared"`` so no
+    caller could read a raw PoB field as a defined primitive. The declaration
+    now exists, so the same guarantee is that the snapshot names its owner and
+    version and resolves units through that table. The synthetic session emits
+    no PoB key at all, so every declared primitive is a gap here, which is the
+    other half of the guarantee: missing stays missing.
+    """
     adapter.documents = documents
     snapshot = adapter.primitives(fixture_build, EngineState(), fixture_profile)
 
-    assert snapshot.semantics_status == "undeclared"
+    assert snapshot.semantics_status == "declared"
     assert snapshot.semantics_owner == "P02-T04"
+    assert snapshot.semantics_version
+    assert snapshot.declared() == {}
+    assert snapshot.gaps()
 
 
 def test_engine_state_configuration_actually_reaches_the_worker(
