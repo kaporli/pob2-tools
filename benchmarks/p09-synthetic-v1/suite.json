@@ -1,0 +1,104 @@
+{
+  "suite_id": "p09-synthetic-v1",
+  "kind": "synthetic",
+  "schema_version": 1,
+  "not_a_claim": "SYNTHETIC. Every entity, count, health value, position, duration and window below is a test constant invented for software testing. None is a PoE 2 monster, a recorded encounter timing or any other measurement, and none may be cited as evidence about PoE 2. A result produced on this suite is not map clear speed and not boss kill time.",
+  "protocol": "benchmarks/p09-synthetic-v1/protocol.md",
+  "scenario_source": {
+    "path": "tests/fixtures/combat/p09_synthetic_suite.v1.json",
+    "sha256": "265c542365b8dd0cdaeefd25bd9017029e20f719f5c11a55bae8bf68e89f1b37",
+    "bytes": 42264
+  },
+  "scenarios": [
+    {
+      "scenario_id": "p09-syn-clear-dense",
+      "version": "1",
+      "category": "clear",
+      "shape": "clear_dense",
+      "scenario_hash": "cc8d09ee8b81ba78b5b45d02206595e8e195b42fb3537bba38850aa75d63be2f",
+      "rotation_id": "p09-syn-rotation-clear",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "reference_gap_ids": [
+        "gap-p09-t01-reference-build",
+        "gap-p09-t01-build-families"
+      ]
+    },
+    {
+      "scenario_id": "p09-syn-clear-spread",
+      "version": "1",
+      "category": "clear",
+      "shape": "clear_spread",
+      "scenario_hash": "aece8f5c09d88b2db30f8c701f947da95231af1d3f3f6b015dddf8babbee6dc7",
+      "rotation_id": "p09-syn-rotation-clear",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "reference_gap_ids": [
+        "gap-p09-t01-reference-build",
+        "gap-p09-t01-build-families"
+      ]
+    },
+    {
+      "scenario_id": "p09-syn-boss-short",
+      "version": "1",
+      "category": "boss",
+      "shape": "boss_short",
+      "scenario_hash": "964d75b696de33c13271aa9d630e6b9da0954a421af5ed3d2326e80b5d2fe307",
+      "rotation_id": "p09-syn-rotation-boss",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "reference_gap_ids": [
+        "gap-p09-t01-reference-build",
+        "gap-p09-t01-build-families"
+      ]
+    },
+    {
+      "scenario_id": "p09-syn-boss-sustained",
+      "version": "1",
+      "category": "boss",
+      "shape": "boss_sustained",
+      "scenario_hash": "dc693f8e8cc58e556608943956666510f5111b96b966c6017cbcbcdb535366d4",
+      "rotation_id": "p09-syn-rotation-boss",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "reference_gap_ids": [
+        "gap-p09-t01-reference-build",
+        "gap-p09-t01-build-families"
+      ]
+    }
+  ],
+  "baseline_suite_hash": "b1dcea97eb24842a60a680abd1ba67acec8b269454c67081c65f99fb35193e54",
+  "baseline_suite_note": "Computed over four scenarios whose reference_build_id and reference_result_id are both null. It freezes the scenario definitions, not a baseline. Freezing a reference later changes this hash and starts a separate leaderboard, which is what docs/specs/scenarios.md requires.",
+  "open_gaps": [
+    "gap-p09-t01-enemy-health",
+    "gap-p09-t01-enemy-defenses",
+    "gap-p09-t01-encounter-density",
+    "gap-p09-t01-spatial-unit",
+    "gap-p09-t01-movement-model",
+    "gap-p09-t01-incoming-damage",
+    "gap-p09-t01-boss-windows",
+    "gap-p09-t01-initial-resources",
+    "gap-p09-t01-preparation-allowance",
+    "gap-p09-t01-duration-limit",
+    "gap-p09-t01-survival-threshold",
+    "gap-p09-t01-reference-build",
+    "gap-p09-t01-build-families",
+    "gap-p09-t01-patch-profile"
+  ],
+  "usable_for": [
+    "exercising a P07 encounter loop end to end",
+    "regression tests over the ranking formula in docs/specs/scenarios.md",
+    "checking that untargetable time is not billed as damage time",
+    "checking that a replayed route leg is charged"
+  ],
+  "not_usable_for": [
+    "any statement about PoE 2 clear speed or boss kill time",
+    "calibrating or fitting any constant",
+    "ranking real builds",
+    "a D04 practical claim"
+  ]
+}

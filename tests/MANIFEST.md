@@ -61,6 +61,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
 | P02-T05 evidence | `python scripts/p02_t05_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/roundtrips.json`, `roundtrip-synthetic.xml` and `roundtrip-pob-export.xml`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T05 item conversion report | `luajit tests/integration/lua/convert_probe.lua pob2-mcp/pob2mcp/bootstrap.lua <item.lua> report` | `luajit` | Not a test; prints the repaired `convert_trade_item` completeness report for one item table instead of the item string. |
+| P09-T01 synthetic suite | `python scripts/p09_t01_suite.py` | Nothing | Not a test; rewrites `tests/fixtures/combat/p09_synthetic_suite.v1.json`, `benchmarks/p09-synthetic-v1/suite.json` and `docs/evidence/P09/protocol-fields.json`. Deterministic and offline. Changing the suite needs a new `suite_id`, not an edit in place. |
 
 Selecting the PoB checkout:
 
@@ -122,6 +123,8 @@ none yet).
 | `test_p02_t05_build_round_trip.py` | P02-T05 offline lane: a BuildSpec exported and reimported, compared on `build_identity`. Enabled and disabled groups, main skill, ordered supports, passive attribute choices, the ordinary/ascendancy split, socketed jewels, weapon sets, the three config value types and an explicitly empty slot. Unsupported fields (trigger nesting, progression, item-granted groups, unnamed catalog IDs) are labelled incomplete and not recommended, with the value preserved in the report. Includes the invariant that a complete export never differs on reimport. |
 | `test_p02_t05_item_round_trip.py` | P02-T05 offline lane: an ItemInstance as PoB item text and back, compared on `item_identity`. Every supported modifier category, modifier line flags, item variants, sockets, omitted optional fields, a modifier line containing a colon. Unsupported: the `unknown` category, a modifier's catalog resolution and roll range, a flag recorded `false`, a requirement other than level, and modifier positions PoB would renumber. |
 | `test_p02_t05_no_mutation.py` | P02-T05: neither direction changes the BuildSpec, the items or the naming table it was given, checked on canonical JSON of the whole input. Includes a monkeypatched mutating exporter, so the guard fails when something does mutate. |
+| `test_p09_t01_scenarios.py` | P09-T01: the four synthetic workloads validate against the P01 contracts, carry the four shapes of `scenarios.md`, keep the synthetic label inside every record, leave both reference slots null, and match the frozen scenario and suite hashes. Plus the oracle: equal total health across the two clear shapes, route time charged only where a route is declared, and untargetable time counted only on the sustained boss. |
+| `test_p09_t01_protocol.py` | P09-T01: every `ScenarioSpec` field appears in the field table, a field marked `unresolved_input` names a gap that exists and any other field names none, no row claims a direct measurement, every gap is open and states a collectable request, and no build family is named anywhere in the suite. Also that the protocol document and the D04 record exist and do not present themselves as accepted. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -334,3 +337,17 @@ One ordering hazard found while running the engine lane: a second
 throwaway one leaves the session `engine` fixture unusable for every test
 after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
 document in the session engine for that reason.
+## P09-T01 recorded results
+Specification version 1.0, 2026-10-10, branch `p09-t01-protocol` off
+`c2c2d02`, CPython 3.12.4, Windows 11:
+| `python -m pytest tests/unit` | 873 passed, 1 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 882 passed, 99 skipped, 1 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 981 passed, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+The 99 skips are the engine lane with no PoB checkout. A skip is not an engine
+pass, and P09-T01 needs no engine: the suite is built and checked entirely from
+the P01 records.
+The two new files add 36 tests. Neither reaches PoB, the network or the game.
+What they cannot check is whether the suite is a good encounter model, because
+no encounter has been measured and no evaluator exists to run it through. The
+suite is `kind: synthetic` and `validation_status: untested` for that reason.
