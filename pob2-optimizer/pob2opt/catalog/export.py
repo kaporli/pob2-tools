@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Protocol, Sequence
 
 from ..domain.enums import GapKind, GapSeverity, Redistribution
+from ..domain.identity import document_hash
 from ..domain.records import (SCHEMA_VERSION, CatalogEntity, DataGap,
                               GameCatalog, PatchProfile, SourceDocument)
 from ..domain.validation import RecordIndex, validate_record
@@ -32,12 +33,12 @@ from .entities import (CATALOG_TABLE_ORDER, catalog_hash, derive_passive_edges,
                        entities_from_rows)
 from .evidence import EvidenceBundle, json_payload, pob_source_url
 from .reader import CatalogReader
-from .release import ReleaseCapture, release_evidence_document
+from .release import ReleaseCapture, release_evidence_document, current_release
 from .rules import GAP_PREFIX, build_character_rules, make_gap
 from .sources import Citation, citations_to_payload
 
 #: Bumped when the export changes what it reads or how it labels it.
-EXPORTER_VERSION = "p02-t02.0"
+EXPORTER_VERSION = "p02-t02.1"
 
 #: Tables read straight from the engine. The other two are derived:
 #: ``ascendancies`` from the class rows and ``passive_edges`` from the node
@@ -209,9 +210,10 @@ class PobCatalogProvider:
             created_at=created_at)
         gaps = list(rule_build.gaps)
 
+        capture, release_problem = current_release(
+            self.release_captures, profile.game, profile.realm)
         live_patch_id, patch_published_at, patch_evidence_ids = (
-            self._resolve_patch(evidence, gaps, created_at))
-        capture = self.release_captures[-1] if self.release_captures else None
+            self._resolve_patch(evidence, gaps, created_at, capture, release_problem))
         # A pinned profile keeps the patch it was pinned to. It is not
         # re-labelled as describing the live patch just because a newer one
         # was captured; it stays usable as a historical profile.
@@ -329,16 +331,25 @@ class PobCatalogProvider:
         return {table: entities.get(table, []) for table in CATALOG_TABLE_ORDER}
 
     def _resolve_patch(self, evidence: EvidenceBundle, gaps: list[DataGap],
-                       created_at: str) -> tuple[str | None, str | None, list[str]]:
-        if not self.release_captures:
+                       created_at: str, selected: ReleaseCapture | None,
+                       problem: str | None) -> tuple[str | None, str | None, list[str]]:
+        ids = []
+        for capture in self.release_captures:
+            document, payload = release_evidence_document(
+                capture,
+                record_id="evidence/release/%s/%s" % (
+                    capture.patch_id, document_hash(capture.payload())[:16]),
+                created_at=created_at, acquisition_version=EXPORTER_VERSION)
+            if document.record_id in ids:
+                continue
+            evidence_id = evidence.adopt(document, payload)
+            ids.append(evidence_id)
+        if selected is None:
             gaps.append(make_gap(
                 "%s/current-patch-unresolved" % GAP_PREFIX,
                 kind=GapKind.MISSING_INPUT,
                 severity=GapSeverity.BLOCKING,
-                explanation=(
-                    "No official release evidence was supplied, so the live "
-                    "game patch is unknown and this profile cannot claim to "
-                    "describe any particular patch."),
+                explanation=problem or "Current patch could not be resolved.",
                 needed_evidence=(
                     "a capture of the official Path of Exile 2 patch notes "
                     "page for the live patch, carrying the thread URL, the "
@@ -346,17 +357,8 @@ class PobCatalogProvider:
                 collection_method="import request",
                 created_at=created_at,
                 field_paths=["/patch_id", "/patch_evidence_ids"]))
-            return None, None, []
-        ids = []
-        for index, capture in enumerate(self.release_captures):
-            document, payload = release_evidence_document(
-                capture,
-                record_id="evidence/release/%s" % capture.patch_id,
-                created_at=created_at,
-                acquisition_version=EXPORTER_VERSION)
-            ids.append(evidence.adopt(document, payload))
-        latest = self.release_captures[-1]
-        return latest.patch_id, latest.patch_published_at, ids
+            return None, None, ids
+        return selected.patch_id, selected.patch_published_at, ids
 
     def _historical_gaps(self, pinned: str, live: str | None,
                          created_at: str) -> list[DataGap]:

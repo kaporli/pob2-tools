@@ -7,8 +7,8 @@ against documents PoB itself wrote.
 
 The acceptance split this file pins:
 
-* a supported fixture keeps its canonical identity exactly, and the export is
-  complete and recommended;
+* representable fields keep their canonical identity; support IDs alone are
+  insufficient to certify their enabled/level/quality state;
 * a fixture carrying an unsupported field is labelled ``incomplete``, is not a
   recommended deliverable, and the export names the field with its value;
 * no export that reports itself complete may differ on reimport. That is the
@@ -45,13 +45,14 @@ def supported():
 def test_a_supported_build_keeps_its_canonical_identity(supported):
     assert supported.build_hash_before == supported.build_hash_after
     assert supported.differences == ()
-    assert supported.status == "faithful"
-    assert supported.recommended_deliverable is True
+    # IDs survive, but the schema cannot certify support settings.
+    assert supported.status == "incomplete"
+    assert supported.recommended_deliverable is False
 
 
-def test_the_supported_export_is_complete_and_still_names_its_metadata(supported):
+def test_support_settings_are_incomplete_and_metadata_is_still_named(supported):
     report = supported.export
-    assert report.completeness == "complete"
+    assert report.completeness == "incomplete"
     assert report.identity_losses == ()
     # Metadata a PoB file does not carry is reported anyway, with its value,
     # so a caller can keep it out of band.

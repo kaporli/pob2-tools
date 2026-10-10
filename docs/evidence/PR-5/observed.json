@@ -1,0 +1,62 @@
+{
+  "active_variant": {
+    "active_id": "2",
+    "expected_label": "ACTIVE SECOND VARIANT",
+    "actual_label": "group-main",
+    "parse_status": "complete"
+  },
+  "unknown_content": {
+    "parse_status": "complete",
+    "unresolved_refs": [],
+    "unknown_node_retained": false,
+    "unknown_skill_retained": false,
+    "roundtrip_status": "faithful",
+    "recommended_deliverable": true
+  },
+  "support_state": {
+    "before": {
+      "skillId": "FixtureSupportTempo",
+      "enabled": "false",
+      "count": "1",
+      "level": "7",
+      "quality": "19"
+    },
+    "after": {
+      "skillId": "FixtureSupportTempo",
+      "enabled": "true",
+      "count": "1"
+    },
+    "roundtrip_status": "faithful",
+    "recommended_deliverable": true
+  },
+  "release_order": {
+    "newest_published": "0.5.5e",
+    "exported_patch": "0.5.4"
+  },
+  "item_requirements": {
+    "record_requirements": {
+      "level": 1,
+      "str": 1
+    },
+    "engine_requirements": {
+      "level": 90,
+      "str": 999
+    },
+    "character_level": 4,
+    "character_strength": 120,
+    "overall_legality": "unknown",
+    "relevant_checks": [
+      {
+        "check_id": "item_requirements",
+        "decision": "legal",
+        "summary": "1 equipped item(s) checked against level 4"
+      },
+      {
+        "check_id": "post_import_verification",
+        "decision": "legal",
+        "summary": "verified against the engine after an exact load of document 000000000000: 3 allocated nodes, 0 ascendancy nodes, 1 equipped items"
+      }
+    ],
+    "violations": []
+  }
+}

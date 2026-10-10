@@ -26,7 +26,7 @@ from ...domain.enums import Legality
 from ...domain.records import DataGap
 
 #: Bumped when a check changes what it decides or how it decides it.
-VALIDATOR_VERSION = "p02-t03.0"
+VALIDATOR_VERSION = "p02-t03.1"
 
 # -- the declared checks ------------------------------------------------------
 

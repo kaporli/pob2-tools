@@ -12,9 +12,10 @@ Two severities, because they mean different things:
   projection of ``pob2opt.domain.identity``. The document cannot reproduce the
   build or item, so the export is **incomplete** and must not be offered as the
   deliverable;
-* ``affects_identity`` false - metadata the identity excludes (a display name,
-  a provenance ID). It is still reported, because a reviewer should see what a
-  PoB file does not carry, but it does not make the export unusable.
+* ``affects_identity`` false - the current identity excludes the field.
+  Ordinary metadata does not block delivery. A ``partial`` loss still blocks
+  it: missing gameplay fields in the schema cannot be certified by comparing
+  that schema's reduced identity.
 """
 
 from __future__ import annotations
@@ -78,11 +79,14 @@ class SupportReport:
 
     @property
     def completeness(self) -> str:
-        return "incomplete" if self.identity_losses else "complete"
+        return "complete" if self.complete else "incomplete"
 
     @property
     def complete(self) -> bool:
-        return not self.identity_losses
+        # The canonical schema may itself lack gameplay fields (support
+        # settings, for example). Equal reduced identities cannot certify them.
+        return not any(u.affects_identity or u.kind == PARTIAL
+                       for u in self.unsupported)
 
     @property
     def recommended_deliverable(self) -> bool:

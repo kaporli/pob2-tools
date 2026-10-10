@@ -19,6 +19,7 @@ Three things this module refuses to do:
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -127,17 +128,41 @@ def load_release_capture(path: str | Path) -> ReleaseCapture:
 
 
 def load_release_captures(directory: str | Path) -> list[ReleaseCapture]:
-    """Every ``*.json`` capture in a directory, newest patch publication last.
-
-    Ordering is by the captured timestamp, which is a fact about the capture;
-    patch ids are not assumed to sort.
-    """
+    """Read evidence deterministically; acquisition order does not imply release order."""
     directory = Path(directory)
     if not directory.is_dir():
         return []
     captures = [load_release_capture(path)
                 for path in sorted(directory.glob("*.json"))]
-    return sorted(captures, key=lambda capture: capture.captured_at)
+    return captures
+
+
+def current_release(captures: list[ReleaseCapture], game: str,
+                    realm: str) -> tuple[ReleaseCapture | None, str | None]:
+    """Resolve applicable publication chronology, or explain its uncertainty."""
+    applicable = [c for c in captures if c.game == game and c.realm in (None, realm)]
+    if not applicable:
+        return None, "No applicable official release evidence was supplied."
+    dated = []
+    for capture in applicable:
+        try:
+            published = datetime.fromisoformat(capture.patch_published_at.replace("Z", "+00:00"))
+            if published.utcoffset() is None:
+                raise ValueError("publication date must include a timezone")
+        except (AttributeError, ValueError):
+            return None, "Release evidence has missing or invalid publication chronology."
+        dated.append((published, capture))
+    by_patch = {}
+    for published, capture in dated:
+        previous = by_patch.setdefault(capture.patch_id, published)
+        if previous != published:
+            return None, "Captures disagree on the publication date of the same patch."
+    latest_date = max(date for date, _ in dated)
+    latest = [c for date, c in dated if date == latest_date]
+    if len({c.patch_id for c in latest}) != 1:
+        return None, "Different patches have the same latest publication timestamp."
+    # Acquisition time breaks ties only between captures of the SAME release.
+    return max(latest, key=lambda c: (c.is_verbatim, c.captured_at, c.source_url)), None
 
 
 def release_evidence_document(capture: ReleaseCapture, *, record_id: str,

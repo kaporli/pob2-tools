@@ -1289,6 +1289,19 @@ def _check_weapon_set_points(ctx: Context, out: ReportBuilder) -> None:
 # ------------------------------------------------------------ after import ---
 
 def check_import(ctx: Context, out: ReportBuilder) -> None:
+    for entry in ctx.equipped:
+        if entry.record is None or entry.imported is None:
+            continue
+        for key in ("level", "str", "dex", "int"):
+            declared = entry.record.requirements.get(key)
+            actual = entry.imported.requirements.get(key)
+            if declared is not None and actual is not None and declared != actual:
+                out.violation(
+                    CHECK_IMPORT, "import_item_requirement_mismatch",
+                    "%s requirement %s differs: record %g, engine %g"
+                    % (entry.label, key, declared, actual),
+                    rule_id="post_import/item_requirements",
+                    field_paths=("/equipment/%s" % entry.slot_id,))
     imported = ctx.imported
     if imported is None:
         out.unknown(

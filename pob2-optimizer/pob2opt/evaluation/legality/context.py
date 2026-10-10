@@ -120,13 +120,13 @@ class Equipped:
         return self.item_hash or self.slot_id
 
     def requirement(self, name: str) -> float | None:
-        """A declared requirement, from the record first, then the engine."""
-        if self.record is not None:
-            value = self.record.requirements.get(name)
-            if value is not None:
-                return float(value)
+        """Validate imported equipment; disagreements are reported separately."""
         if self.imported is not None:
             value = self.imported.requirements.get(name)
+            if value is not None:
+                return float(value)
+        if self.record is not None:
+            value = self.record.requirements.get(name)
             if value is not None:
                 return float(value)
         return None

@@ -28,15 +28,18 @@ Neither direction mutates its input.
 
 from __future__ import annotations
 
+import json
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, replace
 from typing import Any, Mapping, Sequence
 
 from ..domain.enums import ConfigOrigin, RecordParseStatus
+from ..domain.identity import document_hash
 from ..domain.records import (BuildSpec, ConfigValue, EquipmentSlot,
                               ItemInstance, Passives, Progression, SkillEntry,
-                              SkillGroup, SocketedEntity, WeaponSet)
+                              SkillGroup, SocketedEntity, WeaponSet, UnresolvedRef)
 from .itemtext import export_item, import_item
+from .importaudit import audit_document
 from .naming import CatalogNaming, UnresolvedName
 from .support import (NOT_REPRESENTABLE, PARTIAL, UNRESOLVED_NAME,
                       LossCollector, SupportReport)
@@ -73,8 +76,10 @@ SUPPORT = {
         "Intelligence",
         "more than two weapon sets",
         "BuildSpec.name, variant_id, family_id, rotation_ids, "
-        "source_document_ids, declared_patch and unresolved_refs: metadata "
+        "source_document_ids and declared_patch: metadata "
         "the build identity excludes",
+        "support enabled/level/quality settings and unresolved imports: "
+        "incomplete gameplay data that blocks recommendation",
     ),
 }
 
@@ -99,10 +104,17 @@ class BuildExport:
 
 @dataclass(frozen=True)
 class BuildImport:
-    """A BuildSpec read back out of a document, with the items it carried."""
+    """Parsed records, structured losses and exact source XML for persistence.
+
+    Store source_document by build.raw_blob_hashes[0] alongside the records.
+    Losses also travel in unresolved_refs so passing only the BuildSpec to a
+    later exporter cannot erase incomplete-import status.
+    """
 
     build: BuildSpec
     items: Mapping[str, ItemInstance]
+    report: SupportReport
+    source_document: str
 
 
 # ------------------------------------------------------------------ export
@@ -333,12 +345,12 @@ def _export_skill(parent: ET.Element, skill: SkillEntry,
                        "CatalogNaming.skill_ids has no PoB skill ID for this "
                        "support", support_id, True)
             continue
-        # A BuildSpec records no level or quality for a support, so none is
-        # written. Inventing one would be a gameplay claim this task does not
-        # own; PoB applies its own default instead.
+        # This schema has no support settings. The XML is only a partial
+        # preview; the loss blocks its use as a recommended deliverable.
         losses.add(support_path, PARTIAL,
-                   "BuildSpec carries no level or quality for a support gem, "
-                   "so the document omits both and PoB applies its default",
+                   "BuildSpec carries no enabled, level or quality settings "
+                   "for supports; this preview enables the support and uses "
+                   "PoB defaults, so it cannot certify gameplay semantics",
                    support_id, False)
         ET.SubElement(parent, "Gem", support_attrib)
     if skill.triggered:
@@ -521,7 +533,12 @@ def export_build(build: BuildSpec, items: Mapping[str, ItemInstance],
     if build.unresolved_refs:
         losses.add("/unresolved_refs", NOT_REPRESENTABLE,
                    "a PoB document records no parse state",
-                   [ref.field_path for ref in build.unresolved_refs], False)
+                   [{"field_path": ref.field_path, "reference": ref.reference,
+                     "reason": ref.reason} for ref in build.unresolved_refs], True)
+    if build.parse_status != RecordParseStatus.COMPLETE:
+        losses.add("/parse_status", PARTIAL,
+                   "source import has unresolved gameplay content",
+                   build.parse_status.value, False)
     progression = build.progression
     if (progression.quest_flags or progression.reward_flags
             or progression.normal_point_budget is not None
@@ -613,6 +630,8 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
 
     naming.check_invertible()
     root = ET.fromstring(document)
+    losses = LossCollector()
+    audit_document(root, naming, losses)
     build_element = root.find("Build")
     if build_element is None:
         raise ValueError("document has no Build element")
@@ -632,6 +651,11 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
                                       slot_ids_by_name)
     skill_groups = _import_skills(root, naming)
     config = _import_config(root)
+    for key, item in items.items():
+        if item.base_id is None or item.parse_status != RecordParseStatus.COMPLETE:
+            losses.add("/items/" + key, PARTIAL,
+                       "item base or item content is unresolved", item.raw_text, True)
+    report = losses.report()
 
     build = BuildSpec(
         schema_version=1, record_id=record_id, created_at=created_at,
@@ -646,10 +670,17 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
         equipment=equipment, weapon_sets=weapon_sets, passives=passives,
         skill_groups=skill_groups, config=config, rotation_ids=[],
         source_document_ids=[], variant_id=None, family_id=None,
-        raw_blob_hashes=[], parse_status=RecordParseStatus.COMPLETE,
-        unresolved_refs=[])
+        raw_blob_hashes=[document_hash(document.encode("utf-8"))],
+        parse_status=(RecordParseStatus.COMPLETE if report.complete
+                      else RecordParseStatus.PARTIAL),
+        unresolved_refs=[UnresolvedRef(
+            field_path=loss.field_path,
+            reference=(loss.preserved if isinstance(loss.preserved, str)
+                       else json.dumps(loss.preserved)), reason=loss.reason)
+                         for loss in report.unsupported])
     build = replace(build, build_hash=_build_hash(build))
-    return BuildImport(build=build, items=items)
+    return BuildImport(build=build, items=items, report=report,
+                       source_document=document)
 
 
 def _import_items(root: ET.Element, naming: CatalogNaming, record_id: str,

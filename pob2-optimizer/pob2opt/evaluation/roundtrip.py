@@ -164,7 +164,7 @@ def round_trip(build: BuildSpec, items: Mapping[str, ItemInstance],
         build_hash_after=build_hash(restored.build),
         differences=tuple(differences),
         item_differences=item_differences,
-        export=export.report,
+        export=SupportReport(export.report.unsupported + restored.report.unsupported),
         document=export.xml)
 
 
