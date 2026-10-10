@@ -61,6 +61,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
 | P02-T05 evidence | `python scripts/p02_t05_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/roundtrips.json`, `roundtrip-synthetic.xml` and `roundtrip-pob-export.xml`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T05 item conversion report | `luajit tests/integration/lua/convert_probe.lua pob2-mcp/pob2mcp/bootstrap.lua <item.lua> report` | `luajit` | Not a test; prints the repaired `convert_trade_item` completeness report for one item table instead of the item string. |
+| P03-T01 source inspect | `python -m pob2opt.cli source inspect --provider NAME --out DIR` | Nothing | Reports the capability manifest recorded in `docs/evidence/P03`. Offline by construction: it has no fetch path and no flag that adds one. Providers: `mobalytics`, `maxroll`, `poe-ninja`. Exit 3 for an unknown provider or a missing manifest, 4 for a manifest that fails the structure. |
 
 Selecting the PoB checkout:
 
@@ -122,6 +123,8 @@ none yet).
 | `test_p02_t05_build_round_trip.py` | P02-T05 offline lane: a BuildSpec exported and reimported, compared on `build_identity`. Enabled and disabled groups, main skill, ordered supports, passive attribute choices, the ordinary/ascendancy split, socketed jewels, weapon sets, the three config value types and an explicitly empty slot. Unsupported fields (trigger nesting, progression, item-granted groups, unnamed catalog IDs) are labelled incomplete and not recommended, with the value preserved in the report. Includes the invariant that a complete export never differs on reimport. |
 | `test_p02_t05_item_round_trip.py` | P02-T05 offline lane: an ItemInstance as PoB item text and back, compared on `item_identity`. Every supported modifier category, modifier line flags, item variants, sockets, omitted optional fields, a modifier line containing a colon. Unsupported: the `unknown` category, a modifier's catalog resolution and roll range, a flag recorded `false`, a requirement other than level, and modifier positions PoB would renumber. |
 | `test_p02_t05_no_mutation.py` | P02-T05: neither direction changes the BuildSpec, the items or the naming table it was given, checked on canonical JSON of the whole input. Includes a monkeypatched mutating exporter, so the guard fails when something does mutate. |
+| `test_p03_t01_capabilities.py` | P03-T01: the three recorded manifests hold their shape. Every provider is either reproducible or specifically blocked, the three support flags are separate and each cites evidence, all five representative categories are answered rather than dropped, redistribution and access values stay inside the contract, the recorded limits are never looser than `interfaces.md`, no manifest carries anything resembling a credential, and the D02 proposal keeps every required section and stays unresolved. Reads evidence files only. |
+| `test_p03_t01_source_inspect.py` | P03-T01: `pob2opt source inspect` as a command. Report contents per provider, exit codes 0, 2, 3 and 4, an unknown provider, a missing manifest directory, a malformed manifest, and the subcommand refusing anything but `inspect`. Then the validator's rejection cases: a supported flag without confirmation, a dropped category, a substituted category, a missing reason, an unresolvable evidence reference, an access method outside the contract, a loosened limit, and a manifest with neither an example nor a block. Also that the reader imports no HTTP client. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -334,3 +337,24 @@ One ordering hazard found while running the engine lane: a second
 throwaway one leaves the session `engine` fixture unusable for every test
 after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
 document in the session engine for that reason.
+
+## P03-T01 recorded results
+
+Specification version 1.0, 2026-10-10, branch `p03-t01-capabilities` off
+`c2c2d02`, CPython 3.12.4, Windows 11. No PoB, no network:
+
+| Command | Result |
+|---|---|
+| `python -m pytest tests/unit` | 897 passed, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+| `python -m pob2opt.cli source inspect --provider mobalytics --out DIR` | exit 0, `access_blocked`, 0 of 5 categories inspected |
+| `python -m pob2opt.cli source inspect --provider maxroll --out DIR` | exit 0, `unsupported_access`, 0 of 5 categories inspected |
+| `python -m pob2opt.cli source inspect --provider poe-ninja --out DIR` | exit 0, `unsupported_access`, 0 of 5 categories inspected |
+
+The one xfail belongs to P08-T01 and is unrelated. The 55 new tests run in the
+offline unit lane; none is marked `network`, because none of them touches a
+provider. The manifests they read came from a one-off bounded inspection that is
+deliberately not re-runnable as a test: re-running it means contacting three
+providers, which the unit lane forbids and which P03-T01 bounds to a handful of
+requests. A `network`-marked smoke check belongs to P03-T03, against whichever
+provider the D02 review approves.

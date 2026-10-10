@@ -565,9 +565,18 @@ def _catalog(argv):
     return catalog_cli.main(argv[1:])
 
 
+def _source(argv):
+    if not argv or argv[0] != "inspect":
+        print("usage: pob2opt source inspect --provider NAME --out DIR",
+              file=sys.stderr)
+        return 2
+    from .sources import cli as source_cli
+    return source_cli.main(argv[1:])
+
+
 #: Subcommands from docs/specs/interfaces.md. These never touch PHASES; the
 #: legacy phase pipeline keeps its own parser and its existing behavior.
-NEW_COMMANDS = {"doctor": _doctor, "catalog": _catalog}
+NEW_COMMANDS = {"doctor": _doctor, "catalog": _catalog, "source": _source}
 
 
 def main(argv=None):
