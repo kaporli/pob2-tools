@@ -141,7 +141,7 @@
       "field": "duration_limit_s",
       "applies_to": "all four workloads",
       "synthetic_basis": "test_constant",
-      "source_or_reason": "60.0, 90.0, 60.0 and 300.0 s, chosen to leave headroom over the oracle so a timeout in a test means the evaluator failed, not the limit",
+      "source_or_reason": "60.0, 90.0, 60.0 and 300.0 s. A limit bounds the horizon; it is not a performance expectation, and a timeout under it is a valid failed evaluation rather than proof the evaluator is broken",
       "representative_status": "unresolved_input",
       "gap_ids": [
         "gap-p09-t01-duration-limit"

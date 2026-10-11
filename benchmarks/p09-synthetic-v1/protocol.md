@@ -86,28 +86,58 @@ negative. Any stricter bound is `gap-p09-t01-survival-threshold`.
 
 ### Timeout
 
-| Scenario | `duration_limit_s` | Oracle floor it must clear |
-|---|---|---|
-| `p09-syn-clear-dense` | 60.0 | 0.0 s of route |
-| `p09-syn-clear-spread` | 90.0 | 12.0 s of route |
-| `p09-syn-boss-short` | 60.0 | 0.0 s untargetable |
-| `p09-syn-boss-sustained` | 300.0 | 30.0 s untargetable |
+| Scenario | `duration_limit_s` (the horizon) | Declared route over the horizon | Declared untargetable time over the horizon |
+|---|---|---|---|
+| `p09-syn-clear-dense` | 60.0 | 0.0 s | 0.0 s |
+| `p09-syn-clear-spread` | 90.0 | 12.0 s | 0.0 s |
+| `p09-syn-boss-short` | 60.0 | 0.0 s | 0.0 s |
+| `p09-syn-boss-sustained` | 300.0 | 0.0 s | 30.0 s |
 
-These limits are test constants with headroom, so that a timeout in a test means
-the evaluator failed rather than the limit being tight. A timeout is a failure
-verdict, so in a representative suite its value decides which builds are
-reported as failing; setting it needs observed completion times, which is
-`gap-p09-t01-duration-limit`.
+The last two columns describe the whole configured horizon. They are workload
+metadata, not a lower bound on any single evaluation: none of that time has to
+elapse before the target dies, and the sustained boss's first untargetable
+window does not even begin until 60 s.
+
+A timeout is a failed evaluation, which `scenarios.md` explicitly permits, and
+not evidence that the evaluator is broken. A hypothetical build dealing one
+damage per second cannot kill a 40,000 health target inside 300 s however
+correct the evaluator is. An operational error is a different outcome and must
+stay distinguishable from this one.
+
+These limits are test constants. In a representative suite a limit decides
+which builds are reported as failing, so setting one needs observed completion
+times, which is `gap-p09-t01-duration-limit`.
 
 ### Measurable completion events
 
 | Scenario | `completion_condition` | Event |
 |---|---|---|
 | Both clear workloads | `all_targets_dead` | Every declared target entity is dead. The clock runs from scenario start and includes movement, targeting, preparation and cleanup. |
-| Both boss workloads | `target_dead` with the entity id | The single declared target is dead. The clock runs from scenario start and includes preparation and every untargetable window. |
+| Both boss workloads | `target_dead` with the entity id | The single declared target is dead. The clock runs from scenario start to that moment and stops there, so it includes preparation and only the untargetable windows that elapse before the kill. A window later in the horizon is not part of a completed evaluation. |
 
-Both are observable from the scenario state alone and need no judgement call
-from an operator. `scenarios.md` requires exactly this: dense and spread measure
+### Worked completion times
+
+Hand-calculated for `p09-syn-boss-sustained`, whose declared targetable windows
+are [0, 60], [75, 150] and [165, 300] against 40,000 health. Each row applies a
+hypothetical constant damage rate while the target is targetable. The rates are
+invented and describe no build; the rows exist so that the difference between a
+horizon total and an elapsed time is checkable rather than asserted. They are
+carried in the suite's `oracle.worked_examples` and recomputed in
+`tests/unit/test_p09_t01_scenarios.py`.
+
+| Hypothetical damage/s | Completion | Untargetable time elapsed | Outcome |
+|---|---|---|---|
+| 2000 | 20.0 s | 0.0 s | completed inside the first window |
+| 400 | 115.0 s | 15.0 s | completed after one window |
+| 250 | 190.0 s | 30.0 s | completed after both windows |
+| 1 | none | 30.0 s | timed out: a valid failed evaluation |
+
+The first row is the case this protocol previously got wrong: the horizon's
+30 s of untargetable time was described as a floor every boss evaluation had to
+clear, and a kill at 20 s elapses none of it.
+
+Both completion conditions are observable from the scenario state alone and
+need no judgement call from an operator. `scenarios.md` requires exactly this: dense and spread measure
 time to finish a fixed enemy and route workload; boss scenarios measure time
 from scenario start to kill.
 

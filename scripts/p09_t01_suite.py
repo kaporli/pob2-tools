@@ -142,9 +142,11 @@ def build_gaps():
             "representative scenario, at a stated area level, monster rarity "
             "and patch, with the capture or catalog row the value was read "
             "from. One value per named entity, not a range for a tier.",
-            "Catalog export of monster life from an accepted patch profile, "
-            "or an operator-supplied recording in which the health bar and the "
-            "area level are both legible.",
+            "An identified catalog row for that monster at that area level "
+            "and rarity, from an accepted patch profile, or a controlled "
+            "experiment with a known damage figure. A recording's health bar "
+            "shows a fraction of an unknown maximum and does not establish "
+            "absolute life on its own.",
             ALL_SCENARIO_IDS,
         ),
         _gap(
@@ -715,21 +717,83 @@ def build_oracle(scenarios):
         out[s.scenario_id] = {
             "total_target_health": total_health,
             "route_time_s": float(sum(legs)),
-            "mean_targetable_time_s": targetable,
-            "untargetable_time_s": round(s.duration_limit_s - targetable, 6),
+            "horizon_s": s.duration_limit_s,
+            "horizon_targetable_time_s": targetable,
+            "horizon_untargetable_time_s": round(
+                s.duration_limit_s - targetable, 6),
             "preparation_limit_s": s.allowed_preparation.duration_limit_s,
             "duration_limit_s": s.duration_limit_s,
         }
     out["derivation"] = (
         "total_target_health is health x count summed over the declared "
         "entities. route_time_s is the sum of the declared replayed route "
-        "legs. mean_targetable_time_s is the declared targetable window "
-        "length; untargetable_time_s is the rest of the limit, which a correct "
-        "evaluator must not bill as damage time. Both clear shapes carry the "
-        "same 2000.0 total health so that a difference between them is caused "
-        "by the route and the cluster size and by nothing else."
+        "legs. The two horizon_ figures describe the whole configured "
+        "horizon: how much of duration_limit_s the declared windows make "
+        "targetable and how much they do not. They are workload metadata, "
+        "not a per-evaluation elapsed time. An evaluation's elapsed time runs "
+        "from scenario start to completion and stops there, so only the "
+        "windows intersecting [start, completion] are part of it; a kill "
+        "before the first untargetable window elapses none of it. Both clear "
+        "shapes carry the same 2000.0 total health so that a difference "
+        "between them is caused by the route and the cluster size and by "
+        "nothing else."
     )
+    out["worked_examples"] = WORKED_EXAMPLES
     return out
+
+
+#: Hand-calculated completion times for ``p09-syn-boss-sustained``, whose
+#: declared windows are [0, 60], [75, 150] and [165, 300] against 40,000
+#: health. Each assumes a hypothetical constant damage rate applied only while
+#: the target is targetable. They are arithmetic over invented constants and
+#: say nothing about any build or about PoE 2; they exist so the difference
+#: between a horizon total and an elapsed time is checkable rather than
+#: asserted.
+WORKED_EXAMPLES = [
+    {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 2000.0,
+        "completion_time_s": 20.0,
+        "untargetable_time_elapsed_s": 0.0,
+        "windows_intersecting_completion": 1,
+        "outcome": "completed",
+        "note": "Dies inside the first targetable window. None of the "
+                "horizon's 30 s of untargetable time elapses, so none of it "
+                "may be added to the elapsed time.",
+    },
+    {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 400.0,
+        "completion_time_s": 115.0,
+        "untargetable_time_elapsed_s": 15.0,
+        "windows_intersecting_completion": 2,
+        "outcome": "completed",
+        "note": "24,000 in [0, 60], then 16,000 more from 75 s at 400/s. One "
+                "untargetable window elapsed.",
+    },
+    {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 250.0,
+        "completion_time_s": 190.0,
+        "untargetable_time_elapsed_s": 30.0,
+        "windows_intersecting_completion": 3,
+        "outcome": "completed",
+        "note": "15,000 in [0, 60], 18,750 in [75, 150], the remaining 6,250 "
+                "from 165 s at 250/s. Both untargetable windows elapsed.",
+    },
+    {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 1.0,
+        "completion_time_s": None,
+        "untargetable_time_elapsed_s": 30.0,
+        "windows_intersecting_completion": 3,
+        "outcome": "timed_out",
+        "note": "270 damage over the whole targetable horizon against 40,000 "
+                "health. A correct evaluator times out here. That is a failed "
+                "evaluation, which scenarios.md permits, not an operational "
+                "error and not evidence the evaluator is wrong.",
+    },
+]
 
 
 # ------------------------------------------------------------------ fields ==
@@ -786,8 +850,9 @@ FIELD_PLAN = [
      "model, with a declared applicability limit", "unresolved_input",
      ["gap-p09-t01-movement-model"]),
     ("duration_limit_s", "test_constant",
-     "60.0, 90.0, 60.0 and 300.0 s, chosen to leave headroom over the oracle "
-     "so a timeout in a test means the evaluator failed, not the limit",
+     "60.0, 90.0, 60.0 and 300.0 s. A limit bounds the horizon; it is not a "
+     "performance expectation, and a timeout under it is a valid failed "
+     "evaluation rather than proof the evaluator is broken",
      "unresolved_input", ["gap-p09-t01-duration-limit"]),
     ("completion_condition", "specification",
      "docs/specs/scenarios.md: clear shapes finish a fixed enemy and route "

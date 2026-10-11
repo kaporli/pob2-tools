@@ -148,7 +148,16 @@ def test_the_protocol_document_exists_and_refuses_the_claims_it_cannot_make(
     assert "not accepted" in text
 
 
-def test_the_decision_record_proposes_d04_blocked(repo_root: Path):
+def test_the_decision_record_keeps_d04_blocked_for_practical_claims(
+        repo_root: Path):
+    """What has to hold is the restriction, not the word "Unresolved".
+
+    This used to require the record to say it was unresolved whatever a
+    reviewer decided, which forbade the lifecycle it exists inside. A reviewer
+    may resolve the technical half; what may not change without new evidence
+    is that the representative suite and the build families stay unselected
+    and that nothing here is a practical claim.
+    """
     text = (repo_root / "docs" / "decisions" / "D04-encounter-suite.md").read_text(
         encoding="utf-8")
     for heading in ("## Question", "## Sources consulted", "## What was observed",
@@ -156,4 +165,9 @@ def test_the_decision_record_proposes_d04_blocked(repo_root: Path):
                     "## Date"):
         assert heading in text, heading
     assert "blocked for practical claims" in text
-    assert "Unresolved" in text
+    assert "Select no encounters" in text
+    assert "Select no Huntress build families" in text
+    assert "Fit no constant" in text
+    assert "validation: synthetic_only" in text
+    # Items 2 and 3 are not a reviewer's to resolve on this evidence.
+    assert "**Unresolved.** Items 2 and 3" in text

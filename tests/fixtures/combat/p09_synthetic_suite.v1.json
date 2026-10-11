@@ -688,7 +688,7 @@
         "severity": "blocking",
         "explanation": "A representative scenario needs the life of each monster it contains. No value is held for any PoE 2 monster, so the representative suite cannot be written.",
         "needed_evidence": "Maximum life of each named monster and boss used by a representative scenario, at a stated area level, monster rarity and patch, with the capture or catalog row the value was read from. One value per named entity, not a range for a tier.",
-        "collection_method": "Catalog export of monster life from an accepted patch profile, or an operator-supplied recording in which the health bar and the area level are both legible.",
+        "collection_method": "An identified catalog row for that monster at that area level and rarity, from an accepted patch profile, or a controlled experiment with a known damage figure. A recording's health bar shows a fraction of an unknown maximum and does not establish absolute life on its own.",
         "affected_evaluation_ids": [],
         "sensitivity_result_id": null,
         "status": "open",
@@ -1064,35 +1064,77 @@
     "p09-syn-clear-dense": {
       "total_target_health": 2000.0,
       "route_time_s": 0.0,
-      "mean_targetable_time_s": 60.0,
-      "untargetable_time_s": 0.0,
+      "horizon_s": 60.0,
+      "horizon_targetable_time_s": 60.0,
+      "horizon_untargetable_time_s": 0.0,
       "preparation_limit_s": 5.0,
       "duration_limit_s": 60.0
     },
     "p09-syn-clear-spread": {
       "total_target_health": 2000.0,
       "route_time_s": 12.0,
-      "mean_targetable_time_s": 90.0,
-      "untargetable_time_s": 0.0,
+      "horizon_s": 90.0,
+      "horizon_targetable_time_s": 90.0,
+      "horizon_untargetable_time_s": 0.0,
       "preparation_limit_s": 5.0,
       "duration_limit_s": 90.0
     },
     "p09-syn-boss-short": {
       "total_target_health": 10000.0,
       "route_time_s": 0.0,
-      "mean_targetable_time_s": 60.0,
-      "untargetable_time_s": 0.0,
+      "horizon_s": 60.0,
+      "horizon_targetable_time_s": 60.0,
+      "horizon_untargetable_time_s": 0.0,
       "preparation_limit_s": 5.0,
       "duration_limit_s": 60.0
     },
     "p09-syn-boss-sustained": {
       "total_target_health": 40000.0,
       "route_time_s": 0.0,
-      "mean_targetable_time_s": 270.0,
-      "untargetable_time_s": 30.0,
+      "horizon_s": 300.0,
+      "horizon_targetable_time_s": 270.0,
+      "horizon_untargetable_time_s": 30.0,
       "preparation_limit_s": 5.0,
       "duration_limit_s": 300.0
     },
-    "derivation": "total_target_health is health x count summed over the declared entities. route_time_s is the sum of the declared replayed route legs. mean_targetable_time_s is the declared targetable window length; untargetable_time_s is the rest of the limit, which a correct evaluator must not bill as damage time. Both clear shapes carry the same 2000.0 total health so that a difference between them is caused by the route and the cluster size and by nothing else."
+    "derivation": "total_target_health is health x count summed over the declared entities. route_time_s is the sum of the declared replayed route legs. The two horizon_ figures describe the whole configured horizon: how much of duration_limit_s the declared windows make targetable and how much they do not. They are workload metadata, not a per-evaluation elapsed time. An evaluation's elapsed time runs from scenario start to completion and stops there, so only the windows intersecting [start, completion] are part of it; a kill before the first untargetable window elapses none of it. Both clear shapes carry the same 2000.0 total health so that a difference between them is caused by the route and the cluster size and by nothing else.",
+    "worked_examples": [
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 2000.0,
+        "completion_time_s": 20.0,
+        "untargetable_time_elapsed_s": 0.0,
+        "windows_intersecting_completion": 1,
+        "outcome": "completed",
+        "note": "Dies inside the first targetable window. None of the horizon's 30 s of untargetable time elapses, so none of it may be added to the elapsed time."
+      },
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 400.0,
+        "completion_time_s": 115.0,
+        "untargetable_time_elapsed_s": 15.0,
+        "windows_intersecting_completion": 2,
+        "outcome": "completed",
+        "note": "24,000 in [0, 60], then 16,000 more from 75 s at 400/s. One untargetable window elapsed."
+      },
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 250.0,
+        "completion_time_s": 190.0,
+        "untargetable_time_elapsed_s": 30.0,
+        "windows_intersecting_completion": 3,
+        "outcome": "completed",
+        "note": "15,000 in [0, 60], 18,750 in [75, 150], the remaining 6,250 from 165 s at 250/s. Both untargetable windows elapsed."
+      },
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 1.0,
+        "completion_time_s": null,
+        "untargetable_time_elapsed_s": 30.0,
+        "windows_intersecting_completion": 3,
+        "outcome": "timed_out",
+        "note": "270 damage over the whole targetable horizon against 40,000 health. A correct evaluator times out here. That is a failed evaluation, which scenarios.md permits, not an operational error and not evidence the evaluator is wrong."
+      }
+    ]
   }
 }

@@ -92,29 +92,59 @@ This is a proposal. It is not accepted, and P09-T01 does not accept it.
 Two inputs, in this order. The first is small and the owner can supply it
 alone; the second is the real cost.
 
-**1. One complete Huntress build, supplied by the owner (Elias).** A PoB build
-file or build code exported by hand, carrying equipment with full modifier text,
-passive allocations, ascendancy, skill groups with levels, quality and supports,
-weapon-set bindings, and the rotation the operator plays. Imported through
-P03-T02 local acquisition, with no provider access. This closes
-`gap-p09-t01-reference-build` for one configuration and lets the build-family
-question be reopened honestly: a family can be named once a build exists that
-belongs to it. Three builds across three families would close
-`gap-p09-t01-build-families` without any corpus.
+Each input below is described by what it actually measures. An artifact closes
+a gap only when it carries the quantity, in a stated unit, with the context the
+gap names, and a reviewer accepts it. "Supplying a build" and "closing the
+reference gap" are two different events, and an earlier version of this record
+ran them together.
 
-**2. Recorded gameplay for one named encounter, supplied by the owner or by an
-operator the owner names.** For a single named boss and a single named map
-layout, at a stated area level and patch: monster life and mitigation,
-pack size and pack spacing along the walked route, per-leg route times, boss
-phase and invulnerability start and end times across at least five attempts,
-timestamped incoming damage events, the resource state at the start event, and
-the completion time of each attempt including the failures. This is what P09-T02
-collects, and it closes the remaining eleven gaps. It cannot be supplied by
-reading a guide, by a PoB number or by a character level, per
-`docs/specs/contracts.md` `Observation`.
+**1. One complete Huntress build, exported by hand.** A PoB build file or build
+code carrying equipment with full modifier text, passive allocations,
+ascendancy, skill groups with levels, quality and supports, weapon-set
+bindings, and the rotation the operator plays. Imported through P03-T02 local
+acquisition, with no provider access.
 
-Nobody else can supply either input today. No provider in P03-T01's manifests
-offers a permitted automatic route, and this project runs no in-game automation.
+| Gap | What this closes | What it does not |
+|---|---|---|
+| `gap-p09-t01-reference-build` | **Begins** reference selection: it supplies a complete, importable configuration, which is the first of the two things the gap asks for. | It does not close the gap. The gap also requires an observed completion time for that configuration on the scenario, and an export contains no trial. A reference result is frozen by an accepted configuration plus an accepted observation, never by an export alone. |
+| `gap-p09-t01-build-families` | Nothing on its own. | One build does not name a family. Three builds across three distinct families, each accepted, would close it. |
+
+**2. Recorded gameplay for one named encounter.** For a single named boss and a
+single named map layout, at a stated area level and patch. What a recording can
+support depends on what is legible in it, so the gaps are listed separately
+rather than as a block:
+
+| Gap | Artifact and extractable quantity | Required context | Uncertainty | Accepted when |
+|---|---|---|---|---|
+| `gap-p09-t01-boss-windows` | Phase and invulnerability start and end times, read off the recording's clock in seconds | Named boss, area level, patch, at least five attempts | Frame rate and the operator's reaction time bound the precision; state it | A reviewer accepts the attempt set and the stated precision |
+| `gap-p09-t01-duration-limit` | Completion time per attempt, including the failures | The same | As above | The same |
+| `gap-p09-t01-route-timing` | Per-leg walked route times | Named map layout, the route walked | As above | The same |
+| `gap-p09-t01-encounter-density` | Pack size and spacing along that route | The same | Spacing is in whatever unit the recording permits; see the spatial gap | The same |
+| `gap-p09-t01-incoming-damage` | Timestamped damage events | The same, plus the character's mitigation at the time | A health bar shows a fraction, not absolute damage, unless maximum life is known | Only with the life figure below |
+| `gap-p09-t01-initial-resources` | The resource state at the start event | The same | Legibility of the resource display | A reviewer accepts the reading |
+| `gap-p09-t01-enemy-health` | **Not closed by a health bar.** A bar shows a fraction of an unknown maximum | Absolute maximum life needs an identified catalog row for that monster at that area level and rarity, or a controlled experiment with a known damage figure | Identification of the catalog row is the uncertainty | A reviewer accepts the catalog row or the experiment |
+| `gap-p09-t01-enemy-defenses` | **Not closed by a recording.** Mitigation is not visible | As above | As above | As above |
+| `gap-p09-t01-spatial-unit` | **Not closed by a recording.** Positions are in screen or minimap space | The conversion between that space and the game's units needs its own identified evidence | The conversion factor is the unknown | A reviewer accepts the conversion |
+
+A recording that shows boss timings but no spatial conversion closes the timing
+gaps and leaves the spatial one open. A recording with a legible fractional
+health bar and no absolute-life evidence closes neither
+`gap-p09-t01-enemy-health` nor `gap-p09-t01-incoming-damage`. None of these may
+be reported as satisfying the four-scenario, multi-family observation target:
+one dataset for one boss on one map is one dataset.
+
+Collection is what P09-T02 owns, per `docs/specs/contracts.md` `Observation`.
+None of it can be supplied by reading a guide, by a PoB number or by a
+character level.
+
+**Who can supply it.** Owner gameplay is a concrete and available collection
+path, and it is not the only permitted one. Independently sourced or exported
+data is acceptable on the same terms as anything else here: it closes what it
+measures, with its provenance recorded, and a reviewer accepts it. The
+supplemental explicit-link path P03-T01 identifies is one such source for build
+configurations. What is true today is narrower than the earlier wording: no
+provider in P03-T01's manifests offers a permitted automatic route, and this
+project runs no in-game automation.
 
 A third input is cheaper and partial: an accepted patch profile with
 compatibility `verified` rather than `partial`, from P02-T02 against the live
@@ -137,13 +167,23 @@ passes unchanged.
 
 ## Reviewer
 
-Unresolved. No reviewer has seen this record.
+Partly resolved, 2026-10-11, by the external review in
+`docs/reviews/P09-T01.md`. The record is deliberately not resolved as a whole,
+because the two halves of it answer to different people.
 
-The reviewing assistant resolves items 1, 4 and 5 of the proposed choice, which
-are technical. Items 2 and 3, and the two unblocking inputs above, are requests
-to the owner: supplying a build file and recording gameplay are the owner's
-time, not an implementation choice, so they go to Elias as concrete
-alternatives rather than as a design question.
+**Resolved.** Items 1, 4 and 5 of the proposed choice, which are technical. The
+direction is approved: proceed toward synthetic prototype testing only, retain
+the provisional product thresholds, fit no game constants, and make no
+practical build-superiority claim. Adoption of `p09-synthetic-v1` is subject to
+the R1 and R2 repairs in that review, which are applied.
+
+**Unresolved.** Items 2 and 3. Representative encounters and the three Huntress
+families stay unselected, and the fourteen `DataGap` records stay open. No
+gameplay validation and no gate is accepted by this.
+
+**Owner's, not a reviewer's.** The unblocking inputs above are requests for the
+owner's time, so they go to Elias as concrete alternatives rather than as a
+design question. The reviewer's scope does not extend to deciding them.
 
 ## Date
 

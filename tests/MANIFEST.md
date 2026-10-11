@@ -338,8 +338,12 @@ throwaway one leaves the session `engine` fixture unusable for every test
 after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
 document in the session engine for that reason.
 ## P09-T01 recorded results
+
 Specification version 1.0, 2026-10-10, branch `p09-t01-protocol` off
 `c2c2d02`, CPython 3.12.4, Windows 11:
+
+| Command | Result |
+|---|---|
 | `python -m pytest tests/unit` | 873 passed, 1 xfailed |
 | `python -m pytest` (no `POB2_ROOT`) | 882 passed, 99 skipped, 1 xfailed |
 | `python -m pytest` (with `POB2_ROOT`) | 981 passed, 1 xfailed |
@@ -351,3 +355,26 @@ The two new files add 36 tests. Neither reaches PoB, the network or the game.
 What they cannot check is whether the suite is a good encounter model, because
 no encounter has been measured and no evaluator exists to run it through. The
 suite is `kind: synthetic` and `validation_status: untested` for that reason.
+
+### After the P09-T01 review repairs
+
+Branch `p09-benchmarks`, 2026-10-11, after `docs/reviews/P09-T01.md` R1 and R2:
+
+| Command | Python 3.12.4 | Python 3.10.22 |
+|---|---|---|
+| `python -m pytest tests/unit/test_p09_t01_scenarios.py tests/unit/test_p09_t01_protocol.py` | 32 passed | 32 passed |
+| `python -m pytest tests/unit tests/integration -m 'not engine and not network and not longrun'` | 883 passed, 1 xfailed | not re-run |
+| `python scripts/generate_schemas.py --check` | 20 schema files match | not re-run |
+
+One test was removed and two added.
+`test_every_limit_leaves_headroom_over_its_own_floor` is gone: it compared
+constants and called the difference headroom over a floor that no evaluation
+has to reach. `test_the_horizon_totals_account_for_the_whole_limit` says what
+the two horizon figures are, and `test_the_completion_clock_stops_at_death`
+recomputes the four worked completion times from the declared windows rather
+than reading the stored numbers back.
+
+`baseline_suite_hash` is unchanged, so the suite keeps its `suite_id`: no
+`ScenarioSpec` or `RotationPolicy` record changed. The fixture file's SHA-256
+did change, because the oracle block lives in that file, and it is updated in
+both places that record it.

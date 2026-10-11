@@ -180,12 +180,16 @@ def test_only_the_spread_shape_charges_route_time(bundle: dict):
 
 
 def test_only_the_sustained_boss_withholds_the_target(bundle: dict):
+    """Over the whole configured horizon. Not an elapsed time: see
+    ``test_the_completion_clock_stops_at_death``."""
     oracle = bundle["oracle"]
-    assert oracle["p09-syn-boss-sustained"]["untargetable_time_s"] == 30.0
-    assert oracle["p09-syn-boss-sustained"]["mean_targetable_time_s"] == 270.0
+    sustained = oracle["p09-syn-boss-sustained"]
+    assert sustained["horizon_untargetable_time_s"] == 30.0
+    assert sustained["horizon_targetable_time_s"] == 270.0
+    assert sustained["horizon_s"] == 300.0
     for scenario_id in ("p09-syn-clear-dense", "p09-syn-clear-spread",
                         "p09-syn-boss-short"):
-        assert oracle[scenario_id]["untargetable_time_s"] == 0.0
+        assert oracle[scenario_id]["horizon_untargetable_time_s"] == 0.0
 
 
 def test_the_untargetable_windows_are_the_gaps_between_targetable_ones(bundle: dict):
@@ -197,16 +201,81 @@ def test_the_untargetable_windows_are_the_gaps_between_targetable_ones(bundle: d
         for i in range(len(windows) - 1)
     ]
     assert gaps == [15.0, 15.0]
-    assert sum(gaps) == bundle["oracle"]["p09-syn-boss-sustained"]["untargetable_time_s"]
+    assert sum(gaps) == bundle["oracle"]["p09-syn-boss-sustained"][
+        "horizon_untargetable_time_s"]
 
 
-def test_every_limit_leaves_headroom_over_its_own_floor(bundle: dict):
-    """A timeout in a test must mean the evaluator failed, not that the limit
-    was tight. The declared floor is route time plus untargetable time plus
-    preparation."""
+def test_the_horizon_totals_account_for_the_whole_limit(bundle: dict):
+    """What the two horizon figures are: a partition of the configured
+    horizon into declared targetable and declared untargetable time.
+
+    This replaces a test that compared route time plus untargetable time plus
+    preparation against the duration limit and called the result headroom. It
+    proved an inequality between constants and nothing else. Those quantities
+    are not a lower bound on any evaluation's elapsed time, because none of
+    them has to elapse before the target dies.
+    """
     for scenario_id, row in bundle["oracle"].items():
-        if scenario_id == "derivation":
+        if scenario_id in ("derivation", "worked_examples"):
             continue
-        floor = (row["route_time_s"] + row["untargetable_time_s"]
-                 + row["preparation_limit_s"])
-        assert floor < row["duration_limit_s"], scenario_id
+        assert (row["horizon_targetable_time_s"]
+                + row["horizon_untargetable_time_s"]) == row["horizon_s"]
+        assert row["horizon_s"] == row["duration_limit_s"]
+
+
+def test_the_completion_clock_stops_at_death(bundle: dict):
+    """R1. A future window is not part of an evaluation that already ended.
+
+    Each example applies a hypothetical constant damage rate to the sustained
+    boss, only while it is targetable, and is recomputed here from the
+    declared windows. The arithmetic is over invented constants: it describes
+    no build and measures nothing about PoE 2.
+    """
+    sustained = next(s for s in bundle["records"]["scenario_spec"]
+                     if s["scenario_id"] == "p09-syn-boss-sustained")
+    windows = [(w["start_s"], w["end_s"])
+               for w in sustained["target_entities"][0]["targetable_windows"]]
+    health = sustained["target_entities"][0]["health"]
+    horizon = sustained["duration_limit_s"]
+
+    examples = [e for e in bundle["oracle"]["worked_examples"]
+                if e["scenario_id"] == "p09-syn-boss-sustained"]
+    assert len(examples) == 4
+
+    for example in examples:
+        rate = example["hypothetical_damage_per_s"]
+        completion, elapsed_untargetable = _simulate(windows, health, rate,
+                                                     horizon)
+        assert completion == example["completion_time_s"], example
+        assert elapsed_untargetable == example["untargetable_time_elapsed_s"]
+        assert example["outcome"] == ("timed_out" if completion is None
+                                      else "completed")
+
+    by_rate = {e["hypothetical_damage_per_s"]: e for e in examples}
+    # The case the protocol used to get wrong: a kill at 20 s inside the first
+    # window, with none of the horizon's 30 s of invulnerability elapsed.
+    assert by_rate[2000.0]["completion_time_s"] == 20.0
+    assert by_rate[2000.0]["untargetable_time_elapsed_s"] == 0.0
+    assert by_rate[400.0]["completion_time_s"] == 115.0
+    assert by_rate[250.0]["completion_time_s"] == 190.0
+    # And a timeout is a valid failed evaluation, not a broken evaluator.
+    assert by_rate[1.0]["completion_time_s"] is None
+    assert by_rate[1.0]["outcome"] == "timed_out"
+
+
+def _simulate(windows, health, rate, horizon):
+    """Completion time and untargetable time elapsed before it, or None."""
+    remaining = health
+    previous_end = None
+    untargetable = 0.0
+    for start, end in windows:
+        if start >= horizon:
+            break
+        if previous_end is not None:
+            untargetable += min(start, horizon) - previous_end
+        previous_end = min(end, horizon)
+        available = previous_end - start
+        if rate * available >= remaining:
+            return round(start + remaining / rate, 6), untargetable
+        remaining -= rate * available
+    return None, untargetable

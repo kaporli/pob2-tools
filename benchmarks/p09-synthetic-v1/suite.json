@@ -6,8 +6,8 @@
   "protocol": "benchmarks/p09-synthetic-v1/protocol.md",
   "scenario_source": {
     "path": "tests/fixtures/combat/p09_synthetic_suite.v1.json",
-    "sha256": "265c542365b8dd0cdaeefd25bd9017029e20f719f5c11a55bae8bf68e89f1b37",
-    "bytes": 42264
+    "sha256": "5f5609adf9d252a3a9380b1c3259973a9ac439b4ac83a66f5bafcadc8cc402a0",
+    "bytes": 44548
   },
   "scenarios": [
     {
