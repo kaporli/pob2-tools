@@ -15,7 +15,7 @@ from __future__ import annotations
 import ipaddress
 from dataclasses import dataclass, field
 from typing import Iterable
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlunsplit
 
 from .redaction import redact_url
 
@@ -24,6 +24,11 @@ from .redaction import redact_url
 SUPPORTED_SCHEMES = ("https", "http")
 
 DEFAULT_PORTS = {"https": 443, "http": 80}
+
+#: Percent-encoded dot segments. A path spelling one is refused rather than
+#: guessed at: the policy and the HTTP client would otherwise disagree about
+#: which path was approved.
+ENCODED_DOT_SEGMENTS = ("%2e", "%2E")
 
 
 class PolicyRefusal(Exception):
@@ -92,7 +97,13 @@ class HostPolicy:
 
         Refused: a URL carrying credentials, an unsupported scheme, a bare IP
         literal, a host that is not approved, a non-default port the rule did
-        not declare, and a path outside the rule's prefixes.
+        not declare, a percent-encoded dot segment, and a path outside the
+        rule's prefixes.
+
+        The returned URL is the one the caller must send. Dot segments are
+        removed here, so the path the policy approved is the path that travels:
+        a rule allowing ``/approved/`` used to accept ``/approved/../blocked``,
+        which any HTTP client then resolves to ``/blocked``.
         """
         if not isinstance(url, str) or not url.strip():
             raise PolicyRefusal("empty url", url or "")
@@ -108,6 +119,12 @@ class HostPolicy:
             port = parts.port
         except ValueError:
             raise PolicyRefusal("url has an invalid port", url) from None
+
+        raw_path = parts.path or "/"
+        if any(token in raw_path for token in ENCODED_DOT_SEGMENTS):
+            raise PolicyRefusal(
+                "path carries a percent-encoded dot segment", url)
+        path = remove_dot_segments(raw_path)
 
         if not self.rules:
             raise PolicyRefusal(
@@ -126,10 +143,11 @@ class HostPolicy:
                 raise PolicyRefusal(
                     "port %s is not approved for %s"
                     % (port, host), url)
-            if not rule.matches_path(parts.path or "/"):
+            if not rule.matches_path(path):
                 raise PolicyRefusal(
                     "path is outside the approved prefixes for %s" % host, url)
-            return url.strip()
+            return _canonical_url(parts.scheme.lower(), host, port, path,
+                                  parts.query)
 
         if host_matched:
             raise PolicyRefusal(
@@ -145,6 +163,36 @@ class HostPolicy:
         except PolicyRefusal:
             return False
         return True
+
+
+def remove_dot_segments(path: str) -> str:
+    """RFC 3986 5.2.4, so the approved path is the resolved one."""
+    segments = path.split("/")
+    out: list[str] = []
+    for index, segment in enumerate(segments):
+        last = index == len(segments) - 1
+        if segment == ".":
+            if last:
+                out.append("")
+            continue
+        if segment == "..":
+            if len(out) > 1:
+                out.pop()
+            if last:
+                out.append("")
+            continue
+        out.append(segment)
+    return "/".join(out) or "/"
+
+
+def _canonical_url(scheme: str, host: str, port: int | None, path: str,
+                   query: str) -> str:
+    netloc = "[%s]" % host if ":" in host else host
+    if port is not None and port != DEFAULT_PORTS[scheme]:
+        netloc = "%s:%d" % (netloc, port)
+    # The fragment is dropped: it is never sent, and keeping it in the
+    # approved URL would mean approving something other than the request.
+    return urlunsplit((scheme, netloc, path, query, ""))
 
 
 def _is_ip_literal(host: str) -> bool:

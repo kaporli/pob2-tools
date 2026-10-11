@@ -57,7 +57,7 @@
     },
     "sitemap": ["https://mobalytics.gg/sitemap.xml"],
     "named_agent_groups": [],
-    "reading": "The published robots policy permits /poe-2/ and does not name any automation agent. The English build paths this project needs are not disallowed.",
+    "reading": "The robots instructions do not exclude /poe-2/ and name no automation agent, so the English build paths this project needs are not disallowed. That is a crawl instruction; it establishes nothing about the applicable terms, which were not readable.",
     "evidence_ids": ["MOBA-E01"]
   },
   "terms": {
@@ -72,7 +72,7 @@
     "permitted_access_method": null,
     "acquisition_status": "access_blocked",
     "candidate_access_methods": ["manual_capture", "provider_export", "local_file"],
-    "rationale": "robots.txt permits the build paths, but every HTML path requested returned HTTP 403 to this client while robots.txt itself returned 200. The block is at the edge and is client dependent, not a published prohibition. No automated access method is confirmed. Manual capture and the provider's own build-file download remain candidates because docs/specs/research.md records a browser reaching the same pages on 2026-10-04.",
+    "rationale": "robots.txt returned 200 and its instructions do not exclude the build paths. Every HTML path requested returned HTTP 403 to this client, the terms page included, so the applicable terms are unread and the cause of the 403 is unknown: an edge filter, an automation policy and a published prohibition are all consistent with what was observed, and nothing here distinguishes them. No automated access method is confirmed and none is treated as permitted. Manual capture and the provider's own build-file download remain candidates because docs/specs/research.md records a browser reaching the same pages on 2026-10-04.",
     "evidence_ids": ["MOBA-E01", "MOBA-E02", "MOBA-E03", "MOBA-E04", "MOBA-E05", "MOBA-E06", "MOBA-E07"]
   },
   "support": {

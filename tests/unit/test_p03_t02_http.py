@@ -542,8 +542,38 @@ def test_no_credential_reaches_a_blob_a_record_a_log_or_the_state(
     assert SECRET not in json.dumps(_as_json(corpus, outcome.result.record_id))
     assert SECRET not in corpus.read_payload(document.blob_hash).decode("utf-8")
     assert SECRET not in caplog.text
-    assert SECRET not in (tmp_path / "acquisition-state.json").read_text(
-        encoding="utf-8")
+    # An authenticated request is not cached at all without an explicit
+    # partition, so there is no state entry to leak through (R3).
+    assert not (tmp_path / "acquisition-state.json").is_file()
+
+
+def test_an_authenticated_request_is_cached_only_under_a_named_partition(
+        corpus, tmp_path, caplog):
+    """R3. A shared cache entry is a way to serve one caller's authenticated
+    copy to another, so the caller has to name the context it belongs to."""
+    secret_url = "https://%s/build/42?access_token=%s&page=3" % (HOST, SECRET)
+    transport = StubTransport(ok_response(**{"ETag": '"v1"'}),
+                              Response(status=304, headers={}, url=secret_url))
+    service = service_with(transport, corpus, tmp_path)
+    auth = {"Authorization": "Bearer %s" % SECRET}
+
+    with caplog.at_level(logging.DEBUG, logger="pob2opt.acquisition"):
+        first = service.ingest_url(secret_url, provider="fixture", headers=auth,
+                                   credential_partition="fixture-account")
+        second = service.ingest_url(secret_url, provider="fixture", headers=auth,
+                                    credential_partition="fixture-account")
+
+    assert first.status is AcquisitionStatus.OK
+    assert second.status is AcquisitionStatus.OK and second.unchanged
+    assert "If-None-Match" not in transport.requests[0].headers
+    assert "If-None-Match" in transport.requests[1].headers
+
+    state = (tmp_path / "acquisition-state.json").read_text(encoding="utf-8")
+    assert SECRET not in state
+    assert SECRET not in caplog.text
+    # A different authorization context cannot reach the same entry.
+    assert service.state.document_for(
+        "fixture", secret_url, credential_partition="other-account") is None
 
 
 def test_a_failed_fetch_keeps_no_credential_either(corpus, tmp_path, caplog):

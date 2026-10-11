@@ -12,7 +12,7 @@ call, so importing ``pob2opt.acquisition`` neither needs it nor opens a socket.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Iterable, Iterator, Mapping, Protocol
+from typing import Callable, Iterable, Iterator, Mapping, Protocol
 
 #: Read size for the streaming body. Small enough that the size limit is hit
 #: shortly after it is exceeded, not after the whole payload has arrived.
@@ -50,11 +50,33 @@ class Response:
     #: Body chunks. Not read at all for a status whose body we discard.
     chunks: Iterable[bytes] = ()
     url: str = ""
+    #: Releases the underlying transport object. The response owns it, so a
+    #: status whose body is discarded still closes the connection.
+    on_close: Callable[[], None] | None = None
+
+    def __post_init__(self) -> None:
+        self._closed = False
+
+    @property
+    def closed(self) -> bool:
+        return getattr(self, "_closed", False)
 
     def close(self) -> None:
+        """Release the response. Idempotent, and independent of iteration.
+
+        Closing an unstarted generator never runs its ``finally``, so the body
+        guard cannot be the only owner of the connection: a redirect, a 304, a
+        403 and a refused Content-Length all return before the first chunk is
+        pulled, and each one used to leave the socket open.
+        """
+        if getattr(self, "_closed", False):
+            return
+        self._closed = True
         close = getattr(self.chunks, "close", None)
         if callable(close):
             close()
+        if self.on_close is not None:
+            self.on_close()
 
     def header(self, name: str) -> str | None:
         lowered = name.lower()
@@ -106,6 +128,7 @@ class RequestsTransport:
             headers=dict(response.headers),
             chunks=_guarded_chunks(response),
             url=request.url,
+            on_close=getattr(response, "close", None),
         )
 
 

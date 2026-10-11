@@ -34,12 +34,24 @@ Full per-request results are in `docs/evidence/P03/mobalytics-capabilities.json`
 
 ## What was actually observed
 
-**Mobalytics.** `robots.txt` returned 200 and permits `/poe-2/`: `User-agent: *`
-with `Allow: /`, no agent-specific group, nothing covering the build paths. Every
-HTML path requested then returned HTTP 403 to this client, including the listing,
-the guide page that `research.md` recorded as readable on 2026-10-04, the terms
-page, and the sitemap that `robots.txt` itself advertises. So the published
-policy permits and the edge refuses. No field, no export, no pagination
+**Mobalytics.** `robots.txt` returned 200 and its instructions do not exclude
+`/poe-2/`: `User-agent: *` with `Allow: /`, no agent-specific group, nothing
+covering the build paths. Every HTML path requested then returned HTTP 403 to
+this client, including the listing, the guide page that `research.md` recorded
+as readable on 2026-10-04, the terms page, and the sitemap that `robots.txt`
+itself advertises.
+
+Three separate things, kept separate because conflating them is how an unknown
+becomes a permission:
+
+* **Robots instructions.** Read, and they do not exclude these paths. That is
+  a crawl instruction, not a grant of a right to the content.
+* **Terms.** Not read. The terms page itself returned 403, so what they say
+  about automated access is unknown.
+* **Transport status.** 403 to this client, from two independent clients. The
+  cause is unknown: an edge filter, a published prohibition this project has
+  not read, and an automation policy are all consistent with what was
+  observed. Nothing here distinguishes them. No field, no export, no pagination
 behaviour and no record of any category was observed. A public search index
 shows guide titles carrying a `0.5.5` patch label, authors and October 2026
 update dates, and reports that guides offer a build-file download and a pobb.in
@@ -82,11 +94,15 @@ snapshots and a snapshot has no author-declared variants.
    explanatory prose. All nine are false today.
 2. No automatic provider adapter is approved. P03-T03 has no provider to build
    against, and the automatic portion of P03-T04 is blocked for all three.
-3. Keep Mobalytics as the first candidate, with the reason stated plainly: it is
-   the only one of the three whose published policy permits automated access to
-   its build pages. Its block is an edge filter on this client, not a
-   prohibition, so it is the only one that evidence could still open. That is a
-   ranking of prospects, not a usable integration.
+3. Keep Mobalytics as the first candidate, with the reason stated plainly: it
+   is the only one of the three whose robots instructions do not exclude the
+   build paths, and the only one whose applicable terms this project has not
+   been able to read. Its 403 has no established cause. That is a ranking of
+   prospects on incomplete evidence, not a usable integration, and not a
+   finding that automated access is permitted. Any of the three dispositions
+   could change: changed documentation or explicit authorization would move
+   poe.ninja or Maxroll as readily as a readable terms page would move
+   Mobalytics.
 4. Rank poe.ninja second and Maxroll last. poe.ninja permits a documented API but
    has closed the build surface deliberately and for a privacy reason. Maxroll
    prohibits the retrieval itself. Neither can be opened by more inspection.

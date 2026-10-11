@@ -18,6 +18,9 @@ Three properties this module exists to guarantee:
   still recorded: attempts are events and both are kept.
 * **No credential is persisted.** URLs are redacted before they reach a record,
   a log line or the state file, and request headers never leave the HTTP layer.
+  A request that carries a credential is not cached at all unless the caller
+  names the authorization context it belongs to, because a shared cache entry
+  is a way for one caller's authenticated copy to be served to another.
 
 Nothing here imports the engine. Acquisition runs with no PoB checkout.
 """
@@ -37,7 +40,7 @@ from . import content as content_rules
 from .content import ContentRefused, MalformedContent, OversizedContent, UnsupportedContent
 from .http import FetchOutcome, HttpAcquirer
 from .limits import Limits
-from .redaction import redact_diagnostic, redact_url
+from .redaction import SAFE_HEADERS, redact_diagnostic, redact_url
 from .scheduling import Clock, Deferral, SystemClock
 from .state import AcquisitionState
 
@@ -273,12 +276,18 @@ class AcquisitionService:
                    external_id: str | None = None,
                    access_method: AccessMethod = AccessMethod.PUBLIC_PAGE,
                    use_cache: bool = True,
+                   credential_partition: str | None = None,
                    **document_fields: Any) -> AcquisitionOutcome:
         """Fetch through the shared HTTP layer and store what came back.
 
-        A conditional request is sent whenever a validator for this URL is
+        A conditional request is sent whenever a validator for this request is
         known. A 304 is a success that stores nothing: the document already
         held is returned unchanged.
+
+        ``credential_partition`` names the authorization context a request's
+        headers belong to. Without it, a request carrying a credential is not
+        cached and sends no validator: the stored representation would depend
+        on who asked, and the cache has no way to tell.
         """
         safe_url = redact_url(url)
         if self.acquirer is None:
@@ -286,9 +295,21 @@ class AcquisitionService:
                                 AcquisitionStatus.UNSUPPORTED_ACCESS,
                                 "this service was built without an HTTP "
                                 "acquirer; URL input is not available")
-        validators = self.state.validators(provider, url) if use_cache else None
+        cacheable = use_cache and (credential_partition is not None
+                                   or not carries_credentials(headers))
+        if use_cache and not cacheable:
+            LOGGER.info("acquisition cache bypassed for an authenticated "
+                        "request provider=%s url=%s", provider, safe_url)
+        validators = (self.state.validators(
+            provider, url, credential_partition=credential_partition)
+            if cacheable else None)
+        validator_origin = (self.state.final_url_for(
+            provider, url, credential_partition=credential_partition)
+            if cacheable else None)
         fetched = self.acquirer.fetch(provider, url, headers=headers,
-                                      validators=validators)
+                                      validators=validators,
+                                      validator_origin=validator_origin)
+        self._save_cooldowns()
 
         if fetched.status is not AcquisitionStatus.OK:
             return self._failed(provider, fetched.url, access_method,
@@ -299,7 +320,8 @@ class AcquisitionService:
                                 deferral=fetched.deferral)
 
         if fetched.unchanged:
-            return self._unchanged(provider, fetched, access_method)
+            return self._unchanged(provider, url, fetched, access_method,
+                                   credential_partition)
 
         outcome = self.ingest_bytes(
             fetched.body or b"", provider=provider, kind=kind,
@@ -309,12 +331,21 @@ class AcquisitionService:
             media_type=_media_type_of(fetched),
             http_status=fetched.http_status, attempts=fetched.attempts,
             **document_fields)
-        if outcome.ok and use_cache:
+        if outcome.ok and cacheable:
             self.state.remember(provider, url, etag=fetched.etag,
                                 last_modified=fetched.last_modified,
                                 source_document_id=outcome.source_document_id,
-                                acquired_at=self.clock.utcnow())
+                                acquired_at=self.clock.utcnow(),
+                                final_url=fetched.url,
+                                credential_partition=credential_partition)
         return outcome
+
+    def _save_cooldowns(self) -> None:
+        """Persist pending provider deadlines, so a resumed run honours them."""
+        scheduler = getattr(self.acquirer, "scheduler", None)
+        if scheduler is None:
+            return
+        self.state.set_cooldowns(scheduler.pending_cooldowns())
 
     def ingest(self, reference: str, *, provider: str,
                **fields: Any) -> AcquisitionOutcome:
@@ -336,9 +367,26 @@ class AcquisitionService:
         except RecordNotFound:
             return None
 
-    def _unchanged(self, provider: str, fetched: FetchOutcome,
-                   access_method: AccessMethod) -> AcquisitionOutcome:
-        known = self.state.document_for(provider, fetched.url)
+    def _unchanged(self, provider: str, url: str, fetched: FetchOutcome,
+                   access_method: AccessMethod,
+                   credential_partition: str | None) -> AcquisitionOutcome:
+        # Keyed by the URL that was asked for, not by the one the redirect
+        # chain ended at: the validator was stored against the former, so a
+        # 304 has to be resolved against the former.
+        known = self.state.document_for(
+            provider, url, credential_partition=credential_partition)
+        cached_final = self.state.final_url_for(
+            provider, url, credential_partition=credential_partition)
+        if known and cached_final and cached_final != fetched.url:
+            # The starting URL now leads somewhere else. The validator we sent
+            # describes the old target's representation, so this 304 says
+            # nothing about the document we hold.
+            return self._failed(provider, fetched.url, access_method,
+                                AcquisitionStatus.INVALID_RESPONSE,
+                                "304 from a location other than the one the "
+                                "cached representation came from",
+                                http_status=fetched.http_status,
+                                attempts=fetched.attempts)
         document = self._existing(known) if known else None
         if document is None:
             # The validator was ours but the document is gone. That is not a
@@ -409,6 +457,16 @@ class AcquisitionService:
             attempted_at=now)
         self.store.put_acquisition_result(result)
         return result
+
+
+def carries_credentials(headers: Mapping[str, str] | None) -> bool:
+    """True when a caller header could be a credential.
+
+    The same allow list the HTTP layer strips a cross-origin redirect with:
+    anything not known to be safe is treated as a secret.
+    """
+    return any(str(name).lower() not in SAFE_HEADERS
+               for name in (headers or {}))
 
 
 def _status_for(refusal: ContentRefused) -> AcquisitionStatus:

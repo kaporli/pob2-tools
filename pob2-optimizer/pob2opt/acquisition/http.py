@@ -17,6 +17,14 @@ project depends on:
   it cannot become a successful empty build further down.
 * Nothing that could carry a credential is logged or returned. The URL in an
   outcome is the redacted one, and header values never leave this module.
+* A credential belongs to the origin it was issued for. A redirect that
+  changes scheme, host or effective port drops every header that could carry
+  one: approving a host to serve build data does not authorize it to receive
+  another host's secrets.
+* A validator belongs to the origin that issued it too, and an ETag means
+  nothing anywhere else. ``validator_origin`` names where the cached
+  representation came from, so a conditional request reaches that origin and
+  only that one, whether it is the first hop or the end of a redirect chain.
 """
 
 from __future__ import annotations
@@ -24,12 +32,12 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
 from typing import Mapping
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 
 from ..domain.enums import AcquisitionStatus
-from .hosts import HostPolicy, PolicyRefusal
+from .hosts import DEFAULT_PORTS, HostPolicy, PolicyRefusal
 from .limits import Limits, ProviderLimits
-from .redaction import redact_diagnostic, redact_url
+from .redaction import SAFE_HEADERS, redact_diagnostic, redact_url
 from .scheduling import Clock, Deferral, ProviderScheduler, SystemClock, parse_retry_after
 from .transport import (
     Request,
@@ -73,7 +81,9 @@ class Validators:
 @dataclass(frozen=True)
 class FetchOutcome:
     status: AcquisitionStatus
-    #: Redacted. This is the only URL form that leaves the module.
+    #: Redacted. The last URL requested, which is not the first one when a
+    #: redirect was followed. Cache identity belongs to the first: see
+    #: ``requested_url``.
     url: str
     http_status: int | None = None
     body: bytes | None = None
@@ -88,6 +98,11 @@ class FetchOutcome:
     diagnostic: str | None = None
     #: True for a 304: the stored copy is current and nothing was downloaded.
     unchanged: bool = False
+    #: Redacted, and the URL the caller asked for. A cached validator and the
+    #: document it belongs to are keyed by this, never by the redirect target.
+    requested_url: str = ""
+    #: True when a cross-origin redirect dropped caller headers or validators.
+    credentials_dropped: bool = False
     #: The limits actually applied, after provider tightening.
     limits: Limits = field(default_factory=Limits)
 
@@ -120,24 +135,41 @@ class HttpAcquirer:
 
     def fetch(self, provider: str, url: str, *,
               headers: Mapping[str, str] | None = None,
-              validators: Validators | None = None) -> FetchOutcome:
+              validators: Validators | None = None,
+              validator_origin: str | None = None) -> FetchOutcome:
         limits = self.limits_for(provider)
         try:
             target = self.policy.check(url)
         except PolicyRefusal as refusal:
             return self._refused(refusal, limits)
 
-        validators = validators or Validators()
+        requested = redact_url(target)
+        held = validators or Validators()
+        sent_headers = dict(headers or {})
+        origin = origin_of(target)
+        # Where the cached representation came from. Unset means "wherever
+        # this URL leads", which is the plain no-redirect case.
+        issuer = origin_of(validator_origin) if validator_origin else origin
+        validators = held if issuer == origin else Validators()
+        dropped = False
         attempts = 0
         redirects = 0
         last: FetchOutcome | None = None
 
         while attempts < limits.max_attempts:
+            cooldown = self.scheduler.reserve_slot(
+                provider, limits.min_interval_s,
+                max_inline_wait_s=limits.max_inline_wait_s,
+                reason=AcquisitionStatus.RATE_LIMITED.value)
+            if cooldown is not None:
+                # The provider is still inside a delay it advertised earlier.
+                # Moving to another of its URLs does not reset that.
+                return self._cooldown(target, requested, cooldown, attempts,
+                                      limits, dropped)
             attempts += 1
-            self.scheduler.wait_for_slot(provider, limits.min_interval_s)
             try:
-                response = self.transport.send(self._request(target, limits, headers,
-                                                             validators))
+                response = self.transport.send(
+                    self._request(target, limits, sent_headers, validators))
             except TransportError as error:
                 last = self._transport_failure(error, target, attempts, limits)
             else:
@@ -147,30 +179,46 @@ class HttpAcquirer:
                         moved = self._redirect(target, location, limits, redirects)
                         if isinstance(moved, FetchOutcome):
                             return _with_attempts(moved, attempts)
+                        if origin_of(moved) != origin:
+                            sent_headers, stripped = strip_credentials(sent_headers)
+                            dropped = dropped or stripped
+                            origin = origin_of(moved)
+                            LOGGER.info(
+                                "acquisition dropped credentials at a "
+                                "cross-origin redirect url=%s", redact_url(moved))
+                        # Re-attached only where the representation it
+                        # describes actually lives.
+                        validators = held if issuer == origin else Validators()
                         target, redirects = moved, redirects + 1
                         attempts -= 1  # a redirect is not a retry
                         continue
                     last = self._handle(response, target, attempts, limits,
                                         validators)
 
+            if last.retry_after_s:
+                # The constraint belongs to the provider, not to this request,
+                # so it is recorded even on the attempt that gives up.
+                self.scheduler.defer_provider(provider, last.retry_after_s)
             if not last.retry_eligible:
-                return last
+                return _finished(last, requested, dropped)
             if attempts >= limits.max_attempts:
                 break
             deferral = self.scheduler.plan_retry(
                 attempt=attempts,
                 advertised_delay_s=_advertised_delay(last),
                 max_inline_wait_s=limits.max_inline_wait_s,
-                reason=last.status.value)
+                reason=last.status.value,
+                provider=provider)
             if deferral is not None:
                 # The advertised delay is longer than we will hold a process
                 # open for. It is kept whole and handed back as a schedule.
-                return _with_deferral(last, deferral)
+                return _finished(_with_deferral(last, deferral), requested,
+                                 dropped)
 
         assert last is not None
         LOGGER.info("acquisition exhausted attempts provider=%s url=%s status=%s",
                     provider, redact_url(target), last.status.value)
-        return last
+        return _finished(last, requested, dropped)
 
     # -- internals ---------------------------------------------------------
 
@@ -184,6 +232,20 @@ class HttpAcquirer:
                        connect_timeout_s=limits.connect_timeout_s,
                        read_timeout_s=limits.read_timeout_s,
                        max_bytes=limits.max_bytes)
+
+    def _cooldown(self, url: str, requested: str, deferral: Deferral,
+                  attempts: int, limits: Limits,
+                  dropped: bool) -> FetchOutcome:
+        LOGGER.info("acquisition deferred by provider cooldown url=%s %s",
+                    redact_url(url), deferral.describe())
+        return FetchOutcome(
+            status=AcquisitionStatus.RATE_LIMITED, url=redact_url(url),
+            requested_url=requested, attempts=attempts, retry_eligible=True,
+            deferral=deferral, retry_after_s=deferral.delay_s,
+            credentials_dropped=dropped, limits=limits,
+            diagnostic=redact_diagnostic(
+                "the provider cooldown is still in force; "
+                + deferral.describe()))
 
     def _refused(self, refusal: PolicyRefusal, limits: Limits) -> FetchOutcome:
         LOGGER.info("acquisition refused url=%s reason=%s",
@@ -326,6 +388,38 @@ def _too_large(limits: Limits, base: dict, detail: str) -> FetchOutcome:
         status=AcquisitionStatus.INVALID_RESPONSE, retry_eligible=False,
         diagnostic="payload exceeds the %d byte limit (%s)"
                    % (limits.max_bytes, detail), **base)
+
+
+def origin_of(url: str) -> tuple[str, str, int]:
+    """Scheme, host and effective port. Two URLs sharing these share an origin."""
+    parts = urlsplit(url)
+    scheme = (parts.scheme or "").lower()
+    host = (parts.hostname or "").lower().rstrip(".")
+    try:
+        port = parts.port
+    except ValueError:
+        port = None
+    return scheme, host, port or DEFAULT_PORTS.get(scheme, 0)
+
+
+def strip_credentials(headers: Mapping[str, str]) -> tuple[dict[str, str], bool]:
+    """Keep only headers that cannot carry a credential.
+
+    An allow list, :data:`redaction.SAFE_HEADERS`, for the same reason the
+    redaction module uses one: a deny list naming ``Authorization`` and
+    ``Cookie`` misses whatever a provider decides to call its key this year.
+    """
+    kept = {str(name): str(value) for name, value in headers.items()
+            if str(name).lower() in SAFE_HEADERS}
+    return kept, len(kept) != len(headers)
+
+
+def _finished(outcome: FetchOutcome, requested: str,
+              dropped: bool) -> FetchOutcome:
+    import dataclasses
+
+    return dataclasses.replace(outcome, requested_url=requested,
+                               credentials_dropped=dropped)
 
 
 def _advertised_delay(outcome: FetchOutcome) -> float | None:
