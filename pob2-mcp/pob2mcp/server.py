@@ -1,9 +1,13 @@
-"""MCP server exposing the Path of Building 2 calculation engine, GGG character
-import, and the PoE2 trade API.
+"""MCP server exposing the Path of Building 2 calculation engine.
 
 Run:  python -m pob2mcp.server
 Register with Claude Code:
   claude mcp add pob2 -- python -m pob2mcp.server
+
+GGG character import and the PoE2 trade tools are quarantined: they are
+registered, they are documented, and they refuse before touching the network.
+See ``quarantine.py`` for why and for what would restore them. Everything the
+engine does locally is unaffected.
 """
 
 from __future__ import annotations
@@ -18,14 +22,11 @@ from typing import Any
 from mcp.server.mcpserver import MCPServer
 
 from .engine import Pob2Engine, PobEngineError
-from .poe_api import PoeApi
-from .trade import Trade2Client
+from .quarantine import QUARANTINED, CapabilityUnavailable, refuse
 
 mcp = MCPServer("pob2")
 
 _engine: Pob2Engine | None = None
-_poe_api: PoeApi | None = None
-_trade: Trade2Client | None = None
 
 
 def engine() -> Pob2Engine:
@@ -36,18 +37,22 @@ def engine() -> Pob2Engine:
     return _engine
 
 
-def poe_api() -> PoeApi:
-    global _poe_api
-    if _poe_api is None:
-        _poe_api = PoeApi()
-    return _poe_api
+def poe_api():
+    """Quarantined. Refuses before constructing the legacy account client.
+
+    This module no longer imports ``.poe_api`` at all, so a default server
+    process never loads the module holding the borrowed OAuth client id, let
+    alone reads a cached token.
+    """
+    raise refuse("authenticate_poe")
 
 
-def trade() -> Trade2Client:
-    global _trade
-    if _trade is None:
-        _trade = Trade2Client()
-    return _trade
+def trade():
+    """Quarantined. Refuses before constructing the legacy trade client.
+
+    ``.trade`` is likewise not imported, so no ``POESESSID`` cookie is read.
+    """
+    raise refuse("trade_search")
 
 
 # ------------------------------------------------------------------ account
@@ -55,33 +60,27 @@ def trade() -> Trade2Client:
 
 @mcp.tool()
 def authenticate_poe() -> str:
-    """Authenticate with pathofexile.com (opens the user's browser for OAuth).
-    Needed once before list_characters/import_character; the token is cached."""
-    return poe_api().authenticate()
+    """UNAVAILABLE. Authenticating here would use Path of Building's own
+    registered OAuth client, which belongs to another project. This project has
+    no registered client id yet, so the operation refuses immediately."""
+    raise refuse("authenticate_poe")
 
 
 @mcp.tool()
 def list_characters() -> list[dict]:
-    """List the authenticated account's PoE2 characters (name, class, level, league)."""
-    chars = poe_api().list_characters()
-    return [
-        {
-            "name": c.get("name"),
-            "class": c.get("class"),
-            "level": c.get("level"),
-            "league": c.get("league"),
-        }
-        for c in chars
-    ]
+    """UNAVAILABLE. Listing the account's characters needs the account API,
+    which needs the borrowed OAuth identity above."""
+    raise refuse("list_characters")
 
 
 @mcp.tool()
 def import_character(name: str) -> dict:
-    """Import a PoE2 character (items, skills, passive tree, level) into the
-    Path of Building engine and return a build summary. After importing, use
-    get_skills + set_main_skill to select the damage skill, then get_stats."""
-    char = poe_api().get_character(name)
-    return engine().call("import_character", {"character": char})
+    """UNAVAILABLE. Importing from the account needs the account API, which
+    needs the borrowed OAuth identity above.
+
+    Local import still works: `import_build_code` takes a Path of Building
+    share code, and the engine's own import path is unchanged."""
+    raise refuse("import_character")
 
 
 # ------------------------------------------------------------------- build
@@ -226,37 +225,24 @@ def set_config(name: str, value: Any) -> dict:
 
 @mcp.tool()
 def trade_leagues() -> list[dict]:
-    """List current PoE2 trade leagues."""
-    return trade().leagues()
+    """UNAVAILABLE. The trade2 endpoints are undocumented and live market
+    access is recorded as unsupported."""
+    raise refuse("trade_leagues")
 
 
 @mcp.tool()
 def trade_search(league: str, query: dict, max_results: int = 10) -> list[dict]:
-    """Search the PoE2 trade site. `query` is a full trade2 API body:
-    {"query": {"status": {"option": "online"}, "stats": [...], "filters": {...}},
-     "sort": {"price": "asc"}}.
-    Returns listings with price and PoB-format item text (usable with test_item
-    / equip_item)."""
-    result = trade().search(league, query)
-    hashes = result.get("result", [])[:max_results]
-    if not hashes:
-        return []
-    listings = trade().fetch(hashes, result["id"])
-    out = []
-    for entry in listings:
-        converted = engine().call("convert_trade_item", {"item": entry["item"]})
-        price = entry.get("listing", {}).get("price") or {}
-        out.append(
-            {
-                "id": entry.get("id"),
-                "price_amount": price.get("amount"),
-                "price_currency": price.get("currency"),
-                "seller": entry.get("listing", {}).get("account", {}).get("name"),
-                "whisper": entry.get("listing", {}).get("whisper"),
-                "item_text": converted["item_string"],
-            }
-        )
-    return out
+    """UNAVAILABLE. There is no documented PoE 2 item listing route, the
+    trade2 endpoints this used are undocumented, and a POESESSID cookie is a
+    website credential rather than an application one.
+
+    The request body this took was a full trade2 API body
+    ({"query": {"status": ..., "stats": [...], "filters": {...}},
+    "sort": {"price": "asc"}}), and the conversion from a listing to
+    PoB item text is `convert_trade_item` in the engine. Both are kept here
+    and in `trade.py` because they are the reusable knowledge; neither is
+    reachable from this surface."""
+    raise refuse("trade_search")
 
 
 @mcp.tool()
@@ -267,27 +253,13 @@ def trade_evaluate(
     max_results: int = 10,
     sort_stat: str = "CombinedDPS",
 ) -> list[dict]:
-    """Search trade, then evaluate every result in the PoB engine as if equipped
-    in `slot`, WITHOUT modifying the build. Returns listings ranked by the delta
-    of `sort_stat` (any PoB output key, e.g. CombinedDPS, FullDPS, TotalEHP),
-    with price. This is the main tool for finding best-upgrade-per-cost."""
-    listings = trade_search(league, query, max_results)
-    evaluated = []
-    for listing in listings:
-        try:
-            diff = engine().call(
-                "test_item", {"raw": listing["item_text"], "slot": slot}
-            )
-        except PobEngineError as exc:
-            listing["error"] = str(exc)
-            evaluated.append(listing)
-            continue
-        listing["stat_diff"] = diff["diff"]
-        stat = diff["diff"].get(sort_stat)
-        listing["sort_delta"] = stat["delta"] if stat else 0
-        evaluated.append(listing)
-    evaluated.sort(key=lambda x: x.get("sort_delta", 0), reverse=True)
-    return evaluated
+    """UNAVAILABLE. This was trade_search followed by an engine evaluation, so
+    it inherits that refusal.
+
+    Evaluating an item you already have the text of is unaffected: `test_item`
+    takes the item text and a slot and returns the stat delta without
+    modifying the build."""
+    raise refuse("trade_evaluate")
 
 
 # -------------------------------------------------------------------- misc
