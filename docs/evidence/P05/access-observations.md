@@ -108,16 +108,28 @@ scope that `pob2-mcp/pob2mcp/poe_api.py` requests does not appear in S3.
 
 ### O8. Redirect URI rules (S3)
 
-S3 states "Any redirect URIs must point to a secure (HTTPS-enabled) URI with a
-registered domain controlled by the application owner. We cannot accept IP
-addresses or localhost domains even for in-development projects." Public clients
-"Must only use the Authorization Code (with PKCE) grant type and must use a
-local redirect URI."
+S3 states both rules under separate headings, and the headings are what
+resolves them.
 
-Observed: the two statements are both on S3 and they read as being in tension
-for a public client. Inferred: nothing. Which redirect form a public client may
-actually register is a registration-time question, and registration is closed
-(O1), so it cannot be settled here.
+Under **Confidential Clients**: "Any redirect URIs must point to a secure
+(HTTPS-enabled) URI with a registered domain controlled by the application
+owner. We cannot accept IP addresses or localhost domains even for
+in-development projects."
+
+Under **Public Clients**: "Must only use the Authorization Code (with PKCE)
+grant type and must use a local redirect URI (ie.
+http://127.0.0.1:8080/callback)."
+
+Observed: two requirements, each scoped to one client type, re-read against
+the section headings on 2026-10-11. Inferred: a desktop application holding no
+client secret is a public client, so the second applies to it. The example
+address is an example. Nothing here says which host or port this project would
+register, and nothing here is in tension.
+
+Correction: an earlier version of this document recorded the two statements as
+being in tension and the redirect form as an open registration-time question.
+That came from reading the quoted text without its heading. The open condition
+is the registration itself (O1), not the redirect form.
 
 ### O9. Identification and rate limits (S1)
 

@@ -45,13 +45,37 @@ def test_decision_record_carries_every_required_section(decision_text: str) -> N
     missing = [s for s in REQUIRED_SECTIONS if s not in decision_text]
     assert not missing, f"D01 is missing required sections: {missing}"
     assert "- Date proposed: 2026-10-10" in decision_text
-    assert "- Reviewer: unresolved" in decision_text
+    assert re.search(r"^- Reviewer: \S.*$", decision_text, re.M)
 
 
-def test_decision_is_proposed_and_not_self_accepted(decision_text: str) -> None:
-    """An engineer writes the proposal. Only a reviewer resolves it."""
-    assert "Status: proposed, awaiting review" in decision_text
-    assert "- Verdict: unresolved" in decision_text
+def test_decision_is_not_self_accepted(decision_text: str) -> None:
+    """An engineer writes the proposal. Only a reviewer resolves it.
+
+    This used to require the record to say `unresolved` forever, which made a
+    real review impossible to record. What has to hold is weaker and more to
+    the point: the verdict is one of the three the lifecycle allows, an
+    accepted record names a reviewer, and that reviewer is not the engineer
+    who proposed it.
+    """
+    proposer = _field(decision_text, "Proposed by")
+    reviewer = _field(decision_text, "Reviewer")
+    verdict = _field(decision_text, "Verdict")
+    status = _field(decision_text, "Status")
+
+    assert verdict in ("unresolved", "accepted", "rejected"), verdict
+    assert status in ("proposed, awaiting review", "accepted", "rejected"), status
+    if verdict == "unresolved":
+        assert status == "proposed, awaiting review"
+    else:
+        assert reviewer != "unresolved"
+        assert reviewer != proposer
+        assert _field(decision_text, "Date resolved") != "unresolved"
+
+
+def _field(text: str, name: str) -> str:
+    match = re.search(r"^- %s: (.+)$" % re.escape(name), text, re.M)
+    assert match, "D01 has no %s field" % name
+    return match.group(1).strip()
 
 
 def test_public_market_route_is_recorded_unsupported(decision_prose: str) -> None:

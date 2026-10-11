@@ -5,8 +5,8 @@
 - Task: P05-T01
 - Date proposed: 2026-10-10
 - Proposed by: P05 engineer
-- Reviewer: unresolved
-- Status: proposed, awaiting review
+- Reviewer: external review, 2026-10-11
+- Status: accepted
 
 ## Question
 
@@ -88,7 +88,7 @@ prohibition on undocumented ones. It is not proof that none will exist.
 
 A documented endpoint exists and is the right one:
 `GET https://api.pathofexile.com/character/poe2/<name>`, scope
-`account:characters`, OAuth 2.0 authorization code with PKCE for a public
+`account:characters`, OAuth 2.1 authorization code with PKCE for a public
 client.
 
 - Allowed operations: list the authorising account's PoE 2 characters, and read
@@ -104,10 +104,17 @@ client.
 - Limits: whatever the live `X-Rate-Limit-*` headers say, read per response.
   Treat `Retry-After` as a scheduling delay in full, never truncated. These are
   conditions to check at implementation time, not satisfied conditions.
-- Redirect URI: unsettled. S3 says registered redirect URIs must be HTTPS on a
-  domain the owner controls and that localhost is not accepted, and also says a
-  public client must use a local redirect URI. Which applies to us is a
-  registration-time answer we cannot get while registration is closed.
+- Redirect URI: settled, and not a blocker. The two rules S3 states apply to
+  different client types. The HTTPS-and-registered-domain requirement, which
+  rules out localhost, is in the **Confidential Clients** section. The
+  **Public Clients** section says a public client must use the authorization
+  code grant with PKCE and a local redirect URI. A desktop tool holding no
+  client secret is a public client, so it registers its own local redirect
+  URI. S3 gives one as an example; the specific host and port this project
+  would register is a registration-time detail and is not inferred here.
+  Nothing about this is in tension, and it was wrong to record it as a
+  blocker: the open condition is the registration itself, not the redirect
+  form.
 
 Until the condition is met, account-character import is served by P05-T02 file
 import: a build or item document the user exports themselves and passes to
@@ -229,9 +236,28 @@ other means of passing the gate. Each is excluded by S1 and S4, and by the task.
 
 ## Review
 
-- Reviewer: unresolved
-- Verdict: unresolved
-- Date resolved: unresolved
+- Reviewer: external review (`docs/reviews/P05-T01.md`)
+- Verdict: accepted
+- Date resolved: 2026-10-11
 
 A reviewer accepting this record accepts two dispositions, not one: Route A
 supported subject to registration, Route B `unsupported_access`.
+
+What the reviewer accepted, in their terms:
+
+- **Route A.** Documented in principle, unavailable to this project until it
+  has its own registered public client and completes implementation and
+  verification. A `client_id` is not evidence of working import.
+- **Route B.** `unsupported_access` under the currently documented interfaces.
+  Obtaining a `client_id` does not open this route. R05 and G4 stay blocked.
+- **Unavailable refresh.** A typed failure, never a fabricated successful
+  acquisition. Current availability is unknown rather than sold or
+  unavailable, and historical observations stay distinct from a current
+  verification.
+- **Sequencing.** Registration is a Route A dependency, not the critical path.
+  P05-T02 item and listing file import and P05-T03 pools proceed on the
+  existing fidelity contracts, with unknown availability where evidence is
+  absent. P05-T04 live listing transport stays blocked.
+
+Acceptance of this record is not acceptance of any live market capability, and
+no earlier gate is passed by it.
