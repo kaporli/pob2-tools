@@ -1,0 +1,277 @@
+{
+  "acquisition_version": "p03.t02.1",
+  "caveat": "Invented payloads and a scripted transport. No provider was contacted, no socket was opened and no PoB runtime was used. This records our code's behaviour, nothing about any provider.",
+  "conditional_requests": {
+    "blobs": 1,
+    "if_none_match_sent": "\"v1\"",
+    "same_document": true,
+    "second_request_headers": [
+      "Accept-Encoding",
+      "If-None-Match",
+      "User-Agent"
+    ],
+    "second_status": "ok",
+    "second_unchanged": true,
+    "source_documents": 1
+  },
+  "credentials": {
+    "log_lines": [
+      "acquisition stored document=1324cd60-25bd-5611-bd1c-97646b9cd82a provider=synthetic kind=json bytes=31"
+    ],
+    "secret_in_acquisition_result_row": false,
+    "secret_in_blob": false,
+    "secret_in_log": false,
+    "secret_in_source_document_row": false,
+    "secret_in_state_file": false,
+    "secret_in_stored_url": false,
+    "status": "ok",
+    "stored_source_url": "https://builds.example.invalid/build/42?access_token=REDACTED&page=3"
+  },
+  "evidence_kind": "synthetic",
+  "failures": [
+    {
+      "attempts": 1,
+      "blobs_written": 0,
+      "case": "http_403",
+      "diagnostic": "HTTP 403 (attempts=1)",
+      "documents_written": 0,
+      "http_status": 403,
+      "retry_eligible": false,
+      "slept_s": [],
+      "source_document_id": null,
+      "status": "access_blocked"
+    },
+    {
+      "attempts": 1,
+      "blobs_written": 0,
+      "case": "http_404",
+      "diagnostic": "HTTP 404 (attempts=1)",
+      "documents_written": 0,
+      "http_status": 404,
+      "retry_eligible": false,
+      "slept_s": [],
+      "source_document_id": null,
+      "status": "not_found"
+    },
+    {
+      "attempts": 3,
+      "blobs_written": 0,
+      "case": "http_429",
+      "diagnostic": "HTTP 429 retry-after=5s (attempts=3)",
+      "documents_written": 0,
+      "http_status": 429,
+      "retry_eligible": true,
+      "slept_s": [
+        5.0,
+        5.0
+      ],
+      "source_document_id": null,
+      "status": "rate_limited"
+    },
+    {
+      "attempts": 1,
+      "blobs_written": 0,
+      "case": "oversized_payload",
+      "diagnostic": "payload exceeds the 8192 byte limit (read past 8192 bytes) (attempts=1)",
+      "documents_written": 0,
+      "http_status": 200,
+      "retry_eligible": false,
+      "slept_s": [],
+      "source_document_id": null,
+      "status": "invalid_response"
+    },
+    {
+      "attempts": 3,
+      "blobs_written": 0,
+      "case": "timeout",
+      "diagnostic": "read timed out (attempts=3)",
+      "documents_written": 0,
+      "http_status": null,
+      "retry_eligible": true,
+      "slept_s": [
+        1.0,
+        2.0
+      ],
+      "source_document_id": null,
+      "status": "timeout"
+    },
+    {
+      "attempts": 1,
+      "blobs_written": 0,
+      "case": "malformed_content",
+      "diagnostic": "json_syntax: Expecting value: line 1 column 15 (char 14) (attempts=1)",
+      "documents_written": 0,
+      "http_status": 200,
+      "retry_eligible": false,
+      "slept_s": [],
+      "source_document_id": null,
+      "status": "invalid_response"
+    },
+    {
+      "attempts": 1,
+      "blobs_written": 0,
+      "case": "local_malformed_json",
+      "diagnostic": "json_syntax: Expecting value: line 1 column 15 (char 14) (attempts=1)",
+      "documents_written": 0,
+      "http_status": null,
+      "retry_eligible": false,
+      "slept_s": [],
+      "source_document_id": null,
+      "status": "invalid_response"
+    }
+  ],
+  "host_policy": {
+    "default_allowed_hosts": [],
+    "refusals": {
+      "credentials_in_url": "url carries credentials",
+      "default_deny": "no host is approved for acquisition; the host allow list is empty until a capability manifest is accepted",
+      "ip_literal": "bare IP literal is not an approved host",
+      "other_host": "host elsewhere.invalid is not on the allow list",
+      "plain_http": "scheme 'http' is not approved for builds.example.invalid"
+    }
+  },
+  "idempotency": {
+    "acquisition_results": 3,
+    "blobs": 1,
+    "created_flags": [
+      true,
+      false,
+      false
+    ],
+    "document_ids": [
+      "292a7262-eda9-5e06-93f2-bf45544c8c03"
+    ],
+    "source_documents": 1
+  },
+  "input_kinds": {
+    "build_code": {
+      "blob_hash": "a9be3cde1ccea66e0286e3bc30cb62d509d8e77d62cbb37fe97790354ffd6000",
+      "byte_count": 160,
+      "created": true,
+      "declared_patch": null,
+      "expanded_bytes": 134,
+      "media_type": "text/vnd.pathofbuilding.code",
+      "popularity": [],
+      "record_id": "02f9c704-e85f-5cfd-b535-2dfba1208b8a",
+      "redistribution": "unknown",
+      "source_url": null,
+      "status": "ok",
+      "stored_bytes_match": true
+    },
+    "html": {
+      "blob_hash": "a6baf28599da66e6ff9b97c730e35b7a494f177129f129c727da8f1b9c19f8fd",
+      "byte_count": 65,
+      "created": true,
+      "declared_patch": null,
+      "media_type": "text/html",
+      "popularity": [],
+      "record_id": "b96bbf77-7519-5c40-ab9b-c308a7fdc480",
+      "redistribution": "unknown",
+      "source_url": null,
+      "status": "ok",
+      "stored_bytes_match": true
+    },
+    "json": {
+      "blob_hash": "f3a47546596c63724bf6a813ff609312c92ebaf8dede8f58a366dc8de4197c25",
+      "byte_count": 31,
+      "created": true,
+      "declared_patch": null,
+      "media_type": "application/json",
+      "popularity": [],
+      "record_id": "9739d831-f7b9-547d-bdae-582187f35391",
+      "redistribution": "unknown",
+      "source_url": null,
+      "status": "ok",
+      "stored_bytes_match": true
+    },
+    "xml": {
+      "blob_hash": "5961f5e9eecc93a49719e9f379b99424be511f8c77324dcec23b0053805ba857",
+      "byte_count": 134,
+      "created": true,
+      "declared_patch": null,
+      "media_type": "application/xml",
+      "popularity": [],
+      "record_id": "292a7262-eda9-5e06-93f2-bf45544c8c03",
+      "redistribution": "unknown",
+      "source_url": null,
+      "status": "ok",
+      "stored_bytes_match": true
+    }
+  },
+  "limits": {
+    "defaults_sent_to_transport": {
+      "connect_timeout_s": 10.0,
+      "max_bytes": 20971520,
+      "read_timeout_s": 30.0
+    },
+    "provider_can_tighten": {
+      "effective": {
+        "max_attempts": 2,
+        "read_timeout_s": 5.0
+      },
+      "requested": {
+        "max_attempts": 2,
+        "read_timeout_s": 5.0
+      }
+    },
+    "provider_cannot_loosen": {
+      "effective": {
+        "max_attempts": 3,
+        "max_bytes": 20971520,
+        "min_interval_s": 2.5,
+        "read_timeout_s": 30.0
+      },
+      "requested": {
+        "max_attempts": 99,
+        "max_bytes": 1073741824,
+        "min_interval_s": 2.5,
+        "read_timeout_s": 600.0
+      }
+    },
+    "size_limit": {
+      "chunks_pulled_before_refusal": 9,
+      "limit_bytes": 8192,
+      "offered_bytes": 4194304,
+      "status": "invalid_response"
+    }
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.4",
+  "scheduling": {
+    "long_delay_is_scheduled_not_truncated": {
+      "attempts": 1,
+      "not_before": "2026-10-10T00:02:00.000Z",
+      "retry_after_s": 120.0,
+      "retry_eligible": true,
+      "slept_s": [],
+      "status": "rate_limited"
+    },
+    "provider_pacing": {
+      "min_interval_s": 2.5,
+      "requests": 2,
+      "slept_s": [
+        2.5
+      ]
+    },
+    "short_delay_is_waited_in_full": {
+      "attempts": 3,
+      "retry_after_s": 5.0,
+      "slept_s": [
+        5.0,
+        5.0
+      ],
+      "status": "rate_limited"
+    }
+  },
+  "specification_version": "1.0",
+  "statuses_in_use": [
+    "ok",
+    "not_found",
+    "access_blocked",
+    "rate_limited",
+    "invalid_response",
+    "timeout",
+    "unsupported_access"
+  ],
+  "task": "P03-T02"
+}

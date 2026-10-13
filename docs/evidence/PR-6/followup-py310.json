@@ -1,0 +1,39 @@
+{
+  "changed_redirect_query": {
+    "requests": [
+      {
+        "url": "https://fixture.invalid/start",
+        "validator": null
+      },
+      {
+        "url": "https://fixture.invalid/export?variant=first",
+        "validator": null
+      },
+      {
+        "url": "https://fixture.invalid/start",
+        "validator": "\"v1\""
+      },
+      {
+        "url": "https://fixture.invalid/export?variant=second",
+        "validator": "\"v1\""
+      }
+    ],
+    "returned_payload": "{\"variant\": \"first\"}",
+    "same_document": true,
+    "status": "ok"
+  },
+  "declared_latin1": {
+    "diagnostic": "xml_encoding: 'utf-8' codec can't decode byte 0xe9 in position 69: invalid continuation byte (attempts=1)",
+    "status": "invalid_response"
+  },
+  "repeated_query_order_keys_equal": true,
+  "restart": {
+    "deadline_after_request": {},
+    "requests_sent": 1,
+    "saved_deadline": {
+      "fixture": "2026-10-12T00:02:00.000Z"
+    },
+    "seconds_elapsed": 0.0,
+    "status": "ok"
+  }
+}

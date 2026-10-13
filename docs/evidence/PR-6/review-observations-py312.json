@@ -1,0 +1,28 @@
+{
+  "approved_path_after_transport_preparation": "https://a.example.invalid/blocked",
+  "cross_origin_headers": {
+    "Accept-Encoding": "identity",
+    "Authorization": "Bearer invented-review-token",
+    "Cookie": "session=invented",
+    "User-Agent": "pob2opt-acquisition/1 (+local research tool)"
+  },
+  "deep_json": "ok",
+  "discarded_403_response_closed": false,
+  "provider_retry_delay": {
+    "next_request_at": "2026-10-11T00:00:00.000Z",
+    "not_before": "2026-10-11T00:02:00.000Z",
+    "second_status": "ok"
+  },
+  "redacted_url_cache_collision": {
+    "returned_first_document": true,
+    "second_request_sent_first_etag": "\"v1\"",
+    "second_status": "ok"
+  },
+  "redirect_304": {
+    "diagnostic": "304 for a document this corpus no longer holds (attempts=1)",
+    "first_status": "ok",
+    "second_status": "invalid_response"
+  },
+  "utf16_doctype_build_code_status": "ok",
+  "utf16_doctype_status": "ok"
+}

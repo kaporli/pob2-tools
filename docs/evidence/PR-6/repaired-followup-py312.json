@@ -1,0 +1,41 @@
+{
+  "changed_redirect_query": {
+    "requests": [
+      {
+        "url": "https://fixture.invalid/start",
+        "validator": null
+      },
+      {
+        "url": "https://fixture.invalid/export?variant=first",
+        "validator": null
+      },
+      {
+        "url": "https://fixture.invalid/start",
+        "validator": null
+      },
+      {
+        "url": "https://fixture.invalid/export?variant=second",
+        "validator": null
+      }
+    ],
+    "returned_payload": "{\"variant\": \"second\"}",
+    "same_document": false,
+    "status": "ok"
+  },
+  "declared_latin1": {
+    "diagnostic": null,
+    "status": "ok"
+  },
+  "repeated_query_order_keys_equal": false,
+  "restart": {
+    "deadline_after_request": {
+      "fixture": "2026-10-12T00:02:00.000Z"
+    },
+    "requests_sent": 0,
+    "saved_deadline": {
+      "fixture": "2026-10-12T00:02:00.000Z"
+    },
+    "seconds_elapsed": 0.0,
+    "status": "rate_limited"
+  }
+}

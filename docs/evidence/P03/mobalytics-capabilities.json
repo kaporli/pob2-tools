@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "record_kind": "source_capability_manifest",
+  "manifest_id": "p03-t01-mobalytics-2026-10-10",
+  "task": "P03-T01",
+  "specification_version": "1.0",
+  "provider": "mobalytics",
+  "provider_slug": "mobalytics",
+  "provider_home": "https://mobalytics.gg/poe-2/builds",
+  "inspected_at": "2026-10-10",
+  "evidence_class": "independently_observed_external",
+  "evidence_class_note": "Observations of a third party website on one date. Not synthetic, not PoB-derived, not a gameplay measurement. A status recorded here describes what one client saw once.",
+  "inspection": {
+    "client": "Claude Code WebFetch",
+    "client_user_agent": null,
+    "client_user_agent_note": "The tool does not expose the user agent it sends. Any user-agent dependent behaviour below is therefore unattributed.",
+    "rendering": "server response converted to Markdown by the tool; client-side JavaScript is not executed",
+    "credentials_used": false,
+    "cookies_used": false,
+    "provider_contacted": false
+  },
+  "bounds": {
+    "requests_to_provider_host": 7,
+    "crawl": false,
+    "undocumented_endpoints_probed": false,
+    "note": "Seven single requests to paths named in robots.txt, in docs/specs/research.md or in a public search result. No path was guessed and no listing was walked. One further request went to pobb.in/robots.txt, a different host, to check the linked export host's policy."
+  },
+  "robots": {
+    "url": "https://mobalytics.gg/robots.txt",
+    "retrieved": true,
+    "http_status": 200,
+    "group_for_all_agents": {
+      "allow": ["/"],
+      "disallow": [
+        "/api/tft",
+        "/api/valorant",
+        "/reward-pass",
+        "/cs_cz/",
+        "/de_de/",
+        "/es_es/",
+        "/fr_fr/",
+        "/it_it/",
+        "/hu_hu/",
+        "/el_gr/",
+        "/ja_jp/",
+        "/ko_kr/",
+        "/pl_pl/",
+        "/pt_br/",
+        "/tr_tr/",
+        "/ro_ro/",
+        "/ru_ru/",
+        "/zh_chs/",
+        "/valorant/leaderboard*page=",
+        "/deadlock/player-profile/"
+      ],
+      "crawl_delay": null
+    },
+    "sitemap": ["https://mobalytics.gg/sitemap.xml"],
+    "named_agent_groups": [],
+    "reading": "The robots instructions do not exclude /poe-2/ and name no automation agent, so the English build paths this project needs are not disallowed. That is a crawl instruction; it establishes nothing about the applicable terms, which were not readable.",
+    "evidence_ids": ["MOBA-E01"]
+  },
+  "terms": {
+    "url": "https://mobalytics.gg/terms/",
+    "retrieved": false,
+    "http_status": 403,
+    "clauses_on_automated_access": null,
+    "note": "The terms page refused this client, so no clause was read. Nothing about automated access, redistribution or commercial use is established for this provider.",
+    "evidence_ids": ["MOBA-E05"]
+  },
+  "access": {
+    "permitted_access_method": null,
+    "acquisition_status": "access_blocked",
+    "candidate_access_methods": ["manual_capture", "provider_export", "local_file"],
+    "rationale": "robots.txt returned 200 and its instructions do not exclude the build paths. Every HTML path requested returned HTTP 403 to this client, the terms page included, so the applicable terms are unread and the cause of the 403 is unknown: an edge filter, an automation policy and a published prohibition are all consistent with what was observed, and nothing here distinguishes them. No automated access method is confirmed and none is treated as permitted. Manual capture and the provider's own build-file download remain candidates because docs/specs/research.md records a browser reaching the same pages on 2026-10-04.",
+    "evidence_ids": ["MOBA-E01", "MOBA-E02", "MOBA-E03", "MOBA-E04", "MOBA-E05", "MOBA-E06", "MOBA-E07"]
+  },
+  "support": {
+    "listing_metadata": {
+      "supported": false,
+      "confirmed": false,
+      "access_method": null,
+      "note": "The listing page refused this client. Titles, patch labels, authors and update dates appear in a public search index, which is an index of the provider, not an acquisition route for this project.",
+      "evidence_ids": ["MOBA-E02", "MOBA-E03", "MOBA-E07"]
+    },
+    "full_build_data": {
+      "supported": false,
+      "confirmed": false,
+      "access_method": null,
+      "note": "Not confirmed by any observation. A public search result reports that guides carry a Build Planner Export download and a pobb.in link. Neither was retrieved, so no item list and no passive tree was seen in any format. Browser-visible guide text would not have established this either.",
+      "evidence_ids": ["MOBA-E04", "MOBA-E06", "MOBA-E07", "MOBA-E08"]
+    },
+    "explanatory_prose": {
+      "supported": false,
+      "confirmed": false,
+      "access_method": null,
+      "note": "docs/specs/research.md records that a guide page carried substantial content on 2026-10-04 through a different browser. This inspection retrieved none of it.",
+      "evidence_ids": ["MOBA-E04", "MOBA-E09"]
+    }
+  },
+  "fields_visible": {
+    "confirmed_by_this_inspection": [],
+    "reported_not_confirmed": [
+      {"field": "guide_title", "source": "search index", "example": "[0.5.5] Immortal Witchhunter Frostbolt Infinite Loop"},
+      {"field": "declared_patch_label", "source": "search index", "example": "0.5.5"},
+      {"field": "author_display_name", "source": "search index", "example": "Scorpius"},
+      {"field": "updated_date", "source": "search index", "example": "Oct 8, 2026"},
+      {"field": "class_and_ascendancy_taxonomy", "source": "search index", "example": "/poe-2/ranger-builds"},
+      {"field": "author_profile_listing", "source": "search index", "example": "/poe-2/profile/raxxanterax/builds"},
+      {"field": "favourites_count", "source": "docs/specs/research.md 2026-10-04", "example": null}
+    ],
+    "note": "Nothing in reported_not_confirmed is evidence of an extractable field. It records what a later adapter should look for.",
+    "evidence_ids": ["MOBA-E07", "MOBA-E09"]
+  },
+  "structured_export_formats": [
+    {
+      "format": "path_of_exile_2_build_planner_file",
+      "confirmed": false,
+      "route": "a Build Planner Export section inside a guide page, reported by a public search result",
+      "evidence_ids": ["MOBA-E07"]
+    },
+    {
+      "format": "path_of_building_xml_via_pobb_in",
+      "confirmed": false,
+      "route": "a pobb.in link inside a guide page, reported by the same search result. pobb.in is a separate host with its own policy and needs its own manifest before use.",
+      "evidence_ids": ["MOBA-E07", "MOBA-E08"]
+    }
+  ],
+  "pagination": {
+    "behaviour": "unknown",
+    "confirmed": false,
+    "note": "The listing was never retrieved. The sitemap that robots.txt advertises also refused this client, so neither a page parameter nor a sitemap enumeration was observed.",
+    "evidence_ids": ["MOBA-E02", "MOBA-E03", "MOBA-E06"]
+  },
+  "authentication": {
+    "required_for_public_pages": "unknown",
+    "attempted": false,
+    "note": "No login, token or cookie was used. The 403 carried no authentication challenge that this tool reported."
+  },
+  "limits": {
+    "provider_declared": {
+      "rate_limit": null,
+      "size_limit": null,
+      "crawl_delay": null,
+      "note": "None published in robots.txt. The terms page was unreadable."
+    },
+    "applied_defaults": {
+      "connect_timeout_s": 10,
+      "read_timeout_s": 30,
+      "max_response_bytes": 20971520,
+      "max_attempts": 3,
+      "source": "docs/specs/interfaces.md operational defaults"
+    }
+  },
+  "blocked_cases": [
+    {"url": "https://mobalytics.gg/poe-2/builds/", "http_status": 403, "status": "access_blocked", "evidence_id": "MOBA-E02"},
+    {"url": "https://mobalytics.gg/poe-2/builds", "http_status": 403, "status": "access_blocked", "evidence_id": "MOBA-E03"},
+    {"url": "https://mobalytics.gg/poe-2/builds/twister-gemling-legionnaire", "http_status": 403, "status": "access_blocked", "evidence_id": "MOBA-E04"},
+    {"url": "https://mobalytics.gg/terms/", "http_status": 403, "status": "access_blocked", "evidence_id": "MOBA-E05"},
+    {"url": "https://mobalytics.gg/sitemap.xml", "http_status": 403, "status": "access_blocked", "evidence_id": "MOBA-E06"},
+    {"url": "https://mobalytics.gg/poe-2/guides/build-files", "http_status": 403, "status": "access_blocked", "evidence_id": "MOBA-E10"}
+  ],
+  "representative_records": [
+    {
+      "category": "current_endgame",
+      "inspected": false,
+      "status": "access_blocked",
+      "candidate_url": "https://mobalytics.gg/poe-2/builds/ice-shot-deadeye",
+      "candidate_source": "public search result title '0.5.5 Fubgun Ice Shot Deadeye - PoE 2 Ranger Build Guide'",
+      "observed": null,
+      "reason": "Guide pages returned HTTP 403 to this client. The candidate URL was not requested after the first three refusals.",
+      "evidence_ids": ["MOBA-E04", "MOBA-E07"]
+    },
+    {
+      "category": "multiple_variants",
+      "inspected": false,
+      "status": "access_blocked",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "No record could be opened, so no guide was shown to carry variants. No candidate URL was identified without the listing.",
+      "evidence_ids": ["MOBA-E02", "MOBA-E03"]
+    },
+    {
+      "category": "old_patch",
+      "inspected": false,
+      "status": "access_blocked",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "Every patch label seen in the search index was 0.5.5. Whether the provider keeps older-patch guides reachable is unestablished.",
+      "evidence_ids": ["MOBA-E07"]
+    },
+    {
+      "category": "sparse_incomplete",
+      "inspected": false,
+      "status": "access_blocked",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "Identifying a sparse record needs the listing, which refused this client.",
+      "evidence_ids": ["MOBA-E02", "MOBA-E03"]
+    },
+    {
+      "category": "unusual_build",
+      "inspected": false,
+      "status": "access_blocked",
+      "candidate_url": null,
+      "candidate_source": "search result title '[0.5.5] Immortal Witchhunter Frostbolt Infinite Loop', URL not returned",
+      "observed": null,
+      "reason": "Title only. Its URL was not returned by the search and was not guessed.",
+      "evidence_ids": ["MOBA-E07"]
+    }
+  ],
+  "redistribution": "unknown",
+  "local_handling": "restricted",
+  "redistribution_note": "The terms page was unreadable, so no permission and no prohibition is established. Guide text and build files stay out of this repository until a term is read. Anything captured locally is marked restricted.",
+  "redistribution_evidence_ids": ["MOBA-E05"],
+  "recommended_adapter_path": {
+    "summary": "No automatic adapter. Accept explicit local input only: a build file or a PoB code the operator exports from a guide, imported as local_file, plus manual_capture of a single named page when a reviewer supplies it.",
+    "access_methods": ["local_file", "manual_capture"],
+    "allowed_operations": [
+      "import a build file or build code the operator already holds",
+      "store one explicitly named captured page as a raw SourceDocument"
+    ],
+    "refused_operations": [
+      "listing discovery or pagination",
+      "any crawl",
+      "probing /api/ or any path not published in robots.txt or linked from a retrieved page",
+      "retrying the 403 with a different user agent to defeat the edge filter"
+    ],
+    "blocks": "P03-T03 automatic acquisition for this provider stays blocked until a permitted client is agreed and the terms are read.",
+    "next_task": "P03-T02 local acquisition covers the import route without any provider access."
+  },
+  "evidence": [
+    {
+      "id": "MOBA-E01",
+      "method": "direct_fetch",
+      "url": "https://mobalytics.gg/robots.txt",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200. Single group for User-agent: *, Allow: /, with the disallow list recorded above and one sitemap line. No agent-specific group."
+    },
+    {
+      "id": "MOBA-E02",
+      "method": "direct_fetch",
+      "url": "https://mobalytics.gg/poe-2/builds/",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 403. No body returned to the client."
+    },
+    {
+      "id": "MOBA-E03",
+      "method": "direct_fetch",
+      "url": "https://mobalytics.gg/poe-2/builds",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 403. No body returned to the client. Confirms the refusal is not a trailing-slash artefact."
+    },
+    {
+      "id": "MOBA-E04",
+      "method": "direct_fetch",
+      "url": "https://mobalytics.gg/poe-2/builds/twister-gemling-legionnaire",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 403. This is the guide docs/specs/research.md recorded as accessible on 2026-10-04."
+    },
+    {
+      "id": "MOBA-E05",
+      "method": "direct_fetch",
+      "url": "https://mobalytics.gg/terms/",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 403. The terms of use were not read."
+    },
+    {
+      "id": "MOBA-E06",
+      "method": "direct_fetch",
+      "url": "https://mobalytics.gg/sitemap.xml",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 403, although robots.txt advertises this exact URL."
+    },
+    {
+      "id": "MOBA-E07",
+      "method": "search_index",
+      "url": "https://mobalytics.gg/poe-2/builds",
+      "observed_at": "2026-10-10",
+      "observation": "A public web search over mobalytics.gg returned guide titles carrying a 0.5.5 patch label, author names, update dates in October 2026, class listing paths and author profile paths, plus a statement that guides offer a Build Planner Export download and a pobb.in link. This is a third-party index of the provider. It is not an acquisition route and it does not show any item or tree data."
+    },
+    {
+      "id": "MOBA-E08",
+      "method": "direct_fetch",
+      "url": "https://pobb.in/robots.txt",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200. User-agent: * with Disallow: /api/, /pob/, /*/raw$, /*/json$, /*/xml$, /login, /oauth2/*. The raw build route a Mobalytics guide would link to is disallowed to crawlers on that host. pobb.in needs its own manifest before any use."
+    },
+    {
+      "id": "MOBA-E09",
+      "method": "prior_inspection",
+      "url": "docs/specs/research.md",
+      "observed_at": "2026-10-04",
+      "observation": "The recorded research inspection reached the listing and one guide page in a browser and saw patch and type labels, favourites metadata and substantial guide content. It did not establish bulk export, pagination completeness or structured item and tree data."
+    },
+    {
+      "id": "MOBA-E10",
+      "method": "direct_fetch",
+      "url": "https://mobalytics.gg/poe-2/guides/build-files",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 403. The provider's own page describing build-file downloads was not read."
+    }
+  ]
+}
