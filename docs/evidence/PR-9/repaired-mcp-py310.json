@@ -1,0 +1,68 @@
+{
+  "authenticate_poe": {
+    "content": [
+      {
+        "text": "Error executing tool authenticate_poe: authenticate_poe is unavailable: OAuth here authenticates as Path of Building's registered client, which belongs to another project. This project has no registered client of its own. This is a recorded decision, not a transient failure. See docs/decisions/D01-trade-access.md and docs/reviews/P05-T01.md. Restoring it requires a project-owned route that has been separately approved, not a local setting.",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "import_character": {
+    "content": [
+      {
+        "text": "Error executing tool import_character: import_character is unavailable: Reaching the account API requires the borrowed OAuth identity above. Local build import is unaffected: use import_build_code, or load a build file. This is a recorded decision, not a transient failure. See docs/decisions/D01-trade-access.md and docs/reviews/P05-T01.md. Restoring it requires a project-owned route that has been separately approved, not a local setting.",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "legacy_modules_loaded": [],
+  "list_characters": {
+    "content": [
+      {
+        "text": "Error executing tool list_characters: list_characters is unavailable: Reaching the account API requires the borrowed OAuth identity above. This is a recorded decision, not a transient failure. See docs/decisions/D01-trade-access.md and docs/reviews/P05-T01.md. Restoring it requires a project-owned route that has been separately approved, not a local setting.",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "local_engine_commands": [
+    "load_build_xml",
+    "test_item",
+    "save_build_xml"
+  ],
+  "trade_evaluate": {
+    "content": [
+      {
+        "text": "Error executing tool trade_evaluate: trade_evaluate is unavailable: It is trade_search followed by an engine evaluation, so it inherits the refusal above. Evaluating an item you already hold is unaffected: use test_item with the item text. This is a recorded decision, not a transient failure. See docs/decisions/D01-trade-access.md and docs/reviews/P05-T01.md. Restoring it requires a project-owned route that has been separately approved, not a local setting.",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "trade_leagues": {
+    "content": [
+      {
+        "text": "Error executing tool trade_leagues: trade_leagues is unavailable: The trade2 endpoints are undocumented and D01 records live market access as unsupported_access. This is a recorded decision, not a transient failure. See docs/decisions/D01-trade-access.md and docs/reviews/P05-T01.md. Restoring it requires a project-owned route that has been separately approved, not a local setting.",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "trade_search": {
+    "content": [
+      {
+        "text": "Error executing tool trade_search: trade_search is unavailable: The trade2 endpoints are undocumented and D01 records live market access as unsupported_access. No documented PoE 2 item listing route exists, and a POESESSID cookie is a website credential, not an application credential. This is a recorded decision, not a transient failure. See docs/decisions/D01-trade-access.md and docs/reviews/P05-T01.md. Restoring it requires a project-owned route that has been separately approved, not a local setting.",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  }
+}

@@ -140,6 +140,7 @@ none yet).
 | File | Covers |
 |---|---|
 | `test_f12_item_conversion_luajit.py` | Runs the real `convert_trade_item` handler under a stock LuaJIT via `lua/convert_probe.lua`, migrated to the P02-T05 repair: the fractured, desecrated and crafted lines are present with PoB's own markers, they sit after the implicit block, and an unknown item field is reported. The probe's third argument `report` prints the handler's completeness report instead of the item string. |
+| `test_p05_legacy_quarantine.py` | The six quarantined MCP entry points (`authenticate_poe`, `list_characters`, `import_character`, `trade_leagues`, `trade_search`, `trade_evaluate`) each raise a capability error naming D01, and none of them constructs a legacy client on the way: the client classes are replaced with a function that fails if called. `pob2mcp.server` references neither `PoeApi` nor `Trade2Client` anywhere in its syntax tree and imports neither module, checked in a clean interpreter. The client factories refuse before constructing anything, the eighteen local engine tools are untouched, `quarantine.py` reads no environment variable, and both legacy modules are still on disk. Registered MCP handler calls preserve the safe capability explanation and D01 reference as intentional errors; local import, item evaluation and export still dispatch through MCP. |
 
 ### `tests/engine` - requires the PoB runtime
 
