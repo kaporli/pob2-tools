@@ -61,6 +61,7 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
 | P02-T05 evidence | `python scripts/p02_t05_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/roundtrips.json`, `roundtrip-synthetic.xml` and `roundtrip-pob-export.xml`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T05 item conversion report | `luajit tests/integration/lua/convert_probe.lua pob2-mcp/pob2mcp/bootstrap.lua <item.lua> report` | `luajit` | Not a test; prints the repaired `convert_trade_item` completeness report for one item table instead of the item string. |
+| P09-T01 synthetic suite | `python scripts/p09_t01_suite.py` | Nothing | Not a test; rewrites `tests/fixtures/combat/p09_synthetic_suite.v1.json`, `benchmarks/p09-synthetic-v1/suite.json` and `docs/evidence/P09/protocol-fields.json`. Deterministic and offline. Changing the suite needs a new `suite_id`, not an edit in place. |
 | P03-T01 source inspect | `python -m pob2opt.cli source inspect --provider NAME --out DIR` | Nothing | Reports the capability manifest recorded in `docs/evidence/P03`. Offline by construction: it has no fetch path and no flag that adds one. Providers: `mobalytics`, `maxroll`, `poe-ninja`. Exit 3 for an unknown provider or a missing manifest, 4 for a manifest that fails the structure. |
 | P03-T02 ingest | `python -m pob2opt.cli ingest --provider NAME --input PATH_OR_URL --corpus DIR` | Nothing | Not a test; stores one input as a raw record. A URL needs `--allow-host`: no host is approved by default. Exit 3 for blocked/missing/unapproved access, 4 for a malformed or timed-out one. |
 | P03-T02 evidence | `python scripts/p03_t02_evidence.py` | Nothing | Not a test; rewrites `docs/evidence/P03/acquisition.json` from a scripted transport. No provider, no socket, no PoB. |
@@ -125,6 +126,8 @@ none yet).
 | `test_p02_t05_build_round_trip.py` | P02-T05 offline lane: a BuildSpec exported and reimported, compared on `build_identity`. Enabled and disabled groups, main skill, ordered supports, passive attribute choices, the ordinary/ascendancy split, socketed jewels, weapon sets, the three config value types and an explicitly empty slot. Unsupported fields (trigger nesting, progression, item-granted groups, unnamed catalog IDs) are labelled incomplete and not recommended, with the value preserved in the report. Includes the invariant that a complete export never differs on reimport. |
 | `test_p02_t05_item_round_trip.py` | P02-T05 offline lane: an ItemInstance as PoB item text and back, compared on `item_identity`. Every supported modifier category, modifier line flags, item variants, sockets, omitted optional fields, a modifier line containing a colon. Unsupported: the `unknown` category, a modifier's catalog resolution and roll range, a flag recorded `false`, a requirement other than level, and modifier positions PoB would renumber. |
 | `test_p02_t05_no_mutation.py` | P02-T05: neither direction changes the BuildSpec, the items or the naming table it was given, checked on canonical JSON of the whole input. Includes a monkeypatched mutating exporter, so the guard fails when something does mutate. |
+| `test_p09_t01_scenarios.py` | P09-T01: the four synthetic workloads validate against the P01 contracts, carry the four shapes of `scenarios.md`, keep the synthetic label inside every record, leave both reference slots null, and match the frozen scenario and suite hashes. Plus the oracle: equal total health across the two clear shapes, route time charged only where a route is declared, and untargetable time counted only on the sustained boss. |
+| `test_p09_t01_protocol.py` | P09-T01: every `ScenarioSpec` field appears in the field table, a field marked `unresolved_input` names a gap that exists and any other field names none, no row claims a direct measurement, every gap is open and states a collectable request, and no build family is named anywhere in the suite. Also that the protocol document and the D04 record exist and do not present themselves as accepted. |
 | `test_p05_t01_access_decision.py` | P05-T01: the recorded access disposition. D01 carries every section `docs/decisions/README.md` requires, allows an explicit reviewer acceptance while preserving capability limits, keeps the public market route at `unsupported_access` and the account route conditional on a registration we do not have, blesses no cookie or borrowed `client_id`, and specifies the `market refresh` unsupported payload (exit 3, no retry, listings to `unknown`). Also that nothing under `docs/evidence/P05/` is shaped like a credential. Reads documents only. |
 | `test_p03_t01_capabilities.py` | P03-T01: the three recorded manifests hold their shape. Every provider is either reproducible or specifically blocked, the three support flags are separate and each cites evidence, all five representative categories are answered rather than dropped, redistribution and access values stay inside the contract, the recorded limits are never looser than `interfaces.md`, no manifest carries anything resembling a credential, and the D02 proposal keeps every required section and stays unresolved. Reads evidence files only. |
 | `test_p03_t01_source_inspect.py` | P03-T01: `pob2opt source inspect` as a command. Report contents per provider, exit codes 0, 2, 3 and 4, an unknown provider, a missing manifest directory, a malformed manifest, and the subcommand refusing anything but `inspect`. Then the validator's rejection cases: a supported flag without confirmation, a dropped category, a substituted category, a missing reason, an unresolvable evidence reference, an access method outside the contract, a loosened limit, and a manifest with neither an example nor a block. Also that the reader imports no HTTP client. |
@@ -343,6 +346,47 @@ One ordering hazard found while running the engine lane: a second
 throwaway one leaves the session `engine` fixture unusable for every test
 after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
 document in the session engine for that reason.
+## P09-T01 recorded results
+
+Specification version 1.0, 2026-10-10, branch `p09-t01-protocol` off
+`c2c2d02`, CPython 3.12.4, Windows 11:
+
+| Command | Result |
+|---|---|
+| `python -m pytest tests/unit` | 873 passed, 1 xfailed |
+| `python -m pytest` (no `POB2_ROOT`) | 882 passed, 99 skipped, 1 xfailed |
+| `python -m pytest` (with `POB2_ROOT`) | 981 passed, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+The 99 skips are the engine lane with no PoB checkout. A skip is not an engine
+pass, and P09-T01 needs no engine: the suite is built and checked entirely from
+the P01 records.
+The two new files add 36 tests. Neither reaches PoB, the network or the game.
+What they cannot check is whether the suite is a good encounter model, because
+no encounter has been measured and no evaluator exists to run it through. The
+suite is `kind: synthetic` and `validation_status: untested` for that reason.
+
+### After the P09-T01 review repairs
+
+Branch `p09-benchmarks`, 2026-10-11, after `docs/reviews/P09-T01.md` R1 and R2:
+
+| Command | Python 3.12.4 | Python 3.10.22 |
+|---|---|---|
+| `python -m pytest tests/unit/test_p09_t01_scenarios.py tests/unit/test_p09_t01_protocol.py` | 32 passed | 32 passed |
+| `python -m pytest tests/unit tests/integration -m 'not engine and not network and not longrun'` | 883 passed, 1 xfailed | not re-run |
+| `python scripts/generate_schemas.py --check` | 20 schema files match | not re-run |
+
+One test was removed and two added.
+`test_every_limit_leaves_headroom_over_its_own_floor` is gone: it compared
+constants and called the difference headroom over a floor that no evaluation
+has to reach. `test_the_horizon_totals_account_for_the_whole_limit` says what
+the two horizon figures are, and `test_the_completion_clock_stops_at_death`
+recomputes the four worked completion times from the declared windows rather
+than reading the stored numbers back.
+
+`baseline_suite_hash` is unchanged, so the suite keeps its `suite_id`: no
+`ScenarioSpec` or `RotationPolicy` record changed. The fixture file's SHA-256
+did change, because the oracle block lives in that file, and it is updated in
+both places that record it.
 
 ## P03-T01 recorded results
 
