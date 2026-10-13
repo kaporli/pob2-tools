@@ -1,0 +1,256 @@
+{
+  "task": "P09-T01",
+  "suite_id": "p09-synthetic-v1",
+  "evidence_class": "synthetic",
+  "not_a_claim": "SYNTHETIC. Every entity, count, health value, position, duration and window below is a test constant invented for software testing. None is a PoE 2 monster, a recorded encounter timing or any other measurement, and none may be cited as evidence about PoE 2. A result produced on this suite is not map clear speed and not boss kill time.",
+  "statement": "Every ScenarioSpec field, with where the synthetic suite's value comes from and what the same field is in a representative scenario today. A representative_status of unresolved_input names the gaps that would have to close first.",
+  "fields": [
+    {
+      "field": "scenario_id",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md: the four shapes clear_dense, clear_spread, boss_short, boss_sustained",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "version",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "product_default",
+      "source_or_reason": "docs/specs/scenarios.md: a reference or scenario version change starts a separate aggregate identity",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "category",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/contracts.md ScenarioCategory; two clear and two boss per docs/specs/product.md first release",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "kind",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md: synthetic fixtures implement the shapes first; representative scenarios are a separate dataset",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "patch_profile_id",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "A synthetic id. The one real profile P02-T02 exported reports compatibility partial",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-patch-profile"
+      ]
+    },
+    {
+      "field": "target_entities.count",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "20 in one pack, and 4 packs of 5, so both clear shapes carry equal total health",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-encounter-density"
+      ]
+    },
+    {
+      "field": "target_entities.health",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "100.0 per minion and 10000.0 / 40000.0 per boss, chosen round so the oracle is checkable by hand",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-enemy-health"
+      ]
+    },
+    {
+      "field": "target_entities.defenses",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "Zero mitigation, declared synthetic, so the synthetic suite tests the encounter loop and not a mitigation model",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-enemy-defenses"
+      ]
+    },
+    {
+      "field": "target_entities.position",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "Declared coordinates on a synthetic_grid that converts to nothing",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-encounter-density",
+        "gap-p09-t01-spatial-unit"
+      ]
+    },
+    {
+      "field": "target_entities.targetable_windows",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "boss_sustained withholds the target for two 15.0 s windows; the other three shapes are continuously targetable",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-boss-windows"
+      ]
+    },
+    {
+      "field": "initial_state",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "Character at the origin with zero synthetic charges and the declared route",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-initial-resources"
+      ]
+    },
+    {
+      "field": "event_schedule",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "Spawn at 0.0 s, and the two untargetable windows of boss_sustained",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-boss-windows",
+        "gap-p09-t01-incoming-damage"
+      ]
+    },
+    {
+      "field": "spatial_model_id",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md permits declared positions when pathfinding is not implemented, with a stated applicability limit",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "movement_model_id",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md: an explicit replayed route and action-time model, with a declared applicability limit",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-movement-model"
+      ]
+    },
+    {
+      "field": "duration_limit_s",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "60.0, 90.0, 60.0 and 300.0 s. A limit bounds the horizon; it is not a performance expectation, and a timeout under it is a valid failed evaluation rather than proof the evaluator is broken",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-duration-limit"
+      ]
+    },
+    {
+      "field": "completion_condition",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md: clear shapes finish a fixed enemy and route workload; boss shapes measure start to kill",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "incoming_damage_model_id",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "test_constant",
+      "source_or_reason": "No incoming damage, declared synthetic. A survival gate over zero damage is a plumbing test, not a survival claim",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-incoming-damage"
+      ]
+    },
+    {
+      "field": "allowed_preparation",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "product_default",
+      "source_or_reason": "docs/specs/product.md: one configuration, no party buffs, no outside resource generation, weapon-set changes allowed when represented and timed. The 5.0 s limit itself is a test constant",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-preparation-allowance"
+      ]
+    },
+    {
+      "field": "rng_seeds",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "product_default",
+      "source_or_reason": "docs/specs/scenarios.md: the default suite is deterministic, so one fixed seed",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "reference_build_id",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "unresolved",
+      "source_or_reason": "No legal complete build exists in this repository",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-reference-build",
+        "gap-p09-t01-build-families"
+      ]
+    },
+    {
+      "field": "reference_result_id",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "unresolved",
+      "source_or_reason": "No reference evaluation has been run, because there is no reference build and no evaluator",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-reference-build"
+      ]
+    },
+    {
+      "field": "capability_floor_ratio",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md: every scenario ratio at least 0.50, a provisional product setting",
+      "representative_status": "sourced",
+      "gap_ids": []
+    },
+    {
+      "field": "survival_gates",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md: death and timeout are failures. Deaths equal zero is definitional; any stricter margin is not",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-survival-threshold"
+      ]
+    },
+    {
+      "field": "resource_gates",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/scenarios.md: an empty pool is downtime, not illegality, and no arbitrary minimum uptime is allowed. A pool never going negative is the only bound stated here",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-survival-threshold"
+      ]
+    },
+    {
+      "field": "evidence_ids",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "unresolved",
+      "source_or_reason": "Empty. A synthetic fixture cites no evidence because it is not evidence",
+      "representative_status": "unresolved_input",
+      "gap_ids": [
+        "gap-p09-t01-incoming-damage",
+        "gap-p09-t01-enemy-health"
+      ]
+    },
+    {
+      "field": "validation_status",
+      "applies_to": "all four workloads",
+      "synthetic_basis": "specification",
+      "source_or_reason": "docs/specs/contracts.md RuleValidation. untested, because no encounter evaluator exists to check these records against",
+      "representative_status": "sourced",
+      "gap_ids": []
+    }
+  ],
+  "representative_suite_expressibility": "A representative ScenarioSpec cannot be written today even as a skeleton: duration_limit_s, capability_floor_ratio and the entity health fields are required and non-nullable in docs/specs/contracts.md, so an unresolved value cannot be stored as null. The unresolved inputs therefore live in this file and in the DataGap records, not in a half-filled scenario record."
+}

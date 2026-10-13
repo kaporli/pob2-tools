@@ -1,0 +1,7 @@
+{
+  "kill_after_one_window_s": 115.0,
+  "kill_after_two_windows_s": 190.0,
+  "kill_before_first_window_s": 20.0,
+  "one_damage_per_second_times_out": true,
+  "whole_horizon_unavailable_s": 30
+}

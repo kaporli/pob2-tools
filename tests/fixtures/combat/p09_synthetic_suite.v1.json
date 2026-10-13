@@ -1,0 +1,1140 @@
+{
+  "kind": "synthetic",
+  "purpose": "The P09-T01 synthetic encounter suite: four ScenarioSpec records in the four shapes of docs/specs/scenarios.md, two RotationPolicy records, and the DataGap records naming every input a representative suite still needs. It exists so P07 can be built and tested before any encounter has been measured.",
+  "not_a_claim": "SYNTHETIC. Every entity, count, health value, position, duration and window below is a test constant invented for software testing. None is a PoE 2 monster, a recorded encounter timing or any other measurement, and none may be cited as evidence about PoE 2. A result produced on this suite is not map clear speed and not boss kill time.",
+  "schema_version": 1,
+  "suite_id": "p09-synthetic-v1",
+  "protocol": "benchmarks/p09-synthetic-v1/protocol.md",
+  "generated_by": "scripts/p09_t01_suite.py",
+  "records": {
+    "scenario_spec": [
+      {
+        "schema_version": 1,
+        "record_id": "p09-syn-clear-dense",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "scenario_id": "p09-syn-clear-dense",
+        "version": "1",
+        "category": "clear",
+        "kind": "synthetic",
+        "patch_profile_id": "p09-syn-patch-profile",
+        "target_entities": [
+          {
+            "entity_id": "synthetic_dense_pack",
+            "catalog_entity_id": null,
+            "count": 20,
+            "health": 100.0,
+            "defenses": {
+              "synthetic": true,
+              "flat_damage_reduction": 0.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "unit": "synthetic_grid",
+              "conversion_evidence_ids": []
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 60.0
+              }
+            ]
+          }
+        ],
+        "initial_state": {
+          "synthetic": true,
+          "not_a_claim": "SYNTHETIC. Every entity, count, health value, position, duration and window below is a test constant invented for software testing. None is a PoE 2 monster, a recorded encounter timing or any other measurement, and none may be cited as evidence about PoE 2. A result produced on this suite is not map clear speed and not boss kill time.",
+          "suite_id": "p09-synthetic-v1",
+          "shape": "clear_dense",
+          "character_position": {
+            "x": 0.0,
+            "y": 0.0,
+            "unit": "synthetic_grid"
+          },
+          "character_resources": {
+            "synthetic_charges": 0.0
+          },
+          "route": {
+            "leg_durations_s": [],
+            "note": "one cluster, no travel"
+          }
+        },
+        "event_schedule": [
+          {
+            "event_id": "synthetic-dense-spawn",
+            "at_s": 0.0,
+            "kind": "synthetic_spawn",
+            "payload": {
+              "entity_id": "synthetic_dense_pack"
+            }
+          }
+        ],
+        "spatial_model_id": "synthetic_declared_positions_v1",
+        "movement_model_id": "synthetic_stationary_v1",
+        "duration_limit_s": 60.0,
+        "completion_condition": {
+          "kind": "all_targets_dead",
+          "parameters": {}
+        },
+        "incoming_damage_model_id": "synthetic_no_incoming_damage_v1",
+        "allowed_preparation": {
+          "action_ids": [
+            "synthetic_prepare"
+          ],
+          "duration_limit_s": 5.0
+        },
+        "rng_seeds": [
+          1
+        ],
+        "reference_build_id": null,
+        "reference_result_id": null,
+        "capability_floor_ratio": 0.5,
+        "survival_gates": [
+          {
+            "gate_id": "p09-syn-clear-dense-no-death",
+            "metric_path": "/metrics/survival/deaths",
+            "comparison": "eq",
+            "value": 0.0
+          }
+        ],
+        "resource_gates": [
+          {
+            "gate_id": "p09-syn-clear-dense-resource-non-negative",
+            "metric_path": "/metrics/minimum_resources/synthetic_charges",
+            "comparison": "gte",
+            "value": 0.0
+          }
+        ],
+        "evidence_ids": [],
+        "validation_status": "untested"
+      },
+      {
+        "schema_version": 1,
+        "record_id": "p09-syn-clear-spread",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "scenario_id": "p09-syn-clear-spread",
+        "version": "1",
+        "category": "clear",
+        "kind": "synthetic",
+        "patch_profile_id": "p09-syn-patch-profile",
+        "target_entities": [
+          {
+            "entity_id": "synthetic_spread_pack_0",
+            "catalog_entity_id": null,
+            "count": 5,
+            "health": 100.0,
+            "defenses": {
+              "synthetic": true,
+              "flat_damage_reduction": 0.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "unit": "synthetic_grid",
+              "conversion_evidence_ids": []
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 90.0
+              }
+            ]
+          },
+          {
+            "entity_id": "synthetic_spread_pack_1",
+            "catalog_entity_id": null,
+            "count": 5,
+            "health": 100.0,
+            "defenses": {
+              "synthetic": true,
+              "flat_damage_reduction": 0.0
+            },
+            "position": {
+              "x": 40.0,
+              "y": 0.0,
+              "unit": "synthetic_grid",
+              "conversion_evidence_ids": []
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 90.0
+              }
+            ]
+          },
+          {
+            "entity_id": "synthetic_spread_pack_2",
+            "catalog_entity_id": null,
+            "count": 5,
+            "health": 100.0,
+            "defenses": {
+              "synthetic": true,
+              "flat_damage_reduction": 0.0
+            },
+            "position": {
+              "x": 80.0,
+              "y": 0.0,
+              "unit": "synthetic_grid",
+              "conversion_evidence_ids": []
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 90.0
+              }
+            ]
+          },
+          {
+            "entity_id": "synthetic_spread_pack_3",
+            "catalog_entity_id": null,
+            "count": 5,
+            "health": 100.0,
+            "defenses": {
+              "synthetic": true,
+              "flat_damage_reduction": 0.0
+            },
+            "position": {
+              "x": 120.0,
+              "y": 0.0,
+              "unit": "synthetic_grid",
+              "conversion_evidence_ids": []
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 90.0
+              }
+            ]
+          }
+        ],
+        "initial_state": {
+          "synthetic": true,
+          "not_a_claim": "SYNTHETIC. Every entity, count, health value, position, duration and window below is a test constant invented for software testing. None is a PoE 2 monster, a recorded encounter timing or any other measurement, and none may be cited as evidence about PoE 2. A result produced on this suite is not map clear speed and not boss kill time.",
+          "suite_id": "p09-synthetic-v1",
+          "shape": "clear_spread",
+          "character_position": {
+            "x": 0.0,
+            "y": 0.0,
+            "unit": "synthetic_grid"
+          },
+          "character_resources": {
+            "synthetic_charges": 0.0
+          },
+          "route": {
+            "leg_durations_s": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "note": "replayed route: three legs between four packs, charged whether or not the evaluator models movement"
+          }
+        },
+        "event_schedule": [
+          {
+            "event_id": "synthetic-spread-spawn-0",
+            "at_s": 0.0,
+            "kind": "synthetic_spawn",
+            "payload": {
+              "entity_id": "synthetic_spread_pack_0"
+            }
+          },
+          {
+            "event_id": "synthetic-spread-spawn-1",
+            "at_s": 0.0,
+            "kind": "synthetic_spawn",
+            "payload": {
+              "entity_id": "synthetic_spread_pack_1"
+            }
+          },
+          {
+            "event_id": "synthetic-spread-spawn-2",
+            "at_s": 0.0,
+            "kind": "synthetic_spawn",
+            "payload": {
+              "entity_id": "synthetic_spread_pack_2"
+            }
+          },
+          {
+            "event_id": "synthetic-spread-spawn-3",
+            "at_s": 0.0,
+            "kind": "synthetic_spawn",
+            "payload": {
+              "entity_id": "synthetic_spread_pack_3"
+            }
+          }
+        ],
+        "spatial_model_id": "synthetic_declared_positions_v1",
+        "movement_model_id": "synthetic_replay_route_v1",
+        "duration_limit_s": 90.0,
+        "completion_condition": {
+          "kind": "all_targets_dead",
+          "parameters": {}
+        },
+        "incoming_damage_model_id": "synthetic_no_incoming_damage_v1",
+        "allowed_preparation": {
+          "action_ids": [
+            "synthetic_prepare"
+          ],
+          "duration_limit_s": 5.0
+        },
+        "rng_seeds": [
+          1
+        ],
+        "reference_build_id": null,
+        "reference_result_id": null,
+        "capability_floor_ratio": 0.5,
+        "survival_gates": [
+          {
+            "gate_id": "p09-syn-clear-spread-no-death",
+            "metric_path": "/metrics/survival/deaths",
+            "comparison": "eq",
+            "value": 0.0
+          }
+        ],
+        "resource_gates": [
+          {
+            "gate_id": "p09-syn-clear-spread-resource-non-negative",
+            "metric_path": "/metrics/minimum_resources/synthetic_charges",
+            "comparison": "gte",
+            "value": 0.0
+          }
+        ],
+        "evidence_ids": [],
+        "validation_status": "untested"
+      },
+      {
+        "schema_version": 1,
+        "record_id": "p09-syn-boss-short",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "scenario_id": "p09-syn-boss-short",
+        "version": "1",
+        "category": "boss",
+        "kind": "synthetic",
+        "patch_profile_id": "p09-syn-patch-profile",
+        "target_entities": [
+          {
+            "entity_id": "synthetic_boss_short",
+            "catalog_entity_id": null,
+            "count": 1,
+            "health": 10000.0,
+            "defenses": {
+              "synthetic": true,
+              "flat_damage_reduction": 0.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "unit": "synthetic_grid",
+              "conversion_evidence_ids": []
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 60.0
+              }
+            ]
+          }
+        ],
+        "initial_state": {
+          "synthetic": true,
+          "not_a_claim": "SYNTHETIC. Every entity, count, health value, position, duration and window below is a test constant invented for software testing. None is a PoE 2 monster, a recorded encounter timing or any other measurement, and none may be cited as evidence about PoE 2. A result produced on this suite is not map clear speed and not boss kill time.",
+          "suite_id": "p09-synthetic-v1",
+          "shape": "boss_short",
+          "character_position": {
+            "x": 0.0,
+            "y": 0.0,
+            "unit": "synthetic_grid"
+          },
+          "character_resources": {
+            "synthetic_charges": 0.0
+          },
+          "route": {
+            "leg_durations_s": [],
+            "note": "stationary single target"
+          }
+        },
+        "event_schedule": [
+          {
+            "event_id": "synthetic-short-start",
+            "at_s": 0.0,
+            "kind": "synthetic_encounter_start",
+            "payload": {}
+          }
+        ],
+        "spatial_model_id": "synthetic_declared_positions_v1",
+        "movement_model_id": "synthetic_stationary_v1",
+        "duration_limit_s": 60.0,
+        "completion_condition": {
+          "kind": "target_dead",
+          "parameters": {
+            "entity_id": "synthetic_boss_short"
+          }
+        },
+        "incoming_damage_model_id": "synthetic_no_incoming_damage_v1",
+        "allowed_preparation": {
+          "action_ids": [
+            "synthetic_prepare"
+          ],
+          "duration_limit_s": 5.0
+        },
+        "rng_seeds": [
+          1
+        ],
+        "reference_build_id": null,
+        "reference_result_id": null,
+        "capability_floor_ratio": 0.5,
+        "survival_gates": [
+          {
+            "gate_id": "p09-syn-boss-short-no-death",
+            "metric_path": "/metrics/survival/deaths",
+            "comparison": "eq",
+            "value": 0.0
+          }
+        ],
+        "resource_gates": [
+          {
+            "gate_id": "p09-syn-boss-short-resource-non-negative",
+            "metric_path": "/metrics/minimum_resources/synthetic_charges",
+            "comparison": "gte",
+            "value": 0.0
+          }
+        ],
+        "evidence_ids": [],
+        "validation_status": "untested"
+      },
+      {
+        "schema_version": 1,
+        "record_id": "p09-syn-boss-sustained",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "scenario_id": "p09-syn-boss-sustained",
+        "version": "1",
+        "category": "boss",
+        "kind": "synthetic",
+        "patch_profile_id": "p09-syn-patch-profile",
+        "target_entities": [
+          {
+            "entity_id": "synthetic_boss_sustained",
+            "catalog_entity_id": null,
+            "count": 1,
+            "health": 40000.0,
+            "defenses": {
+              "synthetic": true,
+              "flat_damage_reduction": 0.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "unit": "synthetic_grid",
+              "conversion_evidence_ids": []
+            },
+            "targetable_windows": [
+              {
+                "start_s": 0.0,
+                "end_s": 60.0
+              },
+              {
+                "start_s": 75.0,
+                "end_s": 150.0
+              },
+              {
+                "start_s": 165.0,
+                "end_s": 300.0
+              }
+            ]
+          }
+        ],
+        "initial_state": {
+          "synthetic": true,
+          "not_a_claim": "SYNTHETIC. Every entity, count, health value, position, duration and window below is a test constant invented for software testing. None is a PoE 2 monster, a recorded encounter timing or any other measurement, and none may be cited as evidence about PoE 2. A result produced on this suite is not map clear speed and not boss kill time.",
+          "suite_id": "p09-synthetic-v1",
+          "shape": "boss_sustained",
+          "character_position": {
+            "x": 0.0,
+            "y": 0.0,
+            "unit": "synthetic_grid"
+          },
+          "character_resources": {
+            "synthetic_charges": 0.0
+          },
+          "route": {
+            "leg_durations_s": [],
+            "note": "stationary single target"
+          }
+        },
+        "event_schedule": [
+          {
+            "event_id": "synthetic-sustained-start",
+            "at_s": 0.0,
+            "kind": "synthetic_encounter_start",
+            "payload": {}
+          },
+          {
+            "event_id": "synthetic-untargetable-1-begin",
+            "at_s": 60.0,
+            "kind": "synthetic_untargetable_begin",
+            "payload": {}
+          },
+          {
+            "event_id": "synthetic-untargetable-1-end",
+            "at_s": 75.0,
+            "kind": "synthetic_untargetable_end",
+            "payload": {}
+          },
+          {
+            "event_id": "synthetic-untargetable-2-begin",
+            "at_s": 150.0,
+            "kind": "synthetic_untargetable_begin",
+            "payload": {}
+          },
+          {
+            "event_id": "synthetic-untargetable-2-end",
+            "at_s": 165.0,
+            "kind": "synthetic_untargetable_end",
+            "payload": {}
+          }
+        ],
+        "spatial_model_id": "synthetic_declared_positions_v1",
+        "movement_model_id": "synthetic_stationary_v1",
+        "duration_limit_s": 300.0,
+        "completion_condition": {
+          "kind": "target_dead",
+          "parameters": {
+            "entity_id": "synthetic_boss_sustained"
+          }
+        },
+        "incoming_damage_model_id": "synthetic_no_incoming_damage_v1",
+        "allowed_preparation": {
+          "action_ids": [
+            "synthetic_prepare"
+          ],
+          "duration_limit_s": 5.0
+        },
+        "rng_seeds": [
+          1
+        ],
+        "reference_build_id": null,
+        "reference_result_id": null,
+        "capability_floor_ratio": 0.5,
+        "survival_gates": [
+          {
+            "gate_id": "p09-syn-boss-sustained-no-death",
+            "metric_path": "/metrics/survival/deaths",
+            "comparison": "eq",
+            "value": 0.0
+          }
+        ],
+        "resource_gates": [
+          {
+            "gate_id": "p09-syn-boss-sustained-resource-non-negative",
+            "metric_path": "/metrics/minimum_resources/synthetic_charges",
+            "comparison": "gte",
+            "value": 0.0
+          }
+        ],
+        "evidence_ids": [],
+        "validation_status": "untested"
+      }
+    ],
+    "rotation_policy": [
+      {
+        "schema_version": 1,
+        "record_id": "p09-syn-rotation-clear",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "rotation_id": "p09-syn-rotation-clear",
+        "version": "1",
+        "name": "Synthetic clear policy",
+        "category": "clear",
+        "rules": [
+          {
+            "rule_index": 0,
+            "action_id": "synthetic-clear-area",
+            "action": "use_skill",
+            "skill_id": "synthetic_area_skill",
+            "target_selector": "largest_cluster",
+            "weapon_set_id": "synthetic_set_a",
+            "predicate": {
+              "operator": "gte",
+              "path": "/state/selected_cluster/living_count",
+              "value": 2
+            }
+          },
+          {
+            "rule_index": 1,
+            "action_id": "synthetic-clear-single",
+            "action": "use_skill",
+            "skill_id": "synthetic_single_skill",
+            "target_selector": "nearest_living",
+            "weapon_set_id": "synthetic_set_a",
+            "predicate": {
+              "operator": "gte",
+              "path": "/state/living_targets_in_range",
+              "value": 1
+            }
+          },
+          {
+            "rule_index": 2,
+            "action_id": "synthetic-clear-advance",
+            "action": "move",
+            "skill_id": null,
+            "target_selector": "next_route_leg",
+            "weapon_set_id": null,
+            "predicate": {
+              "operator": "eq",
+              "path": "/state/living_targets_in_range",
+              "value": 0
+            }
+          }
+        ]
+      },
+      {
+        "schema_version": 1,
+        "record_id": "p09-syn-rotation-boss",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "rotation_id": "p09-syn-rotation-boss",
+        "version": "1",
+        "name": "Synthetic boss policy",
+        "category": "boss",
+        "rules": [
+          {
+            "rule_index": 0,
+            "action_id": "synthetic-boss-spend",
+            "action": "use_skill",
+            "skill_id": "synthetic_spender_skill",
+            "target_selector": "primary_target",
+            "weapon_set_id": "synthetic_set_a",
+            "predicate": {
+              "operator": "all",
+              "operands": [
+                {
+                  "operator": "eq",
+                  "path": "/state/primary_target/targetable",
+                  "value": true
+                },
+                {
+                  "operator": "gte",
+                  "path": "/state/resources/synthetic_charges",
+                  "value": 3
+                }
+              ]
+            }
+          },
+          {
+            "rule_index": 1,
+            "action_id": "synthetic-boss-build",
+            "action": "use_skill",
+            "skill_id": "synthetic_builder_skill",
+            "target_selector": "primary_target",
+            "weapon_set_id": "synthetic_set_a",
+            "predicate": {
+              "operator": "eq",
+              "path": "/state/primary_target/targetable",
+              "value": true
+            }
+          },
+          {
+            "rule_index": 2,
+            "action_id": "synthetic-boss-wait",
+            "action": "wait",
+            "skill_id": null,
+            "target_selector": "none",
+            "weapon_set_id": null,
+            "predicate": {
+              "operator": "eq",
+              "path": "/state/primary_target/targetable",
+              "value": false
+            }
+          }
+        ]
+      }
+    ],
+    "data_gap": [
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-enemy-health",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-enemy-health",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/target_entities/*/health"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "A representative scenario needs the life of each monster it contains. No value is held for any PoE 2 monster, so the representative suite cannot be written.",
+        "needed_evidence": "Maximum life of each named monster and boss used by a representative scenario, at a stated area level, monster rarity and patch, with the capture or catalog row the value was read from. One value per named entity, not a range for a tier.",
+        "collection_method": "An identified catalog row for that monster at that area level and rarity, from an accepted patch profile, or a controlled experiment with a known damage figure. A recording's health bar shows a fraction of an unknown maximum and does not establish absolute life on its own.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-enemy-defenses",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-enemy-defenses",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/target_entities/*/defenses"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "Life alone does not fix time to kill. Mitigation decides how much of a hit lands, and no mitigation value is held for any monster.",
+        "needed_evidence": "Per named monster at a stated area level and patch: elemental and chaos resistance values, armour, evasion, and any ailment threshold the scenario's completion depends on, each with the catalog row or capture it came from.",
+        "collection_method": "Catalog export from an accepted patch profile, or a measured damage-taken comparison against a known hit value.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-encounter-density",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-encounter-density",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread"
+        ],
+        "field_paths": [
+          "/target_entities/*/count",
+          "/target_entities/*/position"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "The dense and spread shapes differ only by how many monsters stand together and how far apart the packs are. Neither count nor spacing is held for any PoE 2 area.",
+        "needed_evidence": "For one named map layout at a stated area level: monsters per pack, packs per completed run, and the distance between successive packs along the route an operator actually walked, with the unit that distance is expressed in.",
+        "collection_method": "Operator recording of a full run of one named map, with the route and the pack positions marked, repeated enough times to state a spread rather than one layout roll.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-spatial-unit",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-spatial-unit",
+        "kind": "unresolved_entity",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread"
+        ],
+        "field_paths": [
+          "/target_entities/*/position/unit",
+          "/target_entities/*/position/conversion_evidence_ids",
+          "/spatial_model_id"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "contracts.md forbids assuming a PoB radius is metres. Until the unit a position is expressed in is tied to the unit a skill's area of effect is expressed in, no distance in a representative scenario can be compared with a skill's reach.",
+        "needed_evidence": "The conversion between the distance unit the pinned PoB catalog uses for skill area and radius and the distance unit a measured encounter route is recorded in, with the two measurements that establish the ratio.",
+        "collection_method": "A controlled measurement: one skill of known declared radius used against a target at a measured distance, repeated at two distances so the ratio is over-determined.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-movement-model",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-movement-model",
+        "kind": "unsupported_rule",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread"
+        ],
+        "field_paths": [
+          "/movement_model_id",
+          "/initial_state/route"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "No pathfinding is implemented. scenarios.md permits a replayed route and action-time model instead, but the replayed route must come from a recorded run and no run has been recorded.",
+        "needed_evidence": "For one named map layout: the time an operator took on each leg between packs, with the character's movement speed modifiers at the time, and whether a movement skill was used on that leg.",
+        "collection_method": "Operator recording with per-leg timestamps, plus the character sheet that states movement speed for the same attempt.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-incoming-damage",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-incoming-damage",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/incoming_damage_model_id",
+          "/event_schedule"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "scenarios.md requires each representative scenario to specify its damage input. Static life and resistance totals do not certify survival, and no damage event has been recorded.",
+        "needed_evidence": "A timestamped list of damage events taken during one named encounter: time, damage type, magnitude before mitigation where readable, and whether the event was avoidable, for a character whose defensive sheet is captured in the same attempt.",
+        "collection_method": "Operator recording of the encounter with a combat log or a frame-accurate life bar, plus the character sheet for that attempt.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-boss-windows",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-boss-windows",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/target_entities/*/targetable_windows",
+          "/event_schedule"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "The boss shapes differ by whether the target can be hit continuously. No phase or invulnerability timing is held for any PoE 2 boss.",
+        "needed_evidence": "For one named boss: the start and end time of every phase in which it cannot be damaged, measured from encounter start, across at least five recorded attempts, and whether each window is triggered by elapsed time or by remaining life.",
+        "collection_method": "Operator recordings of repeated attempts at the same named boss, timestamped from the same start event.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-initial-resources",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-initial-resources",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/initial_state"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "A scenario starts the character in a declared state. Which resources a character actually holds when an encounter begins, under the solo softcore default of product.md, is not recorded.",
+        "needed_evidence": "For the declared starting condition of each shape: life, mana, energy shield, charges and flask or charge-equivalent state at the instant the completion clock starts, for a named build on a named encounter.",
+        "collection_method": "Operator recording that shows the resource bars at the start event, together with the rule the operator used to decide when the encounter started.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-preparation-allowance",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-preparation-allowance",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/allowed_preparation"
+        ],
+        "mechanic_ids": [],
+        "severity": "ranking_sensitive",
+        "explanation": "Legal preparation decides how much of a build's power is available at the start event. Which pre-encounter actions persist into the encounter, and for how long, is not recorded.",
+        "needed_evidence": "For each action an operator may take before the start event: whether its effect is still active at the start event, its remaining duration there, and the time the action itself cost, for a named build on a named encounter.",
+        "collection_method": "Operator recording of the preparation sequence and the start event in one unbroken capture.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-duration-limit",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-duration-limit",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/duration_limit_s"
+        ],
+        "mechanic_ids": [],
+        "severity": "ranking_sensitive",
+        "explanation": "A timeout is a failure verdict, so its value decides which builds are reported as failing. No observed distribution of completion times exists to place it against.",
+        "needed_evidence": "Completion times for the chosen encounter across the reference configurations, including attempts that failed, so a limit can be set above the slowest intended-to-pass attempt rather than chosen.",
+        "collection_method": "P09-T02 observation import, once the reference configurations exist.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-survival-threshold",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-survival-threshold",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/survival_gates",
+          "/resource_gates"
+        ],
+        "mechanic_ids": [],
+        "severity": "ranking_sensitive",
+        "explanation": "Death equals zero is definitional and needs no evidence. Any stricter gate, such as a minimum life fraction held through the encounter, is a threshold that would have to be fitted, and fitting is forbidden before reviewer acceptance.",
+        "needed_evidence": "The lowest life, energy shield and resource level observed during successful attempts at the chosen encounter, per reference configuration, so a margin gate can be justified or shown unjustifiable.",
+        "collection_method": "P09-T02 observation import, reading the minimum from recorded attempts rather than from a sheet.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-reference-build",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-reference-build",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/reference_build_id",
+          "/reference_result_id"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "scenarios.md requires one approved reference build and result per scenario, and every ratio in the ranking formula divides by that reference time. No legal complete build exists in this repository, so every reference slot is null and no ratio can be computed.",
+        "needed_evidence": "One complete legal Huntress configuration per scenario: equipment with full modifier text, passive allocations, ascendancy, skill groups with levels, quality and supports, weapon-set bindings, and the rotation the operator played, plus the completion time that configuration achieved on that scenario.",
+        "collection_method": "A PoB build file or build code the owner exports and supplies as a local file, imported through P03-T02 local acquisition, followed by a P09-T02 observation of the same configuration.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-build-families",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-build-families",
+        "kind": "access_blocked",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/reference_build_id"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "P09-T01 is asked to propose three Huntress build families from the source corpus. P03-T01 found no named source that permits automatic acquisition to this client, so there is no corpus and no family can be selected without inventing it.",
+        "needed_evidence": "Either a source corpus of imported Huntress builds with their required mechanics, from a provider whose terms and client behaviour permit retrieval, or a set of build files the owner exports by hand, each naming the skills, supports and ascendancy its family depends on.",
+        "collection_method": "P03-T02 local acquisition of owner-supplied build files, or P03-T03 automatic acquisition once a permitted access route exists for any provider.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      },
+      {
+        "schema_version": 1,
+        "record_id": "gap-p09-t01-patch-profile",
+        "created_at": "2026-10-10T00:00:00Z",
+        "provenance_ids": [
+          "p09-syn-protocol-v1"
+        ],
+        "gap_id": "gap-p09-t01-patch-profile",
+        "kind": "missing_input",
+        "subject_ids": [
+          "p09-syn-clear-dense",
+          "p09-syn-clear-spread",
+          "p09-syn-boss-short",
+          "p09-syn-boss-sustained"
+        ],
+        "field_paths": [
+          "/patch_profile_id"
+        ],
+        "mechanic_ids": [],
+        "severity": "blocking",
+        "explanation": "The synthetic suite points at a synthetic profile id that is not an exported PatchProfile. A representative scenario must name a profile whose compatibility is verified, and the one profile P02-T02 exported reports compatibility partial.",
+        "needed_evidence": "An exported PatchProfile for the league the measurements are taken in, whose compatibility is verified rather than partial, and whose catalog hash matches the catalog the measured builds were evaluated against.",
+        "collection_method": "P02-T02 catalog export against the live patch, plus the D03 patch identity decision.",
+        "affected_evaluation_ids": [],
+        "sensitivity_result_id": null,
+        "status": "open",
+        "resolution_evidence_ids": []
+      }
+    ]
+  },
+  "oracle": {
+    "p09-syn-clear-dense": {
+      "total_target_health": 2000.0,
+      "route_time_s": 0.0,
+      "horizon_s": 60.0,
+      "horizon_targetable_time_s": 60.0,
+      "horizon_untargetable_time_s": 0.0,
+      "preparation_limit_s": 5.0,
+      "duration_limit_s": 60.0
+    },
+    "p09-syn-clear-spread": {
+      "total_target_health": 2000.0,
+      "route_time_s": 12.0,
+      "horizon_s": 90.0,
+      "horizon_targetable_time_s": 90.0,
+      "horizon_untargetable_time_s": 0.0,
+      "preparation_limit_s": 5.0,
+      "duration_limit_s": 90.0
+    },
+    "p09-syn-boss-short": {
+      "total_target_health": 10000.0,
+      "route_time_s": 0.0,
+      "horizon_s": 60.0,
+      "horizon_targetable_time_s": 60.0,
+      "horizon_untargetable_time_s": 0.0,
+      "preparation_limit_s": 5.0,
+      "duration_limit_s": 60.0
+    },
+    "p09-syn-boss-sustained": {
+      "total_target_health": 40000.0,
+      "route_time_s": 0.0,
+      "horizon_s": 300.0,
+      "horizon_targetable_time_s": 270.0,
+      "horizon_untargetable_time_s": 30.0,
+      "preparation_limit_s": 5.0,
+      "duration_limit_s": 300.0
+    },
+    "derivation": "total_target_health is health x count summed over the declared entities. route_time_s is the sum of the declared replayed route legs. The two horizon_ figures describe the whole configured horizon: how much of duration_limit_s the declared windows make targetable and how much they do not. They are workload metadata, not a per-evaluation elapsed time. An evaluation's elapsed time runs from scenario start to completion and stops there, so only the windows intersecting [start, completion] are part of it; a kill before the first untargetable window elapses none of it. Both clear shapes carry the same 2000.0 total health so that a difference between them is caused by the route and the cluster size and by nothing else.",
+    "worked_examples": [
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 2000.0,
+        "completion_time_s": 20.0,
+        "untargetable_time_elapsed_s": 0.0,
+        "windows_intersecting_completion": 1,
+        "outcome": "completed",
+        "note": "Dies inside the first targetable window. None of the horizon's 30 s of untargetable time elapses, so none of it may be added to the elapsed time."
+      },
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 400.0,
+        "completion_time_s": 115.0,
+        "untargetable_time_elapsed_s": 15.0,
+        "windows_intersecting_completion": 2,
+        "outcome": "completed",
+        "note": "24,000 in [0, 60], then 16,000 more from 75 s at 400/s. One untargetable window elapsed."
+      },
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 250.0,
+        "completion_time_s": 190.0,
+        "untargetable_time_elapsed_s": 30.0,
+        "windows_intersecting_completion": 3,
+        "outcome": "completed",
+        "note": "15,000 in [0, 60], 18,750 in [75, 150], the remaining 6,250 from 165 s at 250/s. Both untargetable windows elapsed."
+      },
+      {
+        "scenario_id": "p09-syn-boss-sustained",
+        "hypothetical_damage_per_s": 1.0,
+        "completion_time_s": null,
+        "untargetable_time_elapsed_s": 30.0,
+        "windows_intersecting_completion": 3,
+        "outcome": "timed_out",
+        "note": "270 damage over the whole targetable horizon against 40,000 health. A correct evaluator times out here. That is a failed evaluation, which scenarios.md permits, not an operational error and not evidence the evaluator is wrong."
+      }
+    ]
+  }
+}
