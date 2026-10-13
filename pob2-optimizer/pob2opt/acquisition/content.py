@@ -231,18 +231,29 @@ def xml_text(payload: bytes) -> str:
     and defaults to UTF-8 as XML requires. An encoding outside
     :data:`SUPPORTED_XML_ENCODINGS` is refused rather than decoded on a guess.
     """
-    encoding = _bom_encoding(payload)
-    from_bom = encoding is not None
+    encoding = _bom_encoding(payload) or _nul_pattern_encoding(payload)
     if encoding is None:
-        encoding = _nul_pattern_encoding(payload) or "utf-8"
+        # All supported non-UTF-16 encodings spell the declaration in ASCII.
+        # Inspect only that prolog before decoding any non-ASCII body text.
+        prolog = b""
+        if payload.startswith(b"<?xml"):
+            end = payload.find(b"?>")
+            if end != -1:
+                prolog = payload[:end + 2]
+        encoding = _declared_encoding(_decode_strictly(prolog, "ascii")) or "utf-8"
     _require_supported_encoding(encoding)
     text = _decode_strictly(payload, encoding)
 
     declared = _declared_encoding(text)
     if declared is not None:
         _require_supported_encoding(declared)
-        if not from_bom and _canonical_encoding(declared) != _canonical_encoding(encoding):
-            text = _decode_strictly(payload, declared)
+        # A signature and declaration must agree; do not reinterpret already
+        # decoded text under a second encoding, or silently ignore a mismatch.
+        actual = codecs.lookup(encoding).name.replace("-sig", "")
+        claimed = codecs.lookup(declared).name
+        if claimed != actual and not (claimed == "utf-16" and actual in (
+                "utf-16-le", "utf-16-be")):
+            raise MalformedContent("xml_encoding", "encoding declaration conflicts with signature")
     return text
 
 
@@ -273,6 +284,10 @@ def _require_supported_encoding(name: str) -> None:
     if _canonical_encoding(name) not in SUPPORTED_XML_ENCODINGS:
         raise MalformedContent(
             "xml_encoding", "%s is not a supported XML encoding" % name)
+    try:
+        codecs.lookup(name)
+    except LookupError:
+        raise MalformedContent("xml_encoding", "unrecognized encoding name") from None
 
 
 def _decode_strictly(payload: bytes, encoding: str) -> str:

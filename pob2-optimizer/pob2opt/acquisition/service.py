@@ -114,6 +114,10 @@ class AcquisitionService:
         self.state = state if state is not None else AcquisitionState.in_memory()
         self.limits = limits or (acquirer.limits if acquirer is not None else Limits())
         self.acquisition_version = acquisition_version
+        if self.acquirer is not None:
+            # Merge with any stricter deadline already held by this scheduler.
+            # The normal service/CLI path must restore before its first send.
+            self.acquirer.scheduler.restore_cooldowns(self.state.cooldowns())
 
     # -- local inputs ------------------------------------------------------
 
@@ -303,12 +307,15 @@ class AcquisitionService:
         validators = (self.state.validators(
             provider, url, credential_partition=credential_partition)
             if cacheable else None)
-        validator_origin = (self.state.final_url_for(
+        validator_key = (self.state.final_key_for(
             provider, url, credential_partition=credential_partition)
             if cacheable else None)
         fetched = self.acquirer.fetch(provider, url, headers=headers,
                                       validators=validators,
-                                      validator_origin=validator_origin)
+                                      validator_key=validator_key,
+                                      resource_key=lambda target: self.state.key_for(
+                                          provider, target,
+                                          credential_partition=credential_partition))
         self._save_cooldowns()
 
         if fetched.status is not AcquisitionStatus.OK:
@@ -337,6 +344,7 @@ class AcquisitionService:
                                 source_document_id=outcome.source_document_id,
                                 acquired_at=self.clock.utcnow(),
                                 final_url=fetched.url,
+                                final_key=fetched.resource_key,
                                 credential_partition=credential_partition)
         return outcome
 
@@ -375,9 +383,9 @@ class AcquisitionService:
         # 304 has to be resolved against the former.
         known = self.state.document_for(
             provider, url, credential_partition=credential_partition)
-        cached_final = self.state.final_url_for(
+        cached_final = self.state.final_key_for(
             provider, url, credential_partition=credential_partition)
-        if known and cached_final and cached_final != fetched.url:
+        if not cached_final or cached_final != fetched.resource_key:
             # The starting URL now leads somewhere else. The validator we sent
             # describes the old target's representation, so this 304 says
             # nothing about the document we hold.

@@ -26,9 +26,10 @@ import os
 import secrets
 from pathlib import Path
 from typing import Any, Mapping
-from urllib.parse import parse_qsl, urlsplit
+from urllib.parse import urlsplit
 
 from .http import Validators
+from .hosts import DEFAULT_PORTS, remove_dot_segments
 from .redaction import redact_url
 
 FILENAME = "acquisition-state.json"
@@ -60,7 +61,7 @@ class AcquisitionState:
     def validators(self, provider: str, url: str, *,
                    credential_partition: str | None = None) -> Validators:
         entry = self._entry(provider, url, credential_partition)
-        if not entry:
+        if not entry or not entry.get("final_key"):
             return Validators()
         return Validators(etag=entry.get("etag"),
                           last_modified=entry.get("last_modified"))
@@ -73,18 +74,20 @@ class AcquisitionState:
 
     def final_url_for(self, provider: str, url: str, *,
                       credential_partition: str | None = None) -> str | None:
-        """The redacted location the cached representation came from.
-
-        A conditional request is bound to it: if the same starting URL now
-        redirects somewhere else, the validator belongs to the old target and
-        its 304 must not be answered with the old document.
-        """
+        """Display location only; final_key_for binds conditional requests."""
         entry = self._entry(provider, url, credential_partition)
         return entry.get("final_url") if entry else None
+
+    def final_key_for(self, provider: str, url: str, *,
+                      credential_partition: str | None = None) -> str | None:
+        """Opaque identity of the final resource, never its redacted spelling."""
+        entry = self._entry(provider, url, credential_partition)
+        return entry.get("final_key") if entry else None
 
     def remember(self, provider: str, url: str, *, etag: str | None,
                  last_modified: str | None, source_document_id: str | None,
                  acquired_at: str, final_url: str | None = None,
+                 final_key: str | None = None,
                  credential_partition: str | None = None) -> None:
         self._data["pages"][self.key_for(
             provider, url, credential_partition=credential_partition)] = {
@@ -92,7 +95,10 @@ class AcquisitionState:
             "last_modified": last_modified,
             "source_document_id": source_document_id,
             "acquired_at": acquired_at,
-            "final_url": final_url or redact_url(url),
+            "final_url": redact_url(final_url or url),
+            "final_key": final_key or self.key_for(
+                provider, final_url or url,
+                credential_partition=credential_partition),
             "provider": provider,
             # For a reader only. Never the key: see the module docstring.
             "url": redact_url(url),
@@ -173,8 +179,8 @@ def request_key(provider: str, url: str, *, salt: str,
                 credential_partition: str | None = None) -> str:
     """A stable, non-reversible identity for one request.
 
-    Built from the provider, the origin, the path and every query pair,
-    values included: the values are what distinguishes two representations,
+    Built from the provider, the origin, the path and the exact query,
+    values and order included: these distinguish two representations,
     and dropping the ones redaction cannot vouch for is what made two
     different resources share a cache entry. ``credential_partition`` names
     the authorization context, so one caller's authenticated copy is never
@@ -185,16 +191,19 @@ def request_key(provider: str, url: str, *, salt: str,
         port = parts.port
     except ValueError:
         port = None
-    identity = "\n".join([
-        "provider=%s" % provider,
-        "scheme=%s" % (parts.scheme or "").lower(),
-        "host=%s" % (parts.hostname or "").lower().rstrip("."),
-        "port=%s" % (port if port is not None else ""),
-        "path=%s" % parts.path,
-        "partition=%s" % (credential_partition or ""),
-        "query=%s" % json.dumps(
-            sorted(parse_qsl(parts.query, keep_blank_values=True)),
-            separators=(",", ":")),
-    ])
+    scheme = (parts.scheme or "").lower()
+    # Structured fields cannot collide through delimiters. Keep the complete
+    # query spelling/order: duplicate keys can be order-sensitive, and even
+    # decoding query values would assume semantics the provider never promised.
+    identity = json.dumps({
+        "version": 2,
+        "provider": provider,
+        "scheme": scheme,
+        "host": (parts.hostname or "").lower().rstrip("."),
+        "port": port if port is not None else DEFAULT_PORTS.get(scheme),
+        "path": remove_dot_segments(parts.path or "/"),
+        "partition": credential_partition,
+        "query": parts.query,
+    }, sort_keys=True, separators=(",", ":"))
     return hmac.new(salt.encode("utf-8"), identity.encode("utf-8"),
                     hashlib.sha256).hexdigest()

@@ -21,17 +21,15 @@ project depends on:
   changes scheme, host or effective port drops every header that could carry
   one: approving a host to serve build data does not authorize it to receive
   another host's secrets.
-* A validator belongs to the origin that issued it too, and an ETag means
-  nothing anywhere else. ``validator_origin`` names where the cached
-  representation came from, so a conditional request reaches that origin and
-  only that one, whether it is the first hop or the end of a redirect chain.
+* A validator belongs to an exact resource, including its query. Its opaque
+  key is separate from the redacted URL, and only that resource receives it.
 """
 
 from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Mapping
+from typing import Callable, Mapping
 from urllib.parse import urljoin, urlsplit
 
 from ..domain.enums import AcquisitionStatus
@@ -98,9 +96,11 @@ class FetchOutcome:
     diagnostic: str | None = None
     #: True for a 304: the stored copy is current and nothing was downloaded.
     unchanged: bool = False
-    #: Redacted, and the URL the caller asked for. A cached validator and the
-    #: document it belongs to are keyed by this, never by the redirect target.
+    #: Redacted display of the initial request, not a cache identity.
     requested_url: str = ""
+    #: Opaque final-resource identity supplied by the caller's key function.
+    #: No unredacted URL is returned or persisted.
+    resource_key: str | None = None
     #: True when a cross-origin redirect dropped caller headers or validators.
     credentials_dropped: bool = False
     #: The limits actually applied, after provider tightening.
@@ -136,7 +136,9 @@ class HttpAcquirer:
     def fetch(self, provider: str, url: str, *,
               headers: Mapping[str, str] | None = None,
               validators: Validators | None = None,
-              validator_origin: str | None = None) -> FetchOutcome:
+              validator_url: str | None = None,
+              resource_key: Callable[[str], str] | None = None,
+              validator_key: str | None = None) -> FetchOutcome:
         limits = self.limits_for(provider)
         try:
             target = self.policy.check(url)
@@ -147,10 +149,16 @@ class HttpAcquirer:
         held = validators or Validators()
         sent_headers = dict(headers or {})
         origin = origin_of(target)
-        # Where the cached representation came from. Unset means "wherever
-        # this URL leads", which is the plain no-redirect case.
-        issuer = origin_of(validator_origin) if validator_origin else origin
-        validators = held if issuer == origin else Validators()
+        key_for = resource_key or (lambda address: address)
+        # Direct callers may bind a validator to an explicit URL. The service
+        # instead supplies a corpus-keyed HMAC, so cache files need no raw URL.
+        issuer = validator_key
+        if issuer is None:
+            try:
+                issuer = key_for(self.policy.check(validator_url or url))
+            except PolicyRefusal as refusal:
+                return self._refused(refusal, limits)
+        validators = held if issuer == key_for(target) else Validators()
         dropped = False
         attempts = 0
         redirects = 0
@@ -188,7 +196,7 @@ class HttpAcquirer:
                                 "cross-origin redirect url=%s", redact_url(moved))
                         # Re-attached only where the representation it
                         # describes actually lives.
-                        validators = held if issuer == origin else Validators()
+                        validators = held if issuer == key_for(moved) else Validators()
                         target, redirects = moved, redirects + 1
                         attempts -= 1  # a redirect is not a retry
                         continue
@@ -200,7 +208,8 @@ class HttpAcquirer:
                 # so it is recorded even on the attempt that gives up.
                 self.scheduler.defer_provider(provider, last.retry_after_s)
             if not last.retry_eligible:
-                return _finished(last, requested, dropped)
+                return _finished(last, requested, dropped,
+                                 key_for(target) if resource_key else None)
             if attempts >= limits.max_attempts:
                 break
             deferral = self.scheduler.plan_retry(
@@ -213,12 +222,13 @@ class HttpAcquirer:
                 # The advertised delay is longer than we will hold a process
                 # open for. It is kept whole and handed back as a schedule.
                 return _finished(_with_deferral(last, deferral), requested,
-                                 dropped)
+                                 dropped, key_for(target) if resource_key else None)
 
         assert last is not None
         LOGGER.info("acquisition exhausted attempts provider=%s url=%s status=%s",
                     provider, redact_url(target), last.status.value)
-        return _finished(last, requested, dropped)
+        return _finished(last, requested, dropped,
+                         key_for(target) if resource_key else None)
 
     # -- internals ---------------------------------------------------------
 
@@ -415,11 +425,12 @@ def strip_credentials(headers: Mapping[str, str]) -> tuple[dict[str, str], bool]
 
 
 def _finished(outcome: FetchOutcome, requested: str,
-              dropped: bool) -> FetchOutcome:
+              dropped: bool, resource_key: str | None = None) -> FetchOutcome:
     import dataclasses
 
     return dataclasses.replace(outcome, requested_url=requested,
-                               credentials_dropped=dropped)
+                               credentials_dropped=dropped,
+                               resource_key=resource_key)
 
 
 def _advertised_delay(outcome: FetchOutcome) -> float | None:
