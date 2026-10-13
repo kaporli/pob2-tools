@@ -118,9 +118,9 @@ rather than as a block:
 |---|---|---|---|---|
 | `gap-p09-t01-boss-windows` | Phase and invulnerability start and end times, read off the recording's clock in seconds | Named boss, area level, patch, at least five attempts | Frame rate and the operator's reaction time bound the precision; state it | A reviewer accepts the attempt set and the stated precision |
 | `gap-p09-t01-duration-limit` | Completion time per attempt, including the failures | The same | As above | The same |
-| `gap-p09-t01-route-timing` | Per-leg walked route times | Named map layout, the route walked | As above | The same |
+| `gap-p09-t01-movement-model` | Per-leg walked route times | Named map layout, the route walked, movement speed and movement skills used | As above | The same |
 | `gap-p09-t01-encounter-density` | Pack size and spacing along that route | The same | Spacing is in whatever unit the recording permits; see the spatial gap | The same |
-| `gap-p09-t01-incoming-damage` | Timestamped damage events | The same, plus the character's mitigation at the time | A health bar shows a fraction, not absolute damage, unless maximum life is known | Only with the life figure below |
+| `gap-p09-t01-incoming-damage` | Timestamped damage events | Named encounter and patch; the character's maximum/current life and energy shield, mitigation, recovery and other simultaneous resource changes | A fractional character health bar needs a known maximum; net loss alone cannot separate damage, absorption and recovery | A reviewer accepts the character resource context and a method isolating the damage quantity; enemy maximum life is not this prerequisite |
 | `gap-p09-t01-initial-resources` | The resource state at the start event | The same | Legibility of the resource display | A reviewer accepts the reading |
 | `gap-p09-t01-enemy-health` | **Not closed by a health bar.** A bar shows a fraction of an unknown maximum | Absolute maximum life needs an identified catalog row for that monster at that area level and rarity, or a controlled experiment with a known damage figure | Identification of the catalog row is the uncertainty | A reviewer accepts the catalog row or the experiment |
 | `gap-p09-t01-enemy-defenses` | **Not closed by a recording.** Mitigation is not visible | As above | As above | As above |
