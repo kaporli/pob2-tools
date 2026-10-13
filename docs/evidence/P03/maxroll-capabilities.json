@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "record_kind": "source_capability_manifest",
+  "manifest_id": "p03-t01-maxroll-2026-10-10",
+  "task": "P03-T01",
+  "specification_version": "1.0",
+  "provider": "maxroll",
+  "provider_slug": "maxroll",
+  "provider_home": "https://maxroll.gg/poe2/build-guides",
+  "inspected_at": "2026-10-10",
+  "evidence_class": "independently_observed_external",
+  "evidence_class_note": "Observations of a third party website on one date. Not synthetic, not PoB-derived, not a gameplay measurement.",
+  "inspection": {
+    "client": "Claude Code WebFetch",
+    "client_user_agent": null,
+    "client_user_agent_note": "The tool does not expose the user agent it sends. The agent list below names Claude-Code, Claude-User, Claude-Web, ClaudeBot, Claude-SearchBot and anthropic-ai, so this client is inside the prohibited group on any plausible identity.",
+    "rendering": "not applicable; no page was rendered",
+    "credentials_used": false,
+    "cookies_used": false,
+    "provider_contacted": false
+  },
+  "bounds": {
+    "requests_to_provider_host": 1,
+    "crawl": false,
+    "undocumented_endpoints_probed": false,
+    "note": "Only robots.txt was requested. Fetching it is how the policy is discovered. After reading it, no further maxroll.gg request was made, deliberately. The build-guide and planner URLs below come from a public search index, not from this provider."
+  },
+  "robots": {
+    "url": "https://maxroll.gg/robots.txt",
+    "retrieved": true,
+    "http_status": 200,
+    "header_comment_quoted": [
+      "Ziff Davis content is made available for your non-commercial use subject to our Terms of Use here: https://www.ziffdavis.com/terms-of-use",
+      "Use of any robot, crawler, or other tool to scrape, harvest, extract, or retrieve any content on this website using automated means is prohibited without written permission from Ziff Davis.",
+      "Prohibited uses include but are not limited to: (1) text and data mining under Art. 4 of the EU Directive on Copyright in the Digital Single Market; (2) development or operation of artificial intelligence or machine learning software or databases, including by training, fine-tuning, embedding, and retrieval-augmented generation; (3) creating data sets containing our content or sharing it with others; and (4) any commercial purposes.",
+      "Contact licensing@ziffdavis.com for assistance."
+    ],
+    "named_agent_groups": [
+      {
+        "disallow": ["/"],
+        "agent_count_approx": 200,
+        "agents_relevant_to_this_project": [
+          "anthropic-ai",
+          "Claude-Code",
+          "Claude-SearchBot",
+          "Claude-User",
+          "Claude-Web",
+          "ClaudeBot",
+          "Crawl4AI",
+          "FirecrawlAgent",
+          "HTTrack",
+          "Nutch",
+          "Scrapy",
+          "Spider"
+        ],
+        "note": "One group lists roughly two hundred automation and AI agents and ends with Disallow: / for all of them."
+      }
+    ],
+    "group_for_all_agents": {
+      "allow": ["/"],
+      "disallow": [
+        "/cgi-bin/",
+        "/admin/*",
+        "/auth/*",
+        "/404/",
+        "/cdn-cgi/",
+        "/d2/d2-holy-grail/*",
+        "/d2/d2planner/*",
+        "/d3/d3planner/*",
+        "/d4/planner/*",
+        "/lost-ark/la-builder/*",
+        "/last-epoch/planner/*",
+        "/poe/planner/*",
+        "/poe2/planner/*",
+        "/hell-clock/planner/*",
+        "/wow/talent-calculator/*",
+        "/blue-protocol/planner/*",
+        "/borderlands-4/planner/*",
+        "/clair-obscur-expedition-33/planner/*"
+      ],
+      "crawl_delay": null
+    },
+    "sitemap": [
+      "https://maxroll.gg/sitemap.xml",
+      "https://maxroll.gg/news-sitemap.xml"
+    ],
+    "reading": "Two independent prohibitions apply. This client's agent family is disallowed from the entire host. Separately, /poe2/planner/* is disallowed for every agent, and the planner is where this provider holds structured build data. There is no reading of this file under which automated acquisition of Maxroll build data is permitted.",
+    "evidence_ids": ["MAXR-E01"]
+  },
+  "terms": {
+    "url": "https://www.ziffdavis.com/terms-of-use",
+    "retrieved": false,
+    "http_status": null,
+    "clauses_on_automated_access": "The robots.txt header comment states the prohibition and cites this document. The document itself was not retrievable by this client, so only the robots.txt wording is quoted above.",
+    "note": "The quoted comment is itself an explicit statement by the operator. It is sufficient to settle access and redistribution without the linked document.",
+    "evidence_ids": ["MAXR-E01", "MAXR-E02"]
+  },
+  "access": {
+    "permitted_access_method": "local_file",
+    "acquisition_status": "unsupported_access",
+    "candidate_access_methods": ["local_file"],
+    "rationale": "The operator prohibits automated retrieval of any content without written permission, names this client's agent family with Disallow: /, and disallows the planner path for every agent. local_file is the only method left: material the operator already holds, supplied by hand. Obtaining written permission would mean contacting the provider, which this task does not do.",
+    "evidence_ids": ["MAXR-E01"]
+  },
+  "support": {
+    "listing_metadata": {
+      "supported": false,
+      "confirmed": false,
+      "access_method": null,
+      "note": "Build-guide titles and class filters exist, visible through a public search index. They are not acquirable by this project under the stated policy.",
+      "evidence_ids": ["MAXR-E01", "MAXR-E03"]
+    },
+    "full_build_data": {
+      "supported": false,
+      "confirmed": false,
+      "access_method": null,
+      "note": "The PoE2Planner holds the passive tree, atlas tree, skills, passives, gear and declared variants per a public search index. Its path is disallowed for every agent, so this is the most firmly closed surface of the three providers.",
+      "evidence_ids": ["MAXR-E01", "MAXR-E03"]
+    },
+    "explanatory_prose": {
+      "supported": false,
+      "confirmed": false,
+      "access_method": null,
+      "note": "Guide prose is the content the Ziff Davis comment protects by name. Copying it into a dataset is prohibited in the same sentence.",
+      "evidence_ids": ["MAXR-E01"]
+    }
+  },
+  "fields_visible": {
+    "confirmed_by_this_inspection": [],
+    "reported_not_confirmed": [
+      {"field": "build_guide_title", "source": "search index", "example": "Sorceress Build Guides"},
+      {"field": "class_and_ascendancy_filter", "source": "search index", "example": "taxonomies.classes=sorceress, stormweaver"},
+      {"field": "build_guide_type_taxonomy", "source": "search index", "example": "archive"},
+      {"field": "planner_variants", "source": "search index", "example": "variant trees with minimum levels, variants can be hidden"},
+      {"field": "community_build_rating", "source": "search index", "example": null}
+    ],
+    "note": "Recorded so a later reviewer knows what is behind the prohibition. Not an acquisition claim and not a field map.",
+    "evidence_ids": ["MAXR-E03"]
+  },
+  "structured_export_formats": [],
+  "pagination": {
+    "behaviour": "not_inspected",
+    "confirmed": false,
+    "note": "The build-guide index uses query-string filters according to a search result. It was not requested and its paging was not observed.",
+    "evidence_ids": ["MAXR-E03"]
+  },
+  "authentication": {
+    "required_for_public_pages": "unknown",
+    "attempted": false,
+    "note": "Not probed. Authentication would not change the prohibition."
+  },
+  "limits": {
+    "provider_declared": {
+      "rate_limit": null,
+      "size_limit": null,
+      "crawl_delay": null,
+      "note": "No rate limit is published because the operator permits no automated rate at all."
+    },
+    "applied_defaults": {
+      "connect_timeout_s": 10,
+      "read_timeout_s": 30,
+      "max_response_bytes": 20971520,
+      "max_attempts": 3,
+      "source": "docs/specs/interfaces.md operational defaults; not exercised against this host"
+    }
+  },
+  "blocked_cases": [
+    {
+      "url": "https://maxroll.gg/*",
+      "http_status": null,
+      "status": "unsupported_access",
+      "reason": "robots.txt disallows this client's agent family from the whole host, and the header comment prohibits automated retrieval of any content without written permission",
+      "evidence_id": "MAXR-E01"
+    },
+    {
+      "url": "https://maxroll.gg/poe2/planner/*",
+      "http_status": null,
+      "status": "unsupported_access",
+      "reason": "disallowed for User-agent: * as well, so no agent may fetch the structured build data",
+      "evidence_id": "MAXR-E01"
+    },
+    {
+      "url": "https://www.ziffdavis.com/terms-of-use",
+      "http_status": null,
+      "status": "invalid_response",
+      "reason": "the linked terms document could not be retrieved by this client",
+      "evidence_id": "MAXR-E02"
+    }
+  ],
+  "representative_records": [
+    {
+      "category": "current_endgame",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": "https://maxroll.gg/poe2/build-guides",
+      "candidate_source": "public search result",
+      "observed": null,
+      "reason": "Not requested. robots.txt forbids it. The URL is recorded so the prohibition is specific rather than vague.",
+      "evidence_ids": ["MAXR-E01", "MAXR-E03"]
+    },
+    {
+      "category": "multiple_variants",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": "https://maxroll.gg/poe2/planner/maxroll-builds",
+      "candidate_source": "public search result",
+      "observed": null,
+      "reason": "Not requested. This path is disallowed for every agent, not only for this one.",
+      "evidence_ids": ["MAXR-E01", "MAXR-E03"]
+    },
+    {
+      "category": "old_patch",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": null,
+      "candidate_source": "an 'archive' build_guide_type value appears in a search result filter string",
+      "observed": null,
+      "reason": "Not requested. An archive taxonomy suggests old guides are retained, which is unverified.",
+      "evidence_ids": ["MAXR-E01", "MAXR-E03"]
+    },
+    {
+      "category": "sparse_incomplete",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "Not requested. No candidate identified.",
+      "evidence_ids": ["MAXR-E01"]
+    },
+    {
+      "category": "unusual_build",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "Not requested. No candidate identified.",
+      "evidence_ids": ["MAXR-E01"]
+    }
+  ],
+  "redistribution": "restricted",
+  "local_handling": "restricted",
+  "redistribution_note": "The operator states content is for non-commercial use only and prohibits creating data sets containing it or sharing them. No Maxroll content is stored in this repository. A locally imported file stays local and is marked restricted.",
+  "redistribution_evidence_ids": ["MAXR-E01"],
+  "recommended_adapter_path": {
+    "summary": "No adapter. Record unsupported_access and keep the automatic portion of P03-T04 blocked for this provider. If a reviewer supplies a build file or PoB code by hand, P03-T02 imports it as local_file with the provider recorded.",
+    "access_methods": ["local_file"],
+    "allowed_operations": [
+      "import a file the operator already holds, with provider and redistribution recorded"
+    ],
+    "refused_operations": [
+      "any request to maxroll.gg beyond robots.txt",
+      "listing discovery, pagination or crawl",
+      "fetching /poe2/planner/ by any means",
+      "building a data set from this provider's content",
+      "contacting licensing@ziffdavis.com, which is out of scope for this task"
+    ],
+    "blocks": "The automatic adapter portion of P03-T04 for this provider is blocked and cannot be unblocked by evidence. It needs written permission, which is an owner decision, not an engineering one.",
+    "next_task": "P03-T04 delivers the local import path with the capability flag set to unsupported_access."
+  },
+  "evidence": [
+    {
+      "id": "MAXR-E01",
+      "method": "direct_fetch",
+      "url": "https://maxroll.gg/robots.txt",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200. A header comment prohibiting automated retrieval without written permission from Ziff Davis, one group of roughly two hundred automation and AI agents ending in Disallow: /, and a User-agent: * group that allows / but disallows /poe2/planner/* among other planner paths. Two sitemaps advertised."
+    },
+    {
+      "id": "MAXR-E02",
+      "method": "direct_fetch",
+      "url": "https://www.ziffdavis.com/terms-of-use",
+      "observed_at": "2026-10-10",
+      "observation": "The fetch tool reported it is unable to fetch from this host. No clause text was read from the document itself."
+    },
+    {
+      "id": "MAXR-E03",
+      "method": "search_index",
+      "url": "https://maxroll.gg/poe2/build-guides",
+      "observed_at": "2026-10-10",
+      "observation": "A public web search over maxroll.gg returned the build-guide index URL, a planner builds-database URL, a class-filtered index URL carrying a build_guide_type taxonomy with an 'archive' value, and descriptions of a PoE2Planner holding passive tree, atlas tree, skills, passives and gear with variant support and minimum levels. No maxroll.gg page was fetched to obtain this."
+    },
+    {
+      "id": "MAXR-E04",
+      "method": "prior_inspection",
+      "url": "docs/specs/research.md",
+      "observed_at": "2026-10-04",
+      "observation": "The recorded research inspection could not open the Maxroll guide index and left layout, permitted automation, exports and coverage open. This study closes the permitted-automation question: it is prohibited."
+    }
+  ]
+}

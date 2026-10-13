@@ -61,6 +61,9 @@ Exit `0` means every blocking check passed. Exit `3` means a missing dependency
 | P02-T04 primitive fixtures | `python scripts/p02_t04_primitive_fixtures.py` | PoB | Not a test; builds the thirteen controlled fixture documents, reads them through the adapter and rewrites `docs/evidence/P02/primitives.json`. Without a checkout it records `unavailable`. `tests/engine/test_p02_t04_primitive_semantics.py` imports its fixture builder. |
 | P02-T05 evidence | `python scripts/p02_t05_evidence.py` | PoB for the `pob` section | Not a test; rewrites `docs/evidence/P02/roundtrips.json`, `roundtrip-synthetic.xml` and `roundtrip-pob-export.xml`. Without a checkout the `pob` section records `unavailable`. |
 | P02-T05 item conversion report | `luajit tests/integration/lua/convert_probe.lua pob2-mcp/pob2mcp/bootstrap.lua <item.lua> report` | `luajit` | Not a test; prints the repaired `convert_trade_item` completeness report for one item table instead of the item string. |
+| P03-T01 source inspect | `python -m pob2opt.cli source inspect --provider NAME --out DIR` | Nothing | Reports the capability manifest recorded in `docs/evidence/P03`. Offline by construction: it has no fetch path and no flag that adds one. Providers: `mobalytics`, `maxroll`, `poe-ninja`. Exit 3 for an unknown provider or a missing manifest, 4 for a manifest that fails the structure. |
+| P03-T02 ingest | `python -m pob2opt.cli ingest --provider NAME --input PATH_OR_URL --corpus DIR` | Nothing | Not a test; stores one input as a raw record. A URL needs `--allow-host`: no host is approved by default. Exit 3 for blocked/missing/unapproved access, 4 for a malformed or timed-out one. |
+| P03-T02 evidence | `python scripts/p03_t02_evidence.py` | Nothing | Not a test; rewrites `docs/evidence/P03/acquisition.json` from a scripted transport. No provider, no socket, no PoB. |
 
 Selecting the PoB checkout:
 
@@ -122,6 +125,11 @@ none yet).
 | `test_p02_t05_build_round_trip.py` | P02-T05 offline lane: a BuildSpec exported and reimported, compared on `build_identity`. Enabled and disabled groups, main skill, ordered supports, passive attribute choices, the ordinary/ascendancy split, socketed jewels, weapon sets, the three config value types and an explicitly empty slot. Unsupported fields (trigger nesting, progression, item-granted groups, unnamed catalog IDs) are labelled incomplete and not recommended, with the value preserved in the report. Includes the invariant that a complete export never differs on reimport. |
 | `test_p02_t05_item_round_trip.py` | P02-T05 offline lane: an ItemInstance as PoB item text and back, compared on `item_identity`. Every supported modifier category, modifier line flags, item variants, sockets, omitted optional fields, a modifier line containing a colon. Unsupported: the `unknown` category, a modifier's catalog resolution and roll range, a flag recorded `false`, a requirement other than level, and modifier positions PoB would renumber. |
 | `test_p02_t05_no_mutation.py` | P02-T05: neither direction changes the BuildSpec, the items or the naming table it was given, checked on canonical JSON of the whole input. Includes a monkeypatched mutating exporter, so the guard fails when something does mutate. |
+| `test_p03_t01_capabilities.py` | P03-T01: the three recorded manifests hold their shape. Every provider is either reproducible or specifically blocked, the three support flags are separate and each cites evidence, all five representative categories are answered rather than dropped, redistribution and access values stay inside the contract, the recorded limits are never looser than `interfaces.md`, no manifest carries anything resembling a credential, and the D02 proposal keeps every required section and stays unresolved. Reads evidence files only. |
+| `test_p03_t01_source_inspect.py` | P03-T01: `pob2opt source inspect` as a command. Report contents per provider, exit codes 0, 2, 3 and 4, an unknown provider, a missing manifest directory, a malformed manifest, and the subcommand refusing anything but `inspect`. Then the validator's rejection cases: a supported flag without confirmation, a dropped category, a substituted category, a missing reason, an unresolvable evidence reference, an access method outside the contract, a loosened limit, and a manifest with neither an example nor a block. Also that the reader imports no HTTP client. |
+| `test_p03_t02_local.py` | P03-T02 local acquisition: XML, HTML, JSON and a build code each round trip to a raw record with a matching hash; the same bytes are one blob and one document however often they arrive; a missing file, an unknown kind, malformed JSON, unsafe XML, a truncated or oversized build code and an oversized file each get a typed status and write nothing. Also the `ingest` command, the engine-free import checked in a fresh interpreter, and the rule that nothing acquired is ever executed, checked on the syntax tree. |
+| `test_p03_t02_repairs.py` | P03-T02 review repairs, one group per finding in `docs/reviews/P03-T02.md`: credentials stay origin-scoped while validators are bound to the exact final resource, including ordered query values; unsafe XML is refused independently of encoding; ordinary UTF-8, UTF-16, Latin-1 and Windows-1252 documents preserve their raw bytes, direct and compressed; two resources differing only in a redacted query value no longer share a validator, and two authorization contexts no longer share an entry; `RequestsTransport` closes a response on every early return and on a partial read, against a fake session that opens nothing; a 429 cooldown holds the provider's other URLs, leaves other providers alone and survives a restart; a 304 after a redirect resolves against the URL that was asked for, and a changed redirect target does not reuse the cached representation; a dot segment cannot leave an approved path, checked against what `requests` would prepare; and 2,000-level JSON is a typed refusal on both interpreters. |
+| `test_p03_t02_http.py` | P03-T02 shared HTTP layer, transport injected: the empty-by-default host allow list, refusals for plain http, another host, credentials in a URL and a redirect off the list; 403, 404, 429, an oversized body, a timeout and malformed content as typed statuses that store nothing; the 10/30 second timeouts and 20 MiB cap reaching the transport; a provider tightening but never loosening them; three attempts for a transient failure and one for the rest; a short retry delay waited in full and a long one scheduled rather than cut; conditional requests and 304; and that no token reaches a blob, a record, a log line or the state file. |
 
 ### `tests/integration` - local tools, still no PoB and no network
 
@@ -334,3 +342,58 @@ One ordering hazard found while running the engine lane: a second
 throwaway one leaves the session `engine` fixture unusable for every test
 after it. `tests/engine/test_p02_t05_pob_round_trip.py` builds its fixture
 document in the session engine for that reason.
+
+## P03-T01 recorded results
+
+Specification version 1.0, 2026-10-10, branch `p03-t01-capabilities` off
+`c2c2d02`, CPython 3.12.4, Windows 11. No PoB, no network:
+
+| Command | Result |
+|---|---|
+| `python -m pytest tests/unit` | 897 passed, 1 xfailed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match `pob2opt/domain/records.py` |
+| `python -m pob2opt.cli source inspect --provider mobalytics --out DIR` | exit 0, `access_blocked`, 0 of 5 categories inspected |
+| `python -m pob2opt.cli source inspect --provider maxroll --out DIR` | exit 0, `unsupported_access`, 0 of 5 categories inspected |
+| `python -m pob2opt.cli source inspect --provider poe-ninja --out DIR` | exit 0, `unsupported_access`, 0 of 5 categories inspected |
+
+The one xfail belongs to P08-T01 and is unrelated. The 55 new tests run in the
+offline unit lane; none is marked `network`, because none of them touches a
+provider. The manifests they read came from a one-off bounded inspection that is
+deliberately not re-runnable as a test: re-running it means contacting three
+providers, which the unit lane forbids and which P03-T01 bounds to a handful of
+requests. A `network`-marked smoke check belongs to P03-T03, against whichever
+provider the D02 review approves.
+## P03-T02 recorded results
+
+Specification version 1.0, 2026-10-10, branch `p03-t02-acquisition` off
+`c2c2d02`, CPython 3.12.4, Windows 11, no PoB checkout present:
+
+| Command | Result |
+|---|---|
+| `python -m pytest tests/unit` | 917 passed, 1 xfailed |
+| `python -m pytest` | 926 passed, 99 skipped, 1 xfailed |
+| `python -m pytest -m network` | 1026 deselected, 0 collected |
+| `python scripts/p03_t02_evidence.py` | wrote `docs/evidence/P03/acquisition.json` |
+The 99 skips are the engine lane: this worktree has no PoB checkout. P03-T02
+adds no engine test and needs none. The `-m network` line is the point of the
+marker: acquisition ships no test that would contact a provider, so selecting
+that marker collects nothing.
+
+## P03 repair results
+
+After the repairs for `docs/reviews/P03-T01.md` and `docs/reviews/P03-T02.md`,
+branch `p03-acquisition`, Windows 11, no PoB checkout, no socket:
+
+| Command | Python 3.12.4 | Python 3.10.22 |
+|---|---|---|
+| `python -m pytest tests/unit tests/integration -m 'not engine and not network and not longrun'` | 1018 passed, 1 xfailed | 1018 passed, 1 xfailed |
+| `python -m pytest tests/unit/test_p03_t02_repairs.py` | 36 passed | 36 passed |
+| `python scripts/generate_schemas.py --check` | 20 schema files match | not re-run |
+
+The one xfail belongs to P08-T01 and is unrelated. The repair suite is written
+so that reverting any single repair fails it: each test reproduces the
+reviewer's case rather than reading back a configured value. R8 is the clearest
+example, because it is the one finding whose behaviour differed between the two
+interpreters: `json.loads` on a 2,000-level document still raises
+`RecursionError` on 3.10.22 and still succeeds on 3.12.4, and the bound in
+`content.py` is what makes acquisition answer `json_too_deep` on both.

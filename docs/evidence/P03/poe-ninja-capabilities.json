@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "record_kind": "source_capability_manifest",
+  "manifest_id": "p03-t01-poe-ninja-2026-10-10",
+  "task": "P03-T01",
+  "specification_version": "1.0",
+  "provider": "poe.ninja",
+  "provider_slug": "poe-ninja",
+  "provider_home": "https://poe.ninja/poe2/builds",
+  "inspected_at": "2026-10-10",
+  "evidence_class": "independently_observed_external",
+  "evidence_class_note": "Observations of a third party website on one date. Not synthetic, not PoB-derived, not a gameplay measurement.",
+  "inspection": {
+    "client": "Claude Code WebFetch",
+    "client_user_agent": null,
+    "client_user_agent_note": "The tool does not expose the user agent it sends. The provider asks for a descriptive user agent with contact details, which an implemented adapter must set and this inspection could not.",
+    "rendering": "server response converted to Markdown by the tool; client-side JavaScript is not executed",
+    "credentials_used": false,
+    "cookies_used": false,
+    "provider_contacted": false
+  },
+  "bounds": {
+    "requests_to_provider_host": 9,
+    "crawl": false,
+    "undocumented_endpoints_probed": false,
+    "note": "Nine single requests: robots.txt, the builds page twice, the documentation index, the API reference, the Path of Building rules page, the data dumps page, one documented economy endpoint and the privacy policy. The one endpoint called is published in the provider's own API reference. No undocumented endpoint was called, and the builds and profiles endpoints were not looked for."
+  },
+  "robots": {
+    "url": "https://poe.ninja/robots.txt",
+    "retrieved": false,
+    "http_status": 404,
+    "group_for_all_agents": null,
+    "named_agent_groups": [],
+    "sitemap": [],
+    "reading": "No robots.txt is served. Absence is not permission. The provider states its policy in its API reference instead, and that statement is narrower than a missing robots file would imply.",
+    "evidence_ids": ["NINJ-E01", "NINJ-E05"]
+  },
+  "terms": {
+    "url": "https://poe.ninja/docs/api",
+    "retrieved": true,
+    "http_status": 200,
+    "clauses_on_automated_access": [
+      "The economy overview endpoints documented on this page are the supported public surface of the poe.ninja API.",
+      "The builds / profiles API, and every other non-economy endpoint (character, Path of Building, authentication), are internal. They are undocumented, unsupported, and not available for third-party use.",
+      "Responses are HTTP-cached (roughly 5 minutes, ETag-based). Use conditional requests and respect the cache headers; do not bypass caching.",
+      "Polling faster than a few minutes wastes bandwidth for no fresher data.",
+      "Be reasonable with concurrency and volume; this is a community resource.",
+      "Send a descriptive User-Agent that identifies your app and a contact.",
+      "Clients that misbehave against these endpoints, or make excessive use of the economy endpoints, will be blocked."
+    ],
+    "stated_reasons_for_closing_builds_api": [
+      "It is significantly more performance-intensive to serve than economy data",
+      "Many players deliberately hide their characters or make their profiles private. Serving that data to third parties directly would bypass that privacy choice."
+    ],
+    "note": "A separate terms-of-service page was not found. The privacy policy is retrievable and says nothing about scraping or programmatic access.",
+    "evidence_ids": ["NINJ-E05", "NINJ-E07"]
+  },
+  "access": {
+    "permitted_access_method": "documented_api",
+    "acquisition_status": "unsupported_access",
+    "candidate_access_methods": ["documented_api", "local_file"],
+    "rationale": "A documented API exists and works, but it covers economy data only. For build acquisition, which is what P03 needs, the provider states in writing that the builds and profiles API is not available for third-party use. The status for this project's purpose is therefore unsupported_access. The permitted method is recorded as documented_api because it is real and reproducible, and because P05 may use it for market data.",
+    "evidence_ids": ["NINJ-E02", "NINJ-E05", "NINJ-E06"]
+  },
+  "support": {
+    "listing_metadata": {
+      "supported": false,
+      "confirmed": true,
+      "access_method": null,
+      "note": "Confirmed unavailable two ways. The builds page returns HTTP 200 with a navigation and footer shell only, with no character rows, no columns, no league selector and no pagination control in the server response, so a public_page adapter would acquire an empty document. The listing API behind it is closed by the statement above.",
+      "evidence_ids": ["NINJ-E02", "NINJ-E03", "NINJ-E05"]
+    },
+    "full_build_data": {
+      "supported": false,
+      "confirmed": true,
+      "access_method": null,
+      "note": "Explicitly refused by the provider. The Path of Building endpoint is named in the closed set. The provider also gives a privacy reason, so this is not a technical obstacle to route around.",
+      "evidence_ids": ["NINJ-E05"]
+    },
+    "explanatory_prose": {
+      "supported": false,
+      "confirmed": true,
+      "access_method": null,
+      "note": "Not applicable in the way the other two providers offer it. This provider publishes character snapshots derived from the ladder, not authored build guides. There is no rotation text or gearing explanation to acquire, and none must be synthesised for a snapshot.",
+      "evidence_ids": ["NINJ-E04", "NINJ-E08"]
+    }
+  },
+  "fields_visible": {
+    "confirmed_by_this_inspection": [
+      {"field": "league_id", "where": "GET /poe2/api/economy/leagues", "example": "Forbidden Rites", "note": "economy data, not build data"},
+      {"field": "league_name", "where": "GET /poe2/api/economy/leagues", "example": "HC Runes of Aldur", "note": "economy data, not build data"},
+      {"field": "site_disclaimer", "where": "every page footer", "example": "poe.ninja is not affiliated with or endorsed by Grinding Gear Games", "note": null}
+    ],
+    "reported_not_confirmed": [
+      {"field": "character_configuration_and_pob_statistics", "source": "docs/specs/research.md citing the provider's own launch post", "example": null}
+    ],
+    "note": "No build field was seen. The builds page server response contained no record of any kind.",
+    "evidence_ids": ["NINJ-E02", "NINJ-E03", "NINJ-E06", "NINJ-E08"]
+  },
+  "structured_export_formats": [
+    {
+      "format": "json",
+      "confirmed": true,
+      "route": "the documented economy overview endpoints",
+      "covers_build_data": false,
+      "evidence_ids": ["NINJ-E05", "NINJ-E06"]
+    },
+    {
+      "format": "data_dumps_page",
+      "confirmed": false,
+      "route": "a footer link labelled Data dumps pointing at /poe1/data",
+      "covers_build_data": false,
+      "note": "The page was requested and returned the same navigation shell with no content. The link is Path of Exile 1 only by its path. No Path of Exile 2 dump and no build dump was observed.",
+      "evidence_ids": ["NINJ-E09"]
+    }
+  ],
+  "pagination": {
+    "behaviour": "not_applicable_for_builds",
+    "confirmed": false,
+    "note": "The documented economy endpoints are whole-overview documents, not paged collections. Build listing pagination could not be observed because no listing was served.",
+    "evidence_ids": ["NINJ-E05", "NINJ-E03"]
+  },
+  "authentication": {
+    "required_for_public_pages": false,
+    "required_for_documented_api": false,
+    "attempted": false,
+    "note": "The documented economy endpoint answered with no credential. The provider names authentication among the internal endpoints that are not for third-party use, so no authenticated route exists for this project either.",
+    "evidence_ids": ["NINJ-E05", "NINJ-E06"]
+  },
+  "limits": {
+    "provider_declared": {
+      "rate_limit": "no numeric limit published; the reference asks for reasonable concurrency and volume and says misbehaving or excessive clients will be blocked",
+      "cache": "HTTP cached roughly 5 minutes, ETag based; conditional requests required and caching must not be bypassed",
+      "polling_guidance": "faster than a few minutes gains no fresher data",
+      "user_agent": "a descriptive user agent naming the application and a contact is required",
+      "size_limit": null,
+      "evidence_ids": ["NINJ-E05"]
+    },
+    "applied_defaults": {
+      "connect_timeout_s": 10,
+      "read_timeout_s": 30,
+      "max_response_bytes": 20971520,
+      "max_attempts": 3,
+      "source": "docs/specs/interfaces.md operational defaults",
+      "note": "The provider's caching and polling rules are stricter than the defaults and take precedence, as interfaces.md requires."
+    }
+  },
+  "documented_endpoints": {
+    "poe2": [
+      "GET https://poe.ninja/poe2/api/economy/leagues",
+      "GET https://poe.ninja/poe2/api/economy/exchange/current/overview",
+      "GET https://poe.ninja/poe2/api/economy/stash/current/item/overview"
+    ],
+    "poe1": [
+      "GET https://poe.ninja/poe1/api/economy/leagues",
+      "GET https://poe.ninja/poe1/api/economy/exchange/current/overview",
+      "GET https://poe.ninja/poe1/api/economy/stash/current/item/overview",
+      "GET https://poe.ninja/poe1/api/economy/stash/current/currency/overview"
+    ],
+    "note": "Listed as published, not as endorsed for this project. None of them returns build data.",
+    "evidence_ids": ["NINJ-E05"]
+  },
+  "blocked_cases": [
+    {
+      "url": "https://poe.ninja/robots.txt",
+      "http_status": 404,
+      "status": "not_found",
+      "reason": "no robots file is served",
+      "evidence_id": "NINJ-E01"
+    },
+    {
+      "url": "https://poe.ninja/poe2/builds",
+      "http_status": 200,
+      "status": "invalid_response",
+      "reason": "served a navigation shell with no build records; a successful status over an empty document must never become a successful empty build",
+      "evidence_id": "NINJ-E03"
+    },
+    {
+      "url": "builds and profiles API, character endpoint, Path of Building endpoint, authentication endpoint",
+      "http_status": null,
+      "status": "unsupported_access",
+      "reason": "the provider states these are internal, undocumented, unsupported and not available for third-party use; they were not located and not called",
+      "evidence_id": "NINJ-E05"
+    },
+    {
+      "url": "https://poe.ninja/poe1/data",
+      "http_status": 200,
+      "status": "invalid_response",
+      "reason": "the data dumps page served the same shell with no content",
+      "evidence_id": "NINJ-E09"
+    }
+  ],
+  "representative_records": [
+    {
+      "category": "current_endgame",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": "https://poe.ninja/poe2/builds",
+      "candidate_source": "the provider's own builds page",
+      "observed": "HTTP 200 with navigation and footer only. No character row was present in the server response.",
+      "reason": "The page carries no record server side and the API behind it is closed to third parties.",
+      "evidence_ids": ["NINJ-E02", "NINJ-E03", "NINJ-E05"]
+    },
+    {
+      "category": "multiple_variants",
+      "inspected": false,
+      "status": "not_applicable",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "This provider publishes ladder character snapshots. A snapshot has no author-declared variants, so the category does not exist here. It is recorded as absent rather than filled with a substitute.",
+      "evidence_ids": ["NINJ-E04", "NINJ-E08"]
+    },
+    {
+      "category": "old_patch",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": "The economy endpoint lists current leagues including Standard and Hardcore, which implies retained historical leagues.",
+      "reason": "Whether old-league build snapshots stay reachable could not be checked, because no build surface is open.",
+      "evidence_ids": ["NINJ-E05", "NINJ-E06"]
+    },
+    {
+      "category": "sparse_incomplete",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "No listing was served, so no sparse record could be chosen.",
+      "evidence_ids": ["NINJ-E03", "NINJ-E05"]
+    },
+    {
+      "category": "unusual_build",
+      "inspected": false,
+      "status": "unsupported_access",
+      "candidate_url": null,
+      "candidate_source": null,
+      "observed": null,
+      "reason": "Same cause. No listing, no record selection.",
+      "evidence_ids": ["NINJ-E03", "NINJ-E05"]
+    }
+  ],
+  "redistribution": "unknown",
+  "local_handling": "restricted",
+  "redistribution_note": "No licence or redistribution term was found for the documented economy data, and the privacy policy is silent on it. The build data is not obtainable at all, so its redistribution does not arise. Nothing from this provider is stored in this repository.",
+  "redistribution_evidence_ids": ["NINJ-E05", "NINJ-E07"],
+  "reproducible_acquisition_example": {
+    "purpose": "Shows the documented surface is real and reachable. It does not make this provider a build source.",
+    "request": "GET https://poe.ninja/poe2/api/economy/leagues",
+    "observed_at": "2026-10-10",
+    "http_status": 200,
+    "media_type": "application/json",
+    "response": [
+      {"id": "Forbidden Rites", "name": "Forbidden Rites"},
+      {"id": "Runes of Aldur", "name": "Runes of Aldur"},
+      {"id": "HC Forbidden Rites", "name": "HC Forbidden Rites"},
+      {"id": "HC Runes of Aldur", "name": "HC Runes of Aldur"},
+      {"id": "Standard", "name": "Standard"},
+      {"id": "Hardcore", "name": "Hardcore"}
+    ],
+    "contains_build_data": false,
+    "owning_project": "P05 may use this for market and league resolution. P03 may not count it as build acquisition.",
+    "evidence_ids": ["NINJ-E06"]
+  },
+  "recommended_adapter_path": {
+    "summary": "No build adapter. Record unsupported_access for build acquisition and cite the provider's written statement. Keep the documented economy endpoints on file for P05 and D01, under the provider's caching, user-agent and volume rules.",
+    "access_methods": ["documented_api", "local_file"],
+    "allowed_operations": [
+      "call a documented economy endpoint with a descriptive user agent, conditional requests and no polling faster than a few minutes, for market work only",
+      "import a build file the operator already holds, as local_file"
+    ],
+    "refused_operations": [
+      "calling the builds or profiles API",
+      "calling the character, Path of Building or authentication endpoints",
+      "reading network traffic of the builds page to find the endpoint behind it",
+      "treating a 200 over an empty page shell as an acquired document",
+      "bypassing the ETag cache"
+    ],
+    "blocks": "P03-T04 automatic acquisition for this provider is blocked by the provider's own policy, including a stated player-privacy reason. Evidence cannot unblock it.",
+    "next_task": "P03-T04 delivers the local import path with the capability flag set to unsupported_access."
+  },
+  "evidence": [
+    {
+      "id": "NINJ-E01",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/robots.txt",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 404. No robots file served."
+    },
+    {
+      "id": "NINJ-E02",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/poe2/builds",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200. The response carried a header with Account, Contribute, Support, About, Docs and FAQ, Discord, Statistics and Data dumps links, a footer with Privacy Policy and privacy controls, and the Grinding Gear Games disclaimer. No character or build entry, no column, no league selector, no export link and no pagination control."
+    },
+    {
+      "id": "NINJ-E03",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/poe2/builds",
+      "observed_at": "2026-10-10",
+      "observation": "Second request asking for every hyperlink. Returned the navigation links and their hrefs, including /docs and /poe1/data. Still no build record. This reproduces the empty-body observation recorded in docs/specs/research.md on 2026-10-04 and shows the cause is client-side rendering, not an outage."
+    },
+    {
+      "id": "NINJ-E04",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/docs",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200 with a documentation index listing Path of Building rules pages for Path of Exile 1 and 2, an API reference, character and ladder listing questions for both games, and pages on DPS calculation and Path of Building configuration. Confirms the provider derives character snapshots and Path of Building statistics rather than publishing authored guides."
+    },
+    {
+      "id": "NINJ-E05",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/docs/api",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200. The supported and unsupported statements, the caching, polling, concurrency and user-agent rules, the blocking warning, the two stated reasons for closing the builds API, and the documented economy endpoint list, all quoted verbatim in the terms and documented_endpoints sections of this file."
+    },
+    {
+      "id": "NINJ-E06",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/poe2/api/economy/leagues",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200 with a JSON array of six league objects, recorded verbatim in reproducible_acquisition_example. This is the only reproducible acquisition in this study and it contains no build data."
+    },
+    {
+      "id": "NINJ-E07",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/privacy",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200 with retrievable content covering advertising, personal information categories and opt-out rights. Nothing about scraping, automated collection or programmatic access, and no link to a terms of service."
+    },
+    {
+      "id": "NINJ-E08",
+      "method": "prior_inspection",
+      "url": "docs/specs/research.md",
+      "observed_at": "2026-10-04",
+      "observation": "The recorded research inspection read the provider's launch post describing character configurations and Path of Building derived statistics with build sharing, and separately saw the builds page return no body content. It left a documented complete acquisition interface unverified. This study answers that: the interface exists and is closed."
+    },
+    {
+      "id": "NINJ-E09",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/poe1/data",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200 returning the same navigation and footer shell. No dataset, no file format and no licence statement was visible. The link path names Path of Exile 1 only."
+    },
+    {
+      "id": "NINJ-E10",
+      "method": "direct_fetch",
+      "url": "https://poe.ninja/docs/pob-rules-poe2",
+      "observed_at": "2026-10-10",
+      "observation": "HTTP 200 returning the navigation and footer shell with no article body. The documentation article pages render client side as well, so how the provider builds Path of Building data for Path of Exile 2 characters was not read. Only the documentation index and the API reference returned readable text."
+    }
+  ]
+}
