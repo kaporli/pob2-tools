@@ -1,0 +1,68 @@
+{
+  "authenticate_poe": {
+    "content": [
+      {
+        "text": "Error executing tool authenticate_poe",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "import_character": {
+    "content": [
+      {
+        "text": "Error executing tool import_character",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "legacy_modules_loaded": [],
+  "list_characters": {
+    "content": [
+      {
+        "text": "Error executing tool list_characters",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "local_engine_commands": [
+    "load_build_xml",
+    "test_item",
+    "save_build_xml"
+  ],
+  "trade_evaluate": {
+    "content": [
+      {
+        "text": "Error executing tool trade_evaluate",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "trade_leagues": {
+    "content": [
+      {
+        "text": "Error executing tool trade_leagues",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  },
+  "trade_search": {
+    "content": [
+      {
+        "text": "Error executing tool trade_search",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "result_type": "complete"
+  }
+}

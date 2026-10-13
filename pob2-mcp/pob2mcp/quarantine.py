@@ -32,6 +32,8 @@ points; it does not delete anything.
 
 from __future__ import annotations
 
+from mcp.server.mcpserver.exceptions import ToolError
+
 DECISION = "docs/decisions/D01-trade-access.md"
 REVIEW = "docs/reviews/P05-T01.md"
 
@@ -66,8 +68,13 @@ QUARANTINED: dict[str, str] = {
 QUARANTINED_CLIENTS = ("PoeApi", "Trade2Client")
 
 
-class CapabilityUnavailable(RuntimeError):
-    """A quarantined operation. Raised before any network or credential use."""
+class CapabilityUnavailable(ToolError):
+    """An intentional MCP refusal, raised before network or credential use.
+
+    ToolError preserves this safe explanation through the MCP handler.
+    RuntimeError would instead be wrapped as an unexpected crash whose
+    explanation is hidden from callers.
+    """
 
     def __init__(self, operation: str, reason: str) -> None:
         self.operation = operation

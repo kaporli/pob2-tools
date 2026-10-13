@@ -12,11 +12,15 @@ have read a cookie file on the way.
 from __future__ import annotations
 
 import ast
+import asyncio
+import base64
 import inspect
 import sys
+import zlib
 from pathlib import Path
 
 import pytest
+from mcp.types import CallToolRequestParams
 
 import pob2mcp.server as server
 from pob2mcp.quarantine import (
@@ -169,3 +173,65 @@ def test_the_legacy_modules_are_kept_not_deleted():
     package = Path(server.__file__).parent
     assert (package / "poe_api.py").is_file()
     assert (package / "trade.py").is_file()
+
+
+@pytest.fixture(scope="module")
+def mcp_loop():
+    # Windows asyncio creates a loopback socket pair for its wake-up pipe.
+    # Construct that infrastructure before the function-scoped network guard;
+    # every actual tool call still runs with outbound connections prohibited.
+    loop = asyncio.new_event_loop()
+    yield loop
+    loop.close()
+
+
+@pytest.mark.parametrize("name,arguments", [
+    ("authenticate_poe", {}),
+    ("list_characters", {}),
+    ("import_character", {"name": "fixture"}),
+    ("trade_leagues", {}),
+    ("trade_search", {"league": "fixture", "query": {}}),
+    ("trade_evaluate", {"league": "fixture", "query": {}, "slot": "Weapon 1"}),
+])
+def test_registered_mcp_refusal_preserves_explanation(name, arguments, monkeypatch, mcp_loop):
+    def forbidden(*args, **kwargs):
+        pytest.fail("quarantined MCP call reached a client or engine factory")
+
+    for factory in ("poe_api", "trade", "engine"):
+        monkeypatch.setattr(server, factory, forbidden)
+    result = mcp_loop.run_until_complete(server.mcp._handle_call_tool(
+        None, CallToolRequestParams(name=name, arguments=arguments)))
+    assert result.is_error
+    text = " ".join(block.text for block in result.content)
+    assert name in text
+    assert QUARANTINED[name] in text
+    assert "docs/decisions/D01-trade-access.md" in text
+    assert "not a transient failure" in text
+
+
+def test_local_import_item_evaluation_and_export_still_dispatch_through_mcp(monkeypatch, mcp_loop):
+    calls = []
+
+    class Engine:
+        def call(self, command, params=None):
+            calls.append((command, params))
+            return {"xml": "<PathOfBuilding/>"} if command == "save_build_xml" else {"ok": True}
+
+    monkeypatch.setattr(server, "_engine", Engine())
+    code = base64.b64encode(zlib.compress(b"<PathOfBuilding/>")).decode()
+
+    async def run():
+        for name, args in [
+            ("import_build_code", {"code": code}),
+            ("test_item", {"item_text": "fixture item", "slot": "Weapon 1"}),
+            ("export_build_code", {}),
+        ]:
+            result = await server.mcp._handle_call_tool(None, CallToolRequestParams(name=name, arguments=args))
+            assert not result.is_error
+
+    mcp_loop.run_until_complete(run())
+    assert calls == [
+        ("load_build_xml", {"xml": "<PathOfBuilding/>"}),
+        ("test_item", {"raw": "fixture item", "slot": "Weapon 1", "keys": None}),
+        ("save_build_xml", None),
+    ]
