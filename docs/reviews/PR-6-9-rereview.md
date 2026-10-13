@@ -1,5 +1,7 @@
 # PRs 6–9: follow-up review, 2026-10-12
 
+Historical findings below are superseded by [the October 13 repair acceptance](PR-6-9-final.md), which records the fixes, combined verification and remaining capability limits.
+
 Reviewer: Codex. Specification version 1.0. This report is the reviewer verdict for the exact heads below, superseding the earlier verdicts only where explicitly stated. Engineer-authored repair notes in earlier reports are implementation claims, not independent reviewer acceptance.
 
 | PR / task | Reviewed head | Verdict |
