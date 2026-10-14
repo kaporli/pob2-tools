@@ -24,7 +24,8 @@ from typing import Any, Mapping, Sequence
 from ..domain.enums import ModifierCategory, ModifierParseStatus, RecordParseStatus
 from ..domain.records import ItemInstance, ItemModifier, Socket
 from .naming import CatalogNaming, UnresolvedName
-from .support import NOT_REPRESENTABLE, UNRESOLVED_NAME, LossCollector
+from .support import (NOT_REPRESENTABLE, PARTIAL, UNRESOLVED_NAME,
+                      LossCollector, source_int)
 
 #: Category to the marker PoB writes for it. ``implicit`` and ``explicit`` have
 #: none: their block decides. ``unknown`` has no marker at all, which is why an
@@ -203,6 +204,10 @@ def export_item(item: ItemInstance, naming: CatalogNaming,
                 prefix: str = "") -> tuple[str, LossCollector]:
     """One ItemInstance as PoB item text, plus everything it could not carry."""
     losses = LossCollector(prefix)
+    if item.parse_status is not RecordParseStatus.COMPLETE:
+        losses.add("/parse_status", PARTIAL,
+                   "the item's source import has unresolved gameplay content",
+                   item.parse_status.value, False)
     lines: list[str] = []
     rarity = str(item.rarity).upper()
     lines.append("Rarity: " + rarity)
@@ -311,7 +316,8 @@ def _split_marker(line: str) -> tuple[dict[str, bool], list[int], str]:
         token = rest[1:end]
         rest = rest[end + 1:]
         if token.startswith("variant:"):
-            variants = [int(part) for part in token.split(":", 1)[1].split(",")
+            variants = [source_int(part, "/text/{variant}")
+                        for part in token.split(":", 1)[1].split(",")
                         if part.strip()]
         else:
             flags[token] = True
@@ -381,19 +387,19 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
             modifier_lines.append(line)
             continue
         if label == "Item Level":
-            item_level = int(value)
+            item_level = source_int(value, "/text/Item Level")
         elif label == "LevelReq":
-            requirements["level"] = int(value)
+            requirements["level"] = source_int(value, "/text/LevelReq")
         elif label == "Sockets":
             sockets = [Socket(socket_id=str(i), group=i, colour=letter,
                               contents_id=None)
                        for i, letter in enumerate(value.split())]
         elif label == "Implicits":
-            implicit_count = int(value)
+            implicit_count = source_int(value, "/text/Implicits")
         elif label == "Variant":
             variants.append(value)
         elif label == "Selected Variant":
-            selected_variant = int(value)
+            selected_variant = source_int(value, "/text/Selected Variant")
         elif label in numeric_by_label:
             properties[numeric_by_label[label]] = _parse_number(value)
         else:

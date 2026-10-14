@@ -360,6 +360,18 @@
         "tests/p04_fixtures.py"
       ],
       "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/review/generated-support.xml",
+      "sha256": "4803fca28dd3c30c4f0a50446064e7f05e7de03d8e524c973e2d5373d4b68bdc",
+      "bytes": 15994,
+      "origin": "pob_derived",
+      "author": "P04 review",
+      "description": "b09's PoB-generated Spear Stab group with an added support gem (from b12), selected as the main group.",
+      "used_by": [
+        "tests/unit/test_p04_review_repairs.py"
+      ],
+      "caveat": "Retained by the PR #10 review (docs/evidence/PR-10/generated-support-source.xml), saved by the pinned PoB ce566eac45ea; line endings converted to LF. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
     }
   ]
 }

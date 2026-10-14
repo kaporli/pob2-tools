@@ -8,8 +8,8 @@ For every PoB-written fixture document:
 and four separate claims are checked:
 
 * PoB evaluates our document exactly as it evaluated the source: the same
-  socket group count, main skill, and every numeric output within the
-  P02-T01 tolerance;
+  socket group count, main skill, and every numeric output on either side
+  within ``tests/stat_compare.py``'s tolerance;
 * the canonical identity survives PoB's own save, support settings and main
   group included;
 * a support setting we change is carried through PoB's load and save, and
@@ -29,17 +29,18 @@ from dataclasses import replace
 import pytest
 
 import p04_fixtures as fx
-from pob2opt.domain.identity import build_identity
+from pob2opt.domain.absent import ABSENT
+from pob2opt.domain.identity import build_hash, build_identity
+from pob2opt.domain.migrate import upgrade_build_spec
 from pob2opt.evaluation import export_build, import_build
 from pob2opt.evaluation.roundtrip import diff_identity
 from pob2opt.evaluation.variants import SET_TABLES
 from pob2opt.parsers import naming_from_catalog, parse_document
 from pob2opt.parsers.resolve import class_for_document_name
+from stat_compare import numeric, stat_differences
 
 pytestmark = pytest.mark.engine
 
-REL_TOLERANCE = 1e-6
-ABS_TOLERANCE = 1e-9
 ALL_BUILDS = fx.COMPLETE_BUILDS + fx.PARTIAL_BUILDS
 
 
@@ -51,29 +52,10 @@ def _collect_engine_garbage(engine):
     engine.call("eval", {"code": "collectgarbage('collect')"})
 
 
-def _numeric(stats):
-    return {k: v for k, v in stats.items()
-            if isinstance(v, (int, float)) and not isinstance(v, bool)}
-
-
 def _evaluate(engine, xml):
     summary = engine.call("load_build_xml", {"xml": xml})
-    stats = _numeric(engine.call("get_stats", {"all": True}))
+    stats = numeric(engine.call("get_stats", {"all": True}))
     return summary, stats
-
-
-def _stat_differences(before, after):
-    out = {}
-    for key, value in before.items():
-        other = after.get(key)
-        if other is None:
-            out[key] = (value, None)
-            continue
-        delta = abs(float(other) - float(value))
-        relative = delta / abs(float(value)) if value else 0.0
-        if delta > ABS_TOLERANCE and relative > REL_TOLERANCE:
-            out[key] = (value, other)
-    return out
 
 
 def _naming(xml):
@@ -119,7 +101,7 @@ def test_pob_evaluates_our_export_as_it_evaluated_the_source(trips, name):
                 "passivePointsUsed"):
         assert trip["our_summary"][key] == trip["source_summary"][key], key
     assert len(trip["source_stats"]) > 100
-    differences = _stat_differences(trip["source_stats"], trip["our_stats"])
+    differences = stat_differences(trip["source_stats"], trip["our_stats"])
     assert differences == {}, differences
 
 
@@ -197,7 +179,7 @@ def test_disabling_supports_changes_what_pob_calculates(engine, trips):
             continue
         _, stats = _evaluate(engine, export_build(
             changed, trip["items"], trip["naming"]).xml)
-        if _stat_differences(trip["our_stats"], stats):
+        if stat_differences(trip["our_stats"], stats):
             moved.append(name)
     assert moved, "no support state change was visible in any fixture"
 
@@ -227,7 +209,7 @@ def test_each_variant_evaluates_as_pob_evaluates_that_loadout(engine):
         exported = export_build(build, items, naming)
         assert exported.recommended_deliverable, exported.report.as_dict()
         _, ours = _evaluate(engine, exported.xml)
-        assert _stat_differences(expected, ours) == {}, variant.label
+        assert stat_differences(expected, ours) == {}, variant.label
 
 
 def test_the_two_loadouts_are_different_builds(engine):
@@ -236,3 +218,29 @@ def test_the_two_loadouts_are_different_builds(engine):
     assert first.build_hash != second.build_hash
     assert first.raw_blob_hashes == second.raw_blob_hashes
     assert first.source_document_ids == second.source_document_ids
+
+
+# ------------------------------------------- v1 upgrade (review R5) ---
+
+@pytest.mark.parametrize("indices", [(0, 0), (0, None), (None, 0),
+                                     (None, None)])
+def test_an_upgraded_v1_record_evaluates_as_the_v1_record(engine, indices):
+    """PoB evaluates the same main skill and outputs before and after."""
+    outcome = _parse("b03")
+    (build,) = outcome.builds
+    groups = [replace(g, main_skill_index=index, skills=[
+        replace(s, support_ids=[], supports=ABSENT) for s in g.skills])
+        for g, index in zip(build.skill_groups, indices)]
+    legacy = replace(build, schema_version=1, main_skill_group=ABSENT,
+                     skill_groups=groups)
+    legacy = replace(legacy, build_hash=build_hash(legacy))
+    upgraded = upgrade_build_spec(legacy, record_id="u",
+                                  created_at=fx.CREATED_AT)
+    items = {i.item_hash: i for i in outcome.items}
+    naming = _naming(fx.document_bytes("b03").decode("utf-8"))
+    v1_summary, v1_stats = _evaluate(
+        engine, export_build(legacy, items, naming).xml)
+    v2_summary, v2_stats = _evaluate(
+        engine, export_build(upgraded, items, naming).xml)
+    assert v2_summary["mainSkill"] == v1_summary["mainSkill"]
+    assert stat_differences(v1_stats, v2_stats) == {}

@@ -11,29 +11,45 @@ one catalog modifier. Anything else is ``partial`` with an issue naming the
 field. A document that is not a recognizable PoE 2 PoB build is ``invalid``
 or ``unsupported_format``, never a complete build with nothing in it.
 
-Catalog modifier matching is reported, not written into the items. PoB item
-text cannot carry catalog modifier IDs (P02-T05), so writing them would turn
-every export incomplete. Unique, implicit, enchant, rune and crafted lines are
-not in the catalog's affix table; they are counted as unchecked rather than
-called unresolved.
+Catalog modifier matching does not write catalog IDs into the items: PoB
+item text cannot carry them (P02-T05), so writing them would turn every
+export incomplete. A line that fails the match does change the item: that
+modifier is marked ``unresolved`` or ``ambiguous`` and the item ``partial``,
+and so is a name-only item (a template claim). Every variant that equips or
+sockets such an item lists it in ``unresolved_refs`` and is ``partial``, so a
+stored record says so without its ParseResult. Unique, implicit, enchant,
+rune and crafted lines are not in the catalog's affix table; they are
+counted as unchecked rather than called unresolved.
+
+Record IDs carry the parse context (:func:`parse_key`): the source bytes,
+this parser's version, the catalog and the options. Parsing one source under
+another catalog or option makes new records beside the old ones; parsing it
+again under the same context makes the same IDs.
+
+A number the format requires that does not parse is a
+:class:`~pob2opt.evaluation.support.MalformedSource`; the whole document is
+then ``invalid`` with an issue naming the field, and no build is produced.
 """
 
 from __future__ import annotations
 
+import dataclasses
+import json
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, replace
 from typing import Any, Mapping, Sequence
 
-from ..domain.enums import (ModifierCategory, ParseResultStatus,
-                            RecordParseStatus)
-from ..domain.identity import build_hash, item_hash
+from ..domain.enums import (ModifierCategory, ModifierParseStatus,
+                            ParseResultStatus, RecordParseStatus)
+from ..domain.identity import build_hash, content_hash, item_hash
 from ..domain.records import (SCHEMA_VERSION, BuildSpec, CatalogEntity,
-                              CoverageCount, ItemInstance, MechanicClaim,
-                              ParseIssue, ParseResult, SourceDocument,
-                              UnresolvedRef)
+                              CoverageCount, EquipmentSlot, ItemInstance,
+                              MechanicClaim, ParseIssue, ParseResult,
+                              SourceDocument, UnresolvedRef)
 from ..domain.validation import validate_record
 from ..evaluation.naming import CatalogNaming, UnresolvedName
-from ..evaluation.support import NOT_REPRESENTABLE, UnsupportedField
+from ..evaluation.support import (NOT_REPRESENTABLE, MalformedSource,
+                                  UnsupportedField)
 from ..evaluation.variants import VariantSplit, split_variants
 from . import formats
 from .claims import extract_claims
@@ -41,7 +57,7 @@ from .resolve import (TEMPLATE_CLAIM, class_for_document_name, item_readiness,
                       naming_from_catalog, resolve_item_modifiers)
 
 PARSER_ID = "pob2opt.parsers.pob"
-PARSER_VERSION = "p04-t01.1"
+PARSER_VERSION = "p04-t01.2"
 
 #: Elements a PoE 2 PoB document is known to contain. Others are kept in
 #: ``raw_extensions`` and named there.
@@ -67,6 +83,36 @@ class ParseContext:
     naming: CatalogNaming | None = None
     #: The tree version the catalog was exported from; older ones are named.
     current_tree_version: str | None = None
+    #: The format the caller declared, if any; the bytes must agree.
+    declared_format: str | None = None
+
+
+def parse_key(document: SourceDocument, context: ParseContext) -> str:
+    """Identity of one interpretation of a source: 16 hex characters.
+
+    Covers the source bytes, this parser's version, the catalog (its hash,
+    or the explicit naming table) and every option that changes the result.
+    """
+    naming = None
+    if context.naming is not None:
+        naming = json.loads(json.dumps(
+            dataclasses.asdict(context.naming), sort_keys=True,
+            default=lambda value: sorted(value, key=repr)))
+    return content_hash({
+        "source_document_id": document.record_id,
+        "blob_hash": document.blob_hash,
+        "parser_version": PARSER_VERSION,
+        "catalog_hash": context.catalog_hash,
+        "naming": naming,
+        "current_tree_version": context.current_tree_version,
+        "declared_format": context.declared_format,
+    })[:16]
+
+
+def record_base(document: SourceDocument, context: ParseContext) -> str:
+    """The ParseResult ID; every record of the parse is named below it."""
+    return "%s/parse/%s/%s" % (document.record_id, PARSER_VERSION,
+                               parse_key(document, context))
 
 
 @dataclass(frozen=True)
@@ -102,7 +148,7 @@ def _result(document: SourceDocument, context: ParseContext,
             extensions: Mapping[str, Any] | None = None) -> ParseResult:
     return ParseResult(
         schema_version=SCHEMA_VERSION,
-        record_id="%s/parse/%s" % (document.record_id, PARSER_VERSION),
+        record_id=record_base(document, context),
         created_at=context.created_at, provenance_ids=[document.record_id],
         status=status, parser_id=PARSER_ID, parser_version=PARSER_VERSION,
         source_document_id=document.record_id, record_ids=list(record_ids),
@@ -185,11 +231,19 @@ def parse_pob_xml(document: SourceDocument, xml: str, context: ParseContext,
                   for node in root.findall(tag)] for tag in unknown}
 
     naming = _naming(root, context, issues)
-    split = split_variants(
-        xml, naming, record_id="%s/build" % document.record_id,
-        created_at=context.created_at, catalog_hash=context.catalog_hash,
-        provenance_ids=[document.record_id],
-        source_document_ids=[document.record_id])
+    try:
+        split = split_variants(
+            xml, naming, record_id=record_base(document, context) + "/build",
+            created_at=context.created_at, catalog_hash=context.catalog_hash,
+            provenance_ids=[document.record_id],
+            source_document_ids=[document.record_id])
+    except MalformedSource as error:
+        return ParseOutcome(_result(
+            document, context, ParseResultStatus.INVALID,
+            [ParseIssue("malformed_value", error.field_path, error.field_path,
+                        "%s; no build is produced from a document whose "
+                        "values cannot be read" % error)],
+            extensions={"format": source_format}))
 
     missing = _missing_sections(root)
     for section, (field_path, reason) in missing.items():
@@ -207,7 +261,7 @@ def parse_pob_xml(document: SourceDocument, xml: str, context: ParseContext,
                                          context.current_tree_version))
     extensions["target_version"] = root.find("Build").get("targetVersion")
 
-    builds: list[BuildSpec] = []
+    candidates: list[tuple[str, str, BuildSpec]] = []
     items: dict[str, ItemInstance] = {}
     unrepresented: list[dict[str, Any]] = []
     for index, variant in enumerate(split.variants):
@@ -227,6 +281,27 @@ def parse_pob_xml(document: SourceDocument, xml: str, context: ParseContext,
                        "a class cannot be evaluated; no record is produced "
                        "for this variant")
             continue
+        candidates.append((prefix, locator, build))
+        for item in variant.imported.items.values():
+            items.setdefault(item.item_hash, item)
+
+    for loss in split.unlinked.unsupported:
+        code = ("invalid_selector" if "/@active" in loss.field_path
+                else "unlinked_variant_set")
+        issues.add(code, loss.field_path, "document", loss.reason)
+    extensions["unlinked_sets"] = [u.as_dict()
+                                   for u in split.unlinked.unsupported]
+    if unrepresented:
+        extensions["unrepresented"] = unrepresented
+
+    coverage = list(_coverage(root, naming))
+    checked, modifier_coverage = _check_items(items.values(), context,
+                                              document, issues)
+    if modifier_coverage is not None:
+        coverage.append(modifier_coverage)
+    builds: list[BuildSpec] = []
+    for prefix, locator, build in candidates:
+        build = _with_checked_items(build, checked)
         build = _finish_build(build, document, missing)
         report = validate_record(build)
         if not report.ok:
@@ -235,27 +310,11 @@ def parse_pob_xml(document: SourceDocument, xml: str, context: ParseContext,
                                  for e in report.errors))
             continue
         builds.append(build)
-        for item in variant.imported.items.values():
-            items.setdefault(item.item_hash, _finish_item(item, document))
-
-    for loss in split.unlinked.unsupported:
-        issues.add("unlinked_variant_set", loss.field_path, "document",
-                   loss.reason)
-    extensions["unlinked_sets"] = [u.as_dict()
-                                   for u in split.unlinked.unsupported]
-    if unrepresented:
-        extensions["unrepresented"] = unrepresented
-
-    coverage = list(_coverage(root, naming))
-    modifier_coverage = _modifier_checks(items.values(), context, issues)
-    if modifier_coverage is not None:
-        coverage.append(modifier_coverage)
-    for item in items.values():
-        if item_readiness(item) == TEMPLATE_CLAIM:
-            issues.add(TEMPLATE_CLAIM, "/items/%s" % item.item_hash,
-                       item.display_name,
-                       "an item name without stats is a claim about which "
-                       "item is meant, not an item ready for calculation")
+    used = {slot.item_hash for b in builds for slot in b.equipment.values()
+            if slot is not None}
+    used |= {s.entity_id for b in builds for s in b.passives.socketed}
+    items = {item.item_hash: item for item, _ in checked.values()
+             if item.item_hash in used}
 
     notes = root.find("Notes")
     claims: tuple[MechanicClaim, ...] = ()
@@ -264,7 +323,8 @@ def parse_pob_xml(document: SourceDocument, xml: str, context: ParseContext,
         claims = extract_claims(notes.text or "", document=document,
                                 created_at=context.created_at,
                                 entities=context.entities or {},
-                                locator_prefix="/Notes")
+                                locator_prefix="/Notes",
+                                record_prefix=record_base(document, context))
 
     status = _status(builds, issues.items)
     for build in builds:
@@ -388,31 +448,92 @@ def _settings_stated(gem: ET.Element) -> bool:
                for name in ("level", "quality", "enabled"))
 
 
-def _modifier_checks(items, context: ParseContext,
-                     issues: _Issues) -> CoverageCount | None:
-    """Affix lines of magic and rare items against the catalog's modifiers."""
-    if not context.entities or not context.entities.get("item_modifiers"):
-        return None
+def _check_items(items, context: ParseContext, document: SourceDocument,
+                 issues: _Issues):
+    """Affix and readiness checks, written into the items they concern.
+
+    Returns ``{imported item hash: (stored item, reasons)}`` and the
+    ``item_affixes`` coverage. ``reasons`` is empty for an item that passed;
+    otherwise the item is partial and each failing affix line is marked.
+    """
+    entities = context.entities or {}
+    check_affixes = bool(entities.get("item_modifiers"))
     present = resolved = 0
+    checked: dict[str, tuple[ItemInstance, list[tuple[str, str, str]]]] = {}
     for item in items:
-        if item.rarity not in AFFIX_RARITIES:
-            continue
-        _, matches = resolve_item_modifiers(item, context.entities)
-        for match, modifier in zip(matches, item.modifiers):
-            if modifier.category not in AFFIX_CATEGORIES:
-                continue
-            present += 1
-            if match.status == "resolved":
-                resolved += 1
-                continue
-            explanation = (
-                "affix line matches %d catalog modifiers (%s); no automatic "
-                "choice" % (len(match.candidates), ", ".join(match.candidates))
-                if match.candidates else
-                "affix line matches no catalog modifier of this patch")
-            issues.add("%s_affix" % match.status,
-                       "/items/%s/modifiers/%d" % (item.item_hash,
-                                                   match.source_position),
-                       item.display_name + ": " + match.text, explanation)
-    return CoverageCount(domain="item_affixes", present=present,
-                         resolved=resolved, missing=present - resolved)
+        reasons: list[tuple[str, str, str, str]] = []
+        modifiers = list(item.modifiers)
+        if check_affixes and item.rarity in AFFIX_RARITIES:
+            _, matches = resolve_item_modifiers(item, entities)
+            for index, (match, modifier) in enumerate(zip(matches,
+                                                          item.modifiers)):
+                if modifier.category not in AFFIX_CATEGORIES:
+                    continue
+                present += 1
+                if match.status == "resolved":
+                    resolved += 1
+                    continue
+                modifiers[index] = replace(
+                    modifier, parse_status=ModifierParseStatus(match.status))
+                explanation = (
+                    "affix line matches %d catalog modifiers (%s); no "
+                    "automatic choice" % (len(match.candidates),
+                                          ", ".join(match.candidates))
+                    if match.candidates else
+                    "affix line matches no catalog modifier of this patch")
+                reasons.append(("%s_affix" % match.status,
+                                "/modifiers/%d" % index,
+                                item.display_name + ": " + match.text,
+                                explanation))
+        if item_readiness(item) == TEMPLATE_CLAIM:
+            reasons.append((
+                TEMPLATE_CLAIM, "", item.display_name,
+                "an item name without stats is a claim about which item is "
+                "meant, not an item ready for calculation"))
+        out = item
+        if reasons:
+            out = replace(item, modifiers=modifiers,
+                          parse_status=RecordParseStatus.PARTIAL)
+        out = _finish_item(out, document)
+        for code, path, locator, explanation in reasons:
+            issues.add(code, "/items/%s%s" % (out.item_hash, path), locator,
+                       explanation)
+        checked[item.item_hash] = (out, [(code, path, explanation)
+                                         for code, path, _, explanation
+                                         in reasons])
+    coverage = None
+    if check_affixes:
+        coverage = CoverageCount(domain="item_affixes", present=present,
+                                 resolved=resolved,
+                                 missing=present - resolved)
+    return checked, coverage
+
+
+def _with_checked_items(build: BuildSpec, checked) -> BuildSpec:
+    """``build`` pointing at the stored items; a failed one makes it partial."""
+    refs: list[UnresolvedRef] = []
+
+    def swap(field_path: str, original: str) -> str:
+        if original not in checked:
+            return original
+        item, reasons = checked[original]
+        for code, path, explanation in reasons:
+            refs.append(UnresolvedRef(
+                field_path=field_path, reference=item.item_hash + path,
+                reason="%s: %s" % (code, explanation)))
+        return item.item_hash
+
+    equipment = {}
+    for slot_id, content in build.equipment.items():
+        equipment[slot_id] = (None if content is None else EquipmentSlot(
+            item_hash=swap("/equipment/%s" % slot_id, content.item_hash),
+            listing_id=content.listing_id))
+    socketed = [replace(entry, entity_id=swap(
+        "/passives/socketed/%d" % index, entry.entity_id))
+        for index, entry in enumerate(build.passives.socketed)]
+    out = replace(build, equipment=equipment,
+                  passives=replace(build.passives, socketed=socketed))
+    if refs:
+        out = replace(out, parse_status=RecordParseStatus.PARTIAL,
+                      unresolved_refs=list(out.unresolved_refs) + refs)
+    return out

@@ -137,3 +137,155 @@ def test_an_unsupported_document_exits_three(tmp_path, bundle, capsys):
     report = json.loads(captured.out)
     assert report["status"] == "unsupported_format"
     assert report["issues"][0]["code"] == "provider_parser_blocked"
+
+
+# ----------------------------------- review R2, R3, R6: stored outcomes ---
+
+@pytest.fixture(scope="module")
+def bundle_b(tmp_path_factory):
+    """A second catalog: the same rows without granted skills. SYNTHETIC."""
+    out = tmp_path_factory.mktemp("catalog-b")
+    rows_path = merged_rows(out / "rows.json")
+    rows = json.loads(rows_path.read_text(encoding="utf-8"))
+    rows["tables"]["granted_skills"] = []
+    rows_path.write_text(json.dumps(rows), encoding="utf-8")
+    code = cli.main(["catalog", "export",
+                     "--profile", str(EVIDENCE / "catalog-profile-request.json"),
+                     "--out", str(out / "bundle"), "--rows", str(rows_path),
+                     "--release-evidence", str(EVIDENCE / "release")])
+    assert code == 0
+    return out / "bundle"
+
+
+def catalog_hash_of(bundle_dir):
+    return json.loads((bundle_dir / "catalog.json").read_text(
+        encoding="utf-8"))["catalog_hash"]
+
+
+def stored_builds(corpus, report):
+    from pob2opt.domain.records import BuildSpec
+    with RunStore.open_corpus(corpus) as store:
+        records = [store.get_record(r) for r in report["record_ids"]]
+    return [r for r in records if isinstance(r, BuildSpec)]
+
+
+def test_another_catalog_is_another_parse_and_the_first_is_reused(
+        tmp_path, bundle, bundle_b, capsys):
+    corpus = tmp_path / "corpus"
+    source_id = ingest(corpus, "b03")
+    base = ["--source", source_id, "--corpus", str(corpus)]
+    reports = []
+    for chosen in (bundle, bundle_b, bundle):
+        code, captured = run(base + ["--catalog", str(chosen)], capsys)
+        assert code == parse_cli.EXIT_OK, captured.err
+        reports.append(json.loads(captured.out))
+    a, b, again = reports
+    assert (a["unchanged"], b["unchanged"], again["unchanged"]) == (
+        False, False, True)
+    assert a["parse_result_id"] != b["parse_result_id"]
+    assert again["parse_result_id"] == a["parse_result_id"]
+    assert not set(a["record_ids"]) & set(b["record_ids"])
+    assert (a["status"], b["status"]) == ("complete", "partial")
+    assert [x.catalog_hash for x in stored_builds(corpus, a)] == [
+        catalog_hash_of(bundle)]
+    assert [x.catalog_hash for x in stored_builds(corpus, b)] == [
+        catalog_hash_of(bundle_b)]
+    with RunStore.open_corpus(corpus) as store:
+        assert store.unresolved_references() == {}
+
+
+def test_a_changed_option_is_another_parse(tmp_path, bundle, capsys):
+    corpus = tmp_path / "corpus"
+    source_id = ingest(corpus, "b03")
+    base = ["--source", source_id, "--corpus", str(corpus),
+            "--catalog", str(bundle)]
+    ids = []
+    for extra in ([], ["--tree-version", "0_0"], ["--format", "pob_xml"],
+                  ["--tree-version", "0_0"]):
+        code, captured = run(base + extra, capsys)
+        assert code == parse_cli.EXIT_OK, captured.err
+        report = json.loads(captured.out)
+        ids.append((report["parse_result_id"], report["unchanged"]))
+    assert len({i for i, _ in ids[:3]}) == 3
+    assert ids[3] == (ids[1][0], True)
+    old_tree = [i for i in json.loads(captured.out)["issues"]
+                if i["code"] == "old_tree_version"]
+    assert old_tree
+
+
+def test_an_unsupported_parse_exits_three_every_time(tmp_path, bundle,
+                                                     capsys):
+    corpus = tmp_path / "corpus"
+    path = tmp_path / "export.json"
+    path.write_text('{"build": {"skills": ["Arc"]}}', encoding="utf-8")
+    with RunStore.open_corpus(corpus) as store:
+        outcome = AcquisitionService(store).ingest_file(path,
+                                                        provider="maxroll")
+    argv = ["--source", outcome.source_document_id, "--corpus", str(corpus),
+            "--catalog", str(bundle)]
+    first_code, _ = run(argv, capsys)
+    second_code, second = run(argv, capsys)
+    assert (first_code, second_code) == (parse_cli.EXIT_BLOCKED,
+                                         parse_cli.EXIT_BLOCKED)
+    assert json.loads(second.out)["unchanged"] is True
+
+
+def ingest_bytes(corpus, name, data):
+    path = corpus.parent / ("%s.xml" % name)
+    path.write_bytes(data)
+    with RunStore.open_corpus(corpus) as store:
+        outcome = AcquisitionService(store).ingest_file(path, provider="local")
+    assert outcome.ok
+    return outcome.source_document_id
+
+
+def test_a_stored_build_with_an_unknown_affix_is_not_recommendable(
+        tmp_path, bundle, capsys):
+    import xml.etree.ElementTree as ET
+    from pob2opt.domain.records import ItemInstance
+    from pob2opt.evaluation import export_build
+    from pob2opt.parsers import naming_from_catalog
+    from pob2opt.parsers.resolve import class_for_document_name
+    root = ET.fromstring(fx.document_bytes("b01"))
+    item = root.find("Items/Item")
+    item.text = item.text.rstrip() + "\nSYNTHETIC +3 to unknown things\n"
+    data = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+    corpus = tmp_path / "corpus"
+    source_id = ingest_bytes(corpus, "affix", data)
+    code, captured = run(["--source", source_id, "--corpus", str(corpus),
+                          "--catalog", str(bundle)], capsys)
+    assert code == parse_cli.EXIT_OK, captured.err
+    report = json.loads(captured.out)
+    with RunStore.open_corpus(corpus) as store:
+        records = [store.get_record(r) for r in report["record_ids"]]
+    (build,) = [r for r in records if not isinstance(r, ItemInstance)
+                and hasattr(r, "skill_groups")]
+    items = {r.item_hash: r for r in records if isinstance(r, ItemInstance)}
+    assert build.parse_status.value == "partial"
+    assert any(i.parse_status.value == "partial" for i in items.values())
+    from pob2opt.parsers.cli import _load_catalog
+    entities = _load_catalog(bundle)[0].entities
+    class_id = class_for_document_name(entities, "Ranger")
+    naming = naming_from_catalog(entities, class_id=class_id).naming
+    assert not export_build(build, items, naming).recommended_deliverable
+
+
+def test_a_malformed_number_exits_three_and_keeps_the_source(
+        tmp_path, bundle, capsys):
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(fx.document_bytes("b01"))
+    root.find("Build").set("level", "not-a-number")  # SYNTHETIC
+    data = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+    corpus = tmp_path / "corpus"
+    source_id = ingest_bytes(corpus, "malformed", data)
+    code, captured = run(["--source", source_id, "--corpus", str(corpus),
+                          "--catalog", str(bundle)], capsys)
+    assert code == parse_cli.EXIT_BLOCKED, captured.err
+    report = json.loads(captured.out)
+    assert report["status"] == "invalid"
+    (issue,) = report["issues"]
+    assert (issue["code"], issue["field_path"]) == ("malformed_value",
+                                                   "/Build/@level")
+    with RunStore.open_corpus(corpus) as store:
+        assert store.read_payload(store.get_source(source_id).blob_hash) \
+            == data

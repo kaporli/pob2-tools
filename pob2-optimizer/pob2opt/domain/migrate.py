@@ -9,9 +9,8 @@ cannot know them. Every setting becomes null (unknown), the record becomes
 in ``unresolved_refs``. Nothing is filled from PoB defaults.
 
 Main skill group: the group the version 1 exporter wrote as PoB's main
-socket group, that is the first group with a main skill index, else the
-first group. This is the version 1 record's own export behaviour, not a
-guess.
+socket group (:func:`legacy_main_group`). This is the version 1 record's
+own export behaviour, not a guess.
 
 The upgrade returns a new record with its own ``record_id``; the version 1
 record stays as stored. Its hash changes, because a version 2 identity is a
@@ -48,6 +47,23 @@ def _upgrade_skill(skill: SkillEntry, path: str,
     return replace(skill, triggered=triggered, supports=supports)
 
 
+def legacy_main_group(groups) -> int | None:
+    """The zero-based group the version 1 exporter selected, or None.
+
+    That exporter started from PoB's default group 1 and kept it as an unset
+    marker: a group with a main skill index replaced it only while it still
+    read 1. Group 0 therefore never stops the search, and the first later
+    group with a main skill index wins; with none, group 0 is selected.
+    """
+    if not groups:
+        return None
+    number = 1
+    for index, group in enumerate(groups):
+        if group.main_skill_index is not None and number == 1:
+            number = index + 1
+    return number - 1
+
+
 def upgrade_build_spec(build: BuildSpec, *, record_id: str,
                        created_at: str) -> BuildSpec:
     """A version 2 copy of a version 1 BuildSpec, with support settings unknown."""
@@ -61,12 +77,8 @@ def upgrade_build_spec(build: BuildSpec, *, record_id: str,
                                  unknown)
                   for j, skill in enumerate(group.skills)]
         groups.append(replace(group, skills=skills))
-    # The version 1 exporter evaluated the first group with a main skill
-    # index, or the first group; version 2 states that choice.
-    main_group = None
-    if groups:
-        main_group = next((i for i, g in enumerate(groups)
-                           if g.main_skill_index is not None), 0)
+    # Version 2 states the group the version 1 exporter evaluated.
+    main_group = legacy_main_group(groups)
     status = build.parse_status
     if unknown and status is RecordParseStatus.COMPLETE:
         status = RecordParseStatus.PARTIAL

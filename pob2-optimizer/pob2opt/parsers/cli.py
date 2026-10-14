@@ -10,7 +10,9 @@ BuildSpec names its catalog by hash and the corpus refuses a dangling one.
 
 Exit codes: ``0`` parsed (the JSON ``status`` may still be ``partial``),
 ``2`` invalid request, ``3`` the format or catalog prevents parsing, ``4``
-operational failure. Parsing the same source twice reports the stored result.
+operational failure. Parsing the same source again under the same catalog and
+options reports the stored result with the exit code it had; another catalog
+or option is another parse (``pob.parse_key``), stored beside the first.
 """
 
 from __future__ import annotations
@@ -27,9 +29,10 @@ from ..domain.enums import ParseResultStatus
 from ..domain.records import (AcquisitionResult, DataGap, GameCatalog,
                               PatchProfile, SourceDocument)
 from ..storage import RunStore
+from ..storage.errors import DuplicateRecord
 from . import formats
 from .dispatch import parse_document
-from .pob import PARSER_VERSION, ParseContext
+from .pob import ParseContext, record_base
 
 EXIT_OK = 0
 EXIT_INVALID_REQUEST = 2
@@ -93,28 +96,37 @@ def main(argv: Sequence[str] | None = None) -> int:
             print("no source document %r: %s" % (args.source, error),
                   file=sys.stderr)
             return EXIT_INVALID_REQUEST
-        result_id = "%s/parse/%s" % (document.record_id, PARSER_VERSION)
-        if store.has_record(result_id):
-            stored = store.get_record(result_id)
-            print(json.dumps(_report(stored, unchanged=True), indent=2,
-                             sort_keys=True))
-            print("already parsed: %s" % result_id, file=sys.stderr)
-            return EXIT_OK
-
-        for doc in evidence:
-            store.ingest_source(blobs[doc.blob_hash], doc)
-        if acquisition is not None:
-            store.put_acquisition_result(acquisition)
-        store.import_batch([*gaps, catalog, profile])
-        payload = store.read_payload(document.blob_hash)
         context = ParseContext(
             catalog_hash=catalog.catalog_hash,
             created_at=datetime.now(timezone.utc).strftime(
                 "%Y-%m-%dT%H:%M:%SZ"),
             entities=catalog.entities,
-            current_tree_version=args.tree_version)
-        outcome = parse_document(document, payload, context,
-                                 declared_format=args.format)
+            current_tree_version=args.tree_version,
+            declared_format=args.format)
+        result_id = record_base(document, context)
+        if store.has_record(result_id):
+            stored = store.get_record(result_id)
+            print(json.dumps(_report(stored, unchanged=True), indent=2,
+                             sort_keys=True))
+            print("already parsed: %s" % result_id, file=sys.stderr)
+            return _exit_code(stored.status)
+
+        # A catalog already in the corpus came with its bundle; its hash
+        # names its content, so a later export of it adds nothing.
+        if not store.has_record(catalog.record_id):
+            try:
+                for doc in evidence:
+                    store.ingest_source(blobs[doc.blob_hash], doc)
+                if acquisition is not None:
+                    store.put_acquisition_result(acquisition)
+                store.import_batch([*gaps, catalog, profile])
+            except DuplicateRecord as error:
+                print("the catalog bundle collides with records already in "
+                      "the corpus (%s); re-export it with this version"
+                      % error, file=sys.stderr)
+                return EXIT_BLOCKED
+        payload = store.read_payload(document.blob_hash)
+        outcome = parse_document(document, payload, context)
         store.import_batch(outcome.records)
 
     report = _report(outcome.result, unchanged=False)
@@ -128,8 +140,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     print("parse %s: %d build variant(s), %d issue(s)"
           % (outcome.result.status.value, len(outcome.builds),
              len(outcome.result.issues)), file=sys.stderr)
-    if outcome.result.status in (ParseResultStatus.UNSUPPORTED_FORMAT,
-                                 ParseResultStatus.INVALID):
+    return _exit_code(outcome.result.status)
+
+
+def _exit_code(status: ParseResultStatus) -> int:
+    if status in (ParseResultStatus.UNSUPPORTED_FORMAT,
+                  ParseResultStatus.INVALID):
         return EXIT_BLOCKED
     return EXIT_OK
 

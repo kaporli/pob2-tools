@@ -357,13 +357,37 @@ def audit_variant(document: str, selection: Mapping[str, str],
                     source_lines[index] if index < len(source_lines) else None,
                     record_lines[index] if index < len(record_lines) else None)
 
+    def gem_id(gem: ET.Element) -> str | None:
+        if gem.get("gemId") is None:
+            return None
+        try:
+            return naming.reverse_gem(gem.get("gemId"), gem.get("variantId"))
+        except UnresolvedName:
+            return None
+
     # Skills: every gem, in order, against skills and their supports.
     # Groups PoB generates from gear, the tree or a mechanic are not part of
     # the record by design (``builddoc._import_skills``); the author's
     # groups are compared in order.
     skill_set = sets.get("Skills")
-    groups = [] if skill_set is None else [
-        g for g in skill_set.findall("Skill") if not g.get("source")]
+    every = [] if skill_set is None else skill_set.findall("Skill")
+    groups = [g for g in every if not g.get("source")]
+
+    # The main group, as PoB reads it: one-based over every group in the
+    # document. A generated or missing group has no author position.
+    build_element = root.find("Build")
+    if every and build_element is not None:
+        number = _int(build_element.get("mainSkillIndex")
+                      or build_element.get("mainSocketGroup") or "1")
+        target = (every[number - 1]
+                  if number is not None and 1 <= number <= len(every)
+                  else None)
+        source_main = next((gi for gi, g in enumerate(groups)
+                            if g is target), None)
+        record_main = (None if build.main_skill_group is ABSENT
+                       else build.main_skill_group)
+        audit.check("skills_and_supports", "/main_skill_group", source_main,
+                    record_main)
     for gi, group in enumerate(groups):
         record_group = (build.skill_groups[gi]
                         if gi < len(build.skill_groups) else None)
@@ -379,22 +403,31 @@ def audit_variant(document: str, selection: Mapping[str, str],
                        else reverse("slot_names", group.get("slot")))
         audit.check("set_bindings", path + "/slot_id", source_slot,
                     None if record_group is None else record_group.slot_id)
+        audit.check("skills_and_supports", path + "/enabled",
+                    group.get("enabled", "false") == "true",
+                    None if record_group is None else record_group.enabled)
+        main_number = _int(group.get("mainActiveSkill"))
+        audit.check("skills_and_supports", path + "/main_skill_index",
+                    None if main_number is None else main_number - 1,
+                    None if record_group is None
+                    else record_group.main_skill_index)
         source_gems = []
         for gem in group.findall("Gem"):
             skill_id = reverse("skill_ids", gem.get("skillId", ""))
-            source_gems.append((skill_id, _int(gem.get("level")),
+            source_gems.append((skill_id, gem_id(gem), _int(gem.get("level")),
                                 _int(gem.get("quality")),
                                 gem.get("enabled", "true") == "true"))
         record_gems = []
         if record_group is not None:
             for skill in record_group.skills:
-                record_gems.append((skill.skill_id, skill.level,
+                record_gems.append((skill.skill_id, skill.gem_id, skill.level,
                                     skill.quality, skill.enabled))
                 supports = ([] if skill.supports is ABSENT
                             else list(skill.supports))
                 for k, support_id in enumerate(skill.support_ids):
                     s = supports[k] if k < len(supports) else None
                     record_gems.append((support_id,
+                                        None if s is None else s.gem_id,
                                         None if s is None else s.level,
                                         None if s is None else s.quality,
                                         None if s is None else s.enabled))

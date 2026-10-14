@@ -1,0 +1,88 @@
+{
+  "generated_support": {
+    "build_status": "complete",
+    "export_main_skill": "Spear Stab",
+    "issues": [],
+    "parse_status": "complete",
+    "recommended_export": true,
+    "source_gems": [
+      [
+        "MeleeSpearPlayer",
+        "true"
+      ],
+      [
+        "SupportAddedColdDamagePlayer",
+        "true"
+      ],
+      [
+        "SpearThrowPlayer",
+        "true"
+      ]
+    ],
+    "source_main_skill": "Spear Stab",
+    "stat_differences": {
+      "AverageBurstDamage": [
+        15.392,
+        10.608
+      ],
+      "AverageDamage": [
+        15.392,
+        10.608
+      ],
+      "ColdStoredCombinedAvg": [
+        16.12,
+        4.16
+      ],
+      "CombinedAvg": [
+        24.573328,
+        16.935672
+      ],
+      "CombinedDPS": [
+        24.573328,
+        16.935672
+      ],
+      "FreezeBuildupAvg": [
+        0.0001269480499269,
+        3.276078707791e-05
+      ],
+      "ReqInt": [
+        5,
+        null
+      ],
+      "ReqIntString": [
+        5,
+        0
+      ],
+      "TotalDPS": [
+        24.573328,
+        16.935672
+      ],
+      "WithBleedDPS": [
+        24.573328,
+        16.935672
+      ],
+      "WithIgniteDPS": [
+        24.573328,
+        16.935672
+      ],
+      "WithPoisonDPS": [
+        24.573328,
+        16.935672
+      ]
+    }
+  },
+  "v1_migration": [
+    {
+      "TotalDPS": 81.75,
+      "main_skill": "Ball Lightning",
+      "recommended_export": true,
+      "schema_version": 1
+    },
+    {
+      "TotalDPS": 3.1634592,
+      "main_skill": "Armour Breaker",
+      "recommended_export": true,
+      "schema_version": 2
+    }
+  ]
+}

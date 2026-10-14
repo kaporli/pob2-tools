@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 from .naming import CatalogNaming, UnresolvedName
 from .support import (NOT_REPRESENTABLE, PARTIAL, UNRESOLVED_NAME,
-                      LossCollector)
+                      LossCollector, source_int)
 
 
 def audit_document(root: ET.Element, naming: CatalogNaming,
@@ -68,7 +68,9 @@ def audit_document(root: ET.Element, naming: CatalogNaming,
     if spec is not None:
         for node in spec.iter():
             if node.tag.startswith("WeaponSet"):
-                resolve("weapon_set_numbers", int(node.tag[len("WeaponSet"):]),
+                resolve("weapon_set_numbers",
+                        source_int(node.tag[len("WeaponSet"):],
+                                   "/Tree/Spec/" + node.tag),
                         "/Tree/" + node.tag)
             if node.tag == "AttributeOverride":
                 for attr, option in (("strNodes", "Strength"),
@@ -80,7 +82,10 @@ def audit_document(root: ET.Element, naming: CatalogNaming,
             for attr in ("nodes", "strNodes", "dexNodes", "intNodes", "nodeId"):
                 for value in node.get(attr, "").replace(" ", "").split(","):
                     if value:
-                        resolve("node_ids", int(value), "/Tree/%s/@%s" % (node.tag, attr))
+                        resolve("node_ids",
+                                source_int(value, "/Tree/%s/@%s"
+                                           % (node.tag, attr)),
+                                "/Tree/%s/@%s" % (node.tag, attr))
     groups = root.findall("Skills/SkillSet/Skill") + root.findall("Skills/Skill")
     for group_index, group in enumerate(groups):
         group_path = "/Skills/Skill/%d" % group_index
@@ -140,9 +145,12 @@ def _audit_generated(group: ET.Element, path: str,
     """A group PoB generates. Only settings the author changed are losses.
 
     PoB rebuilds these groups from the equipment, the tree or a mechanic
-    when it loads a document, so the group itself is not imported. What PoB
-    cannot rebuild is a choice made on it: a disabled group, a different
-    active skill, a minion or skill-part selection. Those block the record.
+    when it loads a document, so the group itself is not imported. PoB
+    rebuilds only the first gem, the granted skill (CalcSetup.lua sets
+    ``gemList[1]``); every later gem is one the author added, kept by PoB
+    and not by this record, whatever its settings. What PoB cannot rebuild
+    blocks the record: an added gem, a disabled group, a different active
+    skill, a minion or skill-part selection.
     """
     losses.add(path + "/@source", NOT_REPRESENTABLE,
                "PoB generates this group from %r and generates it again on "
@@ -157,7 +165,13 @@ def _audit_generated(group: ET.Element, path: str,
         value = group.get(name)
         if value is not None and value not in allowed:
             changed.append("%s=%s" % (name, value))
-    for gem in group.findall("Gem"):
+    gems = group.findall("Gem")
+    for index, gem in enumerate(gems[1:], 1):
+        losses.add("%s/Gem/%d" % (path, index), PARTIAL,
+                   "a gem the author added to a PoB-generated group; PoB "
+                   "keeps it on reload but this record does not hold it",
+                   ET.tostring(gem, encoding="unicode"), True)
+    for gem in gems[:1]:
         for name, allowed in GENERATED_GEM_DEFAULTS.items():
             value = gem.get(name)
             if value is not None and value not in allowed:

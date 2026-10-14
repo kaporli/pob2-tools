@@ -23,7 +23,7 @@ from ..evaluation.itemtext import import_item
 from . import formats
 from .claims import extract_claims
 from .pob import (ParseContext, ParseOutcome, _result, parse_pob_xml,
-                  refused)
+                  record_base, refused)
 from .resolve import (TEMPLATE_CLAIM, item_readiness, naming_from_catalog)
 
 ITEM_PARSER_ID = "pob2opt.parsers.itemtext"
@@ -37,7 +37,9 @@ def parse_document(document: SourceDocument, payload: bytes,
                    context: ParseContext, *,
                    declared_format: str | None = None) -> ParseOutcome:
     """Parse one stored document. Deterministic, offline, never executes."""
-    detected = formats.detect(payload, declared=declared_format)
+    if declared_format is not None:
+        context = replace(context, declared_format=declared_format)
+    detected = formats.detect(payload, declared=context.declared_format)
     if detected.refused:
         return refused(document, context, detected)
     handler = _HANDLERS.get(detected.format)
@@ -59,7 +61,8 @@ def _item(document, detected, context) -> ParseOutcome:
         naming = naming_from_catalog(context.entities or {}).naming
     try:
         item = import_item(detected.text or "", naming,
-                           record_id="%s/item" % document.record_id,
+                           record_id=record_base(document, context)
+                           + "/item",
                            created_at=context.created_at,
                            catalog_hash=context.catalog_hash,
                            provenance_ids=[document.record_id],
@@ -138,7 +141,8 @@ def _guide_page(document, detected, context) -> ParseOutcome:
     claims = extract_claims(text, document=document,
                             created_at=context.created_at,
                             entities=context.entities or {},
-                            locator_prefix="/visible_text")
+                            locator_prefix="/visible_text",
+                            record_prefix=record_base(document, context))
     issue = _blocked_issue(document, "a saved guide page")
     result = _result(document, context, ParseResultStatus.PARTIAL, [issue],
                      record_ids=[c.record_id for c in claims],

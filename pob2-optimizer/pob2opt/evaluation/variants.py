@@ -121,18 +121,25 @@ def _sets(root: ET.Element) -> dict[str, list[tuple[SetRef, ET.Element]]]:
 
 
 def _active_selection(root: ET.Element,
-                      sets: Mapping[str, Sequence[tuple[SetRef, ET.Element]]]
-                      ) -> dict[str, str] | None:
+                      sets: Mapping[str, Sequence[tuple[SetRef, ET.Element]]],
+                      losses: LossCollector) -> dict[str, str] | None:
+    """The sets the selectors pick; None, with each bad selector, otherwise."""
     selection: dict[str, str] = {}
+    complete = True
     for tag, _, selector in SET_TABLES:
         if tag not in sets:
             continue
         wanted = root.find(tag).get(selector, "1")
         matches = [ref.key for ref, _ in sets[tag] if ref.key == wanted]
         if len(matches) != 1:
-            return None
+            losses.add("/%s/@%s" % (tag, selector), PARTIAL,
+                       "the active selector names %d of the document's %s "
+                       "sets, so PoB's own selection cannot be reproduced"
+                       % (len(matches), tag), wanted, True)
+            complete = False
+            continue
         selection[tag] = matches[0]
-    return selection
+    return selection if complete else None
 
 
 def _loadouts(sets: Mapping[str, Sequence[tuple[SetRef, ET.Element]]],
@@ -221,7 +228,7 @@ def split_variants(document: str, naming: CatalogNaming, *, record_id: str,
     sets = _sets(root)
     losses = LossCollector()
 
-    active = _active_selection(root, sets)
+    active = _active_selection(root, sets, losses)
     candidates: list[tuple[str, dict[str, str], bool]] = []
     if active is not None:
         candidates.append(("active", active, True))
@@ -232,10 +239,6 @@ def split_variants(document: str, naming: CatalogNaming, *, record_id: str,
         if any(selection == known for _, known, _ in candidates):
             continue
         candidates.append((label, selection, False))
-    if active is None and sets:
-        losses.add("/", PARTIAL,
-                   "the document's active selectors do not each name one set, "
-                   "so PoB's own selection cannot be reproduced", None, True)
 
     variants: list[BuildVariant] = []
     for index, (label, selection, is_active) in enumerate(candidates):

@@ -134,3 +134,35 @@ class LossCollector:
 
     def __len__(self) -> int:
         return len(self._items)
+
+
+class MalformedSource(ValueError):
+    """A source value that does not have the type the format requires.
+
+    Raised while reading a document, never for a programming error, so a
+    parser can turn exactly this into an issue naming the field.
+    """
+
+    def __init__(self, field_path: str, value: Any, expected: str) -> None:
+        super().__init__("%s: %r is not %s" % (field_path, value, expected))
+        self.field_path = field_path
+        self.value = value
+        self.expected = expected
+
+
+def source_int(text: Any, field_path: str) -> int:
+    """``int(text)`` for a value read from a source document."""
+    try:
+        return int(text)
+    except (TypeError, ValueError):
+        raise MalformedSource(field_path, text, "an integer") from None
+
+
+def source_number(text: Any, field_path: str) -> int | float:
+    """An int, or a float when the text has a point or exponent."""
+    try:
+        if any(c in str(text) for c in ".eE"):
+            return float(text)
+        return int(text)
+    except (TypeError, ValueError):
+        raise MalformedSource(field_path, text, "a number") from None

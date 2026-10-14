@@ -18,8 +18,8 @@
      "exact": 1.0
     },
     "skills_and_supports": {
-     "agreed": 23,
-     "compared": 23,
+     "agreed": 50,
+     "compared": 50,
      "exact": 1.0
     }
    },
@@ -45,8 +45,8 @@
      "exact": 1.0
     },
     "skills_and_supports": {
-     "agreed": 33,
-     "compared": 33,
+     "agreed": 73,
+     "compared": 73,
      "exact": 1.0
     }
    },
@@ -111,13 +111,13 @@
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "mismatches": [],
       "passed": true,
@@ -191,13 +191,13 @@
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 26,
-       "skills_and_supports": 3
+       "skills_and_supports": 8
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 26,
-       "skills_and_supports": 3
+       "skills_and_supports": 8
       },
       "mismatches": [],
       "passed": true,
@@ -271,13 +271,13 @@
        "allocations": 1,
        "gear_rolls": 6,
        "set_bindings": 24,
-       "skills_and_supports": 4
+       "skills_and_supports": 7
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 6,
        "set_bindings": 24,
-       "skills_and_supports": 4
+       "skills_and_supports": 7
       },
       "mismatches": [],
       "passed": true,
@@ -351,13 +351,13 @@
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 28,
-       "skills_and_supports": 5
+       "skills_and_supports": 12
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 28,
-       "skills_and_supports": 5
+       "skills_and_supports": 12
       },
       "mismatches": [],
       "passed": true,
@@ -431,13 +431,13 @@
        "allocations": 1,
        "gear_rolls": 2,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 2,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "mismatches": [],
       "passed": true,
@@ -511,13 +511,13 @@
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 26,
-       "skills_and_supports": 4
+       "skills_and_supports": 9
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 26,
-       "skills_and_supports": 4
+       "skills_and_supports": 9
       },
       "mismatches": [],
       "passed": true,
@@ -591,13 +591,13 @@
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "mismatches": [],
       "passed": true,
@@ -671,13 +671,13 @@
        "allocations": 1,
        "gear_rolls": 1,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 1,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "mismatches": [],
       "passed": true,
@@ -751,13 +751,13 @@
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 26,
-       "skills_and_supports": 4
+       "skills_and_supports": 9
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 26,
-       "skills_and_supports": 4
+       "skills_and_supports": 9
       },
       "mismatches": [],
       "passed": true,
@@ -831,13 +831,13 @@
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "mismatches": [],
       "passed": true,
@@ -917,13 +917,13 @@
        "allocations": 1,
        "gear_rolls": 5,
        "set_bindings": 26,
-       "skills_and_supports": 5
+       "skills_and_supports": 10
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 5,
        "set_bindings": 26,
-       "skills_and_supports": 5
+       "skills_and_supports": 10
       },
       "mismatches": [],
       "passed": true,
@@ -1003,13 +1003,13 @@
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 4,
        "set_bindings": 24,
-       "skills_and_supports": 3
+       "skills_and_supports": 6
       },
       "mismatches": [],
       "passed": true,
@@ -1089,13 +1089,13 @@
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "mismatches": [],
       "passed": true,
@@ -1118,13 +1118,13 @@
        "allocations": 1,
        "gear_rolls": 1,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 1,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "mismatches": [],
       "passed": true,
@@ -1229,13 +1229,13 @@
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "compared": {
        "allocations": 1,
        "gear_rolls": 3,
        "set_bindings": 24,
-       "skills_and_supports": 2
+       "skills_and_supports": 5
       },
       "mismatches": [],
       "passed": true,
@@ -1314,12 +1314,12 @@
       "agreed": {
        "allocations": 1,
        "set_bindings": 2,
-       "skills_and_supports": 4
+       "skills_and_supports": 7
       },
       "compared": {
        "allocations": 1,
        "set_bindings": 2,
-       "skills_and_supports": 4
+       "skills_and_supports": 7
       },
       "mismatches": [],
       "passed": true,
@@ -1397,12 +1397,12 @@
       "agreed": {
        "gear_rolls": 4,
        "set_bindings": 28,
-       "skills_and_supports": 5
+       "skills_and_supports": 12
       },
       "compared": {
        "gear_rolls": 4,
        "set_bindings": 28,
-       "skills_and_supports": 5
+       "skills_and_supports": 12
       },
       "mismatches": [],
       "passed": true,

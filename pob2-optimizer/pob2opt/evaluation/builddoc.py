@@ -37,6 +37,7 @@ from typing import Any, Mapping, Sequence
 from ..domain.absent import ABSENT
 from ..domain.enums import ConfigOrigin, RecordParseStatus
 from ..domain.identity import document_hash
+from ..domain.migrate import legacy_main_group
 from ..domain.records import (BUILD_SPEC_SCHEMA_VERSION, BuildSpec,
                               ConfigValue, EquipmentSlot, ItemInstance,
                               Passives, Progression, SkillEntry, SkillGroup,
@@ -46,7 +47,8 @@ from .itemtext import export_item, import_item
 from .importaudit import audit_document
 from .naming import CatalogNaming, UnresolvedName
 from .support import (NOT_REPRESENTABLE, PARTIAL, UNRESOLVED_NAME,
-                      LossCollector, SupportReport)
+                      LossCollector, MalformedSource, SupportReport,
+                      source_int, source_number)
 
 #: Written so PoB does not recompute the level from an empty tree
 #: (observation P00-OBS-02).
@@ -313,13 +315,15 @@ def _export_skills(build: BuildSpec, naming: CatalogNaming,
         attrib["set2"] = "true" if set2 else "false"
         if group.main_skill_index is not None:
             attrib["mainActiveSkill"] = str(group.main_skill_index + 1)
-            if main_group is ABSENT and main_socket_group == 1:
-                main_socket_group = index + 1
         node = ET.SubElement(skill_set, "Skill", attrib)
         for skill_index, skill in enumerate(group.skills):
             _export_skill(node, skill, naming, losses,
                           "%s/skills/%d" % (path, skill_index))
-    if main_group is not ABSENT:
+    if main_group is ABSENT:
+        # Version 1 records keep the version 1 exporter's selection.
+        legacy = legacy_main_group(build.skill_groups)
+        main_socket_group = 1 if legacy is None else legacy + 1
+    else:
         if main_group is not None:
             main_socket_group = main_group + 1
         elif build.skill_groups:
@@ -679,10 +683,11 @@ def _reverse(naming: CatalogNaming, table: str, value) -> str | None:
         return None
 
 
-def _split_ids(text: str | None) -> list[int]:
+def _split_ids(text: str | None, field_path: str = "/") -> list[int]:
     if not text:
         return []
-    return [int(part) for part in text.replace(" ", "").split(",") if part]
+    return [source_int(part, field_path)
+            for part in text.replace(" ", "").split(",") if part]
 
 
 def import_build(document: str, naming: CatalogNaming, *, record_id: str,
@@ -708,7 +713,7 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
     ascend_name = build_element.get("ascendClassName", "None")
     ascendancy_id = (None if ascend_name in ("", "None")
                      else _reverse(naming, "ascendancy_names", ascend_name))
-    level = int(build_element.get("level", "1"))
+    level = source_int(build_element.get("level", "1"), "/Build/@level")
 
     items, item_by_id = _import_items(root, naming, record_id, created_at,
                                       catalog_hash)
@@ -768,13 +773,18 @@ def _import_items(root: ET.Element, naming: CatalogNaming, record_id: str,
         text = (node.text or "").strip("\n")
         if not text.strip():
             continue
-        item = import_item(text, naming,
-                           record_id="%s-item-%d" % (record_id, index),
-                           created_at=created_at, catalog_hash=catalog_hash)
+        try:
+            item = import_item(text, naming,
+                               record_id="%s-item-%d" % (record_id, index),
+                               created_at=created_at,
+                               catalog_hash=catalog_hash)
+        except MalformedSource as error:
+            raise MalformedSource("/Items/Item/%d%s" % (index, error.field_path),
+                                  error.value, error.expected) from None
         items[item.item_hash] = item
         numeric = node.get("id")
         if numeric is not None:
-            item_by_id[int(numeric)] = item.item_hash
+            item_by_id[source_int(numeric, "/Items/Item/%d/@id" % index)] =                 item.item_hash
     return items, item_by_id
 
 
@@ -794,7 +804,8 @@ def _import_equipment(root: ET.Element, naming: CatalogNaming,
         if slot_id is None:
             continue
         hand_slots[name] = slot_id
-        item_id = int(node.get("itemId", "0"))
+        item_id = source_int(node.get("itemId", "0"),
+                             "/Items/ItemSet/Slot[@name=%r]/@itemId" % name)
         item_hash = item_by_id.get(item_id)
         equipment[slot_id] = (None if item_hash is None
                               else EquipmentSlot(item_hash=item_hash,
@@ -815,7 +826,7 @@ def _import_tree(root: ET.Element, naming: CatalogNaming,
         return (Passives(allocated=[], ascendancy_allocated=[], choices={},
                          socketed=[]), weapon_set_nodes)
 
-    for native in _split_ids(spec.get("nodes")):
+    for native in _split_ids(spec.get("nodes"), "/Tree/Spec/@nodes"):
         passive_id = _reverse(naming, "node_ids", native)
         if passive_id is None:
             continue
@@ -826,15 +837,19 @@ def _import_tree(root: ET.Element, naming: CatalogNaming,
 
     for child in spec:
         if child.tag.startswith("WeaponSet"):
-            number = int(child.tag[len("WeaponSet"):])
+            number = source_int(child.tag[len("WeaponSet"):],
+                                "/Tree/Spec/" + child.tag)
             names = [_reverse(naming, "node_ids", native)
-                     for native in _split_ids(child.get("nodes"))]
+                     for native in _split_ids(
+                         child.get("nodes"),
+                         "/Tree/Spec/%s/@nodes" % child.tag)]
             weapon_set_nodes[number] = [n for n in names if n is not None]
         elif child.tag == "Sockets":
             for socket in child.findall("Socket"):
-                node_id = _reverse(naming, "node_ids",
-                                   int(socket.get("nodeId", "0")))
-                entity = item_by_id.get(int(socket.get("itemId", "0")))
+                node_id = _reverse(naming, "node_ids", source_int(
+                    socket.get("nodeId", "0"), "/Tree/Spec/Sockets/@nodeId"))
+                entity = item_by_id.get(source_int(
+                    socket.get("itemId", "0"), "/Tree/Spec/Sockets/@itemId"))
                 if node_id is not None and entity is not None:
                     socketed.append(SocketedEntity(node_id=node_id,
                                                    entity_id=entity))
@@ -845,7 +860,9 @@ def _import_tree(root: ET.Element, naming: CatalogNaming,
                                          attribute)
                     if option_id is None:
                         continue
-                    for native in _split_ids(override.get(key)):
+                    for native in _split_ids(
+                            override.get(key),
+                            "/Tree/Spec/Overrides/@" + key):
                         passive_id = _reverse(naming, "node_ids", native)
                         if passive_id is not None:
                             choices[passive_id] = option_id
@@ -944,8 +961,12 @@ def _import_skills(root: ET.Element, naming: CatalogNaming,
             unresolved = False
             skills.append(SkillEntry(
                 skill_id=skill_id, gem_id=gem_id,
-                level=int(gem.get("level", "0")),
-                quality=int(gem.get("quality", "0")),
+                level=source_int(gem.get("level", "0"),
+                                 "/Skills/Skill/%d/Gem/@level"
+                                 % document_index),
+                quality=source_int(gem.get("quality", "0"),
+                                   "/Skills/Skill/%d/Gem/@quality"
+                                   % document_index),
                 enabled=gem.get("enabled", "true") == "true",
                 support_ids=[], triggered=[], supports=[]))
         if main_skill_index is not None and main_skill_index >= len(skills):
@@ -1045,7 +1066,8 @@ def _import_config(root: ET.Element) -> dict[str, ConfigValue]:
             value: Any = node.get("boolean") == "true"
         elif node.get("number") is not None:
             text = node.get("number", "")
-            value = float(text) if any(c in text for c in ".eE") else int(text)
+            value = source_number(text, "/Config/Input[@name=%r]/@number"
+                                  % name)
         elif node.get("string") is not None:
             value = node.get("string")
         else:

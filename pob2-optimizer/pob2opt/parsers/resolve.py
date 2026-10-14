@@ -31,6 +31,7 @@ from dataclasses import dataclass, replace
 from typing import Any, Iterable, Mapping, Sequence
 
 from ..catalog.entities import entity_id
+from ..domain.absent import ABSENT
 from ..domain.enums import ModifierParseStatus, RecordParseStatus
 from ..domain.identity import build_hash, item_hash
 from ..domain.records import (BuildSpec, CatalogEntity, ItemInstance,
@@ -237,7 +238,12 @@ class Migration:
 
 
 def _references(build: BuildSpec) -> list[tuple[str, str, str]]:
-    """(field path, catalog table, entity id) for every catalog reference."""
+    """(field path, catalog table, entity id) for every catalog reference.
+
+    Weapon set and attribute option IDs, config input names and item hashes
+    are not catalog table rows (``records.CATALOG_TABLES``), so they are not
+    listed; items carry their own catalog references.
+    """
     refs: list[tuple[str, str, str]] = [("/class_id", "classes", build.class_id)]
     if build.ascendancy_id is not None:
         refs.append(("/ascendancy_id", "ascendancies", build.ascendancy_id))
@@ -253,6 +259,8 @@ def _references(build: BuildSpec) -> list[tuple[str, str, str]]:
         for j, node in enumerate(weapon_set.passive_allocations):
             refs.append(("/weapon_sets/%d/passive_allocations/%d" % (i, j),
                          "passive_nodes", node))
+    for node in sorted(build.passives.choices):
+        refs.append(("/passives/choices/%s" % node, "passive_nodes", node))
     for slot in build.equipment:
         refs.append(("/equipment/%s" % slot, "slots", slot))
 
@@ -263,10 +271,20 @@ def _references(build: BuildSpec) -> list[tuple[str, str, str]]:
         for k, support_id in enumerate(entry.support_ids):
             refs.append(("%s/support_ids/%d" % (path, k), "granted_skills",
                          support_id))
+        if entry.supports is not ABSENT:
+            for k, support in enumerate(entry.supports):
+                refs.append(("%s/supports/%d/support_id" % (path, k),
+                             "granted_skills", support.support_id))
+                if support.gem_id is not None:
+                    refs.append(("%s/supports/%d/gem_id" % (path, k), "gems",
+                                 support.gem_id))
         for k, child in enumerate(entry.triggered):
             skill("%s/triggered/%d" % (path, k), child)
 
     for i, group in enumerate(build.skill_groups):
+        if group.slot_id is not None:
+            refs.append(("/skill_groups/%d/slot_id" % i, "slots",
+                         group.slot_id))
         for j, entry in enumerate(group.skills):
             skill("/skill_groups/%d/skills/%d" % (i, j), entry)
     return refs

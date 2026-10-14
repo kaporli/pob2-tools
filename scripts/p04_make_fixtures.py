@@ -364,7 +364,10 @@ def write_manifest(out: Path, commit: str) -> None:
     path = fixtures / "manifest.json"
     manifest = json.loads(path.read_text(encoding="utf-8"))
     prefix = out.relative_to(fixtures).as_posix() + "/"
-    kept = [e for e in manifest["fixtures"] if not e["path"].startswith(prefix)]
+    # ``review/`` holds documents kept from a review, not generated here.
+    review = prefix + "review/"
+    kept = [e for e in manifest["fixtures"]
+            if not e["path"].startswith(prefix) or e["path"].startswith(review)]
     caveat = ("Composed by scripts/p04_make_fixtures.py from fixed rules over "
               "the pinned catalog (PoB %s), then loaded and saved by that PoB. "
               "The bytes are PoB's; the build is synthetic: no played "
@@ -372,7 +375,7 @@ def write_manifest(out: Path, commit: str) -> None:
               % commit[:12])
     entries = []
     for file in sorted(out.rglob("*")):
-        if not file.is_file():
+        if not file.is_file() or "review" in file.relative_to(out).parts:
             continue
         data = file.read_bytes()
         relative = file.relative_to(fixtures).as_posix()

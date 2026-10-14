@@ -172,12 +172,18 @@ def _pattern(by_name: Mapping[str, list[list[str]]]) -> re.Pattern[str] | None:
 
 def extract_claims(text: str, *, document: SourceDocument, created_at: str,
                    entities: Mapping[str, Sequence[CatalogEntity]],
-                   locator_prefix: str = "") -> tuple[MechanicClaim, ...]:
+                   locator_prefix: str = "",
+                   record_prefix: str | None = None
+                   ) -> tuple[MechanicClaim, ...]:
     """Unverified claims, one per sentence that names a catalog entity.
 
     ``locator_prefix`` names where ``text`` sits in the source document, for
     example ``/Notes``. Offsets in the locator index ``text`` itself.
+    ``record_prefix`` names the claims; it defaults to the document's ID, and
+    a parser passes its parse context so another catalog makes other IDs.
     """
+    if record_prefix is None:
+        record_prefix = document.record_id
     by_name = _names(entities)
     pattern = _pattern(by_name)
     declared = document.declared_patch
@@ -198,7 +204,7 @@ def extract_claims(text: str, *, document: SourceDocument, created_at: str,
             "utf-8")).hexdigest()[:16]
         claims.append(MechanicClaim(
             schema_version=SCHEMA_VERSION,
-            record_id="%s/claim/%s" % (document.record_id, digest),
+            record_id="%s/claim/%s" % (record_prefix, digest),
             created_at=created_at, provenance_ids=[document.record_id],
             subject_ids=subjects, claim_text=excerpt,
             source_document_id=document.record_id, source_locator=locator,
