@@ -5,7 +5,7 @@ P01 implements these contracts as Python dataclasses plus JSON Schema files in `
 ## Common conventions
 
 - Persist UTF-8 JSON. Object keys use snake case. UTC timestamps use RFC 3339 with `Z`. Durations use seconds; internal scheduling uses integer microseconds. Distances must carry a declared unit and conversion evidence, never assume PoB radius is metres.
-- Every persisted domain record has `schema_version: 1`, `record_id`, `created_at` and `provenance_ids: string[]`. Use UUIDs for event/record IDs, SHA-256 for content identities. Lists may be empty only when semantically valid.
+- Every persisted domain record has `schema_version: 1` (BuildSpec: 1 or 2, see below), `record_id`, `created_at` and `provenance_ids: string[]`. Use UUIDs for event/record IDs, SHA-256 for content identities. Lists may be empty only when semantically valid.
 - Null means unknown/not supplied, never zero or false. Unknown required facts also produce a `DataGap`. Reject NaN, Infinity, negative durations and duplicate allocation IDs. Monetary values are decimal strings with original currency identifiers.
 - Hash canonical JSON with sorted object keys, compact separators, no NaN, and UTF-8 encoding. Preserve order for rotations and skill groups; sort sets such as passive allocations by stable ID. Hash gameplay fields separately from metadata and source popularity.
 - All cross-record references must resolve within the exported run or corpus. Validate them in a second semantic pass after schema validation.
@@ -57,6 +57,9 @@ Each modifier includes `category`, `source_position`, `text`, `native_id` (nulla
 | `rotation_ids` | Named clear and boss policies. May be empty on import, which creates a missing-rotation gap. |
 | `source_document_ids`, `variant_id`, `family_id` | Provenance and deduplication metadata; variant/family nullable until assigned. |
 | `parse_status`, `unresolved_refs` | `complete`, `partial`, or `invalid`; structured unresolved paths. |
+| `main_skill_group` | Schema version 2. Index of the skill group PoB evaluates as main; null when there are no groups or the source does not say. |
+
+BuildSpec schema version 2 adds `main_skill_group` and, on every skill entry, `supports`: one `{support_id, gem_id, level, quality, enabled}` per `support_ids` entry, in the same order. A null setting is unknown, makes the record `partial` and blocks a recommended export; it is never filled with a PoB default. Version 1 records stay readable and keep their hashes. Upgrading one (`domain/migrate.py`) creates a new record whose support settings are unknown. The version 2 identity adds `identity_version: 2`, `main_skill_group` and the support settings.
 
 Hash equipment properties, allocations, progression, enabled groups, set bindings and gameplay config. Exclude name, creator, popularity, listing price and timestamps. Rotation identity is separate but included in evaluation identity. Preserve original XML/code blobs so metadata-only import never masquerades as a reconstructed build.
 

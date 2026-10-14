@@ -537,6 +537,10 @@ def write_bundle(export: CatalogExport, out_dir: str | Path) -> dict[str, str]:
 
     dump("catalog.json", to_jsonable(export.catalog))
     dump("patch_profile.json", to_jsonable(export.profile))
+    if export.acquisition is not None:
+        # The bundle's root: gaps and evidence cite it, so a corpus importing
+        # the bundle needs it to resolve their provenance.
+        dump("acquisition.json", to_jsonable(export.acquisition))
     dump("gaps.json", [to_jsonable(gap) for gap in export.gaps])
     for document in export.evidence:
         dump("evidence/%s.json" % document.record_id.replace("/", "_"),

@@ -5,9 +5,9 @@
   "type": "object",
   "properties": {
     "schema_version": {
-      "type": "integer",
       "enum": [
-        1
+        1,
+        2
       ]
     },
     "record_id": {
@@ -136,6 +136,12 @@
       "items": {
         "$ref": "#/$defs/UnresolvedRef"
       }
+    },
+    "main_skill_group": {
+      "type": [
+        "integer",
+        "null"
+      ]
     }
   },
   "required": [
@@ -165,6 +171,27 @@
     "unresolved_refs"
   ],
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "exclusiveMinimum": 1
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "main_skill_group"
+        ]
+      },
+      "else": {
+        "properties": {
+          "main_skill_group": false
+        }
+      }
+    }
+  ],
   "$defs": {
     "ConfigValue": {
       "type": "object",
@@ -332,6 +359,12 @@
           "items": {
             "$ref": "#/$defs/SkillEntry"
           }
+        },
+        "supports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SupportGem"
+          }
         }
       },
       "required": [
@@ -413,6 +446,49 @@
         "entity_id"
       ],
       "additionalProperties": false
+    },
+    "SupportGem": {
+      "type": "object",
+      "properties": {
+        "support_id": {
+          "type": "string"
+        },
+        "gem_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "level": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "quality": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "support_id",
+        "gem_id",
+        "level",
+        "quality",
+        "enabled"
+      ],
+      "additionalProperties": false,
+      "description": "One support's settings (BuildSpec schema version 2)."
     },
     "UnresolvedRef": {
       "type": "object",

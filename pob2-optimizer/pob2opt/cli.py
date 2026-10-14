@@ -581,10 +581,16 @@ def _ingest(argv):
     return acquisition_cli.main(argv)
 
 
+def _parse(argv):
+    """`pob2opt parse` (P04-T01). Offline: stored bytes in, records out."""
+    from .parsers import cli as parse_cli
+    return parse_cli.main(argv)
+
+
 #: Subcommands from docs/specs/interfaces.md. These never touch PHASES; the
 #: legacy phase pipeline keeps its own parser and its existing behavior.
 NEW_COMMANDS = {"doctor": _doctor, "catalog": _catalog, "source": _source,
-                "ingest": _ingest}
+                "ingest": _ingest, "parse": _parse}
 
 
 def main(argv=None):

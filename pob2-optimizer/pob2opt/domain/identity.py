@@ -49,6 +49,13 @@ parse_status, unresolved_refs, the base record fields, and - deliberately -
 every ``listing_id``, so an equal-stat item bought at a different price has
 the same combat identity.
 
+BuildSpec schema version 2 versions the build identity. A version 2
+projection adds ``identity_version: 2``, ``main_skill_group`` (which group
+PoB evaluates) and, per skill, ``supports``: each support's id, gem id,
+level, quality and enabled flag, in order. A version 1
+projection is unchanged, so every stored version 1 hash still verifies. The
+two can never collide: only version 2 carries the ``identity_version`` key.
+
 ``skill_group_id`` is excluded too: it is a structural label from the source
 file, and two gameplay-identical builds that numbered their groups
 differently are the same build.
@@ -170,8 +177,12 @@ def listing_snapshot_hash(listing: Any) -> str:
 
 # --------------------------------------------------------------- builds ===
 
-def _skill_identity(skill: Any) -> dict[str, Any]:
-    return {
+#: The BuildSpec schema version whose identity carries support settings.
+SUPPORT_IDENTITY_VERSION = 2
+
+
+def _skill_identity(skill: Any, version: int) -> dict[str, Any]:
+    out = {
         "skill_id": skill.skill_id,
         "gem_id": skill.gem_id,
         "level": skill.level,
@@ -179,13 +190,22 @@ def _skill_identity(skill: Any) -> dict[str, Any]:
         "enabled": skill.enabled,
         # Order is semantic: support order can change behaviour.
         "support_ids": list(skill.support_ids),
-        "triggered": [_skill_identity(child) for child in skill.triggered],
+        "triggered": [_skill_identity(child, version)
+                      for child in skill.triggered],
     }
+    if version >= SUPPORT_IDENTITY_VERSION:
+        supports = [] if skill.supports is ABSENT else skill.supports
+        out["supports"] = [
+            {"support_id": s.support_id, "gem_id": s.gem_id,
+             "level": s.level, "quality": s.quality, "enabled": s.enabled}
+            for s in supports]
+    return out
 
 
 def build_identity(build: Any) -> dict[str, Any]:
     passives = build.passives
-    return {
+    version = build.schema_version
+    projection = {
         "class_id": build.class_id,
         "ascendancy_id": build.ascendancy_id,
         "level": build.level,
@@ -226,7 +246,7 @@ def build_identity(build: Any) -> dict[str, Any]:
                 "source_item_hash": group.source_item_hash,
                 "weapon_set_id": group.weapon_set_id,
                 "main_skill_index": group.main_skill_index,
-                "skills": [_skill_identity(s) for s in group.skills],
+                "skills": [_skill_identity(s, version) for s in group.skills],
             }
             for group in build.skill_groups
         ],
@@ -235,6 +255,12 @@ def build_identity(build: Any) -> dict[str, Any]:
         "config": {key: _json(value.value)
                    for key, value in build.config.items()},
     }
+    if version >= SUPPORT_IDENTITY_VERSION:
+        projection["identity_version"] = version
+        projection["main_skill_group"] = (
+            None if build.main_skill_group is ABSENT
+            else build.main_skill_group)
+    return projection
 
 
 def build_hash(build: Any) -> str:

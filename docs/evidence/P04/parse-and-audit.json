@@ -1,0 +1,1511 @@
+{
+ "audit": {
+  "partial_and_ambiguous": {
+   "agreement": {
+    "allocations": {
+     "agreed": 7,
+     "compared": 7,
+     "exact": 1.0
+    },
+    "gear_rolls": {
+     "agreed": 24,
+     "compared": 24,
+     "exact": 1.0
+    },
+    "set_bindings": {
+     "agreed": 174,
+     "compared": 174,
+     "exact": 1.0
+    },
+    "skills_and_supports": {
+     "agreed": 23,
+     "compared": 23,
+     "exact": 1.0
+    }
+   },
+   "passed": 8,
+   "undeclared_mismatches": [],
+   "variants": 8
+  },
+  "ten_complete_variants": {
+   "agreement": {
+    "allocations": {
+     "agreed": 10,
+     "compared": 10,
+     "exact": 1.0
+    },
+    "gear_rolls": {
+     "agreed": 34,
+     "compared": 34,
+     "exact": 1.0
+    },
+    "set_bindings": {
+     "agreed": 250,
+     "compared": 250,
+     "exact": 1.0
+    },
+    "skills_and_supports": {
+     "agreed": 33,
+     "compared": 33,
+     "exact": 1.0
+    }
+   },
+   "passed": 10,
+   "undeclared_mismatches": [],
+   "variants": 10
+  }
+ },
+ "cases": [
+  {
+   "case": "b01",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 22,
+     "resolved": 22
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/3f8adbe07ad42af7/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "b2344bf51f0f6d2559113222f17b6487e2164cc415eb5a39b22a293e6bbeae58",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/3f8adbe07ad42af7/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b03",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 11,
+     "resolved": 11
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 26,
+       "skills_and_supports": 3
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 26,
+       "skills_and_supports": 3
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/c98082e669120de5/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "4d91dc358a4f39791fd937fd23cf67f2db4ffe04e0897af02564fba499e8aac1",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/c98082e669120de5/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b04",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 26,
+     "resolved": 26
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 6,
+     "resolved": 6
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 6,
+       "set_bindings": 24,
+       "skills_and_supports": 4
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 6,
+       "set_bindings": 24,
+       "skills_and_supports": 4
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/1602c76bd185be56/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "fb8d934ca5ab49e1aab13955acdf96c87c4831276d22e60dec99a3196f652a38",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/1602c76bd185be56/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b05",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 18,
+     "resolved": 18
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 28,
+       "skills_and_supports": 5
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 28,
+       "skills_and_supports": 5
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/a349b09fcc15feab/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "1289fcfc1bdbbedfd621d4772b50c945c5d4e1905feb19696e9a9248901e378b",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/a349b09fcc15feab/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b07",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 15,
+     "resolved": 15
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 2,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 2,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/c89be86798d7ad78/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "492abfdb59736d0ec48356ef9b67ef439c42fa436f86b2d0927a436c11546e4c",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/c89be86798d7ad78/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b08",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 23,
+     "resolved": 23
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 26,
+       "skills_and_supports": 4
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 26,
+       "skills_and_supports": 4
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/2d73bedf1c37bc70/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "55caf38182600c24145f729e031e059afb76c62c79d2a6cf47d7ec4c78215d76",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/2d73bedf1c37bc70/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b09",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 22,
+     "resolved": 22
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/8e4d844ce04b4b94/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "99df7042776ce672fcc73454fd537f71de1d9c8fd8dcb972ddf3c170af0714d4",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/8e4d844ce04b4b94/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b10",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 18,
+     "resolved": 18
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 1,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 1,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/6edbad7fd6566c08/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "b9d4f562b5820cfb8775845766af9ddef82bad9b712952f900c6a63c220f2281",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/6edbad7fd6566c08/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b11",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 22,
+     "resolved": 22
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 26,
+       "skills_and_supports": 4
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 26,
+       "skills_and_supports": 4
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/d8763f541be4bbaf/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "58491c9f0441d2f6a69f9138a1bb084d9dc84765a829b9e6770ff73b5c23f8aa",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/d8763f541be4bbaf/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b12",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 13,
+     "resolved": 13
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    }
+   ],
+   "issues": [],
+   "status": "complete",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/49e1c69e4e8bec88/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "67e40d6f704b4f40f89735d7b84986daf5d06d5ce66ddffe6643f8212bd77f8d",
+     "label": "Default",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/49e1c69e4e8bec88/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b02",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 30,
+     "resolved": 30
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 7,
+     "resolved": 7
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 5,
+     "resolved": 5
+    }
+   ],
+   "issues": [
+    {
+     "code": "partial",
+     "explanation": "settings changed on a PoB-generated group are not represented: WildProtectorPlayer skillMinion=BearCompanion, WildProtectorPlayer skillMinionSkill=1",
+     "field_path": "/variants/0/Skills/Skill/2"
+    }
+   ],
+   "status": "partial",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 5,
+       "set_bindings": 26,
+       "skills_and_supports": 5
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 5,
+       "set_bindings": 26,
+       "skills_and_supports": 5
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/77fbc8532350f465/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "d49bbe6af0d4e7ff325c1d1c62244331e2669e1072247e6d7f0eaf38cf4f3cbd",
+     "label": "Default",
+     "parse_status": "partial",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/77fbc8532350f465/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b06",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 16,
+     "resolved": 16
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [
+    {
+     "code": "partial",
+     "explanation": "settings changed on a PoB-generated group are not represented: SupportingFirePlayer skillMinion=TacticianMinion, SupportingFirePlayer skillMinionSkill=1",
+     "field_path": "/variants/0/Skills/Skill/1"
+    }
+   ],
+   "status": "partial",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 24,
+       "skills_and_supports": 3
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/49557ac0e01bcefa/Tree=1;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "4a585d9cace585f3775d10aecf0dd53740507f29c1e94481c737782d6e32be37",
+     "label": "Default",
+     "parse_status": "partial",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/49557ac0e01bcefa/Tree=1;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "variants",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 31,
+     "resolved": 31
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 6,
+     "resolved": 6
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [
+    {
+     "code": "unlinked_variant_set",
+     "explanation": "set 'Unlinked trade test' belongs to no variant: no loadout links it and the document does not select it",
+     "field_path": "/Items/ItemSet"
+    }
+   ],
+   "status": "partial",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/acc012e326409f02/Tree=2;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "99df7042776ce672fcc73454fd537f71de1d9c8fd8dcb972ddf3c170af0714d4",
+     "label": "Endgame {2}",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "2"
+     },
+     "variant_id": "pob-variant/acc012e326409f02/Tree=2;Skills=1;Items=1;Config=1"
+    },
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 1,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 1,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/acc012e326409f02/Tree=1;Skills=2;Items=2;Config=2"
+     },
+     "build_hash": "8cdefb3153e1c01b1cf2c26ab3e5a224b127edc18b6596fb222af006a32b4bc7",
+     "label": "Leveling {1}",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "2",
+      "Items": "2",
+      "Skills": "2",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/acc012e326409f02/Tree=1;Skills=2;Items=2;Config=2"
+    }
+   ]
+  },
+  {
+   "case": "variants-ambiguous",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 31,
+     "resolved": 31
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 5,
+     "resolved": 5
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 6,
+     "resolved": 6
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    }
+   ],
+   "issues": [
+    {
+     "code": "unlinked_variant_set",
+     "explanation": "loadout 'Leveling {1}' matches 2 Items sets; the link is ambiguous and no variant is formed",
+     "field_path": "/Items"
+    },
+    {
+     "code": "unlinked_variant_set",
+     "explanation": "set 'Leveling {1}' belongs to no variant: no loadout links it and the document does not select it",
+     "field_path": "/Tree/Spec"
+    },
+    {
+     "code": "unlinked_variant_set",
+     "explanation": "set 'Leveling {1}' belongs to no variant: no loadout links it and the document does not select it",
+     "field_path": "/Skills/SkillSet"
+    },
+    {
+     "code": "unlinked_variant_set",
+     "explanation": "set 'Leveling {1}' belongs to no variant: no loadout links it and the document does not select it",
+     "field_path": "/Items/ItemSet"
+    },
+    {
+     "code": "unlinked_variant_set",
+     "explanation": "set 'Unlinked trade test' belongs to no variant: no loadout links it and the document does not select it",
+     "field_path": "/Items/ItemSet"
+    },
+    {
+     "code": "unlinked_variant_set",
+     "explanation": "set 'Leveling {1}' belongs to no variant: no loadout links it and the document does not select it",
+     "field_path": "/Config/ConfigSet"
+    }
+   ],
+   "status": "partial",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 3,
+       "set_bindings": 24,
+       "skills_and_supports": 2
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/792407f13e1e278b/Tree=2;Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "99df7042776ce672fcc73454fd537f71de1d9c8fd8dcb972ddf3c170af0714d4",
+     "label": "Endgame {2}",
+     "parse_status": "complete",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "2"
+     },
+     "variant_id": "pob-variant/792407f13e1e278b/Tree=2;Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b04-without-items",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 26,
+     "resolved": 26
+    },
+    {
+     "domain": "equipment",
+     "missing": 1,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 3,
+     "resolved": 3
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    }
+   ],
+   "issues": [
+    {
+     "code": "missing_items",
+     "explanation": "the source has no items section; the equipment is unknown, not empty",
+     "field_path": "/equipment"
+    }
+   ],
+   "status": "partial",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "set_bindings": 2,
+       "skills_and_supports": 4
+      },
+      "compared": {
+       "allocations": 1,
+       "set_bindings": 2,
+       "skills_and_supports": 4
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/4b5667a40a2ffff3/Tree=1;Skills=1;Config=1"
+     },
+     "build_hash": "f0ac8df5d3ebdad7722b40d45df66d284432a0ddabb1d3c2bfe27a595c65b73c",
+     "label": "Default",
+     "parse_status": "partial",
+     "selection": {
+      "Config": "1",
+      "Skills": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/4b5667a40a2ffff3/Tree=1;Skills=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b05-without-tree",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 1,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [
+    {
+     "code": "missing_tree",
+     "explanation": "the source has no passive tree; the allocation is unknown, which blocks legal evaluation",
+     "field_path": "/passives"
+    }
+   ],
+   "status": "partial",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "gear_rolls": 4,
+       "set_bindings": 28,
+       "skills_and_supports": 5
+      },
+      "compared": {
+       "gear_rolls": 4,
+       "set_bindings": 28,
+       "skills_and_supports": 5
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/25a4c8e592536652/Skills=1;Items=1;Config=1"
+     },
+     "build_hash": "048d25bb37bcbd5c9d6ba72e45026958c88732eb971e0c1709b26ece94b381fb",
+     "label": "active",
+     "parse_status": "partial",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1"
+     },
+     "variant_id": "pob-variant/25a4c8e592536652/Skills=1;Items=1;Config=1"
+    }
+   ]
+  },
+  {
+   "case": "b08-without-skills",
+   "field_coverage": [
+    {
+     "domain": "class",
+     "missing": 0,
+     "present": 1,
+     "resolved": 1
+    },
+    {
+     "domain": "passives",
+     "missing": 0,
+     "present": 23,
+     "resolved": 23
+    },
+    {
+     "domain": "equipment",
+     "missing": 0,
+     "present": 2,
+     "resolved": 2
+    },
+    {
+     "domain": "skills",
+     "missing": 1,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "supports",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "config",
+     "missing": 0,
+     "present": 0,
+     "resolved": 0
+    },
+    {
+     "domain": "item_affixes",
+     "missing": 0,
+     "present": 4,
+     "resolved": 4
+    }
+   ],
+   "issues": [
+    {
+     "code": "missing_skills",
+     "explanation": "the source has no skills section; the skill groups are unknown, not empty",
+     "field_path": "/skill_groups"
+    }
+   ],
+   "status": "partial",
+   "variants": [
+    {
+     "audit": {
+      "agreed": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 22
+      },
+      "compared": {
+       "allocations": 1,
+       "gear_rolls": 4,
+       "set_bindings": 22
+      },
+      "mismatches": [],
+      "passed": true,
+      "variant_id": "pob-variant/b60bad6173f2d3f0/Tree=1;Items=1;Config=1"
+     },
+     "build_hash": "eb2f031c59294a74776426f6dcb67c832f46f99d469fc4328e79ce87cdf34c39",
+     "label": "Default",
+     "parse_status": "partial",
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Tree": "1"
+     },
+     "variant_id": "pob-variant/b60bad6173f2d3f0/Tree=1;Items=1;Config=1"
+    }
+   ]
+  }
+ ],
+ "catalog_slice_hash": "b0c6c03cb1d1623ffe63523207d3079c61484aec2c700dc73eeb534997e32b04",
+ "kind": "PoB-derived",
+ "not_a_claim": "Parser and audit behaviour on synthetic compositions saved by the pinned PoB. Says nothing about the game.",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e"
+}

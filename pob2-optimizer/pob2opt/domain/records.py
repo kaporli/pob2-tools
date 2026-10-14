@@ -60,9 +60,30 @@ from .enums import (
     ValidationLabel,
 )
 
-#: The only schema version this build reads or writes.
+#: The schema version every record kind writes unless listed below.
 SCHEMA_VERSION = 1
 SUPPORTED_SCHEMA_VERSIONS = (1,)
+
+#: BuildSpec version 2 adds per-support settings (``SkillEntry.supports``)
+#: and the main skill group (``BuildSpec.main_skill_group``).
+#: Version 1 records stay readable; they carry no support settings, so their
+#: supports are unknown, not default. See ``domain/migrate.py``.
+BUILD_SPEC_SCHEMA_VERSION = 2
+
+#: Record kinds that read more than :data:`SUPPORTED_SCHEMA_VERSIONS`.
+KIND_SCHEMA_VERSIONS: dict[str, tuple[int, ...]] = {
+    "build_spec": (1, 2),
+}
+
+
+def supported_schema_versions(kind: str | None = None) -> tuple[int, ...]:
+    """The versions one record kind reads; all known versions without a kind."""
+    if kind is None:
+        versions = set(SUPPORTED_SCHEMA_VERSIONS)
+        for extra in KIND_SCHEMA_VERSIONS.values():
+            versions.update(extra)
+        return tuple(sorted(versions))
+    return KIND_SCHEMA_VERSIONS.get(kind, SUPPORTED_SCHEMA_VERSIONS)
 
 
 def _frozen(cls=None, /):
@@ -353,6 +374,21 @@ class Passives:
 
 
 @_frozen
+class SupportGem:
+    """One support's settings (BuildSpec schema version 2).
+
+    Null means the source did not say, never a PoB default. A null setting
+    makes the build partial and blocks a recommended export.
+    """
+
+    support_id: str
+    gem_id: str | None
+    level: int | None
+    quality: int | None
+    enabled: bool | None
+
+
+@_frozen
 class SkillEntry:
     skill_id: str
     gem_id: str | None
@@ -366,6 +402,9 @@ class SkillEntry:
     #: annotation here, so the self-reference needs no quotes. Quoting
     #: it leaves a bare string inside ``list[...]`` on Python 3.10.
     triggered: list[SkillEntry]
+    #: Schema version 2 only, one entry per ``support_ids`` entry in the same
+    #: order. Absent in version 1, where support settings were not recorded.
+    supports: list[SupportGem] | Absent = ABSENT
 
 
 @_frozen
@@ -422,6 +461,10 @@ class BuildSpec(RecordBase):
     raw_blob_hashes: list[str]
     parse_status: RecordParseStatus
     unresolved_refs: list[UnresolvedRef]
+    #: Schema version 2 only: index of the skill group PoB evaluates as the
+    #: main one (``Build@mainSocketGroup``). Null when there are no groups,
+    #: or when the source does not say which one it is.
+    main_skill_group: int | None | Absent = ABSENT
 
 
 @_frozen
@@ -936,6 +979,7 @@ def kind_of(record: Any) -> str:
 # helper function. Built from the namespace so a new record cannot be added
 # without being exported.
 __all__ = sorted(
-    ({name for name in dir() if name[:1].isupper()} | {"kind_of"})
+    ({name for name in dir() if name[:1].isupper()}
+     | {"kind_of", "supported_schema_versions"})
     - {"Any", "ABSENT", "Absent"}
 )

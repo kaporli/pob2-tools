@@ -17,8 +17,8 @@ What is deliberately *not* here:
   imported here: it reads the catalog, and the catalog reads this module;
 * the patch profile, catalog export and compatibility evidence - P02-T02, in
   ``pob2opt.catalog``. The catalog ID to PoB name tables the document exporter
-  needs are still supplied by the caller through ``CatalogNaming``; building
-  them from an exported catalog is integration work nobody has done yet.
+  needs are supplied by the caller through ``CatalogNaming``;
+  ``pob2opt.parsers.resolve.naming_from_catalog`` builds them from a catalog.
 """
 
 from __future__ import annotations

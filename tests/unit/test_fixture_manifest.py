@@ -36,11 +36,19 @@ def test_recorded_hashes_match_the_files(fixtures_dir: Path, manifest: dict):
         assert len(data) == entry["bytes"], entry["path"]
 
 
+#: ``pob_derived``: a synthetic composition the pinned PoB loaded and saved
+#: (P04). The bytes are PoB's; the build is still invented.
+ORIGINS = {"synthetic": "synthetic", "pob_derived": "PoB-derived"}
+
+
 def test_every_fixture_is_declared_synthetic(manifest: dict):
     assert "SYNTHETIC" in manifest["statement"]
+    assert "pob_derived" in manifest["statement"]
     for entry in manifest["fixtures"]:
-        assert entry["origin"] == "synthetic", entry["path"]
+        assert entry["origin"] in ORIGINS, entry["path"]
         assert entry["caveat"].strip(), entry["path"]
+        if entry["origin"] == "pob_derived":
+            assert "synthetic" in entry["caveat"], entry["path"]
 
 
 def test_json_fixtures_carry_their_own_synthetic_marker(fixtures_dir: Path, manifest: dict):
@@ -49,7 +57,7 @@ def test_json_fixtures_carry_their_own_synthetic_marker(fixtures_dir: Path, mani
         if path.suffix != ".json":
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
-        assert payload["kind"] == "synthetic", entry["path"]
+        assert payload["kind"] == ORIGINS[entry["origin"]], entry["path"]
         assert payload["purpose"].strip(), entry["path"]
         assert payload.get("not_a_claim", "").strip(), entry["path"]
 
