@@ -9,6 +9,7 @@ records in the corpus, where they resolve against each other.
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -289,3 +290,73 @@ def test_a_malformed_number_exits_three_and_keeps_the_source(
     with RunStore.open_corpus(corpus) as store:
         assert store.read_payload(store.get_source(source_id).blob_hash) \
             == data
+
+
+@pytest.mark.parametrize("standalone", [False, True])
+@pytest.mark.parametrize("label,value", [
+    ("Quality", "broken"), ("Armour", "broken"), ("Energy Shield", "broken"),
+    ("Quality", "1e999"), ("Item Level", "-1"), ("enemyLevel", "1e999"),
+])
+def test_invalid_numeric_fields_are_recorded_without_losing_the_source(
+        tmp_path, bundle, capsys, standalone, label, value):
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(fx.document_bytes("b01"))
+    item = root.find("Items/Item")
+    if label == "enemyLevel":
+        # Config has no standalone representation; this case always uses XML.
+        standalone = False
+        ET.SubElement(root.find("Config/ConfigSet"), "Input", name=label, number=value)
+        expected_path = "/Config/Input[@name='enemyLevel']/@number"
+    else:
+        item.text += "\n%s: %s\n" % (label, value)
+        expected_path = ("" if standalone else "/Items/Item/0") + "/text/" + label
+    data = item.text.encode("utf-8") if standalone else ET.tostring(root)
+    corpus = tmp_path / "corpus"
+    document = fx.source(data, media_type="text/plain" if standalone else "application/xml")
+    document = replace(document, provenance_ids=[document.record_id])
+    with RunStore.open_corpus(corpus) as store:
+        store.ingest_source(data, document)
+    args = ["--source", document.record_id, "--corpus", str(corpus), "--catalog", str(bundle)]
+    for cached in (False, True):
+        code, captured = run(args, capsys)
+        assert code == parse_cli.EXIT_BLOCKED, captured.err
+        report = json.loads(captured.out)
+        assert report["status"] == "invalid"
+        assert report["unchanged"] == cached
+        assert report["record_ids"] == []
+        (issue,) = report["issues"]
+        assert (issue["code"], issue["field_path"]) == ("malformed_value", expected_path)
+    with RunStore.open_corpus(corpus) as store:
+        assert store.read_payload(document.blob_hash) == data
+        assert store.get_record(report["parse_result_id"]).status.value == "invalid"
+
+
+def test_standalone_affix_failure_survives_corpus_reload(tmp_path, bundle, capsys):
+    import xml.etree.ElementTree as ET
+    from pob2opt.evaluation.itemtext import export_item
+    from pob2opt.parsers import naming_from_catalog
+    from pob2opt.parsers.cli import _load_catalog
+
+    root = ET.fromstring(fx.document_bytes("b01"))
+    text = root.find("Items/Item").text + "\nSYNTHETIC +3 to unknown things\n"
+    data = text.encode("utf-8")
+    document = fx.source(data, media_type="text/plain")
+    document = replace(document, provenance_ids=[document.record_id])
+    corpus = tmp_path / "corpus"
+    with RunStore.open_corpus(corpus) as store:
+        store.ingest_source(data, document)
+    code, captured = run(["--source", document.record_id, "--corpus", str(corpus),
+                          "--catalog", str(bundle)], capsys)
+    assert code == parse_cli.EXIT_OK, captured.err
+    report = json.loads(captured.out)
+    assert report["status"] == "partial"
+    (record_id,) = report["record_ids"]
+    with RunStore.open_corpus(corpus) as store:
+        item = store.get_record(record_id)
+        assert store.read_payload(document.blob_hash) == data
+    assert item.parse_status.value == "partial"
+    assert item.modifiers[-1].parse_status.value == "unresolved"
+    assert item.raw_text == text
+    naming = naming_from_catalog(_load_catalog(bundle)[0].entities).naming
+    _, losses = export_item(item, naming)
+    assert not losses.report().complete

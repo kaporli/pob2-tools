@@ -1,0 +1,39 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 6 items
+
+tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose PASSED [ 16%]
+tests/engine/test_f11_import_is_wiped.py::test_worker_init_sequence_erases_the_imported_character PASSED [ 33%]
+tests/engine/test_f11_import_is_wiped.py::test_the_wipe_is_silent PASSED [ 50%]
+tests/engine/test_f11_import_is_wiped.py::test_setup_silently_loses_the_requested_character_level_in_auto_mode PASSED [ 66%]
+tests/engine/test_f11_import_is_wiped.py::test_the_requested_level_is_honoured_when_auto_mode_is_off PASSED [ 83%]
+tests/engine/test_f11_import_is_wiped.py::test_loading_without_opt_setup_keeps_the_whole_character PASSED [100%]
+
+native fault diagnostics: 16956336 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-340\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================= 6 passed in 10.50s ==============================
+Loading main script...
+Unicode support detected
+Loading passive tree data for version '0_5'...
+Loading passive tree assets...
+Processing tree...
+missing node 24665
+missing node 35715
+missing node 28429
+missing node 26353
+missing node 950
+missing node 45406
+missing node 50198
+missing node 5162
+missing node 10889
+missing node 62386
+missing node 39383
+missing node 51916
+missing node 54579
+missing node 16732
+Startup time: 0 ms
+Uniques loaded
+Rares loaded

@@ -1,0 +1,198 @@
+{
+  "elapsed_seconds": 79.693977,
+  "stopped_at_limit": false,
+  "peak_working_set_bytes": 1479012352,
+  "exit_code": 0,
+  "samples": [
+    {
+      "bytes": 25890816.0,
+      "progress": null,
+      "seconds": 0.1713877
+    },
+    {
+      "bytes": 246747136.0,
+      "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps ",
+      "seconds": 2.2727231
+    },
+    {
+      "bytes": 508518400.0,
+      "progress": "tests/engine/test_engine_smoke.py::test_engine_internals_are_reachable ",
+      "seconds": 4.3898689
+    },
+    {
+      "bytes": 605614080.0,
+      "progress": "tests/engine/test_engine_smoke.py::test_save_and_load_round_trip_preserves_tree_and_items ",
+      "seconds": 6.5036396
+    },
+    {
+      "bytes": 704741376.0,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_wipe_is_silent ",
+      "seconds": 8.5941456
+    },
+    {
+      "bytes": 786591744.0,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_loading_without_opt_setup_keeps_the_whole_character ",
+      "seconds": 10.6967177
+    },
+    {
+      "bytes": 976375808.0,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] ",
+      "seconds": 12.8057505
+    },
+    {
+      "bytes": 1019842560.0,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] ",
+      "seconds": 14.9072229
+    },
+    {
+      "bytes": 874418176.0,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character ",
+      "seconds": 16.9989565
+    },
+    {
+      "bytes": 952594432.0,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character ",
+      "seconds": 19.0949526
+    },
+    {
+      "bytes": 1353871360.0,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_repeating_one_request_is_stable ",
+      "seconds": 21.1747969
+    },
+    {
+      "bytes": 1064919040.0,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds ",
+      "seconds": 23.2694717
+    },
+    {
+      "bytes": 1057366016.0,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total ",
+      "seconds": 25.3704027
+    },
+    {
+      "bytes": 1329868800.0,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 27.4624818
+    },
+    {
+      "bytes": 1332473856.0,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 29.5551372
+    },
+    {
+      "bytes": 1315344384.0,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 31.6401998
+    },
+    {
+      "bytes": 1332133888.0,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 33.751818
+    },
+    {
+      "bytes": 1467191296.0,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash ",
+      "seconds": 35.8397754
+    },
+    {
+      "bytes": 1479012352.0,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash ",
+      "seconds": 37.9455475
+    },
+    {
+      "bytes": 867414016.0,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 40.0374702
+    },
+    {
+      "bytes": 1190019072.0,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 42.13329
+    },
+    {
+      "bytes": 1218715648.0,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 44.2251202
+    },
+    {
+      "bytes": 1245278208.0,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 46.3121178
+    },
+    {
+      "bytes": 1029300224.0,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 48.4027936
+    },
+    {
+      "bytes": 1122717696.0,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 50.500028
+    },
+    {
+      "bytes": 1287041024.0,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 52.5881828
+    },
+    {
+      "bytes": 1409716224.0,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 54.6728996
+    },
+    {
+      "bytes": 1052733440.0,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 56.7677683
+    },
+    {
+      "bytes": 1425063936.0,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 58.8621423
+    },
+    {
+      "bytes": 853860352.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 60.9581703
+    },
+    {
+      "bytes": 860258304.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 63.0600096
+    },
+    {
+      "bytes": 859541504.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 65.1483143
+    },
+    {
+      "bytes": 849682432.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 67.2344582
+    },
+    {
+      "bytes": 847126528.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 69.333968
+    },
+    {
+      "bytes": 962842624.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b09] ",
+      "seconds": 71.4190993
+    },
+    {
+      "bytes": 1012858880.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates ",
+      "seconds": 73.5142754
+    },
+    {
+      "bytes": 1012531200.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates ",
+      "seconds": 75.6026365
+    },
+    {
+      "bytes": 1009065984.0,
+      "progress": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices0] ",
+      "seconds": 77.6828608
+    }
+  ]
+}

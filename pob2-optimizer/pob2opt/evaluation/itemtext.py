@@ -19,13 +19,13 @@ source before and after.
 
 from __future__ import annotations
 
-from typing import Any, Mapping, Sequence
+from typing import Any, Sequence
 
 from ..domain.enums import ModifierCategory, ModifierParseStatus, RecordParseStatus
 from ..domain.records import ItemInstance, ItemModifier, Socket
 from .naming import CatalogNaming, UnresolvedName
 from .support import (NOT_REPRESENTABLE, PARTIAL, UNRESOLVED_NAME,
-                      LossCollector, source_int)
+                      LossCollector, source_int, source_number)
 
 #: Category to the marker PoB writes for it. ``implicit`` and ``explicit`` have
 #: none: their block decides. ``unknown`` has no marker at all, which is why an
@@ -105,18 +105,6 @@ def _format_number(value: Any) -> str:
     if isinstance(value, float) and value.is_integer():
         return "%g" % value
     return repr(value)
-
-
-def _parse_number(text: str) -> Any:
-    if any(c in text for c in ".eE"):
-        try:
-            return float(text)
-        except ValueError:
-            return text
-    try:
-        return int(text)
-    except ValueError:
-        return text
 
 
 def _block_of(category: ModifierCategory) -> int:
@@ -387,21 +375,21 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
             modifier_lines.append(line)
             continue
         if label == "Item Level":
-            item_level = source_int(value, "/text/Item Level")
+            item_level = source_int(value, "/text/Item Level", minimum=0)
         elif label == "LevelReq":
-            requirements["level"] = source_int(value, "/text/LevelReq")
+            requirements["level"] = source_int(value, "/text/LevelReq", minimum=0)
         elif label == "Sockets":
             sockets = [Socket(socket_id=str(i), group=i, colour=letter,
                               contents_id=None)
                        for i, letter in enumerate(value.split())]
         elif label == "Implicits":
-            implicit_count = source_int(value, "/text/Implicits")
+            implicit_count = source_int(value, "/text/Implicits", minimum=0)
         elif label == "Variant":
             variants.append(value)
         elif label == "Selected Variant":
-            selected_variant = source_int(value, "/text/Selected Variant")
+            selected_variant = source_int(value, "/text/Selected Variant", minimum=1)
         elif label in numeric_by_label:
-            properties[numeric_by_label[label]] = _parse_number(value)
+            properties[numeric_by_label[label]] = source_number(value, "/text/" + label)
         else:
             properties[text_by_label[label]] = value
 

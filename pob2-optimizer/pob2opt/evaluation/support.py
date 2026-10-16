@@ -150,19 +150,27 @@ class MalformedSource(ValueError):
         self.expected = expected
 
 
-def source_int(text: Any, field_path: str) -> int:
+def source_int(text: Any, field_path: str, *, minimum: int | None = None) -> int:
     """``int(text)`` for a value read from a source document."""
     try:
-        return int(text)
-    except (TypeError, ValueError):
+        value = int(text)
+    except (TypeError, ValueError, OverflowError):
         raise MalformedSource(field_path, text, "an integer") from None
+    if minimum is not None and value < minimum:
+        raise MalformedSource(field_path, text, "an integer >= %d" % minimum)
+    return value
 
 
 def source_number(text: Any, field_path: str) -> int | float:
-    """An int, or a float when the text has a point or exponent."""
+    """A finite int, or float when the text has a point or exponent."""
+    import math
+
     try:
         if any(c in str(text) for c in ".eE"):
-            return float(text)
+            value = float(text)
+            if not math.isfinite(value):
+                raise ValueError
+            return value
         return int(text)
-    except (TypeError, ValueError):
-        raise MalformedSource(field_path, text, "a number") from None
+    except (TypeError, ValueError, OverflowError):
+        raise MalformedSource(field_path, text, "a finite number") from None

@@ -1,0 +1,38 @@
+{
+  "elapsed_seconds": 12.1732422,
+  "exit_code": 0,
+  "peak_working_set_bytes": 545898496,
+  "samples": [
+    {
+      "bytes": 2801664,
+      "progress": null,
+      "seconds": 0.0191965
+    },
+    {
+      "bytes": 115814400,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose ",
+      "seconds": 2.0645076
+    },
+    {
+      "bytes": 187019264,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose ",
+      "seconds": 4.0880411
+    },
+    {
+      "bytes": 348418048,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose ",
+      "seconds": 6.1146202
+    },
+    {
+      "bytes": 503234560,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_wipe_is_silent ",
+      "seconds": 8.1252304
+    },
+    {
+      "bytes": 545898496,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_loading_without_opt_setup_keeps_the_whole_character ",
+      "seconds": 10.1503209
+    }
+  ],
+  "stopped_at_limit": false
+}

@@ -16,15 +16,16 @@ import html.parser
 from dataclasses import replace
 from typing import Callable
 
-from ..domain.enums import ParseResultStatus, RecordParseStatus
-from ..domain.identity import item_hash
+from ..domain.enums import ParseResultStatus
 from ..domain.records import ParseIssue, SourceDocument
 from ..evaluation.itemtext import import_item
+from ..evaluation.support import MalformedSource
 from . import formats
 from .claims import extract_claims
-from .pob import (ParseContext, ParseOutcome, _result, parse_pob_xml,
-                  record_base, refused)
-from .resolve import (TEMPLATE_CLAIM, item_readiness, naming_from_catalog)
+from .pob import (ParseContext, ParseOutcome, _Issues, _check_items,
+                  _item_validation_issues, _result, parse_pob_xml, record_base,
+                  refused)
+from .resolve import naming_from_catalog
 
 ITEM_PARSER_ID = "pob2opt.parsers.itemtext"
 
@@ -67,25 +68,26 @@ def _item(document, detected, context) -> ParseOutcome:
                            catalog_hash=context.catalog_hash,
                            provenance_ids=[document.record_id],
                            source_document_id=document.record_id)
+    except MalformedSource as error:
+        result = _result(document, context, ParseResultStatus.INVALID,
+                         [ParseIssue("malformed_value", error.field_path,
+                                     error.field_path, str(error))],
+                         extensions={"format": formats.ITEM_TEXT})
+        return ParseOutcome(result=_with_parser(result, ITEM_PARSER_ID))
     except ValueError as error:
         return refused(document, context, formats.Detected(
             formats.ITEM_TEXT, True, "malformed_item_text", str(error)))
-    issues = []
-    if item.base_id is None:
-        issues.append(ParseIssue("unresolved_base", "/base_id",
-                                 item.display_name,
-                                 "the base type is not in this catalog"))
-    if item_readiness(item) == TEMPLATE_CLAIM:
-        issues.append(ParseIssue(TEMPLATE_CLAIM, "/modifiers",
-                                 item.display_name,
-                                 "an item name without stats is a claim "
-                                 "about which item is meant, not an item "
-                                 "ready for calculation"))
-    if issues and item.parse_status is RecordParseStatus.COMPLETE:
-        item = replace(item, parse_status=RecordParseStatus.PARTIAL)
-        item = replace(item, item_hash=item_hash(item))
-    status = ParseResultStatus.PARTIAL if issues else ParseResultStatus.COMPLETE
-    result = _result(document, context, status, issues,
+    invalid_items = _item_validation_issues([item], document)
+    if invalid_items:
+        return ParseOutcome(_with_parser(_result(
+            document, context, ParseResultStatus.INVALID, invalid_items,
+            extensions={"format": formats.ITEM_TEXT}), ITEM_PARSER_ID))
+    issues = _Issues()
+    checked, coverage = _check_items([item], context, document, issues)
+    item, _ = checked[item.item_hash]
+    status = ParseResultStatus.PARTIAL if issues.items else ParseResultStatus.COMPLETE
+    result = _result(document, context, status, issues.items,
+                     coverage=[] if coverage is None else [coverage],
                      record_ids=[item.record_id],
                      extensions={"format": formats.ITEM_TEXT})
     result = _with_parser(result, ITEM_PARSER_ID)

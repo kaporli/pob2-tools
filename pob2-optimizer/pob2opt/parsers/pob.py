@@ -57,7 +57,7 @@ from .resolve import (TEMPLATE_CLAIM, class_for_document_name, item_readiness,
                       naming_from_catalog, resolve_item_modifiers)
 
 PARSER_ID = "pob2opt.parsers.pob"
-PARSER_VERSION = "p04-t01.2"
+PARSER_VERSION = "p04-t01.3"
 
 #: Elements a PoE 2 PoB document is known to contain. Others are kept in
 #: ``raw_extensions`` and named there.
@@ -294,6 +294,10 @@ def parse_pob_xml(document: SourceDocument, xml: str, context: ParseContext,
     if unrepresented:
         extensions["unrepresented"] = unrepresented
 
+    invalid_items = _item_validation_issues(items.values(), document)
+    if invalid_items:
+        return ParseOutcome(_result(document, context, ParseResultStatus.INVALID,
+                                    invalid_items, extensions=extensions))
     coverage = list(_coverage(root, naming))
     checked, modifier_coverage = _check_items(items.values(), context,
                                               document, issues)
@@ -448,6 +452,14 @@ def _settings_stated(gem: ET.Element) -> bool:
                for name in ("level", "quality", "enabled"))
 
 
+def _item_validation_issues(items, document):
+    """Validate referenced records too, before any successful parser output."""
+    return [ParseIssue("record_invalid", "/items/%d%s" % (index, error.field_path),
+                       item.display_name, error.message)
+            for index, item in enumerate(items)
+            for error in validate_record(_finish_item(item, document)).errors]
+
+
 def _check_items(items, context: ParseContext, document: SourceDocument,
                  issues: _Issues):
     """Affix and readiness checks, written into the items they concern.
@@ -462,6 +474,9 @@ def _check_items(items, context: ParseContext, document: SourceDocument,
     checked: dict[str, tuple[ItemInstance, list[tuple[str, str, str]]]] = {}
     for item in items:
         reasons: list[tuple[str, str, str, str]] = []
+        if item.base_id is None:
+            reasons.append(("unresolved_base", "/base_id", item.display_name,
+                            "the base type is not in this catalog"))
         modifiers = list(item.modifiers)
         if check_affixes and item.rarity in AFFIX_RARITIES:
             _, matches = resolve_item_modifiers(item, entities)

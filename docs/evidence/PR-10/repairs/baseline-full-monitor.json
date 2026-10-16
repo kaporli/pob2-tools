@@ -1,0 +1,273 @@
+{
+  "elapsed_seconds": 107.0103959,
+  "peak_working_set_bytes": 1312374784,
+  "stopped_at_limit": false,
+  "samples": [
+    {
+      "bytes": 2801664,
+      "progress": null,
+      "seconds": 0.0158131
+    },
+    {
+      "bytes": 207835136,
+      "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps ",
+      "seconds": 2.0509921
+    },
+    {
+      "bytes": 345157632,
+      "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps ",
+      "seconds": 4.078358
+    },
+    {
+      "bytes": 522813440,
+      "progress": "tests/engine/test_engine_smoke.py::test_engine_internals_are_reachable ",
+      "seconds": 6.102369
+    },
+    {
+      "bytes": 531087360,
+      "progress": "tests/engine/test_engine_smoke.py::test_save_and_load_round_trip_preserves_tree_and_items ",
+      "seconds": 8.1283816
+    },
+    {
+      "bytes": 540049408,
+      "progress": "tests/engine/test_f10_engine_state.py::test_aba_build_reload_returns_identical_stats ",
+      "seconds": 10.1500184
+    },
+    {
+      "bytes": 773099520,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_wipe_is_silent ",
+      "seconds": 12.1762685
+    },
+    {
+      "bytes": 768987136,
+      "progress": "tests/engine/test_f11_import_is_wiped.py::test_loading_without_opt_setup_keeps_the_whole_character ",
+      "seconds": 14.2040161
+    },
+    {
+      "bytes": 772071424,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] ",
+      "seconds": 16.231041
+    },
+    {
+      "bytes": 772259840,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] ",
+      "seconds": 18.2608545
+    },
+    {
+      "bytes": 772407296,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] ",
+      "seconds": 20.2709921
+    },
+    {
+      "bytes": 772780032,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_an_exact_load_keeps_the_tree_the_gear_and_the_socket_groups ",
+      "seconds": 22.2826877
+    },
+    {
+      "bytes": 772804608,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character ",
+      "seconds": 24.3108346
+    },
+    {
+      "bytes": 772849664,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character ",
+      "seconds": 26.3340674
+    },
+    {
+      "bytes": 772988928,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_aba_through_the_adapter_returns_identical_primitives ",
+      "seconds": 28.3443327
+    },
+    {
+      "bytes": 773128192,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_an_identical_repeated_request_does_not_reload ",
+      "seconds": 30.3691544
+    },
+    {
+      "bytes": 773177344,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds ",
+      "seconds": 32.3992781
+    },
+    {
+      "bytes": 773177344,
+      "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds ",
+      "seconds": 34.4233197
+    },
+    {
+      "bytes": 773201920,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total ",
+      "seconds": 36.4320439
+    },
+    {
+      "bytes": 806928384,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 38.4550634
+    },
+    {
+      "bytes": 837226496,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 40.4652713
+    },
+    {
+      "bytes": 861908992,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 42.4750527
+    },
+    {
+      "bytes": 837005312,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog ",
+      "seconds": 44.4853893
+    },
+    {
+      "bytes": 842727424,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash ",
+      "seconds": 46.5083464
+    },
+    {
+      "bytes": 934543360,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash ",
+      "seconds": 48.5362826
+    },
+    {
+      "bytes": 940171264,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash ",
+      "seconds": 50.5442833
+    },
+    {
+      "bytes": 860622848,
+      "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_catalog_hash_covers_the_whole_entity_set ",
+      "seconds": 52.5562192
+    },
+    {
+      "bytes": 815255552,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 54.5789809
+    },
+    {
+      "bytes": 828198912,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 56.6013898
+    },
+    {
+      "bytes": 859930624,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 58.6118017
+    },
+    {
+      "bytes": 882716672,
+      "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load ",
+      "seconds": 60.6231842
+    },
+    {
+      "bytes": 941686784,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 62.6369019
+    },
+    {
+      "bytes": 1011527680,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 64.6600538
+    },
+    {
+      "bytes": 1127370752,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 66.6707304
+    },
+    {
+      "bytes": 1227231232,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 68.6805534
+    },
+    {
+      "bytes": 1312374784,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 70.6900121
+    },
+    {
+      "bytes": 1305341952,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 72.7021822
+    },
+    {
+      "bytes": 828280832,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 74.7201226
+    },
+    {
+      "bytes": 828280832,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 76.7378728
+    },
+    {
+      "bytes": 828530688,
+      "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate ",
+      "seconds": 78.745968
+    },
+    {
+      "bytes": 829444096,
+      "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob ",
+      "seconds": 80.7574236
+    },
+    {
+      "bytes": 824029184,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 82.7800623
+    },
+    {
+      "bytes": 828772352,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 84.8084373
+    },
+    {
+      "bytes": 825528320,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 86.8161677
+    },
+    {
+      "bytes": 828207104,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 88.8252114
+    },
+    {
+      "bytes": 824987648,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 90.8347072
+    },
+    {
+      "bytes": 828776448,
+      "progress": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b03] ",
+      "seconds": 92.8486508
+    },
+    {
+      "bytes": 825810944,
+      "progress": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b07] ",
+      "seconds": 94.8785691
+    },
+    {
+      "bytes": 822411264,
+      "progress": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates ",
+      "seconds": 96.9025436
+    },
+    {
+      "bytes": 837779456,
+      "progress": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates ",
+      "seconds": 98.9286954
+    },
+    {
+      "bytes": 964366336,
+      "progress": "tests/engine/test_p04_round_trips.py::test_each_variant_evaluates_as_pob_evaluates_that_loadout ",
+      "seconds": 100.9376374
+    },
+    {
+      "bytes": 967380992,
+      "progress": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices1] ",
+      "seconds": 102.965213
+    },
+    {
+      "bytes": 965197824,
+      "progress": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices3] ",
+      "seconds": 104.9927825
+    }
+  ],
+  "exit_code": 0
+}

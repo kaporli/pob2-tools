@@ -1,0 +1,73 @@
+{
+  "elapsed_seconds": 26.2742705,
+  "exit_code": 0,
+  "peak_working_set_bytes": 918654976,
+  "samples": [
+    {
+      "progress": null,
+      "seconds": 0.0147342,
+      "bytes": 2801664
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 2.0452658,
+      "bytes": 217776128
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 4.0730692,
+      "bytes": 274038784
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 6.0930503,
+      "bytes": 374341632
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 8.1099783,
+      "bytes": 593195008
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 10.1214218,
+      "bytes": 644263936
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "seconds": 12.1438802,
+      "bytes": 643244032
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b04] ",
+      "seconds": 14.1613879,
+      "bytes": 791351296
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b10] ",
+      "seconds": 16.1821872,
+      "bytes": 918654976
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates ",
+      "seconds": 18.1990176,
+      "bytes": 917168128
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates ",
+      "seconds": 20.2286445,
+      "bytes": 916357120
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices0] ",
+      "seconds": 22.2481761,
+      "bytes": 911372288
+    },
+    {
+      "progress": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices3] PASSED [100%]",
+      "seconds": 24.2639266,
+      "bytes": 916463616
+    }
+  ],
+  "stopped_at_limit": false
+}

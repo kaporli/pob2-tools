@@ -30,6 +30,121 @@ from pob2opt.parsers.resolve import class_for_document_name
 REVIEW_FIXTURE = fx.FIXTURES / "review" / "generated-support.xml"
 
 
+# Follow-up F1/F2: identical item validation at both public entry points.
+@pytest.mark.parametrize("case", ["known", "unknown", "ambiguous",
+                                  "out-of-range", "name-only"])
+def test_item_text_and_xml_have_the_same_persisted_readiness(case, tmp_path):
+    from pob2opt.domain.codec import from_jsonable, to_jsonable
+    from pob2opt.domain.records import EquipmentSlot, ItemInstance
+    from pob2opt.parsers import resolve_item_modifiers
+    from pob2opt.domain.validation import validate_record
+    import json
+
+    root = ET.fromstring(fx.document_bytes("b01"))
+    node, _ = equipped_rare(root)
+    entities = dict(fx.entities())
+    if case == "unknown":
+        node.text += "\nSYNTHETIC +3 to unknown things\n"
+    elif case == "out-of-range":
+        lines = node.text.splitlines()
+        start = next(i for i, line in enumerate(lines) if "Implicits:" in line) + 1
+        index = next(i for i in range(start, len(lines)) if re.search(r"\d", lines[i]))
+        lines[index] = re.sub(r"\d+", "99999", lines[index], count=1)
+        node.text = "\n".join(lines)
+    elif case == "name-only":
+        node.text = "\n".join(line for line in node.text.splitlines() if line.strip())
+        node.text = "\n".join(node.text.splitlines()[:3])
+    elif case == "ambiguous":
+        baseline = parse(fx.document_bytes("b01"))
+        item = next(i for i in baseline.items if i.rarity == "rare")
+        _, matches = resolve_item_modifiers(item, entities)
+        entity = next(e for e in entities["item_modifiers"]
+                      if e.entity_id == matches[0].candidates[0])
+        entities["item_modifiers"] = [*entities["item_modifiers"],
+                                     replace(entity, entity_id=entity.entity_id + "-clone")]
+    xml = ET.tostring(root, encoding="utf-8")
+    payload = node.text.encode("utf-8")
+    standalone = parse_document(fx.source(payload, media_type="text/plain"),
+                                payload, fx.context(entities=entities))
+    wrapped = parse(xml, entities=entities)
+    (item,) = standalone.items
+    xml_item = next(i for i in wrapped.items if i.display_name == item.display_name)
+    assert xml_item.raw_text.strip() == item.raw_text.strip()
+    assert item.item_hash == xml_item.item_hash
+    assert item.modifiers == xml_item.modifiers
+    expected = "complete" if case == "known" else "partial"
+    assert item.parse_status.value == xml_item.parse_status.value == expected
+    assert standalone.result.status.value == expected
+    assert validate_record(item).ok
+    # Reload just the item, without its ParseResult, then equip it on a clean
+    # build. Completeness must not depend on remembering a separate issue list.
+    path = tmp_path / "item.json"
+    path.write_text(json.dumps(to_jsonable(item)), encoding="utf-8")
+    stored = from_jsonable(ItemInstance, json.loads(path.read_text(encoding="utf-8")))
+    assert stored.raw_text == node.text
+    _, losses = export_item(stored, naming_for(xml))
+    assert losses.report().complete == (case == "known")
+    clean = parse(fx.document_bytes("b01"))
+    build = clean.builds[0]
+    original = next(i for i in clean.items if i.display_name == item.display_name)
+    equipment = {slot: EquipmentSlot(stored.item_hash, value.listing_id)
+                 if value and value.item_hash == original.item_hash else value
+                 for slot, value in build.equipment.items()}
+    build = replace(build, equipment=equipment)
+    items = {i.item_hash: i for i in clean.items}
+    items[stored.item_hash] = stored
+    assert export_build(build, items, naming_for(xml)).recommended_deliverable \
+        == (case == "known")
+
+
+BAD_ITEM_NUMBERS = [("Quality", "broken"), ("Armour", "broken"),
+                    ("Energy Shield", "broken"), ("Quality", "1e999"),
+                    ("Armour", "-1e999"), ("Energy Shield", "NaN"),
+                    ("Item Level", "-1"), ("LevelReq", "-1"),
+                    ("Implicits", "-1")]
+
+
+@pytest.mark.parametrize("standalone", [False, True])
+@pytest.mark.parametrize("label,value", BAD_ITEM_NUMBERS)
+def test_invalid_item_number_is_a_typed_parse_failure(label, value, standalone):
+    root = ET.fromstring(fx.document_bytes("b01"))
+    node, _ = equipped_rare(root)
+    node.text += "\n%s: %s\n" % (label, value)
+    payload = node.text.encode("utf-8") if standalone else ET.tostring(root)
+    outcome = parse(payload)
+    assert outcome.result.status.value == "invalid"
+    assert not outcome.items and not outcome.builds
+    (issue,) = outcome.result.issues
+    prefix = "" if standalone else "/Items/Item/0"
+    assert (issue.code, issue.field_path) == ("malformed_value", prefix + "/text/" + label)
+
+
+@pytest.mark.parametrize("value", ["1e999", "-1e999", "NaN", "Infinity"])
+def test_nonfinite_config_is_a_typed_parse_failure(value):
+    data = changed("b01", lambda r: ET.SubElement(
+        r.find("Config/ConfigSet"), "Input", name="enemyLevel", number=value))
+    outcome = parse(data)
+    assert outcome.result.status.value == "invalid"
+    assert not outcome.builds and not outcome.items
+    (issue,) = outcome.result.issues
+    assert issue.code == "malformed_value"
+    assert issue.field_path == "/Config/Input[@name='enemyLevel']/@number"
+
+
+@pytest.mark.parametrize("value,expected", [("1.25", 1.25), ("2e1", 20),
+                                          ("-1.25e-2", -0.0125)])
+def test_valid_decimal_and_exponent_properties_are_not_rejected(value, expected):
+    root = ET.fromstring(fx.document_bytes("b01"))
+    node, _ = equipped_rare(root)
+    node.text += "\nQuality: %s\n" % value
+    ET.SubElement(root.find("Config/ConfigSet"), "Input", name="enemyLevel", number=value)
+    outcome = parse(ET.tostring(root))
+    assert outcome.result.status.value == "complete"
+    item = next(i for i in outcome.items if i.raw_text.strip() == node.text.strip())
+    assert item.properties["quality"] == expected
+    assert outcome.builds[0].config["enemyLevel"].value == expected
+
+
 def parse(data, **context):
     return parse_document(fx.source(data), data, fx.context(**context))
 
