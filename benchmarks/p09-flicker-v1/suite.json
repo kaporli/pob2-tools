@@ -1,0 +1,117 @@
+{
+  "suite_id": "p09-flicker-v1",
+  "task": "P09-T01.1",
+  "kind": "representative_protocol",
+  "status": "proposed, not accepted",
+  "not_a_claim": "PROTOCOL, NOT A MEASUREMENT. No enemy statistic, encounter timing, threshold or performance value in this suite was measured. Null fields are unresolved inputs with DataGap records. The seed export supplies a configuration, not a trial. PoB values are proxy_only.",
+  "protocol": "benchmarks/p09-flicker-v1/protocol.md",
+  "hashing": "File entries: SHA-256 of the raw bytes (identity.document_hash). definition_hash: identity.content_hash (canonical JSON SHA-256) of each scenario object in scenarios.json. suite_hash: content_hash of suite_identity, the sorted definition hashes with their reference slots. Representative ScenarioSpec records cannot be written while required fields are unknown, so scenario_hash over ScenarioSpec does not apply yet.",
+  "sources": {
+    "scenarios": {
+      "path": "benchmarks/p09-flicker-v1/scenarios.json",
+      "sha256": "bd0c19da6861f2cce6291facd467456a8b97a167a840f1a50b1fc9e8206ef17a",
+      "bytes": 94313
+    },
+    "references": {
+      "path": "benchmarks/p09-flicker-v1/references.json",
+      "sha256": "80e9104af49e2be3a5de5b49f81adc97e16563f72661e8e4b8056592ef15e62f",
+      "bytes": 2618
+    },
+    "seed_manifest": {
+      "path": "docs/evidence/P09-T01.1/seed/manifest.json",
+      "sha256": "6a2ba0c4c810e436fb0e9592c910baa71b080594a70f17d7748bc6dc1fbedf35",
+      "bytes": 4669
+    },
+    "scope_proposal": {
+      "path": "docs/evidence/P09-T01.1/scope-proposal.json",
+      "sha256": "6c0031595810de856947c448dd3cbe91877c892209dcb0d8b355bcafa696a75a",
+      "bytes": 16493
+    },
+    "mechanics": {
+      "path": "docs/evidence/P09-T01.1/mechanics.json",
+      "sha256": "5ea1a78d03d9f8e56847bbadd99525900dae6421d2a56d40a5397e6f53c6feec",
+      "bytes": 31078
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "flicker_sustained_v1",
+      "version": "1",
+      "definition_hash": "fcb3c156f878ff50b7e0bb541fac22fb058241963bd79f1b64fb3ca687e58dd5",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-boss-short",
+      "version": "1",
+      "definition_hash": "d6eb9af8a2b5c5ef329ee07c4b5f88de9112da511c41b807d9e8deb969cf2c2b",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-boss-sustained",
+      "version": "1",
+      "definition_hash": "f33589cdb5b00989ec4f9e99ea50ed7996d2b80a6045e153caa6a7936400c9d6",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-clear-dense",
+      "version": "1",
+      "definition_hash": "a0a6203f86f1a27d91747979200a2544dd438093d5fba13e844ecf7a93f8948b",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-clear-spread",
+      "version": "1",
+      "definition_hash": "6abb7f26de302916a11ee4dbab078301993291c5b64c27d68cd6acf55c4c520b",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    }
+  ],
+  "suite_hash": "89667d09ddf1aa803e107225256d65615ddd7d4375e3388300139b93e97a5549",
+  "suite_hash_note": "Both reference slots are null for every scenario. Freezing a reference later changes this hash and starts a separate leaderboard.",
+  "open_gaps": [
+    "gap-p09-t011-encounter-selection",
+    "gap-p09-t011-enemy-health",
+    "gap-p09-t011-enemy-defenses",
+    "gap-p09-t011-encounter-density",
+    "gap-p09-t011-spatial-unit",
+    "gap-p09-t011-movement-model",
+    "gap-p09-t011-incoming-damage",
+    "gap-p09-t011-boss-windows",
+    "gap-p09-t011-duration-limit",
+    "gap-p09-t011-success-fraction",
+    "gap-p09-t011-reference-result",
+    "gap-p09-t011-benchmark-target",
+    "gap-p09-t011-benchmark-measurement",
+    "gap-p09-t011-attribution-rules",
+    "gap-p09-t011-rotation-details",
+    "gap-p09-t011-charge-cycle-rules",
+    "gap-p09-t011-hit-and-run-movement",
+    "gap-p09-t011-sustain-cycle",
+    "gap-p09-t011-patch-profile",
+    "gap-p09-t011-engine-checkout-state",
+    "gap-p09-t011-variant-exports",
+    "gap-p09-t011-class-scope-decision",
+    "gap-p09-t011-survival-threshold",
+    "gap-p09-t011-initial-resources",
+    "gap-p09-t011-preparation-allowance"
+  ],
+  "usable_for": [
+    "the owner's answers and recordings that P09-T02 collection needs",
+    "reviewer acceptance of scope, variants and protocol before any constant is fitted"
+  ],
+  "not_usable_for": [
+    "any statement about clear speed, kill time or DPS",
+    "calibrating or fitting any constant",
+    "ranking real builds",
+    "a D04 practical claim"
+  ]
+}

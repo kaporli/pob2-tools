@@ -2,6 +2,8 @@
 
 > **Current scope update, 2026-10-17:** [D07](D07-flicker-strike-objective.md) replaces the initial Huntress/three-Huntress-family target with sustained Flicker Strike DPS and a reviewed class/interaction scope. The historical investigation below and accepted `p09-synthetic-v1` artifacts retain their original wording/hashes. Their synthetic software acceptance remains valid; they do not establish the new objective. The next collection input is one complete **Flicker Strike** export with its actual rotation, followed by representative encounter and controlled-DPS evidence under P09-T01.1. Missing measurements, reference results and patch compatibility remain open; this scope change closes none of those gaps. See the [current ledger](../specs/delivery.md#current-task-ledger).
 
+> **P09-T01.1, 2026-10-17:** the seed Flicker Strike export (Monk / Martial Artist) and the owner's one-sentence rotation are stored in `docs/evidence/P09-T01.1/`. Suite `benchmarks/p09-flicker-v1/` proposes the class scope, three interaction variants, the four workloads and `flicker_sustained_v1`, with 25 open `DataGap` records. The export begins reference selection and closes no measurement gap. No encounter, enemy statistic, benchmark target or threshold is selected, so D04 stays blocked for practical claims. Proposed, not accepted.
+
 Raised by: P09-T01. Specification version 1.0.
 
 ## Question

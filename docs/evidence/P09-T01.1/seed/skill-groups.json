@@ -1,0 +1,593 @@
+[
+  {
+    "gems": [
+      {
+        "description": "Become attuned to all Elements building up Fire, Cold and Lightning Affinity based off the highest Elemental Damage type dealt by your Hits. Your Elemental Damage is enhanced the more Affinity of any type you have.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SkillGemTrinity",
+        "grantedEffectId": "TrinityPlayer",
+        "level": 18,
+        "name": "Trinity",
+        "quality": 0,
+        "support": false
+      },
+      {
+        "description": "Supports Fire skills, granting them an additional level. Does not support skills which do not have levels.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemFireMastery",
+        "grantedEffectId": "SupportFireMasteryPlayer",
+        "level": 1,
+        "name": "Fire Mastery",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Skills which can gain levels, granting them additional levels provided exactly one other support is used with the supported Skill. Does not support skills which do not have levels.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemUhtredsOmen",
+        "grantedEffectId": "SupportUhtredOmenPlayer",
+        "level": 1,
+        "name": "Uhtred's Omen",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 1,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "Conjure hateful energy to fuel your Rage and Life. While active, Bleeding enemies you kill have a chance to spawn a Hateful Remnant, and Hitting a Bleeding target spawns a Hateful Remnant every few seconds. Picking up a Hateful Remnant grants you Rage and recovers Life based on your current Rage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SkillGemSanguineRevelry",
+        "grantedEffectId": "SanguineRevelryPlayer",
+        "level": 18,
+        "name": "Sanguine Revelry",
+        "quality": 0,
+        "support": false
+      }
+    ],
+    "index": 2,
+    "label": "",
+    "slot": "Weapon 1 Swap"
+  },
+  {
+    "gems": [
+      {
+        "description": "While active, enemies you Stun or kill have a chance to generate a Runic Ward Remnant. These Remnants can Overflow your Runic Ward.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemRemnantsOfKalguur",
+        "grantedEffectId": "MetaRemnantsOfKalguurPlayer",
+        "level": 17,
+        "name": "Remnants of Kalguur",
+        "quality": 0,
+        "support": false
+      },
+      {
+        "description": "Supports Skills which create Remnants, allowing those Remnants to be collected from further away, with a chance to create an additional Remnant.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemDissipateTwo",
+        "grantedEffectId": "SupportFleetingRemnantsPlayerTwo",
+        "level": 1,
+        "name": "Harmonic Remnants II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Skills which create Remnants, making those Remnants more powerful.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemInterlude",
+        "grantedEffectId": "SupportInterludePlayer",
+        "level": 1,
+        "name": "Remnant Potency I",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 3,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "Shapeshift into a Werewolf and leap to a target location, damaging enemies in an area around where you land. Predator's Mark will be Triggered targeting the highest Rarity enemy Hit, or if a Mark gem is socketed into this Skill, that Mark will be Triggered instead. Using this Skill allows any Wolf Minions you have to leap immediately.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemWolfPounce",
+        "grantedEffectId": "WolfPouncePlayer",
+        "level": 12,
+        "name": "Pounce",
+        "quality": 0,
+        "support": false
+      },
+      {
+        "description": "Supports Mark Skills. Enemies affected by Supported Marks will have their Armour Broken by Physical Damage they take.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemSingleOutTwo",
+        "grantedEffectId": "SupportMarkForDeathPlayerTwo",
+        "level": 1,
+        "name": "Mark for Death II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports skills with Cooldowns, increasing the rate at which those Cooldowns Recover. Cannot modify the skills of minions.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemIngenuityTwo",
+        "grantedEffectId": "SupportCooldownRecoveryPlayerTwo",
+        "level": 1,
+        "name": "Cooldown Recovery II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing them to Attack faster at the cost of Damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemMartialTempoThree",
+        "grantedEffectId": "SupportRapidAttacksPlayerThree",
+        "level": 1,
+        "name": "Rapid Attacks III",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 4,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "While active, Shattering an enemy with a non-Herald Attack Hit will cause an icy explosion that deals Attack damage to surrounding enemies.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemHeraldOfIce",
+        "grantedEffectId": "HeraldOfIcePlayer",
+        "level": 18,
+        "name": "Herald of Ice",
+        "quality": 23,
+        "support": false
+      },
+      {
+        "description": "Supports any skill with an area of effect, making it larger.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemMagnifiedEffectTwo",
+        "grantedEffectId": "SupportMagnifiedAreaPlayerTwo",
+        "level": 1,
+        "name": "Magnified Area II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports any skill that Hits Enemies, causing it to build up Stun significantly more quickly, at the cost of Damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemOverpowerThree",
+        "grantedEffectId": "SupportStunPlayerThree",
+        "level": 1,
+        "name": "Stun III",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing them to deal more Elemental damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemPrimalArmamentTwo",
+        "grantedEffectId": "SupportElementalArmamentPlayerTwo",
+        "level": 1,
+        "name": "Elemental Armament II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing a Runic Shockwave to erupt under enemies they Heavy Stun. The Shockwave costs Runic Ward, and will not Trigger if you do not have enough Runic Ward.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemConcussiveRunes",
+        "grantedEffectId": "SupportConcussiveRunesPlayer",
+        "level": 1,
+        "name": "Concussive Runes",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Cold skills, granting them an additional level. Does not support skills which do not have levels.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemColdMastery",
+        "grantedEffectId": "SupportColdMasteryPlayer",
+        "level": 1,
+        "name": "Cold Mastery",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 5,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "Teleport to an enemy and Strike them. Consumes Power Charges to perform additional teleporting Strikes on nearby enemies.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemFlickerStrike",
+        "grantedEffectId": "FlickerStrikePlayer",
+        "level": 20,
+        "name": "Flicker Strike",
+        "quality": 23,
+        "support": false
+      },
+      {
+        "description": "Supports Attack Skills you use yourself which do not already have some Condition for use. Supported Skills can only be used after you have moved a certain distance, but have massively increased Skill Speed. Cannot support Skills which have a cooldown.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemHitAndRun",
+        "grantedEffectId": "SupportHitAndRunPlayer",
+        "level": 1,
+        "name": "Hit and Run",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports any skill with an area of effect, causing that area to be smaller but any area damage it deals to be higher.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemConcentratedEffect",
+        "grantedEffectId": "SupportConcentratedAreaPlayer",
+        "level": 1,
+        "name": "Concentrated Area",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing them to deal more damage to enemies based on how close they are to you.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemCloseCombatTwo",
+        "grantedEffectId": "SupportCloseCombatPlayerTwo",
+        "level": 1,
+        "name": "Close Combat II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports skills that consume Power, Frenzy or Endurance Charges on use, giving them a chance not to remove each Charge while still gaining the benefits of consuming them.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemPerpetualCharge",
+        "grantedEffectId": "SupportPerpetualChargePlayer",
+        "level": 1,
+        "name": "Perpetual Charge",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Skills that can cause Damaging Hits, causing those Hits to treat Enemy Elemental Resistances as inverted.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemRakiatasFlow",
+        "grantedEffectId": "SupportRakiatasFlowPlayer",
+        "level": 1,
+        "name": "Rakiata's Flow",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 6,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "While active, periodically grants stages of a buff that gives you more Evasion per stage. Being Hit by an Enemy while you have this buff consumes all stages to damage and Knock Back enemies around you.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SkillGemWindDancer",
+        "grantedEffectId": "WindDancerPlayer",
+        "level": 18,
+        "name": "Wind Dancer",
+        "quality": 20,
+        "support": false
+      },
+      {
+        "description": "Supports any skill that Hits enemies, causing them to Blind on Hit with increased effect.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemBlindTwo",
+        "grantedEffectId": "SupportBlindPlayerTwo",
+        "level": 1,
+        "name": "Blind II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports skills with Cooldowns, increasing the rate at which those Cooldowns Recover. Cannot modify the skills of minions.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemIngenuityTwo",
+        "grantedEffectId": "SupportCooldownRecoveryPlayerTwo",
+        "level": 1,
+        "name": "Cooldown Recovery II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports any skill with an area of effect, making it larger.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemMagnifiedEffectTwo",
+        "grantedEffectId": "SupportMagnifiedAreaPlayerTwo",
+        "level": 1,
+        "name": "Magnified Area II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports any skill that Hits enemies, making it more effective at Freezing enemies.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemGlaciation",
+        "grantedEffectId": "SupportFreezePlayer",
+        "level": 1,
+        "name": "Freeze",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing them to deal more Elemental damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemPrimalArmamentTwo",
+        "grantedEffectId": "SupportElementalArmamentPlayerTwo",
+        "level": 1,
+        "name": "Elemental Armament II",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 7,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "Advance while hitting enemies around you with a series of spinning Strikes.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemWhirlingAssault",
+        "grantedEffectId": "WhirlingAssaultPlayer",
+        "level": 18,
+        "name": "Whirling Assault",
+        "quality": 20,
+        "support": false
+      },
+      {
+        "description": "Supports Skills which cause Damaging Hits. Living Lightning Minions are created when dealing Lightning damage with Supported Skills - bundles of living electricity that target nearby enemies with Chaining Attacks. Enemies will not directly engage these Minions, and can pass through them. Does not modify skills used by Minions.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemLivingLightningTwo",
+        "grantedEffectId": "SupportLivingLightningPlayerTwo",
+        "level": 1,
+        "name": "Living Lightning II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Melee Attack Skills. Supported Skills gain Combo when you successfully Strike Enemies with other Melee Attacks. Supported Skills reset their Combo on use, dealing more Damage the higher Combo you had on use. Cannot support skills which already gain Combo. Cannot modify the Skills of Minions.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemCulminationTwo",
+        "grantedEffectId": "SupportCulminationPlayerTwo",
+        "level": 1,
+        "name": "Culmination II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Skills which can expend Combo. On expending Combo with Supported Skills, you have a chance to gain Power Charges based on the amount of Combo expended.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemAilithLineage",
+        "grantedEffectId": "SupportAilithLineagePlayer",
+        "level": 1,
+        "name": "Ailith's Chimes",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Melee Attacks, causing them to grant Rage on Hit.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemRageTwo",
+        "grantedEffectId": "SupportRagePlayerTwo",
+        "level": 1,
+        "name": "Rage II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Skills which Hit enemies, causing their Mana Leech to recover based on Elemental damage instead of Physical damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemOisinsOath",
+        "grantedEffectId": "SupportOisinsOathPlayer",
+        "level": 1,
+        "name": "Oisin's Oath",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 8,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "While active, killing Shocked enemies with a non-Herald Attack Hit will cause subsequent Attack Hits to release lightning bolts which dealAttack damage to all surrounding enemies.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemHeraldOfThunder",
+        "grantedEffectId": "HeraldOfThunderPlayer",
+        "level": 18,
+        "name": "Herald of Thunder",
+        "quality": 16,
+        "support": false
+      },
+      {
+        "description": "Supports any skill with an area of effect, making it larger.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemMagnifiedEffectTwo",
+        "grantedEffectId": "SupportMagnifiedAreaPlayerTwo",
+        "level": 1,
+        "name": "Magnified Area II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports any skill that Hits Enemies, causing it to build up Stun significantly more quickly, at the cost of Damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemOverpowerThree",
+        "grantedEffectId": "SupportStunPlayerThree",
+        "level": 1,
+        "name": "Stun III",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing them to deal more Elemental damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemPrimalArmamentTwo",
+        "grantedEffectId": "SupportElementalArmamentPlayerTwo",
+        "level": 1,
+        "name": "Elemental Armament II",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing a Runic Shockwave to erupt under enemies they Heavy Stun. The Shockwave costs Runic Ward, and will not Trigger if you do not have enough Runic Ward.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemConcussiveRunes",
+        "grantedEffectId": "SupportConcussiveRunesPlayer",
+        "level": 1,
+        "name": "Concussive Runes",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports any skill that Hits enemies, making it more effective at Freezing enemies.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemGlaciation",
+        "grantedEffectId": "SupportFreezePlayer",
+        "level": 1,
+        "name": "Freeze",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 9,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "While active, causes you to periodically gain Ghost Shrouds. If you are Hit while you have a Ghost Shroud, it is immediately consumed to recover Energy Shield based on your Evasion.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemGhostDance",
+        "grantedEffectId": "GhostDancePlayer",
+        "level": 18,
+        "name": "Ghost Dance",
+        "quality": 20,
+        "support": false
+      },
+      {
+        "description": "Supports skills with Cooldowns, increasing the rate at which those Cooldowns Recover. Cannot modify the skills of minions.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemIngenuityTwo",
+        "grantedEffectId": "SupportCooldownRecoveryPlayerTwo",
+        "level": 1,
+        "name": "Cooldown Recovery II",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 10,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "Consume all Power Charges to charge your Quarterstaff with electricity, adding Lightning damage and a Lightning shockwave to your Quarterstaff Attacks. Reusing this skill while the Buff is active adds to the Buff's duration and damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SkillGemChargedStaff",
+        "grantedEffectId": "ChargedStaffPlayer",
+        "level": 18,
+        "name": "Charged Staff",
+        "quality": 20,
+        "support": false
+      },
+      {
+        "description": "Supports damaging skills you use yourself. Killing a Shocked enemy with supported skills imbues your damage with Lightning damage for a short time.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemInnervate",
+        "grantedEffectId": "SupportInnervatePlayer",
+        "level": 1,
+        "name": "Innervate",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Skills you use yourself which Hit enemies. Critical Hits with Supported Skills imbue all of your Attacks with Fire damage for a duration.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemBlazingCritical",
+        "grantedEffectId": "SupportBlazingCriticalPlayer",
+        "level": 1,
+        "name": "Blazing Critical",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Skills which can Damage Enemies with Hits, causing all sources of Damage Gained to instead be treated as Damage Gained as extra Cold for Supported Skills.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SupportGemEmbitter",
+        "grantedEffectId": "SupportEmbitterPlayer",
+        "level": 1,
+        "name": "Embitter",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks and Warcries you use yourself. Freezing an enemy with Supported Skills infuses you and your allies with Cold damage for a short time. ",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemBhatairsVengeance",
+        "grantedEffectId": "SupportBhatairsVengeancePlayer",
+        "level": 1,
+        "name": "Bhatair's Vengeance",
+        "quality": 0,
+        "support": true
+      },
+      {
+        "description": "Supports Attacks, causing them to deal more Elemental damage.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gems/SupportGemPrimalArmamentTwo",
+        "grantedEffectId": "SupportElementalArmamentPlayerTwo",
+        "level": 1,
+        "name": "Elemental Armament II",
+        "quality": 0,
+        "support": true
+      }
+    ],
+    "index": 11,
+    "label": ""
+  },
+  {
+    "gems": [
+      {
+        "description": "Become attuned to all Elements building up Fire, Cold and Lightning Affinity based off the highest Elemental Damage type dealt by your Hits. Your Elemental Damage is enhanced the more Affinity of any type you have.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SkillGemTrinity",
+        "grantedEffectId": "TrinityPlayer",
+        "level": 18,
+        "name": "Trinity",
+        "quality": 0,
+        "support": false
+      }
+    ],
+    "index": 12,
+    "label": "",
+    "slot": "Amulet"
+  },
+  {
+    "gems": [
+      {
+        "description": "Strike with your Quarterstaff.",
+        "enabled": true,
+        "gemId": "Metadata/Items/Gem/SkillGemPlayerDefaultQuarterstaff",
+        "grantedEffectId": "MeleeQuarterstaffPlayer",
+        "level": 20,
+        "name": "Quarterstaff Strike",
+        "quality": 0,
+        "support": false
+      }
+    ],
+    "index": 13,
+    "label": "",
+    "slot": "Weapon 1"
+  }
+]

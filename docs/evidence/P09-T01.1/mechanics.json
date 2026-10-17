@@ -1,0 +1,926 @@
+{
+  "task": "P09-T01.1",
+  "kind": "PoB-derived",
+  "not_a_claim": "Verbatim lines from the pinned Path of Building data. They say what the engine data holds for patch data exported before 0.5.5e, not how the game behaves. Engine agreement is not gameplay evidence.",
+  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+  "pob_dirty": false,
+  "written_at": "2026-10-17T00:00:00Z",
+  "generated_by": "scripts/p09_t01_1_mechanics.py",
+  "entries": [
+    {
+      "mechanic_id": "skill/FlickerStrikePlayer",
+      "kind": "skill",
+      "path": "src/Data/Skills/act_int.lua",
+      "file_sha256": "896997546177ec9db5eb673082eb8780ac8ef09681180a7033756178921f38aa",
+      "lines": [
+        {
+          "n": 8613,
+          "text": "skills[\"FlickerStrikePlayer\"] = {"
+        },
+        {
+          "n": 8614,
+          "text": "\tname = \"Flicker Strike\","
+        },
+        {
+          "n": 8618,
+          "text": "\tdescription = \"Teleport to an enemy and Strike them. Consumes Power Charges to perform additional teleporting Strikes on nearby enemies.\","
+        },
+        {
+          "n": 8619,
+          "text": "\tskillTypes = { [SkillType.Attack] = true, [SkillType.Melee] = true, [SkillType.MeleeSingleTarget] = true, [SkillType.Area] = true, [SkillType.ConsumesCharges] = true, [SkillType.SkillConsumesPowerChargesOnUse] = true, },"
+        },
+        {
+          "n": 8621,
+          "text": "\t\t[\"Staff\"] = true,"
+        },
+        {
+          "n": 8628,
+          "text": "\t\t{ \"charge_skip_consume_chance_%\", 1, {  } },"
+        },
+        {
+          "n": 8631,
+          "text": "\t\t[1] = { PvPDamageMultiplier = -30, attackSpeedMultiplier = -50, baseMultiplier = 0.8, levelRequirement = 0, cost = { Mana = 12, }, },"
+        },
+        {
+          "n": 8650,
+          "text": "\t\t[20] = { PvPDamageMultiplier = -30, attackSpeedMultiplier = -50, baseMultiplier = 3.27, levelRequirement = 90, cost = { Mana = 85, }, },"
+        },
+        {
+          "n": 8673,
+          "text": "\t\t\t\tlocal strikesPerCharge = activeSkill.skillModList:Sum(\"BASE\", activeSkill.skillCfg, \"AdditionalFlickersPerPowerCharge\")"
+        },
+        {
+          "n": 8674,
+          "text": "\t\t\t\tactiveSkill.skillData.averageBurstHits = 1 + strikesPerCharge"
+        },
+        {
+          "n": 8684,
+          "text": "\t\t\t\t\tmod(\"AdditionalFlickersPerPowerCharge\", \"BASE\", nil, 0, 0, { type = \"Multiplier\", var = \"RemovablePowerCharge\", scalar = \"ConsumedPowerChargeEffect\" }),"
+        },
+        {
+          "n": 8702,
+          "text": "\t\t\t\t{ \"flicker_strike_additional_flickers_from_power_charges\", 2 },"
+        },
+        {
+          "n": 8705,
+          "text": "\t\t\t\t\"ignores_proximity_shield\","
+        },
+        {
+          "n": 8706,
+          "text": "\t\t\t\t\"base_skill_show_average_damage_instead_of_dps\","
+        },
+        {
+          "n": 8707,
+          "text": "\t\t\t\t\"cannot_gain_power_charges_during_skill\","
+        },
+        {
+          "n": 8708,
+          "text": "\t\t\t\t\"is_area_damage\","
+        }
+      ]
+    },
+    {
+      "mechanic_id": "skill/WhirlingAssaultPlayer",
+      "kind": "skill",
+      "path": "src/Data/Skills/act_int.lua",
+      "file_sha256": "896997546177ec9db5eb673082eb8780ac8ef09681180a7033756178921f38aa",
+      "lines": [
+        {
+          "n": 22876,
+          "text": "skills[\"WhirlingAssaultPlayer\"] = {"
+        },
+        {
+          "n": 22877,
+          "text": "\tname = \"Whirling Assault\","
+        },
+        {
+          "n": 22881,
+          "text": "\tdescription = \"Advance while hitting enemies around you with a series of spinning Strikes.\","
+        },
+        {
+          "n": 22882,
+          "text": "\tskillTypes = { [SkillType.Attack] = true, [SkillType.MeleeSingleTarget] = true, [SkillType.Melee] = true, [SkillType.Area] = true, },"
+        },
+        {
+          "n": 22884,
+          "text": "\t\t[\"Staff\"] = true,"
+        },
+        {
+          "n": 22894,
+          "text": "\t\t[1] = { attackSpeedMultiplier = -15, baseMultiplier = 0.4, levelRequirement = 0, cost = { Mana = 18, }, },"
+        },
+        {
+          "n": 22913,
+          "text": "\t\t[20] = { attackSpeedMultiplier = -15, baseMultiplier = 1.63, levelRequirement = 90, cost = { Mana = 126, }, },"
+        },
+        {
+          "n": 22951,
+          "text": "\t\t\t\t{ \"total_attack_time_+_ms\", 1000 },"
+        },
+        {
+          "n": 22952,
+          "text": "\t\t\t\t{ \"attack_maximum_action_distance_+\", 42 },"
+        },
+        {
+          "n": 22953,
+          "text": "\t\t\t\t{ \"melee_range_+\", 14 },"
+        },
+        {
+          "n": 22956,
+          "text": "\t\t\t\t\"area_of_effect_+%_final_from_whirling_assault_level\","
+        },
+        {
+          "n": 22957,
+          "text": "\t\t\t\t\"melee_defer_damage_prediction\","
+        },
+        {
+          "n": 22958,
+          "text": "\t\t\t\t\"cannot_cancel_skill_before_contact_point\","
+        },
+        {
+          "n": 22959,
+          "text": "\t\t\t\t\"visual_hit_effect_physical_is_wind\","
+        },
+        {
+          "n": 22960,
+          "text": "\t\t\t\t\"base_skill_show_average_damage_instead_of_dps\","
+        },
+        {
+          "n": 22961,
+          "text": "\t\t\t\t\"is_area_damage\","
+        },
+        {
+          "n": 22962,
+          "text": "\t\t\t\t\"precise_cursor_targeting_uses_contact_point_height_offset\","
+        }
+      ]
+    },
+    {
+      "mechanic_id": "skill/ChargedStaffPlayer",
+      "kind": "skill",
+      "path": "src/Data/Skills/act_int.lua",
+      "file_sha256": "896997546177ec9db5eb673082eb8780ac8ef09681180a7033756178921f38aa",
+      "lines": [
+        {
+          "n": 3252,
+          "text": "skills[\"ChargedStaffPlayer\"] = {"
+        },
+        {
+          "n": 3253,
+          "text": "\tname = \"Charged Staff\","
+        },
+        {
+          "n": 3257,
+          "text": "\tdescription = \"Consume all Power Charges to charge your Quarterstaff with electricity, adding Lightning damage and a Lightning shockwave to your Quarterstaff Attacks. Reusing this skill while the Buff is active adds to the Buff's duration and damage.\","
+        },
+        {
+          "n": 3258,
+          "text": "\tskillTypes = { [SkillType.Spell] = true, [SkillType.Duration] = true, [SkillType.Buff] = true, [SkillType.ConsumesCharges] = true, [SkillType.SkillConsumesPowerChargesOnUse] = true, [SkillType.HasUsageCondition] = true, [SkillType.RequiresCharges] = true, [SkillType.Lightning] = true, },"
+        },
+        {
+          "n": 3260,
+          "text": "\t\t[\"Staff\"] = true,"
+        },
+        {
+          "n": 3267,
+          "text": "\t\t{ \"charge_skip_consume_chance_%\", 1, {  } },"
+        },
+        {
+          "n": 3270,
+          "text": "\t\t[1] = { levelRequirement = 0, cost = { Mana = 15, }, },"
+        },
+        {
+          "n": 3289,
+          "text": "\t\t[20] = { levelRequirement = 90, cost = { Mana = 65, }, },"
+        },
+        {
+          "n": 3335,
+          "text": "\t\t\t\t{ \"charged_staff_buff_duration_per_stack_ms\", 6000 },"
+        },
+        {
+          "n": 3336,
+          "text": "\t\t\t\t{ \"active_skill_requires_X_power_charges\", 1 },"
+        },
+        {
+          "n": 3339,
+          "text": "\t\t\t\t\"charged_staff_attack_minimum_added_lightning_damage_per_stack\","
+        },
+        {
+          "n": 3340,
+          "text": "\t\t\t\t\"charged_staff_attack_maximum_added_lightning_damage_per_stack\","
+        }
+      ]
+    },
+    {
+      "mechanic_id": "skill/SiphoningStrikePlayer",
+      "kind": "skill",
+      "path": "src/Data/Skills/act_int.lua",
+      "file_sha256": "896997546177ec9db5eb673082eb8780ac8ef09681180a7033756178921f38aa",
+      "lines": [
+        {
+          "n": 17854,
+          "text": "skills[\"SiphoningStrikePlayer\"] = {"
+        },
+        {
+          "n": 17855,
+          "text": "\tname = \"Siphoning Strike\","
+        },
+        {
+          "n": 17859,
+          "text": "\tdescription = \"Dash to a target and Strike them with your Quarterstaff. If the target is Shocked, Consume their Shock to release a Lightning shockwave around the target and grant you a Power Charge. This skill cannot be Ancestrally Boosted.\","
+        },
+        {
+          "n": 17860,
+          "text": "\tskillTypes = { [SkillType.Attack] = true, [SkillType.Melee] = true, [SkillType.Area] = true, [SkillType.Lightning] = true, [SkillType.MeleeSingleTarget] = true, [SkillType.SkillConsumesShock] = true, [SkillType.GeneratesCharges] = true, [SkillType.CannotSpiritStrike] = true, },"
+        },
+        {
+          "n": 17862,
+          "text": "\t\t[\"Staff\"] = true,"
+        },
+        {
+          "n": 17869,
+          "text": "\t\t{ \"chance_to_gain_1_more_charge_%\", 2.5, {  } },"
+        },
+        {
+          "n": 17872,
+          "text": "\t\t[1] = { baseMultiplier = 0.75, levelRequirement = 0, cost = { Mana = 7, }, },"
+        },
+        {
+          "n": 17891,
+          "text": "\t\t[20] = { baseMultiplier = 2.34, levelRequirement = 90, cost = { Mana = 47, }, },"
+        },
+        {
+          "n": 17924,
+          "text": "\t\t\t\t{ \"melee_conditional_step_distance\", 10 },"
+        },
+        {
+          "n": 17925,
+          "text": "\t\t\t\t{ \"base_melee_dash_range\", 65 },"
+        },
+        {
+          "n": 17926,
+          "text": "\t\t\t\t{ \"melee_range_+\", 6 },"
+        },
+        {
+          "n": 17927,
+          "text": "\t\t\t\t{ \"active_skill_hit_damage_stun_multiplier_+%_final\", 50 },"
+        },
+        {
+          "n": 17930,
+          "text": "\t\t\t\t\"skill_can_add_multiple_charges_per_action\","
+        },
+        {
+          "n": 17931,
+          "text": "\t\t\t\t\"is_area_damage\","
+        },
+        {
+          "n": 17932,
+          "text": "\t\t\t\t\"never_shock\","
+        },
+        {
+          "n": 17933,
+          "text": "\t\t\t\t\"global_knockback\","
+        },
+        {
+          "n": 17934,
+          "text": "\t\t\t\t\"base_consume_enemy_shock_on_hit\","
+        },
+        {
+          "n": 17935,
+          "text": "\t\t\t\t\"precise_cursor_targeting_uses_contact_point_height_offset\","
+        },
+        {
+          "n": 17989,
+          "text": "\t\t\t\t{ \"melee_conditional_step_distance\", 10 },"
+        },
+        {
+          "n": 17990,
+          "text": "\t\t\t\t{ \"base_melee_dash_range\", 65 },"
+        },
+        {
+          "n": 17991,
+          "text": "\t\t\t\t{ \"active_skill_hit_damage_stun_multiplier_+%_final\", 50 },"
+        },
+        {
+          "n": 17992,
+          "text": "\t\t\t\t{ \"active_skill_base_area_of_effect_radius\", 30 },"
+        },
+        {
+          "n": 17993,
+          "text": "\t\t\t\t{ \"active_skill_base_physical_damage_%_to_convert_to_lightning\", 100 },"
+        },
+        {
+          "n": 17996,
+          "text": "\t\t\t\t\"skill_can_add_multiple_charges_per_action\","
+        },
+        {
+          "n": 17997,
+          "text": "\t\t\t\t\"is_area_damage\","
+        },
+        {
+          "n": 17998,
+          "text": "\t\t\t\t\"never_shock\","
+        },
+        {
+          "n": 17999,
+          "text": "\t\t\t\t\"precise_cursor_targeting_uses_contact_point_height_offset\","
+        },
+        {
+          "n": 18000,
+          "text": "\t\t\t\t\"display_statset_hide_usage_stats\","
+        }
+      ]
+    },
+    {
+      "mechanic_id": "skill/KillingPalmPlayer",
+      "kind": "skill",
+      "path": "src/Data/Skills/act_int.lua",
+      "file_sha256": "896997546177ec9db5eb673082eb8780ac8ef09681180a7033756178921f38aa",
+      "lines": [
+        {
+          "n": 13819,
+          "text": "skills[\"KillingPalmPlayer\"] = {"
+        },
+        {
+          "n": 13820,
+          "text": "\tname = \"Killing Palm\","
+        },
+        {
+          "n": 13824,
+          "text": "\tdescription = \"Dash to an enemy and Strike them, Culling enemies if their life is low enough and performing additional dashing Strikes to other Cullable targets in range if your target was Culled. Each enemy killed by this strike grants a Power Charge, with higher Rarity monsters granting additional Charges. Enemies around you that can be Culled will be highlighted.\","
+        },
+        {
+          "n": 13825,
+          "text": "\tskillTypes = { [SkillType.Attack] = true, [SkillType.Melee] = true, [SkillType.Area] = true, [SkillType.Physical] = true, [SkillType.MeleeSingleTarget] = true, [SkillType.GeneratesCharges] = true, [SkillType.Palm] = true, },"
+        },
+        {
+          "n": 13827,
+          "text": "\t\t[\"Staff\"] = true,"
+        },
+        {
+          "n": 13837,
+          "text": "\t\t[1] = { attackSpeedMultiplier = -25, baseMultiplier = 0.9, levelRequirement = 0, cost = { Mana = 6, }, },"
+        },
+        {
+          "n": 13856,
+          "text": "\t\t[20] = { attackSpeedMultiplier = -25, baseMultiplier = 2.81, levelRequirement = 90, cost = { Mana = 42, }, },"
+        },
+        {
+          "n": 13889,
+          "text": "\t\t\t\t{ \"melee_conditional_step_distance\", 10 },"
+        },
+        {
+          "n": 13890,
+          "text": "\t\t\t\t{ \"base_melee_dash_range\", 65 },"
+        },
+        {
+          "n": 13891,
+          "text": "\t\t\t\t{ \"active_skill_generic_grace_period_time_ms\", 100 },"
+        },
+        {
+          "n": 13892,
+          "text": "\t\t\t\t{ \"skill_grant_X_power_charges_against_normal_and_magic_monsters\", 1 },"
+        },
+        {
+          "n": 13893,
+          "text": "\t\t\t\t{ \"skill_grant_X_power_charges_against_rare_monsters\", 2 },"
+        },
+        {
+          "n": 13894,
+          "text": "\t\t\t\t{ \"skill_grant_X_power_charges_against_unique_monsters\", 3 },"
+        },
+        {
+          "n": 13895,
+          "text": "\t\t\t\t{ \"melee_dash_placement_added_range\", -3 },"
+        },
+        {
+          "n": 13898,
+          "text": "\t\t\t\t\"kill_enemy_on_hit_if_under_10%_life\","
+        },
+        {
+          "n": 13899,
+          "text": "\t\t\t\t\"active_skill_show_cull_range\","
+        },
+        {
+          "n": 13900,
+          "text": "\t\t\t\t\"skill_can_add_multiple_charges_per_action\","
+        },
+        {
+          "n": 13901,
+          "text": "\t\t\t\t\"global_always_hit\","
+        },
+        {
+          "n": 13902,
+          "text": "\t\t\t\t\"is_area_damage\","
+        },
+        {
+          "n": 13903,
+          "text": "\t\t\t\t\"base_skill_show_average_damage_instead_of_dps\","
+        },
+        {
+          "n": 13904,
+          "text": "\t\t\t\t\"precise_cursor_targeting_uses_contact_point_height_offset\","
+        },
+        {
+          "n": 13905,
+          "text": "\t\t\t\t\"skill_can_flicker\","
+        }
+      ]
+    },
+    {
+      "mechanic_id": "support/SupportCulminationPlayerTwo",
+      "kind": "support",
+      "path": "src/Data/Skills/sup_dex.lua",
+      "file_sha256": "fb099278f3d1e118d713aa759070606cc76a9eabc58c3e76fddf06a0c8bd472a",
+      "lines": [
+        {
+          "n": 1629,
+          "text": "skills[\"SupportCulminationPlayerTwo\"] = {"
+        },
+        {
+          "n": 1630,
+          "text": "\tname = \"Culmination II\","
+        },
+        {
+          "n": 1631,
+          "text": "\tdescription = \"Supports Melee Attack Skills. Supported Skills gain Combo when you successfully Strike Enemies with other Melee Attacks. Supported Skills reset their Combo on use, dealing more Damage the higher Combo you had on use. Cannot support skills which already gain Combo. Cannot modify the Skills of Minions.\","
+        },
+        {
+          "n": 1633,
+          "text": "\tsupport = true,"
+        },
+        {
+          "n": 1634,
+          "text": "\trequireSkillTypes = { SkillType.Attack, SkillType.Melee, SkillType.AND, },"
+        },
+        {
+          "n": 1635,
+          "text": "\taddSkillTypes = { SkillType.ComboStacking, SkillType.SupportedByComboMastery, SkillType.HasUsageCondition, },"
+        },
+        {
+          "n": 1636,
+          "text": "\texcludeSkillTypes = { SkillType.HasUsageCondition, SkillType.SupportedByComboMastery, SkillType.NOT, SkillType.AND, },"
+        },
+        {
+          "n": 1649,
+          "text": "\t\t\t\t{ \"support_culmination_damage_+%_final_per_combo_stack\", 4 },"
+        },
+        {
+          "n": 1650,
+          "text": "\t\t\t\t{ \"base_combo_stacks_decay_delay_ms\", 6000 },"
+        },
+        {
+          "n": 1651,
+          "text": "\t\t\t\t{ \"skill_maximum_number_of_combo_stacks\", 10 },"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "support/SupportAilithLineagePlayer",
+      "kind": "support",
+      "path": "src/Data/Skills/sup_dex.lua",
+      "file_sha256": "fb099278f3d1e118d713aa759070606cc76a9eabc58c3e76fddf06a0c8bd472a",
+      "lines": [
+        {
+          "n": 116,
+          "text": "skills[\"SupportAilithLineagePlayer\"] = {"
+        },
+        {
+          "n": 117,
+          "text": "\tname = \"Ailith's Chimes\","
+        },
+        {
+          "n": 118,
+          "text": "\tdescription = \"Supports Skills which can expend Combo. On expending Combo with Supported Skills, you have a chance to gain Power Charges based on the amount of Combo expended.\","
+        },
+        {
+          "n": 120,
+          "text": "\tsupport = true,"
+        },
+        {
+          "n": 121,
+          "text": "\trequireSkillTypes = { SkillType.ComboStacking, },"
+        },
+        {
+          "n": 122,
+          "text": "\taddSkillTypes = { SkillType.GeneratesCharges, },"
+        },
+        {
+          "n": 123,
+          "text": "\texcludeSkillTypes = { },"
+        },
+        {
+          "n": 139,
+          "text": "\t\t\t\t{ \"chance_%_to_gain_power_charges_per_combo_spent\", 25 },"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "support/SupportHitAndRunPlayer",
+      "kind": "support",
+      "path": "src/Data/Skills/sup_dex.lua",
+      "file_sha256": "fb099278f3d1e118d713aa759070606cc76a9eabc58c3e76fddf06a0c8bd472a",
+      "lines": [
+        {
+          "n": 2533,
+          "text": "skills[\"SupportHitAndRunPlayer\"] = {"
+        },
+        {
+          "n": 2534,
+          "text": "\tname = \"Hit and Run\","
+        },
+        {
+          "n": 2535,
+          "text": "\tdescription = \"Supports Attack Skills you use yourself which do not already have some Condition for use. Supported Skills can only be used after you have moved a certain distance, but have massively increased Skill Speed. Cannot support Skills which have a cooldown.\","
+        },
+        {
+          "n": 2537,
+          "text": "\tsupport = true,"
+        },
+        {
+          "n": 2538,
+          "text": "\trequireSkillTypes = { SkillType.Attack, },"
+        },
+        {
+          "n": 2539,
+          "text": "\taddSkillTypes = { SkillType.HasUsageCondition, SkillType.SupportedByMobileAssault, },"
+        },
+        {
+          "n": 2540,
+          "text": "\texcludeSkillTypes = { SkillType.UsedByProxy, SkillType.Triggered, SkillType.Persistent, SkillType.HasUsageCondition, SkillType.SupportedByMobileAssault, SkillType.NOT, SkillType.AND, SkillType.Instant, SkillType.Cooldown, },"
+        },
+        {
+          "n": 2559,
+          "text": "\t\t\t\t{ \"support_mobile_assault_skill_speed_+%_final\", 40 },"
+        },
+        {
+          "n": 2560,
+          "text": "\t\t\t\t{ \"skill_unusable_until_moved_X_distance\", 100 },"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "support/SupportPerpetualChargePlayer",
+      "kind": "support",
+      "path": "src/Data/Skills/sup_int.lua",
+      "file_sha256": "aa77a312543e00d4eb3110a241ba6e8cd325fad4e6f84c4929bc6cc627788dc6",
+      "lines": [
+        {
+          "n": 7277,
+          "text": "skills[\"SupportPerpetualChargePlayer\"] = {"
+        },
+        {
+          "n": 7278,
+          "text": "\tname = \"Perpetual Charge\","
+        },
+        {
+          "n": 7279,
+          "text": "\tdescription = \"Supports skills that consume Power, Frenzy or Endurance Charges on use, giving them a chance not to remove each Charge while still gaining the benefits of consuming them.\","
+        },
+        {
+          "n": 7281,
+          "text": "\tsupport = true,"
+        },
+        {
+          "n": 7282,
+          "text": "\trequireSkillTypes = { SkillType.ConsumesCharges, },"
+        },
+        {
+          "n": 7283,
+          "text": "\taddSkillTypes = { },"
+        },
+        {
+          "n": 7284,
+          "text": "\texcludeSkillTypes = { },"
+        },
+        {
+          "n": 7287,
+          "text": "\t\t[1] = { levelRequirement = 0, manaMultiplier = 30, },"
+        },
+        {
+          "n": 7297,
+          "text": "\t\t\t\t{ \"charge_skip_consume_chance_%\", 25 },"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "statdesc/flicker_strike_additional_flickers_from_power_charges",
+      "kind": "stat_description",
+      "path": "src/Data/StatDescriptions/skill_stat_descriptions.lua",
+      "file_sha256": "6f2097a95ab398ff6828666381d45d8fb38e40ad388308c38daaf3578780db12",
+      "lines": [
+        {
+          "n": 5614,
+          "text": "\t\t\t\ttext=\"Teleports and Strikes {0} additional time per Power Charge, with 285% more Attack Speed\""
+        },
+        {
+          "n": 5623,
+          "text": "\t\t\t\ttext=\"Teleports and Strikes {0} additional times per Power Charge, with 285% more Attack Speed\""
+        },
+        {
+          "n": 5627,
+          "text": "\t\t\t[1]=\"flicker_strike_additional_flickers_from_power_charges\""
+        }
+      ]
+    },
+    {
+      "mechanic_id": "statdesc/cannot_gain_power_charges_during_skill",
+      "kind": "stat_description",
+      "path": "src/Data/StatDescriptions/skill_stat_descriptions.lua",
+      "file_sha256": "6f2097a95ab398ff6828666381d45d8fb38e40ad388308c38daaf3578780db12",
+      "lines": [
+        {
+          "n": 14708,
+          "text": "\t\t\t\ttext=\"You cannot gain Power Charges while using this Skill\""
+        },
+        {
+          "n": 14712,
+          "text": "\t\t\t[1]=\"cannot_gain_power_charges_during_skill\""
+        }
+      ]
+    },
+    {
+      "mechanic_id": "statdesc/chance_%_to_gain_power_charges_per_combo_spent",
+      "kind": "stat_description",
+      "path": "src/Data/StatDescriptions/gem_stat_descriptions.lua",
+      "file_sha256": "b34aa3ddca236de170a95783dd32f155d6e231988cf731423615644ccf76712d",
+      "lines": [
+        {
+          "n": 9421,
+          "text": "\t\t\t\ttext=\"{0}% Surpassing chance to gain a Power Charge when expending Combo with Supported Skills per Combo expended\""
+        },
+        {
+          "n": 9425,
+          "text": "\t\t\t[1]=\"chance_%_to_gain_power_charges_per_combo_spent\""
+        }
+      ]
+    },
+    {
+      "mechanic_id": "statdesc/skill_maximum_number_of_combo_stacks",
+      "kind": "stat_description",
+      "path": "src/Data/StatDescriptions/gem_stat_descriptions.lua",
+      "file_sha256": "b34aa3ddca236de170a95783dd32f155d6e231988cf731423615644ccf76712d",
+      "lines": [
+        {
+          "n": 5267,
+          "text": "\t\t\t\ttext=\"Supported Skills can gain up to {0} Combo\\nSupported Skills expend all Combo on use\""
+        },
+        {
+          "n": 5271,
+          "text": "\t\t\t[1]=\"skill_maximum_number_of_combo_stacks\""
+        }
+      ]
+    },
+    {
+      "mechanic_id": "statdesc/skill_unusable_until_moved_X_distance",
+      "kind": "stat_description",
+      "path": "src/Data/StatDescriptions/gem_stat_descriptions.lua",
+      "file_sha256": "b34aa3ddca236de170a95783dd32f155d6e231988cf731423615644ccf76712d",
+      "lines": [
+        {
+          "n": 18932,
+          "text": "\t\t\t\t\tk=\"divide_by_ten_1dp_if_required\","
+        },
+        {
+          "n": 18941,
+          "text": "\t\t\t\ttext=\"Supported Skills become usable after you have moved {0} metres\\nSupported Skills become unusable again after use\""
+        },
+        {
+          "n": 18945,
+          "text": "\t\t\t[1]=\"skill_unusable_until_moved_X_distance\""
+        }
+      ]
+    },
+    {
+      "mechanic_id": "statdesc/charge_skip_consume_chance_%",
+      "kind": "stat_description",
+      "path": "src/Data/StatDescriptions/gem_stat_descriptions.lua",
+      "file_sha256": "b34aa3ddca236de170a95783dd32f155d6e231988cf731423615644ccf76712d",
+      "lines": [
+        {
+          "n": 10223,
+          "text": "\t\t\t\ttext=\"Supported Skills have {0}% chance to not remove Charges but still count as consuming them\""
+        },
+        {
+          "n": 10227,
+          "text": "\t\t\t[1]=\"charge_skip_consume_chance_%\""
+        }
+      ]
+    },
+    {
+      "mechanic_id": "engine/removable-power-charges",
+      "kind": "engine",
+      "path": "src/Modules/CalcPerform.lua",
+      "file_sha256": "e4ef1bee4d42c34567db6771495c247a01b443321adba0397be88476ce1d9993",
+      "lines": [
+        {
+          "n": 939,
+          "text": "\tlocal removablePowerCharges = m_max(output.PowerCharges - output.PowerChargesMin, 0)"
+        },
+        {
+          "n": 941,
+          "text": "\toutput.RemovablePowerCharges = removablePowerCharges + extraConsumablePowerCharges"
+        },
+        {
+          "n": 998,
+          "text": "\tmodDB.multipliers[\"RemovablePowerCharge\"] = output.RemovablePowerCharges"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "engine/flicker-bypass-cd-config",
+      "kind": "engine",
+      "path": "src/Modules/ConfigOptions.lua",
+      "file_sha256": "5a77f18ea6c71834a182555e40f1e616ce24e01ee9265c6ed01c789101a6473d",
+      "lines": [
+        {
+          "n": 398,
+          "text": "\t{ var = \"FlickerStrikeBypassCD\", type = \"check\", label = \"Bypass CD?\", ifSkill = \"Flicker Strike\", includeTransfigured = true, defaultState = true, apply = function(val, modList, enemyModList)"
+        },
+        {
+          "n": 399,
+          "text": "\t\tmodList:NewMod(\"CooldownRecovery\", \"OVERRIDE\", 0, \"Config\", { type = \"SkillName\", skillName = \"Flicker Strike\", includeTransfigured = true })"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "passive/65204",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 65204,
+      "name": "Overflowing Power",
+      "ascendancy": null,
+      "notable": true,
+      "stats": [
+        "+2 to Maximum Power Charges"
+      ]
+    },
+    {
+      "mechanic_id": "passive/41751",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 41751,
+      "name": "Martial Adept",
+      "ascendancy": "Martial Artist",
+      "notable": true,
+      "stats": [
+        "When you gain Combo, gain an additional Combo",
+        "-0.2 seconds to current Energy Shield Recharge delay per Combo expended when using Skills"
+      ]
+    },
+    {
+      "mechanic_id": "passive/61586",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 61586,
+      "name": "Martial Master",
+      "ascendancy": "Martial Artist",
+      "notable": true,
+      "stats": [
+        "Skills can build and retain Combo regardless of Weapon Set",
+        "Gain Combo from all Attack Hits"
+      ]
+    },
+    {
+      "mechanic_id": "passive/36643",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 36643,
+      "name": "Additional Power Charge Chance",
+      "ascendancy": "Martial Artist",
+      "notable": false,
+      "stats": [
+        "10% chance when you gain a Power Charge to gain an additional Power Charge"
+      ]
+    },
+    {
+      "mechanic_id": "passive/7979",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 7979,
+      "name": "Elemental Surge",
+      "ascendancy": "Amazon",
+      "notable": true,
+      "stats": [
+        "When you Consume a Charge, Trigger Elemental Surge to gain 3 Lightning Surges",
+        "Grants Skill: Elemental Surge"
+      ]
+    },
+    {
+      "mechanic_id": "passive/42441",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 42441,
+      "name": "Surging Avatar",
+      "ascendancy": "Amazon",
+      "notable": true,
+      "stats": [
+        "When you Consume a Charge, Trigger Elemental Surge to gain 2 Fire Surges",
+        "When you Consume a Charge, Trigger Elemental Surge to gain 2 Cold Surges",
+        "Gain 1 fewer Lightning Surge from Triggering Elemental Surge"
+      ]
+    },
+    {
+      "mechanic_id": "passive/52448",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 52448,
+      "name": "...and Scatter Them to the Winds",
+      "ascendancy": "Invoker",
+      "notable": true,
+      "stats": [
+        "Trigger Elemental Expression on Melee Critical Hit",
+        "Grants Skill: Elemental Expression"
+      ]
+    },
+    {
+      "mechanic_id": "passive/2516",
+      "kind": "passive_node",
+      "path": "src/TreeData/0_5/tree.json",
+      "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+      "node_id": 2516,
+      "name": "Price of Power",
+      "ascendancy": "Lich",
+      "notable": true,
+      "stats": [
+        "Spells consume a Power Charge if able to deal 40% more Damage"
+      ]
+    }
+  ],
+  "classes": {
+    "path": "src/TreeData/0_5/tree.json",
+    "file_sha256": "5cf88fcc5d7cac22fd35a591f0b7ae0f98841c101adf38318b62e6560d3d7dca",
+    "classes": [
+      {
+        "class": "Ranger",
+        "ascendancies": [
+          "Deadeye",
+          "Pathfinder"
+        ]
+      },
+      {
+        "class": "Huntress",
+        "ascendancies": [
+          "Amazon",
+          "Spirit Walker",
+          "Ritualist"
+        ]
+      },
+      {
+        "class": "Warrior",
+        "ascendancies": [
+          "Titan",
+          "Warbringer",
+          "Smith of Kitava"
+        ]
+      },
+      {
+        "class": "Mercenary",
+        "ascendancies": [
+          "Tactician",
+          "Witchhunter",
+          "Gemling Legionnaire"
+        ]
+      },
+      {
+        "class": "Druid",
+        "ascendancies": [
+          "Oracle",
+          "Shaman"
+        ]
+      },
+      {
+        "class": "Witch",
+        "ascendancies": [
+          "Infernalist",
+          "Blood Mage",
+          "Lich",
+          "Abyssal Lich"
+        ]
+      },
+      {
+        "class": "Sorceress",
+        "ascendancies": [
+          "Stormweaver",
+          "Chronomancer",
+          "Disciple of Varashta"
+        ]
+      },
+      {
+        "class": "Monk",
+        "ascendancies": [
+          "Martial Artist",
+          "Invoker",
+          "Acolyte of Chayula"
+        ]
+      }
+    ]
+  }
+}

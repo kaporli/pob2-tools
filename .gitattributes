@@ -15,3 +15,8 @@ tests/integration/lua/*.lua -text
 # beside them, so line endings must not be rewritten.
 docs/evidence/P02/release/*.html -text
 docs/evidence/P02-T02.1/official/** -text
+
+# P09-T01.1 suite and seed export. SHA-256 of these files is frozen in
+# benchmarks/p09-flicker-v1/suite.json and seed/manifest.json.
+benchmarks/p09-flicker-v1/** -text
+docs/evidence/P09-T01.1/** -text
