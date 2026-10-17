@@ -168,3 +168,34 @@ def test_a_version_one_run_keeps_version_one_aggregates():
     assert binding(old, old_manifest) == []
     assert binding(aggregate(), old_manifest) == [
         ("objective_not_in_run", "/objective_id")]
+
+
+# ------------------------------------------------- shipped v2 example ===
+
+def _example(repo_root):
+    import json
+    return json.loads((repo_root / "docs/specs/examples/request.flicker.json")
+                      .read_text(encoding="utf-8"))
+
+
+def test_the_flicker_request_example_validates(repo_root):
+    from pob2opt.domain.validation import validate_record
+
+    report = validate_record(_example(repo_root), kind="run_request")
+    assert report.ok, report.errors
+    assert report.record.objective.objective_id == "flicker_sustained_dps"
+
+
+def test_the_example_placeholder_class_blocks_and_its_skill_ids_are_exact(
+        repo_root):
+    """The skill ids are the shape the catalog export gives Flicker Strike;
+    the class stays a placeholder until P09-T01.1 approves a scope."""
+    gem, granted = _example(repo_root)["objective"]["target_skill_ids"]
+    catalog = {
+        "gems": [entity(gem, ["Flicker Strike"])],
+        "granted_skills": [entity(granted, ["Flicker Strike"])],
+        "classes": [], "ascendancies": [],
+    }
+    report = resolve_objective_scope(
+        catalog, from_jsonable(RunRequest, _example(repo_root)))
+    assert codes(report) == [("unresolved_class", "/class_scope/0/class_id")]

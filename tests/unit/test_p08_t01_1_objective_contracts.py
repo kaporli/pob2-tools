@@ -391,3 +391,9 @@ def test_a_balanced_objective_aggregate_scores_by_balanced_score():
     assert validate_record(aggregate, kind="aggregate_result").ok
     aggregate["objective_score"] = 0.9
     assert codes(aggregate, "aggregate_result") == {"objective_score_mismatch"}
+
+
+def test_the_balanced_objective_keeps_the_scenarios_tie_break():
+    assert BALANCED_V1.tie_tolerance == 1e-6
+    assert BALANCED_V1.tie_breakers == ("min_clear_boss",
+                                        "canonical_build_rotation_hash")

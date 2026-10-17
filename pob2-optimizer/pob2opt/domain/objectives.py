@@ -44,8 +44,8 @@ class ObjectiveDefinition:
     tie_breakers: tuple[str, ...]
 
 
-#: The spec 1.0 default: maximum balanced score over the clear/boss suite.
-#: Version 1 requests and aggregates mean this objective.
+#: The spec 1.0 default: maximum balanced score over the clear/boss suite,
+#: with the scenarios.md tie-break. Version 1 requests mean this objective.
 BALANCED_V1 = ObjectiveDefinition(
     objective_id="balanced_score",
     version=1,
@@ -54,8 +54,8 @@ BALANCED_V1 = ObjectiveDefinition(
     windows=(),
     requires_target_skill=False,
     requires_benchmark=False,
-    tie_tolerance=None,
-    tie_breakers=(),
+    tie_tolerance=1e-6,
+    tie_breakers=("min_clear_boss", "canonical_build_rotation_hash"),
 )
 
 #: D07: sustained single-target Flicker Strike DPS on ``flicker_sustained_v1``.

@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "game": "poe2",
+  "level": 100,
+  "patch_selection": "current",
+  "league_selection": "current_pc_challenge_trade",
+  "mode": "offline_items",
+  "budget": null,
+  "scenario_suite": "benchmarks/flicker-strike-v1/suite.json",
+  "catalog_profile": "profiles/poe2-current-verified.json",
+  "corpus_path": "data/corpus",
+  "item_pool_ids": ["reviewed-flicker-strike-item-pool-v1"],
+  "seed": 20261004,
+  "time_budget_s": 14400,
+  "workers": "auto",
+  "memory_limit_mb": 8192,
+  "allow_weapon_switch": true,
+  "allow_external_gear_swap": false,
+  "execution_profile": "skilled_manual",
+  "class_scope": [
+    {"class_id": "REPLACE_WITH_REVIEWED_CLASS", "ascendancy_ids": null}
+  ],
+  "objective": {
+    "objective_id": "flicker_sustained_dps",
+    "objective_version": 1,
+    "target_skill_ids": [
+      "poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike",
+      "poe2/granted_skills/FlickerStrikePlayer"
+    ],
+    "benchmark_scenario": "benchmarks/flicker-strike-v1/flicker_sustained_v1.json",
+    "benchmark_scenario_hash": null,
+    "attribution_rules": "benchmarks/flicker-strike-v1/attribution-v1.json",
+    "attribution_rules_hash": null
+  }
+}
