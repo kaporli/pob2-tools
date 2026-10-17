@@ -883,6 +883,51 @@ def _check_run_manifest(record):
         yield from _manifest_objective_errors(record)
 
 
+def aggregate_binding_errors(aggregate, manifest) -> tuple[ValidationError, ...]:
+    """Errors binding an aggregate to the run manifest it claims.
+
+    A record index holds identifiers only, so this needs both records, like
+    ``storage.validate_checkpoint``. A version 2 aggregate must carry the
+    objective the manifest froze; a version 1 aggregate has no objective
+    binding and cannot be ranked in a version 2 run.
+    """
+    errors = []
+    if aggregate.manifest_id != manifest.run_id:
+        errors.append(ValidationError(
+            "manifest_mismatch", "/manifest_id",
+            "aggregate names run %r, not %r"
+            % (aggregate.manifest_id, manifest.run_id), "semantic"))
+    request = manifest.resolved_request
+    if request.schema_version < 2:
+        if aggregate.schema_version >= 2:
+            errors.append(ValidationError(
+                "objective_not_in_run", "/objective_id",
+                "run %r has no objective selection; a version 2 aggregate "
+                "cannot belong to it" % manifest.run_id, "semantic"))
+        return tuple(errors)
+    if aggregate.schema_version < 2:
+        errors.append(ValidationError(
+            "unbound_objective", "/schema_version",
+            "a version 1 aggregate has no objective binding and cannot be "
+            "ranked in run %r" % manifest.run_id, "semantic"))
+        return tuple(errors)
+    selection = request.objective
+    if (aggregate.objective_id, aggregate.objective_version) != \
+            (selection.objective_id, selection.objective_version):
+        errors.append(ValidationError(
+            "objective_mismatch", "/objective_id",
+            "aggregate is scored for %s v%s; the run optimizes %s v%s"
+            % (aggregate.objective_id, aggregate.objective_version,
+               selection.objective_id, selection.objective_version),
+            "semantic"))
+    if aggregate.objective_hash != manifest.dependency_hashes.objective_hash:
+        errors.append(ValidationError(
+            "objective_hash_mismatch", "/objective_hash",
+            "aggregate objective_hash differs from the manifest's",
+            "semantic"))
+    return tuple(errors)
+
+
 def _manifest_objective_errors(record):
     """A manifest freezes the objective: hashes resolved and bound."""
     selection = record.resolved_request.objective
