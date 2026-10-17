@@ -84,6 +84,28 @@ class EngineCrash(EngineError):
     status = ResultStatus.ENGINE_CRASH
 
 
+class EngineMemoryLimit(EngineCrash):
+    """The coordinator killed a worker above its memory limit (P02-T01.1).
+
+    Stored as ``engine_crash``: the process is gone and only a new one can
+    continue. The class and diagnostic say it was the limit, not a fault.
+    """
+
+    def __init__(self, diagnostic: str, *, stage: str, limit_bytes: int,
+                 observed_bytes: int, record_ids: Sequence[str] = ()) -> None:
+        self.limit_bytes = limit_bytes
+        self.observed_bytes = observed_bytes
+        super().__init__(diagnostic, stage=stage, record_ids=record_ids)
+
+
+class EngineMemoryProbeError(EngineCrash):
+    """A live bounded worker could not be measured and was terminated."""
+
+
+class EngineReplacementExhausted(EngineCrash):
+    """Too many workers in a row failed; no further replacement is started."""
+
+
 class EngineInternalError(EngineError):
     """A coordinator-side defect: framing, protocol or path resolution."""
 

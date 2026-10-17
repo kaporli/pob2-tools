@@ -1,0 +1,22 @@
+{
+  "run": "review-pr13-py312",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\pr13-review",
+  "plugin": false,
+  "head": "5981ee023ff5146c417de275d399a0991833ffe3",
+  "seed": "13",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine/test_p02_t01_1_memory_bound.py"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 2048,
+  "peak_tree_rss": 352239616,
+  "elapsed_s": 44.7,
+  "python": "3.12.4",
+  "last_line": "============================= 4 passed in 41.94s =============================="
+}

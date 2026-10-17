@@ -1,0 +1,70 @@
+Loading main script...
+Unicode support detected
+Loading passive tree data for version '0_5'...
+Loading passive tree assets...
+Processing tree...
+missing node 24665
+missing node 35715
+missing node 28429
+missing node 26353
+missing node 950
+missing node 45406
+missing node 50198
+missing node 5162
+missing node 10889
+missing node 62386
+missing node 39383
+missing node 51916
+missing node 54579
+missing node 16732
+Uniques loaded
+Rares loaded
+Startup time: 0 ms
+{"i": 0, "step": "new_build", "t": 1148491.765}
+{"i": 0, "step": "search_nodes", "t": 1148491.859}
+{"i": 0, "nodes": [47157, 2955]}
+{"i": 0, "step": "alloc_nodes", "t": 1148491.859}
+{"i": 0, "step": "equip_item", "t": 1148491.953}
+{"i": 0, "step": "save_build_xml", "t": 1148492.015}
+{"i": 0, "step": "new_build2", "t": 1148492.015}
+{"i": 0, "step": "load_build_xml", "t": 1148492.125}
+{"i": 0, "step": "helpers", "t": 1148494.0}
+{"i": 0, "step": "OPT_setup", "t": 1148494.0}
+{"i": 0, "step": "get_build_info", "t": 1148494.093}
+{"i": 0, "done": true, "level": 1}
+{"i": 1, "step": "new_build", "t": 1148494.093}
+{"i": 1, "step": "search_nodes", "t": 1148494.218}
+{"i": 1, "nodes": [47157, 2955]}
+{"i": 1, "step": "alloc_nodes", "t": 1148494.218}
+{"i": 1, "step": "equip_item", "t": 1148494.296}
+{"i": 1, "step": "save_build_xml", "t": 1148494.343}
+{"i": 1, "step": "new_build2", "t": 1148494.343}
+{"i": 1, "step": "load_build_xml", "t": 1148494.437}
+{"i": 1, "step": "helpers", "t": 1148494.625}
+{"i": 1, "step": "OPT_setup", "t": 1148494.625}
+{"i": 1, "step": "get_build_info", "t": 1148494.671}
+{"i": 1, "done": true, "level": 1}
+{"i": 2, "step": "new_build", "t": 1148494.671}
+{"i": 2, "step": "search_nodes", "t": 1148494.75}
+{"i": 2, "nodes": [47157, 2955]}
+{"i": 2, "step": "alloc_nodes", "t": 1148494.765}
+{"i": 2, "step": "equip_item", "t": 1148494.812}
+{"i": 2, "step": "save_build_xml", "t": 1148494.859}
+{"i": 2, "step": "new_build2", "t": 1148494.859}
+{"i": 2, "step": "load_build_xml", "t": 1148494.937}
+{"i": 2, "step": "helpers", "t": 1148495.109}
+{"i": 2, "step": "OPT_setup", "t": 1148495.109}
+{"i": 2, "step": "get_build_info", "t": 1148495.14}
+{"i": 2, "done": true, "level": 1}
+{"i": 3, "step": "new_build", "t": 1148495.156}
+{"i": 3, "step": "search_nodes", "t": 1148495.234}
+{"i": 3, "nodes": [47157, 2955]}
+{"i": 3, "step": "alloc_nodes", "t": 1148495.234}
+{"i": 3, "step": "equip_item", "t": 1148495.296}
+{"i": 3, "step": "save_build_xml", "t": 1148495.328}
+{"i": 3, "step": "new_build2", "t": 1148495.328}
+{"i": 3, "step": "load_build_xml", "t": 1148495.421}
+{"i": 3, "step": "helpers", "t": 1148495.703}
+{"i": 3, "step": "OPT_setup", "t": 1148495.703}
+{"i": 3, "step": "get_build_info", "t": 1148495.75}
+{"i": 3, "done": true, "level": 1}

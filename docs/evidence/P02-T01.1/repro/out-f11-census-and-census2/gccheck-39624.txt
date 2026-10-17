@@ -1,0 +1,35 @@
+before 2404 MiB after 1782 MiB
+at
+stack traceback:
+	Classes/PassiveSpec.lua:1526: in function 'BuildAllDependsAndPaths'
+	Classes/PassiveSpec.lua:743: in function 'SelectAscendClass'
+	Classes/PassiveSpec.lua:711: in function 'SelectClass'
+	Classes/PassiveSpec.lua:397: in function 'ImportFromNodeList'
+	Classes/PassiveSpec.lua:245: in function 'Load'
+	Classes/TreeTab.lua:510: in function <Classes/TreeTab.lua:492>
+	Modules/Build.lua:585: in function 'CallMode'
+	Modules/Main.lua:416: in function <Modules/Main.lua:402>
+	[C]: in function 'pcall'
+	_SimpleGraphic.def.lua:506: in function 'PCall'
+	Launch.lua:113: in function 'runCallback'
+	HeadlessWrapper.lua:65: in function 'loadBuildFromXML'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:102: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:99>
+	[C]: in function 'pcall'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:1011: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:1005>
+spec current nodes=4914 sumPath=84281 maxPath=40(49370) sumDepends=206 maxDepends=197
+census tables=7114693
+total 24900449 _G.build
+total 684996 _G.data
+total 177061 _G.main
+total 166377 _G.GlobalCache
+total 94342 _G.modLib
+total 37562 _G.package
+total 1947 _G.common
+total 290 _G.SkillType
+total 290 _G.SkillTypeName
+total 238 _G._G
+total 79 _G.defaultColorCodes
+total 79 _G.colorCodes
+total 65 _G.buildSites
+total 33 _G.ModFlag
+total 31 _G.math

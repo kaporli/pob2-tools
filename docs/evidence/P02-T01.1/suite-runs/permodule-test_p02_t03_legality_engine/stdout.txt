@@ -1,0 +1,16 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 7 items
+
+tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load PASSED [ 14%]
+tests/engine/test_p02_t03_legality_engine.py::test_a_legality_read_does_not_disturb_a_loaded_build PASSED [ 28%]
+tests/engine/test_p02_t03_legality_engine.py::test_a_document_pob_imports_cleanly_can_still_be_illegal PASSED [ 42%]
+tests/engine/test_p02_t03_legality_engine.py::test_the_record_is_verified_against_the_engine_not_believed PASSED [ 57%]
+tests/engine/test_p02_t03_legality_engine.py::test_the_faithful_record_agrees_with_the_engine PASSED [ 71%]
+tests/engine/test_p02_t03_legality_engine.py::test_a_disconnected_allocation_in_the_real_tree_is_illegal PASSED [ 85%]
+tests/engine/test_p02_t03_legality_engine.py::test_the_live_profile_still_carries_no_slot_categories PASSED [100%]
+
+============================= 7 passed in 11.20s ==============================

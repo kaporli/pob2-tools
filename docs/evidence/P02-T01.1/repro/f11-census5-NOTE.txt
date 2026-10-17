@@ -1,0 +1,1 @@
+f11-census5: 6 runs failed at startup from a Lua syntax error in the diagnostic (escaped newline). Not evidence; rerun as f11-census6.

@@ -1,0 +1,2 @@
+{"run": "f11-census-healthy", "repeat": 0, "jit": "gccheck", "iterations": 4, "completed": 4, "exit_code": 0, "guard": null, "peak_private_bytes": 715194368, "seconds": 6.4, "last_step": {"i": 3, "done": true, "level": 1}, "distinct_node_choices": [[47157, 2955]]}
+{"run": "f11-census-healthy", "repeat": 1, "jit": "gccheck", "iterations": 4, "completed": 4, "exit_code": 0, "guard": null, "peak_private_bytes": 693395456, "seconds": 6.0, "last_step": {"i": 3, "done": true, "level": 1}, "distinct_node_choices": [[47157, 2955]]}

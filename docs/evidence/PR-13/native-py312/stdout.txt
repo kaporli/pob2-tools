@@ -1,0 +1,13 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\pr13-review
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 4 items
+
+tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported PASSED [ 25%]
+tests/engine/test_p02_t01_1_memory_bound.py::test_repeated_losses_stop_without_unlimited_replacement PASSED [ 50%]
+tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results PASSED [ 75%]
+tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only PASSED [100%]
+
+============================= 4 passed in 41.94s ==============================

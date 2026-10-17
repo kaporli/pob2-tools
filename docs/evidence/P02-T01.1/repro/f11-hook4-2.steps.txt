@@ -1,0 +1,109 @@
+Loading main script...
+Unicode support detected
+Loading passive tree data for version '0_5'...
+Loading passive tree assets...
+Processing tree...
+missing node 24665
+missing node 35715
+missing node 28429
+missing node 26353
+missing node 950
+missing node 45406
+missing node 50198
+missing node 5162
+missing node 10889
+missing node 62386
+missing node 39383
+missing node 51916
+missing node 54579
+missing node 16732
+Uniques loaded
+Rares loaded
+Startup time: 0 ms
+{"i": 0, "step": "new_build", "t": 1147157.906}
+{"i": 0, "step": "search_nodes", "t": 1147158.015}
+{"i": 0, "nodes": [47157, 2955]}
+{"i": 0, "step": "alloc_nodes", "t": 1147158.015}
+{"i": 0, "step": "equip_item", "t": 1147158.109}
+{"i": 0, "step": "save_build_xml", "t": 1147158.156}
+{"i": 0, "step": "new_build2", "t": 1147158.156}
+{"i": 0, "step": "load_build_xml", "t": 1147158.25}
+{"i": 0, "step": "helpers", "t": 1147158.453}
+{"i": 0, "step": "OPT_setup", "t": 1147158.453}
+{"i": 0, "step": "get_build_info", "t": 1147158.5}
+{"i": 0, "done": true, "level": 1}
+{"i": 1, "step": "new_build", "t": 1147158.5}
+{"i": 1, "step": "search_nodes", "t": 1147158.593}
+{"i": 1, "nodes": [47157, 2955]}
+{"i": 1, "step": "alloc_nodes", "t": 1147158.593}
+{"i": 1, "step": "equip_item", "t": 1147158.656}
+{"i": 1, "step": "save_build_xml", "t": 1147158.718}
+{"i": 1, "step": "new_build2", "t": 1147158.718}
+{"i": 1, "step": "load_build_xml", "t": 1147158.843}
+{"i": 1, "step": "helpers", "t": 1147159.046}
+{"i": 1, "step": "OPT_setup", "t": 1147159.046}
+{"i": 1, "step": "get_build_info", "t": 1147159.093}
+{"i": 1, "done": true, "level": 1}
+{"i": 2, "step": "new_build", "t": 1147159.093}
+{"i": 2, "step": "search_nodes", "t": 1147159.171}
+{"i": 2, "nodes": [47157, 2955]}
+{"i": 2, "step": "alloc_nodes", "t": 1147159.171}
+{"i": 2, "step": "equip_item", "t": 1147159.265}
+{"i": 2, "step": "save_build_xml", "t": 1147159.296}
+{"i": 2, "step": "new_build2", "t": 1147159.296}
+{"i": 2, "step": "load_build_xml", "t": 1147159.39}
+{"i": 2, "step": "helpers", "t": 1147159.656}
+{"i": 2, "step": "OPT_setup", "t": 1147159.656}
+{"i": 2, "step": "get_build_info", "t": 1147159.703}
+{"i": 2, "done": true, "level": 1}
+{"i": 3, "step": "new_build", "t": 1147159.703}
+{"i": 3, "step": "search_nodes", "t": 1147159.875}
+{"i": 3, "nodes": [47157, 2955]}
+{"i": 3, "step": "alloc_nodes", "t": 1147159.875}
+{"i": 3, "step": "equip_item", "t": 1147160.218}
+{"i": 3, "step": "save_build_xml", "t": 1147160.234}
+{"i": 3, "step": "new_build2", "t": 1147160.25}
+{"i": 3, "step": "load_build_xml", "t": 1147160.328}
+{"i": 3, "step": "helpers", "t": 1147160.609}
+{"i": 3, "step": "OPT_setup", "t": 1147160.609}
+{"i": 3, "step": "get_build_info", "t": 1147160.64}
+{"i": 3, "done": true, "level": 1}
+{"i": 4, "step": "new_build", "t": 1147160.64}
+{"i": 4, "step": "search_nodes", "t": 1147160.703}
+{"i": 4, "nodes": [47157, 2955]}
+{"i": 4, "step": "alloc_nodes", "t": 1147160.703}
+{"i": 4, "step": "equip_item", "t": 1147161.046}
+{"i": 4, "step": "save_build_xml", "t": 1147161.093}
+{"i": 4, "step": "new_build2", "t": 1147161.093}
+{"i": 4, "step": "load_build_xml", "t": 1147161.187}
+{"i": 4, "step": "helpers", "t": 1147162.046}
+{"i": 4, "step": "OPT_setup", "t": 1147162.046}
+{"i": 4, "step": "get_build_info", "t": 1147162.078}
+{"i": 4, "done": true, "level": 1}
+{"i": 5, "step": "new_build", "t": 1147162.078}
+{"i": 5, "step": "search_nodes", "t": 1147162.171}
+{"i": 5, "nodes": [47157, 2955]}
+{"i": 5, "step": "alloc_nodes", "t": 1147162.171}
+{"i": 5, "step": "equip_item", "t": 1147164.312}
+{"i": 5, "step": "save_build_xml", "t": 1147164.343}
+{"i": 5, "step": "new_build2", "t": 1147164.343}
+{"i": 5, "step": "load_build_xml", "t": 1147164.421}
+{"i": 5, "step": "helpers", "t": 1147167.562}
+{"i": 5, "step": "OPT_setup", "t": 1147167.562}
+{"i": 5, "step": "get_build_info", "t": 1147167.593}
+{"i": 5, "done": true, "level": 1}
+{"i": 6, "step": "new_build", "t": 1147167.593}
+{"i": 6, "step": "search_nodes", "t": 1147167.671}
+{"i": 6, "nodes": [47157, 2955]}
+{"i": 6, "step": "alloc_nodes", "t": 1147167.671}
+Traceback (most recent call last):
+  File "C:\Users\Elias\PycharmProjects\pob2-tools\docs\evidence\P02-T01.1\repro_f11.py", line 138, in <module>
+    child(sys.argv[2], int(sys.argv[3]))
+  File "C:\Users\Elias\PycharmProjects\pob2-tools\docs\evidence\P02-T01.1\repro_f11.py", line 89, in child
+    step(i, "alloc_nodes", "alloc_nodes", {"ids": ids})
+  File "C:\Users\Elias\PycharmProjects\pob2-tools\docs\evidence\P02-T01.1\repro_f11.py", line 82, in step
+    return (engine.eval_lua(args) if fn == "eval" else engine.call(fn, args or {}))
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Elias\PycharmProjects\pob2-tools-baseline\pob2-mcp\pob2mcp\engine.py", line 168, in call
+    raise PobEngineError(out.get("error", "unknown engine error"))
+pob2mcp.engine.PobEngineError: [string "mcp-eval"]:35: runaway stopped by diagnostic hook

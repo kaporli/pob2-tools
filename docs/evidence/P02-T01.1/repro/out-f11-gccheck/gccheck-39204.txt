@@ -1,0 +1,17 @@
+before 2567 MiB after 2383 MiB
+at
+stack traceback:
+	Classes/PassiveSpec.lua:1465: in function 'BuildNodePathsToRootNodes'
+	Classes/PassiveSpec.lua:2067: in function 'BuildAllDependsAndPaths'
+	Classes/PassiveSpec.lua:439: in function 'ImportFromNodeList'
+	Classes/PassiveSpec.lua:245: in function 'Load'
+	Classes/TreeTab.lua:510: in function <Classes/TreeTab.lua:492>
+	Modules/Build.lua:585: in function 'CallMode'
+	Modules/Main.lua:416: in function <Modules/Main.lua:402>
+	[C]: in function 'pcall'
+	_SimpleGraphic.def.lua:506: in function 'PCall'
+	Launch.lua:113: in function 'runCallback'
+	HeadlessWrapper.lua:65: in function 'loadBuildFromXML'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:102: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:99>
+	[C]: in function 'pcall'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:1011: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:1005>

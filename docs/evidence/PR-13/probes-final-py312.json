@@ -1,0 +1,104 @@
+{
+  "head": "5981ee023ff5146c417de275d399a0991833ffe3",
+  "python": "3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]",
+  "cases": {
+    "actual_allocation_fast_reply": {
+      "returned_result": true,
+      "measured_bytes": 109559808,
+      "alive": true,
+      "hard_limit_bytes": 83886080
+    },
+    "fast_over_limit_reply": {
+      "returned_result": true,
+      "error": null,
+      "alive": true,
+      "last_memory_bytes": 524288000,
+      "hard_limit_bytes": 419430400
+    },
+    "unreadable_probe": {
+      "returned_result": true,
+      "error": null,
+      "alive": true,
+      "last_memory_bytes": 25079808,
+      "hard_limit_bytes": 419430400
+    },
+    "unreadable_during_wait": {
+      "returned_result": true,
+      "samples": 6,
+      "alive": true
+    },
+    "repeated_startup_failure": {
+      "errors": [
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError"
+      ],
+      "generation": 5,
+      "failures": 0,
+      "history": []
+    },
+    "repeated_fatal_reply": {
+      "errors": [
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError"
+      ],
+      "generation": 5,
+      "failures": 0,
+      "history": [
+        {
+          "pid": 32528,
+          "generation": 1,
+          "requests": 1,
+          "peak_memory_bytes": 25513984,
+          "end": "worker reported a fatal internal_error"
+        },
+        {
+          "pid": 12292,
+          "generation": 2,
+          "requests": 1,
+          "peak_memory_bytes": 25677824,
+          "end": "worker reported a fatal internal_error"
+        },
+        {
+          "pid": 43172,
+          "generation": 3,
+          "requests": 1,
+          "peak_memory_bytes": 25485312,
+          "end": "worker reported a fatal internal_error"
+        },
+        {
+          "pid": 41956,
+          "generation": 4,
+          "requests": 1,
+          "peak_memory_bytes": 25460736,
+          "end": "worker reported a fatal internal_error"
+        }
+      ]
+    },
+    "startup_memory_history": {
+      "errors": [
+        {
+          "type": "EngineMemoryLimit",
+          "message": "engine_crash [startup] worker 6964 used 11685888 bytes during startup, above the 1-byte limit; the process was terminated"
+        },
+        {
+          "type": "EngineMemoryLimit",
+          "message": "engine_crash [startup] worker 45660 used 11223040 bytes during startup, above the 1-byte limit; the process was terminated"
+        },
+        {
+          "type": "EngineReplacementExhausted",
+          "message": "engine_crash [worker] 2 workers in a row were lost; no further worker is started. Last: none"
+        }
+      ],
+      "generation": 2,
+      "failures": 2,
+      "history": [],
+      "pids": []
+    }
+  }
+}

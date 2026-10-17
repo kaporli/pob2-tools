@@ -1,0 +1,22 @@
+{
+  "run": "base-noplugin-s12",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools-baseline",
+  "plugin": false,
+  "head": "f75fe0a01931b3f857696b707f304083d9a82d5b",
+  "seed": "12",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 3072,
+  "peak_tree_rss": 1445928960,
+  "elapsed_s": 112.9,
+  "python": "3.12.4",
+  "last_line": "======================= 152 passed in 111.53s (0:01:51) ======================="
+}

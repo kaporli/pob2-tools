@@ -1,0 +1,21 @@
+{"t": 0.03, "tree_rss": 2142208, "progress": ""}
+{"t": 0.55, "tree_rss": 35934208, "progress": ""}
+{"t": 1.06, "tree_rss": 101343232, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 1.59, "tree_rss": 188129280, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 2.11, "tree_rss": 206307328, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 2.62, "tree_rss": 226402304, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 3.14, "tree_rss": 235143168, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 3.66, "tree_rss": 221728768, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 4.17, "tree_rss": 263720960, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 4.7, "tree_rss": 296411136, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 5.22, "tree_rss": 307314688, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose "}
+{"t": 5.73, "tree_rss": 343326720, "progress": "tests/engine/test_f11_import_is_wiped.py::test_worker_init_sequence_erases_the_imported_character "}
+{"t": 6.25, "tree_rss": 364474368, "progress": "tests/engine/test_f11_import_is_wiped.py::test_worker_init_sequence_erases_the_imported_character "}
+{"t": 6.78, "tree_rss": 389337088, "progress": "tests/engine/test_f11_import_is_wiped.py::test_worker_init_sequence_erases_the_imported_character "}
+{"t": 7.3, "tree_rss": 409448448, "progress": "tests/engine/test_f11_import_is_wiped.py::test_worker_init_sequence_erases_the_imported_character "}
+{"t": 7.81, "tree_rss": 437653504, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_wipe_is_silent "}
+{"t": 8.33, "tree_rss": 474218496, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_wipe_is_silent "}
+{"t": 8.86, "tree_rss": 506716160, "progress": "tests/engine/test_f11_import_is_wiped.py::test_setup_silently_loses_the_requested_character_level_in_auto_mode "}
+{"t": 9.38, "tree_rss": 547782656, "progress": "tests/engine/test_f11_import_is_wiped.py::test_the_requested_level_is_honoured_when_auto_mode_is_off "}
+{"t": 9.91, "tree_rss": 596582400, "progress": "tests/engine/test_f11_import_is_wiped.py::test_loading_without_opt_setup_keeps_the_whole_character "}
+{"t": 10.44, "tree_rss": 624975872, "progress": "tests/engine/test_f11_import_is_wiped.py::test_loading_without_opt_setup_keeps_the_whole_character "}

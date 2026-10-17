@@ -1,0 +1,22 @@
+{
+  "run": "permodule-test_p02_t01_engine_adapter",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+  "plugin": false,
+  "head": "f75fe0a01931b3f857696b707f304083d9a82d5b",
+  "seed": "31",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine/test_p02_t01_engine_adapter.py"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 3072,
+  "peak_tree_rss": 606543872,
+  "elapsed_s": 21.9,
+  "python": "3.12.4",
+  "last_line": "============================= 16 passed in 20.88s ============================="
+}

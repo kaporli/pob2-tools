@@ -1,0 +1,43 @@
+{"t": 0.02, "tree_rss": 2142208, "progress": ""}
+{"t": 0.53, "tree_rss": 36438016, "progress": ""}
+{"t": 1.05, "tree_rss": 66023424, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total "}
+{"t": 1.58, "tree_rss": 140988416, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total "}
+{"t": 2.09, "tree_rss": 244674560, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total "}
+{"t": 2.61, "tree_rss": 256778240, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total "}
+{"t": 3.12, "tree_rss": 263524352, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total "}
+{"t": 3.64, "tree_rss": 340336640, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_every_catalog_table_pages_to_a_stable_total "}
+{"t": 4.16, "tree_rss": 407060480, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_catalog_read_does_not_disturb_a_loaded_build "}
+{"t": 4.69, "tree_rss": 449548288, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 5.2, "tree_rss": 508313600, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 5.72, "tree_rss": 543227904, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 6.24, "tree_rss": 566583296, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 6.75, "tree_rss": 574558208, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 7.27, "tree_rss": 562155520, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 7.78, "tree_rss": 582950912, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 8.3, "tree_rss": 582950912, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 8.81, "tree_rss": 582950912, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 9.33, "tree_rss": 582950912, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 9.84, "tree_rss": 588402688, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 10.36, "tree_rss": 606011392, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 10.88, "tree_rss": 561999872, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 11.39, "tree_rss": 562225152, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 11.91, "tree_rss": 562225152, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 12.44, "tree_rss": 562225152, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 12.94, "tree_rss": 562225152, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 13.47, "tree_rss": 571842560, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 13.97, "tree_rss": 583000064, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_live_export_validates_and_names_its_catalog "}
+{"t": 14.5, "tree_rss": 600383488, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 15.02, "tree_rss": 645373952, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 15.55, "tree_rss": 669913088, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 16.06, "tree_rss": 681345024, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 16.59, "tree_rss": 711049216, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 17.09, "tree_rss": 702148608, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 17.61, "tree_rss": 714809344, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 18.12, "tree_rss": 716009472, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 18.64, "tree_rss": 716009472, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 19.16, "tree_rss": 716009472, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 19.67, "tree_rss": 716009472, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 20.19, "tree_rss": 723501056, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 20.83, "tree_rss": 738852864, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_a_replay_of_the_captured_rows_reproduces_the_live_catalog_hash "}
+{"t": 21.36, "tree_rss": 634691584, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_catalog_hash_covers_the_whole_entity_set "}
+{"t": 21.88, "tree_rss": 127156224, "progress": "tests/engine/test_p02_t02_catalog_engine.py::test_the_parent_working_directory_did_not_move PASSED [100%]"}

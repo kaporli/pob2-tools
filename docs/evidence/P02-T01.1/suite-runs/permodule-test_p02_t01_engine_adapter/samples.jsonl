@@ -1,0 +1,42 @@
+{"t": 0.03, "tree_rss": 2142208, "progress": ""}
+{"t": 0.55, "tree_rss": 36417536, "progress": ""}
+{"t": 1.06, "tree_rss": 63254528, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 1.58, "tree_rss": 187240448, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 2.09, "tree_rss": 228007936, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 2.62, "tree_rss": 236171264, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 3.14, "tree_rss": 271601664, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 3.66, "tree_rss": 330915840, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 4.17, "tree_rss": 74153984, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 4.69, "tree_rss": 158826496, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 5.22, "tree_rss": 246763520, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 5.73, "tree_rss": 257421312, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 6.25, "tree_rss": 263208960, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 6.77, "tree_rss": 327495680, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 7.28, "tree_rss": 377122816, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] "}
+{"t": 7.81, "tree_rss": 433922048, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[90] "}
+{"t": 8.33, "tree_rss": 480227328, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[90] "}
+{"t": 8.86, "tree_rss": 538910720, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_an_exact_load_keeps_the_tree_the_gear_and_the_socket_groups "}
+{"t": 9.38, "tree_rss": 606543872, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_create_blank_build_still_clears_the_character "}
+{"t": 9.91, "tree_rss": 69664768, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 10.44, "tree_rss": 144351232, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 10.95, "tree_rss": 245829632, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 11.47, "tree_rss": 264896512, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 11.98, "tree_rss": 264220672, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 12.5, "tree_rss": 338722816, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 13.02, "tree_rss": 74186752, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 13.53, "tree_rss": 159997952, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 14.05, "tree_rss": 236523520, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 14.56, "tree_rss": 226861056, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 15.08, "tree_rss": 295849984, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character "}
+{"t": 15.59, "tree_rss": 382926848, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_aba_through_the_adapter_returns_identical_primitives "}
+{"t": 16.12, "tree_rss": 457318400, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_two_documents_sharing_a_build_hash_are_not_confused "}
+{"t": 16.66, "tree_rss": 517320704, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_configuration_does_not_leak_into_the_next_evaluation "}
+{"t": 17.19, "tree_rss": 556908544, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_an_identical_repeated_request_does_not_reload "}
+{"t": 17.7, "tree_rss": 555782144, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds "}
+{"t": 18.23, "tree_rss": 58159104, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds "}
+{"t": 18.75, "tree_rss": 136724480, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds "}
+{"t": 19.27, "tree_rss": 234127360, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds "}
+{"t": 19.78, "tree_rss": 237219840, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds "}
+{"t": 20.3, "tree_rss": 247726080, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds "}
+{"t": 20.81, "tree_rss": 348274688, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds "}
+{"t": 21.33, "tree_rss": 63074304, "progress": "tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds PASSED [100%]"}

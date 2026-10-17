@@ -1,0 +1,22 @@
+{
+  "run": "branch-noplugin-s21",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+  "plugin": false,
+  "head": "f75fe0a01931b3f857696b707f304083d9a82d5b",
+  "seed": "21",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine"
+  ],
+  "exit_code": 15,
+  "parent_guard": "memory",
+  "limit_mb": 3072,
+  "peak_tree_rss": 4324888576,
+  "elapsed_s": 34.2,
+  "python": "3.12.4",
+  "last_line": "tests/engine/test_f11_import_is_wiped.py::test_setup_silently_loses_the_requested_character_level_in_auto_mode"
+}

@@ -1,0 +1,40 @@
+{"t": 0.03, "tree_rss": 2146304, "progress": ""}
+{"t": 0.55, "tree_rss": 36483072, "progress": ""}
+{"t": 1.06, "tree_rss": 89960448, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 1.59, "tree_rss": 167223296, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 2.11, "tree_rss": 209391616, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 2.62, "tree_rss": 218161152, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 3.14, "tree_rss": 210935808, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 3.66, "tree_rss": 211275776, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 4.17, "tree_rss": 260648960, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 4.7, "tree_rss": 306921472, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 5.22, "tree_rss": 317755392, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 5.73, "tree_rss": 347701248, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 6.25, "tree_rss": 347410432, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 6.77, "tree_rss": 374501376, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 7.28, "tree_rss": 393998336, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 7.81, "tree_rss": 424325120, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 8.33, "tree_rss": 446029824, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 8.84, "tree_rss": 495841280, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 9.36, "tree_rss": 530509824, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 9.88, "tree_rss": 574988288, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 10.39, "tree_rss": 579395584, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 10.92, "tree_rss": 577495040, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 11.44, "tree_rss": 578977792, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 11.95, "tree_rss": 581001216, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 12.48, "tree_rss": 582389760, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 13.0, "tree_rss": 583204864, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 13.52, "tree_rss": 578265088, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 14.03, "tree_rss": 77074432, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 14.55, "tree_rss": 177831936, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 15.06, "tree_rss": 242556928, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 15.58, "tree_rss": 244822016, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 16.09, "tree_rss": 297455616, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 16.61, "tree_rss": 388898816, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 17.14, "tree_rss": 456052736, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 17.66, "tree_rss": 529072128, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 18.17, "tree_rss": 597860352, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 18.69, "tree_rss": 610717696, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 19.23, "tree_rss": 611467264, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 19.75, "tree_rss": 607387648, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate "}
+{"t": 20.27, "tree_rss": 165531648, "progress": "tests/engine/test_p02_t04_primitive_semantics.py::test_what_pob_does_not_supply_is_always_a_gap PASSED [100%]"}

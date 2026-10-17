@@ -1,0 +1,27 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 18 items
+
+tests/engine/test_p02_t04_primitive_semantics.py::test_hit_dps_is_damage_per_use_times_the_use_rate PASSED [  5%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_damage_per_use_already_contains_hit_probability_and_crit PASSED [ 11%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_extra_projectiles_do_not_multiply_single_target_damage PASSED [ 16%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_damage_over_time_is_a_rate_that_duration_does_not_change PASSED [ 22%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_a_meta_gem_does_not_change_the_socketed_spell_s_cadence PASSED [ 27%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_no_meta_gem_in_the_pinned_catalog_declares_a_trigger_rate[Cast on Critical] PASSED [ 33%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_no_meta_gem_in_the_pinned_catalog_declares_a_trigger_rate[Cast on Block] PASSED [ 38%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_no_meta_gem_in_the_pinned_catalog_declares_a_trigger_rate[Cast on Dodge] PASSED [ 44%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_no_meta_gem_in_the_pinned_catalog_declares_a_trigger_rate[Cast on Minion Death] PASSED [ 50%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_no_meta_gem_in_the_pinned_catalog_declares_a_trigger_rate[Cast on Elemental Ailment] PASSED [ 55%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_a_cooldown_becomes_the_use_rate PASSED [ 61%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_a_skill_without_a_cooldown_reports_a_gap_not_a_zero PASSED [ 66%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_combined_dps_changes_unit_with_the_skill PASSED [ 72%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_full_dps_aggregates_groups_and_includes_damage_over_time PASSED [ 77%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_the_cost_per_second_is_the_cost_per_use_times_the_rate PASSED [ 83%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_the_radius_carries_pobs_own_metre_conversion PASSED [ 88%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_every_declared_primitive_has_one_owner_and_one_unit PASSED [ 94%]
+tests/engine/test_p02_t04_primitive_semantics.py::test_what_pob_does_not_supply_is_always_a_gap PASSED [100%]
+
+============================= 18 passed in 19.91s =============================

@@ -1,0 +1,23 @@
+{"t": 0.02, "tree_rss": 2187264, "progress": ""}
+{"t": 0.53, "tree_rss": 36556800, "progress": ""}
+{"t": 1.05, "tree_rss": 63541248, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 1.58, "tree_rss": 143851520, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 2.09, "tree_rss": 247222272, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 2.61, "tree_rss": 261705728, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 3.12, "tree_rss": 259420160, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 3.64, "tree_rss": 339611648, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 4.16, "tree_rss": 419647488, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 4.67, "tree_rss": 429293568, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 5.19, "tree_rss": 452128768, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 5.7, "tree_rss": 463216640, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 6.23, "tree_rss": 445673472, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 6.75, "tree_rss": 467537920, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 7.25, "tree_rss": 469082112, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 7.78, "tree_rss": 469082112, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 8.3, "tree_rss": 469082112, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 8.81, "tree_rss": 469729280, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 9.33, "tree_rss": 489676800, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 9.84, "tree_rss": 492118016, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_engine_reports_the_state_it_holds_after_an_exact_load "}
+{"t": 10.36, "tree_rss": 517242880, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_a_document_pob_imports_cleanly_can_still_be_illegal "}
+{"t": 10.89, "tree_rss": 585400320, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_faithful_record_agrees_with_the_engine "}
+{"t": 11.41, "tree_rss": 567734272, "progress": "tests/engine/test_p02_t03_legality_engine.py::test_the_live_profile_still_carries_no_slot_categories PASSED [100%]"}

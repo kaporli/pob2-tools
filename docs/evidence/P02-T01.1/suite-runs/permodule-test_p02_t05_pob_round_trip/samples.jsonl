@@ -1,0 +1,13 @@
+{"t": 0.03, "tree_rss": 2142208, "progress": ""}
+{"t": 0.55, "tree_rss": 36270080, "progress": ""}
+{"t": 1.06, "tree_rss": 103170048, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 1.58, "tree_rss": 177029120, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 2.12, "tree_rss": 203526144, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 2.64, "tree_rss": 193740800, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 3.16, "tree_rss": 195244032, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 3.67, "tree_rss": 241156096, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 4.19, "tree_rss": 308281344, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 4.7, "tree_rss": 322183168, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 5.22, "tree_rss": 367321088, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 5.73, "tree_rss": 382865408, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob "}
+{"t": 6.25, "tree_rss": 417492992, "progress": "tests/engine/test_p02_t05_pob_round_trip.py::test_the_comparison_would_notice_a_damaged_export "}

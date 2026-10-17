@@ -1,0 +1,22 @@
+{
+  "run": "permodule-test_f12_item_conversion_golden",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+  "plugin": false,
+  "head": "f75fe0a01931b3f857696b707f304083d9a82d5b",
+  "seed": "31",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine/test_f12_item_conversion_golden.py"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 3072,
+  "peak_tree_rss": 447770624,
+  "elapsed_s": 7.4,
+  "python": "3.12.4",
+  "last_line": "============================== 8 passed in 6.48s =============================="
+}

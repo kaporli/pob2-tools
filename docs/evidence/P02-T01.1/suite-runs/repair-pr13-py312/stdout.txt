@@ -1,0 +1,29 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 20 items
+
+tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported PASSED [  5%]
+tests/engine/test_p02_t01_1_memory_bound.py::test_repeated_losses_stop_without_unlimited_replacement PASSED [ 10%]
+tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results PASSED [ 15%]
+tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only PASSED [ 20%]
+tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[None] PASSED [ 25%]
+tests/engine/test_p02_t01_engine_adapter.py::test_partial_state_failure_restores_document_baseline[90] PASSED [ 30%]
+tests/engine/test_p02_t01_engine_adapter.py::test_the_worker_moves_into_the_pob_tree_and_the_parent_does_not PASSED [ 35%]
+tests/engine/test_p02_t01_engine_adapter.py::test_the_identity_names_the_running_checkout PASSED [ 40%]
+tests/engine/test_p02_t01_engine_adapter.py::test_an_exact_load_keeps_the_tree_the_gear_and_the_socket_groups PASSED [ 45%]
+tests/engine/test_p02_t01_engine_adapter.py::test_create_blank_build_still_clears_the_character PASSED [ 50%]
+tests/engine/test_p02_t01_engine_adapter.py::test_a_malformed_document_is_invalid_input_not_a_default_character PASSED [ 55%]
+tests/engine/test_p02_t01_engine_adapter.py::test_the_evaluation_after_a_rejected_document_is_not_a_blank_character PASSED [ 60%]
+tests/engine/test_p02_t01_engine_adapter.py::test_aba_through_the_adapter_returns_identical_primitives PASSED [ 65%]
+tests/engine/test_p02_t01_engine_adapter.py::test_two_documents_sharing_a_build_hash_are_not_confused PASSED [ 70%]
+tests/engine/test_p02_t01_engine_adapter.py::test_configuration_does_not_leak_into_the_next_evaluation PASSED [ 75%]
+tests/engine/test_p02_t01_engine_adapter.py::test_an_identical_repeated_request_does_not_reload PASSED [ 80%]
+tests/engine/test_p02_t01_engine_adapter.py::test_repeating_one_request_is_stable PASSED [ 85%]
+tests/engine/test_p02_t01_engine_adapter.py::test_a_snapshot_declares_its_primitive_semantics PASSED [ 90%]
+tests/engine/test_p02_t01_engine_adapter.py::test_the_identity_names_the_helper_scripts_that_ran PASSED [ 95%]
+tests/engine/test_p02_t01_engine_adapter.py::test_a_killed_worker_is_replaced_and_the_next_request_succeeds PASSED [100%]
+
+============================= 20 passed in 47.82s =============================
