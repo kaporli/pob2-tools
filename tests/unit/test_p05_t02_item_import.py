@@ -63,6 +63,80 @@ def by_listing(result):
             for listing in result.listings}
 
 
+@pytest.mark.parametrize("ending", ["", "\n--------\nNote: fixture"])
+def test_unterminated_reminder_refuses_the_item_and_capture(ending):
+    text = fx.game_items()["ring_shared_name_a"].replace(
+        "+21 to Dexterity", "(unterminated reminder\n+21 to Dexterity") + ending
+    out = read_item_text(text, fx.document(text.encode(), media_type="text/plain"),
+                         fx.context(), record_id="bad-reminder")
+    assert out.item is None
+    assert out.refused.reason == "unterminated_reminder"
+    data = fx.capture_data()
+    data["entries"][0]["item_text"] = text
+    result = example5(data)
+    assert result.result.status is ParseResultStatus.INVALID
+    assert not result.items and not result.listings
+
+
+@pytest.mark.parametrize("reminder", ["(valid reminder)", "(valid reminder\non two lines)"])
+def test_closed_reminder_preserves_following_modifiers(reminder):
+    text = fx.game_items()["ring_shared_name_a"].replace(
+        "+21 to Dexterity", reminder + "\n+21 to Dexterity")
+    out = read_item_text(text, fx.document(text.encode(), media_type="text/plain"),
+                         fx.context(), record_id="closed-reminder")
+    assert out.status is ParseResultStatus.COMPLETE
+    assert out.item.item_hash == read("ring_shared_name_a").item.item_hash
+    assert any(m.text == "+21 to Dexterity" for m in out.item.modifiers)
+
+
+def capture_with_timestamp(location, timestamp):
+    data = fx.capture_data()
+    if location == "capture":
+        data["observed_at"] = timestamp
+    else:
+        data["entries"][0]["listing"][location] = timestamp
+    return data
+
+
+@pytest.mark.parametrize("location", ["capture", "observed_at", "listed_at"])
+@pytest.mark.parametrize("timestamp", [
+    "2026-02-30T18:00:00Z", "2026-13-16T25:00:00Z", "2025-02-29T18:00:00Z",
+    "2026-10-16T24:00:00Z", "2026-10-16T18:60:00Z", "2026-10-16T18:00:00Z\n",
+])
+def test_impossible_capture_dates_are_invalid(location, timestamp):
+    data = capture_with_timestamp(location, timestamp)
+    capture, issues = capture_module.read_capture(json.dumps(data))
+    assert capture is None
+    path = "/observed_at" if location == "capture" else "/entries/0/listing/" + location
+    assert any(i.code == "invalid_timestamp" and i.field_path == path for i in issues)
+    result = example5(data)
+    assert result.result.status is ParseResultStatus.INVALID
+    assert not result.items and not result.listings
+
+
+@pytest.mark.parametrize("location", ["capture", "observed_at", "listed_at"])
+@pytest.mark.parametrize("timestamp", ["2024-02-29T23:59:59Z", "2026-10-16T18:00:00.123456Z"])
+def test_valid_capture_dates_preserve_source_value(location, timestamp):
+    data = capture_with_timestamp(location, timestamp)
+    capture, issues = capture_module.read_capture(json.dumps(data))
+    assert not issues
+    value = capture.observed_at if location == "capture" else getattr(capture.entries[0].listing, location)
+    assert value == timestamp
+    assert example5(data).result.status is ParseResultStatus.COMPLETE
+
+
+@pytest.mark.parametrize("location", ["capture", "observed_at", "listed_at"])
+def test_cli_rejects_impossible_dates_without_storing_listings(location, tmp_path, bundle, capsys):
+    path = tmp_path / "capture.json"
+    path.write_bytes(fx.capture_bytes(capture_with_timestamp(location, "2026-02-30T18:00:00Z")))
+    corpus = tmp_path / "corpus"
+    code, report = run_import(path, corpus, bundle, capsys)
+    assert code == 2 and report["status"] == "invalid"
+    with RunStore.open_corpus(corpus) as store:
+        assert not list(store.iter_normalized("listing"))
+        assert not list(store.iter_normalized("item_instance"))
+
+
 # ---------------------------------------------------------- acceptance ===
 
 def test_acceptance_same_name_different_roll_items_remain_distinct():

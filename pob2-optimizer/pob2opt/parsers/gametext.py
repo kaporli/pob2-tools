@@ -286,6 +286,12 @@ def import_game_item(text: str, naming: CatalogNaming, *, record_id: str,
                 flags={name: True for name in markers if name in FLAG_MARKERS},
                 parse_status=status))
 
+        if in_reminder:
+            raise GameTextRefused(
+                "unterminated_reminder",
+                "a reminder must close before the end of its section; "
+                "otherwise subsequent modifiers cannot be read safely")
+
     item = ItemInstance(
         schema_version=1, record_id=record_id, created_at=created_at,
         provenance_ids=list(provenance_ids), item_hash="",

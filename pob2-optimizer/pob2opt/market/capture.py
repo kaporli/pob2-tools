@@ -38,6 +38,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any
 
 from ..parsers.formats import MARKET_CAPTURE_FORMAT
@@ -117,10 +118,15 @@ class _Reader:
     def timestamp(self, value: dict, key: str, path: str, *,
                   nullable: bool = False) -> str | None:
         found = self.text(value, key, path, nullable=nullable)
-        if found is not None and not _TIMESTAMP.match(found):
-            self.fail("invalid_timestamp", "%s/%s" % (path, key),
-                      "an RFC 3339 UTC timestamp ending in Z is required")
-            return None
+        if found is not None:
+            try:
+                if not _TIMESTAMP.fullmatch(found):
+                    raise ValueError("invalid UTC representation")
+                datetime.fromisoformat(found[:-1] + "+00:00")
+            except ValueError:
+                self.fail("invalid_timestamp", "%s/%s" % (path, key),
+                          "a valid RFC 3339 UTC timestamp ending in Z is required")
+                return None
         return found
 
 
