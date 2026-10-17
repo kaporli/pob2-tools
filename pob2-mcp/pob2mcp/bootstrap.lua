@@ -625,8 +625,104 @@ handlers.catalog_gems = function(args)
 			grantedEffectId = gem.grantedEffectId,
 			isSupport = (effect and effect.support) and true or false,
 			grantedEffectName = effect and effect.name or nil,
+			weaponRequirements = gem.weaponRequirements,
 		}
 	end, "gems")
+end
+
+-- P02-T02.1. Skill type numbers as upstream names, in upstream order, so a
+-- support's type expression (postfix, with OR/AND/NOT) stays readable.
+local catalogSkillTypeNames
+local function skillTypeName(value)
+	if not catalogSkillTypeNames then
+		catalogSkillTypeNames = {}
+		for name, number in pairs(SkillType or {}) do catalogSkillTypeNames[number] = name end
+	end
+	return catalogSkillTypeNames[value] or tostring(value)
+end
+
+local function typeNames(list)
+	local out = {}
+	for _, value in ipairs(list or {}) do out[#out + 1] = skillTypeName(value) end
+	return out
+end
+
+local catalogSupportIds, catalogGemByEffect
+local function supportIds()
+	if not catalogSupportIds then
+		catalogSupportIds = {}
+		for id, skill in pairs(data.skills or {}) do
+			if skill.support then catalogSupportIds[#catalogSupportIds + 1] = tostring(id) end
+		end
+		table.sort(catalogSupportIds)
+		catalogGemByEffect = {}
+		for _, gem in pairs(data.gems or {}) do
+			if gem.grantedEffectId then catalogGemByEffect[gem.grantedEffectId] = gem end
+		end
+	end
+	return catalogSupportIds
+end
+
+-- Supports PoB's own calcLib.canGrantedEffectSupportActiveSkill accepts for
+-- this active skill on its base skill types only. Types added at runtime by
+-- weapons, other supports or minions are not applied, so this is the
+-- catalog's answer, not a build's. A check that raises is reported, not
+-- counted as either answer.
+local function supportMatches(id, skill)
+	if skill.support then return nil, nil end
+	local actor = {}
+	actor.enemy = { player = actor }
+	local probe = {
+		activeEffect = { grantedEffect = skill, gemData = (function()
+			supportIds()
+			return catalogGemByEffect[id]
+		end)() },
+		skillTypes = skill.skillTypes or {},
+		minionSkillTypes = skill.minionSkillTypes,
+		actor = actor,
+	}
+	local accepted, failed = {}, {}
+	for _, supportId in ipairs(supportIds()) do
+		local ok, result = pcall(calcLib.canGrantedEffectSupportActiveSkill, data.skills[supportId], probe)
+		if not ok then
+			failed[#failed + 1] = supportId
+		elseif result then
+			accepted[#accepted + 1] = supportId
+		end
+	end
+	return accepted, failed
+end
+
+local function levelCosts(skill)
+	local levels = {}
+	for level in pairs(skill.levels or {}) do
+		if tonumber(level) then levels[#levels + 1] = tonumber(level) end
+	end
+	table.sort(levels)
+	local out = {}
+	for _, level in ipairs(levels) do
+		local resources = {}
+		for resource in pairs(skill.levels[level].cost or {}) do resources[#resources + 1] = tostring(resource) end
+		table.sort(resources)
+		for _, resource in ipairs(resources) do
+			out[#out + 1] = { level = level, resource = resource, amount = skill.levels[level].cost[resource] }
+		end
+	end
+	return out
+end
+
+local function statSets(skill)
+	local out = {}
+	for index, set in ipairs(skill.statSets or {}) do
+		local constants = {}
+		for _, pair in ipairs(set.constantStats or {}) do
+			constants[#constants + 1] = { tostring(pair[1]), pair[2] }
+		end
+		local stats = {}
+		for _, stat in ipairs(set.stats or {}) do stats[#stats + 1] = tostring(stat) end
+		out[#out + 1] = { index = index, label = set.label, constantStats = constants, stats = stats }
+	end
+	return out
 end
 
 handlers.catalog_granted_skills = function(args)
@@ -636,6 +732,7 @@ handlers.catalog_granted_skills = function(args)
 		local skill = data.skills[id]
 		local levels = 0
 		for _ in pairs(skill.levels or {}) do levels = levels + 1 end
+		local supportedBy, supportCheckErrors = supportMatches(id, skill)
 		return {
 			id = id,
 			name = skill.name,
@@ -652,6 +749,32 @@ handlers.catalog_granted_skills = function(args)
 				return list
 			end)()),
 			levelCount = levels,
+			skillTypeNames = (function()
+				local list = {}
+				for kind, on in pairs(skill.skillTypes or {}) do
+					if on then list[#list + 1] = skillTypeName(kind) end
+				end
+				table.sort(list)
+				return list
+			end)(),
+			weaponTypes = (function()
+				local list = {}
+				for kind, on in pairs(skill.weaponTypes or {}) do
+					if on then list[#list + 1] = tostring(kind) end
+				end
+				table.sort(list)
+				return list
+			end)(),
+			requireSkillTypes = typeNames(skill.requireSkillTypes),
+			addSkillTypes = typeNames(skill.addSkillTypes),
+			excludeSkillTypes = typeNames(skill.excludeSkillTypes),
+			cannotBeSupported = skill.cannotBeSupported and true or false,
+			supportGemsOnly = skill.supportGemsOnly and true or false,
+			isTrigger = skill.isTrigger and true or false,
+			costs = levelCosts(skill),
+			statSets = statSets(skill),
+			supportedBy = supportedBy,
+			supportCheckErrors = supportCheckErrors,
 		}
 	end, "granted_skills")
 end

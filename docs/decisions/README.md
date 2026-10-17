@@ -14,7 +14,7 @@ contracts it affects, the reviewer, and the date.
 |---|---|---|
 | [D01](D01-trade-access.md) | Accepted access disposition | No approved live listing route. Project-owned registration concerns character import only; live-market acceptance remains blocked. |
 | [D02](D02-source-capabilities.md) | No automatic build provider approved | Capability investigations accepted as scoped tasks; provider selection/access and real representations remain unresolved. |
-| D03 | Open for current-game compatibility | Official current-patch evidence and verified pinned PoB/catalog support; P02-T02.1. |
+| D03 | Open for current-game compatibility; P02-T02.1 review_ready | Live patch 0.5.5e captured verbatim and a clean `ce566ea` catalog exported ([worklog](../worklog/P02-T02.1.md)). Still `partial`: no PoB release covers 0.5.5e (latest 0.23.1, 2026-07-28), and the slot-category gap blocks. |
 | [D04](D04-encounter-suite.md) | Synthetic protocol accepted; practical evidence open | Flicker scope, representative encounters/reference results and controlled-DPS observations; P09-T01.1. Old Huntress selection superseded by D07. |
 | D05 | Implemented mappings accepted within P02/P04 review scope | No blanket coverage approval for new effects or all game content; new Flicker dependencies require coverage/evidence review. |
 | D06 | Provisional thresholds, practical acceptance open | Feasible observation protocol, independent splits and sufficient held-out evidence, including the new DPS objective. |

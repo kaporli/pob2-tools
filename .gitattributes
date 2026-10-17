@@ -10,3 +10,8 @@ tests/fixtures/** -text
 
 # The Lua probe is executed by a luajit subprocess; keep its bytes stable too.
 tests/integration/lua/*.lua -text
+
+# Official pages captured byte for byte (P02-T02.1). Their SHA-256 is recorded
+# beside them, so line endings must not be rewritten.
+docs/evidence/P02/release/*.html -text
+docs/evidence/P02-T02.1/official/** -text

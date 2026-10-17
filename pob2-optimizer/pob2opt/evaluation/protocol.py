@@ -30,8 +30,10 @@ from .primitives import (SEMANTICS_OWNER, SEMANTICS_VERSION, DeclaredPrimitive,
 #: p02-t02.0 added the read-only catalog operation. p02-t03.0 adds the
 #: read-only legality-state operation. The primitive path is unchanged in
 #: both, but the adapter can ask the engine for something new, which is what
-#: this string is for.
-ADAPTER_VERSION = "p02.1"
+#: this string is for. p02.2 (P02-T02.1) widens the gem and granted-skill
+#: catalog rows: weapon restrictions, skill type names, support type
+#: expressions, costs, stat sets and PoB's own static support matches.
+ADAPTER_VERSION = "p02.2"
 
 #: Owner of primitive units, included effects and excluded effects.
 PRIMITIVE_SEMANTICS_OWNER = SEMANTICS_OWNER

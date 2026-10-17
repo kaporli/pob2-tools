@@ -194,7 +194,8 @@ def test_a_different_upstream_commit_is_a_different_context(export):
 
 
 def test_a_modified_working_tree_is_a_different_context(export):
-    other = dataclasses.replace(export.profile, pob_dirty_hash=None)
+    # The slice is recorded from a clean tree (P02-T02.1), so dirty it.
+    other = dataclasses.replace(export.profile, pob_dirty_hash="d" * 64)
     assert evaluation_context_hash(other) != evaluation_context_hash(export.profile)
 
 

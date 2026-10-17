@@ -1,0 +1,1857 @@
+{
+ "behaviour": {
+  "flicker_alone": {
+   "document": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PathOfBuilding2>\n\t<Build ascendClassName=\"None\" characterLevelAutoMode=\"true\" className=\"Ranger\" level=\"1\" mainSocketGroup=\"2\" targetVersion=\"0_1\" viewMode=\"TREE\">\n\t\t<PlayerStat stat=\"AverageDamage\" value=\"23.491048321917\"/>\n\t\t<PlayerStat stat=\"AverageBurstDamage\" value=\"23.491048321917\"/>\n\t\t<PlayerStat stat=\"Speed\" value=\"3.5035\"/>\n\t\t<PlayerStat stat=\"PreEffectiveCritChance\" value=\"10\"/>\n\t\t<PlayerStat stat=\"CritChance\" value=\"2.4\"/>\n\t\t<PlayerStat stat=\"CritMultiplier\" value=\"2\"/>\n\t\t<PlayerStat stat=\"HitChance\" value=\"24\"/>\n\t\t<PlayerStat stat=\"TotalDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"TotalDot\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WithBleedDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"WithIgniteDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"WithPoisonDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"TotalDotDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"CullingDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ReservationDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"CombinedDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"ManaCost\" value=\"85\"/>\n\t\t<PlayerStat stat=\"ManaPercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ManaPerSecondCost\" value=\"297.7975\"/>\n\t\t<PlayerStat stat=\"ManaPercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifeCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESPercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardPercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"RageCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SoulCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Str\" value=\"7\"/>\n\t\t<PlayerStat stat=\"Dex\" value=\"15\"/>\n\t\t<PlayerStat stat=\"ReqDex\" value=\"86\"/>\n\t\t<PlayerStat stat=\"Int\" value=\"7\"/>\n\t\t<PlayerStat stat=\"ReqInt\" value=\"86\"/>\n\t\t<PlayerStat stat=\"Devotion\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Tribute\" value=\"0\"/>\n\t\t<PlayerStat stat=\"TotalEHP\" value=\"47.757152907182\"/>\n\t\t<PlayerStat stat=\"PhysicalMaximumHitTaken\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LightningMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"FireMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"ColdMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"ChaosMaximumHitTaken\" value=\"65\"/>\n\t\t<PlayerStat stat=\"MainHandAccuracy\" value=\"90\"/>\n\t\t<PlayerStat stat=\"Darkness\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ReservedDarkness\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spirit\" value=\"100\"/>\n\t\t<PlayerStat stat=\"SpiritUnreserved\" value=\"100\"/>\n\t\t<PlayerStat stat=\"SpiritUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"Life\" value=\"65\"/>\n\t\t<PlayerStat stat=\"Spec:LifeInc\" value=\"5\"/>\n\t\t<PlayerStat stat=\"LifeUnreserved\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LifeRecoverable\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LifeUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"LifeRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifeLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Mana\" value=\"50\"/>\n\t\t<PlayerStat stat=\"Spec:ManaInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ManaUnreserved\" value=\"50\"/>\n\t\t<PlayerStat stat=\"ManaUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"ManaRegenRecovery\" value=\"2\"/>\n\t\t<PlayerStat stat=\"ManaLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShield\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldRecoveryCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spec:EnergyShieldInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Ward\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"RageRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Evasion\" value=\"7\"/>\n\t\t<PlayerStat stat=\"Spec:EvasionInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"MeleeEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ProjectileEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellProjectileEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"DeflectionRating\" value=\"0\"/>\n\t\t<PlayerStat stat=\"DeflectChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Armour\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spec:ArmourInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"PhysicalDamageReduction\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveBlockChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveSpellBlockChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"AttackDodgeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellDodgeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveSpellSuppressionChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"FireResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"FireResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ColdResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"ColdResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LightningResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"LightningResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ChaosResist\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ChaosResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveMovementSpeedMod\" value=\"1\"/>\n\t\t<PlayerStat stat=\"PresenceRadiusMetres\" value=\"4\"/>\n\t\t<PlayerStat stat=\"FullDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"FullDotDPS\" value=\"0\"/>\n\t\t<FullDPSSkill skillPart=\"\" source=\"\" stat=\"Flicker Strike\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"PowerCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"PowerChargesMax\" value=\"3\"/>\n\t\t<PlayerStat stat=\"FrenzyCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"FrenzyChargesMax\" value=\"3\"/>\n\t\t<PlayerStat stat=\"EnduranceCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnduranceChargesMax\" value=\"3\"/>\n\t\t<Buffs buffList=\"\" combatList=\"\" curseList=\"\"/>\n\t\t<TimelessData devotionVariant1=\"1\" devotionVariant2=\"1\" searchList=\"\" searchListFallback=\"\"/>\n\t</Build>\n\t<Calcs>\n\t\t<Input name=\"misc_buffMode\" string=\"EFFECTIVE\"/>\n\t\t<Input name=\"skill_number\" number=\"2\"/>\n\t\t<Section collapsed=\"false\" id=\"SkillSelect\" subsection=\"ViewSkillDetails\"/>\n\t\t<Section collapsed=\"false\" id=\"HitDamage\" subsection=\"SkillHitDamage\"/>\n\t\t<Section collapsed=\"false\" id=\"Warcries\" subsection=\"EmpoweredStats\"/>\n\t\t<Section collapsed=\"false\" id=\"Dot\" subsection=\"SkillDamageoverTime\"/>\n\t\t<Section collapsed=\"false\" id=\"Speed\" subsection=\"AttackCastRate\"/>\n\t\t<Section collapsed=\"false\" id=\"Crit\" subsection=\"Crits\"/>\n\t\t<Section collapsed=\"false\" id=\"Impale\" subsection=\"Impale\"/>\n\t\t<Section collapsed=\"false\" id=\"SkillTypeStats\" subsection=\"SkilltypespecificStats\"/>\n\t\t<Section collapsed=\"false\" id=\"HitChance\" subsection=\"Accuracy\"/>\n\t\t<Section collapsed=\"false\" id=\"Bleed\" subsection=\"Bleed\"/>\n\t\t<Section collapsed=\"false\" id=\"Poison\" subsection=\"Poison\"/>\n\t\t<Section collapsed=\"false\" id=\"Ignite\" subsection=\"Ignite\"/>\n\t\t<Section collapsed=\"false\" id=\"Decay\" subsection=\"Decay\"/>\n\t\t<Section collapsed=\"false\" id=\"LeechGain\" subsection=\"LeechGainonHit\"/>\n\t\t<Section collapsed=\"false\" id=\"EleAilments\" subsection=\"NonDamagingAilments\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscEffects\" subsection=\"OtherEffects\"/>\n\t\t<Section collapsed=\"false\" id=\"Attributes\" subsection=\"Attributes\"/>\n\t\t<Section collapsed=\"false\" id=\"Life\" subsection=\"Life\"/>\n\t\t<Section collapsed=\"false\" id=\"Mana\" subsection=\"Mana\"/>\n\t\t<Section collapsed=\"false\" id=\"Spirit\" subsection=\"Spirit\"/>\n\t\t<Section collapsed=\"false\" id=\"EnergyShield\" subsection=\"EnergyShield\"/>\n\t\t<Section collapsed=\"false\" id=\"Ward\" subsection=\"RunicWard\"/>\n\t\t<Section collapsed=\"false\" id=\"Resist\" subsection=\"Resists\"/>\n\t\t<Section collapsed=\"false\" id=\"Armour\" subsection=\"Armour\"/>\n\t\t<Section collapsed=\"false\" id=\"Evasion\" subsection=\"Evasion\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"DamageAvoidance\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Block\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Dodge\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Deflection\"/>\n\t\t<Section collapsed=\"false\" id=\"Flasks\" subsection=\"Flasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"UtilityFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"LifeFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"ManaFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"Charms\"/>\n\t\t<Section collapsed=\"true\" id=\"Rage\" subsection=\"Rage\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Charges\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Endurance\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Frenzy\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Power\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscDefences\" subsection=\"OtherDefences\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscDefences\" subsection=\"StunDuration\"/>\n\t\t<Section collapsed=\"true\" id=\"MiscDefences\" subsection=\"OtherAvoidance\"/>\n\t\t<Section collapsed=\"true\" id=\"MiscDefences\" subsection=\"OtherAilmentDefences\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DamageTaken\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DamagingHits\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"EffectiveHealthPool\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"MaximumHitTaken\"/>\n\t\t<Section collapsed=\"true\" id=\"DamageTaken\" subsection=\"RecoupandHitTakenOverTime\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DotsandBuildDegens\"/>\n\t\t<Section collapsed=\"true\" id=\"DamageTaken\" subsection=\"EnemyDegens\"/>\n\t</Calcs>\n\t<Config activeConfigSet=\"1\">\n\t\t<ConfigSet id=\"1\">\n\t\t\t<Input name=\"enemyLevel\" number=\"90\"/>\n\t\t\t<Placeholder name=\"ChillStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"ScorchStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"ShockStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"conditionCorruptingCryStages\" number=\"10\"/>\n\t\t\t<Placeholder name=\"demonFormStacks\" number=\"10\"/>\n\t\t\t<Placeholder name=\"enemyArmour\" number=\"9533\"/>\n\t\t\t<Placeholder name=\"enemyChaosDamage\" number=\"420\"/>\n\t\t\t<Placeholder name=\"enemyChaosResist\" number=\"0\"/>\n\t\t\t<Placeholder name=\"enemyColdDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyColdPen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyColdResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyCritChance\" number=\"5\"/>\n\t\t\t<Placeholder name=\"enemyCritDamage\" number=\"30\"/>\n\t\t\t<Placeholder name=\"enemyCriticalWeaknessStacks\" number=\"20\"/>\n\t\t\t<Placeholder name=\"enemyDamageRollRange\" number=\"70\"/>\n\t\t\t<Placeholder name=\"enemyDistance\" number=\"20\"/>\n\t\t\t<Placeholder name=\"enemyEvasion\" number=\"1244\"/>\n\t\t\t<Placeholder name=\"enemyFireDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyFirePen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyFireResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyLevel\" number=\"82\"/>\n\t\t\t<Placeholder name=\"enemyLightningDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyLightningPen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyLightningResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyPhysicalDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemySpeed\" number=\"700\"/>\n\t\t\t<Placeholder name=\"multiplierCurrentEnergyShield\" number=\"100\"/>\n\t\t\t<Placeholder name=\"multiplierDifferentAmmoFired\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierDifferentGrenadeFired\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierStunnedRecently\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierWarcryUsedRecently\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierWitheredStackCountSelf\" number=\"15\"/>\n\t\t\t<Placeholder name=\"sigilOfPowerStages\" number=\"1\"/>\n\t\t\t<CustomModifierBlock enabled=\"true\" title=\"Default\">\n\t\t\t\t\n\t\t\t</CustomModifierBlock>\n\t\t</ConfigSet>\n\t</Config>\n\t<Import exportParty=\"false\" useGeneratedItemText=\"true\"/>\n\t<Items activeItemSet=\"1\" showStatDifferences=\"true\" useSecondWeaponSet=\"nil\">\n\t\t<Item id=\"1\">\n\t\t\tRarity: RARE\nFixture Stave\nLong Quarterstaff\nItem Level: 82\nQuality: 20\nLevelReq: 0\nImplicits: 0\nAdds 60 to 90 Physical Damage\n30% increased Attack Speed\n\t\t\t<ModRange id=\"1\" range=\"0.5\"/>\n\t\t\t<ModRange id=\"2\" range=\"0.5\"/>\n\t\t</Item>\n\t\t<ItemSet id=\"1\" title=\"Default\" useSecondWeaponSet=\"nil\">\n\t\t\t<Slot itemId=\"1\" itemPbURL=\"\" name=\"Weapon 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 1 Swap\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 2 Swap\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Helmet\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Body Armour\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Gloves\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Boots\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Amulet\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 3\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Belt\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 3\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Flask 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Flask 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Arm 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Arm 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Leg 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Leg 2\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Helmet Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Body Armour Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Body Armour Rune #2\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Gloves Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Boots Rune #1\"/>\n\t\t</ItemSet>\n\t</Items>\n\t<Notes>\n\t\t\n\t</Notes>\n\t<Party ShowAdvanceTools=\"false\" append=\"false\" destination=\"All\"/>\n\t<Skills activeSkillSet=\"1\" defaultGemLevel=\"normalMaximum\" defaultGemQuality=\"nil\" showLegacyGems=\"false\" showSupportGemTypes=\"ALL\" sortGemsByDPS=\"true\" sortGemsByDPSField=\"CombinedDPS\">\n\t\t<SkillSet id=\"1\">\n\t\t\t<Skill enabled=\"true\" includeInFullDPS=\"nil\" label=\"\" mainActiveSkill=\"1\" mainActiveSkillCalcs=\"1\" set1=\"true\" set2=\"false\" slot=\"Weapon 1\" source=\"Default Attack\">\n\t\t\t\t<Gem corruptLevel=\"0\" corrupted=\"false\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gem/SkillGemPlayerDefaultQuarterstaff\" level=\"1\" nameSpec=\"Quarterstaff Strike\" quality=\"0\" skillId=\"MeleeQuarterstaffPlayer\" variantId=\"PlayerDefaultQuarterstaff\"/>\n\t\t\t</Skill>\n\t\t\t<Skill enabled=\"true\" includeInFullDPS=\"true\" label=\"OPT: Flicker Strike\" mainActiveSkill=\"1\" mainActiveSkillCalcs=\"1\" set1=\"true\" set2=\"true\">\n\t\t\t\t<Gem corruptLevel=\"nil\" corrupted=\"nil\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gems/SkillGemFlickerStrike\" level=\"20\" nameSpec=\"Flicker Strike\" quality=\"0\" skillId=\"FlickerStrikePlayer\" variantId=\"FlickerStrike\"/>\n\t\t\t</Skill>\n\t\t</SkillSet>\n\t</Skills>\n\t<Tree activeSpec=\"1\">\n\t\t<Spec ascendClassId=\"0\" ascendancyInternalId=\"\" classId=\"2\" classInternalId=\"2\" masteryEffects=\"\" nodes=\"50459\" secondaryAscendClassId=\"nil\" treeVersion=\"0_5\">\n\t\t\t<URL>\n\t\t\t\thttps://www.pathofexile.com/passive-skill-tree/AAAABgIAAAAA\n\t\t\t</URL>\n\t\t\t<Sockets/>\n\t\t\t<Overrides>\n\t\t\t\t<AttributeOverride dexNodes=\"\" intNodes=\"\" strNodes=\"\"/>\n\t\t\t</Overrides>\n\t\t</Spec>\n\t</Tree>\n\t<TreeView searchStr=\"\" showStatDifferences=\"true\" zoomLevel=\"3\" zoomX=\"0\" zoomY=\"0\"/>\n</PathOfBuilding2>\n",
+   "support": null,
+   "values": {
+    "AverageDamage": 23.491048321917,
+    "CritChance": 2.4,
+    "ManaCost": 85,
+    "Speed": 3.5035
+   }
+  },
+  "flicker_fork": {
+   "document": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PathOfBuilding2>\n\t<Build ascendClassName=\"None\" characterLevelAutoMode=\"true\" className=\"Ranger\" level=\"1\" mainSocketGroup=\"2\" targetVersion=\"0_1\" viewMode=\"TREE\">\n\t\t<PlayerStat stat=\"AverageDamage\" value=\"23.491048321917\"/>\n\t\t<PlayerStat stat=\"AverageBurstDamage\" value=\"23.491048321917\"/>\n\t\t<PlayerStat stat=\"Speed\" value=\"3.5035\"/>\n\t\t<PlayerStat stat=\"PreEffectiveCritChance\" value=\"10\"/>\n\t\t<PlayerStat stat=\"CritChance\" value=\"2.4\"/>\n\t\t<PlayerStat stat=\"CritMultiplier\" value=\"2\"/>\n\t\t<PlayerStat stat=\"HitChance\" value=\"24\"/>\n\t\t<PlayerStat stat=\"TotalDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"TotalDot\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WithBleedDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"WithIgniteDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"WithPoisonDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"TotalDotDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"CullingDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ReservationDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"CombinedDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"ManaCost\" value=\"85\"/>\n\t\t<PlayerStat stat=\"ManaPercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ManaPerSecondCost\" value=\"297.7975\"/>\n\t\t<PlayerStat stat=\"ManaPercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifeCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESPercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardPercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"RageCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SoulCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Str\" value=\"7\"/>\n\t\t<PlayerStat stat=\"Dex\" value=\"15\"/>\n\t\t<PlayerStat stat=\"ReqDex\" value=\"86\"/>\n\t\t<PlayerStat stat=\"Int\" value=\"7\"/>\n\t\t<PlayerStat stat=\"ReqInt\" value=\"86\"/>\n\t\t<PlayerStat stat=\"Devotion\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Tribute\" value=\"0\"/>\n\t\t<PlayerStat stat=\"TotalEHP\" value=\"47.757152907182\"/>\n\t\t<PlayerStat stat=\"PhysicalMaximumHitTaken\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LightningMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"FireMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"ColdMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"ChaosMaximumHitTaken\" value=\"65\"/>\n\t\t<PlayerStat stat=\"MainHandAccuracy\" value=\"90\"/>\n\t\t<PlayerStat stat=\"Darkness\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ReservedDarkness\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spirit\" value=\"100\"/>\n\t\t<PlayerStat stat=\"SpiritUnreserved\" value=\"100\"/>\n\t\t<PlayerStat stat=\"SpiritUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"Life\" value=\"65\"/>\n\t\t<PlayerStat stat=\"Spec:LifeInc\" value=\"5\"/>\n\t\t<PlayerStat stat=\"LifeUnreserved\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LifeRecoverable\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LifeUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"LifeRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifeLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Mana\" value=\"50\"/>\n\t\t<PlayerStat stat=\"Spec:ManaInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ManaUnreserved\" value=\"50\"/>\n\t\t<PlayerStat stat=\"ManaUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"ManaRegenRecovery\" value=\"2\"/>\n\t\t<PlayerStat stat=\"ManaLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShield\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldRecoveryCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spec:EnergyShieldInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Ward\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"RageRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Evasion\" value=\"7\"/>\n\t\t<PlayerStat stat=\"Spec:EvasionInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"MeleeEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ProjectileEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellProjectileEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"DeflectionRating\" value=\"0\"/>\n\t\t<PlayerStat stat=\"DeflectChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Armour\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spec:ArmourInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"PhysicalDamageReduction\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveBlockChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveSpellBlockChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"AttackDodgeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellDodgeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveSpellSuppressionChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"FireResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"FireResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ColdResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"ColdResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LightningResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"LightningResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ChaosResist\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ChaosResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveMovementSpeedMod\" value=\"1\"/>\n\t\t<PlayerStat stat=\"PresenceRadiusMetres\" value=\"4\"/>\n\t\t<PlayerStat stat=\"FullDPS\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"FullDotDPS\" value=\"0\"/>\n\t\t<FullDPSSkill skillPart=\"\" source=\"\" stat=\"Flicker Strike\" value=\"82.300887795837\"/>\n\t\t<PlayerStat stat=\"PowerCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"PowerChargesMax\" value=\"3\"/>\n\t\t<PlayerStat stat=\"FrenzyCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"FrenzyChargesMax\" value=\"3\"/>\n\t\t<PlayerStat stat=\"EnduranceCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnduranceChargesMax\" value=\"3\"/>\n\t\t<Buffs buffList=\"\" combatList=\"\" curseList=\"\"/>\n\t\t<TimelessData devotionVariant1=\"1\" devotionVariant2=\"1\" searchList=\"\" searchListFallback=\"\"/>\n\t</Build>\n\t<Calcs>\n\t\t<Input name=\"misc_buffMode\" string=\"EFFECTIVE\"/>\n\t\t<Input name=\"skill_number\" number=\"2\"/>\n\t\t<Section collapsed=\"false\" id=\"SkillSelect\" subsection=\"ViewSkillDetails\"/>\n\t\t<Section collapsed=\"false\" id=\"HitDamage\" subsection=\"SkillHitDamage\"/>\n\t\t<Section collapsed=\"false\" id=\"Warcries\" subsection=\"EmpoweredStats\"/>\n\t\t<Section collapsed=\"false\" id=\"Dot\" subsection=\"SkillDamageoverTime\"/>\n\t\t<Section collapsed=\"false\" id=\"Speed\" subsection=\"AttackCastRate\"/>\n\t\t<Section collapsed=\"false\" id=\"Crit\" subsection=\"Crits\"/>\n\t\t<Section collapsed=\"false\" id=\"Impale\" subsection=\"Impale\"/>\n\t\t<Section collapsed=\"false\" id=\"SkillTypeStats\" subsection=\"SkilltypespecificStats\"/>\n\t\t<Section collapsed=\"false\" id=\"HitChance\" subsection=\"Accuracy\"/>\n\t\t<Section collapsed=\"false\" id=\"Bleed\" subsection=\"Bleed\"/>\n\t\t<Section collapsed=\"false\" id=\"Poison\" subsection=\"Poison\"/>\n\t\t<Section collapsed=\"false\" id=\"Ignite\" subsection=\"Ignite\"/>\n\t\t<Section collapsed=\"false\" id=\"Decay\" subsection=\"Decay\"/>\n\t\t<Section collapsed=\"false\" id=\"LeechGain\" subsection=\"LeechGainonHit\"/>\n\t\t<Section collapsed=\"false\" id=\"EleAilments\" subsection=\"NonDamagingAilments\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscEffects\" subsection=\"OtherEffects\"/>\n\t\t<Section collapsed=\"false\" id=\"Attributes\" subsection=\"Attributes\"/>\n\t\t<Section collapsed=\"false\" id=\"Life\" subsection=\"Life\"/>\n\t\t<Section collapsed=\"false\" id=\"Mana\" subsection=\"Mana\"/>\n\t\t<Section collapsed=\"false\" id=\"Spirit\" subsection=\"Spirit\"/>\n\t\t<Section collapsed=\"false\" id=\"EnergyShield\" subsection=\"EnergyShield\"/>\n\t\t<Section collapsed=\"false\" id=\"Ward\" subsection=\"RunicWard\"/>\n\t\t<Section collapsed=\"false\" id=\"Resist\" subsection=\"Resists\"/>\n\t\t<Section collapsed=\"false\" id=\"Armour\" subsection=\"Armour\"/>\n\t\t<Section collapsed=\"false\" id=\"Evasion\" subsection=\"Evasion\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"DamageAvoidance\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Block\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Dodge\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Deflection\"/>\n\t\t<Section collapsed=\"false\" id=\"Flasks\" subsection=\"Flasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"UtilityFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"LifeFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"ManaFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"Charms\"/>\n\t\t<Section collapsed=\"true\" id=\"Rage\" subsection=\"Rage\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Charges\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Endurance\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Frenzy\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Power\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscDefences\" subsection=\"OtherDefences\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscDefences\" subsection=\"StunDuration\"/>\n\t\t<Section collapsed=\"true\" id=\"MiscDefences\" subsection=\"OtherAvoidance\"/>\n\t\t<Section collapsed=\"true\" id=\"MiscDefences\" subsection=\"OtherAilmentDefences\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DamageTaken\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DamagingHits\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"EffectiveHealthPool\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"MaximumHitTaken\"/>\n\t\t<Section collapsed=\"true\" id=\"DamageTaken\" subsection=\"RecoupandHitTakenOverTime\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DotsandBuildDegens\"/>\n\t\t<Section collapsed=\"true\" id=\"DamageTaken\" subsection=\"EnemyDegens\"/>\n\t</Calcs>\n\t<Config activeConfigSet=\"1\">\n\t\t<ConfigSet id=\"1\">\n\t\t\t<Input name=\"enemyLevel\" number=\"90\"/>\n\t\t\t<Placeholder name=\"ChillStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"ScorchStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"ShockStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"conditionCorruptingCryStages\" number=\"10\"/>\n\t\t\t<Placeholder name=\"demonFormStacks\" number=\"10\"/>\n\t\t\t<Placeholder name=\"enemyArmour\" number=\"9533\"/>\n\t\t\t<Placeholder name=\"enemyChaosDamage\" number=\"420\"/>\n\t\t\t<Placeholder name=\"enemyChaosResist\" number=\"0\"/>\n\t\t\t<Placeholder name=\"enemyColdDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyColdPen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyColdResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyCritChance\" number=\"5\"/>\n\t\t\t<Placeholder name=\"enemyCritDamage\" number=\"30\"/>\n\t\t\t<Placeholder name=\"enemyCriticalWeaknessStacks\" number=\"20\"/>\n\t\t\t<Placeholder name=\"enemyDamageRollRange\" number=\"70\"/>\n\t\t\t<Placeholder name=\"enemyDistance\" number=\"20\"/>\n\t\t\t<Placeholder name=\"enemyEvasion\" number=\"1244\"/>\n\t\t\t<Placeholder name=\"enemyFireDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyFirePen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyFireResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyLevel\" number=\"82\"/>\n\t\t\t<Placeholder name=\"enemyLightningDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyLightningPen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyLightningResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyPhysicalDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemySpeed\" number=\"700\"/>\n\t\t\t<Placeholder name=\"multiplierCurrentEnergyShield\" number=\"100\"/>\n\t\t\t<Placeholder name=\"multiplierDifferentAmmoFired\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierDifferentGrenadeFired\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierStunnedRecently\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierWarcryUsedRecently\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierWitheredStackCountSelf\" number=\"15\"/>\n\t\t\t<Placeholder name=\"sigilOfPowerStages\" number=\"1\"/>\n\t\t\t<CustomModifierBlock enabled=\"true\" title=\"Default\">\n\t\t\t\t\n\t\t\t</CustomModifierBlock>\n\t\t</ConfigSet>\n\t</Config>\n\t<Import exportParty=\"false\" useGeneratedItemText=\"true\"/>\n\t<Items activeItemSet=\"1\" showStatDifferences=\"true\" useSecondWeaponSet=\"nil\">\n\t\t<Item id=\"1\">\n\t\t\tRarity: RARE\nFixture Stave\nLong Quarterstaff\nItem Level: 82\nQuality: 20\nLevelReq: 0\nImplicits: 0\nAdds 60 to 90 Physical Damage\n30% increased Attack Speed\n\t\t\t<ModRange id=\"1\" range=\"0.5\"/>\n\t\t\t<ModRange id=\"2\" range=\"0.5\"/>\n\t\t</Item>\n\t\t<ItemSet id=\"1\" title=\"Default\" useSecondWeaponSet=\"nil\">\n\t\t\t<Slot itemId=\"1\" itemPbURL=\"\" name=\"Weapon 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 1 Swap\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 2 Swap\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Helmet\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Body Armour\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Gloves\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Boots\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Amulet\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 3\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Belt\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 3\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Flask 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Flask 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Arm 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Arm 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Leg 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Leg 2\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Helmet Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Body Armour Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Body Armour Rune #2\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Gloves Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Boots Rune #1\"/>\n\t\t</ItemSet>\n\t</Items>\n\t<Notes>\n\t\t\n\t</Notes>\n\t<Party ShowAdvanceTools=\"false\" append=\"false\" destination=\"All\"/>\n\t<Skills activeSkillSet=\"1\" defaultGemLevel=\"normalMaximum\" defaultGemQuality=\"nil\" showLegacyGems=\"false\" showSupportGemTypes=\"ALL\" sortGemsByDPS=\"true\" sortGemsByDPSField=\"CombinedDPS\">\n\t\t<SkillSet id=\"1\">\n\t\t\t<Skill enabled=\"true\" includeInFullDPS=\"nil\" label=\"\" mainActiveSkill=\"1\" mainActiveSkillCalcs=\"1\" set1=\"true\" set2=\"false\" slot=\"Weapon 1\" source=\"Default Attack\">\n\t\t\t\t<Gem corruptLevel=\"0\" corrupted=\"false\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gem/SkillGemPlayerDefaultQuarterstaff\" level=\"1\" nameSpec=\"Quarterstaff Strike\" quality=\"0\" skillId=\"MeleeQuarterstaffPlayer\" variantId=\"PlayerDefaultQuarterstaff\"/>\n\t\t\t</Skill>\n\t\t\t<Skill enabled=\"true\" includeInFullDPS=\"true\" label=\"OPT: Flicker Strike\" mainActiveSkill=\"1\" mainActiveSkillCalcs=\"1\" set1=\"true\" set2=\"true\">\n\t\t\t\t<Gem corruptLevel=\"nil\" corrupted=\"nil\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gems/SkillGemFlickerStrike\" level=\"20\" nameSpec=\"Flicker Strike\" quality=\"0\" skillId=\"FlickerStrikePlayer\" variantId=\"FlickerStrike\"/>\n\t\t\t\t<Gem corruptLevel=\"nil\" corrupted=\"nil\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gems/SupportGemFork\" level=\"1\" nameSpec=\"Fork\" quality=\"0\" skillId=\"SupportForkPlayer\" variantId=\"ForkSupport\"/>\n\t\t\t</Skill>\n\t\t</SkillSet>\n\t</Skills>\n\t<Tree activeSpec=\"1\">\n\t\t<Spec ascendClassId=\"0\" ascendancyInternalId=\"\" classId=\"2\" classInternalId=\"2\" masteryEffects=\"\" nodes=\"50459\" secondaryAscendClassId=\"nil\" treeVersion=\"0_5\">\n\t\t\t<URL>\n\t\t\t\thttps://www.pathofexile.com/passive-skill-tree/AAAABgIAAAAA\n\t\t\t</URL>\n\t\t\t<Sockets/>\n\t\t\t<Overrides>\n\t\t\t\t<AttributeOverride dexNodes=\"\" intNodes=\"\" strNodes=\"\"/>\n\t\t\t</Overrides>\n\t\t</Spec>\n\t</Tree>\n\t<TreeView searchStr=\"\" showStatDifferences=\"true\" zoomLevel=\"3\" zoomX=\"0\" zoomY=\"0\"/>\n</PathOfBuilding2>\n",
+   "support": "Fork",
+   "values": {
+    "AverageDamage": 23.491048321917,
+    "CritChance": 2.4,
+    "ManaCost": 85,
+    "Speed": 3.5035
+   }
+  },
+  "flicker_rapid_attacks": {
+   "document": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PathOfBuilding2>\n\t<Build ascendClassName=\"None\" characterLevelAutoMode=\"true\" className=\"Ranger\" level=\"1\" mainSocketGroup=\"2\" targetVersion=\"0_1\" viewMode=\"TREE\">\n\t\t<PlayerStat stat=\"AverageDamage\" value=\"23.491048321917\"/>\n\t\t<PlayerStat stat=\"AverageBurstDamage\" value=\"23.491048321917\"/>\n\t\t<PlayerStat stat=\"Speed\" value=\"4.0313\"/>\n\t\t<PlayerStat stat=\"PreEffectiveCritChance\" value=\"10\"/>\n\t\t<PlayerStat stat=\"CritChance\" value=\"2.4\"/>\n\t\t<PlayerStat stat=\"CritMultiplier\" value=\"2\"/>\n\t\t<PlayerStat stat=\"HitChance\" value=\"24\"/>\n\t\t<PlayerStat stat=\"TotalDPS\" value=\"94.699463100145\"/>\n\t\t<PlayerStat stat=\"TotalDot\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WithBleedDPS\" value=\"94.699463100145\"/>\n\t\t<PlayerStat stat=\"WithIgniteDPS\" value=\"94.699463100145\"/>\n\t\t<PlayerStat stat=\"WithPoisonDPS\" value=\"94.699463100145\"/>\n\t\t<PlayerStat stat=\"TotalDotDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"CullingDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ReservationDPS\" value=\"0\"/>\n\t\t<PlayerStat stat=\"CombinedDPS\" value=\"94.699463100145\"/>\n\t\t<PlayerStat stat=\"ManaCost\" value=\"85\"/>\n\t\t<PlayerStat stat=\"ManaPercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ManaPerSecondCost\" value=\"342.6605\"/>\n\t\t<PlayerStat stat=\"ManaPercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifeCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifePercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ESPercentPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardPercentCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardPerSecondCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"RageCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SoulCost\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Str\" value=\"7\"/>\n\t\t<PlayerStat stat=\"Dex\" value=\"15\"/>\n\t\t<PlayerStat stat=\"ReqDex\" value=\"86\"/>\n\t\t<PlayerStat stat=\"Int\" value=\"7\"/>\n\t\t<PlayerStat stat=\"ReqInt\" value=\"86\"/>\n\t\t<PlayerStat stat=\"Devotion\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Tribute\" value=\"0\"/>\n\t\t<PlayerStat stat=\"TotalEHP\" value=\"47.757152907182\"/>\n\t\t<PlayerStat stat=\"PhysicalMaximumHitTaken\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LightningMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"FireMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"ColdMaximumHitTaken\" value=\"43\"/>\n\t\t<PlayerStat stat=\"ChaosMaximumHitTaken\" value=\"65\"/>\n\t\t<PlayerStat stat=\"MainHandAccuracy\" value=\"90\"/>\n\t\t<PlayerStat stat=\"Darkness\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ReservedDarkness\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spirit\" value=\"100\"/>\n\t\t<PlayerStat stat=\"SpiritUnreserved\" value=\"100\"/>\n\t\t<PlayerStat stat=\"SpiritUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"Life\" value=\"65\"/>\n\t\t<PlayerStat stat=\"Spec:LifeInc\" value=\"5\"/>\n\t\t<PlayerStat stat=\"LifeUnreserved\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LifeRecoverable\" value=\"65\"/>\n\t\t<PlayerStat stat=\"LifeUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"LifeRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LifeLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Mana\" value=\"50\"/>\n\t\t<PlayerStat stat=\"Spec:ManaInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ManaUnreserved\" value=\"50\"/>\n\t\t<PlayerStat stat=\"ManaUnreservedPercent\" value=\"100\"/>\n\t\t<PlayerStat stat=\"ManaRegenRecovery\" value=\"2\"/>\n\t\t<PlayerStat stat=\"ManaLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShield\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldRecoveryCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spec:EnergyShieldInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnergyShieldLeechGainRate\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Ward\" value=\"0\"/>\n\t\t<PlayerStat stat=\"WardRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"RageRegenRecovery\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Evasion\" value=\"7\"/>\n\t\t<PlayerStat stat=\"Spec:EvasionInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"MeleeEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ProjectileEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellProjectileEvadeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"DeflectionRating\" value=\"0\"/>\n\t\t<PlayerStat stat=\"DeflectChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Armour\" value=\"0\"/>\n\t\t<PlayerStat stat=\"Spec:ArmourInc\" value=\"0\"/>\n\t\t<PlayerStat stat=\"PhysicalDamageReduction\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveBlockChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveSpellBlockChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"AttackDodgeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"SpellDodgeChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveSpellSuppressionChance\" value=\"0\"/>\n\t\t<PlayerStat stat=\"FireResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"FireResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ColdResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"ColdResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"LightningResist\" value=\"-50\"/>\n\t\t<PlayerStat stat=\"LightningResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ChaosResist\" value=\"0\"/>\n\t\t<PlayerStat stat=\"ChaosResistOverCap\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EffectiveMovementSpeedMod\" value=\"1\"/>\n\t\t<PlayerStat stat=\"PresenceRadiusMetres\" value=\"4\"/>\n\t\t<PlayerStat stat=\"FullDPS\" value=\"94.699463100145\"/>\n\t\t<PlayerStat stat=\"FullDotDPS\" value=\"0\"/>\n\t\t<FullDPSSkill skillPart=\"\" source=\"\" stat=\"Flicker Strike\" value=\"94.699463100145\"/>\n\t\t<PlayerStat stat=\"PowerCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"PowerChargesMax\" value=\"3\"/>\n\t\t<PlayerStat stat=\"FrenzyCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"FrenzyChargesMax\" value=\"3\"/>\n\t\t<PlayerStat stat=\"EnduranceCharges\" value=\"0\"/>\n\t\t<PlayerStat stat=\"EnduranceChargesMax\" value=\"3\"/>\n\t\t<Buffs buffList=\"\" combatList=\"\" curseList=\"\"/>\n\t\t<TimelessData devotionVariant1=\"1\" devotionVariant2=\"1\" searchList=\"\" searchListFallback=\"\"/>\n\t</Build>\n\t<Calcs>\n\t\t<Input name=\"misc_buffMode\" string=\"EFFECTIVE\"/>\n\t\t<Input name=\"skill_number\" number=\"2\"/>\n\t\t<Section collapsed=\"false\" id=\"SkillSelect\" subsection=\"ViewSkillDetails\"/>\n\t\t<Section collapsed=\"false\" id=\"HitDamage\" subsection=\"SkillHitDamage\"/>\n\t\t<Section collapsed=\"false\" id=\"Warcries\" subsection=\"EmpoweredStats\"/>\n\t\t<Section collapsed=\"false\" id=\"Dot\" subsection=\"SkillDamageoverTime\"/>\n\t\t<Section collapsed=\"false\" id=\"Speed\" subsection=\"AttackCastRate\"/>\n\t\t<Section collapsed=\"false\" id=\"Crit\" subsection=\"Crits\"/>\n\t\t<Section collapsed=\"false\" id=\"Impale\" subsection=\"Impale\"/>\n\t\t<Section collapsed=\"false\" id=\"SkillTypeStats\" subsection=\"SkilltypespecificStats\"/>\n\t\t<Section collapsed=\"false\" id=\"HitChance\" subsection=\"Accuracy\"/>\n\t\t<Section collapsed=\"false\" id=\"Bleed\" subsection=\"Bleed\"/>\n\t\t<Section collapsed=\"false\" id=\"Poison\" subsection=\"Poison\"/>\n\t\t<Section collapsed=\"false\" id=\"Ignite\" subsection=\"Ignite\"/>\n\t\t<Section collapsed=\"false\" id=\"Decay\" subsection=\"Decay\"/>\n\t\t<Section collapsed=\"false\" id=\"LeechGain\" subsection=\"LeechGainonHit\"/>\n\t\t<Section collapsed=\"false\" id=\"EleAilments\" subsection=\"NonDamagingAilments\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscEffects\" subsection=\"OtherEffects\"/>\n\t\t<Section collapsed=\"false\" id=\"Attributes\" subsection=\"Attributes\"/>\n\t\t<Section collapsed=\"false\" id=\"Life\" subsection=\"Life\"/>\n\t\t<Section collapsed=\"false\" id=\"Mana\" subsection=\"Mana\"/>\n\t\t<Section collapsed=\"false\" id=\"Spirit\" subsection=\"Spirit\"/>\n\t\t<Section collapsed=\"false\" id=\"EnergyShield\" subsection=\"EnergyShield\"/>\n\t\t<Section collapsed=\"false\" id=\"Ward\" subsection=\"RunicWard\"/>\n\t\t<Section collapsed=\"false\" id=\"Resist\" subsection=\"Resists\"/>\n\t\t<Section collapsed=\"false\" id=\"Armour\" subsection=\"Armour\"/>\n\t\t<Section collapsed=\"false\" id=\"Evasion\" subsection=\"Evasion\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"DamageAvoidance\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Block\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Dodge\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageAvoidance\" subsection=\"Deflection\"/>\n\t\t<Section collapsed=\"false\" id=\"Flasks\" subsection=\"Flasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"UtilityFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"LifeFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"ManaFlasks\"/>\n\t\t<Section collapsed=\"true\" id=\"Flasks\" subsection=\"Charms\"/>\n\t\t<Section collapsed=\"true\" id=\"Rage\" subsection=\"Rage\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Charges\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Endurance\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Frenzy\"/>\n\t\t<Section collapsed=\"true\" id=\"Charges\" subsection=\"Power\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscDefences\" subsection=\"OtherDefences\"/>\n\t\t<Section collapsed=\"false\" id=\"MiscDefences\" subsection=\"StunDuration\"/>\n\t\t<Section collapsed=\"true\" id=\"MiscDefences\" subsection=\"OtherAvoidance\"/>\n\t\t<Section collapsed=\"true\" id=\"MiscDefences\" subsection=\"OtherAilmentDefences\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DamageTaken\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DamagingHits\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"EffectiveHealthPool\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"MaximumHitTaken\"/>\n\t\t<Section collapsed=\"true\" id=\"DamageTaken\" subsection=\"RecoupandHitTakenOverTime\"/>\n\t\t<Section collapsed=\"false\" id=\"DamageTaken\" subsection=\"DotsandBuildDegens\"/>\n\t\t<Section collapsed=\"true\" id=\"DamageTaken\" subsection=\"EnemyDegens\"/>\n\t</Calcs>\n\t<Config activeConfigSet=\"1\">\n\t\t<ConfigSet id=\"1\">\n\t\t\t<Input name=\"enemyLevel\" number=\"90\"/>\n\t\t\t<Placeholder name=\"ChillStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"ScorchStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"ShockStacks\" number=\"1\"/>\n\t\t\t<Placeholder name=\"conditionCorruptingCryStages\" number=\"10\"/>\n\t\t\t<Placeholder name=\"demonFormStacks\" number=\"10\"/>\n\t\t\t<Placeholder name=\"enemyArmour\" number=\"9533\"/>\n\t\t\t<Placeholder name=\"enemyChaosDamage\" number=\"420\"/>\n\t\t\t<Placeholder name=\"enemyChaosResist\" number=\"0\"/>\n\t\t\t<Placeholder name=\"enemyColdDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyColdPen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyColdResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyCritChance\" number=\"5\"/>\n\t\t\t<Placeholder name=\"enemyCritDamage\" number=\"30\"/>\n\t\t\t<Placeholder name=\"enemyCriticalWeaknessStacks\" number=\"20\"/>\n\t\t\t<Placeholder name=\"enemyDamageRollRange\" number=\"70\"/>\n\t\t\t<Placeholder name=\"enemyDistance\" number=\"20\"/>\n\t\t\t<Placeholder name=\"enemyEvasion\" number=\"1244\"/>\n\t\t\t<Placeholder name=\"enemyFireDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyFirePen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyFireResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyLevel\" number=\"82\"/>\n\t\t\t<Placeholder name=\"enemyLightningDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemyLightningPen\" number=\"3\"/>\n\t\t\t<Placeholder name=\"enemyLightningResist\" number=\"50\"/>\n\t\t\t<Placeholder name=\"enemyPhysicalDamage\" number=\"1051\"/>\n\t\t\t<Placeholder name=\"enemySpeed\" number=\"700\"/>\n\t\t\t<Placeholder name=\"multiplierCurrentEnergyShield\" number=\"100\"/>\n\t\t\t<Placeholder name=\"multiplierDifferentAmmoFired\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierDifferentGrenadeFired\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierStunnedRecently\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierWarcryUsedRecently\" number=\"1\"/>\n\t\t\t<Placeholder name=\"multiplierWitheredStackCountSelf\" number=\"15\"/>\n\t\t\t<Placeholder name=\"sigilOfPowerStages\" number=\"1\"/>\n\t\t\t<CustomModifierBlock enabled=\"true\" title=\"Default\">\n\t\t\t\t\n\t\t\t</CustomModifierBlock>\n\t\t</ConfigSet>\n\t</Config>\n\t<Import exportParty=\"false\" useGeneratedItemText=\"true\"/>\n\t<Items activeItemSet=\"1\" showStatDifferences=\"true\" useSecondWeaponSet=\"nil\">\n\t\t<Item id=\"1\">\n\t\t\tRarity: RARE\nFixture Stave\nLong Quarterstaff\nItem Level: 82\nQuality: 20\nLevelReq: 0\nImplicits: 0\nAdds 60 to 90 Physical Damage\n30% increased Attack Speed\n\t\t\t<ModRange id=\"1\" range=\"0.5\"/>\n\t\t\t<ModRange id=\"2\" range=\"0.5\"/>\n\t\t</Item>\n\t\t<ItemSet id=\"1\" title=\"Default\" useSecondWeaponSet=\"nil\">\n\t\t\t<Slot itemId=\"1\" itemPbURL=\"\" name=\"Weapon 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 1 Swap\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Weapon 2 Swap\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Helmet\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Body Armour\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Gloves\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Boots\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Amulet\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Ring 3\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Belt\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Charm 3\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Flask 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Flask 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Arm 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Arm 2\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Leg 1\"/>\n\t\t\t<Slot itemId=\"0\" itemPbURL=\"\" name=\"Leg 2\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Helmet Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Body Armour Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Body Armour Rune #2\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Gloves Rune #1\"/>\n\t\t\t<RuneSlot runeName=\"None\" slotName=\"Boots Rune #1\"/>\n\t\t</ItemSet>\n\t</Items>\n\t<Notes>\n\t\t\n\t</Notes>\n\t<Party ShowAdvanceTools=\"false\" append=\"false\" destination=\"All\"/>\n\t<Skills activeSkillSet=\"1\" defaultGemLevel=\"normalMaximum\" defaultGemQuality=\"nil\" showLegacyGems=\"false\" showSupportGemTypes=\"ALL\" sortGemsByDPS=\"true\" sortGemsByDPSField=\"CombinedDPS\">\n\t\t<SkillSet id=\"1\">\n\t\t\t<Skill enabled=\"true\" includeInFullDPS=\"nil\" label=\"\" mainActiveSkill=\"1\" mainActiveSkillCalcs=\"1\" set1=\"true\" set2=\"false\" slot=\"Weapon 1\" source=\"Default Attack\">\n\t\t\t\t<Gem corruptLevel=\"0\" corrupted=\"false\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gem/SkillGemPlayerDefaultQuarterstaff\" level=\"1\" nameSpec=\"Quarterstaff Strike\" quality=\"0\" skillId=\"MeleeQuarterstaffPlayer\" variantId=\"PlayerDefaultQuarterstaff\"/>\n\t\t\t</Skill>\n\t\t\t<Skill enabled=\"true\" includeInFullDPS=\"true\" label=\"OPT: Flicker Strike\" mainActiveSkill=\"1\" mainActiveSkillCalcs=\"1\" set1=\"true\" set2=\"true\">\n\t\t\t\t<Gem corruptLevel=\"nil\" corrupted=\"nil\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gems/SkillGemFlickerStrike\" level=\"20\" nameSpec=\"Flicker Strike\" quality=\"0\" skillId=\"FlickerStrikePlayer\" variantId=\"FlickerStrike\"/>\n\t\t\t\t<Gem corruptLevel=\"nil\" corrupted=\"nil\" count=\"1\" enableGlobal1=\"true\" enableGlobal2=\"true\" enabled=\"true\" gemId=\"Metadata/Items/Gems/SupportGemMartialTempo\" level=\"1\" nameSpec=\"Rapid Attacks I\" quality=\"0\" skillId=\"SupportRapidAttacksPlayer\" variantId=\"RapidAttacksSupport\"/>\n\t\t\t</Skill>\n\t\t</SkillSet>\n\t</Skills>\n\t<Tree activeSpec=\"1\">\n\t\t<Spec ascendClassId=\"0\" ascendancyInternalId=\"\" classId=\"2\" classInternalId=\"2\" masteryEffects=\"\" nodes=\"50459\" secondaryAscendClassId=\"nil\" treeVersion=\"0_5\">\n\t\t\t<URL>\n\t\t\t\thttps://www.pathofexile.com/passive-skill-tree/AAAABgIAAAAA\n\t\t\t</URL>\n\t\t\t<Sockets/>\n\t\t\t<Overrides>\n\t\t\t\t<AttributeOverride dexNodes=\"\" intNodes=\"\" strNodes=\"\"/>\n\t\t\t</Overrides>\n\t\t</Spec>\n\t</Tree>\n\t<TreeView searchStr=\"\" showStatDifferences=\"true\" zoomLevel=\"3\" zoomX=\"0\" zoomY=\"0\"/>\n</PathOfBuilding2>\n",
+   "support": "Rapid Attacks I",
+   "values": {
+    "AverageDamage": 23.491048321917,
+    "CritChance": 2.4,
+    "ManaCost": 85,
+    "Speed": 4.0313
+   }
+  }
+ },
+ "coverage": {
+  "compatible_support_gems": [
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAddedChaosDamageSupport",
+    "granted_effect_id": "SupportAddedChaosDamagePlayer",
+    "name": "Chaos Attunement"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAddedColdDamageSupport",
+    "granted_effect_id": "SupportAddedColdDamagePlayer",
+    "name": "Cold Attunement"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAddedFireDamageSupport",
+    "granted_effect_id": "SupportAddedFireDamagePlayer",
+    "name": "Fire Attunement"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAddedLightningDamageSupport",
+    "granted_effect_id": "SupportAddedLightningDamagePlayer",
+    "name": "Lightning Attunement"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAdmixtureSupport",
+    "granted_effect_id": "SupportAdmixturePlayer",
+    "name": "Admixture"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAmbrosiaSupport",
+    "granted_effect_id": "SupportAmbrosiaPlayer",
+    "name": "Ambrosia"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAmbrosiaSupportTwo",
+    "granted_effect_id": "SupportAmbrosiaPlayerTwo",
+    "name": "Ambrosia II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAmbushSupport",
+    "granted_effect_id": "SupportAmbushPlayer",
+    "name": "Ambush"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAncestralAidSupport",
+    "granted_effect_id": "SupportAncestralAidPlayer",
+    "name": "Ancestral Aid"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAncestralCallSupport",
+    "granted_effect_id": "SupportAncestralCallPlayer",
+    "name": "Ancestral Call I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAncestralCallSupportTwo",
+    "granted_effect_id": "SupportAncestralCallPlayerTwo",
+    "name": "Ancestral Call II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArakaalisLustSupport",
+    "granted_effect_id": "SupportArakaalisLustPlayer",
+    "name": "Arakaali's Lust"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArmourBreakSupport",
+    "granted_effect_id": "SupportArmourBreakPlayer",
+    "name": "Armour Break I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArmourBreakSupportThree",
+    "granted_effect_id": "SupportArmourBreakPlayerThree",
+    "name": "Armour Break III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArmourBreakSupportTwo",
+    "granted_effect_id": "SupportArmourBreakPlayerTwo",
+    "name": "Armour Break II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArmourDemolisherSupport",
+    "granted_effect_id": "SupportArmourDemolisherPlayer",
+    "name": "Armour Demolisher I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArmourDemolisherSupportTwo",
+    "granted_effect_id": "SupportArmourDemolisherPlayerTwo",
+    "name": "Armour Demolisher II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArmourExplosionSupport",
+    "granted_effect_id": "SupportArmourExplosionPlayer",
+    "name": "Armour Explosion"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemArmsLengthSupport",
+    "granted_effect_id": "SupportArmsLengthPlayer",
+    "name": "Arms Length"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemAtaluiBloodlettingSupport",
+    "granted_effect_id": "SupportAtaluiBloodlettingPlayer",
+    "name": "Atalui's Bloodletting"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBarbsSupport",
+    "granted_effect_id": "SupportBarbsPlayer",
+    "name": "Barbs I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBarbsSupportThree",
+    "granted_effect_id": "SupportBarbsPlayerThree",
+    "name": "Barbs III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBarbsSupportTwo",
+    "granted_effect_id": "SupportBarbsPlayerTwo",
+    "name": "Barbs II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBeheadSupport",
+    "granted_effect_id": "SupportBeheadPlayer",
+    "name": "Behead I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBeheadSupportTwo",
+    "granted_effect_id": "SupportBeheadPlayerTwo",
+    "name": "Behead II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBhatairsVengeanceSupport",
+    "granted_effect_id": "SupportBhatairsVengeancePlayer",
+    "name": "Bhatair's Vengeance"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBitingFrostSupport",
+    "granted_effect_id": "SupportBitingFrostPlayer",
+    "name": "Biting Frost I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBitingFrostSupportTwo",
+    "granted_effect_id": "SupportBitingFrostPlayerTwo",
+    "name": "Biting Frost II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBlazingCriticalSupport",
+    "granted_effect_id": "SupportBlazingCriticalPlayer",
+    "name": "Blazing Critical"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBleedSupport",
+    "granted_effect_id": "SupportBleedPlayer",
+    "name": "Bleed I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBleedSupportFour",
+    "granted_effect_id": "SupportBleedPlayerFour",
+    "name": "Bleed IV"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBleedSupportThree",
+    "granted_effect_id": "SupportBleedPlayerThree",
+    "name": "Bleed III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBleedSupportTwo",
+    "granted_effect_id": "SupportBleedPlayerTwo",
+    "name": "Bleed II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBlindSupport",
+    "granted_effect_id": "SupportBlindPlayer",
+    "name": "Blind I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBlindSupportTwo",
+    "granted_effect_id": "SupportBlindPlayerTwo",
+    "name": "Blind II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBlindsideSupport",
+    "granted_effect_id": "SupportBlindsidePlayer",
+    "name": "Blindside"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBloodMagicSupport",
+    "granted_effect_id": "SupportBloodMagicPlayer",
+    "name": "Lifetap"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBloodlustSupport",
+    "granted_effect_id": "SupportBloodlustPlayer",
+    "name": "Bloodlust"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBoneShrapnelSupport",
+    "granted_effect_id": "SupportBoneShrapnelPlayer",
+    "name": "Bone Shrapnel"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBountySupport",
+    "granted_effect_id": "SupportBountyPlayer",
+    "name": "Bounty I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBountySupportTwo",
+    "granted_effect_id": "SupportBountyPlayerTwo",
+    "name": "Bounty II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBreachlordsRiftSupport",
+    "granted_effect_id": "SupportBreachlordsRift",
+    "name": "Breachlord's Rift"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBrinkSupport",
+    "granted_effect_id": "SupportBrinkPlayer",
+    "name": "Brink I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBrinkSupportTwo",
+    "granted_effect_id": "SupportBrinkPlayerTwo",
+    "name": "Brink II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBrittleArmourSupport",
+    "granted_effect_id": "SupportBrittleArmourPlayer",
+    "name": "Brittle Armour"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBrutalitySupport",
+    "granted_effect_id": "SupportBrutalityPlayer",
+    "name": "Brutality I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBrutalitySupportThree",
+    "granted_effect_id": "SupportBrutalityPlayerThree",
+    "name": "Brutality III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemBrutalitySupportTwo",
+    "granted_effect_id": "SupportBrutalityPlayerTwo",
+    "name": "Brutality II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCadenceSupport",
+    "granted_effect_id": "SupportCadencePlayer",
+    "name": "Cadence"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCatharsisSupport",
+    "granted_effect_id": "SupportCatharsisPlayer",
+    "name": "Catharsis"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemChargeInhibitionSupport",
+    "granted_effect_id": "SupportChargeInhibitionPlayer",
+    "name": "Inhibitor"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCharmBountySupport",
+    "granted_effect_id": "SupportCharmBountyPlayer",
+    "name": "Charm Bounty"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemChillingIceSupport",
+    "granted_effect_id": "SupportChillingIcePlayer",
+    "name": "Frost Nexus"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemClashSupport",
+    "granted_effect_id": "SupportClashPlayer",
+    "name": "Clash"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCloseCombatSupport",
+    "granted_effect_id": "SupportCloseCombatPlayer",
+    "name": "Close Combat I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCloseCombatSupportTwo",
+    "granted_effect_id": "SupportCloseCombatPlayerTwo",
+    "name": "Close Combat II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemColdExposureSupport",
+    "granted_effect_id": "SupportColdExposurePlayer",
+    "name": "Cold Exposure"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemColdPenetrationSupport",
+    "granted_effect_id": "SupportColdPenetrationPlayer",
+    "name": "Cold Penetration"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemComboFinisherSupport",
+    "granted_effect_id": "SupportComboFinisherPlayer",
+    "name": "Combo Finisher I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemComboFinisherSupportTwo",
+    "granted_effect_id": "SupportComboFinisherPlayerTwo",
+    "name": "Combo Finisher II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCommiserateSupport",
+    "granted_effect_id": "SupportCommiseratePlayer",
+    "name": "Commiserate"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemConcentratedAreaSupport",
+    "granted_effect_id": "SupportConcentratedAreaPlayer",
+    "name": "Concentrated Area"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemConcoctSupport",
+    "granted_effect_id": "SupportConcoctPlayer",
+    "name": "Concoct I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemConcoctSupportTwo",
+    "granted_effect_id": "SupportConcoctPlayerTwo",
+    "name": "Concoct II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemConcussiveRunesSupport",
+    "granted_effect_id": "SupportConcussiveRunesPlayer",
+    "name": "Concussive Runes"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCorrosion",
+    "granted_effect_id": "SupportCorrosionPlayer",
+    "name": "Corrosion"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCullingStrikeSupport",
+    "granted_effect_id": "SupportCullingStrikePlayer",
+    "name": "Culling Strike I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCullingStrikeSupportTwo",
+    "granted_effect_id": "SupportCullingStrikePlayerTwo",
+    "name": "Culling Strike II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCulminationSupport",
+    "granted_effect_id": "SupportCulminationPlayer",
+    "name": "Culmination I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemCulminationSupportTwo",
+    "granted_effect_id": "SupportCulminationPlayerTwo",
+    "name": "Culmination II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDauntlessSupport",
+    "granted_effect_id": "SupportDauntlessPlayer",
+    "name": "Dauntless"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDazeSupport",
+    "granted_effect_id": "SupportDazePlayer",
+    "name": "Daze"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDeadlyCurrentSupport",
+    "granted_effect_id": "SupportDeadlyCurrentPlayer",
+    "name": "Coursing Current"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDeadlyIgnitesSupport",
+    "granted_effect_id": "SupportDeadlyIgnitesPlayer",
+    "name": "Searing Flame I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDeadlyIgnitesSupportTwo",
+    "granted_effect_id": "SupportDeadlyIgnitesPlayerTwo",
+    "name": "Searing Flame II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDeadlyPoisonSupport",
+    "granted_effect_id": "SupportDeadlyPoisonPlayer",
+    "name": "Deadly Poison I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDeadlyPoisonSupportTwo",
+    "granted_effect_id": "SupportDeadlyPoisonPlayerTwo",
+    "name": "Deadly Poison II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDeepCutsSupport",
+    "granted_effect_id": "SupportDeepCutsPlayer",
+    "name": "Deep Cuts I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDeepCutsSupportTwo",
+    "granted_effect_id": "SupportDeepCutsPlayerTwo",
+    "name": "Deep Cuts II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDefySupport",
+    "granted_effect_id": "SupportDefyPlayer",
+    "name": "Defy I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDefySupportTwo",
+    "granted_effect_id": "SupportDefyPlayerTwo",
+    "name": "Defy II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDerangeSupport",
+    "granted_effect_id": "SupportDerangePlayer",
+    "name": "Derange"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemDiallasDesireSupport",
+    "granted_effect_id": "SupportDiallasDesirePlayer",
+    "name": "Dialla's Desire"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEfficiencySupport",
+    "granted_effect_id": "SupportEfficiencyPlayer",
+    "name": "Efficiency I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEfficiencySupportTwo",
+    "granted_effect_id": "SupportEfficiencyPlayerTwo",
+    "name": "Efficiency II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEinharsBeastriteSupport",
+    "granted_effect_id": "SupportEinharsBeastritePlayer",
+    "name": "Einhar's Beastrite"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemElectrocuteSupport",
+    "granted_effect_id": "SupportElectrocutePlayer",
+    "name": "Electrocute"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemElementalArmamentSupport",
+    "granted_effect_id": "SupportElementalArmamentPlayer",
+    "name": "Elemental Armament I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemElementalArmamentSupportThree",
+    "granted_effect_id": "SupportElementalArmamentPlayerThree",
+    "name": "Elemental Armament III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemElementalArmamentSupportTwo",
+    "granted_effect_id": "SupportElementalArmamentPlayerTwo",
+    "name": "Elemental Armament II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemElementalFocusSupport",
+    "granted_effect_id": "SupportElementalFocusPlayer",
+    "name": "Elemental Focus"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEmbitterSupport",
+    "granted_effect_id": "SupportEmbitterPlayer",
+    "name": "Embitter"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEnergyShieldOnShockKillSupport",
+    "granted_effect_id": "SupportEnergyShieldOnShockKillPlayer",
+    "name": "Shock Siphon"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEonyrsThunderSupport",
+    "granted_effect_id": "SupportEonyrsThunderPlayer",
+    "name": "Eonyr's Thunder"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEscalatingPoisonSupport",
+    "granted_effect_id": "SupportEscalatingPoisonPlayer",
+    "name": "Escalating Poison"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemEshsRadianceSupport",
+    "granted_effect_id": "SupportEshsRadiancePlayer",
+    "name": "Esh's Radiance"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemExciseSupport",
+    "granted_effect_id": "SupportExcisePlayer",
+    "name": "Excise"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemExecrateSupport",
+    "granted_effect_id": "SupportExecratePlayer",
+    "name": "Execrate"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemExecuteSupport",
+    "granted_effect_id": "SupportExecutePlayer",
+    "name": "Execute I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemExecuteSupportThree",
+    "granted_effect_id": "SupportExecutePlayerThree",
+    "name": "Execute III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemExecuteSupportTwo",
+    "granted_effect_id": "SupportExecutePlayerTwo",
+    "name": "Execute II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemExpanseSupport",
+    "granted_effect_id": "SupportExpansePlayer",
+    "name": "Expanse"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemExploitWeaknessSupport",
+    "granted_effect_id": "SupportExploitWeaknessPlayer",
+    "name": "Exploit Weakness"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFarCombatSupport",
+    "granted_effect_id": "SupportFarCombatPlayer",
+    "name": "Longshot I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFarCombatSupportTwo",
+    "granted_effect_id": "SupportFarCombatPlayerTwo",
+    "name": "Longshot II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFerocitySupport",
+    "granted_effect_id": "SupportFerocityPlayer",
+    "name": "Ferocity"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFieryDeathSupport",
+    "granted_effect_id": "SupportFieryDeathPlayer",
+    "name": "Fiery Death"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFireExposureSupport",
+    "granted_effect_id": "SupportFireExposurePlayer",
+    "name": "Fire Exposure"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFirePenetrationSupport",
+    "granted_effect_id": "SupportFirePenetrationPlayer",
+    "name": "Fire Penetration I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFirePenetrationSupportTwo",
+    "granted_effect_id": "SupportFirePenetrationPlayerTwo",
+    "name": "Fire Penetration II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFlamePillarSupport",
+    "granted_effect_id": "SupportFlamePillarPlayer",
+    "name": "Flame Pillar"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFreezeSupport",
+    "granted_effect_id": "SupportFreezePlayer",
+    "name": "Freeze"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFrenziedRiposteSupport",
+    "granted_effect_id": "SupportFrenziedRipostePlayer",
+    "name": "Frenzied Riposte"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFrostfireSupport",
+    "granted_effect_id": "SupportFrostfirePlayer",
+    "name": "Frostfire"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFrozenSpiteSupport",
+    "granted_effect_id": "SupportFrozenSpitePlayer",
+    "name": "Frozen Spite"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemGarukhansResolveSupport",
+    "granted_effect_id": "SupportGarukhansResolvePlayer",
+    "name": "Garukhan's Resolve"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHaemocrystalsSupport",
+    "granted_effect_id": "SupportHaemocrystalsPlayer",
+    "name": "Haemocrystals"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHeavyStunEnduranceSupportOne",
+    "granted_effect_id": "SupportHeavyStunEndurancePlayerOne",
+    "name": "Enduring Impact I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHeavyStunEnduranceSupportTwo",
+    "granted_effect_id": "SupportHeavyStunEndurancePlayerTwo",
+    "name": "Enduring Impact II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHeftSupport",
+    "granted_effect_id": "SupportHeftPlayer",
+    "name": "Heft"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHeightenedAccuracySupport",
+    "granted_effect_id": "SupportHeightenedAccuracyPlayer",
+    "name": "Heightened Accuracy I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHeightenedAccuracySupportTwo",
+    "granted_effect_id": "SupportHeightenedAccuracyPlayerTwo",
+    "name": "Heightened Accuracy II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHeightenedChargesSupport",
+    "granted_effect_id": "SupportHeightenedChargesPlayer",
+    "name": "Heightened Charges"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHitAndRunSupport",
+    "granted_effect_id": "SupportHitAndRunPlayer",
+    "name": "Hit and Run"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemHourglassSupport",
+    "granted_effect_id": "SupportHourglassPlayer",
+    "name": "Hourglass"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIceBiteSupport",
+    "granted_effect_id": "SupportIceBitePlayer",
+    "name": "Ice Bite I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIceBiteSupportTwo",
+    "granted_effect_id": "SupportIceBitePlayerTwo",
+    "name": "Ice Bite II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIgniteDurationSupport",
+    "granted_effect_id": "SupportIgniteDurationPlayer",
+    "name": "Eternal Flame I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIgniteDurationSupportThree",
+    "granted_effect_id": "SupportIgniteDurationPlayerThree",
+    "name": "Eternal Flame III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIgniteDurationSupportTwo",
+    "granted_effect_id": "SupportIgniteDurationPlayerTwo",
+    "name": "Eternal Flame II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIgniteSupport",
+    "granted_effect_id": "SupportIgnitePlayer",
+    "name": "Ignite I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIgniteSupportThree",
+    "granted_effect_id": "SupportIgnitePlayerThree",
+    "name": "Ignite III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIgniteSupportTwo",
+    "granted_effect_id": "SupportIgnitePlayerTwo",
+    "name": "Ignite II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemImmolateSupport",
+    "granted_effect_id": "SupportImmolatePlayer",
+    "name": "Immolate"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemImpactShockwaveSupport",
+    "granted_effect_id": "ImpactShockwaveSupportPlayer",
+    "name": "Impact Shockwave"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemImpaleSupport",
+    "granted_effect_id": "SupportImpalePlayer",
+    "name": "Impale"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIncisionSupport",
+    "granted_effect_id": "SupportIncisionPlayer",
+    "name": "Incision"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemIncreasedCriticalDamageSupport",
+    "granted_effect_id": "SupportIncreasedCriticalDamagePlayer",
+    "name": "Supercritical"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemInevitableCriticalsSupport",
+    "granted_effect_id": "SupportInevitableCriticalsPlayer",
+    "name": "Inexorable Critical I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemInevitableCriticalsSupportTwo",
+    "granted_effect_id": "SupportInevitableCriticalsPlayerTwo",
+    "name": "Inexorable Critical II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemInnervateSupport",
+    "granted_effect_id": "SupportInnervatePlayer",
+    "name": "Innervate"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemKnockbackSupport",
+    "granted_effect_id": "SupportKnockbackPlayer",
+    "name": "Knockback"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemKnockbackWaveSupport",
+    "granted_effect_id": "SupportKnockbackWavePlayer",
+    "name": "Wind Wave"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLastingFrostSupport",
+    "granted_effect_id": "SupportLastingFrostPlayer",
+    "name": "Deep Freeze"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLastingShockSupport",
+    "granted_effect_id": "SupportLastingShockPlayer",
+    "name": "Lasting Shock"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLifeFlaskSupport",
+    "granted_effect_id": "SupportLifeFlaskPlayer",
+    "name": "Life Bounty"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLifeLeechSupport",
+    "granted_effect_id": "SupportLifeLeechPlayer",
+    "name": "Life Leech I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLifeLeechSupportThree",
+    "granted_effect_id": "SupportLifeLeechPlayerThree",
+    "name": "Life Leech III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLifeLeechSupportTwo",
+    "granted_effect_id": "SupportLifeLeechPlayerTwo",
+    "name": "Life Leech II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLifeOnCullSupport",
+    "granted_effect_id": "SupportLifeOnCullPlayer",
+    "name": "Life Drain"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLightningExposureSupport",
+    "granted_effect_id": "SupportLightningExposurePlayer",
+    "name": "Lightning Exposure"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLightningPenetrationSupport",
+    "granted_effect_id": "SupportLightningPenetrationPlayer",
+    "name": "Lightning Penetration"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLivingLightningSupport",
+    "granted_effect_id": "SupportLivingLightningPlayer",
+    "name": "Living Lightning"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLivingLightningSupportTwo",
+    "granted_effect_id": "SupportLivingLightningPlayerTwo",
+    "name": "Living Lightning II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemLockdownSupport",
+    "granted_effect_id": "SupportLockdownPlayer",
+    "name": "Lockdown"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMagnifiedAreaSupport",
+    "granted_effect_id": "SupportMagnifiedAreaPlayer",
+    "name": "Magnified Area I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMagnifiedAreaSupportTwo",
+    "granted_effect_id": "SupportMagnifiedAreaPlayerTwo",
+    "name": "Magnified Area II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMaimSupport",
+    "granted_effect_id": "SupportMaimPlayer",
+    "name": "Maim"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMaladySupport",
+    "granted_effect_id": "SupportMaladyPlayer",
+    "name": "Malady"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemManaFlaskSupport",
+    "granted_effect_id": "SupportManaFlaskPlayer",
+    "name": "Mana Bounty"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemManaLeechSupport",
+    "granted_effect_id": "SupportManaLeechPlayer",
+    "name": "Mana Leech"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemManaOnCullSupport",
+    "granted_effect_id": "SupportManaOnCullPlayer",
+    "name": "Soul Drain"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMedvedsFellingSupport",
+    "granted_effect_id": "SupportMedvedsFelling",
+    "name": "Medved's Felling"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMeleePhysicalDamageSupport",
+    "granted_effect_id": "SupportMeleePhysicalDamagePlayer",
+    "name": "Heavy Swing"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMinionPactSupport",
+    "granted_effect_id": "SupportMinionPactPlayer",
+    "name": "Minion Pact I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMinionPactSupportTwo",
+    "granted_effect_id": "SupportMinionPactPlayerTwo",
+    "name": "Minion Pact II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMomentumSupport",
+    "granted_effect_id": "SupportMomentumPlayer",
+    "name": "Momentum"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemMorrigansInsightSupport",
+    "granted_effect_id": "SupportMorrigansInsight",
+    "name": "Morrigan's Insight"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemNeuralOverload",
+    "granted_effect_id": "SupportNeuralOverloadPlayer",
+    "name": "Neural Overload"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemOisinsOathSupport",
+    "granted_effect_id": "SupportOisinsOathPlayer",
+    "name": "Oisin's Oath"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemOlrothsHubrisSupport",
+    "granted_effect_id": "SupportOlrothsHubrisPlayer",
+    "name": "Olroth's Hubris"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemOverchargeSupport",
+    "granted_effect_id": "SupportOverchargePlayer",
+    "name": "Overcharge"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemOverextendSupport",
+    "granted_effect_id": "SupportOverextendPlayer",
+    "name": "Overextend"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemOverreachSupport",
+    "granted_effect_id": "SupportOverreachPlayer",
+    "name": "Overreach"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPerpetualCharge",
+    "granted_effect_id": "SupportPerpetualChargePlayer",
+    "name": "Perpetual Charge"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPinSupport",
+    "granted_effect_id": "SupportPinPlayer",
+    "name": "Pin I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPinSupportThree",
+    "granted_effect_id": "SupportPinPlayerThree",
+    "name": "Pin III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPinSupportTwo",
+    "granted_effect_id": "SupportPinPlayerTwo",
+    "name": "Pin II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPinpointCritical",
+    "granted_effect_id": "SupportPinpointCriticalPlayer",
+    "name": "Pinpoint Critical"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPoisonSupport",
+    "granted_effect_id": "SupportPoisonPlayer",
+    "name": "Poison I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPoisonSupportThree",
+    "granted_effect_id": "SupportPoisonPlayerThree",
+    "name": "Poison III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPoisonSupportTwo",
+    "granted_effect_id": "SupportPoisonPlayerTwo",
+    "name": "Poison II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPotentExposureSupport",
+    "granted_effect_id": "SupportPotentExposurePlayer",
+    "name": "Potent Exposure"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPracticalMagicSupport",
+    "granted_effect_id": "SupportPracticalMagicPlayer",
+    "name": "Practical Magic I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPracticalMagicSupportTwo",
+    "granted_effect_id": "SupportPracticalMagicPlayerTwo",
+    "name": "Practical Magic II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPracticedComboSupport",
+    "granted_effect_id": "SupportPracticedComboPlayer",
+    "name": "Practiced Combo"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemProfanitySupport",
+    "granted_effect_id": "SupportProfanityPlayer",
+    "name": "Profanity I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemProfanitySupportTwo",
+    "granted_effect_id": "SupportProfanityPlayerTwo",
+    "name": "Profanity II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPrototypeSeventeenSupport",
+    "granted_effect_id": "SupportPrototypeSeventeenPlayer",
+    "name": "Prototype Seventeen"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPunchThroughSupport",
+    "granted_effect_id": "SupportPunchThroughPlayer",
+    "name": "Punch Through"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPursuitSupport",
+    "granted_effect_id": "SupportPursuitPlayer",
+    "name": "Pursuit I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPursuitSupportThree",
+    "granted_effect_id": "SupportPursuitPlayerThree",
+    "name": "Pursuit III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemPursuitSupportTwo",
+    "granted_effect_id": "SupportPursuitPlayerTwo",
+    "name": "Pursuit II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemQuillburstSupport",
+    "granted_effect_id": "SupportQuillburstPlayer",
+    "name": "Quill Burst"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRageSupport",
+    "granted_effect_id": "SupportRagePlayer",
+    "name": "Rage I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRageSupportThree",
+    "granted_effect_id": "SupportRagePlayerThree",
+    "name": "Rage III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRageSupportTwo",
+    "granted_effect_id": "SupportRagePlayerTwo",
+    "name": "Rage II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRageforgedSupport",
+    "granted_effect_id": "SupportRageforgedPlayer",
+    "name": "Rageforged I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRageforgedSupportTwo",
+    "granted_effect_id": "SupportRageforgedPlayerTwo",
+    "name": "Rageforged II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRakiatasFlowSupport",
+    "granted_effect_id": "SupportRakiatasFlowPlayer",
+    "name": "Rakiata's Flow"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRapidAttacksSupport",
+    "granted_effect_id": "SupportRapidAttacksPlayer",
+    "name": "Rapid Attacks I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRapidAttacksSupportThree",
+    "granted_effect_id": "SupportRapidAttacksPlayerThree",
+    "name": "Rapid Attacks III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRapidAttacksSupportTwo",
+    "granted_effect_id": "SupportRapidAttacksPlayerTwo",
+    "name": "Rapid Attacks II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRelentlessRageSupport",
+    "granted_effect_id": "SupportRelentlessRagePlayer",
+    "name": "Relentless Rage"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRetaliateSupport",
+    "granted_effect_id": "SupportRetaliatePlayer",
+    "name": "Retaliate I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRetaliateSupportTwo",
+    "granted_effect_id": "SupportRetaliatePlayerTwo",
+    "name": "Retaliate II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRigwaldsFerocitySupport",
+    "granted_effect_id": "SupportRigwaldsFerocityPlayer",
+    "name": "Rigwald's Ferocity"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRipSupport",
+    "granted_effect_id": "SupportRipPlayer",
+    "name": "Rip"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRuneforgedBladesSupport",
+    "granted_effect_id": "SupportRuneforgedBladesPlayer",
+    "name": "Runeforged Blades"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRunicExtractionSupport",
+    "granted_effect_id": "SupportRunicExtractionPlayer",
+    "name": "Runic Extraction"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRunicInfusionSupport",
+    "granted_effect_id": "SupportRunicInfusionPlayer",
+    "name": "Runic Infusion"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRuptureSupport",
+    "granted_effect_id": "SupportRupturePlayer",
+    "name": "Rupture"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRustedSpikesSupport",
+    "granted_effect_id": "SupportRustedSpikesPlayer",
+    "name": "Rusted Spikes"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemRuthlessSupport",
+    "granted_effect_id": "RuthlessSupportPlayer",
+    "name": "Ruthless"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemScouringFlame",
+    "granted_effect_id": "SupportScouringFlamePlayer",
+    "name": "Scouring Flame"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemShockConductionSupport",
+    "granted_effect_id": "SupportShockConductionPlayer",
+    "name": "Shock Conduction"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemShockConductionSupportTwo",
+    "granted_effect_id": "SupportShockConductionPlayerTwo",
+    "name": "Shock Conduction II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemShockSupport",
+    "granted_effect_id": "SupportShockPlayer",
+    "name": "Shock"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemShockingRiftSupport",
+    "granted_effect_id": "SupportShockingRiftPlayer",
+    "name": "Electromagnetism"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSlowPotencySupport",
+    "granted_effect_id": "SupportSlowPotencyPlayer",
+    "name": "Slow Potency"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSparSupport",
+    "granted_effect_id": "SupportSparPlayer",
+    "name": "Spar"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemStaticShocksSupport",
+    "granted_effect_id": "SupportStaticShocksPlayer",
+    "name": "Static Shocks"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemStoicismSupport",
+    "granted_effect_id": "SupportStoicismPlayer",
+    "name": "Stoicism I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemStoicismSupportTwo",
+    "granted_effect_id": "SupportStoicismPlayerTwo",
+    "name": "Stoicism II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemStormfireSupport",
+    "granted_effect_id": "SupportStormfirePlayer",
+    "name": "Stormfire"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemStunSupport",
+    "granted_effect_id": "SupportStunPlayer",
+    "name": "Stun I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemStunSupportThree",
+    "granted_effect_id": "SupportStunPlayerThree",
+    "name": "Stun III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemStunSupportTwo",
+    "granted_effect_id": "SupportStunPlayerTwo",
+    "name": "Stun II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSupportBurstingPlague",
+    "granted_effect_id": "SupportBurstingPlaguePlayer",
+    "name": "Bursting Plague"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSwiftAfflictionSupport",
+    "granted_effect_id": "SupportSwiftAfflictionPlayer",
+    "name": "Swift Affliction I"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSwiftAfflictionSupportThree",
+    "granted_effect_id": "SupportSwiftAfflictionPlayerThree",
+    "name": "Swift Affliction III"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemSwiftAfflictionSupportTwo",
+    "granted_effect_id": "SupportSwiftAfflictionPlayerTwo",
+    "name": "Swift Affliction II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemTacatisIreSupport",
+    "granted_effect_id": "SupportTacatisIrePlayer",
+    "name": "Tacati's Ire"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemTearSupport",
+    "granted_effect_id": "SupportTearPlayer",
+    "name": "Tear"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemTempestuousTempoSupport",
+    "granted_effect_id": "SupportTempestuousTempoPlayer",
+    "name": "Rising Tempest"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemThrillOfTheKillSupport",
+    "granted_effect_id": "SupportThrillOfTheKillPlayer",
+    "name": "Thrill of the Kill"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemThrillOfTheKillSupportTwo",
+    "granted_effect_id": "SupportThrillOfTheKillPlayerTwo",
+    "name": "Thrill of the Kill II"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemTulsStillnessSupport",
+    "granted_effect_id": "SupportTulsStillnessPlayer",
+    "name": "Tul's Stillness"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUhtredAugurySupport",
+    "granted_effect_id": "SupportUhtredAuguryPlayer",
+    "name": "Uhtred's Augury"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUhtredExodusSupport",
+    "granted_effect_id": "SupportUhtredExodusPlayer",
+    "name": "Uhtred's Exodus"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUhtredOmenSupport",
+    "granted_effect_id": "SupportUhtredOmenPlayer",
+    "name": "Uhtred's Omen"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUndermineSupport",
+    "granted_effect_id": "SupportUnderminePlayer",
+    "name": "Undermine"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUnerringPowerSupport",
+    "granted_effect_id": "SupportUnerringPowerPlayer",
+    "name": "Unerring Power"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUntouchableSupport",
+    "granted_effect_id": "SupportUntouchablePlayer",
+    "name": "Untouchable"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUruksSmeltingSupport",
+    "granted_effect_id": "SupportUruksSmeltingPlayer",
+    "name": "Uruk's Smelting"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemUulNetolsEmbraceSupport",
+    "granted_effect_id": "SupportUulNetolsEmbracePlayer",
+    "name": "Uul-Netol's Embrace"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemVarashtasBlessingSupport",
+    "granted_effect_id": "SupportVarashtasBlessingPlayer",
+    "name": "Varashta's Blessing"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemVerglasSupport",
+    "granted_effect_id": "SupportVerglasPlayer",
+    "name": "Verglas"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemVolatilitySupport",
+    "granted_effect_id": "SupportVolatilityPlayer",
+    "name": "Volatility"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemVolcanicEruptionSupport",
+    "granted_effect_id": "SupportVolcanicEruptionPlayer",
+    "name": "Volcanic Eruption"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemVoranasSiegeSupport",
+    "granted_effect_id": "SupportVoranasSiege",
+    "name": "Vorana's Siege"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemVruunsInevitabilitySupport",
+    "granted_effect_id": "SupportVruunsInevitability",
+    "name": "Vruun's Inevitability"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemWildfireSupport",
+    "granted_effect_id": "SupportWildfirePlayer",
+    "name": "Wildfire"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemWitheringTouchSupport",
+    "granted_effect_id": "SupportWitheringTouchPlayer",
+    "name": "Withering Touch"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemXophsPyreSupport",
+    "granted_effect_id": "SupportXophsPyrePlayer",
+    "name": "Xoph's Pyre"
+   },
+   {
+    "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemZerphisLegacySupport",
+    "granted_effect_id": "SupportZerphisLegacyPlayer",
+    "name": "Zerphi's Infamy"
+   }
+  ],
+  "gem": {
+   "gemType": "Attack",
+   "naturalMaxLevel": 20,
+   "reqDex": 50,
+   "reqInt": 50,
+   "reqStr": 0,
+   "tagString": "AoE, Melee, Strike",
+   "tags": [
+    "area",
+    "attack",
+    "dexterity",
+    "grants_active_skill",
+    "intelligence",
+    "melee",
+    "strike"
+   ],
+   "tier": 13,
+   "weaponRequirements": "Quarterstaff"
+  },
+  "gem_entity_id": "poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike",
+  "granted_skill": {
+   "cannotBeSupported": false,
+   "castTime": 1,
+   "costs": [
+    {
+     "amount": 12,
+     "level": 1,
+     "resource": "Mana"
+    },
+    {
+     "amount": 14,
+     "level": 2,
+     "resource": "Mana"
+    },
+    {
+     "amount": 16,
+     "level": 3,
+     "resource": "Mana"
+    },
+    {
+     "amount": 19,
+     "level": 4,
+     "resource": "Mana"
+    },
+    {
+     "amount": 21,
+     "level": 5,
+     "resource": "Mana"
+    },
+    {
+     "amount": 24,
+     "level": 6,
+     "resource": "Mana"
+    },
+    {
+     "amount": 26,
+     "level": 7,
+     "resource": "Mana"
+    },
+    {
+     "amount": 29,
+     "level": 8,
+     "resource": "Mana"
+    },
+    {
+     "amount": 32,
+     "level": 9,
+     "resource": "Mana"
+    },
+    {
+     "amount": 36,
+     "level": 10,
+     "resource": "Mana"
+    },
+    {
+     "amount": 40,
+     "level": 11,
+     "resource": "Mana"
+    },
+    {
+     "amount": 43,
+     "level": 12,
+     "resource": "Mana"
+    },
+    {
+     "amount": 48,
+     "level": 13,
+     "resource": "Mana"
+    },
+    {
+     "amount": 52,
+     "level": 14,
+     "resource": "Mana"
+    },
+    {
+     "amount": 57,
+     "level": 15,
+     "resource": "Mana"
+    },
+    {
+     "amount": 62,
+     "level": 16,
+     "resource": "Mana"
+    },
+    {
+     "amount": 67,
+     "level": 17,
+     "resource": "Mana"
+    },
+    {
+     "amount": 72,
+     "level": 18,
+     "resource": "Mana"
+    },
+    {
+     "amount": 78,
+     "level": 19,
+     "resource": "Mana"
+    },
+    {
+     "amount": 85,
+     "level": 20,
+     "resource": "Mana"
+    },
+    {
+     "amount": 92,
+     "level": 21,
+     "resource": "Mana"
+    },
+    {
+     "amount": 99,
+     "level": 22,
+     "resource": "Mana"
+    },
+    {
+     "amount": 106,
+     "level": 23,
+     "resource": "Mana"
+    },
+    {
+     "amount": 114,
+     "level": 24,
+     "resource": "Mana"
+    },
+    {
+     "amount": 123,
+     "level": 25,
+     "resource": "Mana"
+    },
+    {
+     "amount": 132,
+     "level": 26,
+     "resource": "Mana"
+    },
+    {
+     "amount": 142,
+     "level": 27,
+     "resource": "Mana"
+    },
+    {
+     "amount": 152,
+     "level": 28,
+     "resource": "Mana"
+    },
+    {
+     "amount": 163,
+     "level": 29,
+     "resource": "Mana"
+    },
+    {
+     "amount": 174,
+     "level": 30,
+     "resource": "Mana"
+    },
+    {
+     "amount": 186,
+     "level": 31,
+     "resource": "Mana"
+    },
+    {
+     "amount": 199,
+     "level": 32,
+     "resource": "Mana"
+    },
+    {
+     "amount": 212,
+     "level": 33,
+     "resource": "Mana"
+    },
+    {
+     "amount": 227,
+     "level": 34,
+     "resource": "Mana"
+    },
+    {
+     "amount": 242,
+     "level": 35,
+     "resource": "Mana"
+    },
+    {
+     "amount": 258,
+     "level": 36,
+     "resource": "Mana"
+    },
+    {
+     "amount": 275,
+     "level": 37,
+     "resource": "Mana"
+    },
+    {
+     "amount": 293,
+     "level": 38,
+     "resource": "Mana"
+    },
+    {
+     "amount": 312,
+     "level": 39,
+     "resource": "Mana"
+    },
+    {
+     "amount": 332,
+     "level": 40,
+     "resource": "Mana"
+    }
+   ],
+   "levelCount": 40,
+   "skillTypeNames": [
+    "Area",
+    "Attack",
+    "ConsumesCharges",
+    "Melee",
+    "MeleeSingleTarget",
+    "SkillConsumesPowerChargesOnUse"
+   ],
+   "statSets": [
+    {
+     "constantStats": [
+      [
+       "flicker_strike_additional_flickers_from_power_charges",
+       2
+      ]
+     ],
+     "index": 1,
+     "label": "Flicker Strike",
+     "stats": [
+      "ignores_proximity_shield",
+      "base_skill_show_average_damage_instead_of_dps",
+      "cannot_gain_power_charges_during_skill",
+      "is_area_damage"
+     ]
+    }
+   ],
+   "weaponTypes": [
+    "Staff"
+   ]
+  },
+  "granted_skill_entity_id": "poe2/granted_skills/FlickerStrikePlayer",
+  "incompatible_support_gem_count": 311,
+  "issues": [],
+  "name": "Flicker Strike",
+  "supported_by_effect_ids": [
+   "ImpactShockwaveSupportPlayer",
+   "RuthlessSupportPlayer",
+   "SupportAddedChaosDamagePlayer",
+   "SupportAddedColdDamagePlayer",
+   "SupportAddedFireDamagePlayer",
+   "SupportAddedLightningDamagePlayer",
+   "SupportAdmixturePlayer",
+   "SupportAmbrosiaPlayer",
+   "SupportAmbrosiaPlayerTwo",
+   "SupportAmbushPlayer",
+   "SupportAncestralAidPlayer",
+   "SupportAncestralCallPlayer",
+   "SupportAncestralCallPlayerTwo",
+   "SupportAnimusSplintersPlayer",
+   "SupportArakaalisLustPlayer",
+   "SupportArmourBreakPlayer",
+   "SupportArmourBreakPlayerThree",
+   "SupportArmourBreakPlayerTwo",
+   "SupportArmourDemolisherPlayer",
+   "SupportArmourDemolisherPlayerTwo",
+   "SupportArmourExplosionPlayer",
+   "SupportArmsLengthPlayer",
+   "SupportAtaluiBloodlettingPlayer",
+   "SupportBarbsPlayer",
+   "SupportBarbsPlayerThree",
+   "SupportBarbsPlayerTwo",
+   "SupportBeheadPlayer",
+   "SupportBeheadPlayerTwo",
+   "SupportBhatairsVengeancePlayer",
+   "SupportBitingFrostPlayer",
+   "SupportBitingFrostPlayerTwo",
+   "SupportBlazingCriticalPlayer",
+   "SupportBleedPlayer",
+   "SupportBleedPlayerFour",
+   "SupportBleedPlayerThree",
+   "SupportBleedPlayerTwo",
+   "SupportBlindPlayer",
+   "SupportBlindPlayerTwo",
+   "SupportBlindsidePlayer",
+   "SupportBloodMagicPlayer",
+   "SupportBloodlustPlayer",
+   "SupportBoneShrapnelPlayer",
+   "SupportBountyPlayer",
+   "SupportBountyPlayerTwo",
+   "SupportBreachlordsRift",
+   "SupportBrinkPlayer",
+   "SupportBrinkPlayerTwo",
+   "SupportBrittleArmourPlayer",
+   "SupportBrutalityPlayer",
+   "SupportBrutalityPlayerThree",
+   "SupportBrutalityPlayerTwo",
+   "SupportBurstingPlaguePlayer",
+   "SupportCadencePlayer",
+   "SupportCatharsisPlayer",
+   "SupportChargeInhibitionPlayer",
+   "SupportCharmBountyPlayer",
+   "SupportChillingIcePlayer",
+   "SupportClashPlayer",
+   "SupportCloseCombatPlayer",
+   "SupportCloseCombatPlayerTwo",
+   "SupportColdExposurePlayer",
+   "SupportColdPenetrationPlayer",
+   "SupportComboFinisherPlayer",
+   "SupportComboFinisherPlayerTwo",
+   "SupportCommiseratePlayer",
+   "SupportConcentratedAreaPlayer",
+   "SupportConcoctPlayer",
+   "SupportConcoctPlayerTwo",
+   "SupportConcussiveRunesPlayer",
+   "SupportCorrosionPlayer",
+   "SupportCullingStrikePlayer",
+   "SupportCullingStrikePlayerTwo",
+   "SupportCulminationPlayer",
+   "SupportCulminationPlayerTwo",
+   "SupportDauntlessPlayer",
+   "SupportDazePlayer",
+   "SupportDeadlyCurrentPlayer",
+   "SupportDeadlyIgnitesPlayer",
+   "SupportDeadlyIgnitesPlayerTwo",
+   "SupportDeadlyPoisonPlayer",
+   "SupportDeadlyPoisonPlayerTwo",
+   "SupportDeepCutsPlayer",
+   "SupportDeepCutsPlayerTwo",
+   "SupportDefyPlayer",
+   "SupportDefyPlayerTwo",
+   "SupportDerangePlayer",
+   "SupportDiallasDesirePlayer",
+   "SupportEfficiencyPlayer",
+   "SupportEfficiencyPlayerTwo",
+   "SupportEinharsBeastritePlayer",
+   "SupportElectrocutePlayer",
+   "SupportElementalArmamentPlayer",
+   "SupportElementalArmamentPlayerThree",
+   "SupportElementalArmamentPlayerTwo",
+   "SupportElementalFocusPlayer",
+   "SupportEmbitterPlayer",
+   "SupportEnergyShieldOnShockKillPlayer",
+   "SupportEonyrsThunderPlayer",
+   "SupportEscalatingPoisonPlayer",
+   "SupportEshsRadiancePlayer",
+   "SupportExcisePlayer",
+   "SupportExecratePlayer",
+   "SupportExecutePlayer",
+   "SupportExecutePlayerThree",
+   "SupportExecutePlayerTwo",
+   "SupportExpansePlayer",
+   "SupportExploitWeaknessPlayer",
+   "SupportFarCombatPlayer",
+   "SupportFarCombatPlayerTwo",
+   "SupportFerocityPlayer",
+   "SupportFieryDeathPlayer",
+   "SupportFireExposurePlayer",
+   "SupportFirePenetrationPlayer",
+   "SupportFirePenetrationPlayerTwo",
+   "SupportFlamePillarPlayer",
+   "SupportFreezePlayer",
+   "SupportFrenziedRipostePlayer",
+   "SupportFrostfirePlayer",
+   "SupportFrozenSpitePlayer",
+   "SupportGarukhansResolvePlayer",
+   "SupportHaemocrystalsPlayer",
+   "SupportHeavyStunEndurancePlayerOne",
+   "SupportHeavyStunEndurancePlayerTwo",
+   "SupportHeftPlayer",
+   "SupportHeightenedAccuracyPlayer",
+   "SupportHeightenedAccuracyPlayerTwo",
+   "SupportHeightenedChargesPlayer",
+   "SupportHitAndRunPlayer",
+   "SupportHollowFormPlayer",
+   "SupportHourglassPlayer",
+   "SupportIceBitePlayer",
+   "SupportIceBitePlayerTwo",
+   "SupportIgniteDurationPlayer",
+   "SupportIgniteDurationPlayerThree",
+   "SupportIgniteDurationPlayerTwo",
+   "SupportIgnitePlayer",
+   "SupportIgnitePlayerThree",
+   "SupportIgnitePlayerTwo",
+   "SupportImmolatePlayer",
+   "SupportImpalePlayer",
+   "SupportIncisionPlayer",
+   "SupportIncreasedCriticalDamagePlayer",
+   "SupportInevitableCriticalsPlayer",
+   "SupportInevitableCriticalsPlayerTwo",
+   "SupportInnervatePlayer",
+   "SupportKnockbackPlayer",
+   "SupportKnockbackWavePlayer",
+   "SupportLastingFrostPlayer",
+   "SupportLastingShockPlayer",
+   "SupportLifeFlaskPlayer",
+   "SupportLifeLeechPlayer",
+   "SupportLifeLeechPlayerThree",
+   "SupportLifeLeechPlayerTwo",
+   "SupportLifeOnCullPlayer",
+   "SupportLightningExposurePlayer",
+   "SupportLightningPenetrationPlayer",
+   "SupportLivingLightningPlayer",
+   "SupportLivingLightningPlayerTwo",
+   "SupportLockdownPlayer",
+   "SupportMagnifiedAreaPlayer",
+   "SupportMagnifiedAreaPlayerTwo",
+   "SupportMaimPlayer",
+   "SupportMaladyPlayer",
+   "SupportManaFlaskPlayer",
+   "SupportManaLeechPlayer",
+   "SupportManaOnCullPlayer",
+   "SupportMedvedsFelling",
+   "SupportMeleePhysicalDamagePlayer",
+   "SupportMinionPactPlayer",
+   "SupportMinionPactPlayerTwo",
+   "SupportMomentumPlayer",
+   "SupportMorrigansInsight",
+   "SupportNeuralOverloadPlayer",
+   "SupportOisinsOathPlayer",
+   "SupportOlrothsHubrisPlayer",
+   "SupportOverchargePlayer",
+   "SupportOverextendPlayer",
+   "SupportOverreachPlayer",
+   "SupportPerpetualChargePlayer",
+   "SupportPinPlayer",
+   "SupportPinPlayerThree",
+   "SupportPinPlayerTwo",
+   "SupportPinpointCriticalPlayer",
+   "SupportPoisonPlayer",
+   "SupportPoisonPlayerThree",
+   "SupportPoisonPlayerTwo",
+   "SupportPotentExposurePlayer",
+   "SupportPracticalMagicPlayer",
+   "SupportPracticalMagicPlayerTwo",
+   "SupportPracticedComboPlayer",
+   "SupportProfanityPlayer",
+   "SupportProfanityPlayerTwo",
+   "SupportPrototypeSeventeenPlayer",
+   "SupportPunchThroughPlayer",
+   "SupportPursuitPlayer",
+   "SupportPursuitPlayerThree",
+   "SupportPursuitPlayerTwo",
+   "SupportQuillburstPlayer",
+   "SupportRagePlayer",
+   "SupportRagePlayerThree",
+   "SupportRagePlayerTwo",
+   "SupportRageforgedPlayer",
+   "SupportRageforgedPlayerTwo",
+   "SupportRakiatasFlowPlayer",
+   "SupportRapidAttacksPlayer",
+   "SupportRapidAttacksPlayerThree",
+   "SupportRapidAttacksPlayerTwo",
+   "SupportRelentlessRagePlayer",
+   "SupportRetaliatePlayer",
+   "SupportRetaliatePlayerTwo",
+   "SupportRigwaldsFerocityPlayer",
+   "SupportRipPlayer",
+   "SupportRuneforgedBladesPlayer",
+   "SupportRunicExtractionPlayer",
+   "SupportRunicInfusionPlayer",
+   "SupportRupturePlayer",
+   "SupportRustedSpikesPlayer",
+   "SupportScouringFlamePlayer",
+   "SupportShockConductionPlayer",
+   "SupportShockConductionPlayerTwo",
+   "SupportShockPlayer",
+   "SupportShockingRiftPlayer",
+   "SupportSlowPotencyPlayer",
+   "SupportSparPlayer",
+   "SupportStaticShocksPlayer",
+   "SupportStoicismPlayer",
+   "SupportStoicismPlayerTwo",
+   "SupportStormfirePlayer",
+   "SupportStunPlayer",
+   "SupportStunPlayerThree",
+   "SupportStunPlayerTwo",
+   "SupportSwiftAfflictionPlayer",
+   "SupportSwiftAfflictionPlayerThree",
+   "SupportSwiftAfflictionPlayerTwo",
+   "SupportTacatisIrePlayer",
+   "SupportTearPlayer",
+   "SupportTempestuousTempoPlayer",
+   "SupportThrillOfTheKillPlayer",
+   "SupportThrillOfTheKillPlayerTwo",
+   "SupportTulsStillnessPlayer",
+   "SupportUhtredAuguryPlayer",
+   "SupportUhtredExodusPlayer",
+   "SupportUhtredOmenPlayer",
+   "SupportUnderminePlayer",
+   "SupportUnerringPowerPlayer",
+   "SupportUntouchablePlayer",
+   "SupportUruksSmeltingPlayer",
+   "SupportUulNetolsEmbracePlayer",
+   "SupportVarashtasBlessingPlayer",
+   "SupportVerglasPlayer",
+   "SupportVolatilityPlayer",
+   "SupportVolcanicEruptionPlayer",
+   "SupportVoranasSiege",
+   "SupportVruunsInevitability",
+   "SupportWildfirePlayer",
+   "SupportWitheringTouchPlayer",
+   "SupportXophsPyrePlayer",
+   "SupportZerphisLegacyPlayer"
+  ]
+ },
+ "kind": "PoB-derived",
+ "live_main_skill": {
+  "accepted_count": 258,
+  "accepted_only_live": [],
+  "accepted_only_static": [],
+  "live_skill_types": [
+   "Area",
+   "Attack",
+   "ConsumesCharges",
+   "Melee",
+   "MeleeSingleTarget",
+   "SkillConsumesPowerChargesOnUse"
+  ],
+  "skill": "FlickerStrikePlayer"
+ },
+ "not_a_claim": "Read out of the pinned Path of Building checkout. Not gameplay evidence. The support list is PoB's static answer on base skill types; the weapon in the documents has invented rolls.",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "pob_dirty_hash": null,
+ "written_at": "2026-10-17T20:26:10Z"
+}

@@ -1,0 +1,20 @@
+{
+ "capture_version": 2,
+ "provider": "pathofexile.com",
+ "source_url": "https://www.pathofexile.com/forum/view-thread/4009785/filter-account-type/staff",
+ "captured_at": "2026-10-17T20:17:02Z",
+ "fidelity": "verbatim",
+ "capture_method": "curl_anonymous_get",
+ "game": "poe2",
+ "realm": "poe2",
+ "patch_id": "0.5.5e",
+ "patch_published_at": "2026-10-06T01:32:07Z",
+ "title": "0.5.5e Patch Notes",
+ "author": "Alexander_GGG",
+ "redistribution": "restricted",
+ "raw_file": "poe2-0.5.5e-thread-4009785-staff.html",
+ "raw_sha256": "c1380e84ac5d768fc7371952197ddf94ca6732111fb8022dc0920011210b11d6",
+ "raw_media_type": "text/html; charset=utf-8",
+ "excerpt": "0.5.5e Patch Notes\nAdded a new Texture Quality setting for machines with low VRAM.\nFixed a bug where killing some specific bosses would prevent Ritual encounters from starting.\nFixed a bug where the Tomb of the Fallen Knight could not be accessed.\nFixed an issue where some areas were particularly slow to load.\nFixed a bug where decorations from The Sovereign Hideout were missing 2D art.",
+ "notes": "Byte capture of the staff-only view of the official 0.5.5e Patch Notes thread, fetched anonymously on 2026-10-17 (21227 bytes, unmodified). The thread holds one staff post, the patch notes. The page shows the post time as 'Oct 6, 2026, 1:32:07 AM' with no zone; it is recorded as UTC, as the 2026-10-06 summary capture did, and that zone is unverified. The Early Access Patch Notes forum index fetched at 20:16:40Z the same day lists 0.5.5e as the newest thread (stored under docs/evidence/P02-T02.1/official/). Supersedes poe2-0.5.5e.json as evidence for the same patch; that file is kept unchanged."
+}

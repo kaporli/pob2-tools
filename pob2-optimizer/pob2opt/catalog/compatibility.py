@@ -117,6 +117,8 @@ def run_fixtures(fixtures: Mapping[str, Any],
             outcomes.append(_field(fixture, entities))
         elif kind == "count":
             outcomes.append(_count(fixture, entities))
+        elif kind == "members":
+            outcomes.append(_members(fixture, entities))
         elif kind == "behaviour":
             outcomes.append(_behaviour(fixture, behaviour))
         else:
@@ -165,6 +167,42 @@ def _field(fixture: Mapping[str, Any],
     return FixtureOutcome(fixture["fixture_id"], "field", MATCH,
                           "%s.%s unchanged" % (wanted, fixture["path"]),
                           expected=expected, observed=observed)
+
+
+def _members(fixture: Mapping[str, Any],
+             entities: Mapping[str, Sequence[CatalogEntity]]) -> FixtureOutcome:
+    """A list field still holds every ``includes`` and no ``excludes`` entry.
+
+    Entries outside both lists are ignored, so upstream adding an unrelated
+    value is not a mismatch; one moving to the wrong side is.
+    """
+    table, wanted = fixture["table"], fixture["entity_id"]
+    entity = _lookup(entities, table, wanted)
+    if entity is None:
+        return FixtureOutcome(fixture["fixture_id"], "members", ABSENT,
+                              "%s is not in table %s" % (wanted, table))
+    observed = _dig(entity.raw_reference, fixture["path"])
+    if not isinstance(observed, (list, tuple)):
+        return FixtureOutcome(fixture["fixture_id"], "members", MISMATCH,
+                              "%s.%s is %r, not a list"
+                              % (wanted, fixture["path"], observed))
+    present = set(observed)
+    lost = sorted(set(fixture.get("includes") or ()) - present)
+    gained = sorted(set(fixture.get("excludes") or ()) & present)
+    expected = {"includes": len(fixture.get("includes") or ()),
+                "excludes": len(fixture.get("excludes") or ())}
+    if lost or gained:
+        return FixtureOutcome(
+            fixture["fixture_id"], "members", MISMATCH,
+            "%s.%s lost %s; gained excluded %s"
+            % (wanted, fixture["path"], ", ".join(lost) or "nothing",
+               ", ".join(gained) or "nothing"),
+            expected=expected, observed={"lost": lost, "gained": gained})
+    return FixtureOutcome(fixture["fixture_id"], "members", MATCH,
+                          "%s.%s holds all %d included and none of %d excluded"
+                          % (wanted, fixture["path"], expected["includes"],
+                             expected["excludes"]),
+                          expected=expected, observed=len(observed))
 
 
 def _count(fixture: Mapping[str, Any],
