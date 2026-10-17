@@ -66,3 +66,4 @@ them separate.
 | `P04/verification-context.json` | P04 | Branch, base commit, PoB checkout identity, interpreters and the commands behind the logs |
 | `P05-T02/offline-py312.txt`, `P05-T02/offline-py310.txt` | P05-T02 | Offline suite logs on Python 3.12 and 3.10 after the item and listing import |
 | `P05-T02/engine-py312.txt`, `P05-T02/engine-py312-run2.txt` | P05-T02 | Engine suite logs against PoB `ce566ea`: the first run stopped by the test-session memory guard in an existing P02 test, the second complete. Synthetic items, no gameplay measurement |
+| `P05-T03/offline-py312.txt`, `P05-T03/offline-py310.txt` | P05-T03 | Offline suite logs on Python 3.12 and 3.10 after the equipment pools |

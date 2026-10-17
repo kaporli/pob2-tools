@@ -33,8 +33,11 @@ from .objectives import UnknownObjective, get_objective
 from .codec import CodecError, NotANumber, from_jsonable, to_jsonable
 from .enums import (
     AcquisitionStatus,
+    CandidateAvailability,
     Compatibility,
+    EnablingQueryStatus,
     Fidelity,
+    PoolSlotStatus,
     ResultStatus,
     RunMode,
 )
@@ -475,6 +478,44 @@ def _check_listing(record):
     if record.price_amount is not None and record.price_amount.startswith("-"):
         yield ValidationError("negative_price", "/price_amount",
                               "a listed price cannot be negative", "semantic")
+
+
+def _check_equipment_pool(record):
+    in_bound = [q for q in record.enabling_queries
+                if q.status is not EnablingQueryStatus.OVER_BOUND]
+    if len(in_bound) > record.sampling.enabling_queries_per_run:
+        yield ValidationError(
+            "enabling_queries_over_bound", "/enabling_queries",
+            "%d queries are inside a bound of %d"
+            % (len(in_bound), record.sampling.enabling_queries_per_run),
+            "semantic")
+    for i, slot in enumerate(record.slots):
+        path = "/slots/%d" % i
+        missing = not slot.accepted_base_categories
+        if missing != (slot.status is PoolSlotStatus.MISSING_CATEGORY_RULE):
+            yield ValidationError(
+                "slot_status_mismatch", path + "/status",
+                "missing_category_rule is the status of exactly the slots "
+                "whose rule names no accepted base category", "semantic")
+        if slot.truncated != (slot.considered_count > slot.retained_count):
+            yield ValidationError(
+                "truncation_mismatch", path + "/truncated",
+                "truncated must equal considered_count > retained_count",
+                "semantic")
+        seen = set()
+        for j, candidate in enumerate(slot.candidates):
+            cpath = "%s/candidates/%d" % (path, j)
+            owned = candidate.availability is CandidateAvailability.OWNED
+            if owned and candidate.listing_id is not None:
+                yield ValidationError(
+                    "owned_with_listing", cpath + "/listing_id",
+                    "an owned candidate is not a listing", "semantic")
+            key = (candidate.item_hash, candidate.listing_id, owned)
+            if key in seen:
+                yield ValidationError(
+                    "duplicate_candidate", cpath,
+                    "the same candidate appears twice in one slot", "semantic")
+            seen.add(key)
 
 
 def _check_build_spec(record):
@@ -1018,6 +1059,7 @@ _PER_KIND = {
     "game_catalog": _check_game_catalog,
     "item_instance": _check_item_instance,
     "listing": _check_listing,
+    "equipment_pool": _check_equipment_pool,
     "mechanic_claim": _check_mechanic_claim,
     "observation": _check_observation,
     "parse_result": _check_parse_result,
@@ -1047,7 +1089,8 @@ UNCHECKED_REFERENCE_FIELDS: dict[tuple[str, str], str] = {
     ("observation", "build_family_id"):
         "families are assigned by P09-T03; no record type yet",
     ("run_request", "item_pool_ids"):
-        "item pools are a P05-T03 record type that does not exist yet",
+        "equipment_pool records (P05-T03); a request names them before "
+        "prepare (P08-T01) resolves them",
     ("build_spec", "variant_id"): "deduplication metadata assigned by P04",
     ("build_spec", "family_id"): "deduplication metadata assigned by P09",
 
@@ -1248,6 +1291,21 @@ def _references(kind, record):
     elif kind == "listing":
         yield "/item_hash", record.item_hash, "item_hashes"
         yield "/source_document_id", record.source_document_id, "source_document_ids"
+
+    elif kind == "equipment_pool":
+        yield "/catalog_hash", record.catalog_hash, "catalog_hashes"
+        yield "/patch_profile_id", record.patch_profile_id, "patch_profile_ids"
+        for i, slot in enumerate(record.slots):
+            for j, candidate in enumerate(slot.candidates):
+                path = "/slots/%d/candidates/%d" % (i, j)
+                yield path + "/item_hash", candidate.item_hash, "item_hashes"
+                yield path + "/listing_id", candidate.listing_id, "listing_ids"
+        for i, query in enumerate(record.enabling_queries):
+            yield from _each("/enabling_queries/%d/matched_item_hashes" % i,
+                             query.matched_item_hashes, "item_hashes")
+        yield from _each("/unplaced_item_hashes", record.unplaced_item_hashes,
+                         "item_hashes")
+        yield from _each("/gap_ids", record.gap_ids, "gap_ids")
 
     elif kind == "build_spec":
         yield "/catalog_hash", record.catalog_hash, "catalog_hashes"

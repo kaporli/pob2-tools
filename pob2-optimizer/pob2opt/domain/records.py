@@ -29,12 +29,14 @@ from .enums import (
     ActionKind,
     Availability,
     AvailabilityMode,
+    CandidateAvailability,
     ClaimStatus,
     Compatibility,
     Completion,
     ConfigOrigin,
     CoverageState,
     DatasetSplit,
+    EnablingQueryStatus,
     Fidelity,
     GapKind,
     GapSeverity,
@@ -43,6 +45,7 @@ from .enums import (
     ModifierCategory,
     ModifierParseStatus,
     ParseResultStatus,
+    PoolSlotStatus,
     RecommendationStatus,
     RecordParseStatus,
     Redistribution,
@@ -342,6 +345,81 @@ class Listing(RecordBase):
     #: How many of this item the listing offers. Null is unknown, and an
     #: unknown quantity may not be read as more than one.
     quantity: int | None
+
+
+# ================================================ equipment pools (P05-T03) ===
+
+@_frozen
+class PoolSampling:
+    """Sampling bounds, not an exhaustive-market claim."""
+
+    listings_per_slot: int
+    enabling_queries_per_run: int
+
+
+@_frozen
+class PoolCandidate:
+    item_hash: str
+    #: Null for an owned item or an imported item without a listing.
+    listing_id: str | None
+    availability: CandidateAvailability
+    #: Copies the listing, or the owned count. Null is unknown, read as one.
+    quantity: int | None
+    #: Why the candidate is in the pool: ``owned``, ``enabling:<query id>``
+    #: or ``sample``.
+    retained_for: list[str]
+
+
+@_frozen
+class SlotPool:
+    slot_id: str
+    weapon_set_id: str | None
+    accepted_base_categories: list[str]
+    status: PoolSlotStatus
+    candidates: list[PoolCandidate]
+    #: Non-owned candidates that fit the slot, before the bound.
+    considered_count: int
+    #: Non-owned candidates kept. Below ``considered_count`` means truncated.
+    retained_count: int
+    truncated: bool
+    #: Listings left out because their availability is ``unavailable``.
+    unavailable_count: int
+    #: Items left out because their record is ``partial``.
+    partial_count: int
+
+
+@_frozen
+class EnablingQueryOutcome:
+    query_id: str
+    description: str
+    #: Empty means every slot.
+    slot_ids: list[str]
+    base_ids: list[str]
+    modifier_patterns: list[str]
+    status: EnablingQueryStatus
+    reason: str
+    #: Imported or owned items the declaration matched locally.
+    matched_item_hashes: list[str]
+
+
+@_frozen
+class EquipmentPool(RecordBase):
+    """Candidates per catalog slot for one run (P05-T03).
+
+    ``pool_id`` is a content hash of everything below except the base record
+    fields. No price, budget or score is held: pools never filter by price.
+    """
+
+    pool_id: str
+    catalog_hash: str
+    patch_profile_id: str
+    sampling: PoolSampling
+    slots: list[SlotPool]
+    enabling_queries: list[EnablingQueryOutcome]
+    #: Items no slot took: no resolved base, a base the catalog does not
+    #: name, or a category no slot rule accepts.
+    unplaced_item_hashes: list[str]
+    gap_ids: list[str]
 
 
 # ===================================================== builds and parsing ===
@@ -999,6 +1077,7 @@ RECORD_TYPES: dict[str, type] = {
     "game_catalog": GameCatalog,
     "item_instance": ItemInstance,
     "listing": Listing,
+    "equipment_pool": EquipmentPool,
     "build_spec": BuildSpec,
     "parse_result": ParseResult,
     "mechanic_claim": MechanicClaim,
@@ -1021,6 +1100,7 @@ RECORD_KINDS: dict[type, str] = {cls: kind for kind, cls in RECORD_TYPES.items()
 #: it, so storage and the domain can never drift apart.
 DOMAIN_ID_FIELDS: dict[str, str] = {
     "data_gap": "gap_id",
+    "equipment_pool": "pool_id",
     "listing": "listing_id",
     "evaluation_result": "evaluation_id",
     "aggregate_result": "aggregate_id",
