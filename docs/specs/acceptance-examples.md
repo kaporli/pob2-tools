@@ -2,6 +2,8 @@
 
 These examples specify expected behavior for future tests. All numbers and item/skill names in this document are synthetic. They are not PoE 2 mechanics claims. Implement them with small test doubles where appropriate; actual engine/provider acceptance still requires its own evidence.
 
+Spec 1.1 adds the [D07 Flicker objective fixtures](../decisions/D07-flicker-strike-objective.md#required-adversarial-fixtures). The balanced-score examples below remain valid tests of the named legacy objective and clear/boss diagnostics; they no longer define the default winner. Add an explicit fixture where the eligible highest sustained-DPS candidate has a lower balanced score and still wins D07.
+
 ## Example 1 Balanced scoring
 
 Reference completion times are `[100, 100, 100, 100]` seconds, ordered dense clear, spread clear, short boss, sustained boss. Assume all legality, coverage and survival gates pass.

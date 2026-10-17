@@ -95,6 +95,8 @@ Metrics include `completion: success|timeout|death|unknown`, `completion_time_s`
 
 An `AggregateResult` contains category scores, balanced score, per-scenario gates, `eligible`, `strength_label`, `recommendation_status`, sensitivity references and evaluation IDs. Invalid/unknown candidates have nullable scores and explicit exclusion reasons. Search uses provisional estimates in a separate archive; only qualified detailed results enter recommendation ranking.
 
+**Spec 1.1 extension (P08-T01.1, implemented, awaiting P01 review):** AggregateResult schema version 2 adds `objective_version`, `objective_hash`, `objective_metrics`, `objective_score` and `objective_gap_ids`. `objective_id`/`objective_version` must name a registered objective (`pob2opt/domain/objectives.py`: `balanced_score` v1, `flicker_sustained_dps` v1); unknown pairs are refused. `objective_metrics` holds exactly the objective's metric names (`flicker_sustained_dps`, `flicker_burst_dps`). `objective_score` must equal the objective's score metric, or `balanced_score` for the balanced objective; it is never filled from another score. A null metric or score needs a gap, and an eligible candidate needs a score. Version 1 aggregates keep their free-form `objective_id` and are not ranked by a version 2 objective. Keep `balanced_score` dimensionless; never store DPS there. Ranking and damage attribution remain P07 work.
+
 ## Observation
 
 Fields: `observation_id`, `build_hash`, `patch_profile_id`, `scenario_id`, `rotation_id`, `operator_id` (pseudonymous), `trial_id`, `measured_at`, `measurement_method`, `metrics`, `raw_evidence_ids`, `measurement_uncertainty`, `deviations`, `dataset_split: calibration|validation|holdout`, `build_family_id`, `review_status`.

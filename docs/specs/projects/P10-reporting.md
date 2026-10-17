@@ -12,6 +12,8 @@ Acceptance: JSON and Markdown numbers agree; a failed evaluation is never omitte
 
 For every recommended candidate show: PoB XML/code export where supported, complete gear/passives/gems, clear and boss raw times/scores, relative strength label, survival/resource results, rotation steps, preparation time, execution rate, timing requirements, missed-action sensitivity and unsupported scope.
 
+For D07, lead with the highest eligible sustained Flicker Strike DPS candidate and show the objective/version, target/defenses, 120-second window, attributed damage breakdown, separate five-second burst result, sustain evidence/limits and searched/excluded classes. Label PoB-only values as proxies. Show why a higher burst or higher raw-DPS specialist was excluded if it failed recommendation gates. Do not describe the highest balanced score as the Flicker winner.
+
 Show market items and links with native-currency prices, final refresh state/time, required rolls and evaluated substitutes. Explain theoretical/unverified items explicitly. Render source claim links and evidence status. Use deterministic templates initially; generated prose is optional and cannot invent numbers or mechanics.
 
 Acceptance: a reviewer loads the export and repeats its measurements; text describes the exact evaluated configuration. If export loses a required mechanic, withhold the recommendation export and show the blocker. Strength labels follow the shared formula.

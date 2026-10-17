@@ -2,6 +2,14 @@
 
 The optimizer must reward builds that can clear and boss with the same equipment. This document specifies ranking mechanics. The actual PoE 2 encounter data is selected and evidenced in P09, not invented here.
 
+## Active objective in specification 1.1
+
+[D07](../decisions/D07-flicker-strike-objective.md) changes the default winner to maximum **sustained single-target Flicker Strike DPS**, measured over its fixed 120-second controlled benchmark with all setup/downtime counted. Burst is the first five seconds under the same conditions and is reported separately. This benchmark is additional to the four completion scenarios below; it does not replace their gates or claim to be a real boss.
+
+Compute C, B and S below as clear/boss diagnostics and enforce every existing eligibility gate. Then rank eligible candidates by D07's sustained DPS, with D07's deterministic tie-break. If the DPS benchmark or any required gate lacks evidence, do not fall back to S, a burst value or PoB's displayed DPS. A supported diagnostic benchmark result may be displayed without becoming a recommendation.
+
+The balanced objective below remains a named legacy objective for existing fixtures and comparisons, not the new default. Give the Flicker objective its own version/hash and aggregate fields before implementation. Never rewrite accepted `p09-synthetic-v1` artifacts or hashes to look like evidence for D07.
+
 ## Initial suite
 
 Use four versioned scenarios: `clear_dense`, `clear_spread`, `boss_short`, and `boss_sustained`. Each has explicit enemy entities, health/defenses, positions or supported spatial relationships, movement/targetability windows, incoming damage, initial resources, legal preparation, completion rule and time limit.
@@ -12,11 +20,11 @@ Dense and spread scenarios measure time to finish their fixed enemy/route worklo
 
 Each scenario has one approved reference build/result. References must be legal, complete and evaluated under identical scenario rules. They need not all be the same build. Freeze references before a comparison campaign; never renormalize against the highest candidate discovered in that campaign.
 
-## Ranking algorithm
+## Clear/boss diagnostics, gates and legacy balanced objective
 
 For a successful candidate result in scenario `i`, define `r_i = reference_time_i / candidate_time_i`. Positive finite times are required. For stochastic scenarios, use the median over the same fixed seed set for reference and candidate. Death and timeout are failures, not missing trials to discard. A failed detailed trial disqualifies the default deterministic suite; stochastic suites specify a minimum success fraction before data collection.
 
-Compute `C = geometric_mean(r_clear_dense, r_clear_spread)` and `B = geometric_mean(r_boss_short, r_boss_sustained)`. The default balanced score is `S = sqrt(C * B)`. The ratios are dimensionless. Equal category weighting is a product default, not a property of the game. If any required result is missing/unknown, set all aggregate scores to null; partial per-scenario metrics may still be displayed separately.
+Compute `C = geometric_mean(r_clear_dense, r_clear_spread)` and `B = geometric_mean(r_boss_short, r_boss_sustained)`. The balanced diagnostic score is `S = sqrt(C * B)`. The ratios are dimensionless. Equal category weighting is a product default, not a property of the game. If any required result is missing/unknown, set C, B and S to null; partial per-scenario metrics may still be displayed separately. Missing recommendation gates also leave the active objective's eligible ranking unresolved.
 
 Before computing a recommendation, require:
 
@@ -28,7 +36,7 @@ Before computing a recommendation, require:
 
 These floors mean at most twice the reference time in any scenario and reasonable category performance relative to the selected baselines. They are provisional product settings. P09 reviews whether the chosen real references make them meaningful; engineers cannot relax them to produce a winner.
 
-Keep the Pareto set of eligible `(C, B)` results: a candidate dominates another when it is no worse in both and strictly better in at least one. Report balanced winner by `S`, and eligible clear/boss alternatives when distinct. Tie-break scores within relative tolerance `1e-6` by higher `min(C,B)`, then canonical build-plus-rotation hash for deterministic output. Preserve exact raw times alongside scores.
+Keep the Pareto set of eligible `(C, B)` results: a candidate dominates another when it is no worse in both and strictly better in at least one. For an explicitly selected legacy balanced objective, rank by `S`, then higher `min(C,B)` within relative tolerance `1e-6`, then canonical build-plus-rotation hash. For the default Flicker objective, use D07's ranking instead and retain this set for clear/boss alternatives; do not discard a DPS winner solely because it is dominated on C/B. Preserve exact raw times alongside scores.
 
 ## Strength labels
 
