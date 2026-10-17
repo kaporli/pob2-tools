@@ -1,0 +1,5 @@
+{"event": "reference", "pid": 41424, "keys": 675}
+{"event": "evaluation", "i": 0, "outcome": "ok", "pid": 41928, "generation": 1, "seconds": 2.66, "worker_memory": 312762368}
+{"event": "evaluation", "i": 1, "outcome": "ok", "pid": 41928, "generation": 1, "seconds": 0.33, "worker_memory": 372252672}
+{"event": "evaluation", "i": 2, "outcome": "ok", "pid": 41928, "generation": 1, "seconds": 0.36, "worker_memory": 426622976}
+{"event": "summary", "evaluations": 3, "counts": {"ok": 3, "mismatch": 0}, "limit_mb": 2048, "recycle_mb": 1280, "workers": 1, "recycles": 0, "replacements": 0, "seconds": 3.4, "history": [{"pid": 41928, "generation": 1, "requests": 10, "peak_memory_bytes": 426622976, "end": "closed"}]}

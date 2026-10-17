@@ -61,6 +61,7 @@ class SyntheticSession:
     def handle(self, op: str, args: dict):
         self._maybe_wedge(op)
         self._maybe_die(op)
+        self._maybe_grow(op, args)
         if self.slow_on == op and self.slow_s:
             time.sleep(self.slow_s)
         if op == "describe":
@@ -122,6 +123,28 @@ class SyntheticSession:
         # which is exactly what the acceptance case measures.
         while True:
             time.sleep(3600)
+
+    def _maybe_grow(self, op: str, args: dict) -> None:
+        """Allocate memory on ``grow_on`` (P02-T01.1).
+
+        ``grow_mb`` is allocated and kept, then the request answers. With
+        ``grow_forever`` it keeps allocating and never answers, the offline
+        stand-in for a runaway native loop. ``grow_key`` limits it to requests
+        whose config names that key, so a fresh worker can be asked for an
+        ordinary request.
+        """
+        if op != self.config.get("grow_on"):
+            return
+        key = self.config.get("grow_key")
+        if key is not None and key not in dict(args.get("config") or []):
+            return
+        chunk = int(self.config.get("grow_mb", 64)) * 2**20
+        held = getattr(self, "held", [])
+        self.held = held
+        held.append(b"\x01" * chunk)
+        while self.config.get("grow_forever"):
+            held.append(b"\x01" * chunk)
+            time.sleep(0.02)
 
     def _maybe_die(self, op: str) -> None:
         if self.behavior != "die" or op != self.die_on:

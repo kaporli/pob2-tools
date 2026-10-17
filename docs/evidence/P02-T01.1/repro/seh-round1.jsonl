@@ -1,0 +1,4 @@
+{"condition": "plain", "iterations": 2000, "completed": 2000, "failure": null, "private_before": 262369280, "private_after": 269070336, "seconds": 0.06, "fault_log_bytes": null}
+{"condition": "fh", "iterations": 2000, "completed": 2000, "failure": null, "private_before": 245596160, "private_after": 252424192, "seconds": 0.3, "fault_log_bytes": 1424050}
+{"condition": "thread", "iterations": 2000, "completed": 2000, "failure": null, "private_before": 247549952, "private_after": 254230528, "seconds": 0.31, "fault_log_bytes": null}
+{"condition": "fh+thread", "iterations": 2000, "completed": 2000, "failure": null, "private_before": 246587392, "private_after": 253403136, "seconds": 0.8, "fault_log_bytes": 2324336}

@@ -36,6 +36,17 @@ ADAPTER_VERSION = "p02.1"
 #: Owner of primitive units, included effects and excluded effects.
 PRIMITIVE_SEMANTICS_OWNER = SEMANTICS_OWNER
 
+#: Default hard memory limit per worker (P02-T01.1). A worker above it is
+#: killed and the request fails with ``EngineMemoryLimit``.
+MEMORY_LIMIT_BYTES = 3 * 2**30
+#: Default planned-replacement threshold, checked between requests. A worker
+#: above it finishes its current request and is then replaced.
+RECYCLE_AFTER_BYTES = 2 * 2**30
+#: Unplanned worker losses in a row before the adapter stops replacing.
+MAX_CONSECUTIVE_FAILURES = 3
+#: How often a busy worker's memory is sampled.
+MEMORY_POLL_S = 0.1
+
 OP_DESCRIBE = "describe"
 OP_CREATE_BLANK_BUILD = "create_blank_build"
 OP_LOAD_EXACT_BUILD = "load_exact_build"

@@ -1,0 +1,24 @@
+runaway: lua heap 2525 MiB
+stack traceback:
+	Classes/PassiveSpec.lua:1516: in function 'BuildAllDependsAndPaths'
+	Classes/PassiveSpec.lua:743: in function 'SelectAscendClass'
+	Classes/PassiveSpec.lua:711: in function 'SelectClass'
+	Classes/PassiveSpec.lua:397: in function 'ImportFromNodeList'
+	Classes/PassiveSpec.lua:245: in function 'Load'
+	Classes/TreeTab.lua:510: in function <Classes/TreeTab.lua:492>
+	Modules/Build.lua:585: in function 'CallMode'
+	Modules/Main.lua:416: in function <Modules/Main.lua:402>
+	[C]: in function 'pcall'
+	_SimpleGraphic.def.lua:506: in function 'PCall'
+	Launch.lua:113: in function 'runCallback'
+	HeadlessWrapper.lua:65: in function 'loadBuildFromXML'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:102: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:99>
+	[C]: in function 'pcall'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:1011: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:1005>
+sample 1 heap=2525MiB PassiveSpec.lua:1516(BuildAllDependsAndPaths) < PassiveSpec.lua:743(SelectAscendClass) < PassiveSpec.lua:711(SelectClass) < PassiveSpec.lua:397(ImportFromNodeList) < PassiveSpec.lua:245(Load) < TreeTab.lua:510(nil) < Build.lua:585(CallMode) < Main.lua:416(nil) < [C]:-1(pcall) < _SimpleGraphic.def.lua:506(PCall) < Launch.lua:113(runCallback) < HeadlessWrapper.lua:65(loadBuildFromXML) < [string "-- Handlers exposed to Python through MCP_dis..."]:102(nil) < [C]:-1(pcall) < [string "-- Handlers exposed to Python through MCP_dis..."]:1011(nil)
+sample 2 heap=2529MiB PassiveSpec.lua:1462(BuildNodePathsToRootNodes) < PassiveSpec.lua:2067(BuildAllDependsAndPaths) < PassiveSpec.lua:2169(BuildClusterJewelGraphs) < PassiveSpec.lua:382(PostLoad) < TreeTab.lua:523(nil) < Build.lua:592(CallMode) < Main.lua:416(nil) < [C]:-1(pcall) < _SimpleGraphic.def.lua:506(PCall) < Launch.lua:113(runCallback) < HeadlessWrapper.lua:65(loadBuildFromXML) < [string "-- Handlers exposed to Python through MCP_dis..."]:102(nil) < [C]:-1(pcall) < [string "-- Handlers exposed to Python through MCP_dis..."]:1011(nil)
+sample 3 heap=2530MiB ModStore.lua:289(Flag) < .\Modules\CalcPerform.lua:966(doActorCharges) < .\Modules\CalcPerform.lua:2952(perform) < Calcs.lua:521(buildOutput) < CalcsTab.lua:512(nil) < Build.lua:603(CallMode) < Main.lua:416(nil) < [C]:-1(pcall) < _SimpleGraphic.def.lua:506(PCall) < Launch.lua:113(runCallback) < HeadlessWrapper.lua:65(loadBuildFromXML) < [string "-- Handlers exposed to Python through MCP_dis..."]:102(nil) < [C]:-1(pcall) < [string "-- Handlers exposed to Python through MCP_dis..."]:1011(nil)
+sample 4 heap=2531MiB ModTools.lua:62(mod_createMod) < ModStore.lua:143(NewMod) < .\Modules\CalcSetup.lua:100(initModDB) < .\Modules\CalcSetup.lua:953(initEnv) < Calcs.lua:520(buildOutput) < CalcsTab.lua:505(BuildOutput) < Build.lua:1394(CallMode) < Main.lua:432(nil) < [C]:-1(pcall) < _SimpleGraphic.def.lua:506(PCall) < Launch.lua:113(runCallback) < [string "-- Handlers exposed to Python through MCP_dis..."]:10(recalc) < [string "-- Handlers exposed to Python through MCP_dis..."]:107(nil) < [C]:-1(pcall) < [string "-- Handlers exposed to Python through MCP_dis..."]:1011(nil)
+sample 5 heap=2531MiB .\Modules\CalcDefence.lua:2296(nil) < .\Modules\CalcPerform.lua:3511(perform) < Calcs.lua:521(buildOutput) < CalcsTab.lua:512(BuildOutput) < Build.lua:1394(CallMode) < Main.lua:432(nil) < [C]:-1(pcall) < _SimpleGraphic.def.lua:506(PCall) < Launch.lua:113(runCallback) < [string "-- Handlers exposed to Python through MCP_dis..."]:10(recalc) < [string "-- Handlers exposed to Python through MCP_dis..."]:107(nil) < [C]:-1(pcall) < [string "-- Handlers exposed to Python through MCP_dis..."]:1011(nil)
+sample 6 heap=2533MiB PassiveSpec.lua:1441(BuildNodePathsToRootNodes) < PassiveSpec.lua:2067(BuildAllDependsAndPaths) < [string "mcp-eval"]:16(nil) < [C]:-1(pcall) < [string "-- Handlers exposed to Python through MCP_dis..."]:1011(nil)
+sample 7 heap=2534MiB .\Modules\CalcDefence.lua:660(reducePoolsByDamage) < .\Modules\CalcDefence.lua:2139(numberOfHitsT

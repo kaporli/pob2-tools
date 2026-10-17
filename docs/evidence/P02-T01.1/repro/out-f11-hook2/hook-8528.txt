@@ -1,0 +1,31 @@
+runaway: lua heap 2130 MiB
+stack traceback:
+	Classes/PassiveSpec.lua:1449: in function 'BuildNodePathsToRootNodes'
+	Classes/PassiveSpec.lua:2067: in function 'BuildAllDependsAndPaths'
+	Classes/PassiveSpec.lua:743: in function 'SelectAscendClass'
+	Classes/PassiveSpec.lua:711: in function 'SelectClass'
+	Classes/PassiveSpec.lua:397: in function 'ImportFromNodeList'
+	Classes/PassiveSpec.lua:245: in function 'Load'
+	Classes/TreeTab.lua:510: in function <Classes/TreeTab.lua:492>
+	Modules/Build.lua:585: in function 'CallMode'
+	Modules/Main.lua:416: in function <Modules/Main.lua:402>
+	[C]: in function 'pcall'
+	_SimpleGraphic.def.lua:506: in function 'PCall'
+	Launch.lua:113: in function 'runCallback'
+	HeadlessWrapper.lua:65: in function 'loadBuildFromXML'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:102: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:99>
+	[C]: in function 'pcall'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:1011: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:1005>
+sample 1 line 2067 id=nil nodes=4914 heap=2130MiB
+sample 2 line 2067 id=nil nodes=4914 heap=2130MiB
+sample 3 line 1560 id=nil nodes=0 heap=2131MiB
+sample 4 line 2067 id=nil nodes=4914 heap=2131MiB
+sample 5 line 2067 id=nil nodes=4914 heap=2132MiB
+sample 6 line 2067 id=nil nodes=4914 heap=2132MiB
+sample 7 line 2067 id=nil nodes=4914 heap=2132MiB
+sample 8 line 1529 id=nil nodes=0 heap=2133MiB
+sample 9 line 2067 id=nil nodes=4914 heap=2133MiB
+sample 10 line 2067 id=nil nodes=4914 heap=2133MiB
+sample 14 line 1531 id=nil nodes=0 heap=2136MiB
+sample 15 line 2067 id=nil nodes=4914 heap=2137MiB
+sample 30 line 2056 id=nil nodes=0 heap=2150MiB

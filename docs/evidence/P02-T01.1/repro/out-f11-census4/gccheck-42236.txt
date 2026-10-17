@@ -1,0 +1,60 @@
+before 1922 MiB after 1886 MiB
+at
+stack traceback:
+	Classes/ModStore.lua:272: in function 'More'
+	.\Modules\CalcDefence.lua:1783: in function <.\Modules\CalcDefence.lua:790>
+	.\Modules\CalcPerform.lua:3456: in function 'perform'
+	Modules/Calcs.lua:521: in function 'buildOutput'
+	Classes/CalcsTab.lua:505: in function <Classes/CalcsTab.lua:487>
+	Modules/Build.lua:603: in function 'CallMode'
+	Modules/Main.lua:416: in function <Modules/Main.lua:402>
+	[C]: in function 'pcall'
+	_SimpleGraphic.def.lua:506: in function 'PCall'
+	Launch.lua:113: in function 'runCallback'
+	HeadlessWrapper.lua:65: in function 'loadBuildFromXML'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:102: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:99>
+	[C]: in function 'pcall'
+	[string "-- Handlers exposed to Python through MCP_dis..."]:1011: in function <[string "-- Handlers exposed to Python through MCP_dis..."]:1005>
+spec current nodes=4914 sumPath=38552 maxPath=25(63659) sumDepends=728 maxDepends=197
+spec list1 nodes=4914 sumPath=38552 maxPath=25(63659) sumDepends=728 maxDepends=197
+census tables=5244342
+total 19869322 _G.build.spec.hashOverrides
+total 684996 _G.data
+total 295886 _G.build.latestTree.connectors
+total 177075 _G.main
+total 166377 _G.GlobalCache
+total 146692 _G.build.treeTab.compareSpec
+total 113416 _G.build.latestTree.nodes
+total 110992 _G.build.spec.nodes
+total 94342 _G.modLib
+total 93920 _G.build.latestTree.notableMap
+total 80757 _G.build.configTab.controls
+total 37562 _G.package
+total 29613 latestTree.nodes.*.modList
+total 24254 _G.build.latestTree.keystoneMap
+total 22134 latestTree.nodes.*.modList.ModStore
+total 22025 _G.build.latestTree.groups
+total 19617 latestTree.nodes.*.modList.1
+total 18371 _G.build.calcsTab.controls
+total 17932 _G.build.latestTree.ascendancyMap
+total 16630 _G.build.itemsTab.controls
+total 15662 _G.build.itemsTab.slots
+total 15438 latestTree.nodes.*.modList.__newindex
+total 15159 _G.build.latestTree.legion
+total 10656 latestTree.nodes.*.targetSize
+total 10364 _G.build.compareTab.calcSections
+total 10148 latestTree.nodes.*.options.2
+total 10148 latestTree.nodes.*.options.3
+total 10148 latestTree.nodes.*.options.1
+total 8443 latestTree.nodes.*.linkedId
+total 8001 _G.build.compareTab.controls
+total 6808 latestTree.nodes.*.mods.1
+total 6642 latestTree.nodes.*.targetSize.overlay
+total 6314 _G.build.skillsTab.controls
+total 6238 latestTree.nodes.*.connections.1
+total 5384 _G.build.latestTree.ddsMap
+total 4631 latestTree.nodes.*.connections
+total 4600 _G.build.compareTab.configOptions
+total 4279 latestTree.nodes.*.modList.2
+total 3829 latestTree.nodes.*.sd
+total 3829 latestTree.nodes.*.mods

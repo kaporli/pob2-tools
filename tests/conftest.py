@@ -15,6 +15,8 @@ from __future__ import annotations
 import faulthandler
 import os
 import sys
+import threading
+import time
 from pathlib import Path
 
 import pytest
@@ -70,6 +72,18 @@ POB_ROOT = resolve_pob_root()
 #: Set by the ``engine`` fixture so the terminal summary can point at the log.
 FAULT_LOG: Path | None = None
 
+#: Memory bound for the in-process session engine (P02-T01.1), in MB of the
+#: pytest process's private bytes. A runaway inside a native call cannot be
+#: interrupted, so above the bound the guard names the running test on stderr
+#: and exits with ENGINE_MEMORY_EXIT. 0 disables it.
+ENGINE_MEMORY_LIMIT_MB = int(os.environ.get("POB2_TEST_MEMORY_LIMIT_MB", "3072"))
+ENGINE_MEMORY_EXIT = 87
+
+#: The test pytest is running, for the guard's message.
+CURRENT_TEST: str | None = None
+#: pytest's capture manager, so the guard can reach the real stderr.
+CAPTURE_MANAGER = None
+
 SKIP_REASON = (
     "no usable PathOfBuilding-PoE2 runtime: set POB2_ROOT to a checkout whose "
     "runtime/lua51.dll exists, or restore the external/PathOfBuilding-PoE2 submodule"
@@ -114,6 +128,7 @@ def engine(pob_root: Path, tmp_path_factory):
         log.close()
         print("native fault diagnostics: %s" % log_path, file=sys.stderr)
         raise
+    _start_memory_guard(ENGINE_MEMORY_LIMIT_MB * 2**20)
     eng.cwd_before_boot = before  # type: ignore[attr-defined]
     eng.cwd_after_boot = os.getcwd()  # type: ignore[attr-defined]
     eng.fault_log = log_path  # type: ignore[attr-defined]
@@ -128,6 +143,46 @@ def engine(pob_root: Path, tmp_path_factory):
         else:  # pragma: no cover - pytest enables it by default
             faulthandler.disable()
         log.close()
+
+
+def _start_memory_guard(limit_bytes: int) -> None:
+    """Exit the session above ``limit_bytes``, naming the test (P02-T01.1).
+
+    The engine runs in this process, so the bound cannot replace a worker the
+    way ``EngineAdapter`` does. An explicit exit is the containment: without it
+    the run grows until the machine stops it (observed 4 to 17.6 GB).
+    """
+    from pob2opt.evaluation.memory import probe_available, process_memory_bytes
+
+    if limit_bytes <= 0 or not probe_available():
+        return
+    pid = os.getpid()
+
+    def guard() -> None:
+        while True:
+            used = process_memory_bytes(pid)
+            if used is not None and used > limit_bytes:
+                # Capture redirects fd 2 to a temp file that os._exit drops.
+                if CAPTURE_MANAGER is not None:
+                    CAPTURE_MANAGER.suspend_global_capture(in_=False)
+                os.write(2, ("\nengine memory guard: %d bytes above %d during %s; "
+                             "exiting with %d (POB2_TEST_MEMORY_LIMIT_MB)\n"
+                             % (used, limit_bytes, CURRENT_TEST, ENGINE_MEMORY_EXIT)
+                             ).encode())
+                os._exit(ENGINE_MEMORY_EXIT)
+            time.sleep(0.5)
+
+    threading.Thread(target=guard, name="engine-memory-guard", daemon=True).start()
+
+
+def pytest_configure(config):
+    global CAPTURE_MANAGER
+    CAPTURE_MANAGER = config.pluginmanager.getplugin("capturemanager")
+
+
+def pytest_runtest_logstart(nodeid, location):
+    global CURRENT_TEST
+    CURRENT_TEST = nodeid
 
 
 def pytest_terminal_summary(terminalreporter):

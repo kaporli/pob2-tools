@@ -16,11 +16,13 @@ Lua state. The rules this module exists to keep:
 
 from __future__ import annotations
 
+import functools
 import hashlib
 import os
 import subprocess
 import sys
 import time
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -33,8 +35,10 @@ from . import protocol
 from .checkout import CheckoutIdentity, resolve_checkout
 from .documents import BuildDocumentStore
 from .errors import (EngineCrash, EngineError, EngineInternalError,
-                     EngineInvalidInput, EngineProfileMismatch, EngineTimeout,
-                     error_from_wire)
+                     EngineInvalidInput, EngineMemoryLimit,
+                     EngineProfileMismatch, EngineReplacementExhausted,
+                     EngineTimeout, EngineUnsupported, error_from_wire)
+from .memory import PROBE, process_memory_bytes
 from .protocol import (ADAPTER_VERSION, BuildDocument, DocumentProvenance,
                        EngineIdentity, EngineState, LoadedBuild,
                        PrimitiveSnapshot)
@@ -146,10 +150,18 @@ class WorkerHandle:
     """One spawned process and the pipe to it."""
 
     def __init__(self, spec: WorkerSpec, generation: int,
-                 start_timeout_s: float = protocol.START_TIMEOUT_S) -> None:
+                 start_timeout_s: float = protocol.START_TIMEOUT_S,
+                 memory_limit_bytes: int | None = None) -> None:
         self.spec = spec
         self.generation = generation
         self.start_timeout_s = start_timeout_s
+        self.memory_limit_bytes = memory_limit_bytes
+        #: Highest and latest sampled memory, and answered requests.
+        self.peak_memory_bytes = 0
+        self.last_memory_bytes: int | None = None
+        self.requests = 0
+        #: Set when the worker should be replaced before the next operation.
+        self.recycle_reason: str | None = None
         self._seq = 0
         self.dead = False
         self.death_reason: str | None = None
@@ -189,10 +201,50 @@ class WorkerHandle:
             self.discard("pipe broke while sending: %s" % exc)
             raise EngineCrash("worker %s died before it received %s"
                               % (self.pid, op), stage=op) from None
-        return self._receive(timeout_s, stage=op)
+        result = self._receive(timeout_s, stage=op)
+        if op != protocol.OP_SHUTDOWN:
+            self.requests += 1
+            self.sample_memory()
+        return result
+
+    def sample_memory(self) -> int | None:
+        """Read the worker's memory now and keep the peak."""
+        if self.pid is None:
+            return None
+        observed = process_memory_bytes(self.pid)
+        if observed is not None:
+            self.last_memory_bytes = observed
+            self.peak_memory_bytes = max(self.peak_memory_bytes, observed)
+        return observed
+
+    def _wait(self, timeout_s: float, *, stage: str) -> bool:
+        """Wait for a frame. With a limit, sample memory while waiting.
+
+        Native code holds the worker for the whole request, so the limit has
+        to be enforced from here; the worker cannot check itself.
+        """
+        if self.memory_limit_bytes is None:
+            return self._parent_conn.poll(timeout_s)
+        deadline = time.monotonic() + timeout_s
+        while True:
+            remaining = deadline - time.monotonic()
+            if self._parent_conn.poll(max(0.0, min(remaining, protocol.MEMORY_POLL_S))):
+                return True
+            observed = self.sample_memory()
+            if observed is not None and observed > self.memory_limit_bytes:
+                self.discard("memory %d bytes above limit %d during %s"
+                             % (observed, self.memory_limit_bytes, stage))
+                raise EngineMemoryLimit(
+                    "worker %s used %d bytes during %s, above the %d-byte "
+                    "limit; the process was terminated"
+                    % (self.pid, observed, stage, self.memory_limit_bytes),
+                    stage=stage, limit_bytes=self.memory_limit_bytes,
+                    observed_bytes=observed)
+            if remaining <= 0:
+                return False
 
     def _receive(self, timeout_s: float, *, stage: str):
-        deadline_reached = not self._parent_conn.poll(timeout_s)
+        deadline_reached = not self._wait(timeout_s, stage=stage)
         if deadline_reached:
             self.discard("no answer within %.3fs" % timeout_s)
             raise EngineTimeout(
@@ -240,7 +292,7 @@ class WorkerHandle:
         self.death_reason = ("%s (%s)" % (reason, "; ".join(problems))
                              if problems else reason)
 
-    def close(self) -> None:
+    def close(self, reason: str = "closed") -> None:
         """Ask the worker to shut down; kill it if it will not.
 
         A shutdown that fails is recorded as the death reason rather than
@@ -249,17 +301,25 @@ class WorkerHandle:
         """
         if self.dead:
             return
-        reason = "closed"
         try:
             self.request(protocol.OP_SHUTDOWN, {}, SHUTDOWN_GRACE_S)
         except EngineError as exc:
-            reason = "closed after a failed shutdown: %s" % exc
+            reason = "%s after a failed shutdown: %s" % (reason, exc)
         self.process.join(SHUTDOWN_GRACE_S)
         self.discard(reason)
 
     @property
     def alive(self) -> bool:
         return not self.dead and self.process.is_alive()
+
+
+def _operation_boundary(method):
+    """Run ``method`` as one public operation (see ``EngineAdapter._operation``)."""
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        with self._operation():
+            return method(self, *args, **kwargs)
+    return wrapper
 
 
 # -- adapter ------------------------------------------------------------------
@@ -273,8 +333,36 @@ class EngineAdapter:
                  screen_timeout_s: float = protocol.SCREEN_TIMEOUT_S,
                  detailed_timeout_s: float = protocol.DETAILED_TIMEOUT_S,
                  start_timeout_s: float = protocol.START_TIMEOUT_S,
-                 require_pinned_checkout: bool = False) -> None:
+                 require_pinned_checkout: bool = False,
+                 memory_limit_bytes: int | None = protocol.MEMORY_LIMIT_BYTES,
+                 recycle_after_bytes: int | None = protocol.RECYCLE_AFTER_BYTES,
+                 max_requests_per_worker: int | None = None,
+                 max_consecutive_failures: int | None =
+                 protocol.MAX_CONSECUTIVE_FAILURES) -> None:
+        if (memory_limit_bytes is not None or recycle_after_bytes is not None) \
+                and PROBE is None:
+            raise EngineUnsupported(
+                "no worker memory probe on %s; pass memory_limit_bytes=None "
+                "and recycle_after_bytes=None to run without a memory bound"
+                % sys.platform, stage="spawn")
         self.spec = spec
+        #: Hard limit: a worker above it mid-request is killed (P02-T01.1).
+        self.memory_limit_bytes = memory_limit_bytes
+        #: Soft limits: a worker past either is replaced between operations.
+        self.recycle_after_bytes = recycle_after_bytes
+        self.max_requests_per_worker = max_requests_per_worker
+        #: Unplanned losses in a row (crash, timeout, memory limit) before
+        #: the adapter refuses to start another worker. None means no cap.
+        self.max_consecutive_failures = max_consecutive_failures
+        self.consecutive_failures = 0
+        #: Planned replacements, separate from ``replacements``.
+        self.recycles = 0
+        #: One entry per worker that has ended: pid, generation, requests,
+        #: peak sampled memory and why it ended.
+        self.worker_history: list[dict] = []
+        #: Public operations in progress. Recycling only happens at depth 0,
+        #: so one evaluation never spans two processes.
+        self._depth = 0
         self.documents = documents
         self.screen_timeout_s = screen_timeout_s
         self.detailed_timeout_s = detailed_timeout_s
@@ -336,6 +424,7 @@ class EngineAdapter:
             reason = handle.death_reason or (
                 "worker process exited (%s)" % handle._exit_state())
             handle.discard(reason)
+            self._retire(handle)
             self.replacements += 1
             self._forget_loaded_build()
             self._handle = None
@@ -344,19 +433,85 @@ class EngineAdapter:
                 # The worker died without anyone being told. Say so now; the
                 # next request gets a fresh process. Restarting silently here
                 # would turn a crash into a missing result nobody can see.
+                self.consecutive_failures += 1
                 raise EngineCrash("worker %s is gone: %s" % (handle.pid, reason),
                                   stage="worker")
+        if (self.max_consecutive_failures is not None
+                and self.consecutive_failures >= self.max_consecutive_failures):
+            raise EngineReplacementExhausted(
+                "%d workers in a row were lost; no further worker is started. "
+                "Last: %s" % (self.consecutive_failures,
+                              self.worker_history[-1]["end"]
+                              if self.worker_history else "none"),
+                stage="worker")
         self._generation += 1
         self._identity = None
-        self._handle = WorkerHandle(self.spec, self._generation,
-                                    self.start_timeout_s)
+        try:
+            self._handle = WorkerHandle(self.spec, self._generation,
+                                        self.start_timeout_s,
+                                        self.memory_limit_bytes)
+        except (EngineCrash, EngineTimeout):
+            self.consecutive_failures += 1
+            raise
         self.worker_pids.append(self._handle.pid)
         return self._handle
+
+    def _retire(self, handle: WorkerHandle) -> None:
+        self.worker_history.append({
+            "pid": handle.pid, "generation": handle.generation,
+            "requests": handle.requests,
+            "peak_memory_bytes": handle.peak_memory_bytes or None,
+            "end": handle.death_reason})
+
+    def _recycle_if_due(self) -> None:
+        """Replace a worker past a soft limit before the next operation.
+
+        Planned, so it is not an error and not counted as a failure. The
+        loaded build is forgotten; the next evaluation reloads it.
+        """
+        handle = self._handle
+        if handle is None or handle.dead or handle.recycle_reason is None:
+            return
+        handle.close(reason="recycled: %s" % handle.recycle_reason)
+        self._retire(handle)
+        self.recycles += 1
+        self._handle = None
+        self._identity = None
+        self._forget_loaded_build()
+
+    def _note_recycle(self, handle: WorkerHandle) -> None:
+        if handle.dead or handle.recycle_reason is not None:
+            return
+        memory = handle.last_memory_bytes
+        if memory is not None and self.recycle_after_bytes is not None \
+                and memory > self.recycle_after_bytes:
+            handle.recycle_reason = ("memory %d bytes above %d"
+                                     % (memory, self.recycle_after_bytes))
+        elif self.max_requests_per_worker is not None \
+                and handle.requests >= self.max_requests_per_worker:
+            handle.recycle_reason = "%d requests served" % handle.requests
+
+    @contextmanager
+    def _operation(self):
+        """Mark one public operation; recycle only between operations."""
+        if self._depth == 0:
+            self._recycle_if_due()
+        self._depth += 1
+        try:
+            yield
+        finally:
+            self._depth -= 1
+        # Reached only on success. A worker that loads and then dies on every
+        # read must still exhaust the budget, so one good request is not enough.
+        if self._depth == 0:
+            self.consecutive_failures = 0
 
     def restart_worker(self) -> int:
         """Replace the process. Named so nothing can mistake it for a reset."""
         if self._handle is not None:
             self._handle.discard("restart requested")
+            self._retire(self._handle)
+            self._handle = None
             self.replacements += 1
             self._forget_loaded_build()
         return self._ensure_worker().pid
@@ -365,6 +520,7 @@ class EngineAdapter:
         self.closed = True
         if self._handle is not None:
             self._handle.close()
+            self._retire(self._handle)
             self._handle = None
         self._forget_loaded_build()
         self._identity = None
@@ -392,6 +548,8 @@ class EngineAdapter:
                 # holds nothing (P02-T01-R10).
                 self._forget_loaded_build()
                 self._identity = None
+                if isinstance(exc, (EngineCrash, EngineTimeout)):
+                    self.consecutive_failures += 1
             # Annotate, never replace. Raising a directory error out of a
             # finally block would demote the failure that explains the missing
             # result to __context__ (P02-T01-R07).
@@ -399,6 +557,7 @@ class EngineAdapter:
             if moved:
                 exc.diagnostic = "%s; also %s" % (exc.diagnostic, moved)
             raise
+        self._note_recycle(handle)
         self._assert_parent_cwd(op)
         if deadline is not None:
             self._remaining(deadline, op)
@@ -407,8 +566,9 @@ class EngineAdapter:
     def _remaining(self, deadline: float, stage: str) -> float:
         remaining = deadline - time.monotonic()
         if remaining <= 0:
-            if self._handle is not None:
+            if self._handle is not None and not self._handle.dead:
                 self._handle.discard("evaluation deadline exhausted at %s" % stage)
+                self.consecutive_failures += 1
             self._forget_loaded_build()
             self._identity = None
             raise EngineTimeout("evaluation deadline exhausted; worker terminated",
@@ -447,8 +607,10 @@ class EngineAdapter:
 
     # -- operations -------------------------------------------------------
 
+    @_operation_boundary
     def identity(self, *, deadline: float | None = None) -> EngineIdentity:
-        if self._identity is not None and self._handle is not None                 and self._handle.alive:
+        if self._identity is not None and self._handle is not None \
+                and self._handle.alive:
             return self._identity
         described = self._request(protocol.OP_DESCRIBE, {}, self.screen_timeout_s,
                                   deadline=deadline)
@@ -463,6 +625,7 @@ class EngineAdapter:
             generation=self._generation)
         return self._identity
 
+    @_operation_boundary
     def create_blank_build(self, level: int, resist_penalty: int = 0) -> LoadedBuild:
         """Prepare an empty candidate. This clears tree, gear and groups."""
         payload = self._request(protocol.OP_CREATE_BLANK_BUILD,
@@ -472,6 +635,7 @@ class EngineAdapter:
         self._forget_loaded_build()
         return LoadedBuild.from_wire(payload)
 
+    @_operation_boundary
     def load_exact_build(self, document: BuildDocument, name: str = "exact",
                          *, timeout_s: float | None = None,
                          deadline: float | None = None) -> LoadedBuild:
@@ -499,6 +663,7 @@ class EngineAdapter:
         self._loaded_generation = self._generation
         return loaded
 
+    @_operation_boundary
     def primitives(self, build: BuildSpec, state: EngineState,
                    profile: PatchProfile, *,
                    fidelity: Fidelity = Fidelity.SCREEN,
@@ -567,6 +732,7 @@ class EngineAdapter:
         self._loaded_generation = self._generation
         return snapshot
 
+    @_operation_boundary
     def probe(self, document: BuildDocument, state: EngineState | None = None,
               *, timeout_s: float | None = None) -> dict:
         """Load a document and read raw engine outputs, with no profile.
@@ -588,6 +754,7 @@ class EngineAdapter:
         self._loaded_generation = self._generation
         return dict(payload.get("values") or {})
 
+    @_operation_boundary
     def legality_state(self, build: BuildSpec, profile: PatchProfile, *,
                        document: BuildDocument | None = None,
                        blob_hash: str | None = None,
@@ -622,6 +789,7 @@ class EngineAdapter:
                                 deadline=deadline)
         return payload, document
 
+    @_operation_boundary
     def catalog_page(self, table: str, offset: int = 0,
                      limit: int = protocol.CATALOG_PAGE_ROWS, *,
                      timeout_s: float | None = None) -> dict:
