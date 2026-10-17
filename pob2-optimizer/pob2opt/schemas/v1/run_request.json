@@ -5,9 +5,9 @@
   "type": "object",
   "properties": {
     "schema_version": {
-      "type": "integer",
       "enum": [
-        1
+        1,
+        2
       ]
     },
     "game": {
@@ -88,12 +88,20 @@
     },
     "execution_profile": {
       "type": "string"
+    },
+    "class_scope": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClassScope"
+      }
+    },
+    "objective": {
+      "$ref": "#/$defs/ObjectiveSelection"
     }
   },
   "required": [
     "schema_version",
     "game",
-    "class",
     "level",
     "patch_selection",
     "league_selection",
@@ -112,5 +120,116 @@
     "execution_profile"
   ],
   "additionalProperties": false,
-  "description": "The request file of interfaces.md. Not a persisted domain record."
+  "description": "The request file of interfaces.md. Not a persisted domain record.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "exclusiveMinimum": 1
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "class_scope",
+          "objective"
+        ],
+        "properties": {
+          "class": false
+        }
+      },
+      "else": {
+        "properties": {
+          "class_scope": false,
+          "objective": false
+        },
+        "required": [
+          "class"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "ClassScope": {
+      "type": "object",
+      "properties": {
+        "class_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ascendancy_ids": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "class_id",
+        "ascendancy_ids"
+      ],
+      "additionalProperties": false,
+      "description": "One approved class of a RunRequest version 2 campaign."
+    },
+    "ObjectiveSelection": {
+      "type": "object",
+      "properties": {
+        "objective_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "target_skill_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "benchmark_scenario": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "benchmark_scenario_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "attribution_rules": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attribution_rules_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "objective_id",
+        "objective_version",
+        "target_skill_ids",
+        "benchmark_scenario",
+        "benchmark_scenario_hash",
+        "attribution_rules",
+        "attribution_rules_hash"
+      ],
+      "additionalProperties": false,
+      "description": "The objective a RunRequest version 2 optimizes (D07)."
+    }
+  }
 }

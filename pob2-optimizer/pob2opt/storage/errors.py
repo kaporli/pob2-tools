@@ -142,6 +142,8 @@ class IncompleteBundle(StorageError):
         if check.get("unresolved_references"):
             parts.append("unresolved_references=%s"
                          % check["unresolved_references"])
+        if check.get("validation_errors"):
+            parts.append("validation_errors=%s" % check["validation_errors"])
         super().__init__("run bundle %s is not self-contained: %s"
                          % (run_id, "; ".join(parts) or "unknown"))
 

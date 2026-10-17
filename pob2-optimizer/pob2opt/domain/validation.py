@@ -29,6 +29,7 @@ from jsonschema.exceptions import best_match
 
 from . import identity
 from .absent import ABSENT
+from .objectives import UnknownObjective, get_objective
 from .codec import CodecError, NotANumber, from_jsonable, to_jsonable
 from .enums import (
     AcquisitionStatus,
@@ -706,6 +707,60 @@ def _check_aggregate_result(record):
         yield ValidationError("label_without_eligibility", "/strength_label",
                               "strength labels are for qualifying candidates "
                               "only", "semantic")
+    if record.schema_version >= 2:
+        yield from _aggregate_objective_errors(record)
+
+
+def _aggregate_objective_errors(record):
+    """A version 2 aggregate states its objective's own metrics and score."""
+    try:
+        definition = get_objective(record.objective_id,
+                                   record.objective_version)
+    except UnknownObjective as exc:
+        yield ValidationError("unknown_objective", "/objective_id", str(exc),
+                              "semantic")
+        return
+    metrics = record.objective_metrics
+    expected = set(definition.metric_names)
+    if set(metrics) != expected:
+        yield ValidationError(
+            "objective_metrics_mismatch", "/objective_metrics",
+            "objective %s v%d states exactly %s; got %s"
+            % (definition.objective_id, definition.version,
+               sorted(expected) or "no metrics", sorted(metrics) or "none"),
+            "semantic")
+        return
+    if definition.score_metric is None:
+        source, wanted = "/balanced_score", record.balanced_score
+    else:
+        source = "/objective_metrics/%s" % definition.score_metric
+        wanted = metrics[definition.score_metric]
+        for name in definition.metric_names:
+            value = metrics[name]
+            if value is not None and value < 0:
+                yield ValidationError(
+                    "negative_objective_metric", "/objective_metrics/" + name,
+                    "%s is %r; damage per second cannot be negative"
+                    % (name, value), "semantic")
+    if record.objective_score != wanted:
+        yield ValidationError(
+            "objective_score_mismatch", "/objective_score",
+            "objective_score must equal %s (%r), got %r; it is never filled "
+            "from another score" % (source, wanted, record.objective_score),
+            "semantic")
+    missing = [name for name in definition.metric_names
+               if metrics[name] is None]
+    if record.objective_score is None and definition.score_metric is None:
+        missing.append("balanced_score")
+    if missing and not record.objective_gap_ids:
+        yield ValidationError(
+            "unexplained_missing_objective", "/objective_gap_ids",
+            "%s null without a gap" % ", ".join(missing), "semantic")
+    if record.eligible and record.objective_score is None:
+        yield ValidationError(
+            "eligible_without_objective_score", "/eligible",
+            "a candidate without an objective score is not eligible",
+            "semantic")
 
 
 def _check_observation(record):
@@ -735,6 +790,78 @@ def _check_run_request(record):
     if record.level < 1:
         yield ValidationError("invalid_level", "/level",
                               "level must be at least 1", "semantic")
+    if record.schema_version >= 2:
+        yield from _class_scope_errors(record.class_scope)
+        yield from _objective_selection_errors(record.objective)
+
+
+def _class_scope_errors(scope):
+    if not scope:
+        yield ValidationError(
+            "empty_class_scope", "/class_scope",
+            "a campaign names its approved classes explicitly; an empty list "
+            "is not every class", "semantic")
+    for i, class_id in _duplicates([entry.class_id for entry in scope]):
+        yield ValidationError("duplicate_class_scope",
+                              "/class_scope/%d/class_id" % i,
+                              "class %r is listed twice" % (class_id,),
+                              "semantic")
+    for i, entry in enumerate(scope):
+        path = "/class_scope/%d/ascendancy_ids" % i
+        if entry.ascendancy_ids is None:
+            continue
+        if not entry.ascendancy_ids:
+            yield ValidationError(
+                "empty_ascendancy_scope", path,
+                "an empty list approves no ascendancy; use null for every "
+                "ascendancy of the class", "semantic")
+        for j, ascendancy in _duplicates(entry.ascendancy_ids):
+            yield ValidationError("duplicate_ascendancy_scope",
+                                  "%s/%d" % (path, j),
+                                  "ascendancy %r is listed twice"
+                                  % (ascendancy,), "semantic")
+
+
+def _objective_selection_errors(selection):
+    try:
+        definition = get_objective(selection.objective_id,
+                                   selection.objective_version)
+    except UnknownObjective as exc:
+        yield ValidationError("unknown_objective", "/objective/objective_id",
+                              str(exc), "semantic")
+        return
+    skills = selection.target_skill_ids
+    if definition.requires_target_skill and not skills:
+        yield ValidationError(
+            "missing_target_skill", "/objective/target_skill_ids",
+            "objective %s needs the exact catalog ids of its main skill"
+            % definition.objective_id, "semantic")
+    if not definition.requires_target_skill and skills:
+        yield ValidationError(
+            "unexpected_target_skill", "/objective/target_skill_ids",
+            "objective %s has no skill constraint" % definition.objective_id,
+            "semantic")
+    for i, skill in _duplicates(skills):
+        yield ValidationError("duplicate_target_skill",
+                              "/objective/target_skill_ids/%d" % i,
+                              "skill %r is listed twice" % (skill,),
+                              "semantic")
+    if definition.requires_benchmark:
+        for name in ("benchmark_scenario", "attribution_rules"):
+            if getattr(selection, name) is None:
+                yield ValidationError(
+                    "missing_" + name, "/objective/" + name,
+                    "objective %s is measured on a named benchmark with "
+                    "reviewed attribution rules" % definition.objective_id,
+                    "semantic")
+    else:
+        for name in ("benchmark_scenario", "benchmark_scenario_hash",
+                     "attribution_rules", "attribution_rules_hash"):
+            if getattr(selection, name) is not None:
+                yield ValidationError(
+                    "unexpected_benchmark", "/objective/" + name,
+                    "objective %s has no DPS benchmark"
+                    % definition.objective_id, "semantic")
 
 
 def _check_run_manifest(record):
@@ -752,6 +879,80 @@ def _check_run_manifest(record):
         yield ValidationError("invalid_worker_limit", "/worker_limit",
                               "at least one worker is required", "semantic")
     yield from _check_run_request_nested(record.resolved_request)
+    if record.resolved_request.schema_version >= 2:
+        yield from _manifest_objective_errors(record)
+
+
+def aggregate_binding_errors(aggregate, manifest) -> tuple[ValidationError, ...]:
+    """Errors binding an aggregate to the run manifest it claims.
+
+    A record index holds identifiers only, so this needs both records, like
+    ``storage.validate_checkpoint``. A version 2 aggregate must carry the
+    objective the manifest froze; a version 1 aggregate has no objective
+    binding and cannot be ranked in a version 2 run.
+    """
+    errors = []
+    if aggregate.manifest_id != manifest.run_id:
+        errors.append(ValidationError(
+            "manifest_mismatch", "/manifest_id",
+            "aggregate names run %r, not %r"
+            % (aggregate.manifest_id, manifest.run_id), "semantic"))
+    request = manifest.resolved_request
+    if request.schema_version < 2:
+        if aggregate.schema_version >= 2:
+            errors.append(ValidationError(
+                "objective_not_in_run", "/objective_id",
+                "run %r has no objective selection; a version 2 aggregate "
+                "cannot belong to it" % manifest.run_id, "semantic"))
+        return tuple(errors)
+    if aggregate.schema_version < 2:
+        errors.append(ValidationError(
+            "unbound_objective", "/schema_version",
+            "a version 1 aggregate has no objective binding and cannot be "
+            "ranked in run %r" % manifest.run_id, "semantic"))
+        return tuple(errors)
+    selection = request.objective
+    if (aggregate.objective_id, aggregate.objective_version) != \
+            (selection.objective_id, selection.objective_version):
+        errors.append(ValidationError(
+            "objective_mismatch", "/objective_id",
+            "aggregate is scored for %s v%s; the run optimizes %s v%s"
+            % (aggregate.objective_id, aggregate.objective_version,
+               selection.objective_id, selection.objective_version),
+            "semantic"))
+    if aggregate.objective_hash != manifest.dependency_hashes.objective_hash:
+        errors.append(ValidationError(
+            "objective_hash_mismatch", "/objective_hash",
+            "aggregate objective_hash differs from the manifest's",
+            "semantic"))
+    return tuple(errors)
+
+
+def _manifest_objective_errors(record):
+    """A manifest freezes the objective: hashes resolved and bound."""
+    selection = record.resolved_request.objective
+    try:
+        definition = get_objective(selection.objective_id,
+                                   selection.objective_version)
+    except UnknownObjective:
+        return  # already reported by the nested request check
+    if definition.requires_benchmark:
+        unresolved = [name for name in ("benchmark_scenario_hash",
+                                        "attribution_rules_hash")
+                      if getattr(selection, name) is None]
+        for name in unresolved:
+            yield ValidationError(
+                "unresolved_objective", "/resolved_request/objective/" + name,
+                "%s must be resolved to content before the manifest is "
+                "written" % name, "semantic")
+        if unresolved:
+            return
+    expected = identity.objective_hash(selection)
+    if record.dependency_hashes.objective_hash != expected:
+        yield ValidationError(
+            "objective_hash_mismatch", "/dependency_hashes/objective_hash",
+            "objective_hash does not identify the resolved objective "
+            "(expected %s)" % expected, "semantic")
 
 
 def _check_run_request_nested(request):
@@ -846,7 +1047,10 @@ UNCHECKED_REFERENCE_FIELDS: dict[tuple[str, str], str] = {
     ("scenario_spec", "spatial_model_id"): "a model name owned by P07",
     ("scenario_spec", "movement_model_id"): "a model name owned by P07",
     ("scenario_spec", "incoming_damage_model_id"): "a model name owned by P07",
-    ("aggregate_result", "objective_id"): "a scoring objective name owned by P10",
+    ("aggregate_result", "objective_id"):
+        "a registered objective name, checked against domain/objectives.py",
+    ("aggregate_result", "objective_hash"):
+        "a derived objective identity; the manifest binds it",
     ("aggregate_result", "suite_id"): "a scenario-suite name owned by P09",
     ("run_manifest", "scenario_suite_id"): "a suite name owned by P09",
     ("parse_result", "parser_id"): "a parser name, not a record",
@@ -1101,6 +1305,9 @@ def _references(kind, record):
         yield "/rotation_hash", record.rotation_hash, "rotation_hashes"
         yield "/manifest_id", record.manifest_id, "manifest_ids"
         yield from _each("/evaluation_ids", record.evaluation_ids, "evaluation_ids")
+        if record.objective_gap_ids is not ABSENT:
+            yield from _each("/objective_gap_ids", record.objective_gap_ids,
+                             "gap_ids")
         for i, gate in enumerate(record.scenario_gates):
             yield ("/scenario_gates/%d/scenario_id" % i, gate.scenario_id,
                    "scenario_ids")

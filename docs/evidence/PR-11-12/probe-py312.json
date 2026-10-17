@@ -1,0 +1,58 @@
+{
+  "python": "3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]",
+  "checkout": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\pr11-review",
+  "head": "3f7c8afa49767a476b70170ccf6d67aa0cd095ab",
+  "scope": [
+    {
+      "target_skill_ids": [
+        "poe2/gems/fixture/Flicker"
+      ],
+      "request_valid": true,
+      "scope_ok": true,
+      "issues": []
+    },
+    {
+      "target_skill_ids": [
+        "poe2/gems/fixture/UnrelatedSkill"
+      ],
+      "request_valid": true,
+      "scope_ok": true,
+      "issues": []
+    },
+    {
+      "target_skill_ids": [
+        "poe2/gems/fixture/Flicker",
+        "poe2/gems/fixture/UnrelatedSkill"
+      ],
+      "request_valid": true,
+      "scope_ok": true,
+      "issues": []
+    }
+  ],
+  "storage": [
+    {
+      "case": "wrong_hash",
+      "binding_errors": [
+        "objective_hash_mismatch"
+      ],
+      "stored": true,
+      "stored_validation_ok": true
+    },
+    {
+      "case": "wrong_objective",
+      "binding_errors": [
+        "objective_mismatch"
+      ],
+      "stored": true,
+      "stored_validation_ok": true
+    },
+    {
+      "case": "legacy_aggregate",
+      "binding_errors": [
+        "unbound_objective"
+      ],
+      "stored": true,
+      "stored_validation_ok": true
+    }
+  ]
+}

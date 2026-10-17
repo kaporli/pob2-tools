@@ -73,6 +73,13 @@ the reference build and result: a new reference changes aggregate scores, not
 what a candidate's own evaluation computed, so it belongs to the baseline
 suite hash instead.
 
+``objective_identity`` (D07) includes the registered definition's fixed rules
+(windows, metric names, score metric, tie-break rules), the target skill ids
+sorted as a set, and the resolved benchmark scenario and attribution rule set
+hashes. It excludes the two locator strings, which name where the content was
+read from, and the class scope: classes are compared under one objective, so
+the scope belongs to the request and the manifest, not the objective hash.
+
 ``listing_snapshot_hash`` is the opposite projection: price, currency,
 availability and the observation timestamps, which are exactly the fields the
 combat hashes ignore.
@@ -353,6 +360,45 @@ def baseline_suite_identity(scenarios: list[Any]) -> dict[str, Any]:
 
 def baseline_suite_hash(scenarios: list[Any]) -> str:
     return content_hash(baseline_suite_identity(scenarios))
+
+
+# ------------------------------------------------------------ objectives ===
+
+class UnresolvedObjective(ValueError):
+    """An objective selection whose required content hashes are still null."""
+
+
+def objective_identity(selection: Any) -> dict[str, Any]:
+    """The identity of a RunRequest version 2 ``ObjectiveSelection``.
+
+    Raises ``UnknownObjective`` for an unregistered id/version and
+    ``UnresolvedObjective`` when the objective needs a benchmark and its
+    hashes are not resolved yet: a request file is not a frozen objective.
+    """
+    from .objectives import definition_identity, get_objective
+
+    definition = get_objective(selection.objective_id,
+                               selection.objective_version)
+    if definition.requires_benchmark:
+        missing = [name for name in ("benchmark_scenario_hash",
+                                     "attribution_rules_hash")
+                   if getattr(selection, name) is None]
+        if missing:
+            raise UnresolvedObjective(
+                "objective %s v%d has no identity until %s %s resolved"
+                % (definition.objective_id, definition.version,
+                   " and ".join(missing),
+                   "is" if len(missing) == 1 else "are"))
+    return {
+        "definition": definition_identity(definition),
+        "target_skill_ids": sorted(selection.target_skill_ids),
+        "benchmark_scenario_hash": selection.benchmark_scenario_hash,
+        "attribution_rules_hash": selection.attribution_rules_hash,
+    }
+
+
+def objective_hash(selection: Any) -> str:
+    return content_hash(objective_identity(selection))
 
 
 # ------------------------------------------------------------- manifests ===

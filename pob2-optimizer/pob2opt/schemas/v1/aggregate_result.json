@@ -5,9 +5,9 @@
   "type": "object",
   "properties": {
     "schema_version": {
-      "type": "integer",
       "enum": [
-        1
+        1,
+        2
       ]
     },
     "record_id": {
@@ -106,6 +106,35 @@
       "items": {
         "type": "string"
       }
+    },
+    "objective_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "objective_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "objective_metrics": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "number",
+          "null"
+        ]
+      }
+    },
+    "objective_score": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "objective_gap_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "required": [
@@ -130,6 +159,35 @@
     "exclusion_reasons"
   ],
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "exclusiveMinimum": 1
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "objective_version",
+          "objective_hash",
+          "objective_metrics",
+          "objective_score",
+          "objective_gap_ids"
+        ]
+      },
+      "else": {
+        "properties": {
+          "objective_version": false,
+          "objective_hash": false,
+          "objective_metrics": false,
+          "objective_score": false,
+          "objective_gap_ids": false
+        }
+      }
+    }
+  ],
   "$defs": {
     "ScenarioGateOutcome": {
       "type": "object",
