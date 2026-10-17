@@ -3,6 +3,17 @@
 What each group of tests is, what it needs, and the exact command to run it
 (P00-T05). Run everything from the repository root.
 
+## P08-T01.1 objective contracts and repair coverage
+
+Run `python -m pytest tests/unit/test_p08_t01_1_objective_contracts.py tests/unit/test_p08_t01_1_scope_and_binding.py tests/unit/test_p08_t01_1_storage_binding.py -q`.
+These offline tests cover request/aggregate versioning, legacy migration,
+objective identity, catalog-backed Flicker skill scope, and aggregate binding
+through single writes, pending batches and stored bundle validation. The
+catalog rows are synthetic, using the registered native skill keys; they are
+not gameplay observations or proof of current-patch compatibility. Storage
+tests use a temporary closed fixture corpus. No provider or PoB runtime is
+required. Review and replay evidence is in `docs/evidence/PR-11-12/`.
+
 ## Prerequisites
 
 Create and activate a clean venv for your interpreter. Install the explicitly

@@ -1,0 +1,743 @@
+...................FFFFFFFFFFFFFFFFF.FFFFFFFFFFFF...FFF.F............... [ 66%]
+...................................F                                     [100%]
+================================== FAILURES ===================================
+_____ test_an_unrelated_exact_id_cannot_be_the_flicker_objective[skills0] _____
+
+skills = ('poe2/gems/fixture/SkillGemEcho',)
+
+    @pytest.mark.parametrize("skills", [(OTHER_GEM,), (GEM, OTHER_GEM),
+                                       (GRANTED, OTHER_GEM)])
+    def test_an_unrelated_exact_id_cannot_be_the_flicker_objective(skills):
+        report = resolve_objective_scope(CATALOG, request(skills=skills))
+>       assert not report.ok
+E       assert not True
+E        +  where True = ScopeReport(issues=()).ok
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:219: AssertionError
+_____ test_an_unrelated_exact_id_cannot_be_the_flicker_objective[skills1] _____
+
+skills = ('poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike', 'poe2/gems/fixture/SkillGemEcho')
+
+    @pytest.mark.parametrize("skills", [(OTHER_GEM,), (GEM, OTHER_GEM),
+                                       (GRANTED, OTHER_GEM)])
+    def test_an_unrelated_exact_id_cannot_be_the_flicker_objective(skills):
+        report = resolve_objective_scope(CATALOG, request(skills=skills))
+>       assert not report.ok
+E       assert not True
+E        +  where True = ScopeReport(issues=()).ok
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:219: AssertionError
+_____ test_an_unrelated_exact_id_cannot_be_the_flicker_objective[skills2] _____
+
+skills = ('poe2/granted_skills/FlickerStrikePlayer', 'poe2/gems/fixture/SkillGemEcho')
+
+    @pytest.mark.parametrize("skills", [(OTHER_GEM,), (GEM, OTHER_GEM),
+                                       (GRANTED, OTHER_GEM)])
+    def test_an_unrelated_exact_id_cannot_be_the_flicker_objective(skills):
+        report = resolve_objective_scope(CATALOG, request(skills=skills))
+>       assert not report.ok
+E       assert not True
+E        +  where True = ScopeReport(issues=()).ok
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:219: AssertionError
+_______ test_a_support_with_the_flicker_display_name_is_not_the_target ________
+
+    def test_a_support_with_the_flicker_display_name_is_not_the_target():
+        catalog = deepcopy(CATALOG)
+        catalog["gems"][1] = entity(OTHER_GEM, ["Flicker Strike"], raw={"isSupport": True})
+>       assert not resolve_objective_scope(catalog, request(skills=[OTHER_GEM])).ok
+E       AssertionError: assert not True
+E        +  where True = ScopeReport(issues=()).ok
+E        +    where ScopeReport(issues=()) = resolve_objective_scope({'gems': [CatalogEntity(entity_id='poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike', display_names=['Fixture Strik...e2/ascendancies/2/1', display_names=['Fixture Asc B1'], aliases=[], raw_reference={'classId': 2}, rule_references=[])]}, RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)))
+E        +      where RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)) = request(skills=['poe2/gems/fixture/SkillGemEcho'])
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:226: AssertionError
+_ test_catalog_must_evidence_the_active_gem_effect_pair[gems-grantedEffectId-AnotherPlayerSkill] _
+
+table = 'gems', key = 'grantedEffectId', value = 'AnotherPlayerSkill'
+
+    @pytest.mark.parametrize("table,key,value", [
+        ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+        ("gems", "id", "AnotherGem"),
+        ("gems", "isSupport", True),
+        ("gems", "isSupport", None),
+        ("granted_skills", "id", "AnotherPlayerSkill"),
+        ("granted_skills", "support", True),
+        ("granted_skills", "support", None),
+    ])
+    def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+        catalog = deepcopy(CATALOG)
+        catalog[table][0].raw_reference[key] = value
+        report = resolve_objective_scope(catalog, request())
+>       assert report.issues[0].code == "unverified_objective_skill"
+               ^^^^^^^^^^^^^^^^
+E       IndexError: tuple index out of range
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:242: IndexError
+__ test_catalog_must_evidence_the_active_gem_effect_pair[gems-id-AnotherGem] __
+
+table = 'gems', key = 'id', value = 'AnotherGem'
+
+    @pytest.mark.parametrize("table,key,value", [
+        ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+        ("gems", "id", "AnotherGem"),
+        ("gems", "isSupport", True),
+        ("gems", "isSupport", None),
+        ("granted_skills", "id", "AnotherPlayerSkill"),
+        ("granted_skills", "support", True),
+        ("granted_skills", "support", None),
+    ])
+    def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+        catalog = deepcopy(CATALOG)
+        catalog[table][0].raw_reference[key] = value
+        report = resolve_objective_scope(catalog, request())
+>       assert report.issues[0].code == "unverified_objective_skill"
+               ^^^^^^^^^^^^^^^^
+E       IndexError: tuple index out of range
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:242: IndexError
+_ test_catalog_must_evidence_the_active_gem_effect_pair[gems-isSupport-True] __
+
+table = 'gems', key = 'isSupport', value = True
+
+    @pytest.mark.parametrize("table,key,value", [
+        ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+        ("gems", "id", "AnotherGem"),
+        ("gems", "isSupport", True),
+        ("gems", "isSupport", None),
+        ("granted_skills", "id", "AnotherPlayerSkill"),
+        ("granted_skills", "support", True),
+        ("granted_skills", "support", None),
+    ])
+    def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+        catalog = deepcopy(CATALOG)
+        catalog[table][0].raw_reference[key] = value
+        report = resolve_objective_scope(catalog, request())
+>       assert report.issues[0].code == "unverified_objective_skill"
+               ^^^^^^^^^^^^^^^^
+E       IndexError: tuple index out of range
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:242: IndexError
+_ test_catalog_must_evidence_the_active_gem_effect_pair[gems-isSupport-None] __
+
+table = 'gems', key = 'isSupport', value = None
+
+    @pytest.mark.parametrize("table,key,value", [
+        ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+        ("gems", "id", "AnotherGem"),
+        ("gems", "isSupport", True),
+        ("gems", "isSupport", None),
+        ("granted_skills", "id", "AnotherPlayerSkill"),
+        ("granted_skills", "support", True),
+        ("granted_skills", "support", None),
+    ])
+    def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+        catalog = deepcopy(CATALOG)
+        catalog[table][0].raw_reference[key] = value
+        report = resolve_objective_scope(catalog, request())
+>       assert report.issues[0].code == "unverified_objective_skill"
+               ^^^^^^^^^^^^^^^^
+E       IndexError: tuple index out of range
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:242: IndexError
+_ test_catalog_must_evidence_the_active_gem_effect_pair[granted_skills-id-AnotherPlayerSkill] _
+
+table = 'granted_skills', key = 'id', value = 'AnotherPlayerSkill'
+
+    @pytest.mark.parametrize("table,key,value", [
+        ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+        ("gems", "id", "AnotherGem"),
+        ("gems", "isSupport", True),
+        ("gems", "isSupport", None),
+        ("granted_skills", "id", "AnotherPlayerSkill"),
+        ("granted_skills", "support", True),
+        ("granted_skills", "support", None),
+    ])
+    def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+        catalog = deepcopy(CATALOG)
+        catalog[table][0].raw_reference[key] = value
+        report = resolve_objective_scope(catalog, request())
+>       assert report.issues[0].code == "unverified_objective_skill"
+               ^^^^^^^^^^^^^^^^
+E       IndexError: tuple index out of range
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:242: IndexError
+_ test_catalog_must_evidence_the_active_gem_effect_pair[granted_skills-support-True] _
+
+table = 'granted_skills', key = 'support', value = True
+
+    @pytest.mark.parametrize("table,key,value", [
+        ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+        ("gems", "id", "AnotherGem"),
+        ("gems", "isSupport", True),
+        ("gems", "isSupport", None),
+        ("granted_skills", "id", "AnotherPlayerSkill"),
+        ("granted_skills", "support", True),
+        ("granted_skills", "support", None),
+    ])
+    def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+        catalog = deepcopy(CATALOG)
+        catalog[table][0].raw_reference[key] = value
+        report = resolve_objective_scope(catalog, request())
+>       assert report.issues[0].code == "unverified_objective_skill"
+               ^^^^^^^^^^^^^^^^
+E       IndexError: tuple index out of range
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:242: IndexError
+_ test_catalog_must_evidence_the_active_gem_effect_pair[granted_skills-support-None] _
+
+table = 'granted_skills', key = 'support', value = None
+
+    @pytest.mark.parametrize("table,key,value", [
+        ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+        ("gems", "id", "AnotherGem"),
+        ("gems", "isSupport", True),
+        ("gems", "isSupport", None),
+        ("granted_skills", "id", "AnotherPlayerSkill"),
+        ("granted_skills", "support", True),
+        ("granted_skills", "support", None),
+    ])
+    def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+        catalog = deepcopy(CATALOG)
+        catalog[table][0].raw_reference[key] = value
+        report = resolve_objective_scope(catalog, request())
+>       assert report.issues[0].code == "unverified_objective_skill"
+               ^^^^^^^^^^^^^^^^
+E       IndexError: tuple index out of range
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:242: IndexError
+_______ test_missing_or_ambiguous_catalog_evidence_blocks[missing-gems] _______
+
+table = 'gems', defect = 'missing'
+
+    @pytest.mark.parametrize("table", ["gems", "granted_skills"])
+    @pytest.mark.parametrize("defect", ["missing", "duplicate", "missing_raw"])
+    def test_missing_or_ambiguous_catalog_evidence_blocks(table, defect):
+        catalog = deepcopy(CATALOG)
+        if defect == "missing":
+            catalog[table] = []
+        elif defect == "duplicate":
+            catalog[table].append(catalog[table][0])
+        else:
+            catalog[table][0] = replace(catalog[table][0], raw_reference={})
+        # Even selecting only the other representation requires the pair's evidence.
+        skills = [GRANTED] if table == "gems" else [GEM]
+>       assert not resolve_objective_scope(catalog, request(skills=skills)).ok
+E       AssertionError: assert not True
+E        +  where True = ScopeReport(issues=()).ok
+E        +    where ScopeReport(issues=()) = resolve_objective_scope({'gems': [], 'granted_skills': [CatalogEntity(entity_id='poe2/granted_skills/FlickerStrikePlayer', display_names=['Fix...e2/ascendancies/2/1', display_names=['Fixture Asc B1'], aliases=[], raw_reference={'classId': 2}, rule_references=[])]}, RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)))
+E        +      where RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)) = request(skills=['poe2/granted_skills/FlickerStrikePlayer'])
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:257: AssertionError
+__ test_missing_or_ambiguous_catalog_evidence_blocks[missing-granted_skills] __
+
+table = 'granted_skills', defect = 'missing'
+
+    @pytest.mark.parametrize("table", ["gems", "granted_skills"])
+    @pytest.mark.parametrize("defect", ["missing", "duplicate", "missing_raw"])
+    def test_missing_or_ambiguous_catalog_evidence_blocks(table, defect):
+        catalog = deepcopy(CATALOG)
+        if defect == "missing":
+            catalog[table] = []
+        elif defect == "duplicate":
+            catalog[table].append(catalog[table][0])
+        else:
+            catalog[table][0] = replace(catalog[table][0], raw_reference={})
+        # Even selecting only the other representation requires the pair's evidence.
+        skills = [GRANTED] if table == "gems" else [GEM]
+>       assert not resolve_objective_scope(catalog, request(skills=skills)).ok
+E       AssertionError: assert not True
+E        +  where True = ScopeReport(issues=()).ok
+E        +    where ScopeReport(issues=()) = resolve_objective_scope({'gems': [CatalogEntity(entity_id='poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike', display_names=['Fixture Strik...e2/ascendancies/2/1', display_names=['Fixture Asc B1'], aliases=[], raw_reference={'classId': 2}, rule_references=[])]}, RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)))
+E        +      where RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)) = request(skills=['poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike'])
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:257: AssertionError
+______ test_missing_or_ambiguous_catalog_evidence_blocks[duplicate-gems] ______
+
+table = 'gems', defect = 'duplicate'
+
+    @pytest.mark.parametrize("table", ["gems", "granted_skills"])
+    @pytest.mark.parametrize("defect", ["missing", "duplicate", "missing_raw"])
+    def test_missing_or_ambiguous_catalog_evidence_blocks(table, defect):
+        catalog = deepcopy(CATALOG)
+        if defect == "missing":
+            catalog[table] = []
+        elif defect == "duplicate":
+            catalog[table].append(catalog[table][0])
+        else:
+            catalog[table][0] = replace(catalog[table][0], raw_reference={})
+        # Even selecting only the other representation requires the pair's evidence.
+        skills = [GRANTED] if table == "gems" else [GEM]
+>       assert not resolve_objective_scope(catalog, request(skills=skills)).ok
+E       AssertionError: assert not True
+E        +  where True = ScopeReport(issues=()).ok
+E        +    where ScopeReport(issues=()) = resolve_objective_scope({'gems': [CatalogEntity(entity_id='poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike', display_names=['Fixture Strik...e2/ascendancies/2/1', display_names=['Fixture Asc B1'], aliases=[], raw_reference={'classId': 2}, rule_references=[])]}, RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)))
+E        +      where RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)) = request(skills=['poe2/granted_skills/FlickerStrikePlayer'])
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:257: AssertionError
+_ test_missing_or_ambiguous_catalog_evidence_blocks[duplicate-granted_skills] _
+
+table = 'granted_skills', defect = 'duplicate'
+
+    @pytest.mark.parametrize("table", ["gems", "granted_skills"])
+    @pytest.mark.parametrize("defect", ["missing", "duplicate", "missing_raw"])
+    def test_missing_or_ambiguous_catalog_evidence_blocks(table, defect):
+        catalog = deepcopy(CATALOG)
+        if defect == "missing":
+            catalog[table] = []
+        elif defect == "duplicate":
+            catalog[table].append(catalog[table][0])
+        else:
+            catalog[table][0] = replace(catalog[table][0], raw_reference={})
+        # Even selecting only the other representation requires the pair's evidence.
+        skills = [GRANTED] if table == "gems" else [GEM]
+>       assert not resolve_objective_scope(catalog, request(skills=skills)).ok
+E       AssertionError: assert not True
+E        +  where True = ScopeReport(issues=()).ok
+E        +    where ScopeReport(issues=()) = resolve_objective_scope({'gems': [CatalogEntity(entity_id='poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike', display_names=['Fixture Strik...e2/ascendancies/2/1', display_names=['Fixture Asc B1'], aliases=[], raw_reference={'classId': 2}, rule_references=[])]}, RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)))
+E        +      where RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)) = request(skills=['poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike'])
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:257: AssertionError
+_____ test_missing_or_ambiguous_catalog_evidence_blocks[missing_raw-gems] _____
+
+table = 'gems', defect = 'missing_raw'
+
+    @pytest.mark.parametrize("table", ["gems", "granted_skills"])
+    @pytest.mark.parametrize("defect", ["missing", "duplicate", "missing_raw"])
+    def test_missing_or_ambiguous_catalog_evidence_blocks(table, defect):
+        catalog = deepcopy(CATALOG)
+        if defect == "missing":
+            catalog[table] = []
+        elif defect == "duplicate":
+            catalog[table].append(catalog[table][0])
+        else:
+            catalog[table][0] = replace(catalog[table][0], raw_reference={})
+        # Even selecting only the other representation requires the pair's evidence.
+        skills = [GRANTED] if table == "gems" else [GEM]
+>       assert not resolve_objective_scope(catalog, request(skills=skills)).ok
+E       AssertionError: assert not True
+E        +  where True = ScopeReport(issues=()).ok
+E        +    where ScopeReport(issues=()) = resolve_objective_scope({'gems': [CatalogEntity(entity_id='poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike', display_names=['Fixture Strik...e2/ascendancies/2/1', display_names=['Fixture Asc B1'], aliases=[], raw_reference={'classId': 2}, rule_references=[])]}, RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)))
+E        +      where RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)) = request(skills=['poe2/granted_skills/FlickerStrikePlayer'])
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:257: AssertionError
+_ test_missing_or_ambiguous_catalog_evidence_blocks[missing_raw-granted_skills] _
+
+table = 'granted_skills', defect = 'missing_raw'
+
+    @pytest.mark.parametrize("table", ["gems", "granted_skills"])
+    @pytest.mark.parametrize("defect", ["missing", "duplicate", "missing_raw"])
+    def test_missing_or_ambiguous_catalog_evidence_blocks(table, defect):
+        catalog = deepcopy(CATALOG)
+        if defect == "missing":
+            catalog[table] = []
+        elif defect == "duplicate":
+            catalog[table].append(catalog[table][0])
+        else:
+            catalog[table][0] = replace(catalog[table][0], raw_reference={})
+        # Even selecting only the other representation requires the pair's evidence.
+        skills = [GRANTED] if table == "gems" else [GEM]
+>       assert not resolve_objective_scope(catalog, request(skills=skills)).ok
+E       AssertionError: assert not True
+E        +  where True = ScopeReport(issues=()).ok
+E        +    where ScopeReport(issues=()) = resolve_objective_scope({'gems': [CatalogEntity(entity_id='poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike', display_names=['Fixture Strik...e2/ascendancies/2/1', display_names=['Fixture Asc B1'], aliases=[], raw_reference={'classId': 2}, rule_references=[])]}, RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)))
+E        +      where RunRequest(schema_version=2, game='poe2', class_id=ABSENT, level=100, patch_selection='fixture-patch-1', league_select..._v1.json', benchmark_scenario_hash=None, attribution_rules='fixture/attribution-v1.json', attribution_rules_hash=None)) = request(skills=['poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike'])
+
+tests\unit\test_p08_t01_1_scope_and_binding.py:257: AssertionError
+__ test_conflicts_are_rejected_atomically_with_reference_checks[single-hash] __
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at0')
+defect = 'hash', route = 'single'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F1A3BC0>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[single-objective] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at1')
+defect = 'objective', route = 'single'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F23D550>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[single-version] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at2')
+defect = 'version', route = 'single'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F23FEF0>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[single-legacy] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at3')
+defect = 'legacy', route = 'single'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F41ED80>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-hash] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at4')
+defect = 'hash', route = 'batch_manifest_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F3C6F90>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-objective] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at5')
+defect = 'objective', route = 'batch_manifest_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F41C320>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-version] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at6')
+defect = 'version', route = 'batch_manifest_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F41E6C0>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-legacy] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at7')
+defect = 'legacy', route = 'batch_manifest_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F41F170>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-hash] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at8')
+defect = 'hash', route = 'batch_aggregate_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F3C6300>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-objective] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at9')
+defect = 'objective', route = 'batch_aggregate_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F41EE70>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-version] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at10')
+defect = 'version', route = 'batch_aggregate_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F41C380>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-legacy] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_conflicts_are_rejected_at11')
+defect = 'legacy', route = 'batch_aggregate_first'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F41DFA0>
+
+    @pytest.mark.parametrize("defect", ["hash", "objective", "version", "legacy"])
+    @pytest.mark.parametrize("route", ["single", "batch_manifest_first", "batch_aggregate_first"])
+    def test_conflicts_are_rejected_atomically_with_reference_checks(tmp_path, defect, route,
+                                                                    monkeypatch):
+        # A known alternative version passes record validation but must still
+        # fail binding to this run's v1 selection.
+        monkeypatch.setitem(OBJECTIVES, ("flicker_sustained_dps", 2),
+                            replace(FLICKER_SUSTAINED_DPS_V1, version=2))
+        with RunStore.open(tmp_path) as store:
+            seed_corpus(store)
+            man, agg = manifest(), aggregate(defect)
+            if route == "single":
+                store.put_run(man)
+>           with pytest.raises(RecordInvalid):
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:51: Failed
+_ test_staged_conflicts_are_visible_and_make_bundle_unreadable[hash-objective_hash_mismatch] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_staged_conflicts_are_visi0')
+defect = 'hash', code = 'objective_hash_mismatch'
+
+    @pytest.mark.parametrize("defect,code", [("hash", "objective_hash_mismatch"),
+                                            ("objective", "objective_mismatch"),
+                                            ("legacy", "unbound_objective")])
+    def test_staged_conflicts_are_visible_and_make_bundle_unreadable(tmp_path, defect, code):
+        with RunBundle.create(tmp_path, manifest()) as bundle:
+            seed_corpus(bundle.store)
+            agg = aggregate(defect)
+            bundle.store.put_normalized(agg, require_references=False)
+            report = bundle.store.validate_stored()[agg.record_id]
+>           assert code in report.codes()
+E           AssertionError: assert 'objective_hash_mismatch' in ()
+E            +  where () = codes()
+E            +    where codes = ValidationReport(kind='aggregate_result', errors=(), record=AggregateResult(schema_version=2, record_id='binding-aggre..._metrics={'flicker_burst_dps': 1500.0, 'flicker_sustained_dps': 1000.0}, objective_score=1000.0, objective_gap_ids=[])).codes
+
+tests\unit\test_p08_t01_1_storage_binding.py:84: AssertionError
+_ test_staged_conflicts_are_visible_and_make_bundle_unreadable[objective-objective_mismatch] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_staged_conflicts_are_visi1')
+defect = 'objective', code = 'objective_mismatch'
+
+    @pytest.mark.parametrize("defect,code", [("hash", "objective_hash_mismatch"),
+                                            ("objective", "objective_mismatch"),
+                                            ("legacy", "unbound_objective")])
+    def test_staged_conflicts_are_visible_and_make_bundle_unreadable(tmp_path, defect, code):
+        with RunBundle.create(tmp_path, manifest()) as bundle:
+            seed_corpus(bundle.store)
+            agg = aggregate(defect)
+            bundle.store.put_normalized(agg, require_references=False)
+            report = bundle.store.validate_stored()[agg.record_id]
+>           assert code in report.codes()
+E           AssertionError: assert 'objective_mismatch' in ()
+E            +  where () = codes()
+E            +    where codes = ValidationReport(kind='aggregate_result', errors=(), record=AggregateResult(schema_version=2, record_id='binding-aggre...b86643248daf290f717420f0a115acb741d', objective_metrics={}, objective_score=None, objective_gap_ids=['fixture-gap-1'])).codes
+
+tests\unit\test_p08_t01_1_storage_binding.py:84: AssertionError
+_ test_staged_conflicts_are_visible_and_make_bundle_unreadable[legacy-unbound_objective] _
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_staged_conflicts_are_visi2')
+defect = 'legacy', code = 'unbound_objective'
+
+    @pytest.mark.parametrize("defect,code", [("hash", "objective_hash_mismatch"),
+                                            ("objective", "objective_mismatch"),
+                                            ("legacy", "unbound_objective")])
+    def test_staged_conflicts_are_visible_and_make_bundle_unreadable(tmp_path, defect, code):
+        with RunBundle.create(tmp_path, manifest()) as bundle:
+            seed_corpus(bundle.store)
+            agg = aggregate(defect)
+            bundle.store.put_normalized(agg, require_references=False)
+            report = bundle.store.validate_stored()[agg.record_id]
+>           assert code in report.codes()
+E           AssertionError: assert 'unbound_objective' in ()
+E            +  where () = codes()
+E            +    where codes = ValidationReport(kind='aggregate_result', errors=(), record=AggregateResult(schema_version=1, record_id='binding-aggre...ive_version=ABSENT, objective_hash=ABSENT, objective_metrics=ABSENT, objective_score=ABSENT, objective_gap_ids=ABSENT)).codes
+
+tests\unit\test_p08_t01_1_storage_binding.py:84: AssertionError
+_____________ test_v2_aggregate_cannot_be_assigned_to_legacy_run ______________
+
+tmp_path = WindowsPath('C:/Users/Elias/AppData/Local/Temp/pytest-of-Elias/pytest-372/test_v2_aggregate_cannot_be_as0')
+
+    def test_v2_aggregate_cannot_be_assigned_to_legacy_run(tmp_path):
+        with RunStore.open(tmp_path) as store:
+            old = seed_corpus(store)
+            agg = replace(aggregate(), manifest_id=old["run_manifest"].run_id)
+>           with pytest.raises(RecordInvalid) as exc:
+E           Failed: DID NOT RAISE RecordInvalid
+
+tests\unit\test_p08_t01_1_storage_binding.py:102: Failed
+________ test_the_required_skill_mapping_is_part_of_objective_identity ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020C2F3C75C0>
+
+    def test_the_required_skill_mapping_is_part_of_objective_identity(monkeypatch):
+        before = objective_hash(resolved_selection())
+        edited = replace(FLICKER_SUSTAINED_DPS_V1,
+>                        target_skill=replace(FLICKER_SUSTAINED_DPS_V1.target_skill,
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                              granted_skill_id="DifferentSkill"))
+E       AttributeError: 'ObjectiveDefinition' object has no attribute 'target_skill'
+
+tests\unit\test_p08_t01_1_objective_contracts.py:405: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_an_unrelated_exact_id_cannot_be_the_flicker_objective[skills0]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_an_unrelated_exact_id_cannot_be_the_flicker_objective[skills1]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_an_unrelated_exact_id_cannot_be_the_flicker_objective[skills2]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_a_support_with_the_flicker_display_name_is_not_the_target
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_catalog_must_evidence_the_active_gem_effect_pair[gems-grantedEffectId-AnotherPlayerSkill]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_catalog_must_evidence_the_active_gem_effect_pair[gems-id-AnotherGem]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_catalog_must_evidence_the_active_gem_effect_pair[gems-isSupport-True]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_catalog_must_evidence_the_active_gem_effect_pair[gems-isSupport-None]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_catalog_must_evidence_the_active_gem_effect_pair[granted_skills-id-AnotherPlayerSkill]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_catalog_must_evidence_the_active_gem_effect_pair[granted_skills-support-True]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_catalog_must_evidence_the_active_gem_effect_pair[granted_skills-support-None]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_missing_or_ambiguous_catalog_evidence_blocks[missing-gems]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_missing_or_ambiguous_catalog_evidence_blocks[missing-granted_skills]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_missing_or_ambiguous_catalog_evidence_blocks[duplicate-gems]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_missing_or_ambiguous_catalog_evidence_blocks[duplicate-granted_skills]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_missing_or_ambiguous_catalog_evidence_blocks[missing_raw-gems]
+FAILED tests/unit/test_p08_t01_1_scope_and_binding.py::test_missing_or_ambiguous_catalog_evidence_blocks[missing_raw-granted_skills]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[single-hash]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[single-objective]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[single-version]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[single-legacy]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-hash]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-objective]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-version]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_manifest_first-legacy]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-hash]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-objective]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-version]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_conflicts_are_rejected_atomically_with_reference_checks[batch_aggregate_first-legacy]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_staged_conflicts_are_visible_and_make_bundle_unreadable[hash-objective_hash_mismatch]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_staged_conflicts_are_visible_and_make_bundle_unreadable[objective-objective_mismatch]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_staged_conflicts_are_visible_and_make_bundle_unreadable[legacy-unbound_objective]
+FAILED tests/unit/test_p08_t01_1_storage_binding.py::test_v2_aggregate_cannot_be_assigned_to_legacy_run
+FAILED tests/unit/test_p08_t01_1_objective_contracts.py::test_the_required_skill_mapping_is_part_of_objective_identity
+34 failed, 74 passed in 6.90s

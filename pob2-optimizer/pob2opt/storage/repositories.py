@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Callable, Iterable, Iterator, Sequence
 
@@ -37,6 +37,7 @@ from ..domain import (
 )
 from ..domain.cache import decide as decide_cache
 from ..domain.enums import TASK_TRANSITIONS, TaskState
+from ..domain.validation import (ValidationError, aggregate_binding_errors)
 from .blobs import BlobStore, BlobWrite
 from .index import StoreIndex
 from .database import open_database, transaction, utcnow
@@ -275,6 +276,12 @@ class RunStore:
         index = self.reference_index(records) if require_references else None
         decoded = [self._require_valid(record, index=index)
                    for record in records]
+        if require_references:
+            manifests = {r.run_id: r for r in decoded
+                         if kind_of(r) == "run_manifest"}
+            for record in decoded:
+                if kind_of(record) == "aggregate_result":
+                    self._binding_report(validate_record(record), manifests).raise_for_errors()
 
         legacy_ids = set(legacy_evaluation_ids)
         created: dict[str, bool] = {}
@@ -706,8 +713,32 @@ class RunStore:
                         ) -> dict[str, Any]:
         """Re-validate every stored record against this store as a corpus."""
         index = self.reference_index()
-        return {rid: validate_record(record, index=index)
+        return {rid: self._binding_report(validate_record(record, index=index))
                 for rid, _kind, record in self.iter_stored(kinds)}
+
+    def _binding_report(self, report, pending_manifests=None):
+        """Resolve aggregate bindings against decoded pending or stored runs.
+
+        Staging can omit this check; corpus validation never does. A malformed
+        staged manifest produces a validation error rather than a crash.
+        """
+        if not report.ok or report.kind != "aggregate_result":
+            return report
+        aggregate = report.record
+        manifest = (pending_manifests or {}).get(aggregate.manifest_id)
+        if manifest is None:
+            try:
+                manifest = self.get_run(aggregate.manifest_id)
+            except RecordNotFound:
+                return replace(report, errors=(ValidationError(
+                    "unresolved_reference", "/manifest_id",
+                    "aggregate manifest is not present", "semantic"),))
+        checked = validate_record(manifest)
+        if not checked.ok:
+            return replace(report, errors=(ValidationError(
+                "invalid_manifest", "/manifest_id",
+                "aggregate manifest fails validation", "semantic"),))
+        return replace(report, errors=aggregate_binding_errors(aggregate, checked.record))
 
     def unresolved_references(self) -> dict[str, list[str]]:
         """``record_id -> unresolved field paths``, empty when closed."""
