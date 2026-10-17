@@ -14,8 +14,8 @@ from pathlib import Path
 import pytest
 
 from pob2opt.domain import RECORD_TYPES, available_kinds
-from pob2opt.domain.schema_gen import (SCHEMA_BASE, VERSION_FIELDS, build_all,
-                                       build_schema)
+from pob2opt.domain.schema_gen import (RETIRED_FIELDS, SCHEMA_BASE,
+                                       VERSION_FIELDS, build_all, build_schema)
 from pob2opt.domain.schemas import SCHEMA_DIR, registry, schema_for, validator_for
 
 
@@ -45,13 +45,17 @@ def test_every_field_is_required_unless_it_may_be_absent(kind: str):
     schema = schema_for(kind)
     optional = set(schema["properties"]) - set(schema["required"])
     # Only the Predicate members are optional in v1, and they live in $defs.
-    # A field a later schema version adds is required from that version on.
-    versioned = {name for names in VERSION_FIELDS.get(kind, {}).values()
-                 for name in names}
+    # A field a later schema version adds is required from that version on;
+    # a field it retires is required before it.
+    versioned = {name for table in (VERSION_FIELDS, RETIRED_FIELDS)
+                 for names in table.get(kind, {}).values() for name in names}
     assert optional == versioned, "%s has unexpected optional fields %s" % (
         kind, sorted(optional - versioned))
     for version, names in VERSION_FIELDS.get(kind, {}).items():
-        assert any(rule["then"] == {"required": list(names)}
+        assert any(rule["then"]["required"] == list(names)
+                   for rule in schema["allOf"])
+    for version, names in RETIRED_FIELDS.get(kind, {}).items():
+        assert any(rule["else"].get("required") == list(names)
                    for rule in schema["allOf"])
     assert schema["additionalProperties"] is False
 

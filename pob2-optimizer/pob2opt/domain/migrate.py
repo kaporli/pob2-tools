@@ -1,5 +1,10 @@
 """Record migrations between schema versions.
 
+RunRequest version 1 to 2 (D07). A version 1 request names one class and has
+no objective selector, so it means the balanced objective over that class with
+every ascendancy in scope. The upgrade states exactly that; it never selects a
+skill or the Flicker Strike objective.
+
 BuildSpec version 1 to 2. Version 2 adds ``SkillEntry.supports``, the
 settings of each support, and ``main_skill_group``.
 
@@ -24,8 +29,10 @@ from dataclasses import replace
 from .absent import ABSENT
 from .enums import RecordParseStatus
 from .identity import build_hash
-from .records import (BUILD_SPEC_SCHEMA_VERSION, BuildSpec, SkillEntry,
-                      SupportGem, UnresolvedRef)
+from .objectives import BALANCED_V1
+from .records import (BUILD_SPEC_SCHEMA_VERSION, RUN_REQUEST_SCHEMA_VERSION,
+                      BuildSpec, ClassScope, ObjectiveSelection, RunRequest,
+                      SkillEntry, SupportGem, UnresolvedRef)
 
 #: Reason recorded for a support whose settings a version 1 record lacks.
 UNKNOWN_SETTINGS_REASON = (
@@ -104,3 +111,20 @@ def has_unknown_support_settings(build: BuildSpec) -> bool:
         return any(unknown(child) for child in skill.triggered)
     return any(unknown(skill) for group in build.skill_groups
                for skill in group.skills)
+
+
+def upgrade_run_request(request: RunRequest) -> RunRequest:
+    """The version 2 form of a version 1 request, with the same meaning."""
+    if request.schema_version >= RUN_REQUEST_SCHEMA_VERSION:
+        raise ValueError("RunRequest is already schema version %d"
+                         % request.schema_version)
+    return replace(
+        request, schema_version=RUN_REQUEST_SCHEMA_VERSION, class_id=ABSENT,
+        class_scope=[ClassScope(class_id=request.class_id,
+                                ascendancy_ids=None)],
+        objective=ObjectiveSelection(
+            objective_id=BALANCED_V1.objective_id,
+            objective_version=BALANCED_V1.version,
+            target_skill_ids=[], benchmark_scenario=None,
+            benchmark_scenario_hash=None, attribution_rules=None,
+            attribution_rules_hash=None))

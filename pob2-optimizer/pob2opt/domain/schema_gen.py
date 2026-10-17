@@ -55,6 +55,7 @@ SHA256_FIELDS = frozenset({
     "mechanics_registry_hash", "patch_profile_hash", "pob_dirty_hash",
     "rotation_hash", "software_dirty_hash", "source_item_hash",
     "trace_blob_hash", "raw_blob_hashes", "candidate_archive_hashes",
+    "benchmark_scenario_hash", "attribution_rules_hash",
 })
 
 #: Numeric fields that may not be negative but are not covered by a suffix.
@@ -72,7 +73,17 @@ AT_LEAST_ONE = frozenset({"quantity", "worker_limit"})
 
 #: Top-level fields introduced by a later schema version of one record kind.
 VERSION_FIELDS: dict[str, dict[int, tuple[str, ...]]] = {
+    "aggregate_result": {2: ("objective_version", "objective_hash",
+                             "objective_metrics", "objective_score",
+                             "objective_gap_ids")},
     "build_spec": {2: ("main_skill_group",)},
+    "run_request": {2: ("class_scope", "objective")},
+}
+
+#: Top-level fields a later schema version of one record kind retires:
+#: required before that version, forbidden from it on.
+RETIRED_FIELDS: dict[str, dict[int, tuple[str, ...]]] = {
+    "run_request": {2: ("class",)},
 }
 
 #: Per-field keywords that no naming rule should be stretched to cover.
@@ -104,6 +115,12 @@ OVERRIDES: dict[tuple[str, str], dict[str, Any]] = {
         "anyOf": [{"type": "integer", "minimum": 1}, {"const": "auto"}],
     },
     ("RunRequest", "level"): {"type": "integer", "minimum": 1},
+    ("ClassScope", "class_id"): NON_EMPTY_STRING,
+    ("ObjectiveSelection", "objective_id"): NON_EMPTY_STRING,
+    ("ObjectiveSelection", "objective_version"): {"type": "integer",
+                                                  "minimum": 1},
+    ("AggregateResult", "objective_version"): {"type": "integer",
+                                               "minimum": 1},
     ("RecordBase", "schema_version"): {"enum": list(SUPPORTED_SCHEMA_VERSIONS)},
     ("RecordBase", "record_id"): NON_EMPTY_STRING,
     ("Checkpoint", "schema_version"): {"enum": list(SUPPORTED_SCHEMA_VERSIONS)},
@@ -260,14 +277,23 @@ def build_schema(kind: str) -> dict[str, Any]:
     if kind in KIND_SCHEMA_VERSIONS:
         schema["properties"]["schema_version"] = {
             "enum": list(KIND_SCHEMA_VERSIONS[kind])}
-    for version, names in sorted(VERSION_FIELDS.get(kind, {}).items()):
-        # Required from ``version`` on, forbidden before it. Nested fields
-        # such as SkillEntry.supports are checked by the semantic pass.
+    added = VERSION_FIELDS.get(kind, {})
+    retired = RETIRED_FIELDS.get(kind, {})
+    for version in sorted(set(added) | set(retired)):
+        # Added fields are required from ``version`` on and forbidden before
+        # it; retired fields the reverse. Nested fields such as
+        # SkillEntry.supports are checked by the semantic pass.
+        names, gone = added.get(version, ()), retired.get(version, ())
+        then: dict[str, Any] = {"required": list(names)}
+        otherwise: dict[str, Any] = {"properties": {n: False for n in names}}
+        if gone:
+            then["properties"] = {n: False for n in gone}
+            otherwise["required"] = list(gone)
         schema.setdefault("allOf", []).append({
             "if": {"properties": {"schema_version": {"exclusiveMinimum":
                                                      version - 1}}},
-            "then": {"required": list(names)},
-            "else": {"properties": {name: False for name in names}},
+            "then": then,
+            "else": otherwise,
         })
     if builder.defs:
         schema["$defs"] = dict(sorted(builder.defs.items()))

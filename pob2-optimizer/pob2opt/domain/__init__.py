@@ -13,6 +13,7 @@ Read in this order:
 * ``validation`` - ``validate_record``: version, schema, shape, semantics.
 * ``identity`` - canonical JSON and the hash projections.
 * ``cache`` - evaluation and aggregate cache identity.
+* ``objectives`` - the registered search objectives (D07).
 """
 
 from __future__ import annotations
@@ -39,6 +40,8 @@ from .identity import (
     item_identity,
     listing_snapshot_hash,
     manifest_hash,
+    objective_hash,
+    objective_identity,
     rotation_hash,
     rotation_identity,
     scenario_hash,
@@ -83,6 +86,7 @@ __all__ = [
     "canonical_text", "check_schema_version", "content_hash", "decide",
     "document_hash", "from_jsonable", "is_present", "item_hash",
     "item_identity", "kind_of", "listing_snapshot_hash", "manifest_hash",
+    "objective_hash", "objective_identity",
     "rotation_hash", "rotation_identity", "scenario_hash", "scenario_identity",
     "schema_for", "to_jsonable", "validate_record", "validate_records",
     "validate_rule_registry", "validator_for",

@@ -70,9 +70,21 @@ SUPPORTED_SCHEMA_VERSIONS = (1,)
 #: supports are unknown, not default. See ``domain/migrate.py``.
 BUILD_SPEC_SCHEMA_VERSION = 2
 
+#: RunRequest version 2 (D07) replaces ``class`` with an explicit
+#: ``class_scope`` and adds the ``objective`` selection. Version 1 requests
+#: stay readable and keep their meaning: one class, the balanced objective.
+RUN_REQUEST_SCHEMA_VERSION = 2
+
+#: AggregateResult version 2 (D07) binds the score to a registered objective
+#: version and hash and carries the objective's own metrics and score.
+#: Version 1 aggregates stay readable and are never ranked by a v2 objective.
+AGGREGATE_RESULT_SCHEMA_VERSION = 2
+
 #: Record kinds that read more than :data:`SUPPORTED_SCHEMA_VERSIONS`.
 KIND_SCHEMA_VERSIONS: dict[str, tuple[int, ...]] = {
+    "aggregate_result": (1, 2),
     "build_spec": (1, 2),
+    "run_request": (1, 2),
 }
 
 
@@ -762,6 +774,21 @@ class AggregateResult(RecordBase):
     evaluation_ids: list[str]
     #: Required whenever the candidate is not eligible.
     exclusion_reasons: list[str]
+    #: Schema version 2 only. ``objective_id`` must then name a registered
+    #: objective (``domain/objectives.py``) at this version.
+    objective_version: int | Absent = ABSENT
+    #: Schema version 2 only: ``identity.objective_hash`` of the selection
+    #: the run froze. Must equal the manifest's ``objective_hash``.
+    objective_hash: str | Absent = ABSENT
+    #: Schema version 2 only: the objective's metrics, keyed by the names the
+    #: objective declares. Null means not produced and owes a gap.
+    objective_metrics: dict[str, float | None] | Absent = ABSENT
+    #: Schema version 2 only: the value ranked by the active objective. Never
+    #: filled from ``balanced_score`` or a displayed PoB number for an
+    #: objective that names its own metric.
+    objective_score: float | None | Absent = ABSENT
+    #: Schema version 2 only: gaps explaining every null objective metric.
+    objective_gap_ids: list[str] | Absent = ABSENT
 
 
 # ============================================================ observations ===
@@ -812,12 +839,46 @@ class Observation(RecordBase):
 # ================================================== runs and task state ===
 
 @_frozen
+class ClassScope:
+    """One approved class of a RunRequest version 2 campaign."""
+
+    class_id: str
+    #: Approved ascendancies of this class. Null: not restricted, every
+    #: ascendancy of the class is in scope (the version 1 meaning).
+    ascendancy_ids: list[str] | None
+
+
+@_frozen
+class ObjectiveSelection:
+    """The objective a RunRequest version 2 optimizes (D07).
+
+    ``objective_id`` and ``objective_version`` name a registered definition;
+    its windows, metrics and tie-break rules are fixed by that version and
+    cannot be set here. The two hashes are null in a request file and must be
+    resolved before a manifest is written, like ``workers: "auto"``.
+    """
+
+    objective_id: str
+    objective_version: int
+    #: Exact catalog gem or granted-skill ids of the constrained main skill.
+    #: Empty for an objective without a skill constraint.
+    target_skill_ids: list[str]
+    #: Locator of the DPS benchmark scenario; null when the objective has none.
+    benchmark_scenario: str | None
+    benchmark_scenario_hash: str | None
+    #: Locator of the reviewed damage-ownership rule set.
+    attribution_rules: str | None
+    attribution_rules_hash: str | None
+
+
+@_frozen
 class RunRequest:
     """The request file of interfaces.md. Not a persisted domain record."""
 
     schema_version: int
     game: str
-    class_id: str = field(metadata={"json_key": "class"})
+    #: Schema version 1 only. Version 2 uses ``class_scope``.
+    class_id: str | Absent = field(metadata={"json_key": "class"})
     level: int
     patch_selection: str
     league_selection: str
@@ -836,6 +897,10 @@ class RunRequest:
     allow_weapon_switch: bool
     allow_external_gear_swap: bool
     execution_profile: str
+    #: Schema version 2 only: the explicit approved class list.
+    class_scope: list[ClassScope] | Absent = ABSENT
+    #: Schema version 2 only.
+    objective: ObjectiveSelection | Absent = ABSENT
 
 
 @_frozen
