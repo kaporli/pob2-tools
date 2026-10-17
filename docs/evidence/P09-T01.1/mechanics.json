@@ -744,6 +744,126 @@
       ]
     },
     {
+      "mechanic_id": "engine/pinnacle-enemy-preset",
+      "kind": "engine",
+      "path": "src/Modules/ConfigOptions.lua",
+      "file_sha256": "5a77f18ea6c71834a182555e40f1e616ce24e01ee9265c6ed01c789101a6473d",
+      "lines": [
+        {
+          "n": 2057,
+          "text": "\t\telseif val == \"Pinnacle\" then"
+        },
+        {
+          "n": 2060,
+          "text": "\t\t\tenemyModList:NewMod(\"Condition:PinnacleBoss\", \"FLAG\", true, \"Config\", { type = \"Condition\", var = \"Effective\" })"
+        },
+        {
+          "n": 2067,
+          "text": "\t\t\tenemyModList:NewMod(\"PoiseThreshold\", \"MORE\", 838, \"Xesht\", { type = \"Condition\", var = \"Effective\" })"
+        },
+        {
+          "n": 2071,
+          "text": "\t\t\tlocal defaultEleResist = 50"
+        },
+        {
+          "n": 2072,
+          "text": "\t\t\tbuild.configTab.varControls['enemyLightningResist']:SetPlaceholder(defaultEleResist, true)"
+        },
+        {
+          "n": 2073,
+          "text": "\t\t\tbuild.configTab.varControls['enemyColdResist']:SetPlaceholder(defaultEleResist, true)"
+        },
+        {
+          "n": 2074,
+          "text": "\t\t\tbuild.configTab.varControls['enemyFireResist']:SetPlaceholder(defaultEleResist, true)"
+        },
+        {
+          "n": 2075,
+          "text": "\t\t\tbuild.configTab.varControls['enemyChaosResist']:SetPlaceholder(0, true)"
+        },
+        {
+          "n": 2077,
+          "text": "\t\t\tlocal defaultLevel = 82"
+        },
+        {
+          "n": 2081,
+          "text": "\t\t\t\tdefaultLevel = m_max(build.configTab.enemyLevel, defaultLevel)"
+        },
+        {
+          "n": 2095,
+          "text": "\t\t\tbuild.configTab.varControls['enemyArmour']:SetPlaceholder(round(data.monsterArmourTable[defaultLevel] * (data.bossStats.PinnacleArmourMean/100)), true)"
+        },
+        {
+          "n": 2096,
+          "text": "\t\t\tbuild.configTab.varControls['enemyEvasion']:SetPlaceholder(round(data.monsterEvasionTable[defaultLevel] * (data.bossStats.PinnacleEvasionMean/100)), true)"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "engine/enemy-is-boss-option",
+      "kind": "engine",
+      "path": "src/Modules/ConfigOptions.lua",
+      "file_sha256": "5a77f18ea6c71834a182555e40f1e616ce24e01ee9265c6ed01c789101a6473d",
+      "lines": [
+        {
+          "n": 1982,
+          "text": "\t{ var = \"enemyIsBoss\", type = \"list\", label = \"Is the enemy a Boss?\", defaultIndex = 3, tooltip = data.enemyIsBossTooltip, list = {{val=\"None\",label=\"No\"},{val=\"Boss\",label=\"Standard Boss\"},{val=\"Pinnacle\",label=\"Guardian/Pinnacle Boss\"},{val=\"Uber\",label=\"Uber Pinnacle Boss\"}}, apply = function(val, modList, enemyModList, build)"
+        }
+      ]
+    },
+    {
+      "mechanic_id": "engine/boss-skill-presets",
+      "kind": "engine",
+      "path": "src/Data/BossSkills.lua",
+      "file_sha256": "21a1cc730aef4a430f4ff11f5b4fd878fd2c7245cffefc839a7e83071f1bf7b4",
+      "lines": [
+        {
+          "n": 173,
+          "text": "\t\t{ val = \"None\",                label = \"None\" },"
+        },
+        {
+          "n": 174,
+          "text": "\t\t{ val = \"Atziri Flameblast\",   label = \"Atziri Flameblast\" },"
+        },
+        {
+          "n": 175,
+          "text": "\t\t{ val = \"Shaper Ball\",         label = \"Shaper Ball\" },"
+        },
+        {
+          "n": 176,
+          "text": "\t\t{ val = \"Shaper Slam\",         label = \"Shaper Slam\" },"
+        },
+        {
+          "n": 177,
+          "text": "\t\t{ val = \"Shaper Beam\",         label = \"Shaper Beam\" },"
+        },
+        {
+          "n": 178,
+          "text": "\t\t{ val = \"Sirus Meteor\",        label = \"Sirus Meteor\" },"
+        },
+        {
+          "n": 179,
+          "text": "\t\t{ val = \"Cortex Ground Degen\", label = \"Cortex Ground Degen\" },"
+        },
+        {
+          "n": 180,
+          "text": "\t\t{ val = \"Exarch Ball\",         label = \"Exarch Ball\" },"
+        },
+        {
+          "n": 181,
+          "text": "\t\t{ val = \"Eater Beam\",          label = \"Eater Beam\" },"
+        },
+        {
+          "n": 182,
+          "text": "\t\t{ val = \"Maven Fireball\",      label = \"Maven Fireball\" },"
+        },
+        {
+          "n": 183,
+          "text": "\t\t{ val = \"Maven Memory Game\",   label = \"Maven Memory Game\" }"
+        }
+      ]
+    },
+    {
       "mechanic_id": "passive/65204",
       "kind": "passive_node",
       "path": "src/TreeData/0_5/tree.json",

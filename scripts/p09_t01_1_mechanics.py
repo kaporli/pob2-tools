@@ -91,6 +91,18 @@ ENGINE_LINES = [
      r'FlickerStrikeBypassCD|skillName = "Flicker Strike", includeTransfigured = true \}\)'),
 ]
 
+#: (mechanic_id, file under src/, block start, block end, regex of the lines
+#: to keep inside the block). For blocks whose line shapes repeat elsewhere.
+BLOCK_LINES = [
+    ("engine/pinnacle-enemy-preset", "Modules/ConfigOptions.lua",
+     'elseif val == "Pinnacle" then', 'elseif val == "Uber" then',
+     r'Pinnacle|Xesht|defaultEleResist|enemyChaosResist|defaultLevel = |enemyArmour|enemyEvasion'),
+    ("engine/enemy-is-boss-option", "Modules/ConfigOptions.lua",
+     'var = "enemyIsBoss"', 'if val == "None" then', r'var = "enemyIsBoss"'),
+    ("engine/boss-skill-presets", "Data/BossSkills.lua",
+     'bossSkillsList = {', 'Maven Memory Game', r'val = '),
+]
+
 #: Passive nodes cited by the proposal: seed allocations and the ascendancy
 #: nodes whose text names charges, Combo or melee triggers.
 PASSIVE_NODE_IDS = ["65204", "41751", "61586", "36643", "7979", "42441", "52448", "2516"]
@@ -157,6 +169,19 @@ def engine_entry(root, mechanic_id, rel, pattern):
     return _entry(mechanic_id, "engine", root, rel, picked)
 
 
+def block_entry(root, mechanic_id, rel, start_text, end_text, pattern):
+    lines = _lines(root / "src" / rel)
+    start = next(i for i, l in enumerate(lines) if start_text in l)
+    end = next(i for i in range(start + 1, len(lines)) if end_text in lines[i])
+    pat = re.compile(pattern)
+    if mechanic_id == "engine/boss-skill-presets":
+        end += 1  # the end marker is the list's last entry
+    picked = [(i + 1, lines[i]) for i in range(start, end) if pat.search(lines[i])]
+    if not picked:
+        raise SystemExit("no lines for %s" % mechanic_id)
+    return _entry(mechanic_id, "engine", root, rel, picked)
+
+
 def tree_entries(root):
     rel = "TreeData/0_5/tree.json"
     path = root / "src" / rel
@@ -192,6 +217,7 @@ def main() -> int:
     entries = [skill_entry(root, *s) for s in SKILLS]
     entries += [statdesc_entry(root, *s) for s in STAT_DESCRIPTIONS]
     entries += [engine_entry(root, *s) for s in ENGINE_LINES]
+    entries += [block_entry(root, *s) for s in BLOCK_LINES]
     nodes, classes = tree_entries(root)
     entries += nodes
 

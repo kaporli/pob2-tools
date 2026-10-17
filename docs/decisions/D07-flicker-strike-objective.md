@@ -54,3 +54,13 @@ PoB's displayed DPS is a screening/consistency input. It is not automatically th
 ## Historical evidence and open access decisions
 
 Keep accepted `p09-synthetic-v1` artifacts, hashes and previous review reports unchanged. They remain evidence for spec 1.0 software behavior, not a Flicker Strike benchmark or the new objective. D04's old three-Huntress-family requirement is superseded; its missing encounter/measurement evidence remains open. D01 trade and D02 source access dispositions are unaffected.
+
+## Amendment 2026-10-18
+
+- Authority: Elias, 2026-10-18 (answer to P09-T01.1 Q8: "we damage calc with PoB, not ingame testing").
+- Status: **product direction accepted**. The sections above keep their original wording; where they conflict with this amendment, this amendment applies.
+
+1. PoB on the pinned engine is the accepted damage source for `flicker_sustained_v1`. Its target is a fixed, versioned PoB enemy configuration (a PoB enemy preset with level and resistances as PoB defines them), not an in-game enemy. No in-game target is needed. `benchmarks/p09-flicker-v1/` fixes version 1 as the Guardian/Pinnacle Boss preset (`enemyIsBoss = Pinnacle`, no boss skill preset).
+2. Gameplay recordings become optional validation for the DPS benchmark, not a prerequisite. "Unknown target properties block a comparable score" in item 1 is satisfied by the fixed PoB configuration.
+3. Unchanged: the 120-second window and burst `[0, 5)`, time accounting of every action, attribution rules, no adds or kill events, and the rule against free maximum-state toggles. Charges, Combo and conditions must be generated or sustained by the build under the rotation, not set in PoB config. PoB's displayed DPS stays `proxy_only`; the benchmark value is the time-accounted computation defined in `benchmarks/p09-flicker-v1/protocol.md` (`pob-cycle-v1`).
+4. Unchanged: the clear/boss capability gates, their scenarios and their evidence requirements. P09-T03 validation of the DPS metric against independent observations is now optional for this benchmark; practical claims about the four clear/boss scenarios still need independent evidence.

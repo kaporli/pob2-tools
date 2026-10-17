@@ -9,35 +9,55 @@
   "sources": {
     "scenarios": {
       "path": "benchmarks/p09-flicker-v1/scenarios.json",
-      "sha256": "bd0c19da6861f2cce6291facd467456a8b97a167a840f1a50b1fc9e8206ef17a",
-      "bytes": 94313
+      "sha256": "06e1f49ece386abe348ba51e7905dcc2a3a4dfca38b773aa7ebf6f4e8d0606aa",
+      "bytes": 110399
     },
     "references": {
       "path": "benchmarks/p09-flicker-v1/references.json",
-      "sha256": "80e9104af49e2be3a5de5b49f81adc97e16563f72661e8e4b8056592ef15e62f",
-      "bytes": 2618
+      "sha256": "d063c88d22fffe495b05f7b509ad4ca691d6dfda369a83924282d40cd1cde4e8",
+      "bytes": 2680
     },
     "seed_manifest": {
       "path": "docs/evidence/P09-T01.1/seed/manifest.json",
-      "sha256": "6a2ba0c4c810e436fb0e9592c910baa71b080594a70f17d7748bc6dc1fbedf35",
-      "bytes": 4669
+      "sha256": "96b57d617cbe394a803c5339b9a688b8f43b0807dd3a5b54874fc560ac9323d5",
+      "bytes": 7552
     },
     "scope_proposal": {
       "path": "docs/evidence/P09-T01.1/scope-proposal.json",
-      "sha256": "6c0031595810de856947c448dd3cbe91877c892209dcb0d8b355bcafa696a75a",
-      "bytes": 16493
+      "sha256": "60989673642d43489d9dd19368ab3c229cdcb4dac112da5d6e6580c4dad1b522",
+      "bytes": 16775
     },
     "mechanics": {
       "path": "docs/evidence/P09-T01.1/mechanics.json",
-      "sha256": "5ea1a78d03d9f8e56847bbadd99525900dae6421d2a56d40a5397e6f53c6feec",
-      "bytes": 31078
+      "sha256": "731127814c2bbe9b7ac3eeb46ab623a810fd4d5531bb9b74384fdece0cbe285b",
+      "bytes": 35467
+    },
+    "pob_charge_table": {
+      "path": "docs/evidence/P09-T01.1/pob-charge-table.json",
+      "sha256": "55a210a331e40fe32b6bb34592d9a0dc424ff634a20b1ffad24419fcc6567701",
+      "bytes": 4141
+    },
+    "reference_ninja_share_code": {
+      "path": "docs/evidence/P09-T01.1/reference-ninja-25c49/share-code.txt",
+      "sha256": "a51102cb6b54535cd2bf6d6861c8e00cae5712df7bcb6ec823b176ab7666ce7f",
+      "bytes": 14064
+    },
+    "reference_ninja_decoded": {
+      "path": "docs/evidence/P09-T01.1/reference-ninja-25c49/decoded.xml",
+      "sha256": "d9c5ef47e0a6f1b595b9ff18ec2002872373af084c096670777e7345529bde0d",
+      "bytes": 52925
+    },
+    "reference_ninja_evaluation": {
+      "path": "docs/evidence/P09-T01.1/reference-ninja-25c49/evaluation.json",
+      "sha256": "5cdc2c7596cdc5a2404bf4f2e2db2205b1d3286051fee39afa3a344fb7aac4b3",
+      "bytes": 2953
     }
   },
   "scenarios": [
     {
       "scenario_id": "flicker_sustained_v1",
       "version": "1",
-      "definition_hash": "fcb3c156f878ff50b7e0bb541fac22fb058241963bd79f1b64fb3ca687e58dd5",
+      "definition_hash": "81f9fa70ddd4cc834ff0b8e6dba15e190cbd6e6b64b29031f2678aa44fa3a755",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
@@ -45,7 +65,7 @@
     {
       "scenario_id": "p09-flk-boss-short",
       "version": "1",
-      "definition_hash": "d6eb9af8a2b5c5ef329ee07c4b5f88de9112da511c41b807d9e8deb969cf2c2b",
+      "definition_hash": "7411db3bac8aba1e638aacc5def95c429ae87ea6d61c1cc2debc0332130282da",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
@@ -53,7 +73,7 @@
     {
       "scenario_id": "p09-flk-boss-sustained",
       "version": "1",
-      "definition_hash": "f33589cdb5b00989ec4f9e99ea50ed7996d2b80a6045e153caa6a7936400c9d6",
+      "definition_hash": "cac1917b7e94d5784fd8d19057fc591be2d943fcb55020291f0cd6b406afeae1",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
@@ -61,7 +81,7 @@
     {
       "scenario_id": "p09-flk-clear-dense",
       "version": "1",
-      "definition_hash": "a0a6203f86f1a27d91747979200a2544dd438093d5fba13e844ecf7a93f8948b",
+      "definition_hash": "4b7d6696feb5a876ffc02de543e52201844e8027417467fe193bc20bd7d9e1b3",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
@@ -69,13 +89,13 @@
     {
       "scenario_id": "p09-flk-clear-spread",
       "version": "1",
-      "definition_hash": "6abb7f26de302916a11ee4dbab078301993291c5b64c27d68cd6acf55c4c520b",
+      "definition_hash": "400cb3eaa2dccc212fd6743f25e94aaff8d95c3f35530901fd849efc7dea6a3c",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
     }
   ],
-  "suite_hash": "89667d09ddf1aa803e107225256d65615ddd7d4375e3388300139b93e97a5549",
+  "suite_hash": "c846d70ad30131ded1a4f68509801f2d9ebaffdf11812e6918556448fab363d0",
   "suite_hash_note": "Both reference slots are null for every scenario. Freezing a reference later changes this hash and starts a separate leaderboard.",
   "open_gaps": [
     "gap-p09-t011-encounter-selection",
@@ -89,22 +109,28 @@
     "gap-p09-t011-duration-limit",
     "gap-p09-t011-success-fraction",
     "gap-p09-t011-reference-result",
-    "gap-p09-t011-benchmark-target",
-    "gap-p09-t011-benchmark-measurement",
     "gap-p09-t011-attribution-rules",
     "gap-p09-t011-rotation-details",
     "gap-p09-t011-charge-cycle-rules",
+    "gap-p09-t011-charged-staff-shared-charges",
+    "gap-p09-t011-flicker-strike-timing",
     "gap-p09-t011-hit-and-run-movement",
     "gap-p09-t011-sustain-cycle",
+    "gap-p09-t011-config-conditions",
     "gap-p09-t011-patch-profile",
     "gap-p09-t011-engine-checkout-state",
     "gap-p09-t011-variant-exports",
-    "gap-p09-t011-class-scope-decision",
     "gap-p09-t011-survival-threshold",
-    "gap-p09-t011-initial-resources",
+    "gap-p09-t011-initial-resources"
+  ],
+  "resolved_gaps": [
+    "gap-p09-t011-benchmark-target",
+    "gap-p09-t011-benchmark-measurement",
+    "gap-p09-t011-class-scope-decision",
     "gap-p09-t011-preparation-allowance"
   ],
   "usable_for": [
+    "computing flicker_sustained_v1 with pob-cycle-v1 once its blocking gaps close",
     "the owner's answers and recordings that P09-T02 collection needs",
     "reviewer acceptance of scope, variants and protocol before any constant is fitted"
   ],

@@ -1,7 +1,19 @@
 {
   "task": "P09-T01.1",
-  "status": "proposed, not accepted. Product scope is the owner's decision.",
-  "kind": "PoB-derived proposal",
+  "status": "approved scope (owner decision 2026-10-18). Evidence statuses below are unchanged by the approval.",
+  "kind": "PoB-derived proposal, approved by the owner",
+  "approval": {
+    "authority": "Elias",
+    "date": "2026-10-18",
+    "verbatim": "any class, any ascendancy, any variant",
+    "ascendancies": "all 23",
+    "variants": [
+      "flk-var-combo-expend",
+      "flk-var-shock-consume",
+      "flk-var-cull-kill"
+    ],
+    "source": "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+  },
   "flicker_strike_requirements": {
     "weapon": "Quarterstaff (gem weaponRequirements) / Staff (granted skill weaponTypes)",
     "req_dex_base": 50,
@@ -23,7 +35,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Ranger",
@@ -32,7 +44,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Huntress",
@@ -44,7 +56,7 @@
         "passive/42441"
       ],
       "note": "Consuming a Charge triggers Elemental Surge; Flicker Strike consumes Power Charges.",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Huntress",
@@ -53,7 +65,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Huntress",
@@ -62,7 +74,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Warrior",
@@ -71,7 +83,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Warrior",
@@ -80,7 +92,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Warrior",
@@ -89,7 +101,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Mercenary",
@@ -98,7 +110,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Mercenary",
@@ -107,7 +119,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Mercenary",
@@ -116,7 +128,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Druid",
@@ -125,7 +137,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Druid",
@@ -134,7 +146,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Witch",
@@ -143,7 +155,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Witch",
@@ -152,7 +164,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Witch",
@@ -163,7 +175,7 @@
         "passive/2516"
       ],
       "note": "Its power charge node applies to Spells only; Flicker Strike is an Attack.",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Witch",
@@ -172,7 +184,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Sorceress",
@@ -181,7 +193,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Sorceress",
@@ -190,7 +202,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Sorceress",
@@ -199,7 +211,7 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Monk",
@@ -212,7 +224,7 @@
         "passive/36643"
       ],
       "note": "Seed character. Martial Adept and Martial Master are allocated in the seed; Additional Power Charge Chance is not.",
-      "proposed_first_campaign": true
+      "in_approved_scope": true
     },
     {
       "class": "Monk",
@@ -223,7 +235,7 @@
         "passive/52448"
       ],
       "note": "Triggers Elemental Expression on Melee Critical Hit; Flicker Strike is a Melee Attack.",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     },
     {
       "class": "Monk",
@@ -232,11 +244,11 @@
       "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
       "relevant_nodes": [],
       "note": "",
-      "proposed_first_campaign": false
+      "in_approved_scope": true
     }
   ],
   "excluded": [],
-  "excluded_note": "No ascendancy is excluded: no evidence found makes Flicker Strike unusable for any of them. Proposed for the first campaign: Monk / Martial Artist only, because it is the only one with an export. Adding others is the owner's call.",
+  "excluded_note": "No ascendancy is excluded: no evidence found makes Flicker Strike unusable for any of them. The owner approved all 23. Only Monk / Martial Artist has an export.",
   "variants": [
     {
       "variant_id": "flk-var-combo-expend",
@@ -335,10 +347,10 @@
         }
       ],
       "seed_amplifiers": [],
-      "benchmark_applicability": "Needs a benchmark target that can be Shocked; unknown until gap-p09-t011-benchmark-target closes. No kill event in the cited text.",
+      "benchmark_applicability": "Needs the PoB benchmark enemy to be Shocked, and the Shock to be sustained by the build under the rotation rather than toggled in config (gap-p09-t011-config-conditions). No kill event in the cited text.",
       "gap_ids": [
         "gap-p09-t011-variant-exports",
-        "gap-p09-t011-benchmark-target"
+        "gap-p09-t011-config-conditions"
       ]
     },
     {
@@ -374,7 +386,7 @@
       ]
     }
   ],
-  "variant_distinctness": "The three variants differ in the event that grants the Power Charges Flicker Strike consumes: Combo expenditure, Shock consumption, enemy kill or cull. Each needs a different skill. Only the first has an export.",
+  "variant_distinctness": "The three variants differ in the event that grants the Power Charges Flicker Strike consumes: Combo expenditure, Shock consumption, enemy kill or cull. Each needs a different skill. Only the first has an export. All three approved by the owner.",
   "candidates_not_proposed": [
     {
       "candidate": "Perpetual Charge",

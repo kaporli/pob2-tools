@@ -35,6 +35,71 @@
     "received": "2026-10-17",
     "status": "the only rotation evidence; details not stated are unresolved inputs"
   },
+  "owner_answers": {
+    "received": "2026-10-18",
+    "relayed_by": "coordinator",
+    "answers": [
+      {
+        "question_id": "Q1",
+        "verbatim": "just 1",
+        "recorded": "One Whirling Assault use per Flicker Strike use."
+      },
+      {
+        "question_id": "Q2",
+        "verbatim": "whirling assault",
+        "recorded": "The opener at 0 Power Charges and 0 Combo is Whirling Assault."
+      },
+      {
+        "question_id": "Q3",
+        "verbatim": "when i have a charge",
+        "recorded": "Charged Staff is pressed when at least one Power Charge is held. Its place in the cycle relative to Flicker Strike is not stated."
+      },
+      {
+        "question_id": "Q4",
+        "verbatim": "I press pounce, but only for mobility",
+        "recorded": "Herald of Ice, Herald of Thunder, Wind Dancer, Ghost Dance, Trinity, Remnants of Kalguur and the other Spirit skills are persistent and always active, not pressed (relayed summary). Pounce is movement only, not part of the damage rotation."
+      },
+      {
+        "question_id": "Q5",
+        "verbatim": "the dash from flicker itself",
+        "recorded": "Flicker Strike's own teleport supplies Hit and Run's 10 metres. Owner statement; the catalog does not confirm it."
+      },
+      {
+        "question_id": "Q6",
+        "verbatim": "yes when i'm on a boss & my refund 2% mana on kill jewel doesnt see use",
+        "recorded": "Mana flask used on bosses; the mana-on-kill jewel does nothing on a boss."
+      },
+      {
+        "question_id": "Q7",
+        "verbatim": null,
+        "recorded": "Runs T16 (maximum tier) maps comfortably. Struggles on maps with the 'monsters have increased ailment threshold' modifier: chill does not apply and Polcirkeln does not shatter. Bosses not named (relayed summary)."
+      },
+      {
+        "question_id": "Q8",
+        "verbatim": "we damage calc with PoB, not ingame testing",
+        "recorded": "Decision 1: PoB is the accepted damage source. Recorded as the D07 amendment of 2026-10-18."
+      },
+      {
+        "question_id": "Q9",
+        "verbatim": "any class, any ascendancy, any variant",
+        "recorded": "Decision 2: all 23 ascendancies and all three variants are approved scope."
+      }
+    ]
+  },
+  "owner_decisions": [
+    {
+      "decision": "PoB is the accepted damage source; the flicker_sustained_v1 target is a fixed, versioned PoB enemy configuration; gameplay recordings are optional validation for the DPS benchmark.",
+      "authority": "Elias",
+      "date": "2026-10-18",
+      "recorded_in": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18"
+    },
+    {
+      "decision": "Class scope: any class, any ascendancy (all 23); all three variants approved.",
+      "authority": "Elias",
+      "date": "2026-10-18",
+      "recorded_in": "docs/evidence/P09-T01.1/scope-proposal.json approval"
+    }
+  ],
   "pob_main_skill_as_imported": "Herald of Ice (group 5)",
   "pob_proxy_flicker_main": {
     "label": "proxy_only",

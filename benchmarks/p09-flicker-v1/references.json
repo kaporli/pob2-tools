@@ -20,7 +20,7 @@
       "begins": [
         "gap-p09-t011-reference-result"
       ],
-      "note": "An export carries no trial. A reference result needs an accepted observation of this configuration on each scenario."
+      "note": "An export carries no trial. A reference result needs an accepted observation of this configuration on each workload, and an accepted pob-cycle-v1 result for flicker_sustained_v1."
     }
   ],
   "scenarios": [

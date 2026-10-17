@@ -181,7 +181,10 @@ def test_no_field_claims_a_performance_measurement(bundle):
 def test_unknown_enemy_and_encounter_numbers_stay_null(bundle):
     for sid in gen.ENC_IDS:
         f = _scenario(bundle, sid)["fields"]
-        for name in ("encounter", "target_entities.count", "target_entities.health",
+        assert f["encounter"]["gap_ids"] == ["gap-p09-t011-encounter-selection"]
+        enc = f["encounter"]["value"]
+        assert enc.get("map", enc.get("boss")) is None, sid
+        for name in ("target_entities.count", "target_entities.health",
                      "target_entities.level", "target_entities.defenses",
                      "duration_limit_s", "minimum_success_fraction",
                      "incoming_damage_model_id", "reference_result_id"):
@@ -232,13 +235,43 @@ def test_benchmark_matches_d07_and_the_registered_objective(bundle):
     assert f["objective"]["value"]["target_skill"]["granted_skill_id"] == "FlickerStrikePlayer"
 
 
-def test_benchmark_target_level_and_defenses_are_blocking_gaps(bundle):
+def test_benchmark_target_is_the_fixed_pob_pinnacle_preset(bundle, repo_root: Path):
     f = _scenario(bundle, gen.DPS_ID)["fields"]
-    sev = {g["gap_id"]: g["severity"] for g in bundle["data_gaps"]}
-    for name in ("target_entities.level", "target_entities.defenses",
-                 "target_entities.identity", "attribution_rules", "measurement_method"):
-        assert f[name]["value"] is None
-        assert any(sev[g] == "blocking" for g in f[name]["gap_ids"]), name
+    table = _load(repo_root, EVID / "pob-charge-table.json")
+    assert f["target_entities.identity"]["value"]["pob_config"] == {
+        "enemyIsBoss": "Pinnacle", "presetBossSkills": "None"}
+    assert f["target_entities.level"]["value"] == table["enemy"]["enemyLevel"] == 82
+    d = f["target_entities.defenses"]["value"]
+    assert d["resist"] == {"Fire": 50, "Cold": 50, "Lightning": 50, "Chaos": 0}
+    assert f["kind"]["value"] == "pob_calculation"
+    assert f["gameplay_recordings"]["value"] == "optional"
+
+
+def test_in_game_target_and_measurement_gaps_resolved_by_the_d07_amendment(bundle):
+    gaps = {g["gap_id"]: g for g in bundle["data_gaps"]}
+    for gid in ("gap-p09-t011-benchmark-target", "gap-p09-t011-benchmark-measurement"):
+        assert gaps[gid]["status"] == "resolved"
+        assert gen.D07_AMENDMENT in gaps[gid]["resolution_evidence_ids"]
+
+
+def test_method_is_defined_but_blocked_until_its_rules_are_known(bundle):
+    f = _scenario(bundle, gen.DPS_ID)["fields"]["measurement_method"]
+    sev = {g["gap_id"]: (g["severity"], g["status"]) for g in bundle["data_gaps"]}
+    assert f["value"]["method_id"] == "pob-cycle-v1"
+    assert any(sev[g] == ("blocking", "open") for g in f["gap_ids"])
+    g_input = next(i for i in f["value"]["inputs"] if i["name"] == "g")
+    assert g_input["value"] is None and g_input["gap_id"] == "gap-p09-t011-charge-cycle-rules"
+
+
+def test_method_inputs_trace_to_the_pob_charge_table(bundle, repo_root: Path):
+    table = _load(repo_root, EVID / "pob-charge-table.json")
+    inputs = {i["name"]: i for i in _scenario(bundle, gen.DPS_ID)["fields"]["measurement_method"]["value"]["inputs"]}
+    assert inputs["t_WA"]["seed_value"] == table["whirling_assault"]["Time"]
+    for row in table["flicker_by_charges"]:
+        c = str(row["power_charges"])
+        assert inputs["H(c)"]["seed_values"][c] == row["AverageBurstHits"] == 1 + 2 * row["power_charges"]
+        assert inputs["D(c)"]["seed_values_charged_staff_enabled"][c] == row["AverageBurstDamage"]
+        assert inputs["S_F(c)"]["seed_values"][c] == row["Speed"]
 
 
 def test_benchmark_initial_state_is_a_proposal_not_a_free_maximum(bundle):
@@ -255,7 +288,9 @@ def test_gaps_are_open_specific_and_valid(bundle):
     for g in gen.build_gaps():
         assert not validate_record(g).errors, g.gap_id
     for g in bundle["data_gaps"]:
-        assert g["status"] == "open"
+        assert g["status"] in ("open", "resolved")
+        if g["status"] == "resolved":
+            assert g["resolution_evidence_ids"], g["gap_id"]
         assert g["needed_evidence"].strip().lower().rstrip(".") not in vacuous
         assert g["collection_method"].strip() and g["field_paths"] and g["subject_ids"]
 
@@ -331,3 +366,51 @@ def test_protocol_document_refuses_practical_claims(repo_root: Path):
     assert chr(0x2014) not in text
     for q in ("Q1", "Q9"):
         assert q in text
+
+
+# -------------------------------------------------- owner answers 2026-10-18
+
+def test_owner_answers_are_recorded_verbatim(seed):
+    answers = {a["question_id"]: a for a in seed["owner_answers"]["answers"]}
+    assert answers["Q1"]["verbatim"] == "just 1"
+    assert answers["Q2"]["verbatim"] == "whirling assault"
+    assert answers["Q3"]["verbatim"] == "when i have a charge"
+    assert answers["Q5"]["verbatim"] == "the dash from flicker itself"
+    assert answers["Q8"]["verbatim"] == "we damage calc with PoB, not ingame testing"
+    assert answers["Q9"]["verbatim"] == "any class, any ascendancy, any variant"
+    assert len(seed["owner_decisions"]) == 2
+
+
+def test_scope_is_approved_for_all_ascendancies_and_variants(scope, bundle):
+    assert scope["approval"]["verbatim"] == "any class, any ascendancy, any variant"
+    assert all(r["in_approved_scope"] for r in scope["ascendancies"])
+    assert scope["approval"]["variants"] == [v["variant_id"] for v in scope["variants"]]
+    gap = next(g for g in bundle["data_gaps"] if g["gap_id"] == "gap-p09-t011-class-scope-decision")
+    assert gap["status"] == "resolved"
+
+
+def test_hit_and_run_movement_is_non_blocking(bundle):
+    gap = next(g for g in bundle["data_gaps"] if g["gap_id"] == "gap-p09-t011-hit-and-run-movement")
+    assert gap["severity"] == "informational" and gap["status"] == "open"
+
+
+def test_suite_lists_open_and_resolved_gaps(bundle, suite):
+    status = {g["gap_id"]: g["status"] for g in bundle["data_gaps"]}
+    assert set(suite["open_gaps"]) == {g for g, s in status.items() if s == "open"}
+    assert set(suite["resolved_gaps"]) == {g for g, s in status.items() if s == "resolved"}
+
+
+def test_reference_ninja_build_is_stored_and_decodes(repo_root: Path):
+    d = repo_root / EVID / "reference-ninja-25c49"
+    code = (d / "share-code.txt").read_text(encoding="ascii").strip()
+    assert gen.decode_share_code(code) == (d / "decoded.xml").read_bytes()
+    ev = json.loads((d / "evaluation.json").read_text(encoding="utf-8"))
+    assert ev["source_url"] == "https://poe.ninja/poe2/pob/25c49"
+    assert ev["kind"].startswith("community build")
+    assert ev["flicker_selected"]["AverageBurstHits"] == 17
+
+
+def test_d07_carries_a_dated_amendment_and_keeps_its_original_text(repo_root: Path):
+    text = (repo_root / "docs" / "decisions" / "D07-flicker-strike-objective.md").read_text(encoding="utf-8")
+    assert "## Amendment 2026-10-18" in text
+    assert "Use one non-dying, continuously targetable enemy with explicit, evidenced level and defenses." in text

@@ -1,0 +1,48 @@
+{
+  "task": "P09-T01.1",
+  "kind": "PoB-derived",
+  "not_a_claim": "PoB outputs for the seed export with forced Power Charge counts. Inputs to the flicker_sustained_v1 computation, not a benchmark result and not a measurement.",
+  "captured": "2026-10-18",
+  "build": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml (seed export, Flicker Strike group 6 as main skill, imported config)",
+  "engine": {
+    "checkout": "C:/Users/Elias/PycharmProjects/PathOfBuilding-PoE2 via the pob2 MCP server",
+    "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "working_tree": "not checked (gap-p09-t011-engine-checkout-state)"
+  },
+  "procedure": [
+    "power_charges 0: config usePowerCharges unset (the imported state); PoB reports PowerCharges 0",
+    "power_charges 1 to 5: build.configTab.input.usePowerCharges = true, overridePowerCharges = n, BuildModList, recalc",
+    "overridePowerCharges = 0 with usePowerCharges = true is read by PoB as maximum (observed: PowerCharges 5), so it is not used for the 0 row",
+    "Charged Staff rows: socket group 11 disabled with ProcessSocketGroup, then the same procedure; restored afterwards",
+    "Whirling Assault row: build.mainSocketGroup = 8, recalc, read outputs; main group restored to 6",
+    "After each capture the imported state was restored and TotalDPS read back as 1048349.8862892"
+  ],
+  "flicker_by_charges": [
+    {"power_charges": 0, "AverageBurstHits": 1, "AverageDamage": 112388.62833962, "AverageBurstDamage": 112388.62833962, "Speed": 9.3279, "TotalDPS": 1048349.8862892, "ManaCost": 248},
+    {"power_charges": 1, "AverageBurstHits": 3, "AverageDamage": 126632.0667142, "AverageBurstDamage": 379896.2001426, "Speed": 9.3279, "TotalDPS": 1181211.2551034, "ManaCost": 248},
+    {"power_charges": 2, "AverageBurstHits": 5, "AverageDamage": 129033.8773749, "AverageBurstDamage": 645169.38687452, "Speed": 9.3279, "TotalDPS": 1203615.1047654, "ManaCost": 248},
+    {"power_charges": 3, "AverageBurstHits": 7, "AverageDamage": 131433.32138578, "AverageBurstDamage": 920033.24970045, "Speed": 9.3279, "TotalDPS": 1225996.8785544, "ManaCost": 248},
+    {"power_charges": 4, "AverageBurstHits": 9, "AverageDamage": 133830.39847632, "AverageBurstDamage": 1204473.5862869, "Speed": 9.3279, "TotalDPS": 1248356.5739473, "ManaCost": 248},
+    {"power_charges": 5, "AverageBurstHits": 11, "AverageDamage": 136232.22167473, "AverageBurstDamage": 1498554.438422, "Speed": 9.3279, "TotalDPS": 1270760.5405597, "ManaCost": 248}
+  ],
+  "flicker_charged_staff_disabled": [
+    {"power_charges": 1, "AverageBurstHits": 3, "AverageDamage": 124231.43799368, "AverageBurstDamage": 372694.31398103, "Speed": 9.3279},
+    {"power_charges": 5, "AverageBurstHits": 11, "AverageDamage": 124231.43799368, "AverageBurstDamage": 1366545.8179304, "Speed": 9.3279}
+  ],
+  "observations": [
+    "AverageBurstHits = 1 + 2 x charges in every row, as act_int.lua FlickerStrikePlayer preDamageFunc sets it.",
+    "With Charged Staff enabled, per-strike AverageDamage rises with the forced charge count (126632 at 1, 136232 at 5); with it disabled it is flat (124231). PoB applies Charged Staff's per-charge added lightning and Flicker Strike's per-charge strikes from the same RemovablePowerCharges (gap-p09-t011-charged-staff-shared-charges).",
+    "The 0 row's per-strike damage (112388) is lower than the 1 row's even with Charged Staff disabled (124231), consistent with the seed's 'if you've consumed a Power Charge Recently' passives; not traced further."
+  ],
+  "enemy": {
+    "read_on": "2026-10-17, same engine, Flicker Strike main skill, imported config",
+    "config_enemyIsBoss": "Pinnacle",
+    "presetBossSkills": "None",
+    "enemyLevel": 82,
+    "resist": {"Fire": 50, "Cold": 50, "Lightning": 50, "Chaos": 0},
+    "Armour": 8063,
+    "Evasion": 1175,
+    "procedure": "eval_lua: env.enemyLevel; env.enemy.modDB:Sum('BASE', nil, <stat>) for FireResist, ColdResist, LightningResist, ChaosResist, Armour, Evasion"
+  },
+  "whirling_assault": {"socket_group": 8, "Speed": 0.76936790662168, "Time": 1.2997682791202, "AverageDamage": 10526.168070532, "TotalDPS": 8098.4958931734, "ManaCost": 160}
+}

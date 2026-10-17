@@ -1,0 +1,49 @@
+{
+  "task": "P09-T01.1",
+  "kind": "community build, PoB-derived evaluation",
+  "not_a_claim": "A community build the owner pointed at as the reference PoB method. Not a measurement, not a reference build for this suite, not the owner's character.",
+  "source_url": "https://poe.ninja/poe2/pob/25c49",
+  "retrieved": "2026-10-18, by the coordinator; share code copied from the coordinator's scratch file",
+  "files": {
+    "share-code.txt": "Share code as retrieved",
+    "decoded.xml": "zlib/base64 decode of share-code.txt (the decoding pob2mcp.server.import_build_code applies). The coordinator's own decoded copy differs only by CRLF line endings"
+  },
+  "build": {"class": "Monk", "ascendancy": "Martial Artist", "level": 98, "main_socket_group": 7, "main_skill": "Falling Thunder", "flicker_socket_group": 9},
+  "engine": {
+    "checkout": "C:/Users/Elias/PycharmProjects/PathOfBuilding-PoE2 via the pob2 MCP server",
+    "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "working_tree": "not checked",
+    "load": "eval_lua: loadBuildFromXML(<decoded.xml bytes>), recalc, then build.mainSocketGroup = 9 and recalc"
+  },
+  "headline_as_saved": {
+    "main_skill": "Falling Thunder",
+    "CombinedDPS": 134981934.31312,
+    "TotalDPS": 134262704.86488,
+    "note": "The coordinator reports about 127M CombinedDPS on poe.ninja's page; not re-checked here. The headline is Falling Thunder, not Flicker Strike."
+  },
+  "flicker_selected": {
+    "AverageBurstDamage": 9253367.6539084,
+    "AverageBurstHits": 17,
+    "AverageDamage": 544315.74434755,
+    "Speed": 9.9158,
+    "TotalDPS": 5397326.0578015,
+    "PowerCharges": 7,
+    "PowerChargesMax": 6
+  },
+  "config_inputs_read": {
+    "usePowerCharges": true,
+    "overridePowerCharges": 7,
+    "multiplierCombo": 10,
+    "multiplierRage": 30,
+    "buffOnslaught": true
+  },
+  "config_inputs_reported_by_coordinator": "Enemy Frozen, Shocked, Chilled, Burning, Dazed, Blinded, Intimidated; enemy maximum resistances 75. Not re-read here.",
+  "tree_note": "Spec treeVersion 0_5, 132 node ids in the document, 135 allocated nodes in the engine (class and ascendancy starts included). The coordinator reports 14 nodes missing on the pin (tree version mismatch); not re-checked here. Numbers may differ from poe.ninja's display.",
+  "flicker_strike_count": {
+    "RemovablePowerCharges": 8,
+    "AdditionalFlickersPerPowerCharge_sum": 16,
+    "source_of_sum": "Skill:FlickerStrikePlayer",
+    "reading": "averageBurstHits = 1 + 16 = 17: 2 extra strikes x 8 removable charges. Removable is 8 with 7 forced charges, so one extra consumable charge comes from the build's modifiers (CalcPerform Multiplier:ExtraConsumablePowerCharges); the source modifier was not identified."
+  },
+  "method_reading": "The community figure is burst damage per Flicker Strike use at forced charges, with charges forced above the maximum (7 > 6). TotalDPS is AverageDamage x Speed and ignores charge generation time."
+}

@@ -40,22 +40,45 @@ python scripts/p09_t01_1_mechanics.py
 ```
 
 Run against `external/PathOfBuilding-PoE2` initialised at the pin
-`ce566ea`, `git status` empty. 25 entries: Flicker Strike, Whirling Assault,
+`ce566ea`, `git status` empty. 28 entries: Flicker Strike, Whirling Assault,
 Charged Staff, Siphoning Strike, Killing Palm, Culmination II, Ailith's
-Chimes, Hit and Run, Perpetual Charge, six stat descriptions, two engine
-locations, eight passive nodes, and the class and ascendancy list of tree
+Chimes, Hit and Run, Perpetual Charge, six stat descriptions, five engine
+locations (removable charges, Flicker cooldown config, Pinnacle preset,
+enemyIsBoss option, boss skill presets), eight passive nodes, and the class and ascendancy list of tree
 0_5.
 
-## Scope proposal (`scope-proposal.json`)
+## Scope (`scope-proposal.json`)
 
-Written by `python scripts/p09_t01_1_flicker_suite.py`. Proposal only.
+Written by `python scripts/p09_t01_1_flicker_suite.py`. Approved by the owner
+on 2026-10-18: all 23 ascendancies, all three variants.
+
+## Owner answers (2026-10-18)
+
+Q1 to Q9 answers and the two decisions are in `seed/manifest.json`
+(`owner_answers`, `owner_decisions`). Decision 1 is the D07 amendment.
+
+## PoB charge table (`pob-charge-table.json`)
+
+Seed outputs with Flicker Strike selected at 0 to 5 forced Power Charges,
+Charged Staff enabled and disabled at 1 and 5, Whirling Assault use time and
+mana, and the Pinnacle enemy values PoB reads back. Captured with `eval_lua`
+through the `pob2` MCP server on the operator's checkout at `ce566ea`
+(working tree unchecked). The procedure is in the file. PoB read
+`overridePowerCharges = 0` as maximum, so the 0 row is the imported state.
+
+## Community reference (`reference-ninja-25c49/`)
+
+`https://poe.ninja/poe2/pob/25c49`, retrieved by the coordinator 2026-10-18.
+`share-code.txt` as retrieved, `decoded.xml` its decode, `evaluation.json`
+what the same engine returns for it. Community build, not a measurement and
+not a reference of this suite.
 
 ## Tests
 
 | Command | Result |
 |---|---|
-| `python -m pytest tests/unit/test_p09_t01_1_flicker_suite.py tests/unit/test_p09_t01_scenarios.py tests/unit/test_p09_t01_protocol.py -q` | 58 passed |
-| `python -m pytest tests/unit -q` | 1549 passed, 1 xfailed |
+| `python -m pytest tests/unit/test_p09_t01_1_flicker_suite.py tests/unit/test_p09_t01_scenarios.py tests/unit/test_p09_t01_protocol.py -q` | 67 passed |
+| `python -m pytest tests/unit -q` | 1558 passed, 1 xfailed |
 | `python scripts/generate_schemas.py --check` | 20 schema files match |
 
 No engine test was run: this task adds no engine code and no engine test.
