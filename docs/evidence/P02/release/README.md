@@ -5,7 +5,7 @@ directory and from nothing else. It never contacts a provider: an export that
 could fetch a patch id could also fetch it wrong, and `tests/unit` runs with
 outbound sockets blocked.
 
-One file per captured official page, `capture_version: 1`, with:
+One file per captured official page, `capture_version` 1 or 2, with:
 
 | Field | Meaning |
 |---|---|
@@ -17,9 +17,14 @@ One file per captured official page, `capture_version: 1`, with:
 | `excerpt` | A short attributed excerpt. Not a copy of the page. |
 | `redistribution` | `restricted` for third-party pages. Review locally; do not republish. |
 | `notes` | What the capture is and is not. |
+| `raw_file`, `raw_sha256`, `raw_media_type` | Version 2 only. The fetched page, stored beside the capture, and its SHA-256. |
 
 A `summary` capture can name the patch and can never support `verified`
-compatibility: the exporter records that as a gap every time. Replacing one
+compatibility: the exporter records that as a gap every time. A `verbatim`
+capture must be version 2 and carry `raw_file`; the loader refuses it when the
+bytes do not hash to `raw_sha256` or an excerpt line does not occur in them.
+Its bundle evidence is the page bytes, not the excerpt. When both exist for
+one patch, the verbatim capture is used. Replacing one
 with a `verbatim` capture is a separate collection task, not an edit to this
 file.
 
@@ -30,4 +35,5 @@ With no capture here the export records `patch_id: unknown`, compatibility
 
 | File | Patch | Fidelity | Source |
 |---|---|---|---|
-| `poe2-0.5.5e.json` | 0.5.5e | summary | Official Early Access Patch Notes thread, read 2026-10-06 |
+| `poe2-0.5.5e.json` | 0.5.5e | summary | Official Early Access Patch Notes thread, read 2026-10-06. Kept unchanged as history |
+| `poe2-0.5.5e-verbatim.json` | 0.5.5e | verbatim | Staff-only view of the same thread, fetched 2026-10-17 (P02-T02.1); bytes in `poe2-0.5.5e-thread-4009785-staff.html` |

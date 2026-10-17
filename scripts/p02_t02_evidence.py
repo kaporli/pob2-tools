@@ -14,11 +14,16 @@ Without `POB2_ROOT` the summary records `unavailable` and the slice is left
 alone, the way `scripts/p02_t01_evidence.py` does.
 
 Usage:
-    python scripts/p02_t02_evidence.py
+    python scripts/p02_t02_evidence.py [--summary PATH]
+
+``--summary`` writes the export summary somewhere other than
+`docs/evidence/P02/catalog-export.json`, so a later task can record its own
+export without rewriting the historical one. The slice is always rewritten.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import sys
@@ -49,15 +54,18 @@ def _now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description="Regenerate the P02-T02 evidence.")
+    parser.add_argument("--summary", type=Path, default=SUMMARY)
+    summary_path = parser.parse_args(argv).summary
     pob_root = os.environ.get("POB2_ROOT")
     if not pob_root or not Path(pob_root).is_dir():
-        SUMMARY.write_text(json.dumps(
+        summary_path.write_text(json.dumps(
             {"kind": "PoB-derived", "status": "unavailable",
              "reason": "POB2_ROOT is not set to a PoB checkout, so no catalog "
                        "was exported and nothing here was measured",
              "written_at": _now()}, indent=1) + "\n", encoding="utf-8")
-        print("no POB2_ROOT; recorded 'unavailable' in %s" % SUMMARY,
+        print("no POB2_ROOT; recorded 'unavailable' in %s" % summary_path,
               file=sys.stderr)
         return 0
 
@@ -107,9 +115,9 @@ def main() -> int:
 
     _write_slice(rows, rule_sources, citations_to_payload(citations), checkout,
                  export)
-    _write_summary(export, checkout, evaluation_context_hash(export.profile),
-                   EXPORTER_VERSION)
-    print("wrote %s and %s" % (SUMMARY, SLICE), file=sys.stderr)
+    _write_summary(summary_path, export, checkout,
+                   evaluation_context_hash(export.profile), EXPORTER_VERSION)
+    print("wrote %s and %s" % (summary_path, SLICE), file=sys.stderr)
     return 0
 
 
@@ -173,7 +181,8 @@ def _write_slice(rows, rule_sources, citations, checkout, export) -> None:
                                 ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def _write_summary(export, checkout, context_hash, exporter_version) -> None:
+def _write_summary(path, export, checkout, context_hash,
+                   exporter_version) -> None:
     rules = export.profile.character_rules
     summary = export.summary()
     summary.update({
@@ -215,8 +224,8 @@ def _write_summary(export, checkout, context_hash, exporter_version) -> None:
                   "collection_method": gap.collection_method}
                  for gap in export.gaps],
     })
-    SUMMARY.write_text(json.dumps(summary, indent=1, sort_keys=True,
-                                  ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(summary, indent=1, sort_keys=True,
+                               ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

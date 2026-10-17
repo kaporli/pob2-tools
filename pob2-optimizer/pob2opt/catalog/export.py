@@ -39,7 +39,7 @@ from .rules import GAP_PREFIX, build_character_rules, make_gap
 from .sources import Citation, citations_to_payload
 
 #: Bumped when the export changes what it reads or how it labels it.
-EXPORTER_VERSION = "p02-t02.1"
+EXPORTER_VERSION = "p02-t02.2"
 
 #: Tables read straight from the engine. The other two are derived:
 #: ``ascendancies`` from the class rows and ``passive_edges`` from the node
