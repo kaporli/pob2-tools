@@ -397,3 +397,13 @@ def test_the_balanced_objective_keeps_the_scenarios_tie_break():
     assert BALANCED_V1.tie_tolerance == 1e-6
     assert BALANCED_V1.tie_breakers == ("min_clear_boss",
                                         "canonical_build_rotation_hash")
+
+
+def test_the_required_skill_mapping_is_part_of_objective_identity(monkeypatch):
+    before = objective_hash(resolved_selection())
+    edited = replace(FLICKER_SUSTAINED_DPS_V1,
+                     target_skill=replace(FLICKER_SUSTAINED_DPS_V1.target_skill,
+                                          granted_skill_id="DifferentSkill"))
+    monkeypatch.setitem(objectives_module.OBJECTIVES,
+                        (edited.objective_id, edited.version), edited)
+    assert objective_hash(resolved_selection()) != before

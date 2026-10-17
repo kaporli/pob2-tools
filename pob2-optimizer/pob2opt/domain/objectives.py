@@ -25,6 +25,18 @@ class ObjectiveWindow:
 
 
 @dataclass(frozen=True, slots=True)
+class ObjectiveSkill:
+    """Native catalog keys of the required gem and its active effect.
+
+    These keys identify the skill; their presence, relationship and active
+    status still have to be evidenced by the selected patch catalog.
+    """
+
+    gem_id: str
+    granted_skill_id: str
+
+
+@dataclass(frozen=True, slots=True)
 class ObjectiveDefinition:
     objective_id: str
     version: int
@@ -42,6 +54,7 @@ class ObjectiveDefinition:
     tie_tolerance: float | None
     #: Ordered tie-break rule names applied after the score.
     tie_breakers: tuple[str, ...]
+    target_skill: ObjectiveSkill | None = None
 
 
 #: The spec 1.0 default: maximum balanced score over the clear/boss suite,
@@ -72,6 +85,8 @@ FLICKER_SUSTAINED_DPS_V1 = ObjectiveDefinition(
     requires_benchmark=True,
     tie_tolerance=1e-6,
     tie_breakers=("min_clear_boss", "canonical_build_rotation_hash"),
+    target_skill=ObjectiveSkill("Metadata/Items/Gems/SkillGemFlickerStrike",
+                                "FlickerStrikePlayer"),
 )
 
 OBJECTIVES: dict[tuple[str, int], ObjectiveDefinition] = {
@@ -111,4 +126,7 @@ def definition_identity(definition: ObjectiveDefinition) -> dict:
         "requires_benchmark": definition.requires_benchmark,
         "tie_tolerance": definition.tie_tolerance,
         "tie_breakers": list(definition.tie_breakers),
+        "target_skill": ({"gem_id": definition.target_skill.gem_id,
+                          "granted_skill_id": definition.target_skill.granted_skill_id}
+                         if definition.target_skill is not None else None),
     }

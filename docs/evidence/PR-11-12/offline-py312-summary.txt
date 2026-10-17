@@ -1,0 +1,9 @@
+Terminal summary transcribed from this review's tool output, not a full stdout log.
+Checkout: 3f7c8afa49767a476b70170ccf6d67aa0cd095ab
+Working directory: C:/Users/Elias/PycharmProjects/pob2-tools/.venv/pr11-review
+Interpreter: CPython 3.12.4
+Command: python -m pytest tests/unit tests/integration -q
+Exit code: 0
+
+XFAIL tests/unit/test_f05_run_identity_and_assumptions.py::test_production_prepare_contract_binding_is_pending - P08-T01: prepare service and production contract binding are not implemented
+1435 passed, 1 xfailed in 83.10s (0:01:23)

@@ -282,15 +282,17 @@ class RunBundle:
     def self_check(self) -> dict[str, Any]:
         """Can this bundle be read, and does everything in it resolve?
 
-        Three separate questions, reported separately:
+        Four separate questions, reported separately:
 
         * are the declared blobs present, and do their bytes still hash to
           their names;
         * are the declared records present;
         * does every reference in every stored record, the manifest
-          included, resolve inside this bundle.
+          included, resolve inside this bundle;
+        * do the records satisfy semantic validation, including binding each
+          aggregate to its manifest's objective.
 
-        A bundle is ``readable`` only when all three hold. Before the review
+        A bundle is ``readable`` only when all four hold. Before the review
         it answered the first two and called that readable, so a snapshot
         missing its entire dependency graph passed (P01-R03).
         """
@@ -316,8 +318,14 @@ class RunBundle:
             if not self.store.has_record(record_id):
                 missing_records.append(record_id)
 
-        unresolved = self.store.unresolved_references()
-        return {
+        reports = self.store.validate_stored()
+        invalid = {rid: [str(e) for e in report.errors]
+                   for rid, report in reports.items() if not report.ok}
+        unresolved = {rid: [e.field_path for e in report.errors
+                            if e.code == "unresolved_reference"]
+                      for rid, report in reports.items()
+                      if any(e.code == "unresolved_reference" for e in report.errors)}
+        check = {
             "run_id": self.run_id,
             "manifest_hash": self.manifest_hash,
             "blobs_declared": len(refs["blob"]),
@@ -327,8 +335,12 @@ class RunBundle:
             "missing_records": missing_records,
             "unresolved_references": unresolved,
             "readable": not (missing_blobs or corrupt_blobs or missing_records
-                             or unresolved),
+                             or invalid),
         }
+        # Preserve the successful v1 check's wire shape and recorded evidence.
+        if invalid:
+            check["validation_errors"] = invalid
+        return check
 
     def require_readable(self) -> dict[str, Any]:
         """Raise unless the bundle is complete.

@@ -3,8 +3,8 @@
 D07 requires the target skill and the class scope to be exact catalog
 identities. This module checks that and nothing more:
 
-* every ``target_skill_ids`` entry must be the ``entity_id`` of exactly one
-  entity in ``gems`` or ``granted_skills``;
+* target skills must represent the objective's registered gem/active-effect
+  pair, whose identities and relationship are verified against the catalog;
 * every ``class_scope`` class must be a ``classes`` entity, and every listed
   ascendancy an ``ascendancies`` entity of that class.
 
@@ -19,7 +19,9 @@ from dataclasses import dataclass
 from typing import Mapping, Sequence
 
 from ..domain.records import CatalogEntity, ClassScope, ObjectiveSelection
+from ..domain.objectives import UnknownObjective, get_objective
 from ..parsers.resolve import AMBIGUOUS, RESOLVED, resolve_name
+from .entities import entity_id
 
 #: Catalog tables a target skill id may come from.
 SKILL_TABLES = ("gems", "granted_skills")
@@ -78,11 +80,18 @@ def _native_class_id(entity: CatalogEntity) -> str | None:
 
 def resolve_target_skills(entities: Entities,
                           selection: ObjectiveSelection) -> list[ScopeIssue]:
-    tables = {table: _by_id(entities, table) for table in SKILL_TABLES}
     issues = []
+    try:
+        definition = get_objective(selection.objective_id,
+                                   selection.objective_version)
+    except UnknownObjective as exc:
+        return [ScopeIssue("unknown_objective", "/objective/objective_id",
+                           selection.objective_id, str(exc))]
     for i, skill_id in enumerate(selection.target_skill_ids):
         path = "/objective/target_skill_ids/%d" % i
-        owners = [table for table in SKILL_TABLES if skill_id in tables[table]]
+        owners = [table for table in SKILL_TABLES
+                  for entity in entities.get(table, ())
+                  if entity.entity_id == skill_id]
         if len(owners) == 1:
             continue
         if owners:
@@ -97,6 +106,55 @@ def resolve_target_skills(entities: Entities,
             % (skill_id, "; it matches %d entity name(s)" % len(candidates)
                if candidates else ""),
             candidates))
+    if issues:
+        return issues
+    expected = definition.target_skill
+    if expected is None:
+        if selection.target_skill_ids or definition.requires_target_skill:
+            issues.append(ScopeIssue(
+                "unexpected_target_skill", "/objective/target_skill_ids",
+                selection.objective_id, "objective has no registered target skill"))
+        return issues
+    if not selection.target_skill_ids:
+        return [ScopeIssue("missing_target_skill", "/objective/target_skill_ids",
+                           selection.objective_id,
+                           "supply an exact catalog identity of the required skill")]
+    expected_ids = (entity_id("gems", expected.gem_id),
+                    entity_id("granted_skills", expected.granted_skill_id))
+    for i, skill_id in enumerate(selection.target_skill_ids):
+        if skill_id not in expected_ids:
+            issues.append(ScopeIssue(
+                "objective_skill_mismatch", "/objective/target_skill_ids/%d" % i,
+                skill_id, "this entity is not the objective's required skill",
+                expected_ids))
+    if issues:
+        return issues
+    # Verify both ends even when the request names only one representation.
+    # Names/aliases cannot establish ownership or turn a support into an attack.
+    pair = []
+    for table, key in zip(SKILL_TABLES, expected_ids):
+        matches = [e for e in entities.get(table, ()) if e.entity_id == key]
+        if len(matches) != 1:
+            issues.append(ScopeIssue(
+                "unresolved_objective_skill", "/objective/target_skill_ids", key,
+                "expected exactly one catalog row for %s; found %d; acquire "
+                "or review this patch's gem/active-effect mapping" % (key, len(matches))))
+        else:
+            pair.append(matches[0].raw_reference)
+    if issues:
+        return issues
+    gem, granted = pair
+    if (not isinstance(gem, dict) or not isinstance(granted, dict)
+            or gem.get("id") != expected.gem_id
+            or granted.get("id") != expected.granted_skill_id
+            or gem.get("grantedEffectId") != expected.granted_skill_id
+            or gem.get("isSupport") is not False
+            or granted.get("support") is not False):
+        issues.append(ScopeIssue(
+            "unverified_objective_skill", "/objective/target_skill_ids",
+            selection.objective_id,
+            "catalog must evidence the registered native IDs, their grantedEffectId "
+            "link, and isSupport/support=false; acquire or review these fields"))
     return issues
 
 

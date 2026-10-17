@@ -5,13 +5,15 @@ scope against a catalog by exact entity id. A display name is reported with
 its candidate ids and never substituted. The binding check ties a version 2
 aggregate to the objective its manifest froze.
 
-Offline. The catalog is synthetic: ids follow the ``poe2/<table>/<key>``
-shape of ``catalog/entities.py`` but name no real PoE 2 entity.
+Offline. The catalog rows are synthetic; the required skill's native keys
+match the registered D07 identity. They establish no gameplay behavior.
 """
 
 from __future__ import annotations
 
 import pytest
+from copy import deepcopy
+from dataclasses import replace
 from objective_fixtures import v1_request, v2_aggregate, v2_manifest, v2_request
 from record_fixtures import load_cases
 
@@ -20,8 +22,8 @@ from pob2opt.domain import RECORD_TYPES, from_jsonable
 from pob2opt.domain.records import CatalogEntity, RunRequest
 from pob2opt.domain.validation import aggregate_binding_errors
 
-GEM = "poe2/gems/fixture/SkillGemStrike"
-GRANTED = "poe2/granted_skills/FixtureStrikePlayer"
+GEM = "poe2/gems/Metadata/Items/Gems/SkillGemFlickerStrike"
+GRANTED = "poe2/granted_skills/FlickerStrikePlayer"
 OTHER_GEM = "poe2/gems/fixture/SkillGemEcho"
 
 
@@ -32,9 +34,12 @@ def entity(entity_id, names, aliases=(), raw=None):
 
 
 CATALOG = {
-    "gems": [entity(GEM, ["Fixture Strike"]),
+    "gems": [entity(GEM, ["Fixture Strike"], raw={
+                 "id": "Metadata/Items/Gems/SkillGemFlickerStrike",
+                 "grantedEffectId": "FlickerStrikePlayer", "isSupport": False}),
              entity(OTHER_GEM, ["Fixture Echo"], ["Fixture Strike"])],
-    "granted_skills": [entity(GRANTED, ["Fixture Strike"])],
+    "granted_skills": [entity(GRANTED, ["Fixture Strike"], raw={
+        "id": "FlickerStrikePlayer", "support": False})],
     "classes": [entity("poe2/classes/1", ["Fixture Class A"],
                        raw={"classId": 1}),
                 entity("poe2/classes/2", ["Fixture Class B"],
@@ -73,7 +78,7 @@ def test_a_display_name_is_never_accepted_as_an_id():
     assert issue.field_path == "/objective/target_skill_ids/0"
     # Every exact-name match is offered, including the alias on another gem;
     # none is applied.
-    assert issue.candidates == (OTHER_GEM, GEM, GRANTED)
+    assert issue.candidates == tuple(sorted((OTHER_GEM, GEM, GRANTED)))
 
 
 def test_an_unknown_skill_id_blocks():
@@ -192,10 +197,68 @@ def test_the_example_placeholder_class_blocks_and_its_skill_ids_are_exact(
     the class stays a placeholder until P09-T01.1 approves a scope."""
     gem, granted = _example(repo_root)["objective"]["target_skill_ids"]
     catalog = {
-        "gems": [entity(gem, ["Flicker Strike"])],
-        "granted_skills": [entity(granted, ["Flicker Strike"])],
+        "gems": [entity(gem, ["Flicker Strike"], raw=CATALOG["gems"][0].raw_reference)],
+        "granted_skills": [entity(granted, ["Flicker Strike"],
+                                  raw=CATALOG["granted_skills"][0].raw_reference)],
         "classes": [], "ascendancies": [],
     }
     report = resolve_objective_scope(
         catalog, from_jsonable(RunRequest, _example(repo_root)))
     assert codes(report) == [("unresolved_class", "/class_scope/0/class_id")]
+
+
+@pytest.mark.parametrize("skills", [(GEM,), (GRANTED,), (GEM, GRANTED)])
+def test_each_registered_representation_resolves_with_catalog_evidence(skills):
+    assert resolve_objective_scope(CATALOG, request(skills=skills)).ok
+
+
+@pytest.mark.parametrize("skills", [(OTHER_GEM,), (GEM, OTHER_GEM),
+                                   (GRANTED, OTHER_GEM)])
+def test_an_unrelated_exact_id_cannot_be_the_flicker_objective(skills):
+    report = resolve_objective_scope(CATALOG, request(skills=skills))
+    assert not report.ok
+    assert report.issues[0].code == "objective_skill_mismatch"
+
+
+def test_a_support_with_the_flicker_display_name_is_not_the_target():
+    catalog = deepcopy(CATALOG)
+    catalog["gems"][1] = entity(OTHER_GEM, ["Flicker Strike"], raw={"isSupport": True})
+    assert not resolve_objective_scope(catalog, request(skills=[OTHER_GEM])).ok
+
+
+@pytest.mark.parametrize("table,key,value", [
+    ("gems", "grantedEffectId", "AnotherPlayerSkill"),
+    ("gems", "id", "AnotherGem"),
+    ("gems", "isSupport", True),
+    ("gems", "isSupport", None),
+    ("granted_skills", "id", "AnotherPlayerSkill"),
+    ("granted_skills", "support", True),
+    ("granted_skills", "support", None),
+])
+def test_catalog_must_evidence_the_active_gem_effect_pair(table, key, value):
+    catalog = deepcopy(CATALOG)
+    catalog[table][0].raw_reference[key] = value
+    report = resolve_objective_scope(catalog, request())
+    assert report.issues[0].code == "unverified_objective_skill"
+
+
+@pytest.mark.parametrize("table", ["gems", "granted_skills"])
+@pytest.mark.parametrize("defect", ["missing", "duplicate", "missing_raw"])
+def test_missing_or_ambiguous_catalog_evidence_blocks(table, defect):
+    catalog = deepcopy(CATALOG)
+    if defect == "missing":
+        catalog[table] = []
+    elif defect == "duplicate":
+        catalog[table].append(catalog[table][0])
+    else:
+        catalog[table][0] = replace(catalog[table][0], raw_reference={})
+    # Even selecting only the other representation requires the pair's evidence.
+    skills = [GRANTED] if table == "gems" else [GEM]
+    assert not resolve_objective_scope(catalog, request(skills=skills)).ok
+
+
+def test_balanced_scope_does_not_require_a_flicker_catalog():
+    from pob2opt.domain.migrate import upgrade_run_request
+    old = from_jsonable(RunRequest, v1_request())
+    upgraded = upgrade_run_request(replace(old, class_id="poe2/classes/1"))
+    assert resolve_objective_scope({"classes": CATALOG["classes"]}, upgraded).ok
