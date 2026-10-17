@@ -1,0 +1,481 @@
+FFFFFFFFFFFFFFFF                                                         [100%]
+================================== FAILURES ===================================
+___________ test_fast_allocation_reply_cannot_bypass_the_hard_limit ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA00ADB0>
+
+    def test_fast_allocation_reply_cannot_bypass_the_hard_limit(monkeypatch):
+        # Force the wait to see the reply before its periodic memory sample.
+        monkeypatch.setattr(adapter_module.protocol, "MEMORY_POLL_S", 30.0)
+        with make_adapter(memory_limit_bytes=200 * MB, grow_on="describe",
+                          grow_mb=200) as adapter:
+>           with pytest.raises(EngineMemoryLimit) as error:
+E           Failed: DID NOT RAISE EngineMemoryLimit
+
+tests\unit\test_pr13_repair_regressions.py:200: Failed
+______________ test_ready_and_error_replies_are_checked[startup] ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03DA30>
+stage = 'startup'
+
+    @pytest.mark.parametrize("stage", ["startup", "describe", "load_exact_build"])
+    def test_ready_and_error_replies_are_checked(monkeypatch, stage):
+        original = adapter_module.WorkerHandle._wait
+    
+        def wait(handle, timeout_s, *, stage):
+            ready = original(handle, timeout_s, stage=stage)
+            if ready and stage == target_stage:
+                monkeypatch.setattr(adapter_module, "process_memory_bytes",
+                                    lambda pid: 500 * MB)
+            return ready
+    
+        target_stage = stage
+        monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+        with make_adapter(memory_limit_bytes=400 * MB) as adapter:
+>           with pytest.raises(EngineMemoryLimit) as error:
+E           Failed: DID NOT RAISE EngineMemoryLimit
+
+tests\unit\test_pr13_repair_regressions.py:221: Failed
+_____________ test_ready_and_error_replies_are_checked[describe] ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03E540>
+stage = 'describe'
+
+    @pytest.mark.parametrize("stage", ["startup", "describe", "load_exact_build"])
+    def test_ready_and_error_replies_are_checked(monkeypatch, stage):
+        original = adapter_module.WorkerHandle._wait
+    
+        def wait(handle, timeout_s, *, stage):
+            ready = original(handle, timeout_s, stage=stage)
+            if ready and stage == target_stage:
+                monkeypatch.setattr(adapter_module, "process_memory_bytes",
+                                    lambda pid: 500 * MB)
+            return ready
+    
+        target_stage = stage
+        monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+        with make_adapter(memory_limit_bytes=400 * MB) as adapter:
+>           with pytest.raises(EngineMemoryLimit) as error:
+E           Failed: DID NOT RAISE EngineMemoryLimit
+
+tests\unit\test_pr13_repair_regressions.py:221: Failed
+_________ test_ready_and_error_replies_are_checked[load_exact_build] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03EB10>
+stage = 'load_exact_build'
+
+    @pytest.mark.parametrize("stage", ["startup", "describe", "load_exact_build"])
+    def test_ready_and_error_replies_are_checked(monkeypatch, stage):
+        original = adapter_module.WorkerHandle._wait
+    
+        def wait(handle, timeout_s, *, stage):
+            ready = original(handle, timeout_s, stage=stage)
+            if ready and stage == target_stage:
+                monkeypatch.setattr(adapter_module, "process_memory_bytes",
+                                    lambda pid: 500 * MB)
+            return ready
+    
+        target_stage = stage
+        monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+        with make_adapter(memory_limit_bytes=400 * MB) as adapter:
+            with pytest.raises(EngineMemoryLimit) as error:
+                if stage == "load_exact_build":
+>                   adapter.load_exact_build(BuildDocument("synthetic", ""))
+
+tests\unit\test_pr13_repair_regressions.py:223: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+pob2-optimizer\pob2opt\evaluation\adapter.py:321: in wrapper
+    return method(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pob2-optimizer\pob2opt\evaluation\adapter.py:649: in load_exact_build
+    payload = self._request(protocol.OP_LOAD_EXACT_BUILD,
+pob2-optimizer\pob2opt\evaluation\adapter.py:542: in _request
+    result = handle.request(op, args, timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pob2-optimizer\pob2opt\evaluation\adapter.py:204: in request
+    result = self._receive(timeout_s, stage=op)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <pob2opt.evaluation.adapter.WorkerHandle object at 0x0000029EAA03EF60>
+timeout_s = 30.0, stage = 'load_exact_build'
+
+    def _receive(self, timeout_s: float, *, stage: str):
+        deadline_reached = not self._wait(timeout_s, stage=stage)
+        if deadline_reached:
+            self.discard("no answer within %.3fs" % timeout_s)
+            raise EngineTimeout(
+                "worker %s did not answer %s within %.3fs; the process was "
+                "terminated" % (self.pid, stage, timeout_s), stage=stage)
+        try:
+            payload = self._parent_conn.recv()
+        except (EOFError, OSError) as exc:
+            # Give the dead child a moment to be reaped so the diagnostic can
+            # name its exit code instead of "still running".
+            self.process.join(KILL_GRACE_S if timeout_s > KILL_GRACE_S else timeout_s)
+            exitcode = self._exit_state()
+            self.discard("pipe closed: %s" % exc)
+            raise EngineCrash("worker %s died during %s (%s)"
+                              % (self.pid, stage, exitcode), stage=stage) from None
+        if not isinstance(payload, dict):
+            self.discard("worker sent a non-dict frame")
+            raise EngineInternalError("worker sent %r" % (payload,), stage=stage)
+        if payload.get("ok"):
+            return payload.get("result")
+        if payload.get("fatal"):
+            self.discard("worker reported a fatal %s" % payload.get("code"))
+>       raise error_from_wire(payload)
+E       pob2opt.evaluation.errors.EngineInvalidInput: invalid_input [load_exact_build] synthetic: build document is empty
+
+pob2-optimizer\pob2opt\evaluation\adapter.py:270: EngineInvalidInput
+______________ test_cached_identity_does_not_bypass_memory_check ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03FE90>
+
+    def test_cached_identity_does_not_bypass_memory_check(monkeypatch):
+        with make_adapter(memory_limit_bytes=400 * MB) as adapter:
+            adapter.identity()
+            monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: 500 * MB)
+>           with pytest.raises(EngineMemoryLimit):
+E           Failed: DID NOT RAISE EngineMemoryLimit
+
+tests\unit\test_pr13_repair_regressions.py:235: Failed
+______ test_all_fatal_losses_exhaust_budget_and_retain_history[startup] _______
+
+behavior = 'startup'
+
+    @pytest.mark.parametrize("behavior", ["startup", "handler"])
+    def test_all_fatal_losses_exhaust_budget_and_retain_history(behavior):
+        config = {"behavior": "startup_fail"} if behavior == "startup" else {"values": 3}
+        with make_adapter(max_consecutive_failures=2, **config) as adapter:
+            for count in (1, 2):
+                with pytest.raises(EngineInternalError):
+                    adapter.probe(BuildDocument("synthetic", "<SyntheticBuild/>"))
+>               assert adapter.consecutive_failures == count
+E               assert 0 == 1
+E                +  where 0 = <pob2opt.evaluation.adapter.EngineAdapter object at 0x0000029EAA0D0500>.consecutive_failures
+
+tests\unit\test_pr13_repair_regressions.py:248: AssertionError
+______ test_all_fatal_losses_exhaust_budget_and_retain_history[handler] _______
+
+behavior = 'handler'
+
+    @pytest.mark.parametrize("behavior", ["startup", "handler"])
+    def test_all_fatal_losses_exhaust_budget_and_retain_history(behavior):
+        config = {"behavior": "startup_fail"} if behavior == "startup" else {"values": 3}
+        with make_adapter(max_consecutive_failures=2, **config) as adapter:
+            for count in (1, 2):
+                with pytest.raises(EngineInternalError):
+                    adapter.probe(BuildDocument("synthetic", "<SyntheticBuild/>"))
+>               assert adapter.consecutive_failures == count
+E               assert 0 == 1
+E                +  where 0 = <pob2opt.evaluation.adapter.EngineAdapter object at 0x0000029EAA0D0B30>.consecutive_failures
+
+tests\unit\test_pr13_repair_regressions.py:248: AssertionError
+______________ test_startup_memory_losses_retain_peak_and_reason ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03FF50>
+
+    def test_startup_memory_losses_retain_peak_and_reason(monkeypatch):
+        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: 500 * MB)
+        with make_adapter(memory_limit_bytes=400 * MB, max_consecutive_failures=2) as adapter:
+            for count in (1, 2):
+                with pytest.raises(EngineMemoryLimit):
+                    adapter.identity()
+                assert adapter.consecutive_failures == count
+>               assert len(adapter.worker_history) == count
+E               assert 0 == 1
+E                +  where 0 = len([])
+E                +    where [] = <pob2opt.evaluation.adapter.EngineAdapter object at 0x0000029EAA03FF80>.worker_history
+
+tests\unit\test_pr13_repair_regressions.py:267: AssertionError
+__ test_missing_memory_observation_fails_closed[startup-memory_limit_bytes] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03F530>
+bound = 'memory_limit_bytes', stage = 'startup'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+__ test_missing_memory_observation_fails_closed[startup-recycle_after_bytes] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03E780>
+bound = 'recycle_after_bytes', stage = 'startup'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+___ test_missing_memory_observation_fails_closed[reuse-memory_limit_bytes] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA03DF40>
+bound = 'memory_limit_bytes', stage = 'reuse'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+___ test_missing_memory_observation_fails_closed[reuse-recycle_after_bytes] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA0D1430>
+bound = 'recycle_after_bytes', stage = 'reuse'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+____ test_missing_memory_observation_fails_closed[wait-memory_limit_bytes] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA0D0230>
+bound = 'memory_limit_bytes', stage = 'wait'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+___ test_missing_memory_observation_fails_closed[wait-recycle_after_bytes] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA0D1C10>
+bound = 'recycle_after_bytes', stage = 'wait'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+___ test_missing_memory_observation_fails_closed[reply-memory_limit_bytes] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA0D2780>
+bound = 'memory_limit_bytes', stage = 'reply'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+___ test_missing_memory_observation_fails_closed[reply-recycle_after_bytes] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000029EAA0D38C0>
+bound = 'recycle_after_bytes', stage = 'reply'
+
+    @pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+    @pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+    def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+        # Import locally so this regression can also run against the reviewed head.
+        with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                          max_consecutive_failures=1) as adapter:
+            if stage != "startup":
+                adapter.identity()
+                handle = adapter._handle
+                old_peak = handle.peak_memory_bytes
+            if stage in ("startup", "reuse"):
+                monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+            else:
+                original = adapter_module.WorkerHandle._wait
+    
+                def wait(handle, timeout_s, *, stage):
+                    if target == "wait":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    ready = original(handle, timeout_s, stage=stage)
+                    if target == "reply":
+                        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                    return ready
+    
+                target = stage
+                monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+>           with pytest.raises(EngineCrash) as error:
+E           Failed: DID NOT RAISE EngineCrash
+
+tests\unit\test_pr13_repair_regressions.py:299: Failed
+=========================== short test summary info ===========================
+FAILED tests/unit/test_pr13_repair_regressions.py::test_fast_allocation_reply_cannot_bypass_the_hard_limit
+FAILED tests/unit/test_pr13_repair_regressions.py::test_ready_and_error_replies_are_checked[startup]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_ready_and_error_replies_are_checked[describe]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_ready_and_error_replies_are_checked[load_exact_build]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_cached_identity_does_not_bypass_memory_check
+FAILED tests/unit/test_pr13_repair_regressions.py::test_all_fatal_losses_exhaust_budget_and_retain_history[startup]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_all_fatal_losses_exhaust_budget_and_retain_history[handler]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_startup_memory_losses_retain_peak_and_reason
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[startup-memory_limit_bytes]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[startup-recycle_after_bytes]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[reuse-memory_limit_bytes]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[reuse-recycle_after_bytes]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[wait-memory_limit_bytes]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[wait-recycle_after_bytes]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[reply-memory_limit_bytes]
+FAILED tests/unit/test_pr13_repair_regressions.py::test_missing_memory_observation_fails_closed[reply-recycle_after_bytes]
+16 failed, 14 deselected in 12.33s

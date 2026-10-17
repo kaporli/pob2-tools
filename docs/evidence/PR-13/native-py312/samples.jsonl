@@ -1,0 +1,84 @@
+{"t": 0.06, "tree_rss": 2060288, "progress": ""}
+{"t": 0.61, "tree_rss": 19771392, "progress": ""}
+{"t": 1.16, "tree_rss": 28004352, "progress": ""}
+{"t": 1.7, "tree_rss": 29687808, "progress": ""}
+{"t": 2.25, "tree_rss": 34349056, "progress": ""}
+{"t": 2.8, "tree_rss": 40505344, "progress": "collecting ... "}
+{"t": 3.45, "tree_rss": 43655168, "progress": "collecting ... "}
+{"t": 3.98, "tree_rss": 63475712, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 4.53, "tree_rss": 67174400, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 5.11, "tree_rss": 80781312, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 5.64, "tree_rss": 121950208, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 6.19, "tree_rss": 122183680, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 6.73, "tree_rss": 122224640, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 7.3, "tree_rss": 140283904, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 7.92, "tree_rss": 176111616, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 8.48, "tree_rss": 186081280, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 9.02, "tree_rss": 210599936, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 9.56, "tree_rss": 214417408, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 10.08, "tree_rss": 227999744, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 10.61, "tree_rss": 229224448, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 11.14, "tree_rss": 238714880, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 11.69, "tree_rss": 232017920, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 12.2, "tree_rss": 236584960, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 12.73, "tree_rss": 315502592, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 13.27, "tree_rss": 332365824, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 13.8, "tree_rss": 57622528, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 14.33, "tree_rss": 76431360, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 14.86, "tree_rss": 136941568, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 15.38, "tree_rss": 219545600, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 15.91, "tree_rss": 245121024, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 16.44, "tree_rss": 255787008, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 16.97, "tree_rss": 280190976, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 17.5, "tree_rss": 264110080, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 18.03, "tree_rss": 328273920, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 18.59, "tree_rss": 338223104, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 19.11, "tree_rss": 61353984, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 19.62, "tree_rss": 72765440, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 20.14, "tree_rss": 150142976, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 20.67, "tree_rss": 69529600, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 21.19, "tree_rss": 134582272, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 21.72, "tree_rss": 208154624, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 22.23, "tree_rss": 242540544, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 22.77, "tree_rss": 253059072, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 23.28, "tree_rss": 276922368, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 23.84, "tree_rss": 347410432, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 24.38, "tree_rss": 346394624, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_worker_over_the_hard_limit_is_killed_and_reported "}
+{"t": 24.89, "tree_rss": 61722624, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_repeated_losses_stop_without_unlimited_replacement "}
+{"t": 25.42, "tree_rss": 122396672, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_repeated_losses_stop_without_unlimited_replacement "}
+{"t": 25.94, "tree_rss": 73334784, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_repeated_losses_stop_without_unlimited_replacement "}
+{"t": 26.45, "tree_rss": 150593536, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_repeated_losses_stop_without_unlimited_replacement "}
+{"t": 26.97, "tree_rss": 76247040, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 27.5, "tree_rss": 160264192, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 28.02, "tree_rss": 241074176, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 28.53, "tree_rss": 252194816, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 29.06, "tree_rss": 263684096, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 29.58, "tree_rss": 348753920, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 30.09, "tree_rss": 59650048, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 30.62, "tree_rss": 114106368, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 31.14, "tree_rss": 202465280, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 31.66, "tree_rss": 241922048, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 32.17, "tree_rss": 246996992, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 32.7, "tree_rss": 299204608, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 33.22, "tree_rss": 345690112, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_recycled_worker_gives_identical_results "}
+{"t": 33.73, "tree_rss": 67518464, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 34.27, "tree_rss": 138350592, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 34.78, "tree_rss": 224313344, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 35.31, "tree_rss": 242860032, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 35.83, "tree_rss": 247808000, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 36.36, "tree_rss": 279445504, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 36.88, "tree_rss": 349114368, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 37.39, "tree_rss": 61124608, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 37.92, "tree_rss": 122400768, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 38.44, "tree_rss": 217972736, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 38.95, "tree_rss": 243744768, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 39.47, "tree_rss": 243974144, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 39.98, "tree_rss": 284594176, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 40.52, "tree_rss": 352239616, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 41.03, "tree_rss": 58195968, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 41.55, "tree_rss": 103444480, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 42.06, "tree_rss": 210120704, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 42.58, "tree_rss": 237330432, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 43.09, "tree_rss": 227688448, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 43.61, "tree_rss": 304668672, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}
+{"t": 44.14, "tree_rss": 316870656, "progress": "tests/engine/test_p02_t01_1_memory_bound.py::test_a_request_budget_recycles_between_operations_only "}

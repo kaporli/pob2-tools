@@ -16,9 +16,10 @@ from record_fixtures import records
 
 from pob2opt.domain.enums import ResultStatus
 from pob2opt.evaluation import (ADAPTER_VERSION, CheckoutIdentity, EngineAdapter,
-                                EngineCrash, EngineMemoryLimit,
+                                BuildDocument, EngineCrash, EngineInternalError,
+                                EngineInvalidInput, EngineMemoryLimit,
                                 EngineReplacementExhausted, EngineState,
-                                EngineUnsupported, MappingBuildDocuments,
+                                EngineTimeout, EngineUnsupported, MappingBuildDocuments,
                                 WorkerSpec)
 from pob2opt.evaluation import adapter as adapter_module
 from pob2opt.evaluation.memory import probe_available, process_memory_bytes
@@ -189,3 +190,177 @@ def test_the_defaults_bound_every_worker():
     assert adapter.recycle_after_bytes is not None
     assert adapter.recycle_after_bytes < adapter.memory_limit_bytes
     assert adapter.max_consecutive_failures is not None
+
+
+def test_fast_allocation_reply_cannot_bypass_the_hard_limit(monkeypatch):
+    # Force the wait to see the reply before its periodic memory sample.
+    monkeypatch.setattr(adapter_module.protocol, "MEMORY_POLL_S", 30.0)
+    with make_adapter(memory_limit_bytes=200 * MB, grow_on="describe",
+                      grow_mb=200) as adapter:
+        with pytest.raises(EngineMemoryLimit) as error:
+            adapter.identity()
+        assert error.value.stage == "describe"
+        assert not adapter.worker_alive
+        assert adapter.worker_history[0]["peak_memory_bytes"] > 200 * MB
+
+
+@pytest.mark.parametrize("stage", ["startup", "describe", "load_exact_build"])
+def test_ready_and_error_replies_are_checked(monkeypatch, stage):
+    original = adapter_module.WorkerHandle._wait
+
+    def wait(handle, timeout_s, *, stage):
+        ready = original(handle, timeout_s, stage=stage)
+        if ready and stage == target_stage:
+            monkeypatch.setattr(adapter_module, "process_memory_bytes",
+                                lambda pid: 500 * MB)
+        return ready
+
+    target_stage = stage
+    monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+    with make_adapter(memory_limit_bytes=400 * MB) as adapter:
+        with pytest.raises(EngineMemoryLimit) as error:
+            if stage == "load_exact_build":
+                adapter.load_exact_build(BuildDocument("synthetic", ""))
+            else:
+                adapter.identity()
+        assert error.value.stage == stage
+        assert adapter.consecutive_failures == 1
+        assert len(adapter.worker_history) == len(adapter.worker_pids) == 1
+
+
+def test_cached_identity_does_not_bypass_memory_check(monkeypatch):
+    with make_adapter(memory_limit_bytes=400 * MB) as adapter:
+        adapter.identity()
+        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: 500 * MB)
+        with pytest.raises(EngineMemoryLimit):
+            adapter.identity()
+        assert not adapter.worker_alive
+        assert adapter.consecutive_failures == 1
+
+
+@pytest.mark.parametrize("behavior", ["startup", "handler"])
+def test_all_fatal_losses_exhaust_budget_and_retain_history(behavior):
+    config = {"behavior": "startup_fail"} if behavior == "startup" else {"values": 3}
+    with make_adapter(max_consecutive_failures=2, **config) as adapter:
+        for count in (1, 2):
+            with pytest.raises(EngineInternalError):
+                adapter.probe(BuildDocument("synthetic", "<SyntheticBuild/>"))
+            assert adapter.consecutive_failures == count
+            assert len(adapter.worker_history) == len(adapter.worker_pids) == count
+            assert adapter.worker_history[-1]["pid"] == adapter.worker_pids[-1]
+            assert "fatal" in adapter.worker_history[-1]["end"]
+        for _ in range(2):
+            with pytest.raises(EngineReplacementExhausted, match="fatal"):
+                adapter.identity()
+        assert len(adapter.worker_pids) == 2
+        assert len(adapter.worker_history) == 2
+    assert len(adapter.worker_history) == 2  # closing cannot duplicate history
+
+
+def test_startup_memory_losses_retain_peak_and_reason(monkeypatch):
+    monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: 500 * MB)
+    with make_adapter(memory_limit_bytes=400 * MB, max_consecutive_failures=2) as adapter:
+        for count in (1, 2):
+            with pytest.raises(EngineMemoryLimit):
+                adapter.identity()
+            assert adapter.consecutive_failures == count
+            assert len(adapter.worker_history) == count
+            assert adapter.worker_history[-1]["peak_memory_bytes"] == 500 * MB
+        with pytest.raises(EngineReplacementExhausted, match="memory"):
+            adapter.identity()
+        assert len(adapter.worker_pids) == 2
+
+
+@pytest.mark.parametrize("bound", ["memory_limit_bytes", "recycle_after_bytes"])
+@pytest.mark.parametrize("stage", ["startup", "reuse", "wait", "reply"])
+def test_missing_memory_observation_fails_closed(monkeypatch, bound, stage):
+    # Import locally so this regression can also run against the reviewed head.
+    with make_adapter(**{bound: 400 * MB}, slow_on="describe", slow_s=0.3,
+                      max_consecutive_failures=1) as adapter:
+        if stage != "startup":
+            adapter.identity()
+            handle = adapter._handle
+            old_peak = handle.peak_memory_bytes
+        if stage in ("startup", "reuse"):
+            monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+        else:
+            original = adapter_module.WorkerHandle._wait
+
+            def wait(handle, timeout_s, *, stage):
+                if target == "wait":
+                    monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                ready = original(handle, timeout_s, stage=stage)
+                if target == "reply":
+                    monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+                return ready
+
+            target = stage
+            monkeypatch.setattr(adapter_module.WorkerHandle, "_wait", wait)
+        with pytest.raises(EngineCrash) as error:
+            if stage in ("wait", "reply"):
+                adapter._request("describe", {}, 3.0)
+            else:
+                adapter.identity()
+        assert type(error.value).__name__ == "EngineMemoryProbeError"
+        assert error.value.status is ResultStatus.ENGINE_CRASH
+        assert not adapter.worker_alive
+        assert adapter._handle.last_memory_bytes is None
+        if stage != "startup":
+            assert adapter._handle.peak_memory_bytes >= old_peak
+        assert adapter.consecutive_failures == 1
+        assert len(adapter.worker_history) == 1
+        with pytest.raises(EngineReplacementExhausted, match="probe unavailable"):
+            adapter.identity()
+
+
+def test_explicitly_unbounded_worker_tolerates_missing_probe(monkeypatch):
+    monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+    with make_adapter() as adapter:
+        assert adapter.probe(BuildDocument("synthetic", "<SyntheticBuild/>"))
+        assert adapter.worker_alive
+
+
+def test_shutdown_does_not_require_a_memory_sample(monkeypatch):
+    adapter = make_adapter(memory_limit_bytes=400 * MB)
+    adapter.identity()
+    monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+    adapter.close()
+    assert adapter.worker_history[0]["end"] == "closed"
+    assert adapter.consecutive_failures == 0
+
+
+def test_live_nonfatal_errors_do_not_exhaust_failure_budget():
+    with make_adapter(max_consecutive_failures=1) as adapter:
+        for _ in range(3):
+            with pytest.raises(EngineInvalidInput):
+                adapter.load_exact_build(BuildDocument("synthetic", ""))
+        assert adapter.worker_alive
+        assert adapter.consecutive_failures == 0
+        assert adapter.worker_history == []
+        assert len(adapter.worker_pids) == 1
+
+
+def test_startup_timeouts_are_counted_and_recorded():
+    with make_adapter(startup_s=5.0, max_consecutive_failures=2) as adapter:
+        adapter.start_timeout_s = 0.2
+        for count in (1, 2):
+            with pytest.raises(EngineTimeout):
+                adapter.identity()
+            assert adapter.consecutive_failures == count
+            assert len(adapter.worker_history) == len(adapter.worker_pids) == count
+        with pytest.raises(EngineReplacementExhausted, match="no answer"):
+            adapter.identity()
+
+
+def test_dead_process_is_not_reported_as_a_live_probe_failure(monkeypatch):
+    with make_adapter(memory_limit_bytes=400 * MB) as adapter:
+        adapter.identity()
+        handle = adapter._handle
+        handle.process.kill()
+        handle.process.join(5)
+        monkeypatch.setattr(adapter_module, "process_memory_bytes", lambda pid: None)
+        with pytest.raises(EngineCrash) as error:
+            adapter._request("describe", {}, 3.0)
+        assert type(error.value) is EngineCrash
+        assert adapter.consecutive_failures == 1
+        assert len(adapter.worker_history) == 1

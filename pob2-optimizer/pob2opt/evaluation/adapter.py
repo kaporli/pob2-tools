@@ -35,7 +35,7 @@ from . import protocol
 from .checkout import CheckoutIdentity, resolve_checkout
 from .documents import BuildDocumentStore
 from .errors import (EngineCrash, EngineError, EngineInternalError,
-                     EngineInvalidInput, EngineMemoryLimit,
+                     EngineInvalidInput, EngineMemoryLimit, EngineMemoryProbeError,
                      EngineProfileMismatch, EngineReplacementExhausted,
                      EngineTimeout, EngineUnsupported, error_from_wire)
 from .memory import PROBE, process_memory_bytes
@@ -151,11 +151,15 @@ class WorkerHandle:
 
     def __init__(self, spec: WorkerSpec, generation: int,
                  start_timeout_s: float = protocol.START_TIMEOUT_S,
-                 memory_limit_bytes: int | None = None) -> None:
+                 memory_limit_bytes: int | None = None, *,
+                 monitor_memory: bool = False, defer_ready: bool = False) -> None:
         self.spec = spec
         self.generation = generation
         self.start_timeout_s = start_timeout_s
         self.memory_limit_bytes = memory_limit_bytes
+        self.monitor_memory = monitor_memory or memory_limit_bytes is not None
+        self.retired = False
+        self.failure_counted = False
         #: Highest and latest sampled memory, and answered requests.
         self.peak_memory_bytes = 0
         self.last_memory_bytes: int | None = None
@@ -175,12 +179,17 @@ class WorkerHandle:
             target=worker_main,
             args=(spec.entry, child_conn, spec.to_config()),
             daemon=True, name="pob2opt-engine-%d" % generation)
-        started = time.monotonic()
+        self._started = time.monotonic()
         self.process.start()
         child_conn.close()  # the parent must not hold the child's end open
         self.pid = self.process.pid
+        if not defer_ready:
+            self.await_ready()
+
+    def await_ready(self) -> None:
+        """Handshake after the adapter has retained this process's identity."""
         ready = self._receive(self.start_timeout_s, stage="startup")
-        self.boot_ms = int((time.monotonic() - started) * 1000)
+        self.boot_ms = int((time.monotonic() - self._started) * 1000)
         if not isinstance(ready, dict) or not ready.get("ready"):
             self.discard("worker did not report ready")
             raise EngineInternalError("worker sent %r instead of a ready frame"
@@ -193,6 +202,8 @@ class WorkerHandle:
             raise EngineCrash("worker %s was discarded: %s"
                               % (self.pid, self.death_reason or "unknown"),
                               stage=op)
+        if op != protocol.OP_SHUTDOWN:
+            self.check_memory(stage=op)
         self._seq += 1
         frame = {"seq": self._seq, "op": op, "args": args or {}}
         try:
@@ -204,7 +215,6 @@ class WorkerHandle:
         result = self._receive(timeout_s, stage=op)
         if op != protocol.OP_SHUTDOWN:
             self.requests += 1
-            self.sample_memory()
         return result
 
     def sample_memory(self) -> int | None:
@@ -212,10 +222,37 @@ class WorkerHandle:
         if self.pid is None:
             return None
         observed = process_memory_bytes(self.pid)
+        self.last_memory_bytes = observed
         if observed is not None:
-            self.last_memory_bytes = observed
             self.peak_memory_bytes = max(self.peak_memory_bytes, observed)
         return observed
+
+    def check_memory(self, *, stage: str) -> None:
+        """Enforce sampled bounds; a live but unreadable worker is unsafe.
+
+        Sampling can overshoot between observations. This is containment,
+        not an operating-system allocation ceiling.
+        """
+        observed = self.sample_memory()
+        if not self.monitor_memory:
+            return
+        if observed is None:
+            alive = self.process.is_alive()
+            reason = ("memory probe unavailable for live worker" if alive else
+                      "worker exited while checking memory")
+            self.discard("%s during %s" % (reason, stage))
+            error = EngineMemoryProbeError if alive else EngineCrash
+            raise error("worker %s: %s during %s; process discarded"
+                        % (self.pid, reason, stage), stage=stage)
+        if self.memory_limit_bytes is not None and observed > self.memory_limit_bytes:
+            self.discard("memory %d bytes above limit %d during %s"
+                         % (observed, self.memory_limit_bytes, stage))
+            raise EngineMemoryLimit(
+                "worker %s used %d bytes during %s, above the %d-byte "
+                "limit; the process was terminated"
+                % (self.pid, observed, stage, self.memory_limit_bytes),
+                stage=stage, limit_bytes=self.memory_limit_bytes,
+                observed_bytes=observed)
 
     def _wait(self, timeout_s: float, *, stage: str) -> bool:
         """Wait for a frame. With a limit, sample memory while waiting.
@@ -223,23 +260,17 @@ class WorkerHandle:
         Native code holds the worker for the whole request, so the limit has
         to be enforced from here; the worker cannot check itself.
         """
-        if self.memory_limit_bytes is None:
+        if not self.monitor_memory:
             return self._parent_conn.poll(timeout_s)
         deadline = time.monotonic() + timeout_s
         while True:
             remaining = deadline - time.monotonic()
             if self._parent_conn.poll(max(0.0, min(remaining, protocol.MEMORY_POLL_S))):
                 return True
-            observed = self.sample_memory()
-            if observed is not None and observed > self.memory_limit_bytes:
-                self.discard("memory %d bytes above limit %d during %s"
-                             % (observed, self.memory_limit_bytes, stage))
-                raise EngineMemoryLimit(
-                    "worker %s used %d bytes during %s, above the %d-byte "
-                    "limit; the process was terminated"
-                    % (self.pid, observed, stage, self.memory_limit_bytes),
-                    stage=stage, limit_bytes=self.memory_limit_bytes,
-                    observed_bytes=observed)
+            # A slow shutdown is still bounded. Once it exits, only the pipe
+            # acknowledgement/EOF remains; that no longer needs a sample.
+            if stage != protocol.OP_SHUTDOWN or self.process.is_alive():
+                self.check_memory(stage=stage)
             if remaining <= 0:
                 return False
 
@@ -264,9 +295,13 @@ class WorkerHandle:
             self.discard("worker sent a non-dict frame")
             raise EngineInternalError("worker sent %r" % (payload,), stage=stage)
         if payload.get("ok"):
+            if stage != protocol.OP_SHUTDOWN:
+                self.check_memory(stage=stage)
             return payload.get("result")
         if payload.get("fatal"):
             self.discard("worker reported a fatal %s" % payload.get("code"))
+        elif stage != protocol.OP_SHUTDOWN:
+            self.check_memory(stage=stage)
         raise error_from_wire(payload)
 
     # -- lifetime ---------------------------------------------------------
@@ -418,6 +453,7 @@ class EngineAdapter:
             raise EngineInternalError("adapter is closed", stage="worker")
         handle = self._handle
         if handle is not None and handle.alive:
+            self._check_memory(handle, stage="worker reuse")
             return handle
         if handle is not None:
             unreported = not handle.reported
@@ -433,7 +469,7 @@ class EngineAdapter:
                 # The worker died without anyone being told. Say so now; the
                 # next request gets a fresh process. Restarting silently here
                 # would turn a crash into a missing result nobody can see.
-                self.consecutive_failures += 1
+                self._record_loss(handle)
                 raise EngineCrash("worker %s is gone: %s" % (handle.pid, reason),
                                   stage="worker")
         if (self.max_consecutive_failures is not None
@@ -446,22 +482,42 @@ class EngineAdapter:
                 stage="worker")
         self._generation += 1
         self._identity = None
-        try:
-            self._handle = WorkerHandle(self.spec, self._generation,
-                                        self.start_timeout_s,
-                                        self.memory_limit_bytes)
-        except (EngineCrash, EngineTimeout):
-            self.consecutive_failures += 1
-            raise
+        self._handle = WorkerHandle(
+            self.spec, self._generation, self.start_timeout_s,
+            self.memory_limit_bytes,
+            monitor_memory=self.recycle_after_bytes is not None, defer_ready=True)
         self.worker_pids.append(self._handle.pid)
+        try:
+            self._handle.await_ready()
+        except EngineError:
+            self._record_loss(self._handle)
+            raise
         return self._handle
 
     def _retire(self, handle: WorkerHandle) -> None:
+        if handle.retired:
+            return
+        handle.retired = True
         self.worker_history.append({
             "pid": handle.pid, "generation": handle.generation,
             "requests": handle.requests,
             "peak_memory_bytes": handle.peak_memory_bytes or None,
             "end": handle.death_reason})
+
+    def _record_loss(self, handle: WorkerHandle) -> None:
+        if handle.dead and not handle.failure_counted:
+            handle.failure_counted = True
+            self.consecutive_failures += 1
+            self._retire(handle)
+        self._forget_loaded_build()
+        self._identity = None
+
+    def _check_memory(self, handle: WorkerHandle, *, stage: str) -> None:
+        try:
+            handle.check_memory(stage=stage)
+        except EngineError:
+            self._record_loss(handle)
+            raise
 
     def _recycle_if_due(self) -> None:
         """Replace a worker past a soft limit before the next operation.
@@ -495,6 +551,9 @@ class EngineAdapter:
     def _operation(self):
         """Mark one public operation; recycle only between operations."""
         if self._depth == 0:
+            if self._handle is not None and self._handle.alive:
+                self._check_memory(self._handle, stage="operation boundary")
+                self._note_recycle(self._handle)
             self._recycle_if_due()
         self._depth += 1
         try:
@@ -546,10 +605,7 @@ class EngineAdapter:
                 # timeout, a crash, or a fatal error such as a malformed
                 # document. The next request starts a fresh engine, which
                 # holds nothing (P02-T01-R10).
-                self._forget_loaded_build()
-                self._identity = None
-                if isinstance(exc, (EngineCrash, EngineTimeout)):
-                    self.consecutive_failures += 1
+                self._record_loss(handle)
             # Annotate, never replace. Raising a directory error out of a
             # finally block would demote the failure that explains the missing
             # result to __context__ (P02-T01-R07).
@@ -568,7 +624,7 @@ class EngineAdapter:
         if remaining <= 0:
             if self._handle is not None and not self._handle.dead:
                 self._handle.discard("evaluation deadline exhausted at %s" % stage)
-                self.consecutive_failures += 1
+                self._record_loss(self._handle)
             self._forget_loaded_build()
             self._identity = None
             raise EngineTimeout("evaluation deadline exhausted; worker terminated",

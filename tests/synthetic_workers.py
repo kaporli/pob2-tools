@@ -46,6 +46,9 @@ class SyntheticSession:
         self.opt_setup_calls = 0
         self.closed = False
 
+        if config.get("startup_s"):
+            time.sleep(float(config["startup_s"]))
+
         if self.behavior == "startup_fail":
             raise RuntimeError(config.get("startup_message", "synthetic startup failure"))
 

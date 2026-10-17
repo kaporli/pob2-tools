@@ -1,0 +1,57 @@
+{
+  "head": "5981ee023ff5146c417de275d399a0991833ffe3",
+  "python": "3.10.22 (main, Oct  3 2026, 01:02:33) [MSC v.1944 64 bit (AMD64)]",
+  "cases": {
+    "fast_over_limit_reply": {
+      "returned_result": true,
+      "error": null,
+      "alive": true,
+      "last_memory_bytes": 524288000,
+      "hard_limit_bytes": 419430400
+    },
+    "unreadable_probe": {
+      "returned_result": true,
+      "error": null,
+      "alive": true,
+      "last_memory_bytes": 22298624,
+      "hard_limit_bytes": 419430400
+    },
+    "unreadable_during_wait": {
+      "returned_result": true,
+      "samples": 13,
+      "alive": true
+    },
+    "repeated_startup_failure": {
+      "errors": [
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError",
+        "EngineInternalError"
+      ],
+      "generation": 5,
+      "failures": 0,
+      "history": []
+    },
+    "startup_memory_history": {
+      "errors": [
+        {
+          "type": "EngineMemoryLimit",
+          "message": "engine_crash [startup] worker 44040 used 4038656 bytes during startup, above the 1-byte limit; the process was terminated"
+        },
+        {
+          "type": "EngineMemoryLimit",
+          "message": "engine_crash [startup] worker 37892 used 5517312 bytes during startup, above the 1-byte limit; the process was terminated"
+        },
+        {
+          "type": "EngineReplacementExhausted",
+          "message": "engine_crash [worker] 2 workers in a row were lost; no further worker is started. Last: none"
+        }
+      ],
+      "generation": 2,
+      "failures": 2,
+      "history": [],
+      "pids": []
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "run": "repair-pr13-py310",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+  "plugin": false,
+  "head": "5981ee023ff5146c417de275d399a0991833ffe3",
+  "seed": "13",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine/test_p02_t01_1_memory_bound.py",
+    "tests/engine/test_p02_t01_engine_adapter.py"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 2048,
+  "peak_tree_rss": 1140944896,
+  "elapsed_s": 51.4,
+  "python": "3.10.22",
+  "last_line": "============================= 20 passed in 50.48s ============================="
+}

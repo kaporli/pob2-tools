@@ -98,6 +98,10 @@ class EngineMemoryLimit(EngineCrash):
         super().__init__(diagnostic, stage=stage, record_ids=record_ids)
 
 
+class EngineMemoryProbeError(EngineCrash):
+    """A live bounded worker could not be measured and was terminated."""
+
+
 class EngineReplacementExhausted(EngineCrash):
     """Too many workers in a row failed; no further replacement is started."""
 

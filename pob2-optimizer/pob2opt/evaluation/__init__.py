@@ -36,7 +36,7 @@ from .roundtrip import (Difference, RoundTripReport, SourceMutated,
 from .support import (NOT_REPRESENTABLE, PARTIAL, UNRESOLVED_NAME,
                       SupportReport, UnsupportedField)
 from .errors import (EngineCrash, EngineError, EngineInternalError,
-                     EngineInvalidInput, EngineMemoryLimit,
+                     EngineInvalidInput, EngineMemoryLimit, EngineMemoryProbeError,
                      EngineProfileMismatch, EngineReplacementExhausted,
                      EngineTimeout, EngineUnsupported, redact_diagnostic)
 from .primitives import (BY_ID, BY_NATIVE_KEY, CATEGORIES, PRIMITIVES,
@@ -55,7 +55,8 @@ __all__ = [
     "CheckoutIdentity", "DeclaredPrimitive", "DEFAULT_ENTRY", "Difference",
     "DocumentProvenance", "EngineAdapter", "EngineCrash", "EngineError",
     "EngineIdentity", "EngineInternalError", "EngineInvalidInput",
-    "EngineMemoryLimit", "EngineProfileMismatch", "EngineReplacementExhausted", "EngineState", "EngineTimeout",
+    "EngineMemoryLimit", "EngineMemoryProbeError", "EngineProfileMismatch",
+    "EngineReplacementExhausted", "EngineState", "EngineTimeout",
     "EngineUnsupported", "LoadedBuild", "MappingBuildDocuments",
     "NOT_REPRESENTABLE", "PARTIAL", "PrimitiveDefinition", "PrimitiveGap",
     "PRIMITIVES", "PrimitiveSnapshot", "PRIMITIVE_SEMANTICS_OWNER",

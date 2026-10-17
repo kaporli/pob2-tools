@@ -3,6 +3,8 @@
 Usage: python run_memtrace.py RUN_NAME SEED [pytest args...]
 Every run keeps its own directory under suite-runs/, failed or not.
 POB2_RUN_REPO picks the checkout under test (default: this one).
+POB2_TEST_PYTHON picks the child interpreter (default: this interpreter), so
+the monitoring process can use psutil without installing it in the test venv.
 POB2_PLUGIN=0 runs without the in-process plugin: the parent samples memory
 and the -vv progress line every 0.5 s instead. The parent guard
 kills the whole tree at limit + 1 GiB or the time limit, in case the in-process
@@ -35,7 +37,11 @@ def main():
                POB2_MEMTRACE_DIR=str(out), POB2_MEM_LIMIT_MB=str(LIMIT_MB),
                PYTHONPATH=os.pathsep.join([str(REPO / "pob2-mcp"),
                                            str(REPO / "pob2-optimizer"), str(HERE)]))
-    args = [sys.executable, "-m", "pytest", "-vv", "-p", "no:cacheprovider"] \
+    test_python = os.environ.get("POB2_TEST_PYTHON") or sys.executable
+    python_version = subprocess.run(
+        [test_python, "-c", "import sys; print(sys.version.split()[0])"],
+        capture_output=True, text=True, check=True).stdout.strip()
+    args = [test_python, "-m", "pytest", "-vv", "-p", "no:cacheprovider"] \
         + (["-p", "memtrace"] if PLUGIN else []) + (pytest_args or ["tests/engine"])
     samples = (out / "samples.jsonl").open("w")
     started = time.monotonic()
@@ -73,7 +79,7 @@ def main():
                "seed": seed, "args": args[1:], "exit_code": proc.returncode,
                "parent_guard": guard, "limit_mb": LIMIT_MB, "peak_tree_rss": peak,
                "elapsed_s": round(time.monotonic() - started, 1),
-               "python": sys.version.split()[0]}
+               "python": python_version}
     tail = (out / "stdout.txt").read_text(errors="replace").strip().splitlines()[-1:]
     summary["last_line"] = tail[0] if tail else ""
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
