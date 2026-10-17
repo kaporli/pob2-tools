@@ -18,7 +18,8 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 packages = ["pob2opt", "pob2opt.catalog", "pob2opt.domain",
             "pob2opt.evaluation", "pob2opt.evaluation.legality",
-            "pob2opt.parsers", "pob2opt.sources", "pob2opt.storage"]
+            "pob2opt.market", "pob2opt.parsers", "pob2opt.sources",
+            "pob2opt.storage"]
 
 [tool.setuptools.package-data]
 # schemas/v1 ships with the package so a record can be validated from an

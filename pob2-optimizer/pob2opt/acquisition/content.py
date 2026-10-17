@@ -41,13 +41,16 @@ XML = "xml"
 HTML = "html"
 JSON = "json"
 BUILD_CODE = "build_code"
-KINDS = (XML, HTML, JSON, BUILD_CODE)
+#: PoB or game clipboard item text (P05-T02).
+ITEM_TEXT = "item_text"
+KINDS = (XML, HTML, JSON, BUILD_CODE, ITEM_TEXT)
 
 MEDIA_TYPES = {
     XML: "application/xml",
     HTML: "text/html",
     JSON: "application/json",
     BUILD_CODE: "text/vnd.pathofbuilding.code",
+    ITEM_TEXT: "text/plain",
 }
 
 #: Constructs that make an XML document a resource request or an expansion
@@ -140,6 +143,8 @@ def detect_kind(payload: bytes, *, filename: str | None = None,
         return HTML
     if head.startswith(b"{") or head.startswith(b"["):
         return JSON
+    if head.startswith(b"Rarity:") or head.startswith(b"Item Class:"):
+        return ITEM_TEXT
     if head and _looks_like_build_code(payload):
         return BUILD_CODE
     raise UnsupportedContent(
@@ -163,6 +168,11 @@ def inspect(payload: bytes, kind: str, *,
     elif kind == BUILD_CODE:
         expanded = len(decode_build_code(payload,
                                          max_expanded_bytes=max_expanded_bytes))
+    elif kind == ITEM_TEXT:
+        try:
+            payload.decode("utf-8")
+        except UnicodeDecodeError as error:
+            raise MalformedContent("text_encoding", str(error)) from None
     # HTML is stored verbatim and never parsed. There is nothing to validate
     # that would not amount to interpreting it.
     return ContentReport(kind=kind, media_type=MEDIA_TYPES[kind],
