@@ -66,17 +66,50 @@ def test_unresolved_content_survives_and_blocks_recommendation(path, attr, value
 
 
 @pytest.mark.parametrize("enabled", ["false", "true"])
-def test_support_settings_are_preserved_as_unsupported_gameplay_data(enabled):
+def test_support_settings_are_preserved_as_gameplay_data(enabled):
+    """R2, superseded by BuildSpec schema version 2.
+
+    The settings are now held in the record rather than only preserved as
+    source XML, so the import is complete and the export carries them.
+    """
     root = fixture_document()
     ET.SubElement(root.find("Skills/SkillSet/Skill"), "Gem", {
         "skillId": "FixtureSupportTempo", "enabled": enabled, "level": "7", "quality": "19"})
     parsed = read(root)
-    assert_incomplete(parsed)
-    support = next(loss for loss in parsed.report.unsupported if loss.field_path.endswith("/support"))
-    preserved = ET.fromstring(support.preserved)
-    assert preserved.get("enabled") == enabled
-    assert preserved.get("level") == "7"
-    assert preserved.get("quality") == "19"
+    assert parsed.build.schema_version == 2
+    assert parsed.build.parse_status == RecordParseStatus.COMPLETE
+    support = parsed.build.skill_groups[0].skills[0].supports[0]
+    assert (support.support_id, support.level, support.quality, support.enabled) == (
+        "support-tempo", 7, 19, enabled == "true")
+    trip = round_trip(parsed.build, parsed.items, SYNTHETIC_NAMING)
+    assert trip.status == "faithful", trip.as_dict()
+    gem = [g for g in ET.fromstring(trip.document).iter("Gem")
+           if g.get("skillId") == "FixtureSupportTempo"][0]
+    assert (gem.get("enabled"), gem.get("level"), gem.get("quality")) == (enabled, "7", "19")
+
+
+@pytest.mark.parametrize("missing", ["level", "quality", "enabled"])
+def test_an_unknown_support_setting_still_blocks_recommendation(missing):
+    """The R2 guard is not relaxed: an absent setting is unknown, not a default."""
+    root = fixture_document()
+    attrib = {"skillId": "FixtureSupportTempo", "enabled": "true", "level": "7",
+              "quality": "19"}
+    del attrib[missing]
+    ET.SubElement(root.find("Skills/SkillSet/Skill"), "Gem", attrib)
+    parsed = read(root)
+    support = parsed.build.skill_groups[0].skills[0].supports[0]
+    assert getattr(support, missing) is None
+    export = export_build(parsed.build, parsed.items, SYNTHETIC_NAMING)
+    assert not export.recommended_deliverable
+    assert any(u.field_path.endswith("/supports/0") for u in export.report.unsupported)
+
+
+def test_a_version_1_build_with_supports_still_exports_incomplete():
+    build, items = supported_build()
+    assert build.schema_version == 1 and build.skill_groups[0].skills[0].support_ids
+    export = export_build(build, items, SYNTHETIC_NAMING)
+    assert not export.recommended_deliverable
+    assert not round_trip(build, items, SYNTHETIC_NAMING).recommended_deliverable
 
 
 @pytest.mark.parametrize("tag,child,selector", [

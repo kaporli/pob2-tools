@@ -1,0 +1,94 @@
+{
+  "audit_changed_main_group": {
+    "changed_main": 1,
+    "mismatches": 0,
+    "passed": true,
+    "source_main": 0
+  },
+  "catalog_b_fresh": {
+    "build_statuses": [
+      "partial"
+    ],
+    "status": "partial"
+  },
+  "catalog_cache": [
+    {
+      "code": 0,
+      "requested_catalog": "7c48c8238c857514c1db45c1b855554e7db63ebb7a38db9e4d05f24d99e42a49",
+      "result_id": "3b039cbe-33e5-5ca1-bc36-e619b2accc92/parse/p04-t01.1",
+      "returned_build_catalogs": [
+        "7c48c8238c857514c1db45c1b855554e7db63ebb7a38db9e4d05f24d99e42a49"
+      ],
+      "status": "complete",
+      "unchanged": false
+    },
+    {
+      "code": 0,
+      "requested_catalog": "5618ea82e7a2e35a624892baa056372f08a635d2a4dcb0f4e1e3d25c1f381f19",
+      "result_id": "3b039cbe-33e5-5ca1-bc36-e619b2accc92/parse/p04-t01.1",
+      "returned_build_catalogs": [
+        "7c48c8238c857514c1db45c1b855554e7db63ebb7a38db9e4d05f24d99e42a49"
+      ],
+      "status": "complete",
+      "unchanged": true
+    }
+  ],
+  "engine_comparator": {
+    "added_numeric_stat": {},
+    "zero_to_nonzero": {}
+  },
+  "invalid_active_gem_level": {
+    "message": "invalid literal for int() with base 10: 'broken'",
+    "raised": "ValueError"
+  },
+  "invalid_level": {
+    "message": "invalid literal for int() with base 10: 'not-a-number'",
+    "raised": "ValueError"
+  },
+  "invalid_node": {
+    "message": "invalid literal for int() with base 10: 'broken'",
+    "raised": "ValueError"
+  },
+  "name_only_equipped_item": {
+    "build_statuses": [
+      "complete"
+    ],
+    "issues": [
+      "template_claim"
+    ],
+    "item_statuses": [
+      "complete",
+      "complete"
+    ],
+    "recommended_exports": [
+      true
+    ],
+    "result_status": "partial"
+  },
+  "removed_support_gem": {
+    "removed_gem": "poe2/gems/Metadata/Items/Gems/SkillGemAbidingHexSupport",
+    "reported_removals": [],
+    "status": "complete",
+    "unresolved": []
+  },
+  "unresolved_affix": {
+    "build_statuses": [
+      "complete"
+    ],
+    "issues": [
+      "unresolved_affix"
+    ],
+    "item_statuses": [
+      "complete",
+      "complete"
+    ],
+    "recommended_exports": [
+      true
+    ],
+    "result_status": "partial"
+  },
+  "v1_main_group_migration": {
+    "v1_export_main": "2",
+    "v2_export_main": "1"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "environment record",
+  "branch": "p04-build-fidelity",
+  "base_commit": "6e6cd87209d3a1e29173131d454e369d856d6f7b",
+  "pob_checkout": "C:/Users/Elias/PycharmProjects/PathOfBuilding-PoE2",
+  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+  "pob_status_porcelain_sha256": "8d0c72bb68c78fa13e601005f350b90411dcbbb8a997ea7c5d11c3dd7a825f2b",
+  "python": [
+    "Python 3.12.4",
+    "Python 3.10.22"
+  ],
+  "platform": "Windows 11 Pro 10.0.26200",
+  "commands": {
+    "offline_py312": "python -m pytest tests/unit tests/integration -q -p no:cacheprovider --tb=short",
+    "offline_py310": ".venv/pr2-validation/py310-a/Scripts/python.exe -m pytest tests/unit tests/integration -q -p no:cacheprovider --tb=short",
+    "engine_py312": "POB2_ROOT=C:/Users/Elias/PycharmProjects/PathOfBuilding-PoE2 python -m pytest tests/engine -q -p no:cacheprovider --tb=short",
+    "fixtures": "POB2_ROOT=... python scripts/p04_make_fixtures.py --out tests/fixtures/p04",
+    "evidence": "python scripts/p04_evidence.py",
+    "schemas": "python scripts/generate_schemas.py --check"
+  },
+  "results": {
+    "offline_py312": "1326 passed, 1 xfailed",
+    "offline_py310": "1326 passed, 1 xfailed",
+    "engine_py312": "152 passed",
+    "schemas": "20 schema files match"
+  },
+  "note": "The pinned commit matches the absent submodule's gitlink. The porcelain hash identifies the checkout's working-tree state; it is not a claim of a clean upstream checkout.",
+  "review_repairs": "Results after the PR #10 review repairs (docs/reviews/P04.md R1 to R8), on top of 08d400f."
+}

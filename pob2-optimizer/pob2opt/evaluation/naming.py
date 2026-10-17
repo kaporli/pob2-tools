@@ -79,8 +79,12 @@ class CatalogNaming:
     base_names: Mapping[str, str] = field(default_factory=dict)
     #: skill catalog ID -> PoB ``Gem@skillId``.
     skill_ids: Mapping[str, str] = field(default_factory=dict)
-    #: gem catalog ID -> PoB ``Gem@gemId``.
+    #: gem catalog ID -> PoB ``Gem@gemId``. Several variants of one gem share
+    #: a ``gemId``; ``gem_variant_ids`` tells them apart.
     gem_ids: Mapping[str, str] = field(default_factory=dict)
+    #: gem catalog ID -> PoB ``Gem@variantId``, for gems that have one. The
+    #: reverse lookup is on the (gemId, variantId) pair.
+    gem_variant_ids: Mapping[str, str] = field(default_factory=dict)
     #: Which skill catalog IDs are support gems. A socket group is a flat gem
     #: list, so this is what splits it back into actives and their supports.
     support_skill_ids: frozenset[str] = frozenset()
@@ -104,10 +108,32 @@ class CatalogNaming:
     def _inverse(self, table: str) -> dict[object, str]:
         return _invert(getattr(self, table), table)
 
+    def _gem_pairs(self) -> dict[str, tuple[str, str | None]]:
+        return {key: (value, self.gem_variant_ids.get(key))
+                for key, value in self.gem_ids.items()}
+
+    def reverse_gem(self, gem_id: str, variant_id: str | None) -> str:
+        """The gem catalog ID for a ``gemId`` and optional ``variantId``.
+
+        Without a variant, the ``gemId`` must name exactly one gem.
+        """
+        inverse = _invert(self._gem_pairs(), "gem_ids/gem_variant_ids")
+        if variant_id is not None:
+            try:
+                return inverse[(gem_id, variant_id)]
+            except KeyError:
+                raise UnresolvedName("gem_ids (reverse)",
+                                     "%s|%s" % (gem_id, variant_id)) from None
+        matches = [key for (game, _), key in inverse.items() if game == gem_id]
+        if len(matches) != 1:
+            raise UnresolvedName("gem_ids (reverse)", gem_id)
+        return matches[0]
+
     def check_invertible(self) -> None:
         """Raise if any table would be undecidable on the way back."""
         for table in ("class_names", "class_tree_ids", "ascendancy_names",
                       "ascendancy_tree_ids", "node_ids", "attribute_options",
                       "slot_names", "weapon_set_numbers", "base_names",
-                      "skill_ids", "gem_ids"):
+                      "skill_ids"):
             self._inverse(table)
+        _invert(self._gem_pairs(), "gem_ids/gem_variant_ids")

@@ -31,7 +31,8 @@ from typing import Any, Union, get_args, get_origin
 
 from .absent import Absent
 from .codec import hints_for, json_key
-from .records import RECORD_KINDS, RECORD_TYPES, SUPPORTED_SCHEMA_VERSIONS
+from .records import (KIND_SCHEMA_VERSIONS, RECORD_KINDS, RECORD_TYPES,
+                      SUPPORTED_SCHEMA_VERSIONS)
 
 SCHEMA_DIALECT = "https://json-schema.org/draft/2020-12/schema"
 SCHEMA_BASE = "https://pob2-tools.invalid/schemas/v1/"
@@ -68,6 +69,11 @@ NON_NEGATIVE = frozenset({
 
 #: Numeric fields that must be at least one.
 AT_LEAST_ONE = frozenset({"quantity", "worker_limit"})
+
+#: Top-level fields introduced by a later schema version of one record kind.
+VERSION_FIELDS: dict[str, dict[int, tuple[str, ...]]] = {
+    "build_spec": {2: ("main_skill_group",)},
+}
 
 #: Per-field keywords that no naming rule should be stretched to cover.
 OVERRIDES: dict[tuple[str, str], dict[str, Any]] = {
@@ -251,6 +257,18 @@ def build_schema(kind: str) -> dict[str, Any]:
         "title": cls.__name__,
     }
     schema.update(body)
+    if kind in KIND_SCHEMA_VERSIONS:
+        schema["properties"]["schema_version"] = {
+            "enum": list(KIND_SCHEMA_VERSIONS[kind])}
+    for version, names in sorted(VERSION_FIELDS.get(kind, {}).items()):
+        # Required from ``version`` on, forbidden before it. Nested fields
+        # such as SkillEntry.supports are checked by the semantic pass.
+        schema.setdefault("allOf", []).append({
+            "if": {"properties": {"schema_version": {"exclusiveMinimum":
+                                                     version - 1}}},
+            "then": {"required": list(names)},
+            "else": {"properties": {name: False for name in names}},
+        })
     if builder.defs:
         schema["$defs"] = dict(sorted(builder.defs.items()))
     return schema

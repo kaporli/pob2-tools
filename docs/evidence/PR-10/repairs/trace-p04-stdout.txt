@@ -1,0 +1,86 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 53 items
+
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] PASSED [  1%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b03] PASSED [  3%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b04] PASSED [  5%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b05] PASSED [  7%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b07] PASSED [  9%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b08] PASSED [ 11%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b09] PASSED [ 13%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b10] PASSED [ 15%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b11] PASSED [ 16%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b12] PASSED [ 18%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b02] PASSED [ 20%]
+tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b06] PASSED [ 22%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b01] PASSED [ 24%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b03] PASSED [ 26%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b04] PASSED [ 28%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b05] PASSED [ 30%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b07] PASSED [ 32%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b08] PASSED [ 33%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b09] PASSED [ 35%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b10] PASSED [ 37%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b11] PASSED [ 39%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b12] PASSED [ 41%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b02] PASSED [ 43%]
+tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b06] PASSED [ 45%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b01] PASSED [ 47%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b03] PASSED [ 49%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b04] PASSED [ 50%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b05] PASSED [ 52%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b07] PASSED [ 54%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b08] PASSED [ 56%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b09] PASSED [ 58%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b10] PASSED [ 60%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b11] PASSED [ 62%]
+tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b12] PASSED [ 64%]
+tests/engine/test_p04_round_trips.py::test_a_partial_import_never_exports_as_a_deliverable[b02] PASSED [ 66%]
+tests/engine/test_p04_round_trips.py::test_a_partial_import_never_exports_as_a_deliverable[b06] PASSED [ 67%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b01] PASSED [ 69%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b03] PASSED [ 71%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b04] PASSED [ 73%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b05] PASSED [ 75%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b07] PASSED [ 77%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b08] PASSED [ 79%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b09] PASSED [ 81%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b10] PASSED [ 83%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b11] PASSED [ 84%]
+tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b12] PASSED [ 86%]
+tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates PASSED [ 88%]
+tests/engine/test_p04_round_trips.py::test_each_variant_evaluates_as_pob_evaluates_that_loadout PASSED [ 90%]
+tests/engine/test_p04_round_trips.py::test_the_two_loadouts_are_different_builds PASSED [ 92%]
+tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices0] PASSED [ 94%]
+tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices1] PASSED [ 96%]
+tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices2] PASSED [ 98%]
+tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices3] PASSED [100%]
+
+native fault diagnostics: 67707355 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-349\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================= 53 passed in 23.63s =============================
+Loading main script...
+Unicode support detected
+Loading passive tree data for version '0_5'...
+Loading passive tree assets...
+Processing tree...
+missing node 24665
+missing node 35715
+missing node 28429
+missing node 26353
+missing node 950
+missing node 45406
+missing node 50198
+missing node 5162
+missing node 10889
+missing node 62386
+missing node 39383
+missing node 51916
+missing node 54579
+missing node 16732
+Startup time: 0 ms
+Uniques loaded
+Rares loaded

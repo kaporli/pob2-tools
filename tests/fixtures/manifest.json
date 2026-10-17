@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_by": "P00-T02",
-  "statement": "Every fixture listed here is SYNTHETIC: hand-written for testing software behavior. None is PoB output, a live provider response, or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
+  "statement": "Every fixture listed here is SYNTHETIC: hand-written for testing software behavior, or, with origin pob_derived, a synthetic composition that the pinned PoB loaded and saved, so the bytes are PoB's while the build is invented. None is a live provider response or a gameplay measurement, and none may be cited as evidence about PoE 2 mechanics.",
   "fixtures": [
     {
       "path": "builds/zero_dps_huntress.xml",
@@ -192,6 +192,186 @@
         "tests/unit/test_p09_t01_protocol.py"
       ],
       "caveat": "Every entity, count, health value, position, duration and window is a test constant chosen so the arithmetic is checkable by hand. None is a PoE 2 monster or a recorded encounter timing. A result produced on this suite is not map clear speed and not boss kill time, and it may not be used to fit any constant."
+    },
+    {
+      "path": "p04/builds/b01.xml",
+      "sha256": "3f8adbe07ad42af7b32e7789c91b55392337143acd59fa108bc31ab743aa1176",
+      "bytes": 16048,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Ranger, level 70, 2 item(s), 1 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b02.xml",
+      "sha256": "77fbc8532350f465f42a25389d0a2b81914cd1e7531d407305abb13190f52f99",
+      "bytes": 19178,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Huntress, level 80, 3 item(s), 2 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b03.xml",
+      "sha256": "c98082e669120de59782c6946ffbc0d8dc5c95982bd9709394189e74f8bd7ba3",
+      "bytes": 16777,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Warrior, level 60, 2 item(s), 2 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b04.xml",
+      "sha256": "1602c76bd185be56f0964d85a348261498893ec99fca85e709ce59a6a78e274c",
+      "bytes": 17031,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Witch, level 90, 3 item(s), 1 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b05.xml",
+      "sha256": "a349b09fcc15feabe39655cc02eac1a7410b618bb2b5918f301140e331e6092f",
+      "bytes": 17051,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Sorceress, level 75, 2 item(s), 3 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b06.xml",
+      "sha256": "49557ac0e01bcefad3de1fae99841be5b570da171b97f635680275582ce61e52",
+      "bytes": 16959,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Mercenary, level 55, 2 item(s), 1 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b07.xml",
+      "sha256": "c89be86798d7ad780e1481cc8dbbad0af2669b76f28aed69baac97f7ce83f277",
+      "bytes": 15629,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Monk, level 40, 1 item(s), 1 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b08.xml",
+      "sha256": "2d73bedf1c37bc70fdc2eeb97c09566083fd1284f559735511fcabe1439dee01",
+      "bytes": 17208,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Druid, level 85, 2 item(s), 2 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b09.xml",
+      "sha256": "8e4d844ce04b4b94149c6af3137f6d14902ac33355d939b3076200b8297c2ba5",
+      "bytes": 14591,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Huntress, level 65, 2 item(s), 1 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b10.xml",
+      "sha256": "6edbad7fd6566c08e5b457917a34bde4fe95525696cb666c420ac01ab67498df",
+      "bytes": 15433,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Witch, level 50, 1 item(s), 1 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b11.xml",
+      "sha256": "d8763f541be4bbaf7e94cef53d987b406e4ac623a706d888dcea429ea63f577f",
+      "bytes": 15223,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Ranger, level 68, 2 item(s), 2 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/builds/b12.xml",
+      "sha256": "49e1c69e4e8bec88bf3453d89695d2087f05d4bc61dc4c3c5c6022b3b613e095",
+      "bytes": 16671,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "One build: Warrior, level 72, 2 item(s), 1 skill group(s).",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/catalog-slice.json",
+      "sha256": "877f281d54e7ed24d6f55a468649223c1ab381416aa7b13678ff64fc4d02f249",
+      "bytes": 237849,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "Rows of the pinned PoB catalog the P04 documents reference, plus every affix row sharing a text shape with a fixture item line.",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/variants.xml",
+      "sha256": "acc012e326409f02e803819115125057795fabb23ef73adb190ce70843bac285",
+      "bytes": 22265,
+      "origin": "pob_derived",
+      "author": "P04",
+      "description": "Two loadouts linked by PoB's {id} title rule and one item set no loadout links.",
+      "used_by": [
+        "tests/p04_fixtures.py"
+      ],
+      "caveat": "Composed by scripts/p04_make_fixtures.py from fixed rules over the pinned catalog (PoB ce566eac45ea), then loaded and saved by that PoB. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p04/review/generated-support.xml",
+      "sha256": "4803fca28dd3c30c4f0a50446064e7f05e7de03d8e524c973e2d5373d4b68bdc",
+      "bytes": 15994,
+      "origin": "pob_derived",
+      "author": "P04 review",
+      "description": "b09's PoB-generated Spear Stab group with an added support gem (from b12), selected as the main group.",
+      "used_by": [
+        "tests/unit/test_p04_review_repairs.py"
+      ],
+      "caveat": "Retained by the PR #10 review (docs/evidence/PR-10/generated-support-source.xml), saved by the pinned PoB ce566eac45ea; line endings converted to LF. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
     }
   ]
 }

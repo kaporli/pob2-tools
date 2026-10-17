@@ -1,0 +1,157 @@
+{
+  "numeric_boundaries": {
+    "invalid_quality": {
+      "issues": [
+        "malformed_value"
+      ],
+      "item_levels": [],
+      "item_properties": [],
+      "item_validation": [],
+      "parse_status": "invalid",
+      "recommended_exports": []
+    },
+    "negative_item_level": {
+      "issues": [
+        "malformed_value"
+      ],
+      "item_levels": [],
+      "item_properties": [],
+      "item_validation": [],
+      "parse_status": "invalid",
+      "recommended_exports": []
+    },
+    "overflow_config": {
+      "issues": [
+        "malformed_value"
+      ],
+      "item_levels": [],
+      "item_properties": [],
+      "item_validation": [],
+      "parse_status": "invalid",
+      "recommended_exports": []
+    }
+  },
+  "original_probes": {
+    "audit_changed_main_group": {
+      "changed_main": 1,
+      "mismatches": 1,
+      "passed": false,
+      "source_main": 0
+    },
+    "catalog_b_fresh": {
+      "build_statuses": [
+        "partial"
+      ],
+      "status": "partial"
+    },
+    "catalog_cache": [
+      {
+        "code": 0,
+        "requested_catalog": "7c48c8238c857514c1db45c1b855554e7db63ebb7a38db9e4d05f24d99e42a49",
+        "result_id": "3b039cbe-33e5-5ca1-bc36-e619b2accc92/parse/p04-t01.3/804f86323715714a",
+        "returned_build_catalogs": [
+          "7c48c8238c857514c1db45c1b855554e7db63ebb7a38db9e4d05f24d99e42a49"
+        ],
+        "status": "complete",
+        "unchanged": false
+      },
+      {
+        "code": 0,
+        "requested_catalog": "5618ea82e7a2e35a624892baa056372f08a635d2a4dcb0f4e1e3d25c1f381f19",
+        "result_id": "3b039cbe-33e5-5ca1-bc36-e619b2accc92/parse/p04-t01.3/80d8eec0a6de2b6f",
+        "returned_build_catalogs": [
+          "5618ea82e7a2e35a624892baa056372f08a635d2a4dcb0f4e1e3d25c1f381f19"
+        ],
+        "status": "partial",
+        "unchanged": false
+      }
+    ],
+    "engine_comparator": {
+      "added_numeric_stat": {
+        "BonusDamage": [
+          "<missing>",
+          1000
+        ]
+      },
+      "zero_to_nonzero": {
+        "Damage": [
+          0,
+          1000
+        ]
+      }
+    },
+    "invalid_active_gem_level": {
+      "status": "invalid"
+    },
+    "invalid_level": {
+      "status": "invalid"
+    },
+    "invalid_node": {
+      "status": "invalid"
+    },
+    "name_only_equipped_item": {
+      "build_statuses": [
+        "partial"
+      ],
+      "issues": [
+        "template_claim"
+      ],
+      "item_statuses": [
+        "partial",
+        "complete"
+      ],
+      "recommended_exports": [
+        false
+      ],
+      "result_status": "partial"
+    },
+    "removed_support_gem": {
+      "removed_gem": "poe2/gems/Metadata/Items/Gems/SkillGemAbidingHexSupport",
+      "reported_removals": [
+        "poe2/gems/Metadata/Items/Gems/SkillGemAbidingHexSupport"
+      ],
+      "status": "partial",
+      "unresolved": [
+        "poe2/gems/Metadata/Items/Gems/SkillGemAbidingHexSupport"
+      ]
+    },
+    "unresolved_affix": {
+      "build_statuses": [
+        "partial"
+      ],
+      "issues": [
+        "unresolved_affix"
+      ],
+      "item_statuses": [
+        "partial",
+        "complete"
+      ],
+      "recommended_exports": [
+        false
+      ],
+      "result_status": "partial"
+    },
+    "v1_main_group_migration": {
+      "v1_export_main": "2",
+      "v2_export_main": "2"
+    }
+  },
+  "same_unknown_item": {
+    "item_text": {
+      "export_complete": false,
+      "issues": [
+        "unresolved_affix"
+      ],
+      "item_status": "partial",
+      "parse_status": "partial"
+    },
+    "pob_xml": {
+      "export_complete": false,
+      "issues": [
+        "unresolved_affix"
+      ],
+      "item_status": "partial",
+      "parse_status": "partial"
+    }
+  }
+}

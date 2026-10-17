@@ -19,8 +19,9 @@ What this module refuses to do:
   and passive node names come from a caller-supplied
   :class:`~pob2opt.evaluation.naming.CatalogNaming`; a missing entry is
   reported, not guessed. P02-T02 owns the real table;
-* invent a value the record does not hold. A support gem has no level in a
-  BuildSpec, so the document omits the attribute rather than writing one;
+* invent a value the record does not hold. A support setting that is null
+  (unknown) is omitted from the document and reported, never filled with a
+  PoB default. Version 1 records hold no support settings at all;
 * resolve modifier text into effects. That is P04.
 
 Neither direction mutates its input.
@@ -33,16 +34,21 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass, replace
 from typing import Any, Mapping, Sequence
 
+from ..domain.absent import ABSENT
 from ..domain.enums import ConfigOrigin, RecordParseStatus
 from ..domain.identity import document_hash
-from ..domain.records import (BuildSpec, ConfigValue, EquipmentSlot,
-                              ItemInstance, Passives, Progression, SkillEntry,
-                              SkillGroup, SocketedEntity, WeaponSet, UnresolvedRef)
+from ..domain.migrate import legacy_main_group
+from ..domain.records import (BUILD_SPEC_SCHEMA_VERSION, BuildSpec,
+                              ConfigValue, EquipmentSlot, ItemInstance,
+                              Passives, Progression, SkillEntry, SkillGroup,
+                              SocketedEntity, SupportGem, WeaponSet,
+                              UnresolvedRef)
 from .itemtext import export_item, import_item
 from .importaudit import audit_document
 from .naming import CatalogNaming, UnresolvedName
 from .support import (NOT_REPRESENTABLE, PARTIAL, UNRESOLVED_NAME,
-                      LossCollector, SupportReport)
+                      LossCollector, MalformedSource, SupportReport,
+                      source_int, source_number)
 
 #: Written so PoB does not recompute the level from an empty tree
 #: (observation P00-OBS-02).
@@ -62,6 +68,8 @@ SUPPORT = {
         "jewel sockets on passive nodes",
         "skill groups: order, enabled flag, slot, weapon-set binding, main "
         "skill index, and each skill with its ordered supports",
+        "support settings: gem, level, quality and enabled flag (BuildSpec "
+        "schema version 2)",
         "config values of type boolean, number and string",
     ),
     "not_representable": (
@@ -78,8 +86,14 @@ SUPPORT = {
         "BuildSpec.name, variant_id, family_id, rotation_ids, "
         "source_document_ids and declared_patch: metadata "
         "the build identity excludes",
-        "support enabled/level/quality settings and unresolved imports: "
-        "incomplete gameplay data that blocks recommendation",
+        "support settings of a schema version 1 BuildSpec, and any null "
+        "support setting: unknown gameplay data that blocks recommendation",
+        "gem and group attributes outside the record (count, global effect "
+        "toggles, skill part, stage, mine and minion choices, stat set, "
+        "corruption, includeInFullDPS, item-granted source): reported by "
+        "the import audit when they differ from PoB's defaults",
+        "unresolved imports: incomplete gameplay data that blocks "
+        "recommendation",
     ),
 }
 
@@ -267,6 +281,7 @@ def _export_skills(build: BuildSpec, naming: CatalogNaming,
     skill_set = ET.SubElement(skills, "SkillSet", {"id": "1",
                                                    "title": "Default"})
     main_socket_group = 1
+    main_group = build.main_skill_group
     for index, group in enumerate(build.skill_groups):
         path = "/skill_groups/%d" % index
         attrib: dict[str, str] = {
@@ -300,12 +315,21 @@ def _export_skills(build: BuildSpec, naming: CatalogNaming,
         attrib["set2"] = "true" if set2 else "false"
         if group.main_skill_index is not None:
             attrib["mainActiveSkill"] = str(group.main_skill_index + 1)
-            if main_socket_group == 1:
-                main_socket_group = index + 1
         node = ET.SubElement(skill_set, "Skill", attrib)
         for skill_index, skill in enumerate(group.skills):
             _export_skill(node, skill, naming, losses,
                           "%s/skills/%d" % (path, skill_index))
+    if main_group is ABSENT:
+        # Version 1 records keep the version 1 exporter's selection.
+        legacy = legacy_main_group(build.skill_groups)
+        main_socket_group = 1 if legacy is None else legacy + 1
+    else:
+        if main_group is not None:
+            main_socket_group = main_group + 1
+        elif build.skill_groups:
+            losses.add("/main_skill_group", PARTIAL,
+                       "the main skill group is unknown; PoB would evaluate "
+                       "its default, the first group", None, False)
     return skills, main_socket_group
 
 
@@ -321,13 +345,10 @@ def _export_skill(parent: ET.Element, skill: SkillEntry,
                    "CatalogNaming.skill_ids has no PoB skill ID",
                    skill.skill_id, True)
     if skill.gem_id is not None:
-        try:
-            attrib["gemId"] = naming.resolve("gem_ids", skill.gem_id)
-        except UnresolvedName:
-            losses.add(path + "/gem_id", UNRESOLVED_NAME,
-                       "CatalogNaming.gem_ids has no PoB gem ID",
-                       skill.gem_id, True)
+        _gem_attributes(attrib, skill.gem_id, naming, losses, path + "/gem_id")
     ET.SubElement(parent, "Gem", attrib)
+    settings = (None if skill.supports is ABSENT
+                else dict(enumerate(skill.supports)))
     for support_index, support_id in enumerate(skill.support_ids):
         support_path = "%s/support_ids/%d" % (path, support_index)
         if support_id not in naming.support_skill_ids:
@@ -345,19 +366,69 @@ def _export_skill(parent: ET.Element, skill: SkillEntry,
                        "CatalogNaming.skill_ids has no PoB skill ID for this "
                        "support", support_id, True)
             continue
-        # This schema has no support settings. The XML is only a partial
-        # preview; the loss blocks its use as a recommended deliverable.
-        losses.add(support_path, PARTIAL,
-                   "BuildSpec carries no enabled, level or quality settings "
-                   "for supports; this preview enables the support and uses "
-                   "PoB defaults, so it cannot certify gameplay semantics",
-                   support_id, False)
+        if settings is None:
+            # Schema version 1 has no support settings. The XML is only a
+            # partial preview; the loss blocks its use as a deliverable.
+            losses.add(support_path, PARTIAL,
+                       "BuildSpec schema version 1 carries no enabled, level "
+                       "or quality settings for supports; this preview "
+                       "enables the support and uses PoB defaults, so it "
+                       "cannot certify gameplay semantics", support_id, False)
+        else:
+            _support_attributes(support_attrib, settings.get(support_index),
+                                naming, losses,
+                                "%s/supports/%d" % (path, support_index))
         ET.SubElement(parent, "Gem", support_attrib)
     if skill.triggered:
         losses.add(path + "/triggered", NOT_REPRESENTABLE,
                    "a PoB socket group is a flat gem list with no trigger "
                    "nesting; the nested skills would read back as siblings",
                    [child.skill_id for child in skill.triggered], True)
+
+
+def _gem_attributes(attrib: dict[str, str], gem_id: str,
+                    naming: CatalogNaming, losses: LossCollector,
+                    path: str) -> None:
+    try:
+        attrib["gemId"] = naming.resolve("gem_ids", gem_id)
+    except UnresolvedName:
+        losses.add(path, UNRESOLVED_NAME,
+                   "CatalogNaming.gem_ids has no PoB gem ID", gem_id, True)
+        return
+    variant = naming.gem_variant_ids.get(gem_id)
+    if variant is not None:
+        attrib["variantId"] = variant
+
+
+def _support_attributes(attrib: dict[str, str], support: SupportGem | None,
+                        naming: CatalogNaming, losses: LossCollector,
+                        path: str) -> None:
+    """Write one support's settings. A null setting is omitted and reported."""
+    if support is None:
+        losses.add(path, PARTIAL, "no settings entry for this support",
+                   None, True)
+        return
+    if support.gem_id is not None:
+        _gem_attributes(attrib, support.gem_id, naming, losses,
+                        path + "/gem_id")
+    unknown = []
+    if support.level is None:
+        unknown.append("level")
+    else:
+        attrib["level"] = str(support.level)
+    if support.quality is None:
+        unknown.append("quality")
+    else:
+        attrib["quality"] = str(support.quality)
+    if support.enabled is None:
+        unknown.append("enabled")
+    else:
+        attrib["enabled"] = "true" if support.enabled else "false"
+    if unknown:
+        losses.add(path, PARTIAL,
+                   "support setting(s) %s are unknown; the document omits "
+                   "them and PoB would substitute its defaults"
+                   % ", ".join(unknown), support.support_id, False)
 
 
 def _export_items(build: BuildSpec, items: Mapping[str, ItemInstance],
@@ -612,10 +683,11 @@ def _reverse(naming: CatalogNaming, table: str, value) -> str | None:
         return None
 
 
-def _split_ids(text: str | None) -> list[int]:
+def _split_ids(text: str | None, field_path: str = "/") -> list[int]:
     if not text:
         return []
-    return [int(part) for part in text.replace(" ", "").split(",") if part]
+    return [source_int(part, field_path)
+            for part in text.replace(" ", "").split(",") if part]
 
 
 def import_build(document: str, naming: CatalogNaming, *, record_id: str,
@@ -641,7 +713,7 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
     ascend_name = build_element.get("ascendClassName", "None")
     ascendancy_id = (None if ascend_name in ("", "None")
                      else _reverse(naming, "ascendancy_names", ascend_name))
-    level = int(build_element.get("level", "1"))
+    level = source_int(build_element.get("level", "1"), "/Build/@level")
 
     items, item_by_id = _import_items(root, naming, record_id, created_at,
                                       catalog_hash)
@@ -649,7 +721,9 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
     passives, weapon_set_nodes = _import_tree(root, naming, item_by_id)
     weapon_sets = _import_weapon_sets(naming, weapon_set_nodes,
                                       slot_ids_by_name)
-    skill_groups = _import_skills(root, naming)
+    skill_groups, positions, total = _import_skills(root, naming, losses)
+    main_group = _main_group(build_element, skill_groups, positions, total,
+                             losses)
     config = _import_config(root)
     for key, item in items.items():
         if item.base_id is None or item.parse_status != RecordParseStatus.COMPLETE:
@@ -658,7 +732,7 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
     report = losses.report()
 
     build = BuildSpec(
-        schema_version=1, record_id=record_id, created_at=created_at,
+        schema_version=BUILD_SPEC_SCHEMA_VERSION, record_id=record_id, created_at=created_at,
         provenance_ids=list(provenance_ids), build_hash="",
         catalog_hash=catalog_hash, declared_patch=None, name="",
         class_id=class_id if class_id is not None else "",
@@ -671,13 +745,18 @@ def import_build(document: str, naming: CatalogNaming, *, record_id: str,
         skill_groups=skill_groups, config=config, rotation_ids=[],
         source_document_ids=[], variant_id=None, family_id=None,
         raw_blob_hashes=[document_hash(document.encode("utf-8"))],
+        main_skill_group=main_group,
         parse_status=(RecordParseStatus.COMPLETE if report.complete
                       else RecordParseStatus.PARTIAL),
+        # Only losses that leave the record incomplete are unresolved. A
+        # value PoB regenerates by itself, or display state outside the
+        # identity, stays in the report and does not taint the record.
         unresolved_refs=[UnresolvedRef(
             field_path=loss.field_path,
             reference=(loss.preserved if isinstance(loss.preserved, str)
                        else json.dumps(loss.preserved)), reason=loss.reason)
-                         for loss in report.unsupported])
+                         for loss in report.unsupported
+                         if loss.affects_identity or loss.kind == PARTIAL])
     build = replace(build, build_hash=_build_hash(build))
     return BuildImport(build=build, items=items, report=report,
                        source_document=document)
@@ -694,13 +773,18 @@ def _import_items(root: ET.Element, naming: CatalogNaming, record_id: str,
         text = (node.text or "").strip("\n")
         if not text.strip():
             continue
-        item = import_item(text, naming,
-                           record_id="%s-item-%d" % (record_id, index),
-                           created_at=created_at, catalog_hash=catalog_hash)
+        try:
+            item = import_item(text, naming,
+                               record_id="%s-item-%d" % (record_id, index),
+                               created_at=created_at,
+                               catalog_hash=catalog_hash)
+        except MalformedSource as error:
+            raise MalformedSource("/Items/Item/%d%s" % (index, error.field_path),
+                                  error.value, error.expected) from None
         items[item.item_hash] = item
         numeric = node.get("id")
         if numeric is not None:
-            item_by_id[int(numeric)] = item.item_hash
+            item_by_id[source_int(numeric, "/Items/Item/%d/@id" % index)] =                 item.item_hash
     return items, item_by_id
 
 
@@ -720,7 +804,8 @@ def _import_equipment(root: ET.Element, naming: CatalogNaming,
         if slot_id is None:
             continue
         hand_slots[name] = slot_id
-        item_id = int(node.get("itemId", "0"))
+        item_id = source_int(node.get("itemId", "0"),
+                             "/Items/ItemSet/Slot[@name=%r]/@itemId" % name)
         item_hash = item_by_id.get(item_id)
         equipment[slot_id] = (None if item_hash is None
                               else EquipmentSlot(item_hash=item_hash,
@@ -741,7 +826,7 @@ def _import_tree(root: ET.Element, naming: CatalogNaming,
         return (Passives(allocated=[], ascendancy_allocated=[], choices={},
                          socketed=[]), weapon_set_nodes)
 
-    for native in _split_ids(spec.get("nodes")):
+    for native in _split_ids(spec.get("nodes"), "/Tree/Spec/@nodes"):
         passive_id = _reverse(naming, "node_ids", native)
         if passive_id is None:
             continue
@@ -752,15 +837,19 @@ def _import_tree(root: ET.Element, naming: CatalogNaming,
 
     for child in spec:
         if child.tag.startswith("WeaponSet"):
-            number = int(child.tag[len("WeaponSet"):])
+            number = source_int(child.tag[len("WeaponSet"):],
+                                "/Tree/Spec/" + child.tag)
             names = [_reverse(naming, "node_ids", native)
-                     for native in _split_ids(child.get("nodes"))]
+                     for native in _split_ids(
+                         child.get("nodes"),
+                         "/Tree/Spec/%s/@nodes" % child.tag)]
             weapon_set_nodes[number] = [n for n in names if n is not None]
         elif child.tag == "Sockets":
             for socket in child.findall("Socket"):
-                node_id = _reverse(naming, "node_ids",
-                                   int(socket.get("nodeId", "0")))
-                entity = item_by_id.get(int(socket.get("itemId", "0")))
+                node_id = _reverse(naming, "node_ids", source_int(
+                    socket.get("nodeId", "0"), "/Tree/Spec/Sockets/@nodeId"))
+                entity = item_by_id.get(source_int(
+                    socket.get("itemId", "0"), "/Tree/Spec/Sockets/@itemId"))
                 if node_id is not None and entity is not None:
                     socketed.append(SocketedEntity(node_id=node_id,
                                                    entity_id=entity))
@@ -771,7 +860,9 @@ def _import_tree(root: ET.Element, naming: CatalogNaming,
                                          attribute)
                     if option_id is None:
                         continue
-                    for native in _split_ids(override.get(key)):
+                    for native in _split_ids(
+                            override.get(key),
+                            "/Tree/Spec/Overrides/@" + key):
                         passive_id = _reverse(naming, "node_ids", native)
                         if passive_id is not None:
                             choices[passive_id] = option_id
@@ -808,14 +899,28 @@ def _import_weapon_sets(naming: CatalogNaming,
     return sets
 
 
-def _import_skills(root: ET.Element, naming: CatalogNaming) -> list[SkillGroup]:
+def _import_skills(root: ET.Element, naming: CatalogNaming,
+                   losses: LossCollector):
+    """The author's skill groups, with their positions in the document.
+
+    A group with a ``source`` attribute is one PoB generated from the
+    equipment, the tree or a mechanic, and PoB generates it again on load.
+    It is not imported; the import audit reports any setting on it that the
+    author changed. Returns the groups, each group's position among all
+    groups in the document, and that total.
+    """
     groups: list[SkillGroup] = []
+    positions: list[int] = []
     container = root.find("Skills")
     if container is None:
-        return groups
+        return groups, positions, 0
     skill_set = container.find("SkillSet")
-    nodes = (container if skill_set is None else skill_set).findall("Skill")
-    for node in nodes:
+    every = (container if skill_set is None else skill_set).findall("Skill")
+    nodes = [(index, node) for index, node in enumerate(every)
+             if not node.get("source")]
+    labels = [node.get("label", "") for _, node in nodes]
+    for position, (document_index, node) in enumerate(nodes):
+        positions.append(document_index)
         slot_name = node.get("slot")
         slot_id = (None if slot_name is None
                    else _reverse(naming, "slot_names", slot_name))
@@ -825,34 +930,125 @@ def _import_skills(root: ET.Element, naming: CatalogNaming) -> list[SkillGroup]:
         if set1 != set2:
             weapon_set_id = _reverse(naming, "weapon_set_numbers",
                                      1 if set1 else 2)
-        main_attribute = node.get("mainActiveSkill")
-        main_skill_index = (None if main_attribute is None
-                            else int(main_attribute) - 1)
+        # PoB reads "nil" or a missing value as 1; None writes nothing back,
+        # which PoB reads the same way.
+        main_number = _optional_int(node.get("mainActiveSkill"))
+        main_skill_index = None if main_number is None else main_number - 1
         skills: list[SkillEntry] = []
+        unresolved = False
         for gem in node.findall("Gem"):
             skill_id = _reverse(naming, "skill_ids", gem.get("skillId", ""))
             if skill_id is None:
+                # Active or support is unknown, so nothing after it may be
+                # attached to the skill before it. The audit reports it.
+                unresolved = True
                 continue
-            if skill_id in naming.support_skill_ids and skills:
+            gem_id = _gem_from_document(naming, gem)
+            if skill_id in naming.support_skill_ids:
+                if not skills or unresolved:
+                    continue  # the import audit reports an orphan support
                 current = skills[-1]
+                setting = SupportGem(
+                    support_id=skill_id, gem_id=gem_id,
+                    level=_optional_int(gem.get("level")),
+                    quality=_optional_int(gem.get("quality")),
+                    enabled=(None if gem.get("enabled") is None
+                             else gem.get("enabled") == "true"))
                 skills[-1] = replace(
-                    current, support_ids=list(current.support_ids) + [skill_id])
+                    current, support_ids=list(current.support_ids) + [skill_id],
+                    supports=list(current.supports) + [setting])
                 continue
-            gem_id = (None if gem.get("gemId") is None
-                      else _reverse(naming, "gem_ids", gem.get("gemId")))
+            unresolved = False
             skills.append(SkillEntry(
                 skill_id=skill_id, gem_id=gem_id,
-                level=int(gem.get("level", "0")),
-                quality=int(gem.get("quality", "0")),
+                level=source_int(gem.get("level", "0"),
+                                 "/Skills/Skill/%d/Gem/@level"
+                                 % document_index),
+                quality=source_int(gem.get("quality", "0"),
+                                   "/Skills/Skill/%d/Gem/@quality"
+                                   % document_index),
                 enabled=gem.get("enabled", "true") == "true",
-                support_ids=[], triggered=[]))
+                support_ids=[], triggered=[], supports=[]))
+        if main_skill_index is not None and main_skill_index >= len(skills):
+            # The selected skill is one the record does not hold, such as a
+            # skill another gem grants; the index is left unknown.
+            if not any(_reverse(naming, "skill_ids", g.get("skillId", ""))
+                       is None for g in node.findall("Gem")):
+                losses.add("/Skills/Skill/%d/@mainActiveSkill" % document_index,
+                           PARTIAL, "the selected active skill is not one of "
+                           "the group's %d imported skills" % len(skills),
+                           node.get("mainActiveSkill"), True)
+            main_skill_index = None
+        elif main_skill_index is not None and any(
+                _reverse(naming, "skill_ids", g.get("skillId", "")) is None
+                for g in node.findall("Gem")):
+            # An unknown gem makes the position uncertain. The audit reports
+            # that gem; the index is left unknown, not guessed.
+            main_skill_index = None
+        label = labels[position]
+        # The label is the group's ID when it names one group. An empty or
+        # repeated label gets a positional ID; identity excludes it anyway.
+        group_id = (label if label and labels.count(label) == 1
+                    else "group-%d" % (position + 1))
         groups.append(SkillGroup(
-            group_id=node.get("label", ""),
+            group_id=group_id,
             enabled=node.get("enabled", "false") == "true",
             slot_id=slot_id, source_item_hash=None,
             weapon_set_id=weapon_set_id, main_skill_index=main_skill_index,
             skills=skills))
-    return groups
+    return groups, positions, len(every)
+
+
+def _main_group(build_element: ET.Element, groups: Sequence[SkillGroup],
+                positions: Sequence[int], total: int,
+                losses: LossCollector) -> int | None:
+    """``Build@mainSkillIndex``, else ``mainSocketGroup``, else 1, as PoB reads.
+
+    One-based over every group in the document, zero-based over the imported
+    groups in the record. Null when there are no groups to select. A main
+    group PoB generated, or an index naming no group, is reported.
+    """
+    if total == 0:
+        return None
+    text = (build_element.get("mainSkillIndex")
+            or build_element.get("mainSocketGroup") or "1")
+    number = _optional_int(text)
+    if number is None or not 1 <= number <= total:
+        losses.add("/Build/@mainSocketGroup", PARTIAL,
+                   "the main socket group does not name one of the %d groups"
+                   % total, text, False)
+        return None
+    if not positions and number == 1:
+        # Only generated groups, and PoB evaluates the first of them. The
+        # export writes no group and the default main group 1, which PoB
+        # reads back the same way.
+        return None
+    if number - 1 not in positions:
+        losses.add("/Build/@mainSocketGroup", PARTIAL,
+                   "the main skill is in a group PoB generates from gear, "
+                   "the tree or a mechanic; the record holds no such group",
+                   text, False)
+        return None
+    return positions.index(number - 1)
+
+
+def _optional_int(text: str | None) -> int | None:
+    if text is None or text.strip() == "":
+        return None
+    try:
+        return int(text)
+    except ValueError:
+        return None  # the import audit reports a non-integer setting
+
+
+def _gem_from_document(naming: CatalogNaming, gem: ET.Element) -> str | None:
+    game_id = gem.get("gemId")
+    if game_id is None:
+        return None
+    try:
+        return naming.reverse_gem(game_id, gem.get("variantId"))
+    except UnresolvedName:
+        return None
 
 
 def _import_config(root: ET.Element) -> dict[str, ConfigValue]:
@@ -870,7 +1066,8 @@ def _import_config(root: ET.Element) -> dict[str, ConfigValue]:
             value: Any = node.get("boolean") == "true"
         elif node.get("number") is not None:
             text = node.get("number", "")
-            value = float(text) if any(c in text for c in ".eE") else int(text)
+            value = source_number(text, "/Config/Input[@name=%r]/@number"
+                                  % name)
         elif node.get("string") is not None:
             value = node.get("string")
         else:

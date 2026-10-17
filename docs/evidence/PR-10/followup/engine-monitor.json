@@ -1,0 +1,7 @@
+{
+  "exit_code": -1,
+  "elapsed_seconds": 34.9293546,
+  "stopped_at_limit": true,
+  "peak_working_set_bytes": 4625018880,
+  "pid": 32532
+}

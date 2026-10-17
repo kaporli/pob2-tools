@@ -1,0 +1,68 @@
+{
+  "exit_code": 0,
+  "stopped_at_limit": false,
+  "elapsed_seconds": 24.1802273,
+  "samples": [
+    {
+      "seconds": 0.0135792,
+      "progress": null,
+      "bytes": 2801664
+    },
+    {
+      "seconds": 2.0423258,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "bytes": 213962752
+    },
+    {
+      "seconds": 4.0604857,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "bytes": 289669120
+    },
+    {
+      "seconds": 6.0706196,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "bytes": 446169088
+    },
+    {
+      "seconds": 8.0799018,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "bytes": 616144896
+    },
+    {
+      "seconds": 10.0886665,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "bytes": 628883456
+    },
+    {
+      "seconds": 12.0953001,
+      "progress": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01] ",
+      "bytes": 628154368
+    },
+    {
+      "seconds": 14.1111139,
+      "progress": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b04] ",
+      "bytes": 737853440
+    },
+    {
+      "seconds": 16.1218551,
+      "progress": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b12] ",
+      "bytes": 735768576
+    },
+    {
+      "seconds": 18.132953,
+      "progress": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates ",
+      "bytes": 760573952
+    },
+    {
+      "seconds": 20.1437635,
+      "progress": "tests/engine/test_p04_round_trips.py::test_each_variant_evaluates_as_pob_evaluates_that_loadout ",
+      "bytes": 858492928
+    },
+    {
+      "seconds": 22.1570037,
+      "progress": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices1] ",
+      "bytes": 855994368
+    }
+  ],
+  "peak_working_set_bytes": 858492928
+}

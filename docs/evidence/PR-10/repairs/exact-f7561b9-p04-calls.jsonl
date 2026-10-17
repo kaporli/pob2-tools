@@ -1,0 +1,358 @@
+{"seconds": 1088391.406, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01]"}
+{"seconds": 1088393.828, "event": "call", "name": "eval", "args": {"code": "collectgarbage('collect')"}}
+{"seconds": 1088394.015, "event": "return", "name": "eval", "lua_heap_kib": 114496.96972656}
+{"seconds": 1088394.125, "event": "call", "name": "load_build_xml", "args": {"xml": "3f8adbe07ad42af7b32e7789c91b55392337143acd59fa108bc31ab743aa1176"}}
+{"seconds": 1088394.609, "event": "return", "name": "load_build_xml", "lua_heap_kib": 147254.45800781}
+{"seconds": 1088394.625, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088394.625, "event": "return", "name": "get_stats", "lua_heap_kib": 147387.39941406}
+{"seconds": 1088394.625, "event": "call", "name": "load_build_xml", "args": {"xml": "955204e5a3e0099d1ce387c3e64af39fc855e887358f7df1591176c3c6807803"}}
+{"seconds": 1088394.953, "event": "return", "name": "load_build_xml", "lua_heap_kib": 178600.81445312}
+{"seconds": 1088394.953, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088394.953, "event": "return", "name": "get_stats", "lua_heap_kib": 178672.09960938}
+{"seconds": 1088394.953, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088394.984, "event": "return", "name": "save_build_xml", "lua_heap_kib": 179543.42773438}
+{"seconds": 1088395.0, "event": "call", "name": "load_build_xml", "args": {"xml": "c98082e669120de59782c6946ffbc0d8dc5c95982bd9709394189e74f8bd7ba3"}}
+{"seconds": 1088395.562, "event": "return", "name": "load_build_xml", "lua_heap_kib": 217409.01757812}
+{"seconds": 1088395.562, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088395.562, "event": "return", "name": "get_stats", "lua_heap_kib": 217503.61523438}
+{"seconds": 1088395.562, "event": "call", "name": "load_build_xml", "args": {"xml": "f1db2276a4f73f0717fa5a3547939fb36ae7cc959a786468f61f7eba1ea1efa4"}}
+{"seconds": 1088395.968, "event": "return", "name": "load_build_xml", "lua_heap_kib": 252653.18164062}
+{"seconds": 1088395.968, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088395.984, "event": "return", "name": "get_stats", "lua_heap_kib": 252722.23632812}
+{"seconds": 1088395.984, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088396.0, "event": "return", "name": "save_build_xml", "lua_heap_kib": 253588.86914062}
+{"seconds": 1088396.031, "event": "call", "name": "load_build_xml", "args": {"xml": "1602c76bd185be56f0964d85a348261498893ec99fca85e709ce59a6a78e274c"}}
+{"seconds": 1088396.375, "event": "return", "name": "load_build_xml", "lua_heap_kib": 285894.45117188}
+{"seconds": 1088396.375, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088396.375, "event": "return", "name": "get_stats", "lua_heap_kib": 285984.35742188}
+{"seconds": 1088396.375, "event": "call", "name": "load_build_xml", "args": {"xml": "193993af86db503ec9704cc35cb447cf2055e5aaca3daae939c4dd51f6cc0c30"}}
+{"seconds": 1088396.656, "event": "return", "name": "load_build_xml", "lua_heap_kib": 316892.34570312}
+{"seconds": 1088396.656, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088396.656, "event": "return", "name": "get_stats", "lua_heap_kib": 316959.06054688}
+{"seconds": 1088396.656, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088396.671, "event": "return", "name": "save_build_xml", "lua_heap_kib": 317679.88085938}
+{"seconds": 1088396.703, "event": "call", "name": "load_build_xml", "args": {"xml": "a349b09fcc15feabe39655cc02eac1a7410b618bb2b5918f301140e331e6092f"}}
+{"seconds": 1088397.046, "event": "return", "name": "load_build_xml", "lua_heap_kib": 352562.24414062}
+{"seconds": 1088397.062, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088397.062, "event": "return", "name": "get_stats", "lua_heap_kib": 352652.47070312}
+{"seconds": 1088397.062, "event": "call", "name": "load_build_xml", "args": {"xml": "0500b72e8298b8f64968203ce3cf213ebff537c8a207eb8e404b79e1f477dbd6"}}
+{"seconds": 1088397.343, "event": "return", "name": "load_build_xml", "lua_heap_kib": 385094.74414062}
+{"seconds": 1088397.343, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088397.343, "event": "return", "name": "get_stats", "lua_heap_kib": 385162.84570312}
+{"seconds": 1088397.343, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088397.359, "event": "return", "name": "save_build_xml", "lua_heap_kib": 386011.95117188}
+{"seconds": 1088397.39, "event": "call", "name": "load_build_xml", "args": {"xml": "c89be86798d7ad780e1481cc8dbbad0af2669b76f28aed69baac97f7ce83f277"}}
+{"seconds": 1088397.64, "event": "return", "name": "load_build_xml", "lua_heap_kib": 416896.46679688}
+{"seconds": 1088397.64, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088397.64, "event": "return", "name": "get_stats", "lua_heap_kib": 416983.93554688}
+{"seconds": 1088397.64, "event": "call", "name": "load_build_xml", "args": {"xml": "79f63132b138513405925d393a3cd5baa536938a534e2e86b0638afa67541647"}}
+{"seconds": 1088397.828, "event": "return", "name": "load_build_xml", "lua_heap_kib": 446829.25585938}
+{"seconds": 1088397.828, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088397.828, "event": "return", "name": "get_stats", "lua_heap_kib": 446897.11523438}
+{"seconds": 1088397.828, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088397.843, "event": "return", "name": "save_build_xml", "lua_heap_kib": 447570.58789062}
+{"seconds": 1088397.859, "event": "call", "name": "load_build_xml", "args": {"xml": "2d73bedf1c37bc70fdc2eeb97c09566083fd1284f559735511fcabe1439dee01"}}
+{"seconds": 1088398.39, "event": "return", "name": "load_build_xml", "lua_heap_kib": 484573.97070312}
+{"seconds": 1088398.39, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088398.406, "event": "return", "name": "get_stats", "lua_heap_kib": 484671.09570312}
+{"seconds": 1088398.406, "event": "call", "name": "load_build_xml", "args": {"xml": "d92954ed0a67a6577c242db0daed9ec09075e086d20eba0c58b9871cad55e081"}}
+{"seconds": 1088398.953, "event": "return", "name": "load_build_xml", "lua_heap_kib": 521290.79101562}
+{"seconds": 1088398.953, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088398.953, "event": "return", "name": "get_stats", "lua_heap_kib": 521362.34570312}
+{"seconds": 1088398.953, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088399.0, "event": "return", "name": "save_build_xml", "lua_heap_kib": 522246.72070312}
+{"seconds": 1088399.031, "event": "call", "name": "load_build_xml", "args": {"xml": "8e4d844ce04b4b94149c6af3137f6d14902ac33355d939b3076200b8297c2ba5"}}
+{"seconds": 1088399.578, "event": "return", "name": "load_build_xml", "lua_heap_kib": 203453.08007812}
+{"seconds": 1088399.578, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088399.578, "event": "return", "name": "get_stats", "lua_heap_kib": 203561.70507812}
+{"seconds": 1088399.578, "event": "call", "name": "load_build_xml", "args": {"xml": "a1188e3dd0a6522d1e5a6e608d577d398ded2d351b24fcad8ee0b0ef80c700ff"}}
+{"seconds": 1088399.828, "event": "return", "name": "load_build_xml", "lua_heap_kib": 234546.93945312}
+{"seconds": 1088399.828, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088399.828, "event": "return", "name": "get_stats", "lua_heap_kib": 234616.35351562}
+{"seconds": 1088399.828, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088399.843, "event": "return", "name": "save_build_xml", "lua_heap_kib": 235228.37304688}
+{"seconds": 1088399.859, "event": "call", "name": "load_build_xml", "args": {"xml": "6edbad7fd6566c08e5b457917a34bde4fe95525696cb666c420ac01ab67498df"}}
+{"seconds": 1088400.109, "event": "return", "name": "load_build_xml", "lua_heap_kib": 265524.98242188}
+{"seconds": 1088400.109, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088400.109, "event": "return", "name": "get_stats", "lua_heap_kib": 265625.46289062}
+{"seconds": 1088400.109, "event": "call", "name": "load_build_xml", "args": {"xml": "61797a1515c52ba081dac23c8a0d12af0bf371476e947baec898655b4d9095b3"}}
+{"seconds": 1088400.343, "event": "return", "name": "load_build_xml", "lua_heap_kib": 295374.79882812}
+{"seconds": 1088400.343, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088400.359, "event": "return", "name": "get_stats", "lua_heap_kib": 295441.51367188}
+{"seconds": 1088400.359, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088400.359, "event": "return", "name": "save_build_xml", "lua_heap_kib": 296075.31054688}
+{"seconds": 1088400.375, "event": "call", "name": "load_build_xml", "args": {"xml": "d8763f541be4bbaf7e94cef53d987b406e4ac623a706d888dcea429ea63f577f"}}
+{"seconds": 1088400.671, "event": "return", "name": "load_build_xml", "lua_heap_kib": 329264.68945312}
+{"seconds": 1088400.671, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088400.671, "event": "return", "name": "get_stats", "lua_heap_kib": 329346.44726562}
+{"seconds": 1088400.671, "event": "call", "name": "load_build_xml", "args": {"xml": "5af2c51e31698f46595eb57bde64a9c4f18e91ecbcbad069ac515e0f2bd8b7be"}}
+{"seconds": 1088400.875, "event": "return", "name": "load_build_xml", "lua_heap_kib": 360980.94335938}
+{"seconds": 1088400.875, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088400.875, "event": "return", "name": "get_stats", "lua_heap_kib": 361048.61132812}
+{"seconds": 1088400.875, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088400.89, "event": "return", "name": "save_build_xml", "lua_heap_kib": 361832.04882812}
+{"seconds": 1088400.906, "event": "call", "name": "load_build_xml", "args": {"xml": "49e1c69e4e8bec88bf3453d89695d2087f05d4bc61dc4c3c5c6022b3b613e095"}}
+{"seconds": 1088401.312, "event": "return", "name": "load_build_xml", "lua_heap_kib": 395498.40039062}
+{"seconds": 1088401.312, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088401.312, "event": "return", "name": "get_stats", "lua_heap_kib": 395594.00195312}
+{"seconds": 1088401.312, "event": "call", "name": "load_build_xml", "args": {"xml": "77a33512d562df52b78e8f42a71b9dc3ab991a2fa6f48d5d033f1cb45e745ae4"}}
+{"seconds": 1088401.828, "event": "return", "name": "load_build_xml", "lua_heap_kib": 428459.51367188}
+{"seconds": 1088401.828, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088401.828, "event": "return", "name": "get_stats", "lua_heap_kib": 428533.05664062}
+{"seconds": 1088401.828, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088401.859, "event": "return", "name": "save_build_xml", "lua_heap_kib": 429430.60742188}
+{"seconds": 1088401.89, "event": "call", "name": "load_build_xml", "args": {"xml": "77fbc8532350f465f42a25389d0a2b81914cd1e7531d407305abb13190f52f99"}}
+{"seconds": 1088402.375, "event": "return", "name": "load_build_xml", "lua_heap_kib": 468168.28320312}
+{"seconds": 1088402.375, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088402.375, "event": "return", "name": "get_stats", "lua_heap_kib": 468259.68945312}
+{"seconds": 1088402.375, "event": "call", "name": "load_build_xml", "args": {"xml": "0e042252ecaafcbfc522d3022496d7b293b364a89d498b522558c785ca7b1259"}}
+{"seconds": 1088402.703, "event": "return", "name": "load_build_xml", "lua_heap_kib": 503010.17382812}
+{"seconds": 1088402.703, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088402.718, "event": "return", "name": "get_stats", "lua_heap_kib": 503079.72460938}
+{"seconds": 1088402.718, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088402.734, "event": "return", "name": "save_build_xml", "lua_heap_kib": 504167.70507812}
+{"seconds": 1088402.765, "event": "call", "name": "load_build_xml", "args": {"xml": "49557ac0e01bcefad3de1fae99841be5b570da171b97f635680275582ce61e52"}}
+{"seconds": 1088403.125, "event": "return", "name": "load_build_xml", "lua_heap_kib": 538694.30664062}
+{"seconds": 1088403.125, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088403.125, "event": "return", "name": "get_stats", "lua_heap_kib": 538778.41601562}
+{"seconds": 1088403.125, "event": "call", "name": "load_build_xml", "args": {"xml": "898e47abbfb4a18ea52eb83bb3286884e5ead02b0a02be6d20bfb8222b0703f0"}}
+{"seconds": 1088403.39, "event": "return", "name": "load_build_xml", "lua_heap_kib": 570681.44335938}
+{"seconds": 1088403.39, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088403.39, "event": "return", "name": "get_stats", "lua_heap_kib": 570749.08398438}
+{"seconds": 1088403.39, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088403.406, "event": "return", "name": "save_build_xml", "lua_heap_kib": 571459.38867188}
+{"seconds": 1088403.406, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b01]"}
+{"seconds": 1088403.406, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b03]"}
+{"seconds": 1088403.406, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b03]"}
+{"seconds": 1088403.406, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b04]"}
+{"seconds": 1088403.406, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b04]"}
+{"seconds": 1088403.406, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b05]"}
+{"seconds": 1088403.406, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b05]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b07]"}
+{"seconds": 1088403.421, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b07]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b08]"}
+{"seconds": 1088403.421, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b08]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b09]"}
+{"seconds": 1088403.421, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b09]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b10]"}
+{"seconds": 1088403.421, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b10]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b11]"}
+{"seconds": 1088403.421, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b11]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b12]"}
+{"seconds": 1088403.421, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b12]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b02]"}
+{"seconds": 1088403.421, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b02]"}
+{"seconds": 1088403.421, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b06]"}
+{"seconds": 1088403.437, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_pob_evaluates_our_export_as_it_evaluated_the_source[b06]"}
+{"seconds": 1088403.437, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b01]"}
+{"seconds": 1088403.437, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b01]"}
+{"seconds": 1088403.437, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b03]"}
+{"seconds": 1088403.437, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b03]"}
+{"seconds": 1088403.437, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b04]"}
+{"seconds": 1088403.437, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b04]"}
+{"seconds": 1088403.437, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b05]"}
+{"seconds": 1088403.437, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b05]"}
+{"seconds": 1088403.437, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b07]"}
+{"seconds": 1088403.453, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b07]"}
+{"seconds": 1088403.453, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b08]"}
+{"seconds": 1088403.453, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b08]"}
+{"seconds": 1088403.453, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b09]"}
+{"seconds": 1088403.453, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b09]"}
+{"seconds": 1088403.453, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b10]"}
+{"seconds": 1088403.453, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b10]"}
+{"seconds": 1088403.453, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b11]"}
+{"seconds": 1088403.453, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b11]"}
+{"seconds": 1088403.453, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b12]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b12]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b02]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b02]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b06]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_identity_survives_pobs_own_save[b06]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b01]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b01]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b03]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b03]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b04]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b04]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b05]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b05]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b07]"}
+{"seconds": 1088403.468, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b07]"}
+{"seconds": 1088403.468, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b08]"}
+{"seconds": 1088403.484, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b08]"}
+{"seconds": 1088403.484, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b09]"}
+{"seconds": 1088403.484, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b09]"}
+{"seconds": 1088403.484, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b10]"}
+{"seconds": 1088403.484, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b10]"}
+{"seconds": 1088403.484, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b11]"}
+{"seconds": 1088403.484, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b11]"}
+{"seconds": 1088403.484, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b12]"}
+{"seconds": 1088403.484, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_complete_import_exports_as_the_recommended_deliverable[b12]"}
+{"seconds": 1088403.484, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_partial_import_never_exports_as_a_deliverable[b02]"}
+{"seconds": 1088403.484, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_partial_import_never_exports_as_a_deliverable[b02]"}
+{"seconds": 1088403.484, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_partial_import_never_exports_as_a_deliverable[b06]"}
+{"seconds": 1088403.484, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_partial_import_never_exports_as_a_deliverable[b06]"}
+{"seconds": 1088403.484, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b01]"}
+{"seconds": 1088403.484, "event": "call", "name": "load_build_xml", "args": {"xml": "570c2c37ef889333c4d95bd849d1c407fc686e749c9d4c7c179a360d7bdf9126"}}
+{"seconds": 1088403.656, "event": "return", "name": "load_build_xml", "lua_heap_kib": 602398.06054688}
+{"seconds": 1088403.656, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088403.671, "event": "return", "name": "save_build_xml", "lua_heap_kib": 603239.87304688}
+{"seconds": 1088403.671, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b01]"}
+{"seconds": 1088403.671, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b03]"}
+{"seconds": 1088403.671, "event": "call", "name": "load_build_xml", "args": {"xml": "43466f45bf63d71a810fa3583527033d91b522690985ce21e14e66a704bbd7c2"}}
+{"seconds": 1088404.171, "event": "return", "name": "load_build_xml", "lua_heap_kib": 640339.59179688}
+{"seconds": 1088404.171, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088404.187, "event": "return", "name": "save_build_xml", "lua_heap_kib": 641216.04882812}
+{"seconds": 1088404.203, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b03]"}
+{"seconds": 1088404.203, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b04]"}
+{"seconds": 1088404.203, "event": "call", "name": "load_build_xml", "args": {"xml": "6482b9191362b51c0f559f5fc6175508c8d994fd0fa6a36671a92b00c60622cf"}}
+{"seconds": 1088404.625, "event": "return", "name": "load_build_xml", "lua_heap_kib": 673905.80664062}
+{"seconds": 1088404.625, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088404.656, "event": "return", "name": "save_build_xml", "lua_heap_kib": 674631.73242188}
+{"seconds": 1088404.656, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b04]"}
+{"seconds": 1088404.656, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b05]"}
+{"seconds": 1088404.656, "event": "call", "name": "load_build_xml", "args": {"xml": "79a96c086f6589eae65abca635727f8c72b015a67811dea6f828cb6944112107"}}
+{"seconds": 1088405.015, "event": "return", "name": "load_build_xml", "lua_heap_kib": 708736.49023438}
+{"seconds": 1088405.015, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088405.046, "event": "return", "name": "save_build_xml", "lua_heap_kib": 709624.87304688}
+{"seconds": 1088405.046, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b05]"}
+{"seconds": 1088405.046, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b07]"}
+{"seconds": 1088405.046, "event": "call", "name": "load_build_xml", "args": {"xml": "2eda7bc1928d56e6083d8766b9e74ab516fce99f980f199f33fe9eeaf4776955"}}
+{"seconds": 1088405.343, "event": "return", "name": "load_build_xml", "lua_heap_kib": 740465.75195312}
+{"seconds": 1088405.343, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088405.359, "event": "return", "name": "save_build_xml", "lua_heap_kib": 741137.71289062}
+{"seconds": 1088405.375, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b07]"}
+{"seconds": 1088405.375, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b08]"}
+{"seconds": 1088405.375, "event": "call", "name": "load_build_xml", "args": {"xml": "1937340dc5f7fae82045150fccfc1d0e33a740e054986658315eed0054c1224b"}}
+{"seconds": 1088405.734, "event": "return", "name": "load_build_xml", "lua_heap_kib": 776128.14257812}
+{"seconds": 1088405.734, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088405.75, "event": "return", "name": "save_build_xml", "lua_heap_kib": 775464.50976562}
+{"seconds": 1088405.765, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b08]"}
+{"seconds": 1088405.765, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b09]"}
+{"seconds": 1088405.765, "event": "call", "name": "load_build_xml", "args": {"xml": "87d5c91c92fd93a4c56d2ac395973de6c1ef471726444d856428296255e554ac"}}
+{"seconds": 1088406.343, "event": "return", "name": "load_build_xml", "lua_heap_kib": 188942.79003906}
+{"seconds": 1088406.343, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088406.359, "event": "return", "name": "save_build_xml", "lua_heap_kib": 189551.11425781}
+{"seconds": 1088406.359, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b09]"}
+{"seconds": 1088406.359, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b10]"}
+{"seconds": 1088406.375, "event": "call", "name": "load_build_xml", "args": {"xml": "c5dbe6e75750f0701c332153419a9b8431600e0c1430d4bb510d11854b8d35fe"}}
+{"seconds": 1088406.562, "event": "return", "name": "load_build_xml", "lua_heap_kib": 219250.33300781}
+{"seconds": 1088406.562, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088406.578, "event": "return", "name": "save_build_xml", "lua_heap_kib": 219883.12207031}
+{"seconds": 1088406.578, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b10]"}
+{"seconds": 1088406.578, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b11]"}
+{"seconds": 1088406.578, "event": "call", "name": "load_build_xml", "args": {"xml": "53e1fc9807297be562fbc39bcc85687436b1269b9c44c4f08ba1033c2e8d501d"}}
+{"seconds": 1088406.796, "event": "return", "name": "load_build_xml", "lua_heap_kib": 252504.58691406}
+{"seconds": 1088406.796, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088406.812, "event": "return", "name": "save_build_xml", "lua_heap_kib": 253282.37988281}
+{"seconds": 1088406.812, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b11]"}
+{"seconds": 1088406.812, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b12]"}
+{"seconds": 1088406.812, "event": "call", "name": "load_build_xml", "args": {"xml": "34b0ef482d3a3185fc6010e908fd45157b26c789cbe88fd7f69111abba3375b3"}}
+{"seconds": 1088407.296, "event": "return", "name": "load_build_xml", "lua_heap_kib": 287049.93847656}
+{"seconds": 1088407.296, "event": "call", "name": "save_build_xml", "args": {}}
+{"seconds": 1088407.328, "event": "return", "name": "save_build_xml", "lua_heap_kib": 287953.91503906}
+{"seconds": 1088407.328, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_a_changed_support_state_is_carried_through_pob[b12]"}
+{"seconds": 1088407.328, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates"}
+{"seconds": 1088407.328, "event": "call", "name": "load_build_xml", "args": {"xml": "6d8e01732afb73c2c95007fcafc4810f09c2945498c51cd58cb7895c145fbf5c"}}
+{"seconds": 1088407.75, "event": "return", "name": "load_build_xml", "lua_heap_kib": 320938.04003906}
+{"seconds": 1088407.75, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088407.75, "event": "return", "name": "get_stats", "lua_heap_kib": 321069.62988281}
+{"seconds": 1088407.75, "event": "call", "name": "load_build_xml", "args": {"xml": "f9800154c82ff5c33ff7fc10cbab2231192ddeaeaa472853d66b81879c6add91"}}
+{"seconds": 1088408.109, "event": "return", "name": "load_build_xml", "lua_heap_kib": 356747.28222656}
+{"seconds": 1088408.109, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088408.109, "event": "return", "name": "get_stats", "lua_heap_kib": 356835.67285156}
+{"seconds": 1088408.125, "event": "call", "name": "load_build_xml", "args": {"xml": "553ebb8f4776537d8348df7e58bef5789c9ad1f35f8db21fda2a80cbccf1c38f"}}
+{"seconds": 1088408.375, "event": "return", "name": "load_build_xml", "lua_heap_kib": 388487.47753906}
+{"seconds": 1088408.375, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088408.375, "event": "return", "name": "get_stats", "lua_heap_kib": 388574.21582031}
+{"seconds": 1088408.375, "event": "call", "name": "load_build_xml", "args": {"xml": "5b49006aa51b7d0fe66dc2a853a98dea2c885e80839f612fab0e9352ca3c5178"}}
+{"seconds": 1088408.671, "event": "return", "name": "load_build_xml", "lua_heap_kib": 422224.87988281}
+{"seconds": 1088408.671, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088408.671, "event": "return", "name": "get_stats", "lua_heap_kib": 422314.66113281}
+{"seconds": 1088408.671, "event": "call", "name": "load_build_xml", "args": {"xml": "31c6026a2b5b4869177aa109d634120dc583007aeb078e880521d2986485a1fe"}}
+{"seconds": 1088408.89, "event": "return", "name": "load_build_xml", "lua_heap_kib": 453026.40332031}
+{"seconds": 1088408.89, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088408.89, "event": "return", "name": "get_stats", "lua_heap_kib": 453113.12988281}
+{"seconds": 1088408.89, "event": "call", "name": "load_build_xml", "args": {"xml": "341d83436037b96af5cd4f866ce62ff37cda0a68381d1ac91264359f47e977ec"}}
+{"seconds": 1088409.14, "event": "return", "name": "load_build_xml", "lua_heap_kib": 488531.80175781}
+{"seconds": 1088409.14, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088409.156, "event": "return", "name": "get_stats", "lua_heap_kib": 488618.16113281}
+{"seconds": 1088409.156, "event": "call", "name": "load_build_xml", "args": {"xml": "bc84bd000ccc4b10a40e2d54f32ee7ea84f8bf27112b0ab68c29ca5bf83665e3"}}
+{"seconds": 1088409.812, "event": "return", "name": "load_build_xml", "lua_heap_kib": 523350.12597656}
+{"seconds": 1088409.812, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088409.812, "event": "return", "name": "get_stats", "lua_heap_kib": 523440.31738281}
+{"seconds": 1088409.812, "event": "call", "name": "load_build_xml", "args": {"xml": "ff36d04f1f033f5103d9291d509eadbf2b1afedc4f102f619ad3c6f1ea76d369"}}
+{"seconds": 1088410.203, "event": "return", "name": "load_build_xml", "lua_heap_kib": 554782.99707031}
+{"seconds": 1088410.203, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088410.203, "event": "return", "name": "get_stats", "lua_heap_kib": 554874.03613281}
+{"seconds": 1088410.203, "event": "call", "name": "load_build_xml", "args": {"xml": "f2cc5df98d4afe37b193f8c299b0e72fa6deae2b10675fdc42cbef24b156f9c5"}}
+{"seconds": 1088410.531, "event": "return", "name": "load_build_xml", "lua_heap_kib": 588423.77441406}
+{"seconds": 1088410.531, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088410.531, "event": "return", "name": "get_stats", "lua_heap_kib": 588509.32910156}
+{"seconds": 1088410.531, "event": "call", "name": "load_build_xml", "args": {"xml": "76795d60ffd0cb9371c9efbc62d7fb509a632d033cde5a9cbee4691dfee202d7"}}
+{"seconds": 1088410.812, "event": "return", "name": "load_build_xml", "lua_heap_kib": 620678.40332031}
+{"seconds": 1088410.812, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088410.812, "event": "return", "name": "get_stats", "lua_heap_kib": 620764.18457031}
+{"seconds": 1088410.812, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_disabling_supports_changes_what_pob_calculates"}
+{"seconds": 1088410.812, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_each_variant_evaluates_as_pob_evaluates_that_loadout"}
+{"seconds": 1088410.843, "event": "call", "name": "load_build_xml", "args": {"xml": "e1c68a5c54a188ddf4467774d3cf3bed164d3d74ebcade56c50a25b3c1a16110"}}
+{"seconds": 1088411.156, "event": "return", "name": "load_build_xml", "lua_heap_kib": 663618.73144531}
+{"seconds": 1088411.156, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088411.171, "event": "return", "name": "get_stats", "lua_heap_kib": 663686.03222656}
+{"seconds": 1088411.171, "event": "call", "name": "load_build_xml", "args": {"xml": "a1188e3dd0a6522d1e5a6e608d577d398ded2d351b24fcad8ee0b0ef80c700ff"}}
+{"seconds": 1088411.515, "event": "return", "name": "load_build_xml", "lua_heap_kib": 535033.52929688}
+{"seconds": 1088411.515, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088411.515, "event": "return", "name": "get_stats", "lua_heap_kib": 530790.98339844}
+{"seconds": 1088411.515, "event": "call", "name": "load_build_xml", "args": {"xml": "89a1572a943f0870746039ad0487ced18e73b219c3b0739c84cd535849e14b12"}}
+{"seconds": 1088411.937, "event": "return", "name": "load_build_xml", "lua_heap_kib": 220366.94726562}
+{"seconds": 1088411.937, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088411.937, "event": "return", "name": "get_stats", "lua_heap_kib": 220448.16210938}
+{"seconds": 1088411.937, "event": "call", "name": "load_build_xml", "args": {"xml": "81c3175b753555b646ed26d6ba00e475d4fb99dc25a60e8766b7c38a3a724b31"}}
+{"seconds": 1088412.093, "event": "return", "name": "load_build_xml", "lua_heap_kib": 251509.58789062}
+{"seconds": 1088412.093, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088412.093, "event": "return", "name": "get_stats", "lua_heap_kib": 251577.24023438}
+{"seconds": 1088412.093, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_each_variant_evaluates_as_pob_evaluates_that_loadout"}
+{"seconds": 1088412.093, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_the_two_loadouts_are_different_builds"}
+{"seconds": 1088412.125, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_the_two_loadouts_are_different_builds"}
+{"seconds": 1088412.125, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices0]"}
+{"seconds": 1088412.125, "event": "call", "name": "load_build_xml", "args": {"xml": "e29040bd027423483cc4fc613f9ca1590458f5b93f9d01534140f2f3fee044d8"}}
+{"seconds": 1088412.437, "event": "return", "name": "load_build_xml", "lua_heap_kib": 287065.98046875}
+{"seconds": 1088412.453, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088412.453, "event": "return", "name": "get_stats", "lua_heap_kib": 287173.9765625}
+{"seconds": 1088412.453, "event": "call", "name": "load_build_xml", "args": {"xml": "e29040bd027423483cc4fc613f9ca1590458f5b93f9d01534140f2f3fee044d8"}}
+{"seconds": 1088412.921, "event": "return", "name": "load_build_xml", "lua_heap_kib": 323343.92773438}
+{"seconds": 1088412.921, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088412.921, "event": "return", "name": "get_stats", "lua_heap_kib": 323416.75976562}
+{"seconds": 1088412.921, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices0]"}
+{"seconds": 1088412.921, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices1]"}
+{"seconds": 1088412.937, "event": "call", "name": "load_build_xml", "args": {"xml": "e036c8c28220e103012f065c026face8043fa4279a258ee1fd6045267e9c820d"}}
+{"seconds": 1088413.234, "event": "return", "name": "load_build_xml", "lua_heap_kib": 358523.11914062}
+{"seconds": 1088413.234, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088413.234, "event": "return", "name": "get_stats", "lua_heap_kib": 358610.07226562}
+{"seconds": 1088413.234, "event": "call", "name": "load_build_xml", "args": {"xml": "e036c8c28220e103012f065c026face8043fa4279a258ee1fd6045267e9c820d"}}
+{"seconds": 1088413.453, "event": "return", "name": "load_build_xml", "lua_heap_kib": 392710.20117188}
+{"seconds": 1088413.453, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088413.453, "event": "return", "name": "get_stats", "lua_heap_kib": 392782.26367188}
+{"seconds": 1088413.453, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices1]"}
+{"seconds": 1088413.453, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices2]"}
+{"seconds": 1088413.468, "event": "call", "name": "load_build_xml", "args": {"xml": "a2c65c4b3f823a76ff9c7bdb281b27a8b014956090eef4cd0e1f93ebdc6eacf7"}}
+{"seconds": 1088413.718, "event": "return", "name": "load_build_xml", "lua_heap_kib": 427102.7890625}
+{"seconds": 1088413.718, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088413.734, "event": "return", "name": "get_stats", "lua_heap_kib": 427170.81640625}
+{"seconds": 1088413.734, "event": "call", "name": "load_build_xml", "args": {"xml": "a2c65c4b3f823a76ff9c7bdb281b27a8b014956090eef4cd0e1f93ebdc6eacf7"}}
+{"seconds": 1088413.937, "event": "return", "name": "load_build_xml", "lua_heap_kib": 460941.29101562}
+{"seconds": 1088413.937, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088413.937, "event": "return", "name": "get_stats", "lua_heap_kib": 461009.93945312}
+{"seconds": 1088413.937, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices2]"}
+{"seconds": 1088413.937, "event": "test_start", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices3]"}
+{"seconds": 1088413.953, "event": "call", "name": "load_build_xml", "args": {"xml": "8747045fd04731b4d20f36c652b95dd47a6c7e21bb8878a9e05f44cc768a9258"}}
+{"seconds": 1088414.14, "event": "return", "name": "load_build_xml", "lua_heap_kib": 495260.71289062}
+{"seconds": 1088414.14, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088414.14, "event": "return", "name": "get_stats", "lua_heap_kib": 495327.42773438}
+{"seconds": 1088414.14, "event": "call", "name": "load_build_xml", "args": {"xml": "8747045fd04731b4d20f36c652b95dd47a6c7e21bb8878a9e05f44cc768a9258"}}
+{"seconds": 1088414.328, "event": "return", "name": "load_build_xml", "lua_heap_kib": 529043.60351562}
+{"seconds": 1088414.328, "event": "call", "name": "get_stats", "args": {"all": "True"}}
+{"seconds": 1088414.328, "event": "return", "name": "get_stats", "lua_heap_kib": 529110.31835938}
+{"seconds": 1088414.328, "event": "call", "name": "eval", "args": {"code": "collectgarbage('collect')"}}
+{"seconds": 1088414.718, "event": "return", "name": "eval", "lua_heap_kib": 166162.17773438}
+{"seconds": 1088414.718, "event": "test_end", "test": "tests/engine/test_p04_round_trips.py::test_an_upgraded_v1_record_evaluates_as_the_v1_record[indices3]"}

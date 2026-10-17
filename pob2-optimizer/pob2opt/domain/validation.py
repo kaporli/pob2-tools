@@ -243,7 +243,7 @@ def validate_record(
 
     # 1. version
     try:
-        check_schema_version(data.get("schema_version"))
+        check_schema_version(data.get("schema_version"), kind)
     except UnknownSchemaVersion as exc:
         return ValidationReport(kind, (ValidationError(
             "unsupported_schema_version", "/schema_version", str(exc), "version"),))
@@ -491,6 +491,8 @@ def _check_build_spec(record):
                 "index %d but the group has %d skills"
                 % (group.main_skill_index, len(group.skills)), "semantic")
 
+    yield from _support_setting_errors(record)
+
     if record.parse_status.value == "complete" and record.unresolved_refs:
         yield ValidationError(
             "inconsistent_parse_status", "/parse_status",
@@ -501,6 +503,79 @@ def _check_build_spec(record):
             "missing_raw_payload", "/raw_blob_hashes",
             "the original build payload must be preserved, so a metadata-only "
             "import cannot look like a reconstructed build", "semantic")
+
+
+def _each_skill(groups):
+    for i, group in enumerate(groups):
+        stack = [("/skill_groups/%d/skills/%d" % (i, j), skill)
+                 for j, skill in enumerate(group.skills)]
+        while stack:
+            path, skill = stack.pop(0)
+            yield path, skill
+            stack.extend(("%s/triggered/%d" % (path, k), child)
+                         for k, child in enumerate(skill.triggered))
+
+
+def _main_group_errors(record):
+    group = record.main_skill_group
+    if record.schema_version < 2:
+        if group is not ABSENT:
+            yield ValidationError(
+                "main_group_needs_v2", "/main_skill_group",
+                "main_skill_group exists from BuildSpec schema version 2",
+                "semantic")
+        return
+    if group is ABSENT:
+        yield ValidationError(
+            "missing_main_skill_group", "/main_skill_group",
+            "a schema version 2 BuildSpec states its main skill group, null "
+            "when it has none or it is unknown", "semantic")
+    elif group is None:
+        if record.skill_groups and record.parse_status.value == "complete":
+            yield ValidationError(
+                "inconsistent_parse_status", "/main_skill_group",
+                "parse_status is complete while the main skill group is "
+                "unknown", "semantic")
+    elif group >= len(record.skill_groups):
+        yield ValidationError(
+            "main_group_out_of_range", "/main_skill_group",
+            "index %d but the build has %d skill groups"
+            % (group, len(record.skill_groups)), "semantic")
+
+
+def _support_setting_errors(record):
+    """Support settings belong to schema version 2 and mirror support_ids."""
+    yield from _main_group_errors(record)
+    version = record.schema_version
+    complete = record.parse_status.value == "complete"
+    for path, skill in _each_skill(record.skill_groups):
+        if version < 2:
+            if skill.supports is not ABSENT:
+                yield ValidationError(
+                    "support_settings_need_v2", path + "/supports",
+                    "support settings exist from BuildSpec schema version 2; "
+                    "a version 1 record cannot carry them", "semantic")
+            continue
+        if skill.supports is ABSENT:
+            yield ValidationError(
+                "missing_support_settings", path + "/supports",
+                "a schema version 2 skill lists its support settings, empty "
+                "when it has no supports", "semantic")
+            continue
+        listed = [s.support_id for s in skill.supports]
+        if listed != list(skill.support_ids):
+            yield ValidationError(
+                "support_settings_mismatch", path + "/supports",
+                "supports %r must name support_ids %r in the same order"
+                % (listed, list(skill.support_ids)), "semantic")
+        for k, support in enumerate(skill.supports):
+            unknown = [name for name in ("level", "quality", "enabled")
+                       if getattr(support, name) is None]
+            if complete and unknown:
+                yield ValidationError(
+                    "inconsistent_parse_status", "%s/supports/%d" % (path, k),
+                    "parse_status is complete while support setting(s) %s "
+                    "are unknown" % ", ".join(unknown), "semantic")
 
 
 def _check_data_gap(record):

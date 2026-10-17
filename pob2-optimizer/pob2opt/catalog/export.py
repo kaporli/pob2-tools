@@ -15,6 +15,7 @@ that stopped matching.
 
 from __future__ import annotations
 
+import dataclasses
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -310,6 +311,7 @@ class PobCatalogProvider:
             evidence=evidence.documents, blobs=evidence.payloads,
             report=report, reader=reader_description,
             acquisition=acquisition)
+        export = _namespaced(export, "catalog-export/%s/" % digest[:16])
         export.validation_errors = _validate_bundle(export)
         return export
 
@@ -518,6 +520,44 @@ def _validate_bundle(export: CatalogExport) -> list[str]:
 
 # ----------------------------------------------------------------- output ---
 
+def _namespaced(export: CatalogExport, prefix: str) -> CatalogExport:
+    """``export`` with its evidence and root IDs under ``prefix``.
+
+    Those IDs are fixed strings, and their records carry the export time, so
+    two exports could not share a corpus: the second would collide with the
+    first's immutable records. Prefixing them with the catalog hash keeps
+    every catalog's evidence apart. The catalog and profile IDs already
+    carry the hash. Gap IDs stay as they are: rules and legality cite them
+    by name, and a corpus keeps the first record of a gap.
+    """
+    from ..domain.codec import from_jsonable, to_jsonable
+
+    renamed = {document.record_id: prefix + document.record_id
+               for document in export.evidence}
+    if export.acquisition is not None:
+        renamed[export.acquisition.record_id] = (
+            prefix + export.acquisition.record_id)
+
+    def walk(value: Any) -> Any:
+        if isinstance(value, str):
+            return renamed.get(value, value)
+        if isinstance(value, list):
+            return [walk(v) for v in value]
+        if isinstance(value, dict):
+            return {k: walk(v) for k, v in value.items()}
+        return value
+
+    def rename(record: Any) -> Any:
+        return from_jsonable(type(record), walk(to_jsonable(record)))
+
+    return dataclasses.replace(
+        export, catalog=rename(export.catalog), profile=rename(export.profile),
+        gaps=[rename(gap) for gap in export.gaps],
+        evidence=[rename(document) for document in export.evidence],
+        acquisition=(None if export.acquisition is None
+                     else rename(export.acquisition)))
+
+
 def write_bundle(export: CatalogExport, out_dir: str | Path) -> dict[str, str]:
     """Write the bundle. Returns the paths written, relative to ``out_dir``."""
     from ..domain.codec import to_jsonable
@@ -537,6 +577,10 @@ def write_bundle(export: CatalogExport, out_dir: str | Path) -> dict[str, str]:
 
     dump("catalog.json", to_jsonable(export.catalog))
     dump("patch_profile.json", to_jsonable(export.profile))
+    if export.acquisition is not None:
+        # The bundle's root: gaps and evidence cite it, so a corpus importing
+        # the bundle needs it to resolve their provenance.
+        dump("acquisition.json", to_jsonable(export.acquisition))
     dump("gaps.json", [to_jsonable(gap) for gap in export.gaps])
     for document in export.evidence:
         dump("evidence/%s.json" % document.record_id.replace("/", "_"),

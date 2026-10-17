@@ -20,7 +20,7 @@ import jsonschema
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
-from .records import SUPPORTED_SCHEMA_VERSIONS
+from .records import supported_schema_versions
 
 SCHEMA_DIR = Path(__file__).resolve().parents[1] / "schemas" / "v1"
 
@@ -28,9 +28,9 @@ SCHEMA_DIR = Path(__file__).resolve().parents[1] / "schemas" / "v1"
 class UnknownSchemaVersion(ValueError):
     """A record declares a schema version this build does not implement."""
 
-    def __init__(self, found: Any) -> None:
+    def __init__(self, found: Any, kind: str | None = None) -> None:
         self.found = found
-        self.supported = tuple(SUPPORTED_SCHEMA_VERSIONS)
+        self.supported = supported_schema_versions(kind)
         super().__init__(
             "unsupported schema_version %r; this build supports %s"
             % (found, ", ".join(str(v) for v in self.supported))
@@ -84,8 +84,12 @@ def available_kinds() -> tuple[str, ...]:
     return tuple(sorted(name[: -len(".json")] for name in _documents()))
 
 
-def check_schema_version(value: Any) -> int:
-    """Reject an unknown version with a message naming the supported ones."""
-    if value not in SUPPORTED_SCHEMA_VERSIONS or isinstance(value, bool):
-        raise UnknownSchemaVersion(value)
+def check_schema_version(value: Any, kind: str | None = None) -> int:
+    """Reject an unknown version with a message naming the supported ones.
+
+    Versions are per record kind: BuildSpec reads 1 and 2, every other kind
+    reads 1. Without a kind, any version some kind reads is accepted.
+    """
+    if value not in supported_schema_versions(kind) or isinstance(value, bool):
+        raise UnknownSchemaVersion(value, kind)
     return int(value)

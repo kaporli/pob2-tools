@@ -1,0 +1,6 @@
+........................................................................ [ 47%]
+........................................................................ [ 94%]
+........                                                                 [100%]
+native fault diagnostics: 130746433 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-333\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+152 passed in 75.82s (0:01:15)

@@ -16,16 +16,21 @@ A round trip reports three things, and they are separate claims:
 
 The source records are frozen and are hashed before and after, so a round trip
 also proves that neither direction mutated its input.
+
+The importer writes BuildSpec schema version 2. A version 1 source is compared
+at version 1: the reimport is projected down (support settings dropped) so
+the comparison measures the document, not the schema upgrade.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any, Mapping
 
 from ..domain.identity import (build_hash, build_identity, canonical_text,
                                item_hash, item_identity)
-from ..domain.records import BuildSpec, ItemInstance
+from ..domain.absent import ABSENT
+from ..domain.records import BuildSpec, ItemInstance, SkillEntry
 from .builddoc import BuildExport, BuildImport, export_build, import_build
 from .naming import CatalogNaming
 from .support import SupportReport
@@ -122,6 +127,28 @@ class RoundTripReport:
         }
 
 
+def _without_supports(skill: SkillEntry) -> SkillEntry:
+    return replace(skill, supports=ABSENT,
+                   triggered=[_without_supports(c) for c in skill.triggered])
+
+
+def at_schema_version(build: BuildSpec, version: int) -> BuildSpec:
+    """``build`` as a record of an older version, for comparison only.
+
+    Only version 2 to 1 exists: it drops the support settings version 1 has
+    no field for. The result is a projection, never a record to store.
+    """
+    if build.schema_version == version:
+        return build
+    if (build.schema_version, version) != (2, 1):
+        raise ValueError("no projection from BuildSpec schema version %d to %d"
+                         % (build.schema_version, version))
+    groups = [replace(group, skills=[_without_supports(s) for s in group.skills])
+              for group in build.skill_groups]
+    return replace(build, schema_version=1, skill_groups=groups,
+                   main_skill_group=ABSENT)
+
+
 def _fingerprint(build: BuildSpec, items: Mapping[str, ItemInstance]) -> str:
     from ..domain.codec import to_jsonable
     return canonical_text({"build": to_jsonable(build),
@@ -146,8 +173,9 @@ def round_trip(build: BuildSpec, items: Mapping[str, ItemInstance],
             "export/import changed the BuildSpec or an ItemInstance it was "
             "given; conversion must not mutate the source object")
 
+    restored_build = at_schema_version(restored.build, build.schema_version)
     differences = diff_identity(build_identity(build),
-                                build_identity(restored.build))
+                                build_identity(restored_build))
     item_differences: dict[str, tuple[Difference, ...]] = {}
     for original_hash, original in sorted(items.items()):
         if original_hash not in export.item_ids:
@@ -161,7 +189,7 @@ def round_trip(build: BuildSpec, items: Mapping[str, ItemInstance],
             diff_identity(item_identity(original), item_identity(reimported)))
     return RoundTripReport(
         build_hash_before=build_hash(build),
-        build_hash_after=build_hash(restored.build),
+        build_hash_after=build_hash(restored_build),
         differences=tuple(differences),
         item_differences=item_differences,
         export=SupportReport(export.report.unsupported + restored.report.unsupported),
