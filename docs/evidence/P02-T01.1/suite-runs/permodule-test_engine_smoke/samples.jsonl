@@ -1,0 +1,19 @@
+{"t": 0.03, "tree_rss": 2142208, "progress": ""}
+{"t": 0.53, "tree_rss": 35258368, "progress": ""}
+{"t": 1.06, "tree_rss": 99065856, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 1.59, "tree_rss": 184758272, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 2.11, "tree_rss": 203001856, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 2.62, "tree_rss": 203468800, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 3.14, "tree_rss": 204816384, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 3.66, "tree_rss": 223027200, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 4.17, "tree_rss": 279396352, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 4.7, "tree_rss": 321437696, "progress": "tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary "}
+{"t": 5.22, "tree_rss": 367120384, "progress": "tests/engine/test_engine_smoke.py::test_search_nodes_returns_matching_passives "}
+{"t": 5.75, "tree_rss": 395591680, "progress": "tests/engine/test_engine_smoke.py::test_allocating_a_node_spends_points "}
+{"t": 6.27, "tree_rss": 425672704, "progress": "tests/engine/test_engine_smoke.py::test_allocation_pathing_and_deallocation_are_not_symmetric "}
+{"t": 6.8, "tree_rss": 439312384, "progress": "tests/engine/test_engine_smoke.py::test_get_stats_reports_numeric_defences "}
+{"t": 7.33, "tree_rss": 466194432, "progress": "tests/engine/test_engine_smoke.py::test_equipping_a_weapon_changes_damage "}
+{"t": 7.84, "tree_rss": 493666304, "progress": "tests/engine/test_engine_smoke.py::test_test_item_compares_without_equipping "}
+{"t": 8.38, "tree_rss": 523399168, "progress": "tests/engine/test_engine_smoke.py::test_save_and_load_round_trip_preserves_tree_and_items "}
+{"t": 8.91, "tree_rss": 558739456, "progress": "tests/engine/test_engine_smoke.py::test_save_and_load_round_trip_preserves_tree_and_items "}
+{"t": 9.42, "tree_rss": 581615616, "progress": "============================= 10 passed in 8.73s =============================="}

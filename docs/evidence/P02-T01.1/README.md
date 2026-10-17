@@ -15,13 +15,13 @@ The growth is live Lua data that a full collection cannot free, and it is
 intermittent for identical inputs.
 
 1. **Reproduced on clean `origin/main` (`f75fe0a`), uninstrumented.**
-   `runs/base-noplugin-s11` and `s13` reached 4.1 GB in 35 to 37 s and were
+   `suite-runs/base-noplugin-s11` and `s13` reached 4.1 GB in 35 to 37 s and were
    killed by the runner guard; `s12` passed (152 tests, 1.38 GB). Both
    failures were in `tests/engine/test_f11_import_is_wiped.py`, during
    `test_setup_silently_loses_the_requested_character_level_in_auto_mode`
    (its fixture runs `new_build`, `alloc_nodes`, `equip_item`,
    `save_build_xml`, then the test loads it and runs `OPT_setup`).
-   `runs/branch-noplugin-s21`/`s22` (this branch, before the test guard)
+   `suite-runs/branch-noplugin-s21`/`s22` (this branch, before the test guard)
    failed the same way.
 2. **Bounded reproduction** (`repro_f11.py`): that sequence repeated ten
    times in one in-process engine. Of 106 child processes, 35 stopped early,
@@ -78,19 +78,21 @@ runaway.
 The in-process test session now exits with code 87 above
 `POB2_TEST_MEMORY_LIMIT_MB` (default 3072), naming the running test.
 
-`runs/permodule-*`: every engine module in its own pytest process on this
-branch: 12 modules, 156 passed, peak 879 MB.
+`suite-runs/permodule-*`: every engine module in its own pytest process on this
+branch: 12 modules, 156 passed, peak 879 MB. The P02-T04 module's stderr is
+gzipped: 27 MB of faulthandler output for 4888 `0xe24c4a02` exceptions,
+LuaJIT's ordinary error unwinding in that module's in-process fixture engine.
 
 ## Instrumented runs, kept for the record
 
-- `runs/full-s1`, `full-s2`: this branch's working tree mid-edit, with the
+- `suite-runs/full-s1`, `full-s2`: this branch's working tree mid-edit, with the
   in-process `memtrace.py` plugin. Both report native access violations
   inside `lua_pcall` (s1: 18 errors from the P02-T04 module fixture, which
   boots a second in-process engine; s2: one error in the first module). No
   uninstrumented run produced one. The plugin runs a sampling thread while
   `tests/conftest.py` routes every LuaJIT SEH exception through an
   all-threads faulthandler dump; that combination is suspected, not shown.
-- `runs/full-s3`: broken by a half-written `adapter.py` edit (NameError at
+- `suite-runs/full-s3`: broken by a half-written `adapter.py` edit (NameError at
   import). Not evidence.
 - `repro/seh-round1.jsonl`: 2000 erroring Lua calls under each combination
   of faulthandler and a busy thread; no access violation, no growth.

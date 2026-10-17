@@ -227,7 +227,7 @@ def run(name, jit, iterations, repeats):
     out = HERE / "repro" / ("%s.jsonl" % name)
     out.parent.mkdir(exist_ok=True)
     for r in range(repeats):
-        log = HERE / "repro" / ("%s-%d.log" % (name, r))
+        log = HERE / "repro" / ("%s-%d.steps.txt" % (name, r))
         with log.open("w") as stream:
             proc = subprocess.Popen([sys.executable, __file__, "child", jit, str(iterations)],
                                     stdout=stream, stderr=subprocess.STDOUT)

@@ -1,7 +1,7 @@
 """Run engine tests under memtrace with a pinned PYTHONHASHSEED and a hard guard.
 
 Usage: python run_memtrace.py RUN_NAME SEED [pytest args...]
-Every run keeps its own directory under runs/, failed or not.
+Every run keeps its own directory under suite-runs/, failed or not.
 POB2_RUN_REPO picks the checkout under test (default: this one).
 POB2_PLUGIN=0 runs without the in-process plugin: the parent samples memory
 and the -vv progress line every 0.5 s instead. The parent guard
@@ -27,7 +27,7 @@ TIME_LIMIT_S = float(os.environ.get("POB2_TIME_LIMIT_S", "600"))
 
 def main():
     name, seed, *pytest_args = sys.argv[1:]
-    out = HERE / "runs" / name
+    out = HERE / "suite-runs" / name
     if out.exists():
         sys.exit("run %s already exists; pick a new name" % name)
     out.mkdir(parents=True)

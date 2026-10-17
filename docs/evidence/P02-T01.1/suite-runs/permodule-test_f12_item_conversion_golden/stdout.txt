@@ -1,0 +1,19 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 8 items
+
+tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive PASSED [ 12%]
+tests/engine/test_f12_item_conversion_golden.py::test_fractured_desecrated_and_crafted_modifiers_are_preserved PASSED [ 25%]
+tests/engine/test_f12_item_conversion_golden.py::test_the_engine_agrees_with_the_standalone_probe PASSED [ 37%]
+tests/engine/test_f12_item_conversion_golden.py::test_the_handler_reports_a_complete_conversion PASSED [ 50%]
+tests/engine/test_f12_item_conversion_golden.py::test_pob_reads_the_recovered_lines_back_in_the_right_category PASSED [ 62%]
+tests/engine/test_f12_item_conversion_golden.py::test_a_recovered_affix_reaches_the_calculation PASSED [ 75%]
+tests/engine/test_f12_item_conversion_golden.py::test_conversion_does_not_mutate_the_caller_object PASSED [ 87%]
+tests/engine/test_f12_item_conversion_golden.py::test_repaired_conversion_preserves_every_modifier_category PASSED [100%]
+
+native fault diagnostics: 10023706 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-398\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================== 8 passed in 6.48s ==============================

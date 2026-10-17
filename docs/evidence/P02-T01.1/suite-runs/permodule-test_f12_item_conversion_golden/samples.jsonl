@@ -1,0 +1,14 @@
+{"t": 0.03, "tree_rss": 2142208, "progress": ""}
+{"t": 0.55, "tree_rss": 34959360, "progress": ""}
+{"t": 1.06, "tree_rss": 97193984, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 1.62, "tree_rss": 178507776, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 2.14, "tree_rss": 204849152, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 2.66, "tree_rss": 219922432, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 3.17, "tree_rss": 232202240, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 3.69, "tree_rss": 222228480, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 4.2, "tree_rss": 247066624, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 4.73, "tree_rss": 279810048, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_supported_categories_survive "}
+{"t": 5.25, "tree_rss": 313364480, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_fractured_desecrated_and_crafted_modifiers_are_preserved "}
+{"t": 5.78, "tree_rss": 359845888, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_the_handler_reports_a_complete_conversion "}
+{"t": 6.3, "tree_rss": 405577728, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_a_recovered_affix_reaches_the_calculation "}
+{"t": 6.83, "tree_rss": 447770624, "progress": "tests/engine/test_f12_item_conversion_golden.py::test_conversion_does_not_mutate_the_caller_object "}

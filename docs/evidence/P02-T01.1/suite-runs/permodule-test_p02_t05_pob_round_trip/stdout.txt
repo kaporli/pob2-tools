@@ -1,0 +1,19 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 8 items
+
+tests/engine/test_p02_t05_pob_round_trip.py::test_our_document_loads_in_the_pinned_pob PASSED [ 12%]
+tests/engine/test_p02_t05_pob_round_trip.py::test_the_tree_the_gear_and_the_socket_groups_survive PASSED [ 25%]
+tests/engine/test_p02_t05_pob_round_trip.py::test_deterministic_primitives_agree_after_the_round_trip PASSED [ 37%]
+tests/engine/test_p02_t05_pob_round_trip.py::test_the_exported_document_keeps_the_fixture_affix PASSED [ 50%]
+tests/engine/test_p02_t05_pob_round_trip.py::test_canonical_build_identity_survives_a_pob_round_trip PASSED [ 62%]
+tests/engine/test_p02_t05_pob_round_trip.py::test_identity_is_not_xml_byte_equality PASSED [ 75%]
+tests/engine/test_p02_t05_pob_round_trip.py::test_the_export_of_a_pob_derived_build_is_complete PASSED [ 87%]
+tests/engine/test_p02_t05_pob_round_trip.py::test_the_comparison_would_notice_a_damaged_export PASSED [100%]
+
+native fault diagnostics: 11092794 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-401\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================== 8 passed in 5.88s ==============================

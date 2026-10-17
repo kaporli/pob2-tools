@@ -1,0 +1,16 @@
+{"t": 0.03, "tree_rss": 2142208, "progress": ""}
+{"t": 0.55, "tree_rss": 36073472, "progress": ""}
+{"t": 1.06, "tree_rss": 98467840, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 1.59, "tree_rss": 184639488, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 2.11, "tree_rss": 202223616, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 2.62, "tree_rss": 212733952, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 3.14, "tree_rss": 205422592, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 3.66, "tree_rss": 206135296, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 4.17, "tree_rss": 237948928, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 4.7, "tree_rss": 278740992, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 5.22, "tree_rss": 321028096, "progress": "tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps "}
+{"t": 5.73, "tree_rss": 361836544, "progress": "tests/engine/test_engine_build_inputs.py::test_zero_full_dps_is_not_the_same_as_zero_hit_damage "}
+{"t": 6.25, "tree_rss": 415752192, "progress": "tests/engine/test_engine_build_inputs.py::test_malformed_xml_is_rejected_instead_of_loading_a_default_character "}
+{"t": 6.78, "tree_rss": 431058944, "progress": "tests/engine/test_engine_build_inputs.py::test_the_declared_class_is_never_quietly_replaced_by_the_default_one "}
+{"t": 7.3, "tree_rss": 453971968, "progress": "tests/engine/test_engine_build_inputs.py::test_the_declared_class_is_never_quietly_replaced_by_the_default_one PASSED [100%]"}
+{"t": 7.83, "tree_rss": 453971968, "progress": "tests/engine/test_engine_build_inputs.py::test_the_declared_class_is_never_quietly_replaced_by_the_default_one PASSED [100%]"}

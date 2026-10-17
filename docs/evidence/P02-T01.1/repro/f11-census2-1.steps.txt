@@ -1,0 +1,142 @@
+Loading main script...
+Unicode support detected
+Loading passive tree data for version '0_5'...
+Loading passive tree assets...
+Processing tree...
+missing node 24665
+missing node 35715
+missing node 28429
+missing node 26353
+missing node 950
+missing node 45406
+missing node 50198
+missing node 5162
+missing node 10889
+missing node 62386
+missing node 39383
+missing node 51916
+missing node 54579
+missing node 16732
+Uniques loaded
+Rares loaded
+Startup time: 0 ms
+{"i": 0, "step": "new_build", "t": 1147676.031}
+{"i": 0, "step": "search_nodes", "t": 1147676.125}
+{"i": 0, "nodes": [47157, 2955]}
+{"i": 0, "step": "alloc_nodes", "t": 1147676.125}
+{"i": 0, "step": "equip_item", "t": 1147676.203}
+{"i": 0, "step": "save_build_xml", "t": 1147676.25}
+{"i": 0, "step": "new_build2", "t": 1147676.25}
+{"i": 0, "step": "load_build_xml", "t": 1147676.343}
+{"i": 0, "step": "helpers", "t": 1147676.531}
+{"i": 0, "step": "OPT_setup", "t": 1147676.546}
+{"i": 0, "step": "get_build_info", "t": 1147676.578}
+{"i": 0, "done": true, "level": 1}
+{"i": 1, "step": "new_build", "t": 1147676.578}
+{"i": 1, "step": "search_nodes", "t": 1147676.671}
+{"i": 1, "nodes": [47157, 2955]}
+{"i": 1, "step": "alloc_nodes", "t": 1147676.687}
+{"i": 1, "step": "equip_item", "t": 1147676.781}
+{"i": 1, "step": "save_build_xml", "t": 1147676.843}
+{"i": 1, "step": "new_build2", "t": 1147676.843}
+{"i": 1, "step": "load_build_xml", "t": 1147676.937}
+{"i": 1, "step": "helpers", "t": 1147677.125}
+{"i": 1, "step": "OPT_setup", "t": 1147677.125}
+{"i": 1, "step": "get_build_info", "t": 1147677.171}
+{"i": 1, "done": true, "level": 1}
+{"i": 2, "step": "new_build", "t": 1147677.171}
+{"i": 2, "step": "search_nodes", "t": 1147677.281}
+{"i": 2, "nodes": [47157, 2955]}
+{"i": 2, "step": "alloc_nodes", "t": 1147677.281}
+{"i": 2, "step": "equip_item", "t": 1147677.328}
+{"i": 2, "step": "save_build_xml", "t": 1147677.359}
+{"i": 2, "step": "new_build2", "t": 1147677.375}
+{"i": 2, "step": "load_build_xml", "t": 1147677.484}
+{"i": 2, "step": "helpers", "t": 1147677.906}
+{"i": 2, "step": "OPT_setup", "t": 1147677.921}
+{"i": 2, "step": "get_build_info", "t": 1147677.953}
+{"i": 2, "done": true, "level": 1}
+{"i": 3, "step": "new_build", "t": 1147677.953}
+{"i": 3, "step": "search_nodes", "t": 1147678.046}
+{"i": 3, "nodes": [47157, 2955]}
+{"i": 3, "step": "alloc_nodes", "t": 1147678.046}
+{"i": 3, "step": "equip_item", "t": 1147678.078}
+{"i": 3, "step": "save_build_xml", "t": 1147678.109}
+{"i": 3, "step": "new_build2", "t": 1147678.109}
+{"i": 3, "step": "load_build_xml", "t": 1147678.187}
+{"i": 3, "step": "helpers", "t": 1147678.328}
+{"i": 3, "step": "OPT_setup", "t": 1147678.328}
+{"i": 3, "step": "get_build_info", "t": 1147678.359}
+{"i": 3, "done": true, "level": 1}
+{"i": 4, "step": "new_build", "t": 1147678.359}
+{"i": 4, "step": "search_nodes", "t": 1147678.421}
+{"i": 4, "nodes": [47157, 2955]}
+{"i": 4, "step": "alloc_nodes", "t": 1147678.421}
+{"i": 4, "step": "equip_item", "t": 1147678.468}
+{"i": 4, "step": "save_build_xml", "t": 1147678.484}
+{"i": 4, "step": "new_build2", "t": 1147678.5}
+{"i": 4, "step": "load_build_xml", "t": 1147678.562}
+{"i": 4, "step": "helpers", "t": 1147678.703}
+{"i": 4, "step": "OPT_setup", "t": 1147678.703}
+{"i": 4, "step": "get_build_info", "t": 1147678.734}
+{"i": 4, "done": true, "level": 1}
+{"i": 5, "step": "new_build", "t": 1147678.734}
+{"i": 5, "step": "search_nodes", "t": 1147678.796}
+{"i": 5, "nodes": [47157, 2955]}
+{"i": 5, "step": "alloc_nodes", "t": 1147678.796}
+{"i": 5, "step": "equip_item", "t": 1147678.828}
+{"i": 5, "step": "save_build_xml", "t": 1147678.859}
+{"i": 5, "step": "new_build2", "t": 1147678.859}
+{"i": 5, "step": "load_build_xml", "t": 1147678.921}
+{"i": 5, "step": "helpers", "t": 1147679.062}
+{"i": 5, "step": "OPT_setup", "t": 1147679.062}
+{"i": 5, "step": "get_build_info", "t": 1147679.093}
+{"i": 5, "done": true, "level": 1}
+{"i": 6, "step": "new_build", "t": 1147679.093}
+{"i": 6, "step": "search_nodes", "t": 1147679.156}
+{"i": 6, "nodes": [47157, 2955]}
+{"i": 6, "step": "alloc_nodes", "t": 1147679.156}
+{"i": 6, "step": "equip_item", "t": 1147679.203}
+{"i": 6, "step": "save_build_xml", "t": 1147679.234}
+{"i": 6, "step": "new_build2", "t": 1147679.234}
+{"i": 6, "step": "load_build_xml", "t": 1147679.328}
+{"i": 6, "step": "helpers", "t": 1147679.453}
+{"i": 6, "step": "OPT_setup", "t": 1147679.453}
+{"i": 6, "step": "get_build_info", "t": 1147679.484}
+{"i": 6, "done": true, "level": 1}
+{"i": 7, "step": "new_build", "t": 1147679.484}
+{"i": 7, "step": "search_nodes", "t": 1147679.562}
+{"i": 7, "nodes": [47157, 2955]}
+{"i": 7, "step": "alloc_nodes", "t": 1147679.562}
+{"i": 7, "step": "equip_item", "t": 1147679.593}
+{"i": 7, "step": "save_build_xml", "t": 1147679.625}
+{"i": 7, "step": "new_build2", "t": 1147679.625}
+{"i": 7, "step": "load_build_xml", "t": 1147679.687}
+{"i": 7, "step": "helpers", "t": 1147679.828}
+{"i": 7, "step": "OPT_setup", "t": 1147679.828}
+{"i": 7, "step": "get_build_info", "t": 1147679.859}
+{"i": 7, "done": true, "level": 1}
+{"i": 8, "step": "new_build", "t": 1147679.859}
+{"i": 8, "step": "search_nodes", "t": 1147679.937}
+{"i": 8, "nodes": [47157, 2955]}
+{"i": 8, "step": "alloc_nodes", "t": 1147679.937}
+{"i": 8, "step": "equip_item", "t": 1147679.968}
+{"i": 8, "step": "save_build_xml", "t": 1147680.046}
+{"i": 8, "step": "new_build2", "t": 1147680.062}
+{"i": 8, "step": "load_build_xml", "t": 1147680.171}
+{"i": 8, "step": "helpers", "t": 1147680.406}
+{"i": 8, "step": "OPT_setup", "t": 1147680.406}
+{"i": 8, "step": "get_build_info", "t": 1147680.453}
+{"i": 8, "done": true, "level": 1}
+{"i": 9, "step": "new_build", "t": 1147680.453}
+{"i": 9, "step": "search_nodes", "t": 1147680.625}
+{"i": 9, "nodes": [47157, 2955]}
+{"i": 9, "step": "alloc_nodes", "t": 1147680.64}
+{"i": 9, "step": "equip_item", "t": 1147680.843}
+{"i": 9, "step": "save_build_xml", "t": 1147680.937}
+{"i": 9, "step": "new_build2", "t": 1147680.953}
+{"i": 9, "step": "load_build_xml", "t": 1147681.14}
+{"i": 9, "step": "helpers", "t": 1147681.312}
+{"i": 9, "step": "OPT_setup", "t": 1147681.312}
+{"i": 9, "step": "get_build_info", "t": 1147681.343}
+{"i": 9, "done": true, "level": 1}

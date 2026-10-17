@@ -1,0 +1,22 @@
+{
+  "run": "permodule-test_p02_t03_legality_engine",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools",
+  "plugin": false,
+  "head": "f75fe0a01931b3f857696b707f304083d9a82d5b",
+  "seed": "31",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine/test_p02_t03_legality_engine.py"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 3072,
+  "peak_tree_rss": 585400320,
+  "elapsed_s": 12.0,
+  "python": "3.12.4",
+  "last_line": "============================= 7 passed in 11.20s =============================="
+}

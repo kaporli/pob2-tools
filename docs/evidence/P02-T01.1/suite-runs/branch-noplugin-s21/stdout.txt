@@ -1,0 +1,32 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 156 items
+
+tests/engine/test_engine_build_inputs.py::test_a_skill_less_build_loads_and_reports_zero_full_dps PASSED [  0%]
+tests/engine/test_engine_build_inputs.py::test_zero_full_dps_is_not_the_same_as_zero_hit_damage PASSED [  1%]
+tests/engine/test_engine_build_inputs.py::test_malformed_xml_is_rejected_instead_of_loading_a_default_character PASSED [  1%]
+tests/engine/test_engine_build_inputs.py::test_the_declared_class_is_never_quietly_replaced_by_the_default_one PASSED [  2%]
+tests/engine/test_engine_smoke.py::test_new_build_returns_a_summary PASSED [  3%]
+tests/engine/test_engine_smoke.py::test_engine_internals_are_reachable PASSED [  3%]
+tests/engine/test_engine_smoke.py::test_search_nodes_returns_matching_passives PASSED [  4%]
+tests/engine/test_engine_smoke.py::test_allocating_a_node_spends_points PASSED [  5%]
+tests/engine/test_engine_smoke.py::test_allocation_pathing_and_deallocation_are_not_symmetric PASSED [  5%]
+tests/engine/test_engine_smoke.py::test_get_stats_reports_numeric_defences PASSED [  6%]
+tests/engine/test_engine_smoke.py::test_equipping_a_weapon_changes_damage PASSED [  7%]
+tests/engine/test_engine_smoke.py::test_test_item_compares_without_equipping PASSED [  7%]
+tests/engine/test_engine_smoke.py::test_save_and_load_round_trip_preserves_tree_and_items PASSED [  8%]
+tests/engine/test_engine_smoke.py::test_convert_trade_item_builds_a_parsable_item_string PASSED [  8%]
+tests/engine/test_f10_engine_state.py::test_engine_boot_moved_the_process_into_the_pob_source_tree PASSED [  9%]
+tests/engine/test_f10_engine_state.py::test_the_working_directory_stays_changed_for_the_whole_session PASSED [ 10%]
+tests/engine/test_f10_engine_state.py::test_relative_paths_now_resolve_inside_someone_elses_checkout PASSED [ 10%]
+tests/engine/test_f10_engine_state.py::test_aba_weapon_swap_returns_identical_stats PASSED [ 11%]
+tests/engine/test_f10_engine_state.py::test_aba_build_reload_returns_identical_stats PASSED [ 12%]
+tests/engine/test_f10_engine_state.py::test_repeated_evaluation_of_the_same_state_is_stable PASSED [ 12%]
+tests/engine/test_f10_engine_state.py::test_the_engine_still_moves_the_process_it_is_built_in PASSED [ 13%]
+tests/engine/test_f11_import_is_wiped.py::test_the_fixture_build_really_has_something_to_lose PASSED [ 14%]
+tests/engine/test_f11_import_is_wiped.py::test_worker_init_sequence_erases_the_imported_character PASSED [ 14%]
+tests/engine/test_f11_import_is_wiped.py::test_the_wipe_is_silent PASSED [ 15%]
+tests/engine/test_f11_import_is_wiped.py::test_setup_silently_loses_the_requested_character_level_in_auto_mode 

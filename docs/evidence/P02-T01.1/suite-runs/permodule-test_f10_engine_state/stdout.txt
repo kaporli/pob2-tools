@@ -1,0 +1,18 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 7 items
+
+tests/engine/test_f10_engine_state.py::test_engine_boot_moved_the_process_into_the_pob_source_tree PASSED [ 14%]
+tests/engine/test_f10_engine_state.py::test_the_working_directory_stays_changed_for_the_whole_session PASSED [ 28%]
+tests/engine/test_f10_engine_state.py::test_relative_paths_now_resolve_inside_someone_elses_checkout PASSED [ 42%]
+tests/engine/test_f10_engine_state.py::test_aba_weapon_swap_returns_identical_stats PASSED [ 57%]
+tests/engine/test_f10_engine_state.py::test_aba_build_reload_returns_identical_stats PASSED [ 71%]
+tests/engine/test_f10_engine_state.py::test_repeated_evaluation_of_the_same_state_is_stable PASSED [ 85%]
+tests/engine/test_f10_engine_state.py::test_the_engine_still_moves_the_process_it_is_built_in PASSED [100%]
+
+native fault diagnostics: 12326546 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-395\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================== 7 passed in 6.44s ==============================

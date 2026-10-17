@@ -1,0 +1,21 @@
+{
+  "run": "full-s1",
+  "seed": "1",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "-p",
+    "memtrace",
+    "tests/engine"
+  ],
+  "exit_code": 1,
+  "parent_guard": null,
+  "limit_mb": 3072,
+  "peak_tree_rss": 1471639552,
+  "elapsed_s": 100.0,
+  "python": "3.12.4",
+  "last_line": "================== 134 passed, 18 errors in 97.95s (0:01:37) =================="
+}
