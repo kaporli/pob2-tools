@@ -2,7 +2,7 @@
 
 This specification defines a PoE 2 build optimizer that searches for builds capable of both clearing and bossing, explains their strengths and execution requirements, and exposes missing evidence instead of inventing performance. It is an implementation plan, not a claim that these capabilities already exist.
 
-Specification version: 1.0. Prepared on 2026-10-04. Status: ready for staged implementation; external access and game-specific benchmark decisions have explicit gates. No application implementation is included in this documentation change.
+Specification version: **1.1**, revised 2026-10-17 (original 1.0 prepared 2026-10-04). The first target is maximum sustained single-target **Flicker Strike DPS**, with clearing/bossing capability retained as gates; see [D07](../decisions/D07-flicker-strike-objective.md). Foundation/import work has been delivered; the optimizer is not complete. Start with the [current task ledger and next assignments](delivery.md#current-task-ledger). This revision changes documentation, not application code or persisted schemas.
 
 ## Read in this order
 
@@ -42,10 +42,10 @@ When documents conflict, product requirements take priority, then contracts and 
 5. Mark the task `review_ready`, not `accepted`. Use the [review request](templates/review-request.md) when returning work to the reviewing assistant.
 6. If blocked, record the exact missing input and the work it blocks. Continue only with independent tasks in the delivery plan. Unknown game rules must never be replaced with guessed constants to make a test pass.
 
-All implementation tasks start in `planned`. The specifications themselves do not approve any implementation gate. Technical acceptance belongs to the reviewing assistant when the engineer supplies the changes and evidence. Product-scope changes belong to the owner, Elias. Routine implementation inside these requirements does not need additional owner permission.
+The [delivery ledger](delivery.md#current-task-ledger) distinguishes done, partial, blocked and remaining tasks using the actual review records. Historical reviews retain their original specification version and scope. This documentation revision approves no new implementation gate. Technical acceptance belongs to the reviewing assistant when the engineer supplies changes and evidence; product-scope changes belong to Elias.
 
 ## Completion boundaries
 
 The offline research milestone can finish without automated website access. The full requested live-market product cannot: manual item import is a useful fallback, not acceptance of live trade integration. Similarly, successful PoB calculations establish engine consistency; independent gameplay evidence is required for claims about practical performance.
 
-The initial release covers a documented subset of Huntress mechanics. Expansion is a required staged project outcome, not permission to call that subset all PoE 2 builds. P11 is optional and must not delay a useful, validated non-learning optimizer.
+The initial release covers a documented subset of Flicker Strike interactions and compatible classes. Expansion is a required staged project outcome, not permission to call that subset all PoE 2 builds. P11 is optional and must not delay a useful, validated non-learning optimizer.

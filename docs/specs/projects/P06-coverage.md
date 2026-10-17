@@ -4,7 +4,7 @@ Project ID: P06. Dependencies: P01, P02 catalog/primitive semantics, P04 claim/n
 
 ## P06-T01 Create the mechanics registry
 
-For the initial supported Huntress families, enumerate damage, defenses, costs, reservations, cast/attack timing, cooldowns, durations, stacking, triggers, target selection and enabling interactions. Store MechanicRules with dependencies, owner, required inputs, patch scope, tests and limitations.
+For the initial approved Flicker Strike class/interaction scope ([D07](../../decisions/D07-flicker-strike-objective.md)), enumerate damage, defenses, costs, reservations, action timing, cooldowns, durations, stacking, triggers, target selection, repeat-use/sustain conditions and enabling interactions. Verify which conditions actually apply from the pinned PoE 2 catalog and evidence; do not assume PoE 1 behavior. Store MechanicRules with dependencies, owner, required inputs, patch scope, tests and limitations. Damage attribution and initial-state/renewal assumptions for sustained DPS must have explicit owners too.
 
 Do not treat a modifier parsed by PoB as necessarily implemented correctly. Validate dependency closure and reject cycles in static requirements; temporal trigger loops belong to explicit bounded simulator rules. Unknown rules are registry entries with unsupported status, not dropped entries.
 

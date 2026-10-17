@@ -4,7 +4,11 @@ Project ID: P08. Dependencies: P01 persistence, P02 catalog/legality, P05 import
 
 ## P08-T01 Prepare immutable run contexts
 
+**P08-T01.1, prerequisite contract delivery (done for contract scope in PR #11, `p08-t01.1-contracts`, repair `740e2f0`):** versioned request/objective/aggregate records, migration, objective hashes, catalog-backed Flicker identity checks and persisted aggregate binding are implemented. R1/R2 are closed by [repair self-verification](../../reviews/P08-T01.1-repair-verification.md); require green CI before merge. V1 records retain their meaning and unknown objectives are refused. This child task does not complete prepare: the service must still invoke the resolver, approve/freeze class scope, resolve benchmark/attribution content hashes and create immutable contexts.
+
 Implement `prepare` and RunRequest resolution. Freeze selected class/progression, current patch/league, catalog, source builds, market/imported item pool, scenario suite, objective and all versions. Validate access/coverage separately; market mode requires accepted market capability, while explicitly offline mode can proceed with imports. Current-patch resolution failure cannot fall back to an old patch silently.
+
+For D07, prepare one class-bound context per approved class and a campaign manifest sharing the objective, benchmark, item universe and total time budget. Do not silently constrain the campaign to Huntress or a seed build's class. Report excluded classes and incomplete coverage. Do not grant four hours to every class when the requested campaign budget is four hours total.
 
 Determine worker count using P00 measured peak worker memory: reserve at least 2 GiB for the coordinator/OS and allocate at least 1.5 times measured worker peak per worker, constrained by user limit and available memory. Use one worker until measurements exist. Log all resolved values and unresolved gaps.
 
@@ -18,11 +22,13 @@ After mutation, run legality and coverage. A bounded repair may choose attribute
 
 Acceptance: a toy pair that is harmful individually but beneficial together can be generated; different item rolls and rotations retain distinct identities; repeated identical candidates are deduplicated; mutated trees remain connected or are rejected. Search can generate a supported skill family absent from the seed builds.
 
+For the Flicker objective, every mutation must preserve the resolved Flicker Strike main-skill constraint. Explore interaction variants/classes beyond the seeds within approved scope; unrestricted main-skill replacement belongs only to a different explicitly selected objective. A constraint-breaking candidate is rejected, not silently scored on its stronger alternate skill.
+
 ## P08-T03 Implement a deterministic diverse search kernel
 
 Initial configurable defaults: population 64; 128 proposals per generation; proposal allocations 50% local mutations, 30% coordinated mutations and 20% fresh supported candidates. Keep 16 elite eligible candidates plus representatives from supported families. If a source cannot fill its allocation, record the reason and use fresh proposals; never silently convert all exploration into elite copies.
 
-Screen proposed candidates cheaply. Detailed-evaluate up to 64 unique candidates per generation: up to 48 promising candidates stratified by family and at least 16 unexplored/uncertain candidates selected by seeded sampling. Reserve this exploration quota even when screening score is poor. Unsupported critical mechanics enter the gap queue, not a fake numeric ranking. Use Pareto diversity and balanced score among eligible detailed results. Keep provisional noneligible candidates separately for exploration.
+Screen proposed candidates cheaply. Detailed-evaluate up to 64 unique candidates per generation: up to 48 promising candidates stratified by family/approved Flicker interaction variant and at least 16 unexplored/uncertain candidates selected by seeded sampling. Reserve this exploration quota even when screening score is poor. Unsupported critical mechanics enter the gap queue, not a fake numeric ranking. Use the active objective among eligible detailed results: D07 sustained Flicker DPS by default, balanced score only for an explicitly selected legacy objective. Retain clear/boss Pareto diversity without pruning the DPS winner solely on C/B dominance. Keep provisional noneligible candidates separately for exploration.
 
 Merge evaluations at generation boundaries in stable candidate-ID order, regardless of worker completion order. Track unique legal proposals, rejection reasons, family coverage, screening/detail counts, cache hits and best score over evaluations and time. These defaults are engineering choices, adjustable only through recorded configuration and comparisons.
 

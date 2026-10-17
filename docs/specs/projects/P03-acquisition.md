@@ -30,7 +30,7 @@ Acceptance: a cross-provider matrix lists acquired fields, formats, live status,
 
 ## P03-T05 Build a diverse versioned corpus
 
-For the first corpus target, acquire 30 usable endgame build variants from at least two sources and six build families where available. Include at least three Huntress families if available. This is an engineering coverage target, not statistical proof. If availability prevents it, report actual coverage and seek scope review.
+For the first corpus target, acquire 30 usable endgame build variants from at least two sources and six build families where available. Prioritize complete Flicker Strike exports and at least three independently reviewed interaction variants within that skill where available (D07); surrounding families may supply controls and enabling-mechanic evidence. This is an engineering coverage target, not statistical proof. Do not count synthetic fixtures as source builds or renamed duplicates as distinct variants. If availability prevents the target, report actual coverage and seek scope review; local-file collection may proceed while automatic providers are blocked.
 
 Store a corpus manifest with selection strategy, patch distribution, creator/family counts, failures and source limitations. At most half the collection budget should be popularity-prioritized; spend the rest on distinct mechanics and less represented families. Deduplicate source IDs during acquisition; semantic family deduplication belongs to P04.
 
