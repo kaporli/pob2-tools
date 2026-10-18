@@ -8,12 +8,12 @@ Only a clean checkout of the pin may produce them.
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import pytest
 
-from pob2opt.combat import capture, evaluate_flicker, from_replay, load_p09_resolutions
+from pob2opt.combat import capture, evaluate_flicker, load_p09_resolutions
+from pob2opt.combat.values import seed_replay_values
 from pob2opt.evaluation import EngineAdapter, pob_worker_spec, resolve_checkout
 
 pytestmark = pytest.mark.engine
@@ -53,9 +53,12 @@ def _plain(values) -> dict:
 
 def test_live_values_reproduce_the_frozen_bundle(captures, repo_root: Path):
     _, runs = captures
-    replay = json.loads((repo_root / "docs/evidence/P09-T01.2/replay.json").read_text(encoding="utf-8"))
-    frozen = _plain(from_replay(replay))
+    frozen_values = seed_replay_values(repo_root)
+    frozen = _plain(frozen_values)
     live = _plain(runs[0][0])
+    # Same scored document, engine and applied state (review R5).
+    for key in ("head", "dirty_hash", "document_sha256", "source_document_sha256", "state"):
+        assert runs[0][0].engine.get(key) == frozen_values.engine.get(key), key
     assert live.keys() == frozen.keys()
     for key, value in frozen.items():
         if value is None:

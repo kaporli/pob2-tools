@@ -191,20 +191,49 @@ def apply_method(ledger: CoverageLedger, report: CoverageReport, method: str,
            defer_to_settled=True)
 
 
+ATTRIBUTION_RULE = "attribution/flicker-sustained-v1"
+
+
 def apply_attribution(ledger: CoverageLedger, report: CoverageReport,
-                      acceptance: Mapping | None, assignments: Mapping[str, str],
-                      applied: list) -> None:
-    """Accept the attribution table only with an explicit reviewer acceptance."""
+                      acceptance: Mapping | None, table, applied: list) -> str | None:
+    """Accept ``table`` only with a reviewer acceptance naming its hash.
+
+    Returns a refusal reason when an acceptance was supplied for a different
+    table, None otherwise. On acceptance the coverage rule gets exactly the
+    table's classes and cites its hash, so coverage and scoring share one
+    table (review PR-18-22 R4).
+    """
     if not acceptance:
-        applied.append(Applied("attribution", "attribution/flicker-sustained-v1", None,
-                               "attribution/flicker-sustained-v1", "not_applied",
-                               "proposed table, no reviewer acceptance supplied"))
-        return
-    _apply(ledger, report, "attribution", "p07-t01/attribution-accepted",
-           "attribution/flicker-sustained-v1", protocol_gap="gap-p09-t011-attribution-rules",
-           evidence=tuple(acceptance["evidence_ids"]), author="P07-T01",
-           reviewer=acceptance["reviewer"],
+        applied.append(Applied("attribution", ATTRIBUTION_RULE, None, ATTRIBUTION_RULE,
+                               "not_applied", "no reviewer acceptance supplied for table %s"
+                               % table.table_hash()))
+        return None
+    named = acceptance.get("table_hash")
+    if named != table.table_hash():
+        applied.append(Applied("attribution", ATTRIBUTION_RULE, None, ATTRIBUTION_RULE,
+                               "not_applied", "acceptance names table %s, evaluated table is %s"
+                               % (named, table.table_hash())))
+        return ("attribution acceptance names table %s, not the evaluated table %s"
+                % (named, table.table_hash()))
+    _apply(ledger, report, "attribution", "p07-t01/attribution-accepted", ATTRIBUTION_RULE,
+           protocol_gap="gap-p09-t011-attribution-rules",
+           evidence=tuple(acceptance["evidence_ids"]) + (table.binding_id(),),
+           author="P07-T01", reviewer=acceptance["reviewer"],
            rule_changes={"support": "implemented", "validation": "fixture_checked",
                          "implementation_ref": IMPL + ".attribution"},
-           entry_changes={"assignments": dict(assignments)},
-           outcome="attribution:%s" % acceptance.get("table_id", "accepted"), applied=applied)
+           entry_changes={"assignments": dict(table.classes)},
+           outcome="attribution:" + table.table_hash(), applied=applied)
+    return None
+
+
+def attribution_binding(registry, table) -> str | None:
+    """Why the registry's attribution rule is not bound to ``table``, or None."""
+    if ATTRIBUTION_RULE not in registry:
+        return "registry has no %s rule" % ATTRIBUTION_RULE
+    entry = registry[ATTRIBUTION_RULE]
+    if dict(entry.assignments) != dict(table.classes):
+        return ("coverage rule assignments %s differ from the scored table %s (%s)"
+                % (dict(sorted(entry.assignments.items())), table.table_id, table.table_hash()))
+    if table.binding_id() not in entry.rule.evidence_ids:
+        return "coverage rule does not cite the scored table %s" % table.table_hash()
+    return None

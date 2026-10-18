@@ -27,8 +27,8 @@ for _pkg in (REPO / "pob2-mcp", REPO / "pob2-optimizer"):
     if str(_pkg) not in sys.path:
         sys.path.insert(0, str(_pkg))
 
-from pob2opt.combat import evaluate_flicker, from_replay, load_p09_resolutions  # noqa: E402
-from pob2opt.combat.values import capture  # noqa: E402
+from pob2opt.combat import evaluate_flicker, load_p09_resolutions  # noqa: E402
+from pob2opt.combat.values import capture, seed_replay_values  # noqa: E402
 
 SEED = REPO / "docs/evidence/P09-T01.1/seed/export-flicker-main.xml"
 REPLAY = REPO / "docs/evidence/P09-T01.2/replay.json"
@@ -56,11 +56,10 @@ def header(kind: str, live: bool = False) -> dict:
 
 def offline() -> int:
     xml = SEED.read_text(encoding="utf-8")
-    replay = json.loads(REPLAY.read_text(encoding="utf-8"))
     p09 = load_p09_resolutions()
     for name, document in (("seed-evaluation.json", "benchmark"),
                            ("seed-as-imported-evaluation.json", "seed")):
-        values = from_replay(replay, document=document, replay_ref=REPLAY_REF)
+        values = seed_replay_values(REPO, document=document)
         result = evaluate_flicker(xml, values, p09_resolutions=p09)
         payload = {**header("evaluation from frozen engine bundle"), "document": document,
                    **result.to_json()}
@@ -115,18 +114,22 @@ def live() -> int:
         e["values"] = _strip(e["values"])
     same_eval = ea == eb
     disjoint = not set(a["worker_pids"]) & set(b["worker_pids"])
-    frozen = from_replay(json.loads(REPLAY.read_text(encoding="utf-8")), document="benchmark",
-                         replay_ref=REPLAY_REF).to_json()
+    frozen = seed_replay_values(REPO).to_json()
     keys = [k for k in frozen if k not in ("trace", "engine", "flasks", "document")
             and frozen[k] is not None]
     vs_frozen = {k: {"live": a["values"][k], "frozen": frozen[k],
                      "rel_diff": _rel(a["values"][k], frozen[k])} for k in keys}
     flasks_equal = a["values"]["flasks"] == frozen["flasks"]
+    provenance = {k: {"live": a["values"]["engine"].get(k), "frozen": frozen["engine"].get(k)}
+                  for k in ("head", "dirty_hash", "document_sha256", "source_document_sha256",
+                            "state")}
+    provenance_equal = all(v["live"] == v["frozen"] for v in provenance.values())
     agreement = {"values_identical": same_values, "evaluations_identical": same_eval,
                  "worker_pid_sets_disjoint": disjoint,
                  "evaluation_ids": [a["evaluation"]["evaluation_id"],
                                     b["evaluation"]["evaluation_id"]],
                  "flasks_equal_frozen_bundle": flasks_equal,
+                 "provenance_equal_frozen_bundle": provenance_equal,
                  "max_rel_diff_vs_frozen_bundle": max(v["rel_diff"] for v in vs_frozen.values())}
     after = resolve_checkout(root)
     payload = {**header("live fresh-worker agreement", live=True),
@@ -134,7 +137,7 @@ def live() -> int:
                "working_tree_before": "clean",
                "working_tree_after": "clean" if after.dirty_hash is None and after.reason is None
                else "DIRTY",
-               "agreement": agreement, "vs_frozen_bundle": vs_frozen,
+               "agreement": agreement, "vs_frozen_bundle": vs_frozen, "provenance": provenance,
                "runs": [{"label": r["label"], "worker_pids": r["worker_pids"],
                          "worker_history": r["worker_history"], "values": r["values"],
                          "status": r["evaluation"]["status"],
@@ -145,7 +148,7 @@ def live() -> int:
     print("%s: values identical %s, evaluations identical %s, pids disjoint %s, max rel diff "
           "vs frozen %.3g" % (path.relative_to(REPO).as_posix(), same_values, same_eval,
                               disjoint, agreement["max_rel_diff_vs_frozen_bundle"]))
-    return 0 if same_values and same_eval and disjoint else 1
+    return 0 if same_values and same_eval and disjoint and provenance_equal else 1
 
 
 if __name__ == "__main__":

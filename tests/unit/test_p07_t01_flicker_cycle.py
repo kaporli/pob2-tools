@@ -8,6 +8,7 @@ engine; tests/engine/test_p07_t01_flicker_cycle_engine.py does.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import replace
 from pathlib import Path
@@ -22,7 +23,8 @@ from pob2opt.combat.events import (DECIDE, EXPIRE, IMPACT, STATE, EventLimitExce
                                    EventLoop)
 from pob2opt.combat.policy import compare, use
 from pob2opt.combat.timeline import simulate, summary
-from pob2opt.combat.values import CycleValues, FlaskValues
+from pob2opt.combat.values import (CycleValues, FlaskValues, benchmark_document,
+                                   seed_replay_values)
 from pob2opt.coverage.flicker_v1 import build_registry
 from pob2opt.coverage.registry import MechanicsRegistry
 from pob2opt.domain.enums import RuleSupport, RuleValidation
@@ -33,6 +35,16 @@ REPLAY = REPO / "docs/evidence/P09-T01.2/replay.json"
 EVIDENCE = REPO / "docs/evidence/P07-T01/seed-evaluation.json"
 
 
+PIN = "ce566eac45ea8a86477f513c7ee65a1ebe60014e"
+
+
+def identity(xml: str) -> dict:
+    """What a clean pinned capture of ``xml``'s scoring document records."""
+    return {"head": PIN, "dirty_hash": None,
+            "document_sha256": hashlib.sha256(benchmark_document(xml).encode("utf-8")).hexdigest(),
+            "state": {"forced_power_charges": 5, "document": "benchmark"}}
+
+
 def values(**kw) -> CycleValues:
     base = dict(document="benchmark", charges=5, whirling_time_s=1.0, whirling_mana=0.0,
                 whirling_damage_per_use=0.0, charged_staff_time_s=0.5, charged_staff_mana=0.0,
@@ -40,7 +52,7 @@ def values(**kw) -> CycleValues:
                 flicker_damage_per_strike_buffed=100.0, flicker_damage_per_strike_unbuffed=50.0,
                 flicker_ignite_dps=None, buff_duration_s=10.0, mana_pool=1e9,
                 mana_regen_per_s=0.0, flasks=(), pob_total_dps=None,
-                pob_burst_damage_per_use=300.0)
+                pob_burst_damage_per_use=300.0, engine=identity(SYNTH_XML % ""))
     base.update(kw)
     return CycleValues(**base)
 
@@ -211,12 +223,10 @@ SYNTH_XML = """<?xml version="1.0" encoding="UTF-8"?>
 """
 LIVING_LIGHTNING = ('\n   <Gem skillId="SupportLivingLightningPlayerTwo" '
                     'nameSpec="Living Lightning II" enabled="true"/>')
-ASSIGNED = {"skill/FlickerStrikePlayer": "flicker_direct",
-            "skill/WhirlingAssaultPlayer": "unrelated",
-            "skill/ChargedStaffPlayer": "unrelated"}
+PROPOSED = proposed_table()
 
 
-def settled(**changes) -> MechanicsRegistry:
+def settled(table=None, **changes) -> MechanicsRegistry:
     """Every seeded rule implemented, fixture-checked, evidenced and reviewed."""
     entries = []
     for e in build_registry():
@@ -227,7 +237,10 @@ def settled(**changes) -> MechanicsRegistry:
         if e.mechanic_id == "activation/hit-and-run-reuse":
             e = replace(e, satisfied_by=("skill:FlickerStrikePlayer",))
         if e.mechanic_id == "attribution/flicker-sustained-v1":
-            e = replace(e, assignments=dict(ASSIGNED))
+            # Settled on exactly the scored table: its classes and its hash.
+            bound = table or PROPOSED
+            e = replace(e, assignments=dict(bound.classes), rule=replace(
+                e.rule, evidence_ids=list(e.rule.evidence_ids) + [bound.binding_id()]))
         if e.mechanic_id == "charges/charged-staff-consumption":
             e = replace(e, provides_paths=("buff.charged_staff.active",))
         if e.mechanic_id == "support/SupportLivingLightningPlayerTwo":
@@ -249,7 +262,7 @@ def bench(tmp_path):
 
 
 def evaluate(bench, registry, *, xml=SYNTH_XML % "", source=None, **kw):
-    return evaluate_flicker(xml, source or values(), scenarios_path=bench, mod_support_path=None,
+    return evaluate_flicker(xml, source or values(engine=identity(xml)), scenarios_path=bench, mod_support_path=None,
                             config_options={}, registry=registry, patch_compatibility="verified",
                             **kw)
 
@@ -276,18 +289,17 @@ def test_attribution_acceptance_must_be_explicit(bench):
         e, reviewed_by=None, rule=replace(e.rule, support=RuleSupport.UNSUPPORTED))}
     assert evaluate(bench, settled(**unsettled)).status == "blocked"
     accepted = evaluate(bench, settled(**unsettled), attribution_acceptance={
-        "reviewer": "fixture reviewer", "evidence_ids": ["fixture"], "table_id": "t"})
+        "reviewer": "fixture reviewer", "evidence_ids": ["fixture"],
+        "table_id": PROPOSED.table_id, "table_hash": PROPOSED.table_hash()})
     assert accepted.status == "eligible", accepted.decision
 
 
-def test_unresolved_activation_blocks_unless_the_method_defines_it(bench):
+def test_unresolved_activation_is_defined_only_by_the_owners_method(bench):
     unknown = {"activation/hit-and-run-reuse": lambda e: replace(
         e, satisfied_by=None, reviewed_by=None,
         rule=replace(e.rule, support=RuleSupport.UNKNOWN, validation=RuleValidation.UNTESTED))}
-    other = evaluate(bench, settled(**unknown), method="pob-cycle-v1")
-    assert other.status == "blocked"
-    assert any(b["class"] == "unknown_rule" and "activation/hit-and-run-reuse" in b["mechanics"]
-               for b in other.decision["blocking"])
+    # pob-cycle-v1 has no implementation, so it never runs (review R7).
+    assert evaluate(bench, settled(**unknown), method="pob-cycle-v1").status == "unsupported_method"
     owner = evaluate(bench, settled(**unknown), method="pob-community-v2")
     assert owner.status == "eligible", owner.decision
     applied = {a["resolution_id"]: a for a in owner.coverage["applied_resolutions"]}
@@ -297,16 +309,20 @@ def test_unresolved_activation_blocks_unless_the_method_defines_it(bench):
 
 def test_movement_that_never_happens_blocks(bench):
     move_only = {"activation/hit-and-run-reuse": lambda e: replace(e, satisfied_by=("move",))}
-    for method in ("pob-cycle-v1", "pob-community-v2"):
-        # Settled evidence that only movement re-enables the skill is not
-        # overruled by the owner's method definition.
-        result = evaluate(bench, settled(**move_only), method=method)
-        assert result.status == "blocked", method
-        assert any(b["class"] == "activation_unmet" for b in result.decision["blocking"])
+    # Settled evidence that only movement re-enables the skill is not
+    # overruled by the owner's method definition.
+    result = evaluate(bench, settled(**move_only), method="pob-community-v2")
+    assert result.status == "blocked"
+    assert any(b["class"] == "activation_unmet" for b in result.decision["blocking"])
 
 
 def test_unassigned_secondary_damage_blocks(bench):
-    result = evaluate(bench, settled(), xml=SYNTH_XML % LIVING_LIGHTNING)
+    # A table, accepted and bound, that has no class for Living Lightning II.
+    table = AttributionTable.from_rows("no-living-lightning", [
+        (src, cls) for src, cls in PROPOSED.classes.items()
+        if src != "support/SupportLivingLightningPlayerTwo"])
+    xml = SYNTH_XML % LIVING_LIGHTNING
+    result = evaluate(bench, settled(table=table), xml=xml, attribution=table)
     assert result.status == "blocked"
     assert any(b["class"] == "unassigned_damage" and
                "support/SupportLivingLightningPlayerTwo" in b["mechanics"]
@@ -324,7 +340,8 @@ def test_missing_engine_value_keeps_metrics_null(bench):
         replay = json.loads(REPLAY.read_text(encoding="utf-8"))
         replay["whirling_assault"] = {k: v for k, v in replay["whirling_assault"].items()
                                       if k != "Time"}
-        from_replay(replay)
+        from_replay(replay, source_xml=SEED.read_text(encoding="utf-8"),
+                    source_sha256=hashlib.sha256(SEED.read_bytes()).hexdigest())
 
 
 def test_invalid_rotation_returns_a_typed_refusal(bench):
@@ -346,7 +363,7 @@ def test_evaluation_is_deterministic(bench):
 def seed_result():
     replay = json.loads(REPLAY.read_text(encoding="utf-8"))
     return evaluate_flicker(SEED.read_text(encoding="utf-8"),
-                            from_replay(replay, replay_ref="docs/evidence/P09-T01.2/replay.json"),
+                            seed_replay_values(REPO),
                             p09_resolutions=load_p09_resolutions())
 
 
@@ -370,6 +387,17 @@ def test_seed_matches_p09_t012_community_cycle_within_one_percent(seed_result):
     assert seed_result.diagnostic["flicker_sustained_dps"] == pytest.approx(theirs, rel=0.01)
     assert seed_result.diagnostic["flicker_burst_dps"] == pytest.approx(
         cycle["pounce_off"]["flicker_burst_dps"], rel=1e-9)
+
+
+def test_frozen_bundle_carries_the_capture_identity():
+    v = seed_replay_values(REPO)
+    seed = SEED.read_bytes().decode("utf-8")
+    assert v.engine["head"] == PIN and v.engine["dirty_hash"] is None
+    assert v.engine["document_sha256"] == hashlib.sha256(
+        benchmark_document(seed).encode("utf-8")).hexdigest()
+    with pytest.raises(MissingValue, match="hashes to"):
+        from_replay(json.loads(REPLAY.read_text(encoding="utf-8")), source_xml=seed + " ",
+                    source_sha256=v.engine["source_document_sha256"])
 
 
 def test_seed_evidence_file_matches(seed_result):

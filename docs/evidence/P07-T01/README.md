@@ -9,7 +9,8 @@ measurement, no best-build claim.
 
 **Not eligible.** The objective field `flicker_sustained_dps` is null. The coverage gate
 (`pob2opt.coverage.decide`) refuses with 21 blocking gaps and one unsettled critical rule,
-`attribution/flicker-sustained-v1`. Hit and Run activation is no longer blocking: the
+`attribution/flicker-sustained-v1`; the evaluator adds `gap-p07-attribution-table-unbound`
+(22 in all). Hit and Run activation is no longer blocking: the
 owner's method defines it (teleport re-enables it, as PoB applies it), scoped to
 `pob-community-v2` only.
 
@@ -31,9 +32,13 @@ Seed as imported (Pounce on, PoB applies Predator's Mark x1.24): 287,223 sustain
 
 Blocking gaps, in four groups (full list with requests in `seed-evaluation.json#/decision/blocking`):
 
-1. Attribution: the P09-T01.2 ownership table is a proposal. Until a reviewer accepts it,
-   Flicker Strike, Whirling Assault, Charged Staff and Living Lightning II are unassigned.
-   `evaluate_flicker(..., attribution_acceptance={reviewer, evidence_ids})` applies it.
+1. Attribution: the P09-T01.2 ownership table, persisted as
+   `benchmarks/p09-flicker-v1-attribution/proposed-v1.json` (table hash
+   `sha256:b0a9fd762ab6991447140bd247c0a6efe85e66f0d4e0e887df90735175a9ef6e`), is a
+   proposal. Until a reviewer accepts that hash, Flicker Strike, Whirling Assault, Charged
+   Staff and Living Lightning II are unassigned.
+   `evaluate_flicker(..., attribution_acceptance={reviewer, evidence_ids, table_hash})`
+   applies it.
 2. Rules no code or evidence establishes: Way of the Stonefist (passive 39595, three
    unparsed lines), Rage (`resource/rage`), Trinity, Bhatair's Vengeance, Blazing
    Critical, Concussive Runes, Living Lightning II.
@@ -64,15 +69,31 @@ The bundle reads Whirling Assault damage and Flicker ignite on the seed document
 (Pounce on). For the scoring document those two unscored values are null offline and
 present live; the scored values do not depend on them.
 
+## Review PR-18-22 repairs (R4 to R7)
+
+| Finding | Repair | Regression |
+|---|---|---|
+| R4 scored table differs from the approved one | One persisted table keyed by coverage mechanic ids, identified by `table_hash`, used for coverage assignments and scoring. Acceptance must name the hash; the coverage rule must carry exactly the table's classes and cite `attribution-table:<hash>`, otherwise `gap-p07-attribution-table-unbound` blocks | `test_r4_*` |
+| R5 assumed clean pinned provenance | Engine head, dirty state, scored document SHA-256 and applied state come from the capture (live adapter or frozen bundle, the latter bound to the seed manifest's document hash). Coverage receives them unchanged; an absent dirty key is unknown. A document or state mismatch blocks | `test_r5_*`, `test_frozen_bundle_carries_the_capture_identity`, engine test |
+| R6 windows share identity | Only `[0, 120)` and `[0, 5)` can fill the v1 objective; other windows return `diagnostic_window`. The evaluation id covers objective, scenario file, method, windows, document, rotation, profile, parse evidence, config options, P09 resolutions, attribution table and acceptance, registry and closure hashes, eligibility and the values without worker pids | `test_r6_*` |
+| R7 unsupported method runs the simulator | Only `pob-community-v2`; anything else returns `unsupported_method` with null objective before any simulation | `test_r7_*` |
+
+The 12 regression cases (`tests/unit/test_pr21_review_probes.py`) were run against the
+reviewed head `db40827`: 11 failed, the control case passed
+(`repairs/negative-control-db40827.txt`). After repair all 12 pass
+(`repairs/probes-after-py312.txt`). The live capture's head, dirty state, document hashes
+and state equal the frozen bundle's (`fresh-worker-agreement.json#/provenance`).
+
 ## Files
 
 | File | SHA-256 | What |
 |---|---|---|
-| `seed-evaluation.json` | `4cb1cfb7deb79b7cb13cc56c98f90312c95d1e5e6e43ef2354110e7f5d62586d` | Scoring document: decision, blocking gaps, diagnostic, full action/impact trace, mana ledger, repeatable-cycle check, applied resolutions, ledger history, registry and closure hashes |
-| `seed-as-imported-evaluation.json` | `c5f4e3a214de2d713a85e3b5b360ae402ed0bcb962aafc09d1ee810304f83f99` | Same, document as imported (diagnostic) |
-| `fresh-worker-agreement.json` | `a5e89942391f7eeb26024ee2fda3341b501da2262e6baf93d3ec095c2dcee643` | Two live captures, pids, worker history, comparison with the bundle |
+| `seed-evaluation.json` | `c746b523712d4a386a255dd72ab5eeaec2f28bc0cca878b49667e7705b32c8d8` | Scoring document: decision, blocking gaps, diagnostic, full action/impact trace, mana ledger, repeatable-cycle check, applied resolutions, ledger history, registry and closure hashes |
+| `seed-as-imported-evaluation.json` | `1cd7baac4b155e5e6d9a0bfdb7e7023b9a8d1c76e640ea9c852af7de18537cb7` | Same, document as imported (diagnostic) |
+| `fresh-worker-agreement.json` | `e055a604d29fa280f433fcefb78c2fc7f370f4a4ec0c3c97481c81f8ad5801d7` | Two live captures, pids, worker history, comparison with the bundle |
 | `engine-py312.txt` | | Engine test tail |
 | `offline-py312.txt`, `offline-py310.txt` | | Offline suite tails |
+| `repairs/negative-control-db40827.txt`, `repairs/probes-after-py312.txt` | | R4 to R7 regression cases before and after repair |
 
 Registry after the applied resolutions: hash `aba53d0b2a00ba88f1b6a6fc6900363b811d08e5418af9b0d6e2f0ce5732a75a`,
 closure hash `09109aedd2d3f86f460e9e19c5433f2b24c82c673de5002343ada2cdb652115b`.

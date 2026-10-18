@@ -1,12 +1,13 @@
 {
  "agreement": {
   "evaluation_ids": [
-   "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780",
-   "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780"
+   "ebef9f69e596f8f6bb0857895500e5ce7f6ec88860939b8aa8acbb9e29797ef7",
+   "ebef9f69e596f8f6bb0857895500e5ce7f6ec88860939b8aa8acbb9e29797ef7"
   ],
   "evaluations_identical": true,
   "flasks_equal_frozen_bundle": true,
   "max_rel_diff_vs_frozen_bundle": 0.0,
+  "provenance_equal_frozen_bundle": true,
   "values_identical": true,
   "worker_pid_sets_disjoint": true
  },
@@ -16,11 +17,39 @@
  "engine_root": "external/PathOfBuilding-PoE2",
  "kind": "live fresh-worker agreement",
  "not_a_claim": "PoB-derived computation by method pob-community-v2 (owner decision, D07 amendment 2026-10-18 (2)). Not a gameplay measurement and not a best-build recommendation.",
+ "provenance": {
+  "dirty_hash": {
+   "frozen": null,
+   "live": null
+  },
+  "document_sha256": {
+   "frozen": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
+   "live": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee"
+  },
+  "head": {
+   "frozen": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+   "live": "ce566eac45ea8a86477f513c7ee65a1ebe60014e"
+  },
+  "source_document_sha256": {
+   "frozen": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+   "live": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed"
+  },
+  "state": {
+   "frozen": {
+    "document": "benchmark",
+    "forced_power_charges": 5
+   },
+   "live": {
+    "document": "benchmark",
+    "forced_power_charges": 5
+   }
+  }
+ },
  "runs": [
   {
    "diagnostic_burst": 241702.32877773402,
    "diagnostic_sustained": 231631.3984119951,
-   "evaluation_id": "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780",
+   "evaluation_id": "ebef9f69e596f8f6bb0857895500e5ce7f6ec88860939b8aa8acbb9e29797ef7",
    "label": "A",
    "status": "blocked",
    "values": {
@@ -32,13 +61,19 @@
     "engine": {
      "adapter_version": "p02.2",
      "dirty_hash": null,
+     "document_sha256": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
      "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
      "source": "EngineAdapter",
+     "source_document_sha256": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+     "state": {
+      "document": "benchmark",
+      "forced_power_charges": 5
+     },
      "worker_pids": [
-      33236,
-      26716,
-      32256,
-      33868
+      15604,
+      20012,
+      10092,
+      14216
      ]
     },
     "flasks": [
@@ -90,43 +125,43 @@
     {
      "end": "recycled: 4 requests served",
      "generation": 1,
-     "peak_memory_bytes": 560607232,
-     "pid": 33236,
+     "peak_memory_bytes": 556027904,
+     "pid": 15604,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 2,
-     "peak_memory_bytes": 478552064,
-     "pid": 26716,
+     "peak_memory_bytes": 481689600,
+     "pid": 20012,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 3,
-     "peak_memory_bytes": 530632704,
-     "pid": 32256,
+     "peak_memory_bytes": 518914048,
+     "pid": 10092,
      "requests": 4
     },
     {
      "end": "closed",
      "generation": 4,
-     "peak_memory_bytes": 265588736,
-     "pid": 33868,
+     "peak_memory_bytes": 262225920,
+     "pid": 14216,
      "requests": 1
     }
    ],
    "worker_pids": [
-    33236,
-    26716,
-    32256,
-    33868
+    15604,
+    20012,
+    10092,
+    14216
    ]
   },
   {
    "diagnostic_burst": 241702.32877773402,
    "diagnostic_sustained": 231631.3984119951,
-   "evaluation_id": "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780",
+   "evaluation_id": "ebef9f69e596f8f6bb0857895500e5ce7f6ec88860939b8aa8acbb9e29797ef7",
    "label": "B",
    "status": "blocked",
    "values": {
@@ -138,13 +173,19 @@
     "engine": {
      "adapter_version": "p02.2",
      "dirty_hash": null,
+     "document_sha256": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
      "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
      "source": "EngineAdapter",
+     "source_document_sha256": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+     "state": {
+      "document": "benchmark",
+      "forced_power_charges": 5
+     },
      "worker_pids": [
-      31580,
-      26932,
-      32448,
-      1892
+      7596,
+      32104,
+      32692,
+      10436
      ]
     },
     "flasks": [
@@ -196,37 +237,37 @@
     {
      "end": "recycled: 4 requests served",
      "generation": 1,
-     "peak_memory_bytes": 510132224,
-     "pid": 31580,
+     "peak_memory_bytes": 512790528,
+     "pid": 7596,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 2,
-     "peak_memory_bytes": 479580160,
-     "pid": 26932,
+     "peak_memory_bytes": 466325504,
+     "pid": 32104,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 3,
-     "peak_memory_bytes": 532836352,
-     "pid": 32448,
+     "peak_memory_bytes": 529719296,
+     "pid": 32692,
      "requests": 4
     },
     {
      "end": "closed",
      "generation": 4,
-     "peak_memory_bytes": 264192000,
-     "pid": 1892,
+     "peak_memory_bytes": 260116480,
+     "pid": 10436,
      "requests": 1
     }
    ],
    "worker_pids": [
-    31580,
-    26932,
-    32448,
-    1892
+    7596,
+    32104,
+    32692,
+    10436
    ]
   }
  ],

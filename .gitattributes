@@ -27,3 +27,6 @@ docs/evidence/P09-T01.2/** -text
 
 # P07-T01 evidence. Its README records the SHA-256 of the JSON files.
 docs/evidence/P07-T01/** -text
+
+# P07-T01 attribution table. table_hash is recorded inside it.
+benchmarks/p09-flicker-v1-attribution/** -text

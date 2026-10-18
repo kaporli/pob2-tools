@@ -13,6 +13,7 @@ Charged Staff buff as PoB applies it. Charges are assumed, not generated.
 
 from __future__ import annotations
 
+import hashlib
 import re
 from dataclasses import asdict, dataclass, field
 from typing import Any, Mapping
@@ -80,6 +81,10 @@ class CycleValues:
     pob_total_dps: float | None
     pob_burst_damage_per_use: float | None
     trace: Mapping[str, str] = field(default_factory=dict)
+    #: Provenance recorded by the capture, never supplied by the evaluator:
+    #: ``head`` (PoB commit), ``dirty_hash`` (None for a checked clean tree;
+    #: the key is absent when unchecked), ``document_sha256`` (the scored
+    #: document the values were read from) and ``state`` (what was applied).
     engine: Mapping[str, Any] = field(default_factory=dict)
 
     def mana_flask(self) -> FlaskValues | None:
@@ -131,13 +136,25 @@ def buff_duration_s(duration: Mapping[str, Any], charges: int, path: str) -> flo
     return base / 1000.0 * (1 + inc / 100.0) * more * charges
 
 
-def from_replay(replay: Mapping[str, Any], *, document: str = "benchmark",
-                charges: int = 5, replay_ref: str = "replay.json") -> CycleValues:
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def from_replay(replay: Mapping[str, Any], *, source_xml: str, source_sha256: str,
+                document: str = "benchmark", charges: int = 5,
+                replay_ref: str = "replay.json") -> CycleValues:
     """Values from a frozen P09-T01.2 replay bundle.
 
     ``document``: ``benchmark`` (Pounce disabled, the scoring document) or
     ``seed`` (as imported, with Pounce's Predator's Mark).
+
+    ``source_xml`` is the document the bundle names in ``build``; it must hash
+    to ``source_sha256`` (recorded in the seed manifest). The bundle's engine
+    identity and the scored document's hash are carried into the values.
     """
+    if sha256_text(source_xml) != source_sha256:
+        raise MissingValue("/build", "source document hashes to %s, the bundle's document "
+                           "is %s" % (sha256_text(source_xml), source_sha256))
     if document == "seed":
         on, off = replay["flicker_seed"], replay["flicker_charged_staff_disabled"]
         on_ref, off_ref = "/flicker_seed", "/flicker_charged_staff_disabled"
@@ -196,8 +213,25 @@ def from_replay(replay: Mapping[str, Any], *, document: str = "benchmark",
             "mana": ref + "/diagnostics/imported/outputs",
             "flasks": ref + "/diagnostics/imported/flasks",
         },
-        engine={"source": "frozen replay bundle", "head": (replay.get("engine") or {}).get("head")},
+        engine=_replay_identity(replay, source_xml, document, charges),
     )
+
+
+def _replay_identity(replay, source_xml, document, charges) -> dict:
+    engine = replay.get("engine") or {}
+    adapter = engine.get("adapter_identity") or {}
+    out = {"source": "frozen replay bundle", "build": replay.get("build"),
+           "source_document_sha256": sha256_text(source_xml),
+           "document_sha256": sha256_text(benchmark_document(source_xml)
+                                          if document == "benchmark" else source_xml),
+           "state": {"forced_power_charges": charges, "document": document}}
+    if adapter.get("pob_commit") is not None:
+        out["head"] = adapter["pob_commit"]
+    if "pob_dirty_hash" in adapter:
+        out["dirty_hash"] = adapter["pob_dirty_hash"]
+    if adapter.get("adapter_version"):
+        out["adapter_version"] = adapter["adapter_version"]
+    return out
 
 
 # ------------------------------------------------------------ live capture ===
@@ -270,6 +304,16 @@ def capture(adapter, xml: str, *, document: str = "benchmark", charges: int = 5,
     flasks = tuple(_flask(slot, data, "/cycle_inputs/flasks")
                    for slot, data in sorted((extra.get("flasks") or {}).items()))
     identity = adapter.identity()
+    engine = {"source": "EngineAdapter", "head": identity.pob_commit,
+              "adapter_version": identity.adapter_version,
+              "source_document_sha256": sha256_text(xml),
+              "document_sha256": sha256_text(doc),
+              "state": {"forced_power_charges": charges, "document": document},
+              "worker_pids": list(getattr(adapter, "worker_pids", ()))}
+    # A dirty hash of None means clean only when the checkout was resolved;
+    # otherwise the tree state is unknown and the key stays absent.
+    if getattr(adapter.checkout, "reason", "unresolved") is None:
+        engine["dirty_hash"] = identity.pob_dirty_hash
     return CycleValues(
         document=document, charges=charges,
         whirling_time_s=_need(wa, "Time", "/whirling"),
@@ -299,8 +343,28 @@ def capture(adapter, xml: str, *, document: str = "benchmark", charges: int = 5,
             "mana": "engine: imported state outputs Mana, ManaRegenRecovery",
             "flasks": "engine: cycle_inputs flaskData",
         },
-        engine={"source": "EngineAdapter", "head": identity.pob_commit,
-                "dirty_hash": identity.pob_dirty_hash,
-                "adapter_version": identity.adapter_version,
-                "worker_pids": list(getattr(adapter, "worker_pids", ()))},
+        engine=engine,
     )
+
+
+SEED_REPLAY = "docs/evidence/P09-T01.2/replay.json"
+SEED_MANIFEST = "docs/evidence/P09-T01.1/seed/manifest.json"
+
+
+def seed_replay_values(repo_root, *, document: str = "benchmark") -> CycleValues:
+    """The P09-T01.2 bundle's values, bound to the seed document it names.
+
+    The document's expected SHA-256 comes from the P09-T01.1 seed manifest,
+    so a changed or substituted seed file is refused.
+    """
+    import json
+    from pathlib import Path
+
+    root = Path(repo_root)
+    replay = json.loads((root / SEED_REPLAY).read_text(encoding="utf-8"))
+    manifest = json.loads((root / SEED_MANIFEST).read_text(encoding="utf-8"))
+    build = replay["build"]
+    expected = next(f["sha256"] for f in manifest["files"] if f["path"] == build)
+    source = (root / build).read_bytes().decode("utf-8")
+    return from_replay(replay, source_xml=source, source_sha256=expected, document=document,
+                       replay_ref=SEED_REPLAY)
