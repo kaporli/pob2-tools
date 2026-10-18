@@ -1,0 +1,359 @@
+FF..FFFFFFFFFFFFFFFFFF......FFF                                          [100%]
+================================== FAILURES ===================================
+__________ test_unterminated_reminder_refuses_the_item_and_capture[] __________
+tests\unit\test_p05_t02_item_import.py:72: in test_unterminated_reminder_refuses_the_item_and_capture
+    assert out.item is None
+E   AssertionError: assert ItemInstance(schema_version=1, record_id='bad-reminder', created_at='2026-10-14T00:00:00Z', provenance_ids=['src/p05']...Dexterity\n--------\nCorrupted\n', source_document_id='src/p05', parse_status=<RecordParseStatus.COMPLETE: 'complete'>) is None
+E    +  where ItemInstance(schema_version=1, record_id='bad-reminder', created_at='2026-10-14T00:00:00Z', provenance_ids=['src/p05']...Dexterity\n--------\nCorrupted\n', source_document_id='src/p05', parse_status=<RecordParseStatus.COMPLETE: 'complete'>) = ItemTextRead(status=<ParseResultStatus.COMPLETE: 'complete'>, item=ItemInstance(schema_version=1, record_id='bad-remin...mplete'>), issues=(), coverage=(CoverageCount(domain='item_affixes', present=1, resolved=1, missing=0),), refused=None).item
+_ test_unterminated_reminder_refuses_the_item_and_capture[\n--------\nNote: fixture] _
+tests\unit\test_p05_t02_item_import.py:72: in test_unterminated_reminder_refuses_the_item_and_capture
+    assert out.item is None
+E   assert ItemInstance(schema_version=1, record_id='bad-reminder', created_at='2026-10-14T00:00:00Z', provenance_ids=['src/p05']...upted\n\n--------\nNote: fixture', source_document_id='src/p05', parse_status=<RecordParseStatus.COMPLETE: 'complete'>) is None
+E    +  where ItemInstance(schema_version=1, record_id='bad-reminder', created_at='2026-10-14T00:00:00Z', provenance_ids=['src/p05']...upted\n\n--------\nNote: fixture', source_document_id='src/p05', parse_status=<RecordParseStatus.COMPLETE: 'complete'>) = ItemTextRead(status=<ParseResultStatus.COMPLETE: 'complete'>, item=ItemInstance(schema_version=1, record_id='bad-remin...aw_text keeps it"),), coverage=(CoverageCount(domain='item_affixes', present=1, resolved=1, missing=0),), refused=None).item
+___ test_impossible_capture_dates_are_invalid[2026-02-30T18:00:00Z-capture] ___
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-02-30T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_ test_impossible_capture_dates_are_invalid[2026-02-30T18:00:00Z-observed_at] _
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+__ test_impossible_capture_dates_are_invalid[2026-02-30T18:00:00Z-listed_at] __
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+___ test_impossible_capture_dates_are_invalid[2026-13-16T25:00:00Z-capture] ___
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-13-16T25:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_ test_impossible_capture_dates_are_invalid[2026-13-16T25:00:00Z-observed_at] _
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+__ test_impossible_capture_dates_are_invalid[2026-13-16T25:00:00Z-listed_at] __
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+___ test_impossible_capture_dates_are_invalid[2025-02-29T18:00:00Z-capture] ___
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2025-02-29T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_ test_impossible_capture_dates_are_invalid[2025-02-29T18:00:00Z-observed_at] _
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+__ test_impossible_capture_dates_are_invalid[2025-02-29T18:00:00Z-listed_at] __
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+___ test_impossible_capture_dates_are_invalid[2026-10-16T24:00:00Z-capture] ___
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T24:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_ test_impossible_capture_dates_are_invalid[2026-10-16T24:00:00Z-observed_at] _
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+__ test_impossible_capture_dates_are_invalid[2026-10-16T24:00:00Z-listed_at] __
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+___ test_impossible_capture_dates_are_invalid[2026-10-16T18:60:00Z-capture] ___
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:60:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_ test_impossible_capture_dates_are_invalid[2026-10-16T18:60:00Z-observed_at] _
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+__ test_impossible_capture_dates_are_invalid[2026-10-16T18:60:00Z-listed_at] __
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+__ test_impossible_capture_dates_are_invalid[2026-10-16T18:00:00Z\n-capture] __
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z\n', ent...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_ test_impossible_capture_dates_are_invalid[2026-10-16T18:00:00Z\n-observed_at] _
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_ test_impossible_capture_dates_are_invalid[2026-10-16T18:00:00Z\n-listed_at] _
+tests\unit\test_p05_t02_item_import.py:109: in test_impossible_capture_dates_are_invalid
+    assert capture is None
+E   AssertionError: assert Capture(provider='fixture-market', realm='poe2', league_id='Fixture League', observed_at='2026-10-16T18:00:00Z', entri...ttacks (implicit)\n--------\n+13 to Dexterity\n', listing=None)), unknown_fields=('/kind', '/not_a_claim', '/purpose')) is None
+_____ test_cli_rejects_impossible_dates_without_storing_listings[capture] _____
+tests\unit\test_p05_t02_item_import.py:134: in test_cli_rejects_impossible_dates_without_storing_listings
+    assert code == 2 and report["status"] == "invalid"
+E   assert (0 == 2)
+---------------------------- Captured stdout setup ----------------------------
+{
+ "adapter_version": "p02-t02.0",
+ "catalog_hash": "7c48c8238c857514c1db45c1b855554e7db63ebb7a38db9e4d05f24d99e42a49",
+ "compatibility": "unknown",
+ "compatibility_report": {
+  "compatibility": "unknown",
+  "counts": {
+   "absent": 0,
+   "match": 13,
+   "mismatch": 4,
+   "unchecked": 1
+  },
+  "fixture_set_version": 1,
+  "outcomes": [
+   {
+    "detail": "poe2/classes/8 present in classes",
+    "expected": "poe2/classes/8",
+    "fixture_id": "avail/class/huntress",
+    "kind": "availability",
+    "observed": "poe2/classes/8",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/classes/1 present in classes",
+    "expected": "poe2/classes/1",
+    "fixture_id": "avail/class/witch",
+    "kind": "availability",
+    "observed": "poe2/classes/1",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/ascendancies/8/1 present in ascendancies",
+    "expected": "poe2/ascendancies/8/1",
+    "fixture_id": "avail/ascendancy/amazon",
+    "kind": "availability",
+    "observed": "poe2/ascendancies/8/1",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/gems/Metadata/Items/Gems/SkillGemSpark present in gems",
+    "expected": "poe2/gems/Metadata/Items/Gems/SkillGemSpark",
+    "fixture_id": "avail/gem/spark",
+    "kind": "availability",
+    "observed": "poe2/gems/Metadata/Items/Gems/SkillGemSpark",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff present in gems",
+    "expected": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff",
+    "fixture_id": "avail/gem/quarterstaff-strike",
+    "kind": "availability",
+    "observed": "poe2/gems/Metadata/Items/Gems/SkillGemPlayerDefaultQuarterstaff",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/item_bases/Long Quarterstaff present in item_bases",
+    "expected": "poe2/item_bases/Long Quarterstaff",
+    "fixture_id": "avail/item_base/long-quarterstaff",
+    "kind": "availability",
+    "observed": "poe2/item_bases/Long Quarterstaff",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/slots/Weapon 1 present in slots",
+    "expected": "poe2/slots/Weapon 1",
+    "fixture_id": "avail/slot/weapon-1",
+    "kind": "availability",
+    "observed": "poe2/slots/Weapon 1",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/config_variables/resistancePenalty present in config_variables",
+    "expected": "poe2/config_variables/resistancePenalty",
+    "fixture_id": "avail/config/resistance-penalty",
+    "kind": "availability",
+    "observed": "poe2/config_variables/resistancePenalty",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/passive_nodes/11230 present in passive_nodes",
+    "expected": "poe2/passive_nodes/11230",
+    "fixture_id": "avail/passive/keystone-ritual-cadence",
+    "kind": "availability",
+    "observed": "poe2/passive_nodes/11230",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/slots/Weapon 1.weaponSet unchanged",
+    "expected": 1,
+    "fixture_id": "field/slot/weapon-1-set",
+    "kind": "field",
+    "observed": 1,
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/item_bases/Long Quarterstaff.type unchanged",
+    "expected": "Staff",
+    "fixture_id": "field/item_base/long-quarterstaff-type",
+    "kind": "field",
+    "observed": "Staff",
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/gems/Metadata/Items/Gems/SkillGemSpark.isSupport unchanged",
+    "expected": false,
+    "fixture_id": "field/gem/spark-is-not-support",
+    "kind": "field",
+    "observed": false,
+    "outcome": "match"
+   },
+   {
+    "detail": "poe2/classes/8.startNodeId unchanged",
+    "expected": 50459,
+    "fixture_id": "field/class/huntress-start-node",
+    "kind": "field",
+    "observed": 50459,
+    "outcome": "match"
+   },
+   {
+    "detail": "table passive_nodes holds 205 entities, below the recorded floor of 4000",
+    "expected": 4000,
+    "fixture_id": "count/passive_nodes",
+    "kind": "count",
+    "observed": 205,
+    "outcome": "mismatch"
+   },
+   {
+    "detail": "table gems holds 84 entities, below the recorded floor of 800",
+    "expected": 800,
+    "fixture_id": "count/gems",
+    "kind": "count",
+    "observed": 84,
+    "outcome": "mismatch"
+   },
+   {
+    "detail": "table item_modifiers holds 287 entities, below the recorded floor of 7000",
+    "expected": 7000,
+    "fixture_id": "count/item_modifiers",
+    "kind": "count",
+    "observed": 287,
+    "outcome": "mismatch"
+   },
+   {
+    "detail": "table config_variables holds 43 entities, below the recorded floor of 450",
+    "expected": 450,
+    "fixture_id": "count/config_variables",
+    "kind": "count",
+    "observed": 43,
+    "outcome": "mismatch"
+   },
+   {
+    "detail": "no engine was available, so this behaviour was not checked",
+    "expected": null,
+    "fixture_id": "behaviour/level-28-huntress-defences",
+    "kind": "behaviour",
+    "observed": null,
+    "outcome": "unchecked"
+   }
+  ],
+  "reasons": [
+   "fixtures not checked: behaviour/level-28-huntress-defences"
+  ],
+  "recorded_from": {
+   "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+   "pob_release": "0.23.1",
+   "pob_release_date": "2026-07-28",
+   "recorded_at": "2026-10-06",
+   "recorded_by": "P02-T02",
+   "tree_version": "0_5"
+  }
+ },
+ "entity_counts": {
+  "ascendancies": 23,
+  "classes": 8,
+  "config_variables": 43,
+  "gems": 84,
+  "granted_skills": 91,
+  "item_bases": 54,
+  "item_modifiers": 287,
+  "passive_edges": 168,
+  "passive_nodes": 205,
+  "slots": 113
+ },
+ "evidence_ids": [
+  "catalog-export/7c48c8238c857514/evidence/export/invocation",
+  "catalog-export/7c48c8238c857514/evidence/pob/source/citations",
+  "catalog-export/7c48c8238c857514/evidence/pob/source/point_maximums",
+  "catalog-export/7c48c8238c857514/evidence/pob/source/level_cap",
+  "catalog-export/7c48c8238c857514/evidence/pob/data/class-ascendancies",
+  "catalog-export/7c48c8238c857514/evidence/pob/data/weapon-set-quest-points",
+  "catalog-export/7c48c8238c857514/evidence/pob/data/slots",
+  "catalog-export/7c48c8238c857514/evidence/pob/source/support_socket_limit",
+  "catalog-export/7c48c8238c857514/evidence/pob/data/weapon-set-constants",
+  "catalog-export/7c48c8238c857514/evidence/pob/data/gem-natural-max-levels",
+  "catalog-export/7c48c8238c857514/evidence/release/0.5.5e/88f9b3fd48ba72d0",
+  "catalog-export/7c48c8238c857514/evidence/export/compatibility",
+  "catalog-export/7c48c8238c857514/evidence/export/catalog-read"
+ ],
+ "exporter_version": "p02-t02.1",
+ "gap_ids": [
+  "gap/p02-t02/weapon-set-point-unlock-levels",
+  "gap/p02-t02/quest-passive-point-rewards",
+  "gap/p02-t02/ascendancy-point-unlock-schedule",
+  "gap/p02-t02/slot-accepted-base-categories",
+  "gap/p02-t02/gem-level-legality",
+  "gap/p02-t02/skill-level-limit",
+  "gap/p02-t02/compatibility-fixtures-failed",
+  "gap/p02-t02/catalog-predates-current-patch",
+  "gap/p02-t02/release-evidence-not-verbatim",
+  "gap/p02-t02/unpinned-checkout"
+ ],
+ "league_id": "Standard",
+ "out_dir": "C:\\Users\\Elias\\AppData\\Local\\Temp\\pytest-of-Elias\\pytest-480\\p05catalog0\\bundle",
+ "patch_id": "0.5.5e",
+ "patch_profile_id": "patch-profile/0.5.5e/7c48c8238c857514",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "pob_dirty_hash": "063ac7ef27e11e3cb6ad942374129fbd11ef1869666bbbb59682fd395c1e3181",
+ "reader": {
+  "kind": "captured_rows",
+  "source": "C:\\Users\\Elias\\AppData\\Local\\Temp\\pytest-of-Elias\\pytest-480\\p05catalog0\\rows.json",
+  "tables": [
+   "classes",
+   "config_variables",
+   "gems",
+   "granted_skills",
+   "item_bases",
+   "item_modifiers",
+   "passive_nodes",
+   "slots"
+  ]
+ },
+ "resolutions": {},
+ "validation_errors": []
+}
+---------------------------- Captured stderr setup ----------------------------
+catalog 7c48c8238c85, patch 0.5.5e, compatibility unknown; 10 gap(s)
+  compatibility: fixtures not checked: behaviour/level-28-huntress-defences
+___ test_cli_rejects_impossible_dates_without_storing_listings[observed_at] ___
+tests\unit\test_p05_t02_item_import.py:134: in test_cli_rejects_impossible_dates_without_storing_listings
+    assert code == 2 and report["status"] == "invalid"
+E   assert (0 == 2)
+____ test_cli_rejects_impossible_dates_without_storing_listings[listed_at] ____
+tests\unit\test_p05_t02_item_import.py:134: in test_cli_rejects_impossible_dates_without_storing_listings
+    assert code == 2 and report["status"] == "invalid"
+E   assert (0 == 2)
+=========================== short test summary info ===========================
+FAILED tests/unit/test_p05_t02_item_import.py::test_unterminated_reminder_refuses_the_item_and_capture[]
+FAILED tests/unit/test_p05_t02_item_import.py::test_unterminated_reminder_refuses_the_item_and_capture[\n--------\nNote: fixture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-02-30T18:00:00Z-capture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-02-30T18:00:00Z-observed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-02-30T18:00:00Z-listed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-13-16T25:00:00Z-capture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-13-16T25:00:00Z-observed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-13-16T25:00:00Z-listed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2025-02-29T18:00:00Z-capture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2025-02-29T18:00:00Z-observed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2025-02-29T18:00:00Z-listed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T24:00:00Z-capture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T24:00:00Z-observed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T24:00:00Z-listed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T18:60:00Z-capture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T18:60:00Z-observed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T18:60:00Z-listed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T18:00:00Z\n-capture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T18:00:00Z\n-observed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_impossible_capture_dates_are_invalid[2026-10-16T18:00:00Z\n-listed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_cli_rejects_impossible_dates_without_storing_listings[capture]
+FAILED tests/unit/test_p05_t02_item_import.py::test_cli_rejects_impossible_dates_without_storing_listings[observed_at]
+FAILED tests/unit/test_p05_t02_item_import.py::test_cli_rejects_impossible_dates_without_storing_listings[listed_at]
+23 failed, 8 passed, 40 deselected in 5.74s

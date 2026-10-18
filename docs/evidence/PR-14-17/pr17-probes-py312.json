@@ -1,0 +1,53 @@
+{
+  "pr": 17,
+  "observations": {
+    "bad_source_hashes": [],
+    "changed_window_changes_suite_hash": true,
+    "activation_gap": {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-hit-and-run-movement",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-hit-and-run-movement",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained",
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/movement_model_id"
+      ],
+      "mechanic_ids": [
+        "support/SupportHitAndRunPlayer",
+        "statdesc/skill_unusable_until_moved_X_distance"
+      ],
+      "severity": "informational",
+      "explanation": "Hit and Run makes Flicker Strike usable after moving 10 metres. Owner Q5: 'the dash from flicker itself' supplies it. The catalog does not confirm that Flicker Strike's teleport counts as moving.",
+      "needed_evidence": "Engine, official or recorded evidence that Flicker Strike's teleport re-enables Hit and Run.",
+      "collection_method": "Optional: a recording of consecutive Flicker Strike uses without other movement.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    "activation_gap_listed_as_method_blocker": false,
+    "speed_input": {
+      "name": "S_F(c)",
+      "meaning": "Flicker Strike strikes per second at c Power Charges",
+      "source": "PoB output Speed with Flicker Strike as main skill (includes the skill's 285% more attack speed and Hit and Run's 40% more skill speed); docs/evidence/P09-T01.1/pob-charge-table.json",
+      "seed_values": {
+        "0": 9.3279,
+        "1": 9.3279,
+        "2": 9.3279,
+        "3": 9.3279,
+        "4": 9.3279,
+        "5": 9.3279
+      }
+    }
+  }
+}

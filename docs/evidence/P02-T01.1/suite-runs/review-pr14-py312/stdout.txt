@@ -1,0 +1,37 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\review-pr14
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 4 items
+
+tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour PASSED [ 25%]
+tests/engine/test_p02_t02_1_flicker_engine.py::test_the_verdict_is_partial_for_the_stated_reasons_only PASSED [ 50%]
+tests/engine/test_p02_t02_1_flicker_engine.py::test_flicker_strike_has_no_coverage_issue_in_the_live_catalog PASSED [ 75%]
+tests/engine/test_p02_t02_1_flicker_engine.py::test_the_static_support_list_equals_pobs_answer_in_a_build PASSED [100%]
+
+native fault diagnostics: 6959064 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-464\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================= 4 passed in 13.21s ==============================
+Loading main script...
+Unicode support detected
+Loading passive tree data for version '0_5'...
+Loading passive tree assets...
+Processing tree...
+missing node 24665
+missing node 35715
+missing node 28429
+missing node 26353
+missing node 950
+missing node 45406
+missing node 50198
+missing node 5162
+missing node 10889
+missing node 62386
+missing node 39383
+missing node 51916
+missing node 54579
+missing node 16732
+Uniques loaded
+Rares loaded
+Startup time: 0 ms

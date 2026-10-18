@@ -1,0 +1,64 @@
+{
+  "pr": 16,
+  "observations": {
+    "pool_catalog": "69981c3e529897d42f244dec65e4a45190ebd9fd789cd1545135067d884a5789",
+    "stale_item_catalog": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "stale_candidates": [
+      [
+        "poe2/slots/Ring 1",
+        [
+          "9e9c3d6cb48aa90da7fde68a241e15ed7d81ecb5de2993689300c211c3135360"
+        ]
+      ],
+      [
+        "poe2/slots/Ring 2",
+        [
+          "9e9c3d6cb48aa90da7fde68a241e15ed7d81ecb5de2993689300c211c3135360"
+        ]
+      ]
+    ],
+    "partial_then_complete": [],
+    "complete_then_partial": [
+      [
+        "poe2/slots/Ring 1",
+        [
+          "9e9c3d6cb48aa90da7fde68a241e15ed7d81ecb5de2993689300c211c3135360"
+        ]
+      ],
+      [
+        "poe2/slots/Ring 2",
+        [
+          "9e9c3d6cb48aa90da7fde68a241e15ed7d81ecb5de2993689300c211c3135360"
+        ]
+      ]
+    ],
+    "profile_market_scope": [
+      "poe2",
+      "Invented"
+    ],
+    "listing_market_scope": [
+      "not-poe2",
+      "not-Invented"
+    ],
+    "foreign_listing_candidates": [
+      [
+        "poe2/slots/Ring 1",
+        "listing/foreign"
+      ],
+      [
+        "poe2/slots/Ring 2",
+        "listing/foreign"
+      ]
+    ],
+    "unlisted_duplicate_inferred_owned": [
+      {
+        "count": 2,
+        "hash": "9e9c3d6cb48aa90da7fde68a241e15ed7d81ecb5de2993689300c211c3135360"
+      }
+    ],
+    "duplicate_conflicts_without_ownership": [
+      "unlisted_item_reused"
+    ],
+    "duplicate_conflicts_with_inferred_ownership": []
+  }
+}

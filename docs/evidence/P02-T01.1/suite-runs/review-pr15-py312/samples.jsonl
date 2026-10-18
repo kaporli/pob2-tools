@@ -1,0 +1,13 @@
+{"t": 0.03, "tree_rss": 2084864, "progress": ""}
+{"t": 0.53, "tree_rss": 41459712, "progress": "collecting ... "}
+{"t": 1.05, "tree_rss": 125198336, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 1.58, "tree_rss": 212008960, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.08, "tree_rss": 200011776, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.59, "tree_rss": 207237120, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.11, "tree_rss": 294481920, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.62, "tree_rss": 343465984, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[magic_ring] "}
+{"t": 4.14, "tree_rss": 396275712, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[ring_shared_name_b] "}
+{"t": 4.66, "tree_rss": 436056064, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[magic_ring] "}
+{"t": 5.17, "tree_rss": 468017152, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_a] "}
+{"t": 5.69, "tree_rss": 515538944, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_writes_level_zero_for_an_item_without_a_requirement "}
+{"t": 6.2, "tree_rss": 540991488, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save "}

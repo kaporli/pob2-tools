@@ -1,0 +1,10 @@
+{
+  "pr": 14,
+  "observations": {
+    "tampered_capture_refused": "release capture capture.json: raw_file page.html hashes to cfca7ddfb6ff98cf0ca98e7d0c27c2addedec709969e843590bba04ffe9ad89a, recorded c1380e84ac5d768fc7371952197ddf94ca6732111fb8022dc0920011210b11d6",
+    "original_coverage_issues": [],
+    "missing_supports_issues": [
+      "the granted-skill row carries no supportedBy list; re-export with adapter p02.2 or later"
+    ]
+  }
+}

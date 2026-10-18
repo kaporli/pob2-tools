@@ -1,0 +1,44 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\review-pr15
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 11 items
+
+tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] PASSED [  9%]
+tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[magic_ring] PASSED [ 18%]
+tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[ring_shared_name_a] PASSED [ 27%]
+tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[ring_shared_name_b] PASSED [ 36%]
+tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[bow_every_category] PASSED [ 45%]
+tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[magic_ring] PASSED [ 54%]
+tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_a] PASSED [ 63%]
+tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_b] PASSED [ 72%]
+tests/engine/test_p05_t02_item_conversion.py::test_pob_writes_level_zero_for_an_item_without_a_requirement PASSED [ 81%]
+tests/engine/test_p05_t02_item_conversion.py::test_pob_moves_rune_lines_ahead_of_enchant_lines PASSED [ 90%]
+tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save PASSED [100%]
+
+native fault diagnostics: 15460129 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-465\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================= 11 passed in 6.06s ==============================
+Loading main script...
+Unicode support detected
+Loading passive tree data for version '0_5'...
+Loading passive tree assets...
+Processing tree...
+missing node 24665
+missing node 35715
+missing node 28429
+missing node 26353
+missing node 950
+missing node 45406
+missing node 50198
+missing node 5162
+missing node 10889
+missing node 62386
+missing node 39383
+missing node 51916
+missing node 54579
+missing node 16732
+Uniques loaded
+Rares loaded
+Startup time: 0 ms

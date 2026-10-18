@@ -1,0 +1,18 @@
+{"t": 0.02, "tree_rss": 2097152, "progress": ""}
+{"t": 0.53, "tree_rss": 29691904, "progress": ""}
+{"t": 1.05, "tree_rss": 44032000, "progress": "collecting ... "}
+{"t": 1.56, "tree_rss": 80429056, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.08, "tree_rss": 108134400, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.59, "tree_rss": 170631168, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.09, "tree_rss": 214900736, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.61, "tree_rss": 225648640, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 4.12, "tree_rss": 241016832, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 4.62, "tree_rss": 233787392, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 5.14, "tree_rss": 292626432, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 5.66, "tree_rss": 330641408, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[magic_ring] "}
+{"t": 6.17, "tree_rss": 398823424, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[bow_every_category] "}
+{"t": 6.69, "tree_rss": 426188800, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_a] "}
+{"t": 7.2, "tree_rss": 475537408, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_b] "}
+{"t": 7.72, "tree_rss": 527388672, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_moves_rune_lines_ahead_of_enchant_lines "}
+{"t": 8.23, "tree_rss": 553160704, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save PASSED [100%]"}
+{"t": 8.75, "tree_rss": 553164800, "progress": "Rares loaded"}
