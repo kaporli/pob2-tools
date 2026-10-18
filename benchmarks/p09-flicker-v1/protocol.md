@@ -15,25 +15,29 @@ reference result.
 **Read this first.** No enemy statistic, encounter timing, threshold or
 completion time here was measured. The seed export is a configuration, not a
 trial. Under the D07 amendment of 2026-10-18, PoB is the damage source for
-`flicker_sustained_v1`; its value is the time-accounted `pob-cycle-v1`
-computation, which is defined here but not yet computed. PoB's displayed DPS
-stays `proxy_only`. D04 stays blocked for practical claims about the clear and
+`flicker_sustained_v1`. Under its amendment 2 (owner decision, same day) the
+benchmark's method is `pob-community-v2`: community-style PoB per-use damage
+with charges assumed, inside a time-accounted 120 s rotation. Its seed value
+is computed below as evidence, not frozen as a reference, and is not a
+supported score while sustain and attribution stay open. `pob-cycle-v1`
+(generated charges) stays defined and uncomputed. PoB's displayed DPS stays
+`proxy_only` and is reported beside. D04 stays blocked for practical claims about the clear and
 boss workloads.
 
 ## What is frozen
 
 | Artefact | Path | SHA-256 |
 |---|---|---|
-| Scenario definitions, rotation record, owner questions, DataGaps | `benchmarks/p09-flicker-v1/scenarios.json` | `6c4b72eb01b7d0a3028bfadc5da6c3622ad33b42c48a29e29409ba06b2ac600c` |
+| Scenario definitions, rotation record, owner questions, DataGaps | `benchmarks/p09-flicker-v1/scenarios.json` | `0342553d85a2aa6a95131b0424074a499ba1f3afee38f8c04c7256124ba2ffba` |
 | Reference manifest | `benchmarks/p09-flicker-v1/references.json` | `d063c88d22fffe495b05f7b509ad4ca691d6dfda369a83924282d40cd1cde4e8` |
 | Suite manifest and hashes | `benchmarks/p09-flicker-v1/suite.json` | see the file |
-| Seed export manifest, owner answers and decisions | `docs/evidence/P09-T01.1/seed/manifest.json` | `d01e9a3d2f1ec41adf42fc80593b8b403c9b11a0125d23ab54993e1d4935a876` |
+| Seed export manifest, owner answers and decisions | `docs/evidence/P09-T01.1/seed/manifest.json` | `7ba0ec309f9c9454c28147cec8ddb744484a8749d68b922ab43da6fc31ba4866` |
 | Approved scope | `docs/evidence/P09-T01.1/scope-proposal.json` | `60989673642d43489d9dd19368ab3c229cdcb4dac112da5d6e6580c4dad1b522` |
 | Pinned engine data extract | `docs/evidence/P09-T01.1/mechanics.json` | `731127814c2bbe9b7ac3eeb46ab623a810fd4d5531bb9b74384fdece0cbe285b` |
 | PoB outputs at 0 to 5 charges | `docs/evidence/P09-T01.1/pob-charge-table.json` | `55a210a331e40fe32b6bb34592d9a0dc424ff634a20b1ffad24419fcc6567701` |
 | Community reference build (poe.ninja 25c49) | `docs/evidence/P09-T01.1/reference-ninja-25c49/` | `share-code.txt` `a51102cb6b54535cd2bf6d6861c8e00cae5712df7bcb6ec823b176ab7666ce7f`, `evaluation.json` `5cdc2c7596cdc5a2404bf4f2e2db2205b1d3286051fee39afa3a344fb7aac4b3` |
 
-`suite_hash` is `ab28b208ce19a0a3d94840ca7d0c9ab289b70f7636a8a760b77c874ac0927468`.
+`suite_hash` is `92240e43c3b68f8bef8b64bb56e0e8103f136688cd76f0701610ed3f0b8030b5`.
 
 | Scenario | `definition_hash` |
 |---|---|
@@ -41,7 +45,7 @@ boss workloads.
 | `p09-flk-clear-spread` | `400cb3eaa2dccc212fd6743f25e94aaff8d95c3f35530901fd849efc7dea6a3c` |
 | `p09-flk-boss-short` | `7411db3bac8aba1e638aacc5def95c429ae87ea6d61c1cc2debc0332130282da` |
 | `p09-flk-boss-sustained` | `cac1917b7e94d5784fd8d19057fc591be2d943fcb55020291f0cd6b406afeae1` |
-| `flicker_sustained_v1` | `248e158563a3154e392dbdef5d21346bfc10c44ccc5e58a001a44bc6c54ac35d` |
+| `flicker_sustained_v1` | `f1d992cc851cc0430198b81f55ab420ce2d7840081e385d3ed128036323a7c58` |
 
 Hashing follows `pob2opt/domain/identity.py`: files by SHA-256 of their raw
 bytes, each scenario object by `content_hash` (canonical JSON), and the suite
@@ -96,7 +100,8 @@ Answers, 2026-10-18 (verbatim where quoted; all in `seed/manifest.json`):
 | Q7 | T16 maps comfortably; struggles with "monsters have increased ailment threshold" | Clear workloads on T16 maps, one with that modifier; bosses not named |
 | Q8 | "we damage calc with PoB, not ingame testing" | Decision 1: D07 amendment 2026-10-18 |
 | Q9 | "any class, any ascendancy, any variant" | Decision 2: all 23 ascendancies and all three variants approved |
-| Q10 | "Once per N cycles" | Charged Staff pressed once per N cycles to refresh its buff; N open (`gap-p09-t012-charged-staff-period`) |
+| Q10 | "Once per N cycles" | Charged Staff pressed once per N cycles to refresh its buff |
+| Decision 3 | "it's obvious, whirling assault to generate charges, charged staff, whirling assault to generate charges, flicker, whirling, flicker, whirling, flicker, etc until charged runs out & repeat? but again, look at how those other PoBs did DPS calcs, don't stray from their methods, match them. Assume we have charges for flicker for the dps calcs" | D07 amendment 2026-10-18 (2): rotation fixed; method `pob-community-v2` below |
 
 What the pinned engine data says about the parts of the cycle (citations are
 `mechanic_id`s in `mechanics.json`):
@@ -293,9 +298,12 @@ Procedure:
    separately, never in the score.
 
 Status: defined, not computed. Blocking: charge-cycle rules, Charged Staff
-period N and shared charges, config conditions, mana sustain and Flicker
-Strike's mana charging, Hit and Run activation/reuse, and damage attribution.
-The clean-engine rerun is resolved and stays listed as a met prerequisite.
+shared charges, config conditions, mana sustain and Flicker Strike's mana
+charging, Hit and Run activation/reuse, and damage attribution. The
+clean-engine rerun, the rotation and the Charged Staff period are resolved
+and stay listed as met prerequisites. Under D07 amendment 2 this method is
+the generated-charge alternative; the benchmark's method is
+`pob-community-v2`.
 `docs/evidence/P09-T01.2/mechanics-rules.json` holds the rule table: each
 rule resolved, conditional (alternatives written out) or blocking, with
 citations into the pinned engine. The method's
@@ -311,6 +319,42 @@ damage cannot enter D(c) or the score. PoB damage acceptance and optional
 recordings do not waive either prerequisite. This is a protocol contract;
 P06/P07 must implement its enforcement before computing a result.
 
+### Method `pob-community-v2` (owner decision, D07 amendment 2)
+
+Per-use Flicker Strike damage is PoB's own output at the build's maximum
+Power Charges with the Charged Staff buff as PoB applies it; charges for
+Flicker Strike are assumed, as community PoB builds assume them. Hit and Run
+is taken as PoB applies it. These are the owner's chosen method, not
+verified game mechanics.
+
+1. Rotation: Whirling Assault, Charged Staff (consumes 5 charges), then
+   Whirling Assault and Flicker Strike repeated until the buff expires, then
+   again. Buff: 6 s per stack x 1.25 (PoB's increased duration on the seed)
+   x 5 = 37.5 s.
+2. Time: PoB Time of Whirling Assault (1.2998 s) and Charged Staff
+   (0.3181 s); a Flicker Strike use is 11 strikes at 1 / Speed.
+3. Damage: each strike is credited PoB AverageDamage at its end, with the
+   buff value while the buff lasts and the Charged Staff disabled value
+   after. Sustained = strikes ending in [0, 120) / 120; burst = [0, 5) / 5.
+4. Reported beside: PoB AverageBurstDamage and TotalDPS at maximum charges;
+   the community reference's condition inputs applied to the seed; the
+   Pounce-off document; a mana ledger.
+
+Computed in `docs/evidence/P09-T01.2/community-cycle.json`
+(`python scripts/p09_t01_2_community_cycle.py`), not frozen as a reference:
+
+| Seed document | Sustained | Burst | PoB TotalDPS (plain) | PoB per use |
+|---|---|---|---|---|
+| As imported (owner's PoB) | 572,246 | 299,711 | 1,270,761 | 1,498,554 |
+| Pounce off | 461,488 | 241,702 | 1,024,807 | 1,208,512 |
+
+Waived by the decision: `charge-cycle-rules`, `charged-staff-shared-charges`,
+`hit-and-run-movement`. Still blocking a supported score: `sustain-cycle`
+(the schedule needs 19,540 mana in 120 s against a 887 pool and 5,748 regenerated;
+the first unaffordable action is at 7.9 s without a flask),
+`flicker-mana-charging`, `attribution-rules` (proposed table, not accepted),
+`config-conditions` (Pounce's Predator's Mark is in the owner's PoB).
+
 ## Field sourcing
 
 `scenarios.json` holds every field with `basis`, `source`, `value` and
@@ -320,17 +364,18 @@ P06/P07 must implement its enforcement before computing a result.
 |---|---|---|---|---|
 | each clear workload | 33 | 15 | 0 | 18 |
 | each boss workload | 33 | 15 | 1 | 17 |
-| `flicker_sustained_v1` | 41 | 3 | 2 | 36 |
+| `flicker_sustained_v1` | 43 | 3 | 2 | 38 |
 
 No field is a gameplay measurement.
 
 ## Gaps
 
-30 `DataGap` records ship in `scenarios.json`. Resolved (5):
+30 `DataGap` records ship in `scenarios.json`. Resolved (7):
 `benchmark-target` and `benchmark-measurement` (D07 amendment),
 `class-scope-decision` (Q9), `preparation-allowance` (Q4),
-`engine-checkout-state` (P09-T01.2 replay). Open (25): 22 blocking, 3 ranking
-sensitive, 0 informational.
+`engine-checkout-state` (P09-T01.2 replay), `rotation-details` and
+`charged-staff-period` (Q10 and D07 amendment 2). Open (23): 20 blocking, 3
+ranking sensitive, 0 informational.
 
 | Gap | Kind | Severity | Status |
 |---|---|---|---|
@@ -345,7 +390,7 @@ sensitive, 0 informational.
 | `gap-p09-t011-duration-limit` | missing_input | blocking | open |
 | `gap-p09-t011-success-fraction` | missing_input | blocking | open |
 | `gap-p09-t011-reference-result` | missing_input | blocking | open |
-| `gap-p09-t011-rotation-details` | missing_input | blocking | open |
+| `gap-p09-t011-rotation-details` | missing_input | blocking | resolved |
 | `gap-p09-t011-charge-cycle-rules` | unsupported_rule | blocking | open |
 | `gap-p09-t011-charged-staff-shared-charges` | unsupported_rule | blocking | open |
 | `gap-p09-t011-sustain-cycle` | missing_input | blocking | open |
@@ -358,7 +403,7 @@ sensitive, 0 informational.
 | `gap-p09-t011-survival-threshold` | missing_input | ranking_sensitive | open |
 | `gap-p09-t011-initial-resources` | missing_input | ranking_sensitive | open |
 | `gap-p09-t011-hit-and-run-movement` | unsupported_rule | blocking | open |
-| `gap-p09-t012-charged-staff-period` | missing_input | blocking | open |
+| `gap-p09-t012-charged-staff-period` | missing_input | blocking | resolved |
 | `gap-p09-t012-flicker-mana-charging` | unsupported_rule | blocking | open |
 | `gap-p09-t011-benchmark-target` | missing_input | blocking | resolved |
 | `gap-p09-t011-benchmark-measurement` | unsupported_rule | blocking | resolved |
@@ -369,7 +414,6 @@ sensitive, 0 informational.
 
 | Id | Question | Gaps |
 |---|---|---|
-| Q10 | Answered in part: "Once per N cycles". Still open: N, and whether the press follows Whirling Assault or a Flicker Strike that kept a charge. | rotation-details, charged-staff-shared-charges, charged-staff-period |
 | Q11 | Which T16 maps (packs close together; spread out) and which two bosses (no breaks; phases or untargetable time)? Are PoB's Pinnacle and Uber tiers acceptable enemy configurations for them? | encounter-selection |
 
 ## Recordings (optional for the DPS benchmark)
@@ -394,6 +438,7 @@ python scripts/p09_t01_1_flicker_suite.py
 python -m pytest tests/unit/test_p09_t01_1_flicker_suite.py -q
 POB2_ROOT=<clean checkout of ce566ea> python scripts/p09_t01_2_seed_replay.py   # needs PoB
 POB2_ROOT=<clean checkout of ce566ea> python scripts/p09_t01_2_mechanics_rules.py
+python scripts/p09_t01_2_community_cycle.py
 python -m pytest tests/unit/test_p09_t01_2_seed_replay.py -q
 ```
 
@@ -406,7 +451,8 @@ call list in `seed/manifest.json`.
 
 It states no enemy statistic, encounter timing, threshold or completion time
 for the clear and boss workloads. It fits no constant. It computes no
-`pob-cycle-v1` value while the charge-cycle rules are unknown, and never uses
-forced charges, forced Combo or toggled conditions as the benchmark. It
-writes no `RotationPolicy` while Charged Staff's place is unstated. It freezes
+`pob-cycle-v1` value while the charge-cycle rules are unknown. Under D07
+amendment 2 it forces only Power Charges at the build's maximum and the
+Charged Staff buff, as the owner's method; forced Combo and other toggled
+conditions are reported, never scored. It freezes
 no reference result. `p09-synthetic-v1` and its reviews are untouched.

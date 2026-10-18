@@ -378,7 +378,8 @@ def test_owner_answers_are_recorded_verbatim(seed):
     assert answers["Q5"]["verbatim"] == "the dash from flicker itself"
     assert answers["Q8"]["verbatim"] == "we damage calc with PoB, not ingame testing"
     assert answers["Q9"]["verbatim"] == "any class, any ascendancy, any variant"
-    assert len(seed["owner_decisions"]) == 2
+    assert len(seed["owner_decisions"]) == 3
+    assert seed["owner_decisions"][2]["verbatim"].startswith("it's obvious, whirling assault")
 
 
 def test_scope_is_approved_for_all_ascendancies_and_variants(scope, bundle):

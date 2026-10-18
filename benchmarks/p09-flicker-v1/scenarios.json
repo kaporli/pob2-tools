@@ -1755,9 +1755,11 @@
               "8. Whirling Assault's own damage and every other skill's damage are reported separately and never enter the score (D07 item 3)."
             ],
             "community_method_difference": "The community reference (poe.ninja 25c49) reads AverageBurstDamage at forced charges (7, above its maximum of 6) with forced Combo, Rage, Onslaught and enemy conditions: burst per use, no charge generation time. pob-cycle-v1 uses the same PoB outputs but only charges the rotation generates, and divides by elapsed time including each Whirling Assault use. PoB TotalDPS (AverageDamage x Speed) also ignores charge generation time.",
-            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-rotation-details, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-sustain-cycle, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules, gap-p09-t012-charged-staff-period, gap-p09-t012-flicker-mana-charging.",
+            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-sustain-cycle, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules, gap-p09-t012-flicker-mana-charging.",
             "resolved_prerequisites": [
-              "gap-p09-t011-engine-checkout-state"
+              "gap-p09-t011-engine-checkout-state",
+              "gap-p09-t011-rotation-details",
+              "gap-p09-t012-charged-staff-period"
             ],
             "rule_table": "docs/evidence/P09-T01.2/mechanics-rules.json"
           },
@@ -1780,6 +1782,65 @@
           "source": "D07 amendment: optional validation, not a prerequisite",
           "value": "optional",
           "gap_ids": []
+        },
+        "benchmark_method": {
+          "basis": "decision_D07",
+          "source": "D07 amendment 2026-10-18 (2): the owner's community-PoB method is the benchmark's method; pob-cycle-v1 stays defined for a generated-charge evaluation",
+          "value": {
+            "primary": "pob-community-v2",
+            "generated_charges": "pob-cycle-v1"
+          },
+          "gap_ids": []
+        },
+        "community_method": {
+          "basis": "decision_D07",
+          "source": "D07 amendment 2026-10-18 (2)",
+          "value": {
+            "method_id": "pob-community-v2",
+            "decision": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+            "owner_verbatim": "it's obvious, whirling assault to generate charges, charged staff, whirling assault to generate charges, flicker, whirling, flicker, whirling, flicker, etc until charged runs out & repeat? but again, look at how those other PoBs did DPS calcs, don't stray from their methods, match them. Assume we have charges for flicker for the dps calcs",
+            "per_use_damage": "PoB AverageBurstDamage of Flicker Strike at the build's maximum Power Charges with the Charged Staff buff as PoB applies it (charges assumed); per strike = AverageDamage, credited at each strike's end",
+            "rotation": [
+              "Whirling Assault",
+              "Charged Staff",
+              "repeat (Whirling Assault, Flicker Strike) until the Charged Staff buff expires",
+              "repeat from Whirling Assault, Charged Staff"
+            ],
+            "time": "PoB Time of Whirling Assault and Charged Staff; Flicker Strike H / Speed; all inside [0, 120)",
+            "buff_duration": "6 s per stack (ChargedStaffBuffDuration) x (1 + increased duration) x stacks consumed, from PoB",
+            "reported_beside": "plain PoB AverageBurstDamage and TotalDPS at maximum charges; the community reference's condition inputs on the seed",
+            "not_a_verified_mechanic": "Hit and Run reuse and charge availability are the owner's chosen method.",
+            "waived_by_decision": [
+              {
+                "gap_id": "gap-p09-t011-charge-cycle-rules",
+                "evidence": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+                "why": "charges assumed for Flicker Strike"
+              },
+              {
+                "gap_id": "gap-p09-t011-charged-staff-shared-charges",
+                "evidence": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+                "why": "Charged Staff and Flicker Strike each at maximum charges as PoB applies them"
+              },
+              {
+                "gap_id": "gap-p09-t011-hit-and-run-movement",
+                "evidence": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+                "why": "Hit and Run as PoB applies it; owner's method, not a verified mechanic"
+              }
+            ],
+            "still_blocking_a_supported_score": [
+              "gap-p09-t011-sustain-cycle",
+              "gap-p09-t012-flicker-mana-charging",
+              "gap-p09-t011-attribution-rules",
+              "gap-p09-t011-config-conditions"
+            ],
+            "computation": "docs/evidence/P09-T01.2/community-cycle.json"
+          },
+          "gap_ids": [
+            "gap-p09-t011-sustain-cycle",
+            "gap-p09-t012-flicker-mana-charging",
+            "gap-p09-t011-attribution-rules",
+            "gap-p09-t011-config-conditions"
+          ]
         },
         "sustain_report": {
           "basis": "decision_D07",
@@ -1916,8 +1977,9 @@
   ],
   "rotation": {
     "rotation_id": "p09-flk-rotation-owner-v1",
-    "version": "2",
+    "version": "3",
     "owner_statement_verbatim": "whirling assault to get 5 power charges & then flicker strike, rince and repeat",
+    "owner_decision_2_verbatim": "it's obvious, whirling assault to generate charges, charged staff, whirling assault to generate charges, flicker, whirling, flicker, whirling, flicker, etc until charged runs out & repeat? but again, look at how those other PoBs did DPS calcs, don't stray from their methods, match them. Assume we have charges for flicker for the dps calcs",
     "received": "2026-10-17",
     "answers_received": "2026-10-18",
     "source": "Owner (Elias), P09-T01.1 assignment and answers Q1 to Q9",
@@ -1927,7 +1989,7 @@
         "Whirling Assault x1 (Q1: 'just 1')",
         "Flicker Strike x1"
       ],
-      "charged_staff": "Pressed 'when i have a charge' (Q3), once per N cycles to refresh its buff (Q10); N unresolved",
+      "charged_staff": "Pressed after a Whirling Assault, then again when its buff expires (owner decision 2026-10-18 (2)); period from the buff duration",
       "persistent_buffs_not_pressed": [
         "Herald of Ice",
         "Herald of Thunder",
@@ -2094,7 +2156,7 @@
     {
       "question_id": "Q10",
       "question": "Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or at another point? About how often?",
-      "status": "answered in part: once per N cycles; N open"
+      "status": "answered: once per N cycles (Q10), then the full rotation in owner decision 2026-10-18 (2)"
     },
     {
       "question_id": "Q11",
@@ -2527,11 +2589,14 @@
       "severity": "blocking",
       "explanation": "Owner Q1 to Q6 fix the cycle (one Whirling Assault, one Flicker Strike, Whirling Assault opener). Q10: Charged Staff is pressed once per N cycles to refresh its buff, consuming all held charges. Open: N (gap-p09-t012-charged-staff-period) and the press's position inside its cycle (after Whirling Assault and before Flicker Strike is the only point with a charge held, unless Perpetual Charge kept one).",
       "needed_evidence": "N, and whether the refresh press follows Whirling Assault or follows a Flicker Strike that kept a charge.",
-      "collection_method": "Owner follow-up to Q10; a reviewer checks the rotation record. Rule table: docs/evidence/P09-T01.2/mechanics-rules.json charged-staff-period.",
+      "collection_method": "Owner follow-up to Q10; a reviewer checks the rotation record. Rule table: docs/evidence/P09-T01.2/mechanics-rules.json charged-staff-period. Owner decision 2026-10-18 (2) gives the full rotation: Whirling Assault, Charged Staff, then Whirling Assault and Flicker Strike until the buff expires, repeated.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
-      "status": "open",
-      "resolution_evidence_ids": []
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+        "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+      ]
     },
     {
       "schema_version": 1,
@@ -2815,11 +2880,14 @@
       "severity": "blocking",
       "explanation": "Owner Q10: Charged Staff is pressed once per N Whirling Assault to Flicker Strike cycles to refresh its buff. N decides how many charges Charged Staff takes from Flicker Strike, how much of the window its buff covers, and its time and mana.",
       "needed_evidence": "The number N, and the press's position inside its cycle.",
-      "collection_method": "Owner answer relayed by the coordinator; a reviewer records it in the rotation.",
+      "collection_method": "Owner answer relayed by the coordinator; a reviewer records it in the rotation. Owner decision 2026-10-18 (2): the press repeats when the buff expires, so N follows from the buff duration (6 s per stack, 25% increased duration on the seed, from PoB) and PoB's use times.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
-      "status": "open",
-      "resolution_evidence_ids": []
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+        "docs/evidence/P09-T01.2/replay.json"
+      ]
     },
     {
       "schema_version": 1,

@@ -5,7 +5,7 @@
  "command": "python scripts/p09_t01_2_mechanics_rules.py",
  "engine_head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
  "replay": "docs/evidence/P09-T01.2/replay.json",
- "replay_sha256": "98904c57f3db901e664748a4bda743d5148ba9acd02003a65287ce7701d17085",
+ "replay_sha256": "796372e907e7126bf8291172bd8c09f3cf2bcfa4f06ce085ad09f48fe243a198",
  "web_evidence": "docs/evidence/P09-T01.2/web-evidence.json",
  "web_evidence_sha256": "e28d2eb323cf1e818827435f4a9a3b7a051c72456f57eca53ede28ce257b06ea",
  "citations": {
@@ -164,6 +164,25 @@
    "line": 1356,
    "text": "env.player.modDB:NewMod(\"Multiplier:MinionPresenceCount\", \"BASE\", output[activeSkill.minion.minionData.limit], \"Config\", { type = \"Condition\", var = \"Combat\" })"
   },
+  "pob/flicker-bypass-cd": {
+   "path": "src/Modules/ConfigOptions.lua",
+   "file_sha256": "5a77f18ea6c71834a182555e40f1e616ce24e01ee9265c6ed01c789101a6473d",
+   "line": 399,
+   "text": "modList:NewMod(\"CooldownRecovery\", \"OVERRIDE\", 0, \"Config\", { type = \"SkillName\", skillName = \"Flicker Strike\", includeTransfigured = true })"
+  },
+  "pob/close-combat-ramp": {
+   "path": "src/Data/Skills/sup_dex.lua",
+   "file_sha256": "fb099278f3d1e118d713aa759070606cc76a9eabc58c3e76fddf06a0c8bd472a",
+   "line": 1281,
+   "text": "mod(\"Damage\", \"MORE\", nil, 0, 0, { type = \"DistanceRamp\", ramp = {{10,1},{35,0}} }),",
+   "block": "skills[\"SupportCloseCombatPlayerTwo\"]"
+  },
+  "pob/enemy-distance-placeholder": {
+   "path": "src/Modules/ConfigOptions.lua",
+   "file_sha256": "5a77f18ea6c71834a182555e40f1e616ce24e01ee9265c6ed01c789101a6473d",
+   "line": 1639,
+   "text": "{ var = \"enemyDistance\", type = \"count\", label = \"Distance to enemy:\", tooltip = \"10 units equals 1 metre"
+  },
   "pob/ultimate-mana-flask": {
    "path": "src/Data/Bases/flask.lua",
    "file_sha256": "c5d40d1fac4eca7fe87619b60d8a3829d0a2e9a5aba8a80849a7bf6afa7fc5c1",
@@ -194,7 +213,11 @@
     "pob/removable-power-charges",
     "web/fextralife-flicker-strike",
     "docs/evidence/P09-T01.2/replay.json#/flicker_seed"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "skill/FlickerStrikePlayer"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "flicker-no-charge-gain",
@@ -204,7 +227,11 @@
    "evidence": [
     "pob/statdesc-no-charge-gain",
     "web/fextralife-flicker-strike"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "resource/power-charges"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "flicker-strike-timing",
@@ -220,7 +247,11 @@
     "pob/flicker-speed-more",
     "docs/evidence/P09-T01.2/replay.json#/benchmark_documents/flicker_benchmark",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/speed_more"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "timing/flicker-strike-strike-duration"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "flicker-mana-charging",
@@ -241,7 +272,11 @@
    "evidence": [
     "pob/flicker-description",
     "docs/evidence/P09-T01.2/replay.json#/flicker_seed/0/ManaCost"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "cost/mana-per-use"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "perpetual-charge",
@@ -255,7 +290,11 @@
     "pob/perpetual-charge-description",
     "pob/perpetual-charge-chance",
     "docs/evidence/P09-T01.1/seed/skill-groups.json"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "support/SupportPerpetualChargePlayer"
+   ],
+   "pob_community_v2": "waived"
   },
   {
    "rule_id": "ailith-surpassing-distribution",
@@ -270,7 +309,11 @@
     "pob/statdesc-ailith-surpassing",
     "web/poe2wiki-surpassing-chance"
    ],
-   "limitation": "The Surpassing definition comes from a search summary of the community wiki, which refused automated access. A reviewer may require the page itself or an in-game tooltip capture."
+   "limitation": "The Surpassing definition comes from a search summary of the community wiki, which refused automated access. A reviewer may require the page itself or an in-game tooltip capture.",
+   "p06_mechanic_ids": [
+    "support/SupportAilithLineagePlayer"
+   ],
+   "pob_community_v2": "waived"
   },
   {
    "rule_id": "combo-gain-per-strike",
@@ -299,7 +342,13 @@
     "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers",
     "web/forum-3591721-combo",
     "web/game8-combo"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "support/SupportCulminationPlayerTwo",
+    "passive/41751",
+    "resource/combo"
+   ],
+   "pob_community_v2": "waived"
   },
   {
    "rule_id": "whirling-assault-own-combo",
@@ -321,7 +370,12 @@
     "pob/whirling-assault-description",
     "docs/evidence/P09-T01.1/mechanics.json#passive/61586",
     "docs/evidence/P09-T01.2/replay.json#/whirling_assault"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "passive/61586",
+    "support/SupportCulminationPlayerTwo"
+   ],
+   "pob_community_v2": "waived"
   },
   {
    "rule_id": "combo-cap-and-decay",
@@ -335,7 +389,11 @@
    "evidence": [
     "pob/culmination-cap",
     "pob/culmination-decay"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "resource/combo"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "whirling-assault-use",
@@ -348,7 +406,11 @@
    },
    "evidence": [
     "docs/evidence/P09-T01.2/replay.json#/whirling_assault"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "skill/WhirlingAssaultPlayer"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "charged-staff-use",
@@ -363,7 +425,11 @@
     "pob/charged-staff-description",
     "pob/charged-staff-requires",
     "docs/evidence/P09-T01.2/replay.json#/charged_staff"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "charges/charged-staff-consumption"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "charged-staff-buff-ownership",
@@ -395,7 +461,12 @@
     "pob/consumed-recently-parse",
     "docs/evidence/P09-T01.2/replay.json#/benchmark_documents",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/lightning_min"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "skill/ChargedStaffPlayer",
+    "charges/charged-staff-consumption"
+   ],
+   "pob_community_v2": "waived"
   },
   {
    "rule_id": "consumed-power-charge-recently",
@@ -410,7 +481,9 @@
    "evidence": [
     "pob/consumed-recently-parse",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/conditional_mods"
-   ]
+   ],
+   "p06_mechanic_ids": null,
+   "pob_community_v2": "waived"
   },
   {
    "rule_id": "hit-and-run-reuse",
@@ -446,7 +519,12 @@
     "web/fextralife-hit-and-run",
     "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers",
     "docs/evidence/P09-T01.2/replay.json#/benchmark_documents/flicker_benchmark_no_hit_and_run"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "activation/hit-and-run-reuse",
+    "support/SupportHitAndRunPlayer"
+   ],
+   "pob_community_v2": "waived"
   },
   {
    "rule_id": "pounce-predators-mark",
@@ -462,7 +540,12 @@
     "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers",
     "docs/evidence/P09-T01.2/replay.json#/group_sweep",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/enemy_mods"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "skill/WolfPouncePlayer",
+    "config/condition-sustain"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "persistent-buffs",
@@ -473,7 +556,12 @@
     "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers",
     "docs/evidence/P09-T01.2/replay.json#/group_sweep",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/player_conditions"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "skill/HeraldOfIcePlayer",
+    "skill/HeraldOfThunderPlayer"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "pob-default-states",
@@ -486,7 +574,11 @@
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/conditional_mods",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/enemy_mods",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/outputs"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "config/condition-sustain"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "mana-sustain",
@@ -515,26 +607,287 @@
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/flasks",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/outputs",
     "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
-   ]
+   ],
+   "p06_mechanic_ids": [
+    "resource/mana-sustain",
+    "resource/mana-flask",
+    "resource/mana-regeneration"
+   ],
+   "pob_community_v2": "applies"
   },
   {
    "rule_id": "charged-staff-period",
-   "status": "blocking",
-   "gap_id": "gap-p09-t012-charged-staff-period",
+   "status": "resolved",
    "question": "How often Charged Staff is pressed.",
-   "rule": "Owner Q10 (2026-10-18): once per N Whirling Assault to Flicker Strike cycles, to refresh its buff. Modelled as rotation parameter N; each press costs its own time and mana and consumes all held charges. N is not yet given.",
+   "rule": "Owner Q10: once per N cycles; owner decision 2026-10-18 (2): Whirling Assault, Charged Staff, then Whirling Assault and Flicker Strike until the buff expires, repeated. The period follows from the buff duration: 6 s per stack (ChargedStaffBuffDuration) x (1 + 25% increased duration on the seed) x stacks consumed. Each press costs its own time and mana.",
    "parameters": {
-    "N": null
+    "buff_s_per_stack": 7.5,
+    "N": "derived per timeline"
    },
    "evidence": [
-    "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
-   ]
+    "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers",
+    "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+    "pob/charged-staff-duration",
+    "docs/evidence/P09-T01.2/replay.json#/diagnostics/charged_staff_duration"
+   ],
+   "p06_mechanic_ids": [
+    "charges/charged-staff-consumption"
+   ],
+   "pob_community_v2": "applies"
+  },
+  {
+   "rule_id": "flicker-bypass-cd-default",
+   "status": "resolved",
+   "question": "Does PoB's default 'Bypass CD?' for Flicker Strike change the seed's numbers?",
+   "rule": "No. The import does not write FlickerStrikeBypassCD; PoB defaults it on and adds CooldownRecovery OVERRIDE 0 for Flicker Strike. The pinned Flicker Strike has no cooldown, and switching the option off leaves every captured output unchanged. The benchmark may leave it at the default.",
+   "evidence": [
+    "pob/flicker-bypass-cd",
+    "docs/evidence/P09-T01.2/replay.json#/config_probes",
+    "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/config_mods"
+   ],
+   "p06_mechanic_ids": [
+    "config/FlickerStrikeBypassCD"
+   ],
+   "pob_community_v2": "applies"
+  },
+  {
+   "rule_id": "enemy-distance",
+   "status": "conditional",
+   "gap_id": "gap-p09-t011-config-conditions",
+   "question": "Distance between the character and the target for Close Combat II.",
+   "rule": "PoB uses its placeholder enemyDistance 20 (2 m) when the document sets none; Close Combat II gives 30% more damage at 1 m or less, falling to 0 at 3.5 m, so 18% at 2 m. Flicker Strike teleports to its target, but the resulting distance is not established. Proposed: keep the placeholder (the value the seed was imported with) and report the sensitivity.",
+   "parameters": {
+    "per_strike_at_1m": 121431.6369793,
+    "per_strike_at_2m_default": 109864.69489897,
+    "per_strike_at_3_5m": 93242.194594313
+   },
+   "evidence": [
+    "pob/close-combat-ramp",
+    "pob/enemy-distance-placeholder",
+    "docs/evidence/P09-T01.2/replay.json#/config_probes"
+   ],
+   "p06_mechanic_ids": [
+    "config/enemyDistance"
+   ],
+   "pob_community_v2": "applies"
+  },
+  {
+   "rule_id": "way-of-the-stonefist",
+   "status": "conditional",
+   "gap_id": "gap-p09-t011-config-conditions",
+   "question": "PoB leaves Way of the Stonefist unparsed. Does the seed lose its effect?",
+   "rule": "Not for the base type: the imported gloves already are 'Runeforged Fists of Stone', so the account API returned the transformed item. Whether their explicit modifiers are the transformed, stronger versions is not established; PoB evaluates the text as imported. Martial Adept and Martial Master are also unparsed by PoB; their Combo effects belong to the cycle rules (combo-gain-per-strike, whirling-assault-own-combo), not to PoB damage.",
+   "evidence": [
+    "docs/evidence/P09-T01.1/seed/items-raw.json",
+    "docs/evidence/P09-T01.1/seed/passive-nodes.json"
+   ],
+   "p06_mechanic_ids": null,
+   "pob_community_v2": "applies"
+  }
+ ],
+ "pob_community_v2_decision": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+ "p06_ledger_resolutions": [
+  {
+   "resolution_id": "p09-t012/flicker-extra-strikes",
+   "gap_id": null,
+   "mechanic_id": "skill/FlickerStrikePlayer",
+   "evidence_ids": [
+    "pob/flicker-description",
+    "pob/flicker-strikes-per-charge",
+    "pob/flicker-prediamage",
+    "pob/removable-power-charges",
+    "web/fextralife-flicker-strike",
+    "docs/evidence/P09-T01.2/replay.json#/flicker_seed"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "validation": "fixture_checked"
+   },
+   "input_values": {},
+   "outcome": "p09-t012:flicker-extra-strikes",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/perpetual-charge",
+   "gap_id": null,
+   "mechanic_id": "support/SupportPerpetualChargePlayer",
+   "evidence_ids": [
+    "pob/perpetual-charge-description",
+    "pob/perpetual-charge-chance",
+    "docs/evidence/P09-T01.1/seed/skill-groups.json"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "limitations": [
+     "Each consumed charge stays with probability 0.25, independently; the use still counts all of them as consumed."
+    ]
+   },
+   "input_values": {},
+   "outcome": "p09-t012:perpetual-charge",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/ailith-surpassing-distribution",
+   "gap_id": null,
+   "mechanic_id": "support/SupportAilithLineagePlayer",
+   "evidence_ids": [
+    "pob/ailith-description",
+    "pob/statdesc-ailith-surpassing",
+    "web/poe2wiki-surpassing-chance"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "limitations": [
+     "Surpassing: floor(25% x K / 100) charges plus one with the remaining chance; definition from a search summary of the community wiki."
+    ]
+   },
+   "input_values": {},
+   "outcome": "p09-t012:ailith-surpassing-distribution",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/combo-cap-and-decay",
+   "gap_id": null,
+   "mechanic_id": "resource/combo",
+   "evidence_ids": [
+    "pob/culmination-cap",
+    "pob/culmination-decay"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "limitations": [
+     "Cap 10 on the stored count, all expended on use, decay 6.0 s after the last gain."
+    ]
+   },
+   "input_values": {},
+   "outcome": "p09-t012:combo-cap-and-decay",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/whirling-assault-use",
+   "gap_id": null,
+   "mechanic_id": "skill/WhirlingAssaultPlayer",
+   "evidence_ids": [
+    "docs/evidence/P09-T01.2/replay.json#/whirling_assault"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "validation": "fixture_checked"
+   },
+   "input_values": {},
+   "outcome": "p09-t012:whirling-assault-use",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/charged-staff-use",
+   "gap_id": null,
+   "mechanic_id": "charges/charged-staff-consumption",
+   "evidence_ids": [
+    "pob/charged-staff-description",
+    "pob/charged-staff-requires",
+    "docs/evidence/P09-T01.2/replay.json#/charged_staff"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "limitations": [
+     "Consumes all held charges, needs 1; not covered by Perpetual Charge in the seed."
+    ]
+   },
+   "input_values": {},
+   "outcome": "p09-t012:charged-staff-use",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/pounce-predators-mark",
+   "gap_id": null,
+   "mechanic_id": "skill/WolfPouncePlayer",
+   "evidence_ids": [
+    "pob/predators-mark-description",
+    "pob/predators-mark-minion-count",
+    "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers",
+    "docs/evidence/P09-T01.2/replay.json#/group_sweep",
+    "docs/evidence/P09-T01.2/replay.json#/diagnostics/charges_5/enemy_mods"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "limitations": [
+     "Off in flicker_sustained_v1 documents: Pounce is movement only (owner Q4) and the mark is not generated by the rotation."
+    ]
+   },
+   "input_values": {},
+   "outcome": "p09-t012:pounce-predators-mark",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/flicker-bypass-cd-default",
+   "gap_id": null,
+   "mechanic_id": "config/FlickerStrikeBypassCD",
+   "evidence_ids": [
+    "pob/flicker-bypass-cd",
+    "docs/evidence/P09-T01.2/replay.json#/config_probes",
+    "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/config_mods"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "support": "implemented",
+    "validation": "fixture_checked",
+    "limitations": [
+     "No effect on the pin: Flicker Strike has no cooldown; outputs identical with the option off."
+    ]
+   },
+   "input_values": {},
+   "outcome": "p09-t012:flicker-bypass-cd-default",
+   "ready": false,
+   "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap"
+  },
+  {
+   "resolution_id": "p09-t012/engine-checkout",
+   "gap_id": "gap-p09-t011-engine-checkout-state",
+   "mechanic_id": "engine/pinned-checkout",
+   "evidence_ids": [
+    "docs/evidence/P09-T01.2/replay.json"
+   ],
+   "author": "P09-T01.2",
+   "resolved_at": "2026-10-18T00:00:00Z",
+   "reviewer": null,
+   "rule_changes": {
+    "validation": "fixture_checked"
+   },
+   "input_values": {
+    "/pob_inputs": "docs/evidence/P09-T01.2/replay.json"
+   },
+   "outcome": "clean pinned replay agrees with every earlier value",
+   "ready": true,
+   "why_not_ready": null
   }
  ],
  "status_counts": {
-  "resolved": 10,
-  "conditional": 3,
-  "blocking": 6
+  "resolved": 12,
+  "conditional": 5,
+  "blocking": 5
  },
  "attribution": {
   "status": "proposed; needs reviewer acceptance (gap-p09-t011-attribution-rules stays open)",

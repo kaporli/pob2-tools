@@ -48,6 +48,17 @@ TIMEOUT_S = 300.0
 REL_TOL = 1e-9
 MAX_REQUESTS_PER_WORKER = 6
 
+#: Condition inputs the community reference build sets in its PoB config.
+REFERENCE_CONDITIONS = {
+    "buffOnslaught": True, "conditionCritInPast8Sec": True, "conditionCritRecently": True,
+    "conditionEnemyBlinded": True, "conditionEnemyBurning": True, "conditionEnemyChilled": True,
+    "conditionEnemyDazed": True, "conditionEnemyFrozen": True, "conditionEnemyIntimidated": True,
+    "conditionEnemyShocked": True, "conditionGainedPowerChargeRecently": True,
+    "conditionHaveEnergyShield": True, "conditionNonCritRecently": True, "multiplierCombo": 10,
+    "multiplierRage": 30, "useEnduranceCharges": True, "useFrenzyCharges": True,
+    "windDancerStacks": 3,
+}
+
 #: Socket groups in the seed document, 1-based as PoB numbers them.
 GROUP_FLICKER = 6
 GROUP_WHIRLING = 8
@@ -194,6 +205,26 @@ return {
 """
 
 
+CHARGED_STAFF_DURATION_LUA = r"""
+local skill = build.calcsTab.mainEnv.player.mainSkill
+local cfg = skill.skillCfg
+local rows = {}
+for _, r in ipairs(skill.skillModList:Tabulate("INC", cfg, "Duration")) do
+  rows[#rows + 1] = { value = r.value, source = tostring(r.mod.source) }
+end
+for _, r in ipairs(skill.skillModList:Tabulate("MORE", cfg, "Duration")) do
+  rows[#rows + 1] = { value = r.value, source = tostring(r.mod.source), more = true }
+end
+return {
+  skill = skill.activeEffect.grantedEffect.id,
+  per_stack_ms_base = skill.skillModList:Sum("BASE", cfg, "ChargedStaffBuffDuration"),
+  duration_inc = skill.skillModList:Sum("INC", cfg, "Duration"),
+  duration_more = skill.skillModList:More(cfg, "Duration"),
+  duration_mods = rows,
+}
+"""
+
+
 def check_checkout(root: Path):
     from pob2opt.evaluation import resolve_checkout
 
@@ -310,6 +341,30 @@ def run_adapter(root: Path, xml: str) -> dict:
                 sweep.append({"disabled_group": index, "gem": group_gem(xml, index),
                               "forced_power_charges": charges, **values})
         out["group_sweep"] = sweep
+        # PoB defaults the import did not write: Flicker Strike's "Bypass CD?"
+        # (on by default) and the enemy distance placeholder (20 units = 2 m),
+        # which Close Combat II reads. Benchmark document, 5 forced charges.
+        probes = []
+        for name, extra in (("default", {}),
+                            ("FlickerStrikeBypassCD_off", {"FlickerStrikeBypassCD": False}),
+                            ("enemyDistance_10", {"enemyDistance": 10}),
+                            ("enemyDistance_35", {"enemyDistance": 35})):
+            values = probe("config/%s" % name, bench,
+                           EngineState(config={"usePowerCharges": True, "overridePowerCharges": 5, **extra},
+                                       main_skill=(GROUP_FLICKER, 1),
+                                       stat_keys=FLICKER_KEYS + ("CritChance", "HitChance")))
+            probes.append({"probe": name, "config": extra, **values})
+        out["config_probes"] = probes
+        # The community reference's condition inputs (reference-ninja-25c49
+        # decoded.xml), applied to the seed at its maximum of 5 charges. Its
+        # enemy resistance and above-maximum charge inputs are left out: the
+        # target is the fixed Pinnacle preset.
+        out["reference_conditions"] = {
+            "config": REFERENCE_CONDITIONS,
+            "seed": probe("reference_conditions/seed", xml, EngineState(
+                config={"usePowerCharges": True, "overridePowerCharges": 5, **REFERENCE_CONDITIONS},
+                main_skill=(GROUP_FLICKER, 1), stat_keys=FLICKER_KEYS)),
+        }
         out["whirling_assault"] = probe(
             "whirling_assault", xml,
             EngineState(main_skill=(GROUP_WHIRLING, 1), stat_keys=SKILL_KEYS))
@@ -347,6 +402,13 @@ def run_diagnostics(root: Path, xml: str) -> dict:
             result[name] = engine.eval_lua(DIAGNOSTIC_LUA)
         engine.call("load_build_xml", {"xml": xml, "name": "p09-t01.2 config"})
         result["config_input"] = engine.call("get_config", {})
+        # Charged Staff's buff duration: PoB carries ChargedStaffBuffDuration
+        # (6000 ms per stack) but no module reads it, so read the duration
+        # modifiers that apply to the skill instead.
+        engine.call("set_config", {"name": "usePowerCharges", "value": True})
+        engine.call("set_config", {"name": "overridePowerCharges", "value": 1})
+        engine.call("set_main_skill", {"group": GROUP_CHARGED_STAFF, "skill": 1})
+        result["charged_staff_duration"] = engine.eval_lua(CHARGED_STAFF_DURATION_LUA)
     finally:
         engine.close()
         os.chdir(cwd)
@@ -439,11 +501,13 @@ def main() -> int:
         "whirling_assault": adapter_out["whirling_assault"],
         "charged_staff": adapter_out["charged_staff"],
         "group_sweep": adapter_out["group_sweep"],
+        "config_probes": adapter_out["config_probes"],
+        "reference_conditions": adapter_out["reference_conditions"],
         "diagnostics": diagnostics,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(record, indent=1, sort_keys=True, ensure_ascii=False) + "\n",
-                   encoding="utf-8")
+                   encoding="utf-8", newline="\n")
     print("wrote %s; %d values differ from the P09-T01.1 capture"
           % (OUT.relative_to(REPO_ROOT), record["agreement_summary"]["values_differing"]))
     return 0

@@ -91,13 +91,23 @@ OWNER_ANSWERS = [
     ("Q9", "any class, any ascendancy, any variant",
      "Decision 2: all 23 ascendancies and all three variants are approved scope."),
     ("Q10", "Once per N cycles",
-     "Charged Staff is pressed only periodically, once per N Whirling Assault to Flicker Strike cycles, to refresh its buff (owner's chosen option, relayed by the coordinator 2026-10-18). N is not given yet: gap-p09-t012-charged-staff-period."),
+     "Charged Staff is pressed only periodically, once per N Whirling Assault to Flicker Strike cycles, to refresh its buff (owner's chosen option, relayed by the coordinator 2026-10-18). Owner decision 2026-10-18 (2) then gave the full rotation: the press repeats when the buff expires, so N follows from the buff duration (gap-p09-t012-charged-staff-period resolved)."),
 ]
+
+#: Owner decision 2026-10-18 (2), verbatim, and where D07 records it.
+OWNER_DECISION_2 = (
+    "it's obvious, whirling assault to generate charges, charged staff, "
+    "whirling assault to generate charges, flicker, whirling, flicker, "
+    "whirling, flicker, etc until charged runs out & repeat? but again, look "
+    "at how those other PoBs did DPS calcs, don't stray from their methods, "
+    "match them. Assume we have charges for flicker for the dps calcs")
+D07_AMENDMENT_2 = "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2"
 
 #: P09-T01.2 evidence: the clean pinned replay and the rule table.
 T012 = "docs/evidence/P09-T01.2"
 REPLAY_REF = T012 + "/replay.json"
 RULES_REF = T012 + "/mechanics-rules.json"
+COMMUNITY_REF = T012 + "/community-cycle.json"
 
 NOT_A_CLAIM = (
     "PROTOCOL, NOT A MEASUREMENT. No enemy statistic, encounter timing, "
@@ -270,6 +280,10 @@ def build_seed_manifest():
             {"decision": "Class scope: any class, any ascendancy (all 23); all three variants approved.",
              "authority": "Elias", "date": "2026-10-18",
              "recorded_in": "docs/evidence/P09-T01.1/scope-proposal.json approval"},
+            {"decision": "Rotation and DPS method: Whirling Assault, Charged Staff, then Whirling Assault and Flicker Strike until the Charged Staff buff expires, repeated; per-use Flicker Strike damage as community PoB builds compute it, with charges assumed (method pob-community-v2).",
+             "verbatim": OWNER_DECISION_2,
+             "authority": "Elias", "date": "2026-10-18", "relayed_by": "coordinator",
+             "recorded_in": D07_AMENDMENT_2},
         ],
         "pob_main_skill_as_imported": "Herald of Ice (group 5)",
         "pob_proxy_flicker_main": {
@@ -632,8 +646,12 @@ def build_gaps():
              "N, and whether the refresh press follows Whirling Assault or "
              "follows a Flicker Strike that kept a charge.",
              "Owner follow-up to Q10; a reviewer checks the rotation record. "
-             "Rule table: " + RULES_REF + " charged-staff-period.",
-             ["skill/ChargedStaffPlayer"]),
+             "Rule table: " + RULES_REF + " charged-staff-period. Owner "
+             "decision 2026-10-18 (2) gives the full rotation: Whirling "
+             "Assault, Charged Staff, then Whirling Assault and Flicker Strike "
+             "until the buff expires, repeated.",
+             ["skill/ChargedStaffPlayer"],
+             resolved_by=[D07_AMENDMENT_2, OWNER_ANSWERS_REF]),
         _gap("gap-p09-t011-charge-cycle-rules", UR, B, [DPS_ID] + BOSS_IDS,
              ["/measurement_method", "/sustain_report"],
              "pob-cycle-v1 needs the Combo Whirling Assault holds at each use. "
@@ -776,8 +794,12 @@ def build_gaps():
              "of the window its buff covers, and its time and mana.",
              "The number N, and the press's position inside its cycle.",
              "Owner answer relayed by the coordinator; a reviewer records it "
-             "in the rotation.",
-             ["skill/ChargedStaffPlayer"]),
+             "in the rotation. Owner decision 2026-10-18 (2): the press repeats "
+             "when the buff expires, so N follows from the buff duration "
+             "(6 s per stack, 25% increased duration on the seed, from PoB) and "
+             "PoB's use times.",
+             ["skill/ChargedStaffPlayer"],
+             resolved_by=[D07_AMENDMENT_2, REPLAY_REF]),
         _gap("gap-p09-t012-flicker-mana-charging", UR, B, [DPS_ID] + BOSS_IDS,
              ["/sustain_report", "/measurement_method"],
              "Flicker Strike costs 248 mana in PoB. Its text describes one use "
@@ -991,7 +1013,41 @@ POB_CYCLE_REQUIRED_GAPS = (
 )
 
 #: Prerequisites closed with evidence. They stay in required_gap_ids.
-RESOLVED_PREREQUISITES = frozenset({"gap-p09-t011-engine-checkout-state"})
+RESOLVED_PREREQUISITES = frozenset({"gap-p09-t011-engine-checkout-state",
+                                    "gap-p09-t011-rotation-details",
+                                    "gap-p09-t012-charged-staff-period"})
+
+#: pob-community-v2 (D07 amendment 2): what the owner's method waives, and
+#: what still stands between its value and a supported score.
+COMMUNITY_WAIVED = (
+    ("gap-p09-t011-charge-cycle-rules", "charges assumed for Flicker Strike"),
+    ("gap-p09-t011-charged-staff-shared-charges", "Charged Staff and Flicker Strike each at maximum charges as PoB applies them"),
+    ("gap-p09-t011-hit-and-run-movement", "Hit and Run as PoB applies it; owner's method, not a verified mechanic"),
+)
+COMMUNITY_STILL_BLOCKING = (
+    "gap-p09-t011-sustain-cycle",
+    "gap-p09-t012-flicker-mana-charging",
+    "gap-p09-t011-attribution-rules",
+    "gap-p09-t011-config-conditions",
+)
+
+
+def community_method():
+    """pob-community-v2: the owner's method, computed in COMMUNITY_REF."""
+    return {
+        "method_id": "pob-community-v2",
+        "decision": D07_AMENDMENT_2,
+        "owner_verbatim": OWNER_DECISION_2,
+        "per_use_damage": "PoB AverageBurstDamage of Flicker Strike at the build's maximum Power Charges with the Charged Staff buff as PoB applies it (charges assumed); per strike = AverageDamage, credited at each strike's end",
+        "rotation": ["Whirling Assault", "Charged Staff", "repeat (Whirling Assault, Flicker Strike) until the Charged Staff buff expires", "repeat from Whirling Assault, Charged Staff"],
+        "time": "PoB Time of Whirling Assault and Charged Staff; Flicker Strike H / Speed; all inside [0, 120)",
+        "buff_duration": "6 s per stack (ChargedStaffBuffDuration) x (1 + increased duration) x stacks consumed, from PoB",
+        "reported_beside": "plain PoB AverageBurstDamage and TotalDPS at maximum charges; the community reference's condition inputs on the seed",
+        "not_a_verified_mechanic": "Hit and Run reuse and charge availability are the owner's chosen method.",
+        "waived_by_decision": [{"gap_id": g, "evidence": D07_AMENDMENT_2, "why": w} for g, w in COMMUNITY_WAIVED],
+        "still_blocking_a_supported_score": list(COMMUNITY_STILL_BLOCKING),
+        "computation": COMMUNITY_REF,
+    }
 
 
 def pob_cycle_method():
@@ -1119,6 +1175,10 @@ def dps_scenario(mechanics_ids):
                                 pob_cycle_method(),
                                 [*POB_CYCLE_REQUIRED_GAPS, "gap-p09-t011-flicker-strike-timing"]),
         "gameplay_recordings": F("decision_D07", "D07 amendment: optional validation, not a prerequisite", "optional"),
+        "benchmark_method": F("decision_D07", "D07 amendment 2026-10-18 (2): the owner's community-PoB method is the benchmark's method; pob-cycle-v1 stays defined for a generated-charge evaluation",
+                              {"primary": "pob-community-v2", "generated_charges": "pob-cycle-v1"}),
+        "community_method": F("decision_D07", "D07 amendment 2026-10-18 (2)", community_method(),
+                              list(COMMUNITY_STILL_BLOCKING)),
         "sustain_report": F("decision_D07", "D07 item 6: report depletion and whether the cycle repeats",
                             {"required": True, "repeatable_cycle": None},
                             ["gap-p09-t011-sustain-cycle", "gap-p09-t011-charge-cycle-rules"]),
@@ -1139,15 +1199,16 @@ def dps_scenario(mechanics_ids):
 def build_rotation(facts):
     return {
         "rotation_id": ROTATION_ID,
-        "version": "2",
+        "version": "3",
         "owner_statement_verbatim": OWNER_ROTATION,
+        "owner_decision_2_verbatim": OWNER_DECISION_2,
         "received": "2026-10-17",
         "answers_received": "2026-10-18",
         "source": "Owner (Elias), P09-T01.1 assignment and answers Q1 to Q9",
         "cycle": {
             "opener": "Whirling Assault (Q2: 'whirling assault')",
             "repeat": ["Whirling Assault x1 (Q1: 'just 1')", "Flicker Strike x1"],
-            "charged_staff": "Pressed 'when i have a charge' (Q3), once per N cycles to refresh its buff (Q10); N unresolved",
+            "charged_staff": "Pressed after a Whirling Assault, then again when its buff expires (owner decision 2026-10-18 (2)); period from the buff duration",
             "persistent_buffs_not_pressed": PERSISTENT_SKILLS,
             "movement_only": ["Pounce (Q4: 'I press pounce, but only for mobility')"],
             "hit_and_run_movement": "Flicker Strike's dash (Q5: 'the dash from flicker itself'); unverified by the catalog",
@@ -1204,7 +1265,7 @@ QUESTIONS = [
     ("Q7", "Maps and bosses.", "answered in part: T16 maps, ailment threshold weak case; no map or boss named"),
     ("Q8", "Benchmark target.", "answered: decision 1, PoB is the damage source"),
     ("Q9", "Class and variant scope.", "answered: decision 2, all approved"),
-    ("Q10", "Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or at another point? About how often?", "answered in part: once per N cycles; N open"),
+    ("Q10", "Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or at another point? About how often?", "answered: once per N cycles (Q10), then the full rotation in owner decision 2026-10-18 (2)"),
     ("Q11", "Which T16 maps (one with packs close together, one spread out) and which two bosses (one you kill without breaks, one with phases or untargetable time) do you run? Are PoB's Pinnacle and Uber tiers acceptable enemy configurations for them?", "open"),
 ]
 

@@ -39,6 +39,16 @@ PIN = "ce566eac45ea8a86477f513c7ee65a1ebe60014e"
 REPLAY_REF = "docs/evidence/P09-T01.2/replay.json"
 WEB_REF = "docs/evidence/P09-T01.2/web-evidence.json"
 OWNER_REF = "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+DECISION_2 = "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2"
+
+#: How each rule stands under pob-community-v2 (D07 amendment 2): "waived"
+#: rules only exist to generate charges or schedule activation in-model.
+UNDER_COMMUNITY_METHOD = {
+    "combo-gain-per-strike": "waived", "whirling-assault-own-combo": "waived",
+    "ailith-surpassing-distribution": "waived", "perpetual-charge": "waived",
+    "charged-staff-buff-ownership": "waived", "consumed-power-charge-recently": "waived",
+    "hit-and-run-reuse": "waived",
+}
 
 #: (citation id, file under src/, exact text, optional anchor). Without an
 #: anchor the text must occur once in the file; with one, the first
@@ -90,6 +100,13 @@ CITATIONS = [
      'description = "Mark a target, causing it to take increased damage based on how many of the target\'s enemies are near to it. If the target dies, the Mark will Activate to Trigger the Summon Wolf skill and Consume the Mark.",', 'skills["WolfPounceMarkPlayer"]'),
     ("pob/predators-mark-minion-count", "Modules/CalcPerform.lua",
      'env.player.modDB:NewMod("Multiplier:MinionPresenceCount", "BASE", output[activeSkill.minion.minionData.limit], "Config", { type = "Condition", var = "Combat" })'),
+    ("pob/flicker-bypass-cd", "Modules/ConfigOptions.lua",
+     'modList:NewMod("CooldownRecovery", "OVERRIDE", 0, "Config", { type = "SkillName", skillName = "Flicker Strike", includeTransfigured = true })'),
+    ("pob/close-combat-ramp", "Data/Skills/sup_dex.lua",
+     'mod("Damage", "MORE", nil, 0, 0, { type = "DistanceRamp", ramp = {{10,1},{35,0}} }),',
+     'skills["SupportCloseCombatPlayerTwo"]'),
+    ("pob/enemy-distance-placeholder", "Modules/ConfigOptions.lua",
+     '{ var = "enemyDistance", type = "count", label = "Distance to enemy:", tooltip = "10 units equals 1 metre'),
     ("pob/ultimate-mana-flask", "Data/Bases/flask.lua",
      'flask = { mana = 310, duration = 3, chargesUsed = 10, chargesMax = 75, },'),
 ]
@@ -147,6 +164,8 @@ def rules(replay: dict) -> list[dict]:
     wa = replay["whirling_assault"]
     cs = replay["charged_staff"]
     diag = replay["diagnostics"]["imported"]
+    probes = {p["probe"]: p for p in replay["config_probes"]}
+    cs_duration = replay["diagnostics"]["charged_staff_duration"]
     flask = diag["flasks"]["Flask 2"]["flaskData"]
     return [
         {"rule_id": "flicker-extra-strikes", "status": "resolved",
@@ -289,13 +308,116 @@ def rules(replay: dict) -> list[dict]:
          "implication": "At 5 charges one Whirling Assault plus one Flicker Strike costs %d mana per cycle (per-use charging) against %.1f mana per second of regeneration; the pool and flask cover only part of 120 s, so a supported score must include waiting for mana." % (wa["ManaCost"] + seed[0]["ManaCost"], diag["outputs"]["ManaRegenRecovery"]),
          "evidence": ["pob/ultimate-mana-flask", ptr("/diagnostics/imported/flasks"),
                       ptr("/diagnostics/imported/outputs"), OWNER_REF]},
-        {"rule_id": "charged-staff-period", "status": "blocking",
-         "gap_id": "gap-p09-t012-charged-staff-period",
+        {"rule_id": "charged-staff-period", "status": "resolved",
          "question": "How often Charged Staff is pressed.",
-         "rule": "Owner Q10 (2026-10-18): once per N Whirling Assault to Flicker Strike cycles, to refresh its buff. Modelled as rotation parameter N; each press costs its own time and mana and consumes all held charges. N is not yet given.",
-         "parameters": {"N": None},
-         "evidence": [OWNER_REF]},
+         "rule": "Owner Q10: once per N cycles; owner decision 2026-10-18 (2): Whirling Assault, Charged Staff, then Whirling Assault and Flicker Strike until the buff expires, repeated. The period follows from the buff duration: 6 s per stack (ChargedStaffBuffDuration) x (1 + 25% increased duration on the seed) x stacks consumed. Each press costs its own time and mana.",
+         "parameters": {"buff_s_per_stack": cs_duration["per_stack_ms_base"] / 1000 * (1 + cs_duration["duration_inc"] / 100) * cs_duration["duration_more"],
+                        "N": "derived per timeline"},
+         "evidence": [OWNER_REF, DECISION_2, "pob/charged-staff-duration", ptr("/diagnostics/charged_staff_duration")]},
+        {"rule_id": "flicker-bypass-cd-default", "status": "resolved",
+         "question": "Does PoB's default 'Bypass CD?' for Flicker Strike change the seed's numbers?",
+         "rule": "No. The import does not write FlickerStrikeBypassCD; PoB defaults it on and adds CooldownRecovery OVERRIDE 0 for Flicker Strike. The pinned Flicker Strike has no cooldown, and switching the option off leaves every captured output unchanged. The benchmark may leave it at the default.",
+         "evidence": ["pob/flicker-bypass-cd", ptr("/config_probes"),
+                      ptr("/diagnostics/imported/config_mods")]},
+        {"rule_id": "enemy-distance", "status": "conditional",
+         "gap_id": "gap-p09-t011-config-conditions",
+         "question": "Distance between the character and the target for Close Combat II.",
+         "rule": "PoB uses its placeholder enemyDistance 20 (2 m) when the document sets none; Close Combat II gives 30% more damage at 1 m or less, falling to 0 at 3.5 m, so 18% at 2 m. Flicker Strike teleports to its target, but the resulting distance is not established. Proposed: keep the placeholder (the value the seed was imported with) and report the sensitivity.",
+         "parameters": {"per_strike_at_1m": probes["enemyDistance_10"]["AverageDamage"],
+                        "per_strike_at_2m_default": probes["default"]["AverageDamage"],
+                        "per_strike_at_3_5m": probes["enemyDistance_35"]["AverageDamage"]},
+         "evidence": ["pob/close-combat-ramp", "pob/enemy-distance-placeholder", ptr("/config_probes")]},
+        {"rule_id": "way-of-the-stonefist", "status": "conditional",
+         "gap_id": "gap-p09-t011-config-conditions",
+         "question": "PoB leaves Way of the Stonefist unparsed. Does the seed lose its effect?",
+         "rule": "Not for the base type: the imported gloves already are 'Runeforged Fists of Stone', so the account API returned the transformed item. Whether their explicit modifiers are the transformed, stronger versions is not established; PoB evaluates the text as imported. Martial Adept and Martial Master are also unparsed by PoB; their Combo effects belong to the cycle rules (combo-gain-per-strike, whirling-assault-own-combo), not to PoB damage.",
+         "evidence": ["docs/evidence/P09-T01.1/seed/items-raw.json",
+                      "docs/evidence/P09-T01.1/seed/passive-nodes.json"]},
     ]
+
+
+#: Which mechanic of the P06 registry (p06-flicker-v1, branch p06-coverage
+#: 3cc334d) each rule informs. None: no P06 entry names it yet.
+P06_MECHANICS = {
+    "flicker-extra-strikes": ["skill/FlickerStrikePlayer"],
+    "flicker-no-charge-gain": ["resource/power-charges"],
+    "flicker-strike-timing": ["timing/flicker-strike-strike-duration"],
+    "flicker-mana-charging": ["cost/mana-per-use"],
+    "perpetual-charge": ["support/SupportPerpetualChargePlayer"],
+    "ailith-surpassing-distribution": ["support/SupportAilithLineagePlayer"],
+    "combo-gain-per-strike": ["support/SupportCulminationPlayerTwo", "passive/41751", "resource/combo"],
+    "whirling-assault-own-combo": ["passive/61586", "support/SupportCulminationPlayerTwo"],
+    "combo-cap-and-decay": ["resource/combo"],
+    "whirling-assault-use": ["skill/WhirlingAssaultPlayer"],
+    "charged-staff-use": ["charges/charged-staff-consumption"],
+    "charged-staff-buff-ownership": ["skill/ChargedStaffPlayer", "charges/charged-staff-consumption"],
+    "consumed-power-charge-recently": None,
+    "hit-and-run-reuse": ["activation/hit-and-run-reuse", "support/SupportHitAndRunPlayer"],
+    "pounce-predators-mark": ["skill/WolfPouncePlayer", "config/condition-sustain"],
+    "persistent-buffs": ["skill/HeraldOfIcePlayer", "skill/HeraldOfThunderPlayer"],
+    "pob-default-states": ["config/condition-sustain"],
+    "mana-sustain": ["resource/mana-sustain", "resource/mana-flask", "resource/mana-regeneration"],
+    "charged-staff-period": ["charges/charged-staff-consumption"],
+    "flicker-bypass-cd-default": ["config/FlickerStrikeBypassCD"],
+    "enemy-distance": ["config/enemyDistance"],
+    "way-of-the-stonefist": None,
+}
+
+#: Corrected rule fields for the P06 registry when the rule's evidence is
+#: accepted. Shaped as pob2opt.coverage.resolution.Resolution.rule_changes.
+P06_RULE_CHANGES = {
+    "flicker-extra-strikes": {"validation": "fixture_checked"},
+    "perpetual-charge": {"limitations": ["Each consumed charge stays with probability 0.25, independently; the use still counts all of them as consumed."]},
+    "ailith-surpassing-distribution": {"limitations": ["Surpassing: floor(25% x K / 100) charges plus one with the remaining chance; definition from a search summary of the community wiki."]},
+    "combo-cap-and-decay": {"limitations": ["Cap 10 on the stored count, all expended on use, decay 6.0 s after the last gain."]},
+    "whirling-assault-use": {"validation": "fixture_checked"},
+    "charged-staff-use": {"limitations": ["Consumes all held charges, needs 1; not covered by Perpetual Charge in the seed."]},
+    "pounce-predators-mark": {"limitations": ["Off in flicker_sustained_v1 documents: Pounce is movement only (owner Q4) and the mark is not generated by the rotation."]},
+    "flicker-bypass-cd-default": {"support": "implemented", "validation": "fixture_checked",
+                                  "limitations": ["No effect on the pin: Flicker Strike has no cooldown; outputs identical with the option off."]},
+}
+
+
+def ledger_resolutions(rule_list: list[dict]) -> list[dict]:
+    """Each rule as a pob2opt.coverage Resolution. ``ready`` is true only
+    when feeding it to CoverageLedger.resolve would close a gap that this
+    evidence fully settles; a rule that settles part of a gap is a rule
+    change only, so the gap stays open."""
+    out = []
+    for rule in rule_list:
+        mechanics = P06_MECHANICS.get(rule["rule_id"])
+        changes = P06_RULE_CHANGES.get(rule["rule_id"])
+        if not mechanics or changes is None or rule["status"] != "resolved":
+            continue
+        out.append({
+            "resolution_id": "p09-t012/" + rule["rule_id"],
+            "gap_id": rule.get("gap_id"),
+            "mechanic_id": mechanics[0],
+            "evidence_ids": rule["evidence"],
+            "author": "P09-T01.2",
+            "resolved_at": "2026-10-18T00:00:00Z",
+            "reviewer": None,
+            "rule_changes": changes,
+            "input_values": {},
+            "outcome": "p09-t012:" + rule["rule_id"],
+            "ready": False,
+            "why_not_ready": "awaiting reviewer; the rule settles part of its mechanic, not a whole gap",
+        })
+    out.append({
+        "resolution_id": "p09-t012/engine-checkout",
+        "gap_id": "gap-p09-t011-engine-checkout-state",
+        "mechanic_id": "engine/pinned-checkout",
+        "evidence_ids": [REPLAY_REF],
+        "author": "P09-T01.2",
+        "resolved_at": "2026-10-18T00:00:00Z",
+        "reviewer": None,
+        "rule_changes": {"validation": "fixture_checked"},
+        "input_values": {"/pob_inputs": REPLAY_REF},
+        "outcome": "clean pinned replay agrees with every earlier value",
+        "ready": True,
+        "why_not_ready": None,
+    })
+    return out
 
 
 def attribution(replay: dict) -> dict:
@@ -347,12 +469,16 @@ def main() -> int:
         "web_evidence": WEB_REF,
         "web_evidence_sha256": _sha(WEB),
         "citations": citations,
-        "rules": rule_list,
+        "rules": [dict(r, p06_mechanic_ids=P06_MECHANICS[r["rule_id"]],
+                       pob_community_v2=UNDER_COMMUNITY_METHOD.get(r["rule_id"], "applies"))
+                  for r in rule_list],
+        "pob_community_v2_decision": DECISION_2,
+        "p06_ledger_resolutions": ledger_resolutions(rule_list),
         "status_counts": {s: sum(1 for r in rule_list if r["status"] == s)
                           for s in ("resolved", "conditional", "blocking")},
         "attribution": attribution(replay),
     }
-    OUT.write_text(json.dumps(record, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(record, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     print("wrote %s: %s" % (OUT.relative_to(REPO_ROOT), record["status_counts"]))
     return 0
 

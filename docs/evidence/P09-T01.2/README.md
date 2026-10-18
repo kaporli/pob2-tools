@@ -4,12 +4,14 @@ Captured 2026-10-18 on Windows 11, CPython 3.12.4, against
 `external/PathOfBuilding-PoE2` at `ce566ea` with an empty
 `git status --porcelain --untracked-files=all` before and after every run.
 Everything here is PoB-derived or secondary web text. Nothing is a gameplay
-measurement and no `pob-cycle-v1` value is computed.
+measurement. The `pob-community-v2` value (owner's method, D07 amendment 2) is
+computed; no `pob-cycle-v1` value is.
 
 | File | What |
 |---|---|
 | `replay.json` | The seed loaded through `EngineAdapter` on the clean pin: all outputs with Flicker Strike main, 0 to 5 forced charges with Charged Staff on and off, Whirling Assault, Charged Staff, a one-group-at-a-time sweep, four benchmark documents (Pounce off; with and without Charged Staff and Hit and Run), and read-only diagnostics (enemy values, Config-sourced, conditional and enemy modifiers, speed and added-damage sources, flasks) |
-| `mechanics-rules.json` | 19 rules for the cycle with status, parameters and evidence (engine citations with file SHA-256 and line), and the proposed damage ownership table |
+| `community-cycle.json` | `pob-community-v2`: the full 120 s action and strike timeline for the seed as imported and with Pounce off, sustained and burst values, time per action, a mana ledger, plain PoB numbers and the community reference's conditions on the seed |
+| `mechanics-rules.json` | 22 rules for the cycle with status, parameters and evidence (engine citations with file SHA-256 and line), and the proposed damage ownership table |
 | `web-evidence.json` | Retrieved web text with URL and date, and the pages that refused automated access |
 | `offline-py312.txt`, `engine-py312.txt` | Test logs |
 
@@ -34,17 +36,42 @@ working tree therefore did not change these numbers;
 
 ## Rule status
 
-Resolved (10): extra strikes, no charge gain during Flicker Strike, Perpetual
+Resolved (12): extra strikes, no charge gain during Flicker Strike, Perpetual
 Charge per charge, Surpassing distribution, Combo cap and decay, Whirling
 Assault use, Charged Staff use, Pounce mark off, persistent buffs, PoB
-default states.
+default states, Flicker Strike's "Bypass CD?" default (no effect on the pin),
+Charged Staff period (owner Q10 and decision 2: pressed when the 37.5 s buff
+expires).
 
-Conditional (3): strike timing, Charged Staff buff ownership, 'consumed a
-Power Charge Recently'.
+Conditional (5): strike timing, Charged Staff buff ownership, 'consumed a
+Power Charge Recently', enemy distance (PoB placeholder 2 m; 1 m gives +10.5%,
+3.5 m gives -15.1% per strike), Way of the Stonefist (PoB leaves it, Martial
+Adept and Martial Master unparsed; the imported gloves are already Fists of
+Stone).
 
-Blocking (6): Flicker Strike mana per use or per strike, Combo per strike,
-Whirling Assault's own Combo, Hit and Run reuse, mana sustain, Charged Staff
-period N (owner Q10: "Once per N cycles").
+Blocking (5): Flicker Strike mana per use or per strike, Combo per strike,
+Whirling Assault's own Combo, Hit and Run reuse, mana sustain. Under
+`pob-community-v2` the Combo, Surpassing, Perpetual Charge, buff ownership,
+'recently' and Hit and Run rules are waived by the owner's decision; mana and
+attribution still apply. Each rule names its P06 registry mechanic, and
+`p06_ledger_resolutions` holds resolved rules in the
+`pob2opt.coverage.CoverageLedger.resolve` shape (only the engine-checkout one
+is ready to close a gap).
+
+## pob-community-v2 values (owner's method, not a supported score)
+
+| Document | Sustained | Burst [0, 5) | PoB TotalDPS | PoB per use |
+|---|---|---|---|---|
+| Seed as imported | 572,246 | 299,711 | 1,270,761 | 1,498,554 |
+| Pounce off | 461,488 | 241,702 | 1,024,807 | 1,208,512 |
+
+The rotation spends 64.8 s on Whirling Assault, 0.95 s on Charged Staff (3
+presses) and 54.3 s on 46 Flicker Strike uses. Applying the community
+reference's condition inputs (Onslaught, Rage 30, enemy shocked, chilled,
+frozen and others) to the seed raises PoB's per-use value to 4,634,311; those
+are reported, not adopted. The schedule needs 19,540 mana in 120 s against an
+887 pool and 5,748 regenerated; without a flask the first unaffordable action
+is at 7.9 s. That is why `sustain-cycle` still blocks a supported score.
 
 The Combo rules conflict with the owner's "whirling assault to get 5 power
 charges": at most 10 Combo gives 2 or 3 charges per Whirling Assault use, so
@@ -68,6 +95,6 @@ teleport counts as Hit and Run movement.
 
 | Command | Result |
 |---|---|
-| `python -m pytest tests/unit tests/integration -q` | 1698 passed, 1 xfailed |
+| `python -m pytest tests/unit tests/integration -q` | 1708 passed, 1 xfailed |
 | `python -m pytest tests/engine/test_p09_t01_2_seed_replay_engine.py tests/engine/test_p02_t02_1_flicker_engine.py -q` (clean pin) | 8 passed |
 | `python scripts/generate_schemas.py --check` | 21 schema files match |

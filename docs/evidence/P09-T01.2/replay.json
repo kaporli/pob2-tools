@@ -385,6 +385,74 @@
   "TotalDPS": 0
  },
  "command": "python scripts/p09_t01_2_seed_replay.py",
+ "config_probes": [
+  {
+   "AverageBurstDamage": 1208511.6438887,
+   "AverageBurstHits": 11,
+   "AverageDamage": 109864.69489897,
+   "CritChance": 86.35,
+   "HitChance": 100,
+   "ManaCost": 248,
+   "PowerCharges": 5,
+   "PowerChargesMax": 5,
+   "RemovablePowerCharges": 5,
+   "Speed": 9.3279,
+   "TotalDPS": 1024806.8875481,
+   "config": {},
+   "probe": "default"
+  },
+  {
+   "AverageBurstDamage": 1208511.6438887,
+   "AverageBurstHits": 11,
+   "AverageDamage": 109864.69489897,
+   "CritChance": 86.35,
+   "HitChance": 100,
+   "ManaCost": 248,
+   "PowerCharges": 5,
+   "PowerChargesMax": 5,
+   "RemovablePowerCharges": 5,
+   "Speed": 9.3279,
+   "TotalDPS": 1024806.8875481,
+   "config": {
+    "FlickerStrikeBypassCD": false
+   },
+   "probe": "FlickerStrikeBypassCD_off"
+  },
+  {
+   "AverageBurstDamage": 1335748.0067723,
+   "AverageBurstHits": 11,
+   "AverageDamage": 121431.6369793,
+   "CritChance": 86.35,
+   "HitChance": 100,
+   "ManaCost": 248,
+   "PowerCharges": 5,
+   "PowerChargesMax": 5,
+   "RemovablePowerCharges": 5,
+   "Speed": 9.3279,
+   "TotalDPS": 1132702.1665793,
+   "config": {
+    "enemyDistance": 10
+   },
+   "probe": "enemyDistance_10"
+  },
+  {
+   "AverageBurstDamage": 1025664.1405374,
+   "AverageBurstHits": 11,
+   "AverageDamage": 93242.194594313,
+   "CritChance": 86.35,
+   "HitChance": 100,
+   "ManaCost": 248,
+   "PowerCharges": 5,
+   "PowerChargesMax": 5,
+   "RemovablePowerCharges": 5,
+   "Speed": 9.3279,
+   "TotalDPS": 869753.8669563,
+   "config": {
+    "enemyDistance": 35
+   },
+   "probe": "enemyDistance_35"
+  }
+ ],
  "diagnostics": {
   "charged_staff_disabled/charges_5": {
    "conditional_mods": [
@@ -2982,6 +3050,18 @@
     }
    ]
   },
+  "charged_staff_duration": {
+   "duration_inc": 25,
+   "duration_mods": [
+    {
+     "source": "Skill:ChargedStaffPlayer",
+     "value": 25
+    }
+   ],
+   "duration_more": 1,
+   "per_stack_ms_base": 6000,
+   "skill": "ChargedStaffPlayer"
+  },
   "charges_1": {
    "conditional_mods": [
     {
@@ -3743,7 +3823,7 @@
     },
     {
      "mod": "Damage",
-     "neg": false,
+     "neg": true,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -3753,7 +3833,7 @@
     },
     {
      "mod": "Damage",
-     "neg": true,
+     "neg": false,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -3763,7 +3843,7 @@
     },
     {
      "mod": "DamageTaken",
-     "neg": false,
+     "neg": true,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -3773,7 +3853,7 @@
     },
     {
      "mod": "DamageTaken",
-     "neg": true,
+     "neg": false,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -6417,7 +6497,7 @@
     },
     {
      "mod": "Damage",
-     "neg": false,
+     "neg": true,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -6427,7 +6507,7 @@
     },
     {
      "mod": "Damage",
-     "neg": true,
+     "neg": false,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -6437,7 +6517,7 @@
     },
     {
      "mod": "DamageTaken",
-     "neg": false,
+     "neg": true,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -6447,7 +6527,7 @@
     },
     {
      "mod": "DamageTaken",
-     "neg": true,
+     "neg": false,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -9128,7 +9208,7 @@
     },
     {
      "mod": "Damage",
-     "neg": true,
+     "neg": false,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -9138,7 +9218,7 @@
     },
     {
      "mod": "Damage",
-     "neg": false,
+     "neg": true,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -9148,7 +9228,7 @@
     },
     {
      "mod": "DamageTaken",
-     "neg": false,
+     "neg": true,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -9158,7 +9238,7 @@
     },
     {
      "mod": "DamageTaken",
-     "neg": true,
+     "neg": false,
      "scope": "player",
      "source": "Base",
      "tag": "Condition",
@@ -11558,6 +11638,39 @@
   "Whirling Assault: main skill group 8; Charged Staff: main skill group 11.",
   "Diagnostics: a direct Pob2Engine session on the same checkout, read-only Lua after the same loads."
  ],
+ "reference_conditions": {
+  "config": {
+   "buffOnslaught": true,
+   "conditionCritInPast8Sec": true,
+   "conditionCritRecently": true,
+   "conditionEnemyBlinded": true,
+   "conditionEnemyBurning": true,
+   "conditionEnemyChilled": true,
+   "conditionEnemyDazed": true,
+   "conditionEnemyFrozen": true,
+   "conditionEnemyIntimidated": true,
+   "conditionEnemyShocked": true,
+   "conditionGainedPowerChargeRecently": true,
+   "conditionHaveEnergyShield": true,
+   "conditionNonCritRecently": true,
+   "multiplierCombo": 10,
+   "multiplierRage": 30,
+   "useEnduranceCharges": true,
+   "useFrenzyCharges": true,
+   "windDancerStacks": 3
+  },
+  "seed": {
+   "AverageBurstDamage": 4634310.7492875,
+   "AverageBurstHits": 11,
+   "AverageDamage": 421300.97720795,
+   "ManaCost": 248,
+   "PowerCharges": 5,
+   "PowerChargesMax": 5,
+   "RemovablePowerCharges": 5,
+   "Speed": 10.323,
+   "TotalDPS": 4349089.9877177
+  }
+ },
  "states": [
   {
    "name": "imported",
@@ -13277,6 +13390,248 @@
      "CritChance",
      "CombinedDPS",
      "IgniteDPS"
+    ]
+   }
+  },
+  {
+   "name": "config/default",
+   "state": {
+    "config": [
+     [
+      "overridePowerCharges",
+      5
+     ],
+     [
+      "usePowerCharges",
+      true
+     ]
+    ],
+    "main_skill": [
+     6,
+     1
+    ],
+    "stat_keys": [
+     "AverageBurstHits",
+     "AverageDamage",
+     "AverageBurstDamage",
+     "Speed",
+     "TotalDPS",
+     "ManaCost",
+     "PowerCharges",
+     "PowerChargesMax",
+     "RemovablePowerCharges",
+     "CritChance",
+     "HitChance"
+    ]
+   }
+  },
+  {
+   "name": "config/FlickerStrikeBypassCD_off",
+   "state": {
+    "config": [
+     [
+      "FlickerStrikeBypassCD",
+      false
+     ],
+     [
+      "overridePowerCharges",
+      5
+     ],
+     [
+      "usePowerCharges",
+      true
+     ]
+    ],
+    "main_skill": [
+     6,
+     1
+    ],
+    "stat_keys": [
+     "AverageBurstHits",
+     "AverageDamage",
+     "AverageBurstDamage",
+     "Speed",
+     "TotalDPS",
+     "ManaCost",
+     "PowerCharges",
+     "PowerChargesMax",
+     "RemovablePowerCharges",
+     "CritChance",
+     "HitChance"
+    ]
+   }
+  },
+  {
+   "name": "config/enemyDistance_10",
+   "state": {
+    "config": [
+     [
+      "enemyDistance",
+      10
+     ],
+     [
+      "overridePowerCharges",
+      5
+     ],
+     [
+      "usePowerCharges",
+      true
+     ]
+    ],
+    "main_skill": [
+     6,
+     1
+    ],
+    "stat_keys": [
+     "AverageBurstHits",
+     "AverageDamage",
+     "AverageBurstDamage",
+     "Speed",
+     "TotalDPS",
+     "ManaCost",
+     "PowerCharges",
+     "PowerChargesMax",
+     "RemovablePowerCharges",
+     "CritChance",
+     "HitChance"
+    ]
+   }
+  },
+  {
+   "name": "config/enemyDistance_35",
+   "state": {
+    "config": [
+     [
+      "enemyDistance",
+      35
+     ],
+     [
+      "overridePowerCharges",
+      5
+     ],
+     [
+      "usePowerCharges",
+      true
+     ]
+    ],
+    "main_skill": [
+     6,
+     1
+    ],
+    "stat_keys": [
+     "AverageBurstHits",
+     "AverageDamage",
+     "AverageBurstDamage",
+     "Speed",
+     "TotalDPS",
+     "ManaCost",
+     "PowerCharges",
+     "PowerChargesMax",
+     "RemovablePowerCharges",
+     "CritChance",
+     "HitChance"
+    ]
+   }
+  },
+  {
+   "name": "reference_conditions/seed",
+   "state": {
+    "config": [
+     [
+      "buffOnslaught",
+      true
+     ],
+     [
+      "conditionCritInPast8Sec",
+      true
+     ],
+     [
+      "conditionCritRecently",
+      true
+     ],
+     [
+      "conditionEnemyBlinded",
+      true
+     ],
+     [
+      "conditionEnemyBurning",
+      true
+     ],
+     [
+      "conditionEnemyChilled",
+      true
+     ],
+     [
+      "conditionEnemyDazed",
+      true
+     ],
+     [
+      "conditionEnemyFrozen",
+      true
+     ],
+     [
+      "conditionEnemyIntimidated",
+      true
+     ],
+     [
+      "conditionEnemyShocked",
+      true
+     ],
+     [
+      "conditionGainedPowerChargeRecently",
+      true
+     ],
+     [
+      "conditionHaveEnergyShield",
+      true
+     ],
+     [
+      "conditionNonCritRecently",
+      true
+     ],
+     [
+      "multiplierCombo",
+      10
+     ],
+     [
+      "multiplierRage",
+      30
+     ],
+     [
+      "overridePowerCharges",
+      5
+     ],
+     [
+      "useEnduranceCharges",
+      true
+     ],
+     [
+      "useFrenzyCharges",
+      true
+     ],
+     [
+      "usePowerCharges",
+      true
+     ],
+     [
+      "windDancerStacks",
+      3
+     ]
+    ],
+    "main_skill": [
+     6,
+     1
+    ],
+    "stat_keys": [
+     "AverageBurstHits",
+     "AverageDamage",
+     "AverageBurstDamage",
+     "Speed",
+     "TotalDPS",
+     "ManaCost",
+     "PowerCharges",
+     "PowerChargesMax",
+     "RemovablePowerCharges"
     ]
    }
   },

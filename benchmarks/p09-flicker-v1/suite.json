@@ -9,8 +9,8 @@
   "sources": {
     "scenarios": {
       "path": "benchmarks/p09-flicker-v1/scenarios.json",
-      "sha256": "6c4b72eb01b7d0a3028bfadc5da6c3622ad33b42c48a29e29409ba06b2ac600c",
-      "bytes": 116754
+      "sha256": "0342553d85a2aa6a95131b0424074a499ba1f3afee38f8c04c7256124ba2ffba",
+      "bytes": 121433
     },
     "references": {
       "path": "benchmarks/p09-flicker-v1/references.json",
@@ -19,8 +19,8 @@
     },
     "seed_manifest": {
       "path": "docs/evidence/P09-T01.1/seed/manifest.json",
-      "sha256": "d01e9a3d2f1ec41adf42fc80593b8b403c9b11a0125d23ab54993e1d4935a876",
-      "bytes": 7899
+      "sha256": "7ba0ec309f9c9454c28147cec8ddb744484a8749d68b922ab43da6fc31ba4866",
+      "bytes": 8867
     },
     "scope_proposal": {
       "path": "docs/evidence/P09-T01.1/scope-proposal.json",
@@ -57,7 +57,7 @@
     {
       "scenario_id": "flicker_sustained_v1",
       "version": "1",
-      "definition_hash": "248e158563a3154e392dbdef5d21346bfc10c44ccc5e58a001a44bc6c54ac35d",
+      "definition_hash": "f1d992cc851cc0430198b81f55ab420ce2d7840081e385d3ed128036323a7c58",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
@@ -95,7 +95,7 @@
       "reference_status": "unresolved"
     }
   ],
-  "suite_hash": "ab28b208ce19a0a3d94840ca7d0c9ab289b70f7636a8a760b77c874ac0927468",
+  "suite_hash": "92240e43c3b68f8bef8b64bb56e0e8103f136688cd76f0701610ed3f0b8030b5",
   "suite_hash_note": "Both reference slots are null for every scenario. Freezing a reference later changes this hash and starts a separate leaderboard.",
   "open_gaps": [
     "gap-p09-t011-encounter-selection",
@@ -110,7 +110,6 @@
     "gap-p09-t011-success-fraction",
     "gap-p09-t011-reference-result",
     "gap-p09-t011-attribution-rules",
-    "gap-p09-t011-rotation-details",
     "gap-p09-t011-charge-cycle-rules",
     "gap-p09-t011-charged-staff-shared-charges",
     "gap-p09-t011-flicker-strike-timing",
@@ -119,7 +118,6 @@
     "gap-p09-t011-config-conditions",
     "gap-p09-t011-patch-profile",
     "gap-p09-t011-variant-exports",
-    "gap-p09-t012-charged-staff-period",
     "gap-p09-t012-flicker-mana-charging",
     "gap-p09-t011-survival-threshold",
     "gap-p09-t011-initial-resources"
@@ -127,7 +125,9 @@
   "resolved_gaps": [
     "gap-p09-t011-benchmark-target",
     "gap-p09-t011-benchmark-measurement",
+    "gap-p09-t011-rotation-details",
     "gap-p09-t011-engine-checkout-state",
+    "gap-p09-t012-charged-staff-period",
     "gap-p09-t011-class-scope-decision",
     "gap-p09-t011-preparation-allowance"
   ],
