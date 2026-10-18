@@ -1,0 +1,16 @@
+{"t": 0.01, "tree_rss": 5685248, "progress": ""}
+{"t": 0.53, "tree_rss": 41033728, "progress": "collecting ... "}
+{"t": 1.05, "tree_rss": 106651648, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 1.56, "tree_rss": 190033920, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.08, "tree_rss": 212553728, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.59, "tree_rss": 213725184, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.11, "tree_rss": 214790144, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.61, "tree_rss": 283877376, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 4.12, "tree_rss": 320815104, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[magic_ring] "}
+{"t": 4.66, "tree_rss": 366936064, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[ring_shared_name_a] "}
+{"t": 5.17, "tree_rss": 414896128, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[bow_every_category] "}
+{"t": 5.69, "tree_rss": 432619520, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[magic_ring] "}
+{"t": 6.2, "tree_rss": 456359936, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_a] "}
+{"t": 6.72, "tree_rss": 487002112, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_b] "}
+{"t": 7.23, "tree_rss": 536461312, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_moves_rune_lines_ahead_of_enchant_lines "}
+{"t": 7.76, "tree_rss": 565305344, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save "}

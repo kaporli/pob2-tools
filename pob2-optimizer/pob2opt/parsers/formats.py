@@ -10,8 +10,11 @@ Signatures, checked in this order:
   A ``PathOfBuilding`` root is the Path of Exile 1 format and is
   ``unsupported_format`` here.
 * ``saved_html``: a document starting with a doctype or ``<html``.
-* ``provider_json``: a JSON object or array. No P03 provider representation
-  is approved (D02 is unresolved), so these have no parser yet.
+* ``market_capture``: a JSON object whose ``format`` is
+  ``pob2opt.market_capture``: the local listing file ``pob2opt market import``
+  reads (P05-T02). It is not a provider export; ``pob2opt parse`` refuses it.
+* ``provider_json``: any other JSON object or array. No P03 provider
+  representation is approved (D02 is unresolved), so these have no parser yet.
 * ``item_text``: PoB or game clipboard item text, starting ``Rarity:`` or
   ``Item Class:``.
 * ``pob_code``: a PoB sharing code, which decodes to ``pob_xml``.
@@ -23,6 +26,7 @@ are refused with a typed reason. Nothing is executed.
 
 from __future__ import annotations
 
+import json
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 
@@ -33,9 +37,14 @@ POB_CODE = "pob_code"
 ITEM_TEXT = "item_text"
 SAVED_HTML = "saved_html"
 PROVIDER_JSON = "provider_json"
+MARKET_CAPTURE = "market_capture"
 UNKNOWN = "unknown"
 
-FORMATS = (POB_XML, POB_CODE, ITEM_TEXT, SAVED_HTML, PROVIDER_JSON)
+FORMATS = (POB_XML, POB_CODE, ITEM_TEXT, SAVED_HTML, PROVIDER_JSON,
+           MARKET_CAPTURE)
+
+#: The ``format`` value that marks a market capture file.
+MARKET_CAPTURE_FORMAT = "pob2opt.market_capture"
 
 POB2_ROOT = "PathOfBuilding2"
 POB1_ROOT = "PathOfBuilding"
@@ -92,6 +101,8 @@ def _detect(payload: bytes) -> Detected:
             text = payload.decode("utf-8")
         except UnicodeDecodeError as error:
             return Detected(PROVIDER_JSON, True, "json_encoding", str(error))
+        if _is_market_capture(text):
+            return Detected(MARKET_CAPTURE, text=text)
         return Detected(PROVIDER_JSON, text=text)
     if head.startswith(b"Rarity:") or head.startswith(b"Item Class:"):
         try:
@@ -109,6 +120,14 @@ def _detect(payload: bytes) -> Detected:
         return Detected(POB_CODE, xml=inner.xml)
     return Detected(UNKNOWN, True, "unknown_format",
                     "no supported format signature matches these bytes")
+
+
+def _is_market_capture(text: str) -> bool:
+    try:
+        data = json.loads(text)
+    except ValueError:
+        return False
+    return isinstance(data, dict) and data.get("format") == MARKET_CAPTURE_FORMAT
 
 
 def _pob_xml(payload: bytes) -> Detected:

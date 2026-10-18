@@ -6,22 +6,25 @@ representation, and D02 has approved none (``docs/decisions/D02``). Such a
 document gets ``unsupported_format`` with the reason, and a saved guide page
 still yields its prose as unverified claims, never a build.
 
-Item text is parsed into one ``ItemInstance``. A name without stats stays a
-template claim and the parse is partial.
+Item text, in PoB's format or the game's clipboard format, is parsed into one
+``ItemInstance``. A name without stats stays a template claim and the parse
+is partial.
 """
 
 from __future__ import annotations
 
 import html.parser
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from typing import Callable
 
-from ..domain.enums import ParseResultStatus
-from ..domain.records import ParseIssue, SourceDocument
+from ..domain.enums import ParseResultStatus, RecordParseStatus
+from ..domain.records import (CoverageCount, ItemInstance, ParseIssue,
+                              SourceDocument)
 from ..evaluation.itemtext import import_item
 from ..evaluation.support import MalformedSource
 from . import formats
 from .claims import extract_claims
+from .gametext import GameTextRefused, import_game_item, is_game_text
 from .pob import (ParseContext, ParseOutcome, _Issues, _check_items,
                   _item_validation_issues, _result, parse_pob_xml, record_base,
                   refused)
@@ -57,41 +60,85 @@ def _pob(document, detected, context) -> ParseOutcome:
 
 
 def _item(document, detected, context) -> ParseOutcome:
+    read = read_item_text(detected.text or "", document, context,
+                          record_id=record_base(document, context) + "/item")
+    if read.refused is not None:
+        return refused(document, context, read.refused)
+    result = _result(document, context, read.status, read.issues,
+                     coverage=read.coverage,
+                     record_ids=[] if read.item is None else [read.item.record_id],
+                     extensions={"format": formats.ITEM_TEXT})
+    result = _with_parser(result, ITEM_PARSER_ID)
+    return ParseOutcome(result=result,
+                        items=() if read.item is None else (read.item,))
+
+
+@dataclass(frozen=True)
+class ItemTextRead:
+    """One item text read and checked. ``item`` is None unless it parsed."""
+
+    status: ParseResultStatus
+    item: ItemInstance | None = None
+    issues: tuple[ParseIssue, ...] = ()
+    coverage: tuple[CoverageCount, ...] = ()
+    #: Set when the text is refused before any item exists.
+    refused: formats.Detected | None = None
+
+
+def read_item_text(text: str, document: SourceDocument,
+                   context: ParseContext, *, record_id: str) -> ItemTextRead:
+    """PoB or game clipboard item text to one checked ItemInstance.
+
+    Shared by ``pob2opt parse`` and ``pob2opt market import``: the same
+    affix and readiness checks (P04-T03) apply to both.
+    """
     naming = context.naming
     if naming is None:
         naming = naming_from_catalog(context.entities or {}).naming
+    notes: list[ParseIssue] = []
     try:
-        item = import_item(detected.text or "", naming,
-                           record_id=record_base(document, context)
-                           + "/item",
-                           created_at=context.created_at,
-                           catalog_hash=context.catalog_hash,
-                           provenance_ids=[document.record_id],
-                           source_document_id=document.record_id)
+        if is_game_text(text):
+            game = import_game_item(
+                text, naming, record_id=record_id,
+                created_at=context.created_at,
+                catalog_hash=context.catalog_hash,
+                provenance_ids=[document.record_id],
+                source_document_id=document.record_id)
+            item = game.item
+            notes = [ParseIssue(n.code, "/items/%s" % item.item_hash,
+                                n.locator, n.explanation) for n in game.notes]
+        else:
+            item = import_item(text, naming, record_id=record_id,
+                               created_at=context.created_at,
+                               catalog_hash=context.catalog_hash,
+                               provenance_ids=[document.record_id],
+                               source_document_id=document.record_id)
     except MalformedSource as error:
-        result = _result(document, context, ParseResultStatus.INVALID,
-                         [ParseIssue("malformed_value", error.field_path,
-                                     error.field_path, str(error))],
-                         extensions={"format": formats.ITEM_TEXT})
-        return ParseOutcome(result=_with_parser(result, ITEM_PARSER_ID))
+        return ItemTextRead(ParseResultStatus.INVALID, issues=(ParseIssue(
+            "malformed_value", error.field_path, error.field_path,
+            str(error)),))
+    except GameTextRefused as error:
+        return ItemTextRead(ParseResultStatus.INVALID, refused=formats.Detected(
+            formats.ITEM_TEXT, True, error.reason, error.detail))
     except ValueError as error:
-        return refused(document, context, formats.Detected(
+        return ItemTextRead(ParseResultStatus.INVALID, refused=formats.Detected(
             formats.ITEM_TEXT, True, "malformed_item_text", str(error)))
     invalid_items = _item_validation_issues([item], document)
     if invalid_items:
-        return ParseOutcome(_with_parser(_result(
-            document, context, ParseResultStatus.INVALID, invalid_items,
-            extensions={"format": formats.ITEM_TEXT}), ITEM_PARSER_ID))
+        return ItemTextRead(ParseResultStatus.INVALID,
+                            issues=tuple(invalid_items))
     issues = _Issues()
     checked, coverage = _check_items([item], context, document, issues)
     item, _ = checked[item.item_hash]
-    status = ParseResultStatus.PARTIAL if issues.items else ParseResultStatus.COMPLETE
-    result = _result(document, context, status, issues.items,
-                     coverage=[] if coverage is None else [coverage],
-                     record_ids=[item.record_id],
-                     extensions={"format": formats.ITEM_TEXT})
-    result = _with_parser(result, ITEM_PARSER_ID)
-    return ParseOutcome(result=result, items=(item,))
+    partial = bool(issues.items) or (
+        item.parse_status is not RecordParseStatus.COMPLETE)
+    status = ParseResultStatus.PARTIAL if partial else ParseResultStatus.COMPLETE
+    # Notes were keyed by the hash before the checks; key them by the stored one.
+    for note in notes:
+        issues.add(note.code, "/items/%s" % item.item_hash, note.source_locator,
+                   note.explanation)
+    return ItemTextRead(status, item, tuple(issues.items),
+                        () if coverage is None else (coverage,))
 
 
 def _with_parser(result, parser_id: str):
@@ -160,6 +207,16 @@ def _provider_json(document, detected, context) -> ParseOutcome:
     return ParseOutcome(result=result)
 
 
+def _market_capture(document, detected, context) -> ParseOutcome:
+    issue = ParseIssue(
+        "market_capture_not_a_build", "/", document.provider,
+        "a market capture holds items and listings; import it with "
+        "`pob2opt market import`")
+    result = _result(document, context, ParseResultStatus.UNSUPPORTED_FORMAT,
+                     [issue], extensions={"format": formats.MARKET_CAPTURE})
+    return ParseOutcome(result=result)
+
+
 def _blocked_issue(document: SourceDocument, what: str) -> ParseIssue:
     return ParseIssue(
         "provider_parser_blocked", "/", document.provider,
@@ -175,4 +232,5 @@ _HANDLERS: dict[str, Callable[..., ParseOutcome]] = {
     formats.ITEM_TEXT: _item,
     formats.SAVED_HTML: _guide_page,
     formats.PROVIDER_JSON: _provider_json,
+    formats.MARKET_CAPTURE: _market_capture,
 }

@@ -1,0 +1,21 @@
+{"t": 0.02, "tree_rss": 5349376, "progress": ""}
+{"t": 0.53, "tree_rss": 42369024, "progress": "collecting ... "}
+{"t": 1.05, "tree_rss": 107507712, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 1.56, "tree_rss": 196861952, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.09, "tree_rss": 215961600, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 2.66, "tree_rss": 239984640, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.16, "tree_rss": 230604800, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 3.67, "tree_rss": 297304064, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[bow_every_category] "}
+{"t": 4.19, "tree_rss": 334643200, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[magic_ring] "}
+{"t": 4.7, "tree_rss": 383373312, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_reads_the_game_text_as_we_do[ring_shared_name_b] "}
+{"t": 5.23, "tree_rss": 412114944, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[magic_ring] "}
+{"t": 5.77, "tree_rss": 427442176, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[magic_ring] "}
+{"t": 6.36, "tree_rss": 430657536, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[magic_ring] "}
+{"t": 7.05, "tree_rss": 439898112, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_a] "}
+{"t": 7.59, "tree_rss": 457424896, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_our_record_survives_pob_load_and_save[ring_shared_name_b] "}
+{"t": 8.11, "tree_rss": 502472704, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_pob_writes_level_zero_for_an_item_without_a_requirement "}
+{"t": 8.62, "tree_rss": 551153664, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save "}
+{"t": 9.14, "tree_rss": 556941312, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save PASSED [100%]"}
+{"t": 9.67, "tree_rss": 556941312, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save PASSED [100%]"}
+{"t": 10.19, "tree_rss": 556949504, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save PASSED [100%]"}
+{"t": 10.7, "tree_rss": 556924928, "progress": "tests/engine/test_p05_t02_item_conversion.py::test_a_named_rune_survives_pob_load_and_save PASSED [100%]"}

@@ -1,0 +1,46 @@
+{
+  "format": "pob2opt.market_capture",
+  "format_version": 1,
+  "kind": "synthetic",
+  "purpose": "acceptance-examples.md example 5: L1 and L2 share a display name with different rolls; L2 and L3 have equal stats; L3 has no price; a fourth item has no listing.",
+  "not_a_claim": "Invented listings. No provider was contacted; the provider, league and listing ids are placeholders.",
+  "provider": "fixture-market",
+  "realm": "poe2",
+  "league_id": "Fixture League",
+  "observed_at": "2026-10-16T18:00:00Z",
+  "entries": [
+    {
+      "item_text": "Item Class: Rings\nRarity: Rare\nShared Name\nIron Ring\n--------\nRequires: Level 44\n--------\nItem Level: 79\n--------\nAdds 1 to 4 Physical Damage to Attacks (implicit)\n--------\nAdds 9 to 15 Cold damage to Attacks\n+21 to Dexterity\n--------\nCorrupted\n",
+      "listing": {
+        "listing_id": "L1",
+        "quantity": 1,
+        "price": {
+          "amount": "5",
+          "currency": "exalted"
+        }
+      }
+    },
+    {
+      "item_text": "Item Class: Rings\nRarity: Rare\nShared Name\nIron Ring\n--------\nRequires: Level 44\n--------\nItem Level: 79\n--------\nAdds 1 to 4 Physical Damage to Attacks (implicit)\n--------\nAdds 10 to 17 Cold damage to Attacks\n+21 to Dexterity\n--------\nCorrupted\n",
+      "listing": {
+        "listing_id": "L2",
+        "quantity": 1,
+        "price": {
+          "amount": "1000",
+          "currency": "divine"
+        }
+      }
+    },
+    {
+      "item_text": "Item Class: Rings\nRarity: Rare\nShared Name\nIron Ring\n--------\nRequires: Level 44\n--------\nItem Level: 79\n--------\nAdds 1 to 4 Physical Damage to Attacks (implicit)\n--------\nAdds 10 to 17 Cold damage to Attacks\n+21 to Dexterity\n--------\nCorrupted\n",
+      "listing": {
+        "listing_id": "L3",
+        "price": null
+      }
+    },
+    {
+      "item_text": "Item Class: Rings\nRarity: Magic\nIron Ring of the Fixture\n--------\nRequires: Level 11\n--------\nItem Level: 40\n--------\nAdds 1 to 4 Physical Damage to Attacks (implicit)\n--------\n+13 to Dexterity\n",
+      "listing": null
+    }
+  ]
+}

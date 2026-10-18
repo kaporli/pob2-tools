@@ -75,6 +75,29 @@ def _load_catalog(directory: Path):
     return catalog, profile, gaps, evidence, blobs, acquisition
 
 
+def import_catalog_bundle(store, catalog, profile, gaps, evidence, blobs,
+                          acquisition) -> bool:
+    """Put a catalog bundle's records into the corpus; False on a collision.
+
+    A catalog already in the corpus came with its bundle; its hash names its
+    content, so a later export of it adds nothing.
+    """
+    if store.has_record(catalog.record_id):
+        return True
+    try:
+        for doc in evidence:
+            store.ingest_source(blobs[doc.blob_hash], doc)
+        if acquisition is not None:
+            store.put_acquisition_result(acquisition)
+        store.import_batch([*gaps, catalog, profile])
+    except DuplicateRecord as error:
+        print("the catalog bundle collides with records already in the "
+              "corpus (%s); re-export it with this version" % error,
+              file=sys.stderr)
+        return False
+    return True
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(list(sys.argv[2:] if argv is None else argv))
     corpus = Path(args.corpus).resolve()
@@ -111,20 +134,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             print("already parsed: %s" % result_id, file=sys.stderr)
             return _exit_code(stored.status)
 
-        # A catalog already in the corpus came with its bundle; its hash
-        # names its content, so a later export of it adds nothing.
-        if not store.has_record(catalog.record_id):
-            try:
-                for doc in evidence:
-                    store.ingest_source(blobs[doc.blob_hash], doc)
-                if acquisition is not None:
-                    store.put_acquisition_result(acquisition)
-                store.import_batch([*gaps, catalog, profile])
-            except DuplicateRecord as error:
-                print("the catalog bundle collides with records already in "
-                      "the corpus (%s); re-export it with this version"
-                      % error, file=sys.stderr)
-                return EXIT_BLOCKED
+        if not import_catalog_bundle(store, catalog, profile, gaps, evidence,
+                                     blobs, acquisition):
+            return EXIT_BLOCKED
         payload = store.read_payload(document.blob_hash)
         outcome = parse_document(document, payload, context)
         store.import_batch(outcome.records)

@@ -465,6 +465,18 @@ def _check_item_instance(record):
             "position" % (category, position), "semantic")
 
 
+def _check_listing(record):
+    # A price is an amount in a named currency. An amount without one cannot
+    # be read; a currency without an amount is still an unknown price.
+    if record.price_amount is not None and record.price_currency is None:
+        yield ValidationError(
+            "price_without_currency", "/price_currency",
+            "a price amount needs its original currency", "semantic")
+    if record.price_amount is not None and record.price_amount.startswith("-"):
+        yield ValidationError("negative_price", "/price_amount",
+                              "a listed price cannot be negative", "semantic")
+
+
 def _check_build_spec(record):
     allocations = {
         "/passives/allocated": record.passives.allocated,
@@ -1005,6 +1017,7 @@ _PER_KIND = {
     "evaluation_result": _check_evaluation_result,
     "game_catalog": _check_game_catalog,
     "item_instance": _check_item_instance,
+    "listing": _check_listing,
     "mechanic_claim": _check_mechanic_claim,
     "observation": _check_observation,
     "parse_result": _check_parse_result,

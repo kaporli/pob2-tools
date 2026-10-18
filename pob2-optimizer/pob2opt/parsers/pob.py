@@ -57,7 +57,11 @@ from .resolve import (TEMPLATE_CLAIM, class_for_document_name, item_readiness,
                       naming_from_catalog, resolve_item_modifiers)
 
 PARSER_ID = "pob2opt.parsers.pob"
-PARSER_VERSION = "p04-t01.3"
+#: ``.4`` (P05-T02) reads game clipboard item text instead of misreading it
+#: as PoB item text, reads PoB's ``Rune:`` socket lines as rune names instead
+#: of modifier lines and ``{enchant}{rune}`` as one rune line, and resolves a
+#: magic item's base from its name as PoB does.
+PARSER_VERSION = "p04-t01.5"
 
 #: Elements a PoE 2 PoB document is known to contain. Others are kept in
 #: ``raw_extensions`` and named there.

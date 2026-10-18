@@ -1,0 +1,22 @@
+{
+  "run": "review-pr14-py312",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\review-pr14",
+  "plugin": false,
+  "head": "83f7a54140c8323fe3f22b2ed430636e4687b210",
+  "seed": "14",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine/test_p02_t02_1_flicker_engine.py"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 2048,
+  "peak_tree_rss": 940736512,
+  "elapsed_s": 13.9,
+  "python": "3.12.4",
+  "last_line": "Startup time: 0 ms"
+}

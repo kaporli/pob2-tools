@@ -372,6 +372,31 @@
         "tests/unit/test_p04_review_repairs.py"
       ],
       "caveat": "Retained by the PR #10 review (docs/evidence/PR-10/generated-support-source.xml), saved by the pinned PoB ce566eac45ea; line endings converted to LF. The bytes are PoB's; the build is synthetic: no played character, no recommendation and no gameplay measurement."
+    },
+    {
+      "path": "p05/game-items.json",
+      "origin": "synthetic",
+      "author": "P05-T02",
+      "description": "Game clipboard item texts: same name with different rolls, equal stats under another name, every modifier category marker, attribute requirements, a unique with flavour text, a magic item and an advanced copy that is refused.",
+      "used_by": [
+        "tests/unit/test_p05_t02_item_import.py",
+        "tests/engine/test_p05_t02_item_conversion.py"
+      ],
+      "caveat": "Hand-written in the section layout of PoB's own item parser tests. FIXTURE names and FIXTUREMOD lines are invented; other lines match rows of the P04 catalog slice. Not copied from the game or a trade site.",
+      "sha256": "bfad450b3b6142a7119f55931c3560c1319a2bb4d66ee6ea0b2a1580ca7fe30c",
+      "bytes": 3767
+    },
+    {
+      "path": "p05/capture-example5.json",
+      "origin": "synthetic",
+      "author": "P05-T02",
+      "description": "A pob2opt.market_capture file for acceptance example 5: L1/L2 same name different rolls, L2/L3 equal stats, L3 without a price, and one item without a listing.",
+      "used_by": [
+        "tests/unit/test_p05_t02_item_import.py"
+      ],
+      "caveat": "Invented listings, provider, league and listing ids. No provider was contacted.",
+      "sha256": "16850b52063d4a9713717a4e6cd6805217464d3b0bbec1c932ec0c4062724063",
+      "bytes": 2090
     }
   ]
 }

@@ -587,10 +587,20 @@ def _parse(argv):
     return parse_cli.main(argv)
 
 
+def _market(argv):
+    """`pob2opt market import` (P05-T02). Offline; refresh is P05-T04."""
+    if not argv or argv[0] != "import":
+        print("usage: pob2opt market import --input FILE --corpus DIR "
+              "--catalog DIR", file=sys.stderr)
+        return 2
+    from .market import cli as market_cli
+    return market_cli.main(argv[1:])
+
+
 #: Subcommands from docs/specs/interfaces.md. These never touch PHASES; the
 #: legacy phase pipeline keeps its own parser and its existing behavior.
 NEW_COMMANDS = {"doctor": _doctor, "catalog": _catalog, "source": _source,
-                "ingest": _ingest, "parse": _parse}
+                "ingest": _ingest, "parse": _parse, "market": _market}
 
 
 def main(argv=None):

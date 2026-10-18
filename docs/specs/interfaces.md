@@ -13,7 +13,7 @@ Implement argparse subcommands. JSON is the machine-readable output; status pros
 | `pob2opt ingest --provider NAME --input PATH_OR_URL --corpus DIR` | Acquire permitted input, preserve raw payload; return source IDs/status. | P03-T02 |
 | `pob2opt parse --source ID --corpus DIR` | Create canonical records and ParseResult from stored bytes. No network needed. | P04-T01 |
 | `pob2opt catalog export --profile FILE --out DIR` | Export pinned PoB entities and compatibility evidence. | P02-T02 |
-| `pob2opt market import --input FILE --corpus DIR` | Import item/listing records, preserving original currency and observed status. | P05-T02 |
+| `pob2opt market import --input FILE --corpus DIR` | Import item/listing records, preserving original currency and observed status. Implemented with `--catalog DIR` (as `parse`); input is PoB or game item text, or a `pob2opt.market_capture` v1 file (`pob2opt/market/capture.py`). Provider exports are refused while D01 approves none. | P05-T02 |
 | `pob2opt market refresh --snapshot ID --corpus DIR` | Use approved provider; otherwise return `unsupported_access`. | P05-T04 |
 | `pob2opt prepare --request FILE --out DIR` | Resolve patch, league, catalog, corpus and item snapshots; write immutable manifest and gaps. Does not start search. | P08-T01 |
 | `pob2opt evaluate --build FILE --manifest FILE --out DIR` | Validate and evaluate exact build/rotations over the pinned suite. | P07-T05 |

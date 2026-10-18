@@ -1,0 +1,50 @@
+{
+  "pr": 15,
+  "observations": {
+    "2026-02-30T18:00:00Z": {
+      "status": "complete",
+      "observed_at": [
+        "2026-02-30T18:00:00Z",
+        "2026-02-30T18:00:00Z",
+        "2026-02-30T18:00:00Z"
+      ],
+      "validation": [
+        true,
+        true,
+        true
+      ]
+    },
+    "2026-13-16T25:00:00Z": {
+      "status": "complete",
+      "observed_at": [
+        "2026-13-16T25:00:00Z",
+        "2026-13-16T25:00:00Z",
+        "2026-13-16T25:00:00Z"
+      ],
+      "validation": [
+        true,
+        true,
+        true
+      ]
+    },
+    "unterminated_reminder": {
+      "status": "complete",
+      "item_status": "complete",
+      "modifiers": [
+        "Adds 1 to 4 Physical Damage to Attacks",
+        "Adds 9 to 15 Cold damage to Attacks"
+      ],
+      "issues": [],
+      "export_completeness": "complete"
+    },
+    "unidentified": {
+      "status": "complete",
+      "item_status": "complete",
+      "modifiers": [
+        "Adds 1 to 4 Physical Damage to Attacks"
+      ],
+      "issues": [],
+      "export_completeness": "incomplete"
+    }
+  }
+}

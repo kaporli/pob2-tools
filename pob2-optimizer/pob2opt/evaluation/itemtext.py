@@ -79,6 +79,7 @@ SUPPORT = {
         "modifier line flags disabled/mutated/unscalable",
         "item variants and the selected variant",
         "the item flags corrupted, double_corrupted, mirrored, sanctified",
+        "PoB's per-socket rune names (properties['runes'])",
     ),
     "not_representable": (
         "ModifierCategory.unknown: PoB has no marker for it",
@@ -218,6 +219,7 @@ def export_item(item: ItemInstance, naming: CatalogNaming,
         lines.append(base_line if base_line is not None else item.display_name)
 
     properties = dict(item.properties)
+    runes = properties.pop("runes", None)
     variants = properties.pop("variants", None)
     selected_variant = properties.pop("selected_variant", None)
     if item.item_level is not None:
@@ -239,6 +241,8 @@ def export_item(item: ItemInstance, naming: CatalogNaming,
 
     socket_lines = _socket_lines(item, losses)
     lines.extend(socket_lines)
+    for name in runes or ():
+        lines.append("Rune: " + str(name))
 
     requirements = dict(item.requirements)
     if "level" in requirements:
@@ -351,6 +355,7 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
     sockets: list[Socket] = []
     flags: dict[str, bool] = {}
     variants: list[str] = []
+    runes: list[str] = []
     selected_variant: int | None = None
     implicit_count = 0
     modifier_lines: list[str] = []
@@ -361,7 +366,7 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
 
     known_labels = (
         {"Item Level", "LevelReq", "Sockets", "Implicits", "Variant",
-         "Selected Variant"}
+         "Selected Variant", "Rune"}
         | set(numeric_by_label) | set(text_by_label))
 
     for line in lines[index:]:
@@ -386,6 +391,8 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
             implicit_count = source_int(value, "/text/Implicits", minimum=0)
         elif label == "Variant":
             variants.append(value)
+        elif label == "Rune":
+            runes.append(value)
         elif label == "Selected Variant":
             selected_variant = source_int(value, "/text/Selected Variant", minimum=1)
         elif label in numeric_by_label:
@@ -393,6 +400,11 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
         else:
             properties[text_by_label[label]] = value
 
+    # PoB writes one ``Rune:`` line per socket, ``None`` for an empty one.
+    # The rune's effect is in the ``{rune}`` modifier lines; the names are kept
+    # only when a socket names a rune, so an all-empty list adds nothing.
+    if any(name != "None" for name in runes):
+        properties["runes"] = runes
     if variants:
         properties["variants"] = variants
         if selected_variant is not None:
@@ -402,6 +414,9 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
     for position, raw in enumerate(modifier_lines):
         line_flags, variant_ids, body = _split_marker(raw)
         if line_flags.pop("rune", False):
+            # PoB writes a rune line as ``{enchant}{rune}``: rune implies
+            # enchant there, so the enchant marker is not a separate flag.
+            line_flags.pop("enchant", None)
             category = ModifierCategory.RUNE
         elif line_flags.pop("enchant", False):
             category = ModifierCategory.ENCHANT
@@ -423,12 +438,8 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
             native_id=None, resolved_effect_ids=[], values=[],
             flags=mod_flags, parse_status=ModifierParseStatus.RESOLVED))
 
-    base_id: str | None = None
-    if base_name is not None:
-        try:
-            base_id = naming.reverse("base_names", base_name)
-        except UnresolvedName:
-            base_id = None
+    base_id = None if base_name is None else base_id_for_name(
+        base_name, rarity, naming)
 
     item = ItemInstance(
         schema_version=1, record_id=record_id, created_at=created_at,
@@ -440,6 +451,28 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
         source_document_id=source_document_id,
         parse_status=RecordParseStatus.COMPLETE)
     return _replace_hash(item, _item_hash(item))
+
+
+def base_id_for_name(name: str, rarity: str,
+                     naming: CatalogNaming) -> str | None:
+    """The base for an item's base line, or None.
+
+    A normal or magic item has no separate base line: its name carries the
+    base, with a magic item's affixes around it. As PoB does, the longest
+    base name inside it is taken; two bases of that length are ambiguous and
+    resolve to nothing.
+    """
+    if name in naming.base_names.values():
+        return naming.reverse("base_names", name)
+    if rarity not in ("normal", "magic"):
+        return None
+    found = [(len(base), key) for key, base in naming.base_names.items()
+             if base and base in name]
+    if not found:
+        return None
+    longest = max(length for length, _ in found)
+    keys = sorted({key for length, key in found if length == longest})
+    return keys[0] if len(keys) == 1 else None
 
 
 def _replace_hash(item: ItemInstance, value: str) -> ItemInstance:
