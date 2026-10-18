@@ -36,12 +36,15 @@ working tree therefore did not change these numbers;
 
 ## Rule status
 
-Resolved (12): extra strikes, no charge gain during Flicker Strike, Perpetual
+Resolved (14): extra strikes, no charge gain during Flicker Strike, Perpetual
 Charge per charge, Surpassing distribution, Combo cap and decay, Whirling
 Assault use, Charged Staff use, Pounce mark off, persistent buffs, PoB
 default states, Flicker Strike's "Bypass CD?" default (no effect on the pin),
 Charged Staff period (owner Q10 and decision 2: pressed when the 37.5 s buff
-expires).
+expires), Flicker Strike mana once per use (PoB's ManaCost is an upfront
+per-use cost; its ManaPerSecondCost multiplies by the strike rate and is not
+used), mana sustain (pool, regeneration and the seed's mana flask from PoB;
+Mageblood grants Mage's Legacy stat bonuses only and leaves flasks unchanged).
 
 Conditional (5): strike timing, Charged Staff buff ownership, 'consumed a
 Power Charge Recently', enemy distance (PoB placeholder 2 m; 1 m gives +10.5%,
@@ -49,29 +52,31 @@ Power Charge Recently', enemy distance (PoB placeholder 2 m; 1 m gives +10.5%,
 Adept and Martial Master unparsed; the imported gloves are already Fists of
 Stone).
 
-Blocking (5): Flicker Strike mana per use or per strike, Combo per strike,
-Whirling Assault's own Combo, Hit and Run reuse, mana sustain. Under
-`pob-community-v2` the Combo, Surpassing, Perpetual Charge, buff ownership,
-'recently' and Hit and Run rules are waived by the owner's decision; mana and
-attribution still apply. Each rule names its P06 registry mechanic, and
-`p06_ledger_resolutions` holds resolved rules in the
+Blocking (3): Combo per strike, Whirling Assault's own Combo, Hit and Run
+reuse. Under `pob-community-v2` these and the Surpassing, Perpetual Charge,
+buff ownership and 'recently' rules are waived by the owner's decision;
+mana and attribution still apply. Each rule names its P06 registry mechanic,
+and `p06_ledger_resolutions` holds resolved rules in the
 `pob2opt.coverage.CoverageLedger.resolve` shape (only the engine-checkout one
 is ready to close a gap).
 
 ## pob-community-v2 values (owner's method, not a supported score)
 
-| Document | Sustained | Burst [0, 5) | PoB TotalDPS | PoB per use |
-|---|---|---|---|---|
-| Seed as imported | 572,246 | 299,711 | 1,270,761 | 1,498,554 |
-| Pounce off | 461,488 | 241,702 | 1,024,807 | 1,208,512 |
+| Document | Sustained (waits for mana) | Burst [0, 5) | Without waiting (not attainable) | PoB TotalDPS | PoB per use |
+|---|---|---|---|---|---|
+| Seed as imported | 285,023 | 299,711 | 572,246 | 1,270,761 | 1,498,554 |
+| Pounce off | 229,857 | 241,702 | 461,488 | 1,024,807 | 1,208,512 |
 
-The rotation spends 64.8 s on Whirling Assault, 0.95 s on Charged Staff (3
-presses) and 54.3 s on 46 Flicker Strike uses. Applying the community
-reference's condition inputs (Onslaught, Rage 30, enemy shocked, chilled,
-frozen and others) to the seed raises PoB's per-use value to 4,634,311; those
-are reported, not adopted. The schedule needs 19,540 mana in 120 s against an
-887 pool and 5,748 regenerated; without a flask the first unaffordable action
-is at 7.9 s. That is why `sustain-cycle` still blocks a supported score.
+Mana decides the value. The seed's one mana flask (356.5 per use, 10 of 75
+charges, 0.25 charges per second, charges full at t = 0) is used 10 times.
+With waiting, the window holds 34.7 s of Whirling Assault, 0.95 s of Charged
+Staff (3 presses), 27.1 s of Flicker Strike (23 uses) and 57.2 s waiting for
+mana. Without waiting the same rotation runs 9,393 mana short (first
+unaffordable action at 22.7 s). Applying the community reference's condition
+inputs (Onslaught, Rage 30, enemy shocked, chilled, frozen and others) to the
+seed raises PoB's per-use value to 4,634,311; those are reported, not
+adopted. Still blocking a supported score: attribution (proposed table, not
+accepted) and config conditions (Pounce's mark in the owner's PoB).
 
 The Combo rules conflict with the owner's "whirling assault to get 5 power
 charges": at most 10 Combo gives 2 or 3 charges per Whirling Assault use, so
@@ -95,6 +100,6 @@ teleport counts as Hit and Run movement.
 
 | Command | Result |
 |---|---|
-| `python -m pytest tests/unit tests/integration -q` | 1708 passed, 1 xfailed |
+| `python -m pytest tests/unit tests/integration -q` | 1709 passed, 1 xfailed |
 | `python -m pytest tests/engine/test_p09_t01_2_seed_replay_engine.py tests/engine/test_p02_t02_1_flicker_engine.py -q` (clean pin) | 8 passed |
 | `python scripts/generate_schemas.py --check` | 21 schema files match |

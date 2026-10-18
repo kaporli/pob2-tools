@@ -183,6 +183,36 @@
    "line": 1639,
    "text": "{ var = \"enemyDistance\", type = \"count\", label = \"Distance to enemy:\", tooltip = \"10 units equals 1 metre"
   },
+  "pob/mana-cost-upfront": {
+   "path": "src/Modules/CalcOffence.lua",
+   "file_sha256": "009e67d06172c206d4e6d83abf0119dc8838dd25dc5f7af16cf93a5d228a7d7e",
+   "line": 2197,
+   "text": "[\"Mana\"] = { type = \"Mana\", upfront = true, percent = false, text = \"mana\", baseCost = 0, baseCostRaw = 0, totalCost = 0, baseCostNoMult = 0, finalBaseCost = 0 },"
+  },
+  "pob/mana-cost-output": {
+   "path": "src/Modules/CalcOffence.lua",
+   "file_sha256": "009e67d06172c206d4e6d83abf0119dc8838dd25dc5f7af16cf93a5d228a7d7e",
+   "line": 2305,
+   "text": "local costName = resource..\"Cost\""
+  },
+  "pob/mana-per-second-cost": {
+   "path": "src/Modules/CalcOffence.lua",
+   "file_sha256": "009e67d06172c206d4e6d83abf0119dc8838dd25dc5f7af16cf93a5d228a7d7e",
+   "line": 6217,
+   "text": "output[usedResource..\"PerSecondCost\"] = (output[usedResource..\"PerSecondCost\"] or 0)+ output[resource..\"Cost\"] * useSpeed"
+  },
+  "pob/mageblood-legacies": {
+   "path": "src/Modules/CalcPerform.lua",
+   "file_sha256": "e4ef1bee4d42c34567db6771495c247a01b443321adba0397be88476ce1d9993",
+   "line": 1551,
+   "text": "if modDB:Flag(nil, \"MagebloodEquipped\") then"
+  },
+  "pob/mageblood-parse": {
+   "path": "src/Modules/ModParser.lua",
+   "file_sha256": "edf21aa4165391a396a50d56deb77d68bee3d0601a75947ec3dbfeaab7d70e7a",
+   "line": 5634,
+   "text": "[\"legacy of (%w+)\"] = function (_, flask) return {"
+  },
   "pob/ultimate-mana-flask": {
    "path": "src/Data/Bases/flask.lua",
    "file_sha256": "c5d40d1fac4eca7fe87619b60d8a3829d0a2e9a5aba8a80849a7bf6afa7fc5c1",
@@ -255,22 +285,18 @@
   },
   {
    "rule_id": "flicker-mana-charging",
-   "status": "blocking",
-   "gap_id": "gap-p09-t012-flicker-mana-charging",
+   "status": "resolved",
    "question": "Is Flicker Strike's mana cost paid once per use or once per strike?",
-   "rule": "Unresolved. The skill text describes one use with additional strikes, which reads as one payment; PoB's ManaPerSecondCost multiplies the per-use cost by the strike rate, which reads as one payment per strike.",
-   "alternatives": [
-    {
-     "variant": "per_use",
-     "mana_per_use": 248
-    },
-    {
-     "variant": "per_strike",
-     "mana_per_use": "248 x H(c)"
-    }
-   ],
+   "rule": "Once per use, by the owner's community-PoB method: PoB's ManaCost is the upfront cost of one skill use (pob/mana-cost-upfront, pob/mana-cost-output), and the skill text describes one use with additional strikes. PoB's ManaPerSecondCost multiplies that cost by the attack speed (pob/mana-per-second-cost), which for Flicker Strike is the strike rate, so it is not used. Not verified in game.",
+   "parameters": {
+    "mana_per_use": 248
+   },
    "evidence": [
+    "pob/mana-cost-upfront",
+    "pob/mana-cost-output",
+    "pob/mana-per-second-cost",
     "pob/flicker-description",
+    "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
     "docs/evidence/P09-T01.2/replay.json#/flicker_seed/0/ManaCost"
    ],
    "p06_mechanic_ids": [
@@ -582,10 +608,9 @@
   },
   {
    "rule_id": "mana-sustain",
-   "status": "blocking",
-   "gap_id": "gap-p09-t011-sustain-cycle",
+   "status": "resolved",
    "question": "Mana available over the 120 s window.",
-   "rule": "Pool, regeneration and the mana flask are now known from PoB; the flask policy is not. On a single non-dying target no kill-based flask charges or mana on kill apply.",
+   "rule": "Pool and regeneration from PoB; the seed's one mana flask (Flask 2) from PoB flaskData: its recovery per use, instant part, duration, charges per use, maximum and 0.25 charges per second; no kill charges or mana on kill on one non-dying target. Mageblood in the pinned PoB grants Mage's Legacy stat bonuses (here Jade x2, Silver, Diamond) and does not make flasks permanent or change their charges (pob/mageblood-parse, pob/mageblood-legacies). Protocol choices for review: flask charges full at t = 0, the flask used whenever its recovery fits or a cost is unaffordable, never overlapping, no action time. The evaluation waits for mana before an unaffordable action; that waiting counts inside the window.",
    "parameters": {
     "mana_max": 887,
     "mana_regen_per_s": 47.9,
@@ -596,17 +621,16 @@
     "flask_charges_max": 75,
     "flask_charges_per_s": 0.25
    },
-   "open": [
-    "Flask charges at t = 0 (the initial-state proposal fixes energy shield and mana, not flask charges).",
-    "When the flask is used (owner Q6: on bosses) and whether a use is a timed action.",
-    "Per-use or per-strike Flicker Strike mana (gap-p09-t012-flicker-mana-charging)."
-   ],
-   "implication": "At 5 charges one Whirling Assault plus one Flicker Strike costs 408 mana per cycle (per-use charging) against 47.9 mana per second of regeneration; the pool and flask cover only part of 120 s, so a supported score must include waiting for mana.",
+   "implication": "At 5 charges one Whirling Assault plus one Flicker Strike costs 408 mana per cycle against 47.9 mana per second of regeneration plus the flask; the rotation cannot run back to back and the evaluation waits for mana.",
    "evidence": [
     "pob/ultimate-mana-flask",
+    "pob/mageblood-parse",
+    "pob/mageblood-legacies",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/flasks",
+    "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/flask_mods",
     "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/outputs",
-    "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+    "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers",
+    "docs/evidence/P09-T01.2/community-cycle.json"
    ],
    "p06_mechanic_ids": [
     "resource/mana-sustain",
@@ -885,9 +909,9 @@
   }
  ],
  "status_counts": {
-  "resolved": 12,
+  "resolved": 14,
   "conditional": 5,
-  "blocking": 5
+  "blocking": 3
  },
  "attribution": {
   "status": "proposed; needs reviewer acceptance (gap-p09-t011-attribution-rules stays open)",

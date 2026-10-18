@@ -1755,11 +1755,13 @@
               "8. Whirling Assault's own damage and every other skill's damage are reported separately and never enter the score (D07 item 3)."
             ],
             "community_method_difference": "The community reference (poe.ninja 25c49) reads AverageBurstDamage at forced charges (7, above its maximum of 6) with forced Combo, Rage, Onslaught and enemy conditions: burst per use, no charge generation time. pob-cycle-v1 uses the same PoB outputs but only charges the rotation generates, and divides by elapsed time including each Whirling Assault use. PoB TotalDPS (AverageDamage x Speed) also ignores charge generation time.",
-            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-sustain-cycle, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules, gap-p09-t012-flicker-mana-charging.",
+            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules.",
             "resolved_prerequisites": [
               "gap-p09-t011-engine-checkout-state",
               "gap-p09-t011-rotation-details",
-              "gap-p09-t012-charged-staff-period"
+              "gap-p09-t011-sustain-cycle",
+              "gap-p09-t012-charged-staff-period",
+              "gap-p09-t012-flicker-mana-charging"
             ],
             "rule_table": "docs/evidence/P09-T01.2/mechanics-rules.json"
           },
@@ -1828,16 +1830,12 @@
               }
             ],
             "still_blocking_a_supported_score": [
-              "gap-p09-t011-sustain-cycle",
-              "gap-p09-t012-flicker-mana-charging",
               "gap-p09-t011-attribution-rules",
               "gap-p09-t011-config-conditions"
             ],
             "computation": "docs/evidence/P09-T01.2/community-cycle.json"
           },
           "gap_ids": [
-            "gap-p09-t011-sustain-cycle",
-            "gap-p09-t012-flicker-mana-charging",
             "gap-p09-t011-attribution-rules",
             "gap-p09-t011-config-conditions"
           ]
@@ -2739,11 +2737,15 @@
       "severity": "blocking",
       "explanation": "D07 item 6 needs resource depletion and whether the cycle repeats. PoB: Flicker Strike 248 mana per use, Whirling Assault 160, 887 maximum mana, 47.9 mana regeneration per second. Owner Q6: mana flask used on bosses; mana on kill does nothing there. Flask recovery and charge gain are not in the method yet.",
       "needed_evidence": "PoB's mana flask recovery and charge gain for the seed's flask, or a reviewer rule for flask use in the 120 s window.",
-      "collection_method": "P09-T01.2 captured the mana flask from PoB (356.5 mana per use, 10 of 75 charges, 0.25 charges per second, no kill charges on the benchmark). Still open: flask charges at t = 0, when the flask is used, and per-use versus per-strike Flicker Strike mana (gap-p09-t012-flicker-mana-charging); reviewer rule.",
+      "collection_method": "P09-T01.2 captured the mana flask from PoB (356.5 mana per use, 10 of 75 charges, 0.25 charges per second, no kill charges on the benchmark). Still open: flask charges at t = 0, when the flask is used, and per-use versus per-strike Flicker Strike mana (gap-p09-t012-flicker-mana-charging); reviewer rule. Then resolved: Mageblood in the pinned PoB grants Mage's Legacy stat bonuses only and leaves flasks unchanged; the seed's one mana flask is modelled from PoB flaskData; the timeline waits for mana inside the window (docs/evidence/P09-T01.2/community-cycle.json, docs/evidence/P09-T01.2/mechanics-rules.json mana-sustain). Flask charges full at t = 0 and the flask use policy are protocol choices for review.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
-      "status": "open",
-      "resolution_evidence_ids": []
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/evidence/P09-T01.2/mechanics-rules.json",
+        "docs/evidence/P09-T01.2/community-cycle.json",
+        "docs/evidence/P09-T01.2/replay.json"
+      ]
     },
     {
       "schema_version": 1,
@@ -2913,11 +2915,14 @@
       "severity": "blocking",
       "explanation": "Flicker Strike costs 248 mana in PoB. Its text describes one use with additional teleporting strikes (one payment), while PoB's ManaPerSecondCost multiplies the cost by the strike rate (one payment per strike). At 5 charges the two differ elevenfold.",
       "needed_evidence": "An official statement, a pinned engine rule, or a recording of the mana globe across Flicker Strike uses at known charges.",
-      "collection_method": "Engine or official lookup; optional owner recording read frame by frame.",
+      "collection_method": "Engine or official lookup; optional owner recording read frame by frame. Resolved by the owner's community-PoB method (D07 amendment 2): PoB's ManaCost is the upfront cost of one use, paid once per use (docs/evidence/P09-T01.2/mechanics-rules.json flicker-mana-charging).",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
-      "status": "open",
-      "resolution_evidence_ids": []
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2",
+        "docs/evidence/P09-T01.2/mechanics-rules.json"
+      ]
     },
     {
       "schema_version": 1,

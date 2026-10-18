@@ -305,6 +305,21 @@ def test_waivers_cite_the_decision_and_blockers_stay_open(community, rules, gaps
     assert "gap-p09-t011-hit-and-run-movement" in waived
     for row in community["still_blocking_a_supported_score"]:
         assert gaps[row["gap_id"]]["status"] == "open"
-    assert community["primary"]["mana"]["first_unaffordable_action_s"] is not None
+    assert community["unsustained_schedule"]["seed"]["mana"]["first_unaffordable_action_s"] is not None
     assert _rule(rules, "hit-and-run-reuse")["pob_community_v2"] == "waived"
     assert _rule(rules, "mana-sustain")["pob_community_v2"] == "applies"
+
+
+def test_mana_is_modelled_with_the_seed_flask_and_waiting_counts(community, replay, gaps):
+    flask = replay["diagnostics"]["imported"]["flasks"]["Flask 2"]["flaskData"]
+    for run in (community["primary"], community["pounce_off"]):
+        mana = run["mana"]
+        assert mana["lowest_balance"] >= -1e-9 and mana["first_unaffordable_action_s"] is None
+        possible = (flask["chargesMax"] + flask["gainBase"] * 120.0) // flask["chargesUsed"]
+        assert mana["flask_uses"] <= possible
+        assert mana["flask_mana_recovered"] <= mana["flask_uses"] * flask["manaTotal"] + 1e-6
+        assert run["time_in_window_s"]["wait for mana"] == pytest.approx(mana["waited_s"], abs=0.02)
+    nowait = community["unsustained_schedule"]["seed"]
+    assert nowait["flicker_sustained_dps"] > community["primary"]["flicker_sustained_dps"]
+    for gid in ("gap-p09-t011-sustain-cycle", "gap-p09-t012-flicker-mana-charging"):
+        assert gaps[gid]["status"] == "resolved" and gaps[gid]["resolution_evidence_ids"]

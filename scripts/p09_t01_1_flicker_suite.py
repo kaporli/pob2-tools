@@ -734,7 +734,14 @@ def build_gaps():
              "10 of 75 charges, 0.25 charges per second, no kill charges on "
              "the benchmark). Still open: flask charges at t = 0, when the "
              "flask is used, and per-use versus per-strike Flicker Strike "
-             "mana (gap-p09-t012-flicker-mana-charging); reviewer rule."),
+             "mana (gap-p09-t012-flicker-mana-charging); reviewer rule. "
+             "Then resolved: Mageblood in the pinned PoB grants Mage's Legacy "
+             "stat bonuses only and leaves flasks unchanged; the seed's one "
+             "mana flask is modelled from PoB flaskData; the timeline waits "
+             "for mana inside the window (" + COMMUNITY_REF + ", " + RULES_REF
+             + " mana-sustain). Flask charges full at t = 0 and the flask use "
+             "policy are protocol choices for review.",
+             resolved_by=[RULES_REF, COMMUNITY_REF, REPLAY_REF]),
         _gap("gap-p09-t011-config-conditions", UR, B, [DPS_ID],
              ["/target_entities/0/conditions", "/initial_state"],
              "D07 forbids free maximum-state toggles. The seed's imported PoB "
@@ -809,8 +816,11 @@ def build_gaps():
              "An official statement, a pinned engine rule, or a recording of "
              "the mana globe across Flicker Strike uses at known charges.",
              "Engine or official lookup; optional owner recording read frame "
-             "by frame.",
-             ["skill/FlickerStrikePlayer"]),
+             "by frame. Resolved by the owner's community-PoB method (D07 "
+             "amendment 2): PoB's ManaCost is the upfront cost of one use, "
+             "paid once per use (" + RULES_REF + " flicker-mana-charging).",
+             ["skill/FlickerStrikePlayer"],
+             resolved_by=[D07_AMENDMENT_2, RULES_REF]),
         _gap("gap-p09-t011-class-scope-decision", MI, B, ["scope-proposal"],
              ["/ascendancies/*/in_approved_scope", "/variants"],
              "The class list and variants were proposals; D07 makes scope the "
@@ -1015,7 +1025,9 @@ POB_CYCLE_REQUIRED_GAPS = (
 #: Prerequisites closed with evidence. They stay in required_gap_ids.
 RESOLVED_PREREQUISITES = frozenset({"gap-p09-t011-engine-checkout-state",
                                     "gap-p09-t011-rotation-details",
-                                    "gap-p09-t012-charged-staff-period"})
+                                    "gap-p09-t012-charged-staff-period",
+                                    "gap-p09-t011-sustain-cycle",
+                                    "gap-p09-t012-flicker-mana-charging"})
 
 #: pob-community-v2 (D07 amendment 2): what the owner's method waives, and
 #: what still stands between its value and a supported score.
@@ -1025,8 +1037,6 @@ COMMUNITY_WAIVED = (
     ("gap-p09-t011-hit-and-run-movement", "Hit and Run as PoB applies it; owner's method, not a verified mechanic"),
 )
 COMMUNITY_STILL_BLOCKING = (
-    "gap-p09-t011-sustain-cycle",
-    "gap-p09-t012-flicker-mana-charging",
     "gap-p09-t011-attribution-rules",
     "gap-p09-t011-config-conditions",
 )

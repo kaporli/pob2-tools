@@ -77,79 +77,139 @@ def inputs(replay: dict, variant: str) -> dict:
     }
 
 
-def timeline(v: dict) -> tuple[list[dict], list[dict]]:
-    """Actions and Flicker Strike strikes in [0, WINDOW_S)."""
+class Mana:
+    """Mana pool with continuous regeneration and the seed's mana flask.
+
+    Flask (PoB flaskData of Flask 2): manaTotal per use, instantPerc of it at
+    once and the rest evenly over duration; chargesUsed per use from
+    chargesMax; gainBase charges per second. No kill charges on the
+    benchmark. Policy (protocol choice): start with full charges; never use
+    the flask while one is still recovering; use it when its whole recovery
+    fits under the pool or the next cost is unaffordable. A flask use takes no
+    action time. In the pinned PoB, Mageblood grants Mage's Legacy stat
+    bonuses only and changes no flask duration, charge or recovery.
+    """
+
+    def __init__(self, pool, regen, flask, use_flask):
+        self.pool, self.regen, self.f = pool, regen, flask
+        self.mana, self.t = pool, 0.0
+        self.use_flask = use_flask
+        self.charges = flask["chargesMax"] if use_flask else 0
+        self.flask_until, self.flask_rate = 0.0, 0.0
+        self.spent = self.flask_mana = self.waited = 0.0
+        self.flask_uses = 0
+        self.lowest = pool
+
+    def advance(self, to):
+        while self.t < to - 1e-12:
+            step = min(to - self.t, 0.01)
+            gain = self.regen * step
+            if self.t < self.flask_until:
+                from_flask = self.flask_rate * min(step, self.flask_until - self.t)
+                gain += from_flask
+                self.flask_mana += from_flask
+            self.mana = min(self.pool, self.mana + gain)
+            if self.use_flask:
+                self.charges = min(self.f["chargesMax"], self.charges + self.f["gainBase"] * step)
+            self.t += step
+
+    def maybe_flask(self, cost):
+        f = self.f
+        if not self.use_flask or self.t < self.flask_until or self.charges < f["chargesUsed"]:
+            return
+        if self.mana + f["manaTotal"] <= self.pool or self.mana < cost:
+            self.charges -= f["chargesUsed"]
+            instant = f["manaTotal"] * f["instantPerc"] / 100
+            self.mana = min(self.pool, self.mana + instant)
+            self.flask_mana += instant
+            self.flask_rate = (f["manaTotal"] - instant) / f["duration"]
+            self.flask_until = self.t + f["duration"]
+            self.flask_uses += 1
+
+    def pay(self, cost, wait):
+        """Pay cost now, or first wait for it when wait is set; returns seconds waited."""
+        self.maybe_flask(cost)
+        start = self.t
+        while wait and self.mana < cost and self.t < WINDOW_S:
+            self.advance(self.t + 0.01)
+            self.maybe_flask(cost)
+        self.waited += self.t - start
+        self.mana -= cost
+        self.spent += cost
+        self.lowest = min(self.lowest, self.mana)
+        return self.t - start
+
+
+def timeline(v: dict, mana: Mana, wait: bool):
+    """Actions, waits and Flicker Strike strikes in [0, WINDOW_S)."""
     actions: list[dict] = []
     strikes: list[dict] = []
-    t = 0.0
     buff_end = None  # no buff before the first Charged Staff press
+    first_short = None
 
-    def act(name, duration, **extra):
-        nonlocal t
-        actions.append({"action": name, "start_s": t, "end_s": t + duration, **extra})
-        t += duration
+    def act(name, duration, cost, **extra):
+        nonlocal first_short
+        before = mana.t
+        if mana.pay(cost, wait):
+            actions.append({"action": "wait for mana", "start_s": before, "end_s": mana.t, "mana": 0})
+        if mana.mana < 0 and first_short is None:
+            first_short = mana.t
+        start = mana.t
+        actions.append({"action": name, "start_s": start, "end_s": start + duration, "mana": cost, **extra})
+        mana.advance(start + duration)
+        return start
 
-    while t < WINDOW_S:
-        if buff_end is None or buff_end <= t:
-            act("Whirling Assault", v["t_WA_s"], mana=v["mana_WA"], purpose="charges for Charged Staff (assumed)")
-            if t >= WINDOW_S:
+    while mana.t < WINDOW_S:
+        if buff_end is None or buff_end <= mana.t:
+            act("Whirling Assault", v["t_WA_s"], v["mana_WA"], purpose="charges for Charged Staff (assumed)")
+            if mana.t >= WINDOW_S:
                 break
-            act("Charged Staff", v["t_CS_s"], mana=v["mana_CS"], charges_consumed=CHARGES)
-            buff_end = t + v["buff_duration_s"]
+            act("Charged Staff", v["t_CS_s"], v["mana_CS"], charges_consumed=CHARGES)
+            buff_end = mana.t + v["buff_duration_s"]
             actions[-1]["buff_until_s"] = buff_end
-            if t >= WINDOW_S:
+            if mana.t >= WINDOW_S:
                 break
-        act("Whirling Assault", v["t_WA_s"], mana=v["mana_WA"], purpose="charges for Flicker Strike (assumed)")
-        if t >= WINDOW_S:
+        act("Whirling Assault", v["t_WA_s"], v["mana_WA"], purpose="charges for Flicker Strike (assumed)")
+        if mana.t >= WINDOW_S:
             break
-        start = t
         step = 1 / v["strike_rate_per_s"]
         use = len([a for a in actions if a["action"] == "Flicker Strike"]) + 1
+        start = act("Flicker Strike", v["strikes_per_flicker"] * step, v["mana_F"],
+                    charges_consumed=CHARGES, strikes=v["strikes_per_flicker"])
         for k in range(1, v["strikes_per_flicker"] + 1):
             end = start + k * step
             buffed = buff_end is not None and end <= buff_end
             strikes.append({"use": use, "strike": k, "end_s": end, "buffed": buffed,
                             "damage": v["per_strike_buffed"] if buffed else v["per_strike_unbuffed"]})
-        act("Flicker Strike", v["strikes_per_flicker"] * step, mana=v["mana_F"],
-            charges_consumed=CHARGES, strikes=v["strikes_per_flicker"])
-    return actions, strikes
+    ledger = {"pool": mana.pool, "regen_per_s": mana.regen, "spent_in_window": mana.spent,
+              "flask_uses": mana.flask_uses, "flask_mana_recovered": mana.flask_mana,
+              "waited_s": mana.waited, "lowest_balance": mana.lowest,
+              "first_unaffordable_action_s": first_short,
+              "flask": {k: mana.f[k] for k in ("manaTotal", "instantPerc", "duration", "chargesUsed",
+                                              "chargesMax", "gainBase")},
+              "assumptions": "Flicker Strike mana paid once per use (PoB ManaCost, an upfront per-use cost); "
+                             "flask policy as in Mana; %s." % (
+                                 "waits for mana before an unaffordable action" if wait
+                                 else "no waiting: the schedule as written, to show its deficit")}
+    return actions, strikes, ledger
 
 
-def mana_ledger(actions: list[dict], pool: float, regen: float) -> dict:
-    """Mana with continuous regeneration and costs paid at action start, no
-    flask and no waiting: how far the schedule outruns the pool."""
-    mana, t, lowest, first_short = pool, 0.0, pool, None
-    spent = 0.0
-    for a in actions:
-        if a["start_s"] >= WINDOW_S:
-            break
-        mana = min(pool, mana + (a["start_s"] - t) * regen)
-        t = a["start_s"]
-        mana -= a["mana"]
-        spent += a["mana"]
-        if mana < 0 and first_short is None:
-            first_short = a["start_s"]
-        lowest = min(lowest, mana)
-    return {"pool": pool, "regen_per_s": regen, "spent_in_window": spent,
-            "regenerated_at_most": regen * WINDOW_S, "lowest_balance": lowest,
-            "first_unaffordable_action_s": first_short,
-            "assumptions": "Flicker Strike mana paid once per use; no mana flask; no waiting for mana. "
-                           "The flask (356.5 per use, 10 of 75 charges, 0.25 charges per second) is not scheduled."}
-
-
-def evaluate(replay: dict, variant: str) -> dict:
+def evaluate(replay: dict, variant: str, *, wait: bool = True) -> dict:
     v = inputs(replay, variant)
-    actions, strikes = timeline(v)
+    out = replay["diagnostics"]["imported"]["outputs"]
+    flask = replay["diagnostics"]["imported"]["flasks"]["Flask 2"]["flaskData"]
+    actions, strikes, ledger = timeline(
+        v, Mana(out["Mana"], out["ManaRegenRecovery"], flask, use_flask=True), wait)
     sustained = [s for s in strikes if s["end_s"] < WINDOW_S]
     burst = [s for s in strikes if s["end_s"] < BURST_S]
     total = sum(s["damage"] for s in sustained)
-    out = replay["diagnostics"]["imported"]["outputs"]
     time_on = {}
     for a in actions:
         span = max(0.0, min(a["end_s"], WINDOW_S) - a["start_s"])
         time_on[a["action"]] = time_on.get(a["action"], 0.0) + span
     return {
         "document": variant,
+        "mana_limited": wait,
         "inputs": v,
         "flicker_sustained_dps": total / WINDOW_S,
         "flicker_burst_dps": sum(s["damage"] for s in burst) / BURST_S,
@@ -162,7 +222,7 @@ def evaluate(replay: dict, variant: str) -> dict:
             "reported_not_scored": "Whirling Assault, Charged Shockwave, ignite, Living Lightning, heralds",
         },
         "time_in_window_s": time_on,
-        "mana": mana_ledger(actions, out["Mana"], out["ManaRegenRecovery"]),
+        "mana": ledger,
         "actions": actions,
         "strikes": strikes,
     }
@@ -188,6 +248,11 @@ def main() -> int:
                     "Charged Staff buff expires, then again (owner, amendment 2 item 1).",
         "primary": evaluate(replay, "seed"),
         "pounce_off": evaluate(replay, "benchmark"),
+        "unsustained_schedule": {
+            "note": "The same rotation without waiting for mana, flask still used: the community figure "
+                    "before mana is accounted. Its balance goes negative; not attainable as written.",
+            "seed": evaluate(replay, "seed", wait=False),
+            "pounce_off": evaluate(replay, "benchmark", wait=False)},
         "plain_pob": {
             "note": "PoB's own numbers at 5 forced charges with Charged Staff enabled; no rotation time.",
             "seed": {"AverageBurstDamage": seed5["AverageBurstDamage"], "TotalDPS": seed5["TotalDPS"]},
@@ -198,12 +263,16 @@ def main() -> int:
                 "note": "The community reference's condition inputs on the seed. Not adopted by amendment 2; reported only."},
         },
         "still_blocking_a_supported_score": [
-            {"gap_id": "gap-p09-t011-sustain-cycle", "why": "the schedule spends more mana than the pool and regeneration supply; flask use is not scheduled"},
-            {"gap_id": "gap-p09-t012-flicker-mana-charging", "why": "per-use or per-strike mana"},
             {"gap_id": "gap-p09-t011-attribution-rules", "why": "ownership table proposed, not accepted by a reviewer"},
             {"gap_id": "gap-p09-t011-config-conditions", "why": "the seed's PoB applies Pounce's Predator's Mark (x1.24); primary keeps it as the owner's PoB does, pounce_off drops it"},
         ],
         "resolved_by_decision": ["gap-p09-t011-rotation-details", "gap-p09-t012-charged-staff-period"],
+        "resolved_by_evidence": {
+            "gap-p09-t011-sustain-cycle": "mana modelled from PoB (pool, regeneration, Flask 2 flaskData); the "
+                                          "primary timeline waits for mana, so its value is attainable; Mageblood "
+                                          "does not alter flasks in the pinned PoB",
+            "gap-p09-t012-flicker-mana-charging": "PoB ManaCost is the upfront cost of one use; the owner's "
+                                                  "community method uses it per use"},
         "waived_by_decision": [
             {"gap_id": g, "evidence": DECISION, "why": why} for g, why in (
                 ("gap-p09-t011-charge-cycle-rules", "charges assumed for Flicker Strike"),
