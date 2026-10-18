@@ -37,7 +37,7 @@ from typing import Callable, Iterable, Mapping, Sequence
 from ..domain.enums import (Availability, CandidateAvailability,
                             EnablingQueryStatus, PoolSlotStatus,
                             RecordParseStatus)
-from ..domain.identity import build_hash, pool_hash
+from ..domain.identity import build_hash, item_identity, pool_hash
 from ..domain.records import (SCHEMA_VERSION, BuildSpec, DataGap,
                               EnablingQueryOutcome, EquipmentPool,
                               EquipmentSlot, GameCatalog, ItemInstance,
@@ -175,16 +175,38 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
                bounds: PoolSampling | None = None,
                gaps: Iterable[DataGap] = (), created_at: str,
                provenance_ids: Sequence[str] = ()) -> EquipmentPool:
-    """One pool over every slot of ``profile``. Takes no price or budget."""
+    """One pool over every slot of ``profile``. Takes no price or budget.
+
+    All inputs must belong to the pinned catalog and exact realm/league.
+    Mixed scopes and conflicting item identities/readiness are refused before
+    matching or sampling. Reparse/reconcile those records before retrying;
+    input order must never promote a partial item to a complete candidate.
+    """
     if catalog.catalog_hash != profile.catalog_hash:
         raise ValueError("the catalog is %s and the profile pins %s"
                          % (catalog.catalog_hash, profile.catalog_hash))
+    items, listings = list(items), list(listings)
+    wrong_items = sorted({i.record_id for i in items
+                          if i.catalog_hash != profile.catalog_hash})
+    wrong_listings = sorted({l.listing_id for l in listings
+                            if (l.realm, l.league_id) !=
+                            (profile.realm, profile.league_id)})
+    if wrong_items or wrong_listings:
+        raise ValueError("pool input scope mismatch: items=%r; listings=%r"
+                         % (wrong_items, wrong_listings))
     bounds = bounds or sampling()
     categories = {entity.entity_id: (entity.raw_reference or {}).get("type")
                   for entity in catalog.entities.get("item_bases", ())}
     by_hash: dict[str, ItemInstance] = {}
-    for item in items:
-        by_hash.setdefault(item.item_hash, item)
+    conflicting = set()
+    for item in sorted(items, key=lambda i: (i.item_hash, i.record_id)):
+        previous = by_hash.setdefault(item.item_hash, item)
+        if (previous.parse_status != item.parse_status or
+                item_identity(previous) != item_identity(item)):
+            conflicting.add(item.item_hash)
+    if conflicting:
+        raise ValueError("conflicting pool item identity or parse status: %s"
+                         % ", ".join(sorted(conflicting)))
     listed: dict[str, list[Listing]] = defaultdict(list)
     for listing in listings:
         listed[listing.item_hash].append(listing)

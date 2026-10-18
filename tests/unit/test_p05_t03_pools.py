@@ -91,10 +91,10 @@ def item(name, base, *lines, status=RecordParseStatus.COMPLETE, catalog="c" * 64
 
 def listing(name, item_hash, *, amount="1", currency="exalted", quantity=1,
             availability=Availability.OBSERVED):
-    key = "listing/fixture/poe2/League/%s" % name
+    key = "listing/fixture/poe2/Invented/%s" % name
     return Listing(schema_version=SCHEMA_VERSION, record_id=key, created_at=CREATED,
                    provenance_ids=["src"], listing_id=key, provider="fixture",
-                   realm="poe2", league_id="League", item_hash=item_hash,
+                   realm="poe2", league_id="Invented", item_hash=item_hash,
                    price_amount=amount, price_currency=None if amount is None
                    else currency, listed_at=None, observed_at=CREATED,
                    last_checked_at=CREATED, availability=availability,
@@ -153,6 +153,62 @@ def make_pool(world, items, listings, **kwargs):
 
 def slot(pool, slot_id) -> SlotPool:
     return next(s for s in pool.slots if s.slot_id == slot_id)
+
+
+@pytest.mark.parametrize("owned_input", [False, True])
+def test_foreign_catalog_refused_before_enabling_or_sampling(world, owned_input):
+    current = item("current", RING, "FIXTUREMOD Hits ignite", catalog=world.catalog.catalog_hash)
+    stale = replace(current, record_id="stale", catalog_hash="f" * 64)
+    errors = []
+    for order in itertools.permutations([current, stale]):
+        with pytest.raises(ValueError, match="scope mismatch") as error:
+            make_pool(world, iter(order), [], queries=QUERIES, bounds=sampling(0),
+                      owned=[OwnedItem(current.item_hash)] if owned_input else [])
+        errors.append(str(error.value))
+    assert len(set(errors)) == 1 and "stale" in errors[0]
+
+
+@pytest.mark.parametrize("foreign", [{"realm": "poe1"}, {"league_id": "Other"},
+                                    {"realm": ""}, {"league_id": ""}])
+def test_foreign_listing_refused_even_for_an_enabling_item(world, foreign):
+    ring = item("enabler", RING, "FIXTUREMOD Hits ignite", catalog=world.catalog.catalog_hash)
+    good = listing("good", ring.item_hash)
+    bad = replace(listing("foreign", ring.item_hash), **foreign)
+    errors = []
+    for order in itertools.permutations([good, bad]):
+        with pytest.raises(ValueError, match="scope mismatch") as error:
+            make_pool(world, [ring], iter(order), queries=QUERIES, bounds=sampling(0))
+        errors.append(str(error.value))
+    assert len(set(errors)) == 1 and bad.listing_id in errors[0]
+    pool = make_pool(world, [ring], [good], queries=QUERIES, bounds=sampling(0))
+    assert slot(pool, RING_1).candidates[0].listing_id == good.listing_id
+
+
+@pytest.mark.parametrize("change", ["readiness", "identity"])
+def test_conflicting_same_hash_items_refused_in_every_order(world, change):
+    original = item("enabler", RING, "FIXTUREMOD Hits ignite", catalog=world.catalog.catalog_hash)
+    other = replace(original, record_id="other", **(
+        {"parse_status": RecordParseStatus.PARTIAL} if change == "readiness"
+        else {"requirements": {"level": 99}}))
+    errors = []
+    for order in itertools.permutations([original, other]):
+        with pytest.raises(ValueError, match="conflicting pool item") as error:
+            make_pool(world, iter(order), [listing("same", original.item_hash)],
+                      queries=QUERIES, bounds=sampling(0))
+        errors.append(str(error.value))
+    assert len(set(errors)) == 1 and original.item_hash in errors[0]
+
+
+@pytest.mark.parametrize("status", [RecordParseStatus.COMPLETE, RecordParseStatus.PARTIAL])
+def test_equivalent_duplicate_items_have_order_independent_pools(world, status):
+    original = item("ring", RING, "FIXTUREMOD +1 to Strength", catalog=world.catalog.catalog_hash,
+                    status=status)
+    duplicate = replace(original, record_id="other", raw_text="another source",
+                        provenance_ids=["another-source"])
+    expected = make_pool(world, [original], [])
+    for order in itertools.permutations([original, duplicate]):
+        assert make_pool(world, iter(order), []) == expected
+    assert bool(slot(expected, RING_1).candidates) == (status is RecordParseStatus.COMPLETE)
 
 
 # ---------------------------------------------------------- acceptance ===
@@ -435,13 +491,15 @@ def test_a_pool_over_the_pinned_catalog_and_an_imported_capture(tmp_path,
                                                                 bundle, capsys):
     """The pinned export has no slot categories: every slot reports it, the
     imported items stay unplaced, and the stored pool resolves."""
+    catalog, profile, gaps, *_ = _load_catalog(bundle)
     capture = tmp_path / "capture.json"
-    capture.write_bytes(fx.capture_bytes())
+    data = fx.capture_data()
+    data.update(realm=profile.realm, league_id=profile.league_id)
+    capture.write_bytes(fx.capture_bytes(data))
     corpus = tmp_path / "corpus"
     assert cli.main(["market", "import", "--input", str(capture), "--corpus",
                      str(corpus), "--catalog", str(bundle)]) == 0
     capsys.readouterr()
-    catalog, profile, gaps, *_ = _load_catalog(bundle)
     with RunStore.open_corpus(corpus) as store:
         items = list(store.iter_normalized("item_instance"))
         listings = list(store.iter_normalized("listing"))
