@@ -1,0 +1,4555 @@
+{
+ "attribution": {
+  "accepted_by": null,
+  "classes": {
+   "flicker_strike_hit": "flicker_direct",
+   "whirling_assault_hit": "unrelated"
+  },
+  "evidence": [
+   "docs/evidence/P09-T01.2/mechanics-rules.json#/attribution"
+  ],
+  "not_modelled": {
+   "charged_shockwave": "unrelated: owned by Charged Staff",
+   "flicker_strike_ignite": "unrelated: excluded from the v1 score, PoB IgniteDPS reported",
+   "herald_of_ice": "unrelated: needs shatters or kills, absent on the benchmark",
+   "herald_of_thunder": "unrelated",
+   "living_lightning": "unrelated: minion damage"
+  },
+  "notes": {
+   "flicker_strike_hit": "PoB AverageDamage per strike at the method's charges; includes the Charged Staff buff lightning while the buff is up",
+   "whirling_assault_hit": "PoB AverageBurstDamage per use; separate skill"
+  },
+  "table_id": "p09-t012-attribution-proposed"
+ },
+ "build": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml",
+ "command": "python scripts/p07_t01_flicker_cycle.py",
+ "coverage": {
+  "applied_resolutions": [
+   {
+    "detail": "p09-t012:flicker-extra-strikes",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+    "mechanic_id": "skill/FlickerStrikePlayer",
+    "resolution_id": "p09-t012/flicker-extra-strikes",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:perpetual-charge",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "p09-t012/perpetual-charge",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:ailith-surpassing-distribution",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "p09-t012/ailith-surpassing-distribution",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:combo-cap-and-decay",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "p09-t012/combo-cap-and-decay",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:whirling-assault-use",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+    "mechanic_id": "skill/WhirlingAssaultPlayer",
+    "resolution_id": "p09-t012/whirling-assault-use",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:charged-staff-use",
+    "gap_id": "gap-p06-missing-implementation-charges-charged-staff-consumption-15354938ae",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p09-t012/charged-staff-use",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "no open gap names this mechanic in the report",
+    "gap_id": null,
+    "mechanic_id": "skill/WolfPouncePlayer",
+    "resolution_id": "p09-t012/pounce-predators-mark",
+    "result": "skipped",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:flicker-bypass-cd-default",
+    "gap_id": "gap-p06-unknown-rule-config-flickerstrikebypasscd-d4f84c80ba",
+    "mechanic_id": "config/FlickerStrikeBypassCD",
+    "resolution_id": "p09-t012/flicker-bypass-cd-default",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "clean pinned replay agrees with every earlier value",
+    "gap_id": "gap-p09-t011-engine-checkout-state",
+    "mechanic_id": "engine/pinned-checkout",
+    "resolution_id": "p09-t012/engine-checkout",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-flask-3710fdb984",
+    "mechanic_id": "resource/mana-flask",
+    "resolution_id": "p07-t01/mana-flask",
+    "result": "applied",
+    "source": "implementation"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-sustain-0653e3349b",
+    "mechanic_id": "resource/mana-sustain",
+    "resolution_id": "p07-t01/mana-sustain",
+    "result": "applied",
+    "source": "implementation"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p09-t011-rotation-details",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p07-t01/charged-staff-buff-window",
+    "result": "applied",
+    "source": "implementation"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p09-t011-charge-cycle-rules",
+    "mechanic_id": "resource/power-charges",
+    "resolution_id": "pob-community-v2/resource/power-charges",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "pob-community-v2/resource/combo",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-support-supportculminationplayertwo-417d6b46f1",
+    "mechanic_id": "support/SupportCulminationPlayerTwo",
+    "resolution_id": "pob-community-v2/support/SupportCulminationPlayerTwo",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "pob-community-v2/support/SupportAilithLineagePlayer",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "pob-community-v2/support/SupportPerpetualChargePlayer",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-passive-41751-b1cda48394",
+    "mechanic_id": "passive/41751",
+    "resolution_id": "pob-community-v2/passive/41751",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-passive-61586-20fa93d7fb",
+    "mechanic_id": "passive/61586",
+    "resolution_id": "pob-community-v2/passive/61586",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p09-t011-charged-staff-shared-charges",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "pob-community-v2/charged-staff-shared-charges",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "method:pob-community-v2:teleport-satisfies",
+    "gap_id": "gap-p09-t011-hit-and-run-movement",
+    "mechanic_id": "activation/hit-and-run-reuse",
+    "resolution_id": "pob-community-v2/hit-and-run",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "proposed table, no reviewer acceptance supplied",
+    "gap_id": null,
+    "mechanic_id": "attribution/flicker-sustained-v1",
+    "resolution_id": "attribution/flicker-sustained-v1",
+    "result": "not_applied",
+    "source": "attribution"
+   }
+  ],
+  "ledger_history": [
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/flicker-description, pob/flicker-strikes-per-charge, pob/flicker-prediamage, pob/removable-power-charges, web/fextralife-flicker-strike, docs/evidence/P09-T01.2/replay.json#/flicker_seed",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+    "kind": "resolved",
+    "mechanic_id": "skill/FlickerStrikePlayer",
+    "resolution_id": "p09-t012/flicker-extra-strikes"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/perpetual-charge-description, pob/perpetual-charge-chance, docs/evidence/P09-T01.1/seed/skill-groups.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "p09-t012/perpetual-charge"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/ailith-description, pob/statdesc-ailith-surpassing, web/poe2wiki-surpassing-chance",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "p09-t012/ailith-surpassing-distribution"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/culmination-cap, pob/culmination-decay",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "kind": "resolved",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "p09-t012/combo-cap-and-decay"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence docs/evidence/P09-T01.2/replay.json#/whirling_assault",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+    "kind": "resolved",
+    "mechanic_id": "skill/WhirlingAssaultPlayer",
+    "resolution_id": "p09-t012/whirling-assault-use"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/charged-staff-description, pob/charged-staff-requires, docs/evidence/P09-T01.2/replay.json#/charged_staff",
+    "gap_id": "gap-p06-missing-implementation-charges-charged-staff-consumption-15354938ae",
+    "kind": "resolved",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p09-t012/charged-staff-use"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/flicker-bypass-cd, docs/evidence/P09-T01.2/replay.json#/config_probes, docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/config_mods",
+    "gap_id": "gap-p06-unknown-rule-config-flickerstrikebypasscd-d4f84c80ba",
+    "kind": "resolved",
+    "mechanic_id": "config/FlickerStrikeBypassCD",
+    "resolution_id": "p09-t012/flicker-bypass-cd-default"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence docs/evidence/P09-T01.2/replay.json",
+    "gap_id": "gap-p09-t011-engine-checkout-state",
+    "kind": "resolved",
+    "mechanic_id": "engine/pinned-checkout",
+    "resolution_id": "p09-t012/engine-checkout"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by nobody yet; evidence tests/unit/test_p07_t01_flicker_cycle.py, docs/evidence/P07-T01/README.md, docs/evidence/P09-T01.2/replay.json, docs/evidence/P09-T01.2/mechanics-rules.json#mana-sustain",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-flask-3710fdb984",
+    "kind": "resolved",
+    "mechanic_id": "resource/mana-flask",
+    "resolution_id": "p07-t01/mana-flask"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by nobody yet; evidence tests/unit/test_p07_t01_flicker_cycle.py, docs/evidence/P07-T01/README.md, docs/evidence/P09-T01.2/replay.json",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-sustain-0653e3349b",
+    "kind": "resolved",
+    "mechanic_id": "resource/mana-sustain",
+    "resolution_id": "p07-t01/mana-sustain"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by nobody yet; evidence tests/unit/test_p07_t01_flicker_cycle.py, docs/evidence/P07-T01/README.md, docs/evidence/P09-T01.2/replay.json, docs/evidence/P09-T01.2/mechanics-rules.json#charged-staff-period",
+    "gap_id": "gap-p09-t011-rotation-details",
+    "kind": "resolved",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p07-t01/charged-staff-buff-window"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p09-t011-charge-cycle-rules",
+    "kind": "resolved",
+    "mechanic_id": "resource/power-charges",
+    "resolution_id": "pob-community-v2/resource/power-charges"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "kind": "resolved",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "pob-community-v2/resource/combo"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportculminationplayertwo-417d6b46f1",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportCulminationPlayerTwo",
+    "resolution_id": "pob-community-v2/support/SupportCulminationPlayerTwo"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "pob-community-v2/support/SupportAilithLineagePlayer"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "pob-community-v2/support/SupportPerpetualChargePlayer"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-passive-41751-b1cda48394",
+    "kind": "resolved",
+    "mechanic_id": "passive/41751",
+    "resolution_id": "pob-community-v2/passive/41751"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-passive-61586-20fa93d7fb",
+    "kind": "resolved",
+    "mechanic_id": "passive/61586",
+    "resolution_id": "pob-community-v2/passive/61586"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p09-t011-charged-staff-shared-charges",
+    "kind": "resolved",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "pob-community-v2/charged-staff-shared-charges"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p09-t011-hit-and-run-movement",
+    "kind": "resolved",
+    "mechanic_id": "activation/hit-and-run-reuse",
+    "resolution_id": "pob-community-v2/hit-and-run"
+   }
+  ],
+  "ranking_sensitive": [
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: config/enemyDistance.",
+    "gap_id": "gap-p06-unvalidated-config-enemydistance-773fb42908",
+    "mechanics": [
+     "config/enemyDistance"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: cost/mana-per-use.",
+    "gap_id": "gap-p06-unvalidated-cost-mana-per-use-9b0dc81422",
+    "mechanics": [
+     "cost/mana-per-use"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: damage/pob-modifiers, skill/ChargedStaffPlayer, skill/MeleeQuarterstaffPlayer.",
+    "gap_id": "gap-p06-unvalidated-damage-pob-modifiers-648802f8c5",
+    "mechanics": [
+     "damage/pob-modifiers",
+     "skill/ChargedStaffPlayer",
+     "skill/MeleeQuarterstaffPlayer"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: initial-state/flicker-sustained-v1.",
+    "gap_id": "gap-p06-unvalidated-initial-state-flicker-sustained-v1-26bf2c8684",
+    "mechanics": [
+     "initial-state/flicker-sustained-v1"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "PoB returns no modifier and no unparsed remainder for '28% increased Explicit Resistance Modifier magnitudes' on item:Ring 1; any effect is applied elsewhere or not at all.",
+    "gap_id": "gap-p06-unvalidated-item-ring-1-e85f3dd71e",
+    "mechanics": []
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "patch/profile-0.5.5e is partial and untested. Compatibility is partial (P02-T02.1).",
+    "gap_id": "gap-p06-unvalidated-patch-profile-0-5-5e-0af1d317ec",
+    "mechanics": [
+     "patch/profile-0.5.5e"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: resource/mana-regeneration, resource/power-charges-max.",
+    "gap_id": "gap-p06-unvalidated-resource-mana-regeneration-43622a2ef9",
+    "mechanics": [
+     "resource/mana-regeneration",
+     "resource/power-charges-max"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: support/SupportBlindPlayerTwo, support/SupportCloseCombatPlayerTwo, support/SupportColdMasteryPlayer, support/SupportConcentratedAreaPlayer, support/SupportCooldownRecoveryPlayerTwo, support/SupportElementalArmamentPlayerTwo, support/SupportEmbitterPlayer, support/SupportFireMasteryPlayer, support/SupportFreezePlayer, support/SupportMagnifiedAreaPlayerTwo, support/SupportOisinsOathPlayer, support/SupportRagePlayerTwo, support/SupportRakiatasFlowPlayer, support/SupportStunPlayerThree, support/SupportUhtredOmenPlayer.",
+    "gap_id": "gap-p06-unvalidated-support-supportblindplayertwo-62328fd54c",
+    "mechanics": [
+     "support/SupportBlindPlayerTwo",
+     "support/SupportCloseCombatPlayerTwo",
+     "support/SupportColdMasteryPlayer",
+     "support/SupportConcentratedAreaPlayer",
+     "support/SupportCooldownRecoveryPlayerTwo",
+     "support/SupportElementalArmamentPlayerTwo",
+     "support/SupportEmbitterPlayer",
+     "support/SupportFireMasteryPlayer",
+     "support/SupportFreezePlayer",
+     "support/SupportMagnifiedAreaPlayerTwo",
+     "support/SupportOisinsOathPlayer",
+     "support/SupportRagePlayerTwo",
+     "support/SupportRakiatasFlowPlayer",
+     "support/SupportStunPlayerThree",
+     "support/SupportUhtredOmenPlayer"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: support/SupportHitAndRunPlayer.",
+    "gap_id": "gap-p06-unvalidated-support-supporthitandrunplayer-a15c4b4a83",
+    "mechanics": [
+     "support/SupportHitAndRunPlayer"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "timing/flicker-strike-strike-duration is partial and untested. pob-cycle-v1 takes H(c) strikes of 1/S_F(c) each; unvalidated.",
+    "gap_id": "gap-p06-unvalidated-timing-flicker-strike-strike-duration-3c52ba774b",
+    "mechanics": [
+     "timing/flicker-strike-strike-duration"
+    ]
+   }
+  ],
+  "registry_hash": "aba53d0b2a00ba88f1b6a6fc6900363b811d08e5418af9b0d6e2f0ce5732a75a",
+  "registry_id": "p06-flicker-v1",
+  "registry_version": "21",
+  "report_notes": [
+   "group 2 not on active weapon sets [1] or disabled; not walked",
+   "group 4 not on active weapon sets [1] or disabled; not walked",
+   "build declares '0_1'; the declaration does not override profile compatibility 'partial'",
+   "Weapon 1 Swap (Spiteful Floret, Nettle Talisman) is on weapon set 2, not walked",
+   "group 13 (MeleeQuarterstaffPlayer) is not used by the rotation; not a damage source"
+  ],
+  "rule_closure_hash": "09109aedd2d3f86f460e9e19c5433f2b24c82c673de5002343ada2cdb652115b",
+  "rule_ids": [
+   "activation/hit-and-run-reuse",
+   "attribution/flicker-sustained-v1",
+   "charges/charged-staff-consumption",
+   "config/FlickerStrikeBypassCD",
+   "config/enemyDistance",
+   "cost/mana-per-use",
+   "damage/pob-modifiers",
+   "engine/pinned-checkout",
+   "initial-state/flicker-sustained-v1",
+   "passive/41751",
+   "passive/61586",
+   "patch/profile-0.5.5e",
+   "resource/combo",
+   "resource/mana-flask",
+   "resource/mana-regeneration",
+   "resource/mana-sustain",
+   "resource/power-charges",
+   "resource/power-charges-max",
+   "resource/rage",
+   "skill/ChargedStaffPlayer",
+   "skill/FlickerStrikePlayer",
+   "skill/GhostDancePlayer",
+   "skill/HeraldOfIcePlayer",
+   "skill/HeraldOfThunderPlayer",
+   "skill/MeleeQuarterstaffPlayer",
+   "skill/MetaRemnantsOfKalguurPlayer",
+   "skill/TrinityPlayer",
+   "skill/WhirlingAssaultPlayer",
+   "skill/WindDancerPlayer",
+   "support/SupportAilithLineagePlayer",
+   "support/SupportBhatairsVengeancePlayer",
+   "support/SupportBlazingCriticalPlayer",
+   "support/SupportBlindPlayerTwo",
+   "support/SupportCloseCombatPlayerTwo",
+   "support/SupportColdMasteryPlayer",
+   "support/SupportConcentratedAreaPlayer",
+   "support/SupportConcussiveRunesPlayer",
+   "support/SupportCooldownRecoveryPlayerTwo",
+   "support/SupportCulminationPlayerTwo",
+   "support/SupportElementalArmamentPlayerTwo",
+   "support/SupportEmbitterPlayer",
+   "support/SupportFireMasteryPlayer",
+   "support/SupportFleetingRemnantsPlayerTwo",
+   "support/SupportFreezePlayer",
+   "support/SupportHitAndRunPlayer",
+   "support/SupportInnervatePlayer",
+   "support/SupportInterludePlayer",
+   "support/SupportLivingLightningPlayerTwo",
+   "support/SupportMagnifiedAreaPlayerTwo",
+   "support/SupportOisinsOathPlayer",
+   "support/SupportPerpetualChargePlayer",
+   "support/SupportRagePlayerTwo",
+   "support/SupportRakiatasFlowPlayer",
+   "support/SupportStunPlayerThree",
+   "support/SupportUhtredOmenPlayer",
+   "target/pinnacle-preset",
+   "timing/flicker-strike-strike-duration"
+  ]
+ },
+ "decision": {
+  "blocking": [
+   {
+    "class": "missing_data",
+    "domain": "scenario",
+    "explanation": "Scenario field /reference_result_id has no value.",
+    "fields": [
+     "/reference_result_id"
+    ],
+    "gap_id": "gap-p06-missing-data-flicker-sustained-v1-5a807dfa4a",
+    "mechanics": [],
+    "needed_evidence": "The value of /reference_result_id from the evidence its protocol gap names.",
+    "subjects": [
+     "flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_data",
+    "domain": "scenario",
+    "explanation": "Scenario field /target_entities.conditions has no value.",
+    "fields": [
+     "/target_entities.conditions"
+    ],
+    "gap_id": "gap-p06-missing-data-flicker-sustained-v1-8c9d8962b7",
+    "mechanics": [],
+    "needed_evidence": "The value of /target_entities.conditions from the evidence its protocol gap names.",
+    "subjects": [
+     "flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_data",
+    "domain": "scenario",
+    "explanation": "Scenario field /reference_build_id has no value.",
+    "fields": [
+     "/reference_build_id"
+    ],
+    "gap_id": "gap-p06-missing-data-flicker-sustained-v1-f5c52da736",
+    "mechanics": [],
+    "needed_evidence": "The value of /reference_build_id from the evidence its protocol gap names.",
+    "subjects": [
+     "flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "attribution",
+    "explanation": "attribution/flicker-sustained-v1 (Damage ownership for flicker_sustained_v1) is required and no code calculates it. No source is assigned until the attribution rule is accepted.",
+    "fields": [],
+    "gap_id": "gap-p06-missing-implementation-attribution-flicker-sustained-v1-59343bef87",
+    "mechanics": [
+     "attribution/flicker-sustained-v1"
+    ],
+    "needed_evidence": "An implementation of attribution/flicker-sustained-v1 owned by simulator, with fixture tests and the evidence for its parameters.",
+    "subjects": [
+     "scenario:flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "passive",
+    "explanation": "PoB does not parse 'Ignore Attribute Requirements to equip Gloves' on passive:39595 (unparsed remainder 'Ignore Attribute Requirements to equip Gloves '); its effect is not calculated.",
+    "fields": [
+     "Ignore Attribute Requirements to equip Gloves"
+    ],
+    "gap_id": "gap-p06-missing-implementation-passive-39595-046f03426f",
+    "mechanics": [],
+    "needed_evidence": "An engine or simulator implementation of 'Ignore Attribute Requirements to equip Gloves' with a fixture test, or evidence that it has no effect in flicker_sustained_v1.",
+    "subjects": [
+     "passive:39595"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "passive",
+    "explanation": "PoB does not parse 'Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and' on passive:39595 (unparsed remainder 'Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves '); its effect is not calculated.",
+    "fields": [
+     "Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and"
+    ],
+    "gap_id": "gap-p06-missing-implementation-passive-39595-07fe64d789",
+    "mechanics": [],
+    "needed_evidence": "An engine or simulator implementation of 'Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and' with a fixture test, or evidence that it has no effect in flicker_sustained_v1.",
+    "subjects": [
+     "passive:39595"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "passive",
+    "explanation": "PoB does not parse 'their Explicit Modifiers are transformed into more powerful related Modifiers' on passive:39595 (unparsed remainder 'their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves '); its effect is not calculated.",
+    "fields": [
+     "their Explicit Modifiers are transformed into more powerful related Modifiers"
+    ],
+    "gap_id": "gap-p06-missing-implementation-passive-39595-58eb0a271d",
+    "mechanics": [],
+    "needed_evidence": "An engine or simulator implementation of 'their Explicit Modifiers are transformed into more powerful related Modifiers' with a fixture test, or evidence that it has no effect in flicker_sustained_v1.",
+    "subjects": [
+     "passive:39595"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "resource",
+    "explanation": "resource/rage (Rage state over time) is required and no code calculates it. Rage II grants Rage on hit; no simulator rule tracks Rage.",
+    "fields": [],
+    "gap_id": "gap-p06-missing-implementation-resource-rage-f2f8561aa5",
+    "mechanics": [
+     "resource/rage"
+    ],
+    "needed_evidence": "An implementation of resource/rage owned by simulator, with fixture tests and the evidence for its parameters.",
+    "subjects": [
+     "support:SupportRagePlayerTwo"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source support/SupportLivingLightningPlayerTwo has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-184d06a9f2",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "support/SupportLivingLightningPlayerTwo"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for support/SupportLivingLightningPlayerTwo in the attribution rule.",
+    "subjects": [
+     "support:SupportLivingLightningPlayerTwo"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source skill/FlickerStrikePlayer has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "skill/FlickerStrikePlayer"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for skill/FlickerStrikePlayer in the attribution rule.",
+    "subjects": [
+     "skill:FlickerStrikePlayer"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source skill/WhirlingAssaultPlayer has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "skill/WhirlingAssaultPlayer"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for skill/WhirlingAssaultPlayer in the attribution rule.",
+    "subjects": [
+     "skill:WhirlingAssaultPlayer"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source skill/ChargedStaffPlayer has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-f46ddde2fd",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "skill/ChargedStaffPlayer"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for skill/ChargedStaffPlayer in the attribution rule.",
+    "subjects": [
+     "skill:ChargedStaffPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "buff",
+    "explanation": "How skill/TrinityPlayer (Trinity Affinity build-up) behaves is not established. Affinity is built by hits over time; PoB's assumed level is not generated by the rotation.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-skill-trinityplayer-6a2e46bff0",
+    "mechanics": [
+     "skill/TrinityPlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Trinity Affinity build-up under the scenario's conditions.",
+    "subjects": [
+     "skill:TrinityPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "buff",
+    "explanation": "How support/SupportBhatairsVengeancePlayer (Bhatair's Vengeance: freezing infuses cold) behaves is not established. Freeze on the Pinnacle target and infusion uptime are not established.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportbhatairsvengeanceplayer-a37aefd0aa",
+    "mechanics": [
+     "support/SupportBhatairsVengeancePlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Bhatair's Vengeance: freezing infuses cold under the scenario's conditions.",
+    "subjects": [
+     "support:SupportBhatairsVengeancePlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "buff",
+    "explanation": "How support/SupportBlazingCriticalPlayer (Blazing Critical: crit imbues attacks with fire) behaves is not established. Buff uptime from critical hits is not established.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportblazingcriticalplayer-884d9707fd",
+    "mechanics": [
+     "support/SupportBlazingCriticalPlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Blazing Critical: crit imbues attacks with fire under the scenario's conditions.",
+    "subjects": [
+     "support:SupportBlazingCriticalPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "damage",
+    "explanation": "How support/SupportConcussiveRunesPlayer (Concussive Runes shockwave on heavy stun) behaves is not established. Heavy stun on the target and Runic Ward are not modelled.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportconcussiverunesplayer-3cb4119d48",
+    "mechanics": [
+     "support/SupportConcussiveRunesPlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Concussive Runes shockwave on heavy stun under the scenario's conditions.",
+    "subjects": [
+     "support:SupportConcussiveRunesPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "damage",
+    "explanation": "How support/SupportLivingLightningPlayerTwo (Living Lightning II minions) behaves is not established. Minion creation and damage are not established.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportlivinglightningplayertwo-f468e65a88",
+    "mechanics": [
+     "support/SupportLivingLightningPlayerTwo"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Living Lightning II minions under the scenario's conditions.",
+    "subjects": [
+     "support:SupportLivingLightningPlayerTwo"
+    ]
+   },
+   {
+    "class": "protocol:missing_input",
+    "domain": "protocol",
+    "explanation": "The seed export begins reference selection. A reference also needs a result on the scenario: an observed completion time for the four workloads, and for flicker_sustained_v1 a pob-cycle-v1 computation, which cannot run until its blocking gaps close.",
+    "gap_id": "gap-p09-t011-reference-result",
+    "needed_evidence": "For each workload an accepted observation of the seed; for flicker_sustained_v1 a pob-cycle-v1 result of the seed in a clean pinned engine, accepted by a reviewer."
+   },
+   {
+    "class": "protocol:unsupported_rule",
+    "domain": "protocol",
+    "explanation": "Proposed rule: only Flicker Strike's own PoB AverageBurstDamage counts; Whirling Assault, Living Lightning, the heralds, Wind Dancer, Trinity and Remnants of Kalguur are reported separately. Not yet accepted by a reviewer. Charged Staff's buff share is gap-p09-t011-charged-staff-shared-charges.",
+    "gap_id": "gap-p09-t011-attribution-rules",
+    "needed_evidence": "Reviewer acceptance of the proposed rule, or a replacement rule per seed damage source with catalog evidence."
+   },
+   {
+    "class": "protocol:unsupported_rule",
+    "domain": "protocol",
+    "explanation": "D07 forbids free maximum-state toggles. The seed's imported PoB config carries condition inputs (for example conditionChampionIntimidate, inDemonForm, touchedDebuffsCount 10, purpleFlameStacks 10, targetBrandedEnemy, SecondsSinceInevitableCrit 10, multiplierCurrentManaPercentage 100) whose effect on Flicker Strike and whose sustain under the rotation are not checked.",
+    "gap_id": "gap-p09-t011-config-conditions",
+    "needed_evidence": "For each condition input that changes a Flicker Strike output: evidence the build sustains it under the rotation, or the input switched off in the benchmark configuration."
+   },
+   {
+    "class": "protocol:stale_patch",
+    "domain": "protocol",
+    "explanation": "The catalog verdict is partial: the engine data release predates 0.5.5e and slot-accepted-base-categories is open (P02-T02.1).",
+    "gap_id": "gap-p09-t011-patch-profile",
+    "needed_evidence": "An accepted patch profile with compatibility verified for 0.5.5e or the patch the measurements are taken on."
+   }
+  ],
+  "blocking_gap_ids": [
+   "gap-p06-missing-data-flicker-sustained-v1-5a807dfa4a",
+   "gap-p06-missing-data-flicker-sustained-v1-8c9d8962b7",
+   "gap-p06-missing-data-flicker-sustained-v1-f5c52da736",
+   "gap-p06-missing-implementation-attribution-flicker-sustained-v1-59343bef87",
+   "gap-p06-missing-implementation-passive-39595-046f03426f",
+   "gap-p06-missing-implementation-passive-39595-07fe64d789",
+   "gap-p06-missing-implementation-passive-39595-58eb0a271d",
+   "gap-p06-missing-implementation-resource-rage-f2f8561aa5",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-184d06a9f2",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-f46ddde2fd",
+   "gap-p06-unknown-rule-skill-trinityplayer-6a2e46bff0",
+   "gap-p06-unknown-rule-support-supportbhatairsvengeanceplayer-a37aefd0aa",
+   "gap-p06-unknown-rule-support-supportblazingcriticalplayer-884d9707fd",
+   "gap-p06-unknown-rule-support-supportconcussiverunesplayer-3cb4119d48",
+   "gap-p06-unknown-rule-support-supportlivinglightningplayertwo-f468e65a88",
+   "gap-p09-t011-attribution-rules",
+   "gap-p09-t011-config-conditions",
+   "gap-p09-t011-patch-profile",
+   "gap-p09-t011-reference-result"
+  ],
+  "eligible": false,
+  "reasons": [
+   "21 blocking gaps open",
+   "critical rules not settled: attribution/flicker-sustained-v1"
+  ],
+  "unsettled_critical": [
+   "attribution/flicker-sustained-v1"
+  ]
+ },
+ "diagnostic": {
+  "attributed_damage_0_120": 27795767.80943941,
+  "attributed_damage_0_5": 1208511.64388867,
+  "contributions": {
+   "by_source": {
+    "flicker_strike_hit": {
+     "damage": 27795767.80943941,
+     "impacts": 253,
+     "owner": "flicker_direct"
+    }
+   },
+   "flicker_strikes_counted": 253,
+   "flicker_with_charged_staff_buff": 27795767.80943941,
+   "flicker_without_buff": 0.0
+  },
+  "flicker_burst_dps": 241702.32877773402,
+  "flicker_sustained_dps": 231631.3984119951,
+  "flicker_uses_started": 23,
+  "label": "NOT ELIGIBLE: diagnostic only; not the objective and not a supported score",
+  "pob_plain": {
+   "AverageBurstDamage": 1208511.6438887,
+   "IgniteDPS": null,
+   "TotalDPS": 1024806.8875481,
+   "note": "PoB's own numbers at the method's charges; no rotation time; proxy_only"
+  },
+  "preparation_time_s": 35.666928999999996,
+  "time_in_window_s": {
+   "Charged Staff": 0.9543809999999868,
+   "Flicker Strike": 27.12293399999999,
+   "Whirling Assault": 34.71254800000001,
+   "wait for mana": 57.21013700000002
+  }
+ },
+ "document": "benchmark",
+ "evaluation_id": "2d5e6737cc25ec9c6fc64e537d6edea932b6dd7fa8eb638ef404c5fde193b263",
+ "kind": "evaluation from frozen engine bundle",
+ "mana_ignored": {
+  "flicker_burst_dps": 241702.32877773402,
+  "flicker_sustained_dps": 458685.10120319977,
+  "flicker_uses_started": 46,
+  "mana": {
+   "end_balance": -9384.00000000001,
+   "first_deficit_s": 22.749871,
+   "flask": {
+    "charges_max": 75.0,
+    "charges_per_s": 0.25,
+    "charges_used": 10.0,
+    "duration_s": 3.0,
+    "instant_percent": 30.0,
+    "mana_total": 356.5,
+    "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+    "slot": "Flask 2"
+   },
+   "flask_mana_recovered_raw": 3565.0,
+   "flask_uses": 10,
+   "lowest_balance": -9416.21188780001,
+   "policy": "flask: start full; not while recovering; when its recovery fits under the pool or the next cost is unaffordable; no waiting, balance may go negative (comparison only)",
+   "pool": 887,
+   "regen_per_s": 47.9,
+   "spent_in_window": 19584.0,
+   "waited_s": 0.0
+  },
+  "note": "same rotation without waiting for mana; balance goes negative; comparison only, not attainable as written"
+ },
+ "method": "pob-community-v2",
+ "not_a_claim": "PoB-derived computation by method pob-community-v2 (owner decision, D07 amendment 2026-10-18 (2)). Not a gameplay measurement and not a best-build recommendation.",
+ "notes": [],
+ "objective": {
+  "label": "proxy_only: PoB-derived, model_estimate at best",
+  "metrics": {
+   "flicker_burst_dps": null,
+   "flicker_sustained_dps": null
+  },
+  "objective_id": "flicker_sustained_dps",
+  "objective_version": 1,
+  "score": null
+ },
+ "repeatable": {
+  "charged_staff_periods": [
+   {
+    "end_s": 41.571167,
+    "sequence": [
+     "ChargedStaffPlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer"
+    ],
+    "start_s": 1.299768,
+    "waited_s": 6.4261659999999985
+   },
+   {
+    "end_s": 80.976178,
+    "sequence": [
+     "ChargedStaffPlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer"
+    ],
+    "start_s": 41.571167,
+    "waited_s": 25.39198600000001
+   }
+  ],
+  "no_wait_period": {
+   "mana_demand": 6732,
+   "mana_supply_regen_plus_flask": 2345.3514877832754,
+   "pairs": 16,
+   "period_s": 41.28231441642729,
+   "sustainable_without_waiting": false
+  },
+  "note": "The mana-limited timeline repeats by waiting; indefinite sustain without waiting needs supply >= demand per period.",
+  "repeating_sequence": false
+ },
+ "rotation": {
+  "record": {
+   "category": "boss",
+   "created_at": "2026-10-18T00:00:00Z",
+   "name": "Flicker seed: Whirling Assault, Charged Staff when down, else Flicker Strike",
+   "provenance_ids": [
+    "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2: whirling assault to generate charges, charged staff, whirling assault to generate charges, flicker, whirling, flicker, whirling, flicker, etc until charged runs out & repeat"
+   ],
+   "record_id": "p07-flicker-seed-rotation",
+   "rotation_id": "p07-flicker-seed-rotation",
+   "rules": [
+    {
+     "action": "use_skill",
+     "action_id": "refresh-charged-staff",
+     "predicate": {
+      "operands": [
+       {
+        "operator": "gte",
+        "path": "state.power_charges",
+        "value": 1
+       },
+       {
+        "operator": "eq",
+        "path": "buff.charged_staff.active",
+        "value": false
+       }
+      ],
+      "operator": "all"
+     },
+     "rule_index": 0,
+     "skill_id": "ChargedStaffPlayer",
+     "target_selector": "single_target",
+     "weapon_set_id": null
+    },
+    {
+     "action": "use_skill",
+     "action_id": "flicker-strike",
+     "predicate": {
+      "operator": "gte",
+      "path": "state.power_charges",
+      "value": 1
+     },
+     "rule_index": 1,
+     "skill_id": "FlickerStrikePlayer",
+     "target_selector": "single_target",
+     "weapon_set_id": null
+    },
+    {
+     "action": "use_skill",
+     "action_id": "whirling-assault",
+     "predicate": {
+      "operator": "eq",
+      "path": "state.power_charges",
+      "value": 0
+     },
+     "rule_index": 2,
+     "skill_id": "WhirlingAssaultPlayer",
+     "target_selector": "single_target",
+     "weapon_set_id": null
+    }
+   ],
+   "schema_version": 1,
+   "version": "1"
+  },
+  "rotation_hash": "f5728ee9058b715849463555a2322d00cd2b6548ebba12aba9ba54a6e7a08716",
+  "rotation_id": "p07-flicker-seed-rotation"
+ },
+ "status": "blocked",
+ "task": "P07-T01",
+ "timeline": {
+  "actions": [
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 1.299768,
+    "mana_after": 727,
+    "mana_before": 887,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 0.0
+   },
+   {
+    "action": "refresh-charged-staff",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 1.617895,
+    "mana_after": 745.2588872,
+    "mana_before": 789.2588872,
+    "mana_cost": 44,
+    "skill": "ChargedStaffPlayer",
+    "start_s": 1.299768
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 2.917663,
+    "mana_after": 600.4971705,
+    "mana_before": 760.4971705,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 1.617895
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 4.096921,
+    "mana_after": 414.75605770000004,
+    "mana_before": 662.7560577,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 2.917663,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 5.396689,
+    "mana_after": 418.1925159000001,
+    "mana_before": 578.1925159000001,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 4.096921
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 6.575947,
+    "mana_after": 340.5704379000001,
+    "mana_before": 588.5704379000001,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 5.396689,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 7.875715,
+    "mana_after": 335.1515074000001,
+    "mana_before": 495.1515074000001,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 6.575947
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 9.054973,
+    "mana_after": 299.6967485000001,
+    "mana_before": 547.6967485000001,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 7.875715,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 10.354741,
+    "mana_after": 294.27781800000014,
+    "mana_before": 454.27781800000014,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 9.054973
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 11.533999,
+    "mana_after": 216.65574000000015,
+    "mana_before": 464.65574000000015,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 10.354741,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 12.833767,
+    "mana_after": 263.42855210000016,
+    "mana_before": 423.42855210000016,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 11.533999
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 14.013025,
+    "mana_after": 185.80647410000017,
+    "mana_before": 433.8064741000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 12.833767,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 15.312793,
+    "mana_after": 180.38754360000019,
+    "mana_before": 340.3875436000002,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 14.013025
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 16.492051,
+    "mana_after": 144.93278470000018,
+    "mana_before": 392.9327847000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 15.312793,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 17.791819,
+    "mana_after": 139.5138542000002,
+    "mana_before": 299.5138542000002,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 16.492051
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 18.971077,
+    "mana_after": 61.89177620000021,
+    "mana_before": 309.8917762000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 17.791819,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 20.270845,
+    "mana_after": 108.66458830000022,
+    "mana_before": 268.6645883000002,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 18.971077
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 21.450103,
+    "mana_after": 31.04251030000023,
+    "mana_before": 279.04251030000023,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 20.270845,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 22.749871,
+    "mana_after": 25.623579800000243,
+    "mana_before": 185.62357980000024,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 21.450103
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 22.824871,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 22.749871
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 24.004129,
+    "mana_after": 7.090000025300469e-05,
+    "mana_before": 248.00007090000025,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 22.824871,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 24.045469,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 24.004129
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 25.345237,
+    "mana_after": 0.00012540000025751397,
+    "mana_before": 160.00012540000026,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 24.045469
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 25.749871,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 25.345237
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 26.929129,
+    "mana_after": 82.36882090000029,
+    "mana_before": 330.3688209000003,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 25.749871,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 28.228897,
+    "mana_after": 76.9498904000003,
+    "mana_before": 236.9498904000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 26.929129
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 28.234025,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 28.228897
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 29.413283,
+    "mana_after": 7.73333363213169e-06,
+    "mana_before": 248.00000773333363,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 28.234025,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 30.713051,
+    "mana_after": 46.34625570000031,
+    "mana_before": 206.3462557000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 29.413283
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 30.951646,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 30.713051
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 32.130904,
+    "mana_after": 5.616666982177776e-06,
+    "mana_before": 248.00000561666698,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 30.951646,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 32.172244,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 32.130904
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 33.472012,
+    "mana_after": 6.011666698668705e-05,
+    "mana_before": 160.000060116667,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 32.172244
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 36.931107,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 33.472012
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 38.110365,
+    "mana_after": 2.5300000345396256e-05,
+    "mana_before": 248.00002530000035,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 36.931107,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 40.271399,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 38.110365
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 41.571167,
+    "mana_after": 1.2100000333248317e-05,
+    "mana_before": 160.00001210000033,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 40.271399
+   },
+   {
+    "action": "refresh-charged-staff",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 41.889294,
+    "mana_after": 18.25889930000033,
+    "mana_before": 62.25889930000033,
+    "mana_cost": 44,
+    "skill": "ChargedStaffPlayer",
+    "start_s": 41.571167
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 44.530272,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 41.889294
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 45.83004,
+    "mana_after": 2.8800000336559606e-05,
+    "mana_before": 160.00002880000034,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 44.530272
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 49.707725,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 45.83004
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 50.886983,
+    "mana_after": 2.7500000328473106e-05,
+    "mana_before": 248.00002750000033,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 49.707725,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 53.048017,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 50.886983
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 54.347785,
+    "mana_after": 1.4300000316325168e-05,
+    "mana_before": 160.00001430000032,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 53.048017
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 58.22547,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 54.347785
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 59.404728,
+    "mana_after": 1.3000000308238668e-05,
+    "mana_before": 248.0000130000003,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 58.22547,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 61.565763,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 59.404728
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 62.865531,
+    "mana_after": 4.7700000294526035e-05,
+    "mana_before": 160.0000477000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 61.565763
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 64.248028,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 62.865531
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 65.427286,
+    "mana_after": 0.00012515000025814516,
+    "mana_before": 248.00012515000026,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 64.248028,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 65.468625,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 65.427286
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 66.768393,
+    "mana_after": 4.8566666947635895e-05,
+    "mana_before": 160.00004856666695,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 65.468625
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 67.818372,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 66.768393
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 68.99763,
+    "mana_after": 1.880000030496376e-05,
+    "mana_before": 248.0000188000003,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 67.818372,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 71.158664,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 68.99763
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 72.458432,
+    "mana_after": 5.600000292815821e-06,
+    "mana_before": 160.0000056000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 71.158664
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 76.336117,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 72.458432
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 77.515375,
+    "mana_after": 4.300000284729322e-06,
+    "mana_before": 248.00000430000028,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 76.336117,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 79.67641,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 77.515375
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 80.976178,
+    "mana_after": 3.900000027101669e-05,
+    "mana_before": 160.00003900000027,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 79.67641
+   },
+   {
+    "action": "refresh-charged-staff",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 81.294305,
+    "mana_after": 18.258926200000268,
+    "mana_before": 62.25892620000027,
+    "mana_cost": 44,
+    "skill": "ChargedStaffPlayer",
+    "start_s": 80.976178
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 83.935282,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 81.294305
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 85.23505,
+    "mana_after": 7.800000275892671e-06,
+    "mana_before": 160.00000780000028,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 83.935282
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 89.112735,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 85.23505
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 90.291993,
+    "mana_after": 6.500000267806172e-06,
+    "mana_before": 248.00000650000027,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 89.112735,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 92.453028,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 90.291993
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 93.752796,
+    "mana_after": 4.120000025409354e-05,
+    "mana_before": 160.00004120000025,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 92.453028
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 97.630481,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 93.752796
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 98.809739,
+    "mana_after": 3.990000024600704e-05,
+    "mana_before": 248.00003990000025,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 97.630481,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 100.970773,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 98.809739
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 102.270541,
+    "mana_after": 2.67000002338591e-05,
+    "mana_before": 160.00002670000023,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 100.970773
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 104.096921,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 102.270541
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 105.276179,
+    "mana_after": 8.692515900000217,
+    "mana_before": 256.6925159000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 104.096921,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 106.575947,
+    "mana_after": 3.273585400000229,
+    "mana_before": 163.27358540000023,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 105.276179
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 107.223383,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 106.575947
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 108.402641,
+    "mana_after": 4.570000027115384e-05,
+    "mana_before": 248.00004570000027,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 107.223383,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 110.563675,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 108.402641
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 111.863443,
+    "mana_after": 3.25000002590059e-05,
+    "mana_before": 160.00003250000026,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 110.563675
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 115.741128,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 111.863443
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 116.920386,
+    "mana_after": 3.12000002509194e-05,
+    "mana_before": 248.00003120000025,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 115.741128,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 119.08142,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 116.920386
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 120.381188,
+    "mana_after": 1.8000000238771463e-05,
+    "mana_before": 160.00001800000024,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 119.08142
+   }
+  ],
+  "buff_windows": [
+   {
+    "end_s": 39.117895,
+    "stacks": 5,
+    "start_s": 1.617895
+   },
+   {
+    "end_s": 79.389294,
+    "stacks": 5,
+    "start_s": 41.889294
+   },
+   {
+    "end_s": 118.794305,
+    "stacks": 5,
+    "start_s": 81.294305
+   }
+  ],
+  "burst_s": 5.0,
+  "events_processed": 391,
+  "flask_uses_s": [
+   4.096921,
+   7.875715,
+   11.533999,
+   15.312793,
+   18.971077,
+   22.749871,
+   25.749871,
+   29.413283,
+   64.096921,
+   104.096921
+  ],
+  "impacts": [
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 3.024868,
+    "t_us": 3024868,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 3.132074,
+    "t_us": 3132074,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 3.239279,
+    "t_us": 3239279,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 3.346484,
+    "t_us": 3346484,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 3.453689,
+    "t_us": 3453689,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 3.560895,
+    "t_us": 3560895,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 3.6681,
+    "t_us": 3668100,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 3.775305,
+    "t_us": 3775305,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 3.88251,
+    "t_us": 3882510,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 3.989716,
+    "t_us": 3989716,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 4.096921,
+    "t_us": 4096921,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 5.503894,
+    "t_us": 5503894,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 5.6111,
+    "t_us": 5611100,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 5.718305,
+    "t_us": 5718305,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 5.82551,
+    "t_us": 5825510,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 5.932715,
+    "t_us": 5932715,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 6.039921,
+    "t_us": 6039921,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 6.147126,
+    "t_us": 6147126,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 6.254331,
+    "t_us": 6254331,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 6.361536,
+    "t_us": 6361536,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 6.468742,
+    "t_us": 6468742,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 6.575947,
+    "t_us": 6575947,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 7.98292,
+    "t_us": 7982920,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 8.090126,
+    "t_us": 8090126,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 8.197331,
+    "t_us": 8197331,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 8.304536,
+    "t_us": 8304536,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 8.411741,
+    "t_us": 8411741,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 8.518947,
+    "t_us": 8518947,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 8.626152,
+    "t_us": 8626152,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 8.733357,
+    "t_us": 8733357,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 8.840562,
+    "t_us": 8840562,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 8.947768,
+    "t_us": 8947768,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 9.054973,
+    "t_us": 9054973,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 10.461946,
+    "t_us": 10461946,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 10.569152,
+    "t_us": 10569152,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 10.676357,
+    "t_us": 10676357,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 10.783562,
+    "t_us": 10783562,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 10.890767,
+    "t_us": 10890767,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 10.997973,
+    "t_us": 10997973,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 11.105178,
+    "t_us": 11105178,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 11.212383,
+    "t_us": 11212383,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 11.319588,
+    "t_us": 11319588,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 11.426794,
+    "t_us": 11426794,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 11.533999,
+    "t_us": 11533999,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 12.940972,
+    "t_us": 12940972,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 13.048178,
+    "t_us": 13048178,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 13.155383,
+    "t_us": 13155383,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 13.262588,
+    "t_us": 13262588,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 13.369793,
+    "t_us": 13369793,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 13.476999,
+    "t_us": 13476999,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 13.584204,
+    "t_us": 13584204,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 13.691409,
+    "t_us": 13691409,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 13.798614,
+    "t_us": 13798614,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 13.90582,
+    "t_us": 13905820,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 14.013025,
+    "t_us": 14013025,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 15.419998,
+    "t_us": 15419998,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 15.527204,
+    "t_us": 15527204,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 15.634409,
+    "t_us": 15634409,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 15.741614,
+    "t_us": 15741614,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 15.848819,
+    "t_us": 15848819,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 15.956025,
+    "t_us": 15956025,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 16.06323,
+    "t_us": 16063230,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 16.170435,
+    "t_us": 16170435,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 16.27764,
+    "t_us": 16277640,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 16.384846,
+    "t_us": 16384846,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 16.492051,
+    "t_us": 16492051,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 17.899024,
+    "t_us": 17899024,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 18.00623,
+    "t_us": 18006230,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 18.113435,
+    "t_us": 18113435,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 18.22064,
+    "t_us": 18220640,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 18.327845,
+    "t_us": 18327845,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 18.435051,
+    "t_us": 18435051,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 18.542256,
+    "t_us": 18542256,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 18.649461,
+    "t_us": 18649461,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 18.756666,
+    "t_us": 18756666,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 18.863872,
+    "t_us": 18863872,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 18.971077,
+    "t_us": 18971077,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 20.37805,
+    "t_us": 20378050,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 20.485256,
+    "t_us": 20485256,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 20.592461,
+    "t_us": 20592461,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 20.699666,
+    "t_us": 20699666,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 20.806871,
+    "t_us": 20806871,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 20.914077,
+    "t_us": 20914077,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 21.021282,
+    "t_us": 21021282,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 21.128487,
+    "t_us": 21128487,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 21.235692,
+    "t_us": 21235692,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 21.342898,
+    "t_us": 21342898,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 21.450103,
+    "t_us": 21450103,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 22.932076,
+    "t_us": 22932076,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 23.039282,
+    "t_us": 23039282,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 23.146487,
+    "t_us": 23146487,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 23.253692,
+    "t_us": 23253692,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 23.360897,
+    "t_us": 23360897,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 23.468103,
+    "t_us": 23468103,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 23.575308,
+    "t_us": 23575308,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 23.682513,
+    "t_us": 23682513,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 23.789718,
+    "t_us": 23789718,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 23.896924,
+    "t_us": 23896924,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 24.004129,
+    "t_us": 24004129,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 25.857076,
+    "t_us": 25857076,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 25.964282,
+    "t_us": 25964282,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 26.071487,
+    "t_us": 26071487,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 26.178692,
+    "t_us": 26178692,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 26.285897,
+    "t_us": 26285897,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 26.393103,
+    "t_us": 26393103,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 26.500308,
+    "t_us": 26500308,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 26.607513,
+    "t_us": 26607513,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 26.714718,
+    "t_us": 26714718,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 26.821924,
+    "t_us": 26821924,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 26.929129,
+    "t_us": 26929129,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 28.34123,
+    "t_us": 28341230,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 28.448436,
+    "t_us": 28448436,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 28.555641,
+    "t_us": 28555641,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 28.662846,
+    "t_us": 28662846,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 28.770051,
+    "t_us": 28770051,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 28.877257,
+    "t_us": 28877257,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 28.984462,
+    "t_us": 28984462,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 29.091667,
+    "t_us": 29091667,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 29.198872,
+    "t_us": 29198872,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 29.306078,
+    "t_us": 29306078,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 29.413283,
+    "t_us": 29413283,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 31.058851,
+    "t_us": 31058851,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 31.166057,
+    "t_us": 31166057,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 31.273262,
+    "t_us": 31273262,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 31.380467,
+    "t_us": 31380467,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 31.487672,
+    "t_us": 31487672,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 31.594878,
+    "t_us": 31594878,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 31.702083,
+    "t_us": 31702083,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 31.809288,
+    "t_us": 31809288,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 31.916493,
+    "t_us": 31916493,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 32.023699,
+    "t_us": 32023699,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 32.130904,
+    "t_us": 32130904,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 37.038312,
+    "t_us": 37038312,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 37.145518,
+    "t_us": 37145518,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 37.252723,
+    "t_us": 37252723,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 37.359928,
+    "t_us": 37359928,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 37.467133,
+    "t_us": 37467133,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 37.574339,
+    "t_us": 37574339,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 37.681544,
+    "t_us": 37681544,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 37.788749,
+    "t_us": 37788749,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 37.895954,
+    "t_us": 37895954,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 38.00316,
+    "t_us": 38003160,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 38.110365,
+    "t_us": 38110365,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 49.81493,
+    "t_us": 49814930,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 49.922136,
+    "t_us": 49922136,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 50.029341,
+    "t_us": 50029341,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 50.136546,
+    "t_us": 50136546,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 50.243751,
+    "t_us": 50243751,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 50.350957,
+    "t_us": 50350957,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 50.458162,
+    "t_us": 50458162,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 50.565367,
+    "t_us": 50565367,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 50.672572,
+    "t_us": 50672572,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 50.779778,
+    "t_us": 50779778,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 50.886983,
+    "t_us": 50886983,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 58.332675,
+    "t_us": 58332675,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 58.439881,
+    "t_us": 58439881,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 58.547086,
+    "t_us": 58547086,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 58.654291,
+    "t_us": 58654291,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 58.761496,
+    "t_us": 58761496,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 58.868702,
+    "t_us": 58868702,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 58.975907,
+    "t_us": 58975907,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 59.083112,
+    "t_us": 59083112,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 59.190317,
+    "t_us": 59190317,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 59.297523,
+    "t_us": 59297523,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 59.404728,
+    "t_us": 59404728,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 64.355233,
+    "t_us": 64355233,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 64.462439,
+    "t_us": 64462439,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 64.569644,
+    "t_us": 64569644,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 64.676849,
+    "t_us": 64676849,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 64.784054,
+    "t_us": 64784054,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 64.89126,
+    "t_us": 64891260,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 64.998465,
+    "t_us": 64998465,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 65.10567,
+    "t_us": 65105670,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 65.212875,
+    "t_us": 65212875,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 65.320081,
+    "t_us": 65320081,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 65.427286,
+    "t_us": 65427286,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 67.925577,
+    "t_us": 67925577,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 68.032783,
+    "t_us": 68032783,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 68.139988,
+    "t_us": 68139988,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 68.247193,
+    "t_us": 68247193,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 68.354398,
+    "t_us": 68354398,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 68.461604,
+    "t_us": 68461604,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 68.568809,
+    "t_us": 68568809,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 68.676014,
+    "t_us": 68676014,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 68.783219,
+    "t_us": 68783219,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 68.890425,
+    "t_us": 68890425,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 68.99763,
+    "t_us": 68997630,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 76.443322,
+    "t_us": 76443322,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 76.550528,
+    "t_us": 76550528,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 76.657733,
+    "t_us": 76657733,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 76.764938,
+    "t_us": 76764938,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 76.872143,
+    "t_us": 76872143,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 76.979349,
+    "t_us": 76979349,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 77.086554,
+    "t_us": 77086554,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 77.193759,
+    "t_us": 77193759,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 77.300964,
+    "t_us": 77300964,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 77.40817,
+    "t_us": 77408170,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 77.515375,
+    "t_us": 77515375,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 89.21994,
+    "t_us": 89219940,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 89.327146,
+    "t_us": 89327146,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 89.434351,
+    "t_us": 89434351,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 89.541556,
+    "t_us": 89541556,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 89.648761,
+    "t_us": 89648761,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 89.755967,
+    "t_us": 89755967,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 89.863172,
+    "t_us": 89863172,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 89.970377,
+    "t_us": 89970377,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 90.077582,
+    "t_us": 90077582,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 90.184788,
+    "t_us": 90184788,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 90.291993,
+    "t_us": 90291993,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 97.737686,
+    "t_us": 97737686,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 97.844892,
+    "t_us": 97844892,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 97.952097,
+    "t_us": 97952097,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 98.059302,
+    "t_us": 98059302,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 98.166507,
+    "t_us": 98166507,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 98.273713,
+    "t_us": 98273713,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 98.380918,
+    "t_us": 98380918,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 98.488123,
+    "t_us": 98488123,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 98.595328,
+    "t_us": 98595328,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 98.702534,
+    "t_us": 98702534,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 98.809739,
+    "t_us": 98809739,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 104.204126,
+    "t_us": 104204126,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 104.311332,
+    "t_us": 104311332,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 104.418537,
+    "t_us": 104418537,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 104.525742,
+    "t_us": 104525742,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 104.632947,
+    "t_us": 104632947,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 104.740153,
+    "t_us": 104740153,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 104.847358,
+    "t_us": 104847358,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 104.954563,
+    "t_us": 104954563,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 105.061768,
+    "t_us": 105061768,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 105.168974,
+    "t_us": 105168974,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 105.276179,
+    "t_us": 105276179,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 107.330588,
+    "t_us": 107330588,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 107.437794,
+    "t_us": 107437794,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 107.544999,
+    "t_us": 107544999,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 107.652204,
+    "t_us": 107652204,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 107.759409,
+    "t_us": 107759409,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 107.866615,
+    "t_us": 107866615,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 107.97382,
+    "t_us": 107973820,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 108.081025,
+    "t_us": 108081025,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 108.18823,
+    "t_us": 108188230,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 108.295436,
+    "t_us": 108295436,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 108.402641,
+    "t_us": 108402641,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 1,
+    "t_s": 115.848333,
+    "t_us": 115848333,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 2,
+    "t_s": 115.955539,
+    "t_us": 115955539,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 3,
+    "t_s": 116.062744,
+    "t_us": 116062744,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 4,
+    "t_s": 116.169949,
+    "t_us": 116169949,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 5,
+    "t_s": 116.277154,
+    "t_us": 116277154,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 6,
+    "t_s": 116.38436,
+    "t_us": 116384360,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 7,
+    "t_s": 116.491565,
+    "t_us": 116491565,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 8,
+    "t_s": 116.59877,
+    "t_us": 116598770,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 9,
+    "t_s": 116.705975,
+    "t_us": 116705975,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 10,
+    "t_s": 116.813181,
+    "t_us": 116813181,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "flicker_strike_hit",
+    "strike": 11,
+    "t_s": 116.920386,
+    "t_us": 116920386,
+    "use": 23
+   }
+  ],
+  "mana": {
+   "end_balance": 44.000000000000234,
+   "first_deficit_s": null,
+   "flask": {
+    "charges_max": 75.0,
+    "charges_per_s": 0.25,
+    "charges_used": 10.0,
+    "duration_s": 3.0,
+    "instant_percent": 30.0,
+    "mana_total": 356.5,
+    "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+    "slot": "Flask 2"
+   },
+   "flask_mana_recovered_raw": 3564.999999999999,
+   "flask_uses": 10,
+   "lowest_balance": 4.300000284729322e-06,
+   "policy": "flask: start full; not while recovering; when its recovery fits under the pool or the next cost is unaffordable; actions wait for mana",
+   "pool": 887,
+   "regen_per_s": 47.9,
+   "spent_in_window": 10156.0,
+   "waited_s": 57.21013700000002
+  },
+  "mana_enforced": true,
+  "stopped": null,
+  "window_s": 120.0
+ },
+ "values": {
+  "buff_duration_s": 37.5,
+  "charged_staff_mana": 44,
+  "charged_staff_time_s": 0.31812686899536,
+  "charges": 5,
+  "document": "benchmark",
+  "engine": {
+   "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+   "source": "frozen replay bundle"
+  },
+  "flasks": [
+   {
+    "charges_max": 75.0,
+    "charges_per_s": 0.0,
+    "charges_used": 10.0,
+    "duration_s": 7.1,
+    "instant_percent": 0.0,
+    "mana_total": 0.0,
+    "name": "Blood of the Warrior, Gargantuan Life Flask",
+    "slot": "Flask 1"
+   },
+   {
+    "charges_max": 75.0,
+    "charges_per_s": 0.25,
+    "charges_used": 10.0,
+    "duration_s": 3.0,
+    "instant_percent": 30.0,
+    "mana_total": 356.5,
+    "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+    "slot": "Flask 2"
+   }
+  ],
+  "flicker_damage_per_strike_buffed": 109864.69489897,
+  "flicker_damage_per_strike_unbuffed": 100186.64354329,
+  "flicker_ignite_dps": null,
+  "flicker_mana": 248,
+  "flicker_strike_rate": 9.3279,
+  "flicker_strikes_per_use": 11,
+  "mana_pool": 887,
+  "mana_regen_per_s": 47.9,
+  "pob_burst_damage_per_use": 1208511.6438887,
+  "pob_total_dps": 1024806.8875481,
+  "trace": {
+   "buff_duration": "docs/evidence/P09-T01.2/replay.json#/diagnostics/charged_staff_duration",
+   "charged_staff": "docs/evidence/P09-T01.2/replay.json#/charged_staff",
+   "flasks": "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/flasks",
+   "flicker_buffed": "docs/evidence/P09-T01.2/replay.json#/benchmark_documents/flicker_benchmark/5",
+   "flicker_unbuffed": "docs/evidence/P09-T01.2/replay.json#/benchmark_documents/flicker_benchmark_charged_staff_disabled/5",
+   "mana": "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/outputs",
+   "whirling": "docs/evidence/P09-T01.2/replay.json#/whirling_assault"
+  },
+  "whirling_damage_per_use": null,
+  "whirling_mana": 160,
+  "whirling_time_s": 1.2997682791202
+ }
+}

@@ -1,0 +1,313 @@
+{
+ "agreement": {
+  "evaluation_ids": [
+   "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780",
+   "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780"
+  ],
+  "evaluations_identical": true,
+  "flasks_equal_frozen_bundle": true,
+  "max_rel_diff_vs_frozen_bundle": 0.0,
+  "values_identical": true,
+  "worker_pid_sets_disjoint": true
+ },
+ "build": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml",
+ "command": "python scripts/p07_t01_flicker_cycle.py --live",
+ "engine_head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "engine_root": "external/PathOfBuilding-PoE2",
+ "kind": "live fresh-worker agreement",
+ "not_a_claim": "PoB-derived computation by method pob-community-v2 (owner decision, D07 amendment 2026-10-18 (2)). Not a gameplay measurement and not a best-build recommendation.",
+ "runs": [
+  {
+   "diagnostic_burst": 241702.32877773402,
+   "diagnostic_sustained": 231631.3984119951,
+   "evaluation_id": "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780",
+   "label": "A",
+   "status": "blocked",
+   "values": {
+    "buff_duration_s": 37.5,
+    "charged_staff_mana": 44,
+    "charged_staff_time_s": 0.31812686899536,
+    "charges": 5,
+    "document": "benchmark",
+    "engine": {
+     "adapter_version": "p02.2",
+     "dirty_hash": null,
+     "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+     "source": "EngineAdapter",
+     "worker_pids": [
+      33236,
+      26716,
+      32256,
+      33868
+     ]
+    },
+    "flasks": [
+     {
+      "charges_max": 75.0,
+      "charges_per_s": 0.0,
+      "charges_used": 10.0,
+      "duration_s": 7.1,
+      "instant_percent": 0.0,
+      "mana_total": 0.0,
+      "name": "Blood of the Warrior, Gargantuan Life Flask",
+      "slot": "Flask 1"
+     },
+     {
+      "charges_max": 75.0,
+      "charges_per_s": 0.25,
+      "charges_used": 10.0,
+      "duration_s": 3.0,
+      "instant_percent": 30.0,
+      "mana_total": 356.5,
+      "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+      "slot": "Flask 2"
+     }
+    ],
+    "flicker_damage_per_strike_buffed": 109864.69489897,
+    "flicker_damage_per_strike_unbuffed": 100186.64354329,
+    "flicker_ignite_dps": 657.11921879027,
+    "flicker_mana": 248,
+    "flicker_strike_rate": 9.3279,
+    "flicker_strikes_per_use": 11,
+    "mana_pool": 887,
+    "mana_regen_per_s": 47.9,
+    "pob_burst_damage_per_use": 1208511.6438887,
+    "pob_total_dps": 1024806.8875481,
+    "trace": {
+     "buff_duration": "engine: cycle_inputs, group 11",
+     "charged_staff": "engine: group 11 main skill",
+     "flasks": "engine: cycle_inputs flaskData",
+     "flicker_buffed": "engine: group 6, 5 forced charges",
+     "flicker_unbuffed": "engine: group 6, 5 forced charges, group 11 disabled",
+     "mana": "engine: imported state outputs Mana, ManaRegenRecovery",
+     "whirling": "engine: group 8 main skill"
+    },
+    "whirling_damage_per_use": 8488.8452181712,
+    "whirling_mana": 160,
+    "whirling_time_s": 1.2997682791202
+   },
+   "worker_history": [
+    {
+     "end": "recycled: 4 requests served",
+     "generation": 1,
+     "peak_memory_bytes": 560607232,
+     "pid": 33236,
+     "requests": 4
+    },
+    {
+     "end": "recycled: 4 requests served",
+     "generation": 2,
+     "peak_memory_bytes": 478552064,
+     "pid": 26716,
+     "requests": 4
+    },
+    {
+     "end": "recycled: 4 requests served",
+     "generation": 3,
+     "peak_memory_bytes": 530632704,
+     "pid": 32256,
+     "requests": 4
+    },
+    {
+     "end": "closed",
+     "generation": 4,
+     "peak_memory_bytes": 265588736,
+     "pid": 33868,
+     "requests": 1
+    }
+   ],
+   "worker_pids": [
+    33236,
+    26716,
+    32256,
+    33868
+   ]
+  },
+  {
+   "diagnostic_burst": 241702.32877773402,
+   "diagnostic_sustained": 231631.3984119951,
+   "evaluation_id": "8d31c57b75cb495f961c2f61c2cc77c260d2547840f1f5b0dfd2045ec7cd9780",
+   "label": "B",
+   "status": "blocked",
+   "values": {
+    "buff_duration_s": 37.5,
+    "charged_staff_mana": 44,
+    "charged_staff_time_s": 0.31812686899536,
+    "charges": 5,
+    "document": "benchmark",
+    "engine": {
+     "adapter_version": "p02.2",
+     "dirty_hash": null,
+     "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+     "source": "EngineAdapter",
+     "worker_pids": [
+      31580,
+      26932,
+      32448,
+      1892
+     ]
+    },
+    "flasks": [
+     {
+      "charges_max": 75.0,
+      "charges_per_s": 0.0,
+      "charges_used": 10.0,
+      "duration_s": 7.1,
+      "instant_percent": 0.0,
+      "mana_total": 0.0,
+      "name": "Blood of the Warrior, Gargantuan Life Flask",
+      "slot": "Flask 1"
+     },
+     {
+      "charges_max": 75.0,
+      "charges_per_s": 0.25,
+      "charges_used": 10.0,
+      "duration_s": 3.0,
+      "instant_percent": 30.0,
+      "mana_total": 356.5,
+      "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+      "slot": "Flask 2"
+     }
+    ],
+    "flicker_damage_per_strike_buffed": 109864.69489897,
+    "flicker_damage_per_strike_unbuffed": 100186.64354329,
+    "flicker_ignite_dps": 657.11921879027,
+    "flicker_mana": 248,
+    "flicker_strike_rate": 9.3279,
+    "flicker_strikes_per_use": 11,
+    "mana_pool": 887,
+    "mana_regen_per_s": 47.9,
+    "pob_burst_damage_per_use": 1208511.6438887,
+    "pob_total_dps": 1024806.8875481,
+    "trace": {
+     "buff_duration": "engine: cycle_inputs, group 11",
+     "charged_staff": "engine: group 11 main skill",
+     "flasks": "engine: cycle_inputs flaskData",
+     "flicker_buffed": "engine: group 6, 5 forced charges",
+     "flicker_unbuffed": "engine: group 6, 5 forced charges, group 11 disabled",
+     "mana": "engine: imported state outputs Mana, ManaRegenRecovery",
+     "whirling": "engine: group 8 main skill"
+    },
+    "whirling_damage_per_use": 8488.8452181712,
+    "whirling_mana": 160,
+    "whirling_time_s": 1.2997682791202
+   },
+   "worker_history": [
+    {
+     "end": "recycled: 4 requests served",
+     "generation": 1,
+     "peak_memory_bytes": 510132224,
+     "pid": 31580,
+     "requests": 4
+    },
+    {
+     "end": "recycled: 4 requests served",
+     "generation": 2,
+     "peak_memory_bytes": 479580160,
+     "pid": 26932,
+     "requests": 4
+    },
+    {
+     "end": "recycled: 4 requests served",
+     "generation": 3,
+     "peak_memory_bytes": 532836352,
+     "pid": 32448,
+     "requests": 4
+    },
+    {
+     "end": "closed",
+     "generation": 4,
+     "peak_memory_bytes": 264192000,
+     "pid": 1892,
+     "requests": 1
+    }
+   ],
+   "worker_pids": [
+    31580,
+    26932,
+    32448,
+    1892
+   ]
+  }
+ ],
+ "task": "P07-T01",
+ "vs_frozen_bundle": {
+  "buff_duration_s": {
+   "frozen": 37.5,
+   "live": 37.5,
+   "rel_diff": 0.0
+  },
+  "charged_staff_mana": {
+   "frozen": 44,
+   "live": 44,
+   "rel_diff": 0.0
+  },
+  "charged_staff_time_s": {
+   "frozen": 0.31812686899536,
+   "live": 0.31812686899536,
+   "rel_diff": 0.0
+  },
+  "charges": {
+   "frozen": 5,
+   "live": 5,
+   "rel_diff": 0.0
+  },
+  "flicker_damage_per_strike_buffed": {
+   "frozen": 109864.69489897,
+   "live": 109864.69489897,
+   "rel_diff": 0.0
+  },
+  "flicker_damage_per_strike_unbuffed": {
+   "frozen": 100186.64354329,
+   "live": 100186.64354329,
+   "rel_diff": 0.0
+  },
+  "flicker_mana": {
+   "frozen": 248,
+   "live": 248,
+   "rel_diff": 0.0
+  },
+  "flicker_strike_rate": {
+   "frozen": 9.3279,
+   "live": 9.3279,
+   "rel_diff": 0.0
+  },
+  "flicker_strikes_per_use": {
+   "frozen": 11,
+   "live": 11,
+   "rel_diff": 0.0
+  },
+  "mana_pool": {
+   "frozen": 887,
+   "live": 887,
+   "rel_diff": 0.0
+  },
+  "mana_regen_per_s": {
+   "frozen": 47.9,
+   "live": 47.9,
+   "rel_diff": 0.0
+  },
+  "pob_burst_damage_per_use": {
+   "frozen": 1208511.6438887,
+   "live": 1208511.6438887,
+   "rel_diff": 0.0
+  },
+  "pob_total_dps": {
+   "frozen": 1024806.8875481,
+   "live": 1024806.8875481,
+   "rel_diff": 0.0
+  },
+  "whirling_mana": {
+   "frozen": 160,
+   "live": 160,
+   "rel_diff": 0.0
+  },
+  "whirling_time_s": {
+   "frozen": 1.2997682791202,
+   "live": 1.2997682791202,
+   "rel_diff": 0.0
+  }
+ },
+ "working_tree_after": "clean",
+ "working_tree_before": "clean"
+}

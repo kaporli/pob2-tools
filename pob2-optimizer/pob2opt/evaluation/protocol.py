@@ -55,15 +55,47 @@ OP_LOAD_EXACT_BUILD = "load_exact_build"
 OP_PRIMITIVES = "primitives"
 OP_CATALOG_PAGE = "catalog_page"
 OP_LEGALITY_STATE = "legality_state"
+OP_CYCLE_INPUTS = "cycle_inputs"
 OP_SHUTDOWN = "shutdown"
 
 OPERATIONS = (OP_DESCRIBE, OP_CREATE_BLANK_BUILD, OP_LOAD_EXACT_BUILD,
-              OP_PRIMITIVES, OP_CATALOG_PAGE, OP_LEGALITY_STATE, OP_SHUTDOWN)
+              OP_PRIMITIVES, OP_CATALOG_PAGE, OP_LEGALITY_STATE, OP_CYCLE_INPUTS,
+              OP_SHUTDOWN)
 
 #: The bootstrap handler behind ``OP_LEGALITY_STATE``. Read-only: it reports
 #: the allocation, equipment, skills and calculated pools the engine holds and
 #: decides nothing (P02-T03).
 LEGALITY_STATE_HANDLER = "legality_state"
+
+#: Fixed, read-only Lua behind ``OP_CYCLE_INPUTS`` (P07-T01). After the same
+#: config and main skill handling as ``OP_PRIMITIVES`` it reports values the
+#: output table does not carry: each equipped flask's ``flaskData`` scalars
+#: and the main skill's duration modifiers with the Charged Staff per-stack
+#: base. Callers cannot supply code; it never changes the build.
+CYCLE_INPUTS_LUA = r"""
+local env = build.calcsTab.mainEnv
+local skill = env.player.mainSkill
+local cfg = skill.skillCfg
+local flasks = {}
+for slotName, slot in pairs(build.itemsTab.slots) do
+  local item = slot.selItemId and build.itemsTab.items[slot.selItemId]
+  if item and item.flaskData and not slot.nodeId then
+    local fd = {}
+    for k, v in pairs(item.flaskData) do if type(v) ~= "table" then fd[k] = v end end
+    flasks[slotName] = { name = item.name, base = item.baseName, flaskData = fd,
+                         active = slot.active and true or false }
+  end
+end
+return {
+  main_skill = skill.activeEffect.grantedEffect.id,
+  flasks = flasks,
+  duration = {
+    per_stack_ms_base = skill.skillModList:Sum("BASE", cfg, "ChargedStaffBuffDuration"),
+    inc = skill.skillModList:Sum("INC", cfg, "Duration"),
+    more = skill.skillModList:More(cfg, "Duration"),
+  },
+}
+"""
 
 #: Catalog tables the engine can enumerate, and the bootstrap handler for
 #: each. ``passive_edges`` is absent on purpose: edges are derived from the
