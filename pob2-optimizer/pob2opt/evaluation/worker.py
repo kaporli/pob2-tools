@@ -101,6 +101,8 @@ class PobSession:
             return self.legality_state(**args)
         if op == protocol.OP_CYCLE_INPUTS:
             return self.cycle_inputs(**args)
+        if op == protocol.OP_PARSE_SUPPORT:
+            return self.parse_support()
         raise SessionError(ResultStatus.UNSUPPORTED,
                            "unknown operation %r" % op, stage="dispatch")
 
@@ -204,6 +206,13 @@ class PobSession:
             group, skill = main_skill
             self._call("set_main_skill", {"group": group, "skill": skill}, stage=stage)
         return self._eval(protocol.CYCLE_INPUTS_LUA, stage=stage)
+
+    def parse_support(self) -> dict:
+        """Per-line parse verdicts, config rows and selection of the loaded
+        document (P06-T02 capture, fixed Lua in ``coverage.capture``). Read-only."""
+        from ..coverage.capture import PARSE_SUPPORT_LUA
+
+        return self._eval(PARSE_SUPPORT_LUA, stage=protocol.OP_PARSE_SUPPORT)
 
     def close(self) -> None:
         close = getattr(self.engine, "close", None)

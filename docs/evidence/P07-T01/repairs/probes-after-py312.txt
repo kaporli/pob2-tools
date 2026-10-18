@@ -10,4 +10,9 @@ PASSED tests/unit/test_pr21_review_probes.py::test_r6_alternate_windows_are_not_
 PASSED tests/unit/test_pr21_review_probes.py::test_r6_changed_scenario_changes_identity
 PASSED tests/unit/test_pr21_review_probes.py::test_r7_unsupported_method_is_refused_with_a_settled_registry[pob-cycle-v1]
 PASSED tests/unit/test_pr21_review_probes.py::test_r7_unsupported_method_is_refused_with_a_settled_registry[no-such-method]
-12 passed in 2.27s
+PASSED tests/unit/test_pr21_review_probes.py::test_r1_unsupported_state_in_the_selected_loadout_blocks
+PASSED tests/unit/test_pr21_review_probes.py::test_r2_capture_from_an_unclean_or_other_engine_blocks
+PASSED tests/unit/test_pr21_review_probes.py::test_r2_capture_of_another_document_blocks
+PASSED tests/unit/test_pr21_review_probes.py::test_r2_missing_capture_blocks
+PASSED tests/unit/test_pr21_review_probes.py::test_r3_unearned_enemy_debuff_blocks
+17 passed in 1.09s

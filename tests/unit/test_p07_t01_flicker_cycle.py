@@ -25,7 +25,9 @@ from pob2opt.combat.policy import compare, use
 from pob2opt.combat.timeline import simulate, summary
 from pob2opt.combat.values import (CycleValues, FlaskValues, benchmark_document,
                                    seed_replay_values)
+from pob2opt.coverage.capture import bind_capture
 from pob2opt.coverage.flicker_v1 import build_registry
+from pob2opt.coverage.inputs import build_facts_from_pob_xml
 from pob2opt.coverage.registry import MechanicsRegistry
 from pob2opt.domain.enums import RuleSupport, RuleValidation
 
@@ -38,11 +40,25 @@ EVIDENCE = REPO / "docs/evidence/P07-T01/seed-evaluation.json"
 PIN = "ce566eac45ea8a86477f513c7ee65a1ebe60014e"
 
 
-def identity(xml: str) -> dict:
+def engine_result(scored_xml: str, **changes) -> dict:
+    """What PARSE_SUPPORT_LUA returns for a document with no items or passives."""
+    facts = build_facts_from_pob_xml(scored_xml)
+    out = {"items": [], "nodes": [],
+           "config": [{"var": k, "shown": True, "input": v, "placeholder": None}
+                      for k, v in sorted(facts.config_explicit.items())],
+           "selection": dict(facts.selection)}
+    out.update(changes)
+    return out
+
+
+def identity(xml: str, *, pob_commit: str = PIN, pob_dirty: bool = False) -> dict:
     """What a clean pinned capture of ``xml``'s scoring document records."""
+    scored = benchmark_document(xml)
     return {"head": PIN, "dirty_hash": None,
-            "document_sha256": hashlib.sha256(benchmark_document(xml).encode("utf-8")).hexdigest(),
-            "state": {"forced_power_charges": 5, "document": "benchmark"}}
+            "document_sha256": hashlib.sha256(scored.encode("utf-8")).hexdigest(),
+            "state": {"forced_power_charges": 5, "document": "benchmark"},
+            "parse_capture": bind_capture(scored, engine_result(scored),
+                                          pob_commit=pob_commit, pob_dirty=pob_dirty)}
 
 
 def values(**kw) -> CycleValues:
@@ -262,7 +278,7 @@ def bench(tmp_path):
 
 
 def evaluate(bench, registry, *, xml=SYNTH_XML % "", source=None, **kw):
-    return evaluate_flicker(xml, source or values(engine=identity(xml)), scenarios_path=bench, mod_support_path=None,
+    return evaluate_flicker(xml, source or values(engine=identity(xml)), scenarios_path=bench,
                             config_options={}, registry=registry, patch_compatibility="verified",
                             **kw)
 

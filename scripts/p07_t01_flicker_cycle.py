@@ -10,7 +10,10 @@ disabled) and ``seed-as-imported-evaluation.json`` (Pounce on, diagnostic).
 ``--live``: captures the values twice, each through its own ``EngineAdapter``
 and therefore its own worker processes, on the clean pinned checkout;
 evaluates both; requires identical results; compares them with the frozen
-bundle. Writes ``docs/evidence/P07-T01/fresh-worker-agreement.json``.
+bundle. Writes ``docs/evidence/P07-T01/fresh-worker-agreement.json`` and the
+scoring document's bound parse capture from run A,
+``docs/evidence/P07-T01/benchmark-parse-capture.json``, which the frozen
+bundle then carries; run B must equal it.
 """
 
 from __future__ import annotations
@@ -108,6 +111,15 @@ def live() -> int:
         runs.append({"label": label, "worker_pids": pids, "worker_history": history,
                      "values": values.to_json(), "evaluation": result.to_json()})
     a, b = runs
+    parse_payload = {k: v for k, v in a["values"]["engine"]["parse_capture"].items()
+                     if k != "source"}
+    parse_payload.update(task="P07-T01", kind="engine_parse_support",
+                   not_a_claim="Parsed means PoB produced a modifier list; it does not mean the "
+                               "modifier is implemented correctly.",
+                   generated_by="python scripts/p07_t01_flicker_cycle.py --live (run A)",
+                   document="benchmark document of %s (Pounce disabled)"
+                            % str(SEED.relative_to(REPO)).replace("\\", "/"))
+    write("benchmark-parse-capture.json", parse_payload)
     same_values = _strip(a["values"]) == _strip(b["values"])
     ea, eb = dict(a["evaluation"]), dict(b["evaluation"])
     for e in (ea, eb):
@@ -123,7 +135,12 @@ def live() -> int:
     provenance = {k: {"live": a["values"]["engine"].get(k), "frozen": frozen["engine"].get(k)}
                   for k in ("head", "dirty_hash", "document_sha256", "source_document_sha256",
                             "state")}
-    provenance_equal = all(v["live"] == v["frozen"] for v in provenance.values())
+    for key in ("binding", "items", "nodes", "config"):
+        provenance["parse_capture." + key] = {
+            "live_b": b["values"]["engine"]["parse_capture"].get(key),
+            "frozen": frozen["engine"].get("parse_capture", {}).get(key)}
+    provenance_equal = all(v.get("live", v.get("live_b")) == v["frozen"]
+                           for v in provenance.values())
     agreement = {"values_identical": same_values, "evaluations_identical": same_eval,
                  "worker_pid_sets_disjoint": disjoint,
                  "evaluation_ids": [a["evaluation"]["evaluation_id"],

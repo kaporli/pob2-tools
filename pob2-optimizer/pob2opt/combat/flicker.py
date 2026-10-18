@@ -17,6 +17,8 @@ Boundaries (review PR-18-22 R4 to R7):
   table the coverage rule carries and cites;
 - engine, document and state identity come from the values' capture and are
   checked against the scored document; nothing here asserts a clean pin;
+- parse and config evidence comes with that capture, bound to the scored
+  document, and coverage verifies the binding;
 - only the fixed v1 windows (120 s, 5 s) can produce the objective; other
   windows are separately identified diagnostics;
 - only ``pob-community-v2`` is implemented; any other method is refused.
@@ -32,8 +34,9 @@ from typing import Any, Callable, Mapping
 
 from ..coverage import CoverageLedger, analyse, decide
 from ..coverage.flicker_v1 import build_registry
-from ..coverage.inputs import (EngineState as CoverageEngine, ScenarioFacts,
-                               build_facts_from_pob_xml, load_mod_support, load_scenarios)
+from ..coverage.inputs import (EngineState as CoverageEngine, ModSupport, ScenarioFacts,
+                               build_facts_from_pob_xml, load_scenarios,
+                               mod_support_from_json)
 from ..coverage.registry import PATCH_PROFILE_ID
 from ..domain.codec import to_jsonable
 from ..domain.identity import content_hash
@@ -159,7 +162,7 @@ def evaluate_flicker(xml: str, values_source: Callable[[], CycleValues] | CycleV
                      policy: RotationPolicy | None = None,
                      method: str = res.METHOD_ID,
                      scenarios_path: str | Path = REPO / "benchmarks/p09-flicker-v1/scenarios.json",
-                     mod_support_path: str | Path | None = REPO / "docs/evidence/P06/seed-engine-mod-support.json",
+                     mod_support: ModSupport | None = None,
                      p09_resolutions: list[Mapping] | None = None,
                      attribution: AttributionTable | None = None,
                      attribution_acceptance: Mapping | None = None,
@@ -186,7 +189,9 @@ def evaluate_flicker(xml: str, values_source: Callable[[], CycleValues] | CycleV
         "method": method, "windows": {k: list(v) for k, v in windows.items()},
         "xml_sha256": sha256_text(xml), "rotation": rotation_json["rotation_hash"],
         "patch_profile": [patch_profile_id, patch_compatibility],
-        "mod_support_sha256": _file_sha(mod_support_path),
+        "mod_support_override": (content_hash(mod_support.binding.identity())
+                                 if mod_support is not None and mod_support.binding else
+                                 None if mod_support is None else "unbound"),
         "config_options": (content_hash({k: to_jsonable(v) for k, v in config_options.items()})
                            if config_options is not None else None),
         "p09_resolutions": content_hash(list(p09_resolutions)) if p09_resolutions else None,
@@ -220,7 +225,12 @@ def evaluate_flicker(xml: str, values_source: Callable[[], CycleValues] | CycleV
     facts = build_facts_from_pob_xml(scored_xml.encode("utf-8"), engine=_coverage_engine(values))
     registry = registry or build_registry()
     scenario = load_scenarios(scenarios_path)[SCENARIO_ID]
-    mods = load_mod_support(mod_support_path) if mod_support_path else None
+    # Parse evidence comes with the values' capture and is bound to the scored
+    # document; coverage verifies the binding (P06 R2). No default report.
+    mods = mod_support
+    if mods is None and values is not None and values.engine.get("parse_capture"):
+        capture = values.engine["parse_capture"]
+        mods = mod_support_from_json(capture, str(capture.get("source", "values capture")))
     inputs = _inputs(values) if values is not None else {}
 
     def run(reg, scen):

@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import hashlib
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from typing import Any, Mapping
 
 FLICKER = "Flicker Strike"
@@ -312,8 +312,21 @@ def capture(adapter, xml: str, *, document: str = "benchmark", charges: int = 5,
               "worker_pids": list(getattr(adapter, "worker_pids", ()))}
     # A dirty hash of None means clean only when the checkout was resolved;
     # otherwise the tree state is unknown and the key stays absent.
-    if getattr(adapter.checkout, "reason", "unresolved") is None:
+    resolved = getattr(adapter.checkout, "reason", "unresolved") is None
+    if resolved:
         engine["dirty_hash"] = identity.pob_dirty_hash
+    # Parse verdicts for the scored document, bound to it (P06 R2).
+    from ..coverage.capture import CaptureRefused, bind_capture
+
+    raw = adapter.parse_support(BuildDocument(build_hash="%s/parse" % build_hash, xml=doc))
+    try:
+        engine["parse_capture"] = {
+            "source": "EngineAdapter.parse_support",
+            **bind_capture(doc, raw, pob_commit=identity.pob_commit,
+                           pob_dirty=(identity.pob_dirty_hash is not None) if resolved else None)}
+    except CaptureRefused as exc:
+        raise MissingValue("/parse_capture", "engine state differs from the document: %s"
+                           % exc) from None
     return CycleValues(
         document=document, charges=charges,
         whirling_time_s=_need(wa, "Time", "/whirling"),
@@ -349,6 +362,9 @@ def capture(adapter, xml: str, *, document: str = "benchmark", charges: int = 5,
 
 SEED_REPLAY = "docs/evidence/P09-T01.2/replay.json"
 SEED_MANIFEST = "docs/evidence/P09-T01.1/seed/manifest.json"
+#: Bound parse captures of the documents the bundle scores, by document.
+SEED_PARSE_CAPTURES = {"seed": "docs/evidence/P06/seed-engine-mod-support.json",
+                       "benchmark": "docs/evidence/P07-T01/benchmark-parse-capture.json"}
 
 
 def seed_replay_values(repo_root, *, document: str = "benchmark") -> CycleValues:
@@ -366,5 +382,17 @@ def seed_replay_values(repo_root, *, document: str = "benchmark") -> CycleValues
     build = replay["build"]
     expected = next(f["sha256"] for f in manifest["files"] if f["path"] == build)
     source = (root / build).read_bytes().decode("utf-8")
-    return from_replay(replay, source_xml=source, source_sha256=expected, document=document,
-                       replay_ref=SEED_REPLAY)
+    values = from_replay(replay, source_xml=source, source_sha256=expected, document=document,
+                         replay_ref=SEED_REPLAY)
+    capture_path = root / SEED_PARSE_CAPTURES[document]
+    if not capture_path.exists():
+        return values
+    capture = json.loads(capture_path.read_text(encoding="utf-8"))
+    bound_to = (capture.get("binding") or {}).get("document_hash")
+    if bound_to != values.engine["document_sha256"]:
+        raise MissingValue("/parse_capture", "%s is bound to document %s, the scored document "
+                           "is %s" % (SEED_PARSE_CAPTURES[document], bound_to,
+                                      values.engine["document_sha256"]))
+    engine = dict(values.engine, parse_capture={"source": SEED_PARSE_CAPTURES[document],
+                                                **capture})
+    return replace(values, engine=engine)

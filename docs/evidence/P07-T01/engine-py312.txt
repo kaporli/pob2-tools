@@ -1,4 +1,5 @@
-tests\engine\test_p07_t01_flicker_cycle_engine.py ..                     [ 33%]
 tests\engine\test_p09_t01_2_seed_replay_engine.py ....                   [100%]
 
-============================= 6 passed in 31.18s ==============================
+native fault diagnostics: 13840466 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-583\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================= 7 passed in 35.84s ==============================

@@ -56,11 +56,12 @@ OP_PRIMITIVES = "primitives"
 OP_CATALOG_PAGE = "catalog_page"
 OP_LEGALITY_STATE = "legality_state"
 OP_CYCLE_INPUTS = "cycle_inputs"
+OP_PARSE_SUPPORT = "parse_support"
 OP_SHUTDOWN = "shutdown"
 
 OPERATIONS = (OP_DESCRIBE, OP_CREATE_BLANK_BUILD, OP_LOAD_EXACT_BUILD,
               OP_PRIMITIVES, OP_CATALOG_PAGE, OP_LEGALITY_STATE, OP_CYCLE_INPUTS,
-              OP_SHUTDOWN)
+              OP_PARSE_SUPPORT, OP_SHUTDOWN)
 
 #: The bootstrap handler behind ``OP_LEGALITY_STATE``. Read-only: it reports
 #: the allocation, equipment, skills and calculated pools the engine holds and

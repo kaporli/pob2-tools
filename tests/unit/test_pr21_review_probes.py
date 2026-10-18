@@ -131,3 +131,64 @@ def test_r7_unsupported_method_is_refused_with_a_settled_registry(bench, method)
     result = f.evaluate(bench, f.settled(), method=method)
     assert blocked(result)
     assert result.status == "unsupported_method"
+
+
+# Inherited R1 to R3 (PR #19) through evaluate_flicker -------------------------
+
+def _two_loadouts(active: str) -> str:
+    one = f.SYNTH_XML % ""
+    start, end = one.index("<SkillSet id=\"1\">"), one.index("</SkillSet>") + len("</SkillSet>")
+    first = one[start:end]
+    second = first.replace('<SkillSet id="1">', '<SkillSet id="7">').replace(
+        '<Gem skillId="ChargedStaffPlayer"',
+        '<Gem skillId="UnknownActiveSkill" nameSpec="Unknown" enabled="true"/>\n'
+        '   <Gem skillId="ChargedStaffPlayer"')
+    return one[:start].replace("<Skills>", '<Skills activeSkillSet="%s">' % active) \
+        + first + "\n " + second + one[end:]
+
+
+def _evaluate_doc(bench, xml, **kw):
+    return f.evaluate(bench, f.settled(), xml=xml,
+                      source=f.values(engine=f.identity(xml, **kw)))
+
+
+def test_r1_unsupported_state_in_the_selected_loadout_blocks(bench):
+    assert _evaluate_doc(bench, _two_loadouts("1")).status == "eligible"
+    result = _evaluate_doc(bench, _two_loadouts("7"))
+    assert blocked(result)
+    assert any(b["class"] == "unknown_entity" for b in result.decision["blocking"])
+
+
+def test_r2_capture_from_an_unclean_or_other_engine_blocks(bench):
+    for kw in ({"pob_commit": "wrong-commit"}, {"pob_dirty": True}, {"pob_dirty": None}):
+        result = _evaluate_doc(bench, f.SYNTH_XML % "", **kw)
+        assert blocked(result), kw
+        assert any(b["class"] == "unbound_evidence" for b in result.decision["blocking"]), kw
+
+
+def test_r2_capture_of_another_document_blocks(bench):
+    xml = f.SYNTH_XML % ""
+    ident = f.identity(xml)
+    ident["parse_capture"] = f.identity(OTHER_XML)["parse_capture"]
+    result = f.evaluate(bench, f.settled(), xml=xml, source=f.values(engine=ident))
+    assert blocked(result)
+    assert any(b["class"] == "unbound_evidence" for b in result.decision["blocking"])
+
+
+def test_r2_missing_capture_blocks(bench):
+    xml = f.SYNTH_XML % ""
+    ident = {k: v for k, v in f.identity(xml).items() if k != "parse_capture"}
+    result = f.evaluate(bench, f.settled(), xml=xml, source=f.values(engine=ident))
+    assert blocked(result)
+
+
+def test_r3_unearned_enemy_debuff_blocks(bench):
+    xml = (f.SYNTH_XML % "").replace(
+        "</PathOfBuilding2>",
+        '<Config><Input name="enemyCriticalWeaknessStacks" number="20"/></Config>\n'
+        "</PathOfBuilding2>")
+    result = _evaluate_doc(bench, xml)
+    assert blocked(result)
+    assert any(b["class"] == "hidden_assumption"
+               and b["fields"] == ["/config/enemyCriticalWeaknessStacks"]
+               for b in result.decision["blocking"])
