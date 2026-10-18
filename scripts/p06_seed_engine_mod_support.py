@@ -7,6 +7,11 @@ unparsed text as ``extra`` (Classes/Item.lua, Classes/PassiveTree.lua).
 A parsed line is not proof of a correct implementation; an unparsed line is
 proof that PoB does not calculate it.
 
+The capture is bound to the document hash, the selected sets, the clean
+engine identity, each equipped item's id and text hash, the allocated nodes
+and the selected config inputs. It refuses to write when the engine's loaded
+state differs from the document's.
+
 Also records every config variable holding an input or placeholder value and
 whether PoB's own config tab shows it for this build (``control.shown``).
 PoB applies count-type placeholders when no input is set
@@ -49,7 +54,8 @@ local fields = { "enchantModLines", "runeModLines", "implicitModLines",
 for slotName, slot in pairs(build.itemsTab.slots) do
   local item = build.itemsTab.items[slot.selItemId]
   if item then
-    local entry = { slot = slotName, name = item.name, base = item.baseName, lines = {} }
+    local entry = { slot = slotName, item_id = tostring(slot.selItemId), name = item.name,
+                    base = item.baseName, lines = {} }
     for _, f in ipairs(fields) do
       for _, row in ipairs(lines(item, f)) do
         row.block = f
@@ -83,6 +89,12 @@ for var, control in pairs(cfg.varControls) do
       input = input, placeholder = placeholder }
   end
 end
+out.selection = {
+  Tree = tostring(build.treeTab.activeSpec),
+  Skills = tostring(build.skillsTab.activeSkillSetId),
+  Items = tostring(build.itemsTab.activeItemSetId),
+  Config = tostring(cfg.activeConfigSetId),
+}
 return out
 """
 
@@ -103,9 +115,49 @@ def main() -> int:
     from pob2mcp.engine import Pob2Engine
 
     xml = SEED.read_bytes()
+    sys.path.insert(0, str(REPO / "pob2-optimizer"))
+    from pob2opt.coverage.inputs import build_facts_from_pob_xml
+    facts = build_facts_from_pob_xml(xml)
+    if facts.loadout_problems:
+        print("refused: %s" % "; ".join(facts.loadout_problems))
+        return 2
     with Pob2Engine(str(root)) as engine:
         engine.call("load_build_xml", {"xml": xml.decode("utf-8"), "name": "seed"})
         result = engine.eval_lua(PROBE)
+    # Bind the verdicts to what the engine actually held, and refuse when that
+    # differs from the document's own selection, items, nodes or inputs.
+    by_slot = {i.slot: i for i in facts.items}
+    engine_items = {e["slot"]: e["item_id"] for e in result["items"]}
+    problems = []
+    if result["selection"] != dict(facts.selection):
+        problems.append("selection %s != %s" % (result["selection"], dict(facts.selection)))
+    if set(engine_items) != set(by_slot) or any(
+            by_slot[k].item_id != v for k, v in engine_items.items() if k in by_slot):
+        problems.append("equipped items differ: engine %s, document %s" % (
+            engine_items, {k: v.item_id for k, v in by_slot.items()}))
+    engine_nodes = sorted((str(n["id"]) for n in result["nodes"]), key=int)
+    if engine_nodes != list(facts.passive_ids):
+        problems.append("allocated nodes differ")
+    inputs = {r["var"]: r.get("input") for r in result["config"]}
+    for var, value in facts.config_explicit.items():
+        engine_value = inputs.get(var)
+        same = (engine_value.split() == value.split()
+                if isinstance(engine_value, str) and isinstance(value, str)
+                else engine_value == value)
+        if not same:
+            problems.append("config %s: engine %r, document %r" % (var, inputs.get(var), value))
+    if problems:
+        print("refused: " + "; ".join(problems))
+        return 2
+    binding = {
+        "document_hash": facts.document_hash,
+        "selection": dict(facts.selection),
+        "pob_commit": head,
+        "pob_dirty": False,
+        "items": {slot: [i.item_id, i.text_sha256] for slot, i in sorted(by_slot.items())},
+        "nodes": list(facts.passive_ids),
+        "config": dict(sorted(facts.config_explicit.items())),
+    }
     result["items"].sort(key=lambda e: e["slot"])
     result["nodes"].sort(key=lambda e: int(e["id"]))
     result["config"].sort(key=lambda e: e["var"])
@@ -119,6 +171,7 @@ def main() -> int:
         "seed_xml": str(SEED.relative_to(REPO)).replace("\\", "/"),
         "seed_sha256": hashlib.sha256(xml).hexdigest(),
         "generated_by": "scripts/p06_seed_engine_mod_support.py",
+        "binding": binding,
         **result,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)

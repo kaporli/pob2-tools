@@ -29,7 +29,7 @@ RULE_FIELDS = ("support", "validation", "limitations", "tolerances",
                "required_input_paths", "dependency_ids", "implementation_ref", "owner")
 #: Entry fields a resolution may correct.
 ENTRY_FIELDS = ("satisfied_by", "assignments", "provides_paths", "requires_events",
-                "damage_source", "tests")
+                "damage_source", "tests", "config_values")
 
 
 class ResolutionRefused(ValueError):

@@ -16,11 +16,12 @@ import pytest
 from pob2opt.coverage import (CoverageLedger, EntityDiff, RegistryError,
                               Resolution, ResolutionRefused, analyse, decide)
 from pob2opt.coverage.flicker_v1 import POB_CYCLE_INPUT_RULES, build_registry
-from pob2opt.coverage.inputs import (BuildFacts, EngineState, GemFacts,
-                                     GroupFacts, ItemFacts, LineSupport,
+from pob2opt.coverage.inputs import (BuildFacts, CaptureBinding, EngineState,
+                                     GemFacts, GroupFacts, ItemFacts, LineSupport,
                                      ModSupport, ScenarioFacts,
-                                     build_facts_from_pob_xml, load_mod_support,
-                                     load_scenarios, parse_config_options)
+                                     build_facts_from_pob_xml, item_text_hash,
+                                     load_mod_support, load_scenarios,
+                                     parse_config_options)
 from pob2opt.coverage.registry import MechanicsRegistry, RuleEntry, make_rule
 from pob2opt.domain.absent import ABSENT
 from pob2opt.domain.enums import (ActionKind, GapKind, GapSeverity, GapStatus,
@@ -102,12 +103,44 @@ def build(*, extra_groups=(), engine=EngineState(PIN, False), items=(), passives
     return BuildFacts(build_id="build/test", class_name="Monk", ascendancy=None,
                       level=90, declared_patch=None, main_group=1, groups=groups,
                       passive_ids=tuple(passives), items=tuple(items),
-                      config_explicit={}, config_effective=None, engine=engine)
+                      config_explicit=dict(config or {}), config_effective=None,
+                      engine=engine, document_hash="doc-test", selection=dict(SELECTION))
 
 
-def mods(items=None, nodes=None, config=()):
+SELECTION = {"Tree": "1", "Skills": "1", "Items": "1", "Config": "1"}
+
+
+def item(slot, item_id, name, text=None):
+    """An equipped item whose identity is its id and text hash."""
+    return ItemFacts(slot, item_id, name, item_text_hash(text or "%s\n%s" % (item_id, name)))
+
+
+def mods(items=None, nodes=None, config=(), binding=None):
+    """A capture as given; unbound unless ``binding`` is supplied."""
     return ModSupport(source="test", pob_commit=PIN, items=items or {},
-                      nodes=nodes or {}, config=tuple(config))
+                      nodes=nodes or {}, config=tuple(config), binding=binding)
+
+
+def capture(b, *, items=None, nodes=None, config=(), commit=PIN, dirty=False, of=None):
+    """A complete capture bound to build ``of`` (default ``b``) on ``commit``.
+
+    Every equipped item and allocated node gets a verified (possibly empty)
+    line set unless given; config rows hold the build's inputs plus ``config``.
+    """
+    source = of or b
+    rows = [{"var": k, "shown": True, "input": v} for k, v in source.config_explicit.items()]
+    rows += list(config)
+    binding = CaptureBinding(
+        document_hash=source.document_hash, selection=dict(source.selection),
+        pob_commit=commit, pob_dirty=dirty,
+        items={i.slot: (i.item_id, i.text_sha256) for i in source.items},
+        nodes=tuple(source.passive_ids), config=dict(source.config_explicit))
+    item_lines = {i.slot: () for i in source.items}
+    item_lines.update(items or {})
+    node_lines = {n: () for n in source.passive_ids}
+    node_lines.update(nodes or {})
+    return ModSupport(source="test", pob_commit=commit, items=item_lines, nodes=node_lines,
+                      config=tuple(rows), binding=binding)
 
 
 def cmp(path, op=PredicateOperator.GTE, value=0):
@@ -131,15 +164,18 @@ def rotation(*rules):
 
 ROT = (rule(0, "use_skill", "Builder"), rule(1, "use_skill", "Strike"))
 SCENARIO = ScenarioFacts("bench", "dps_benchmark", frozenset(), {})
+TARGETED = ScenarioFacts("bench", "dps_benchmark", frozenset(), {},
+                         target_config={"enemyLevel": 82})
 INPUTS = {"/pob/Strike/Duration": 0.5}
 
 
 def run(registry=None, *, b=None, rot=ROT, scenario=SCENARIO, ms=None, inputs=INPUTS,
         compatibility="verified"):
     registry = registry or settled_registry()
-    report = analyse(b or build(), scenario, registry,
+    b = b or build()
+    report = analyse(b, scenario, registry,
                      rotation=rotation(*rot) if rot is not None else None,
-                     mod_support=ms if ms is not None else mods(),
+                     mod_support=ms if ms is not None else capture(b),
                      patch_profile_id=PROFILE, patch_compatibility=compatibility,
                      pinned_commit=PIN, inputs=inputs)
     return report, decide(report, registry)
@@ -261,21 +297,21 @@ def test_missing_data_and_missing_implementation_produce_different_requests():
 
 
 def test_display_name_omission_does_not_change_blocking():
-    named = build(items=(ItemFacts("Ring 1", "1", "Some Ring"),))
-    unnamed = build(items=(ItemFacts("Ring 1", "1", ""),))
-    ms = mods(items={"Ring 1": (LineSupport("+10 to Strength", True, None),)})
-    a, da = run(b=named, ms=ms)
-    b, db = run(b=unnamed, ms=ms)
+    named = build(items=(item("Ring 1", "1", "Some Ring", "Ring text"),))
+    unnamed = build(items=(item("Ring 1", "1", "", "Ring text"),))
+    lines = {"Ring 1": (LineSupport("+10 to Strength", True, None),)}
+    a, da = run(b=named, ms=capture(named, items=lines))
+    b, db = run(b=unnamed, ms=capture(unnamed, items=lines))
     assert [f.gap_id for f in a.findings] == [f.gap_id for f in b.findings]
     assert da.eligible and db.eligible
 
 
 def test_unknown_skill_item_line_and_hidden_toggle_are_detected():
     b = build(extra_groups=(GroupFacts(3, True, None, frozenset({1}), (gem("Mystery"),)),),
-              items=(ItemFacts("Ring 1", "1", "Ring"),))
-    ms = mods(items={"Ring 1": (LineSupport("Strikes deal double damage on Tuesdays", False,
-                                            "Strikes deal double damage on Tuesdays"),)},
-              config=[{"var": "conditionOnslaught", "shown": True, "input": True}])
+              items=(item("Ring 1", "1", "Ring"),))
+    ms = capture(b, items={"Ring 1": (LineSupport("Strikes deal double damage on Tuesdays",
+                                                  False, "Strikes deal double damage on Tuesdays"),)},
+                 config=[{"var": "conditionOnslaught", "shown": True, "input": True}])
     report, decision = run(b=b, ms=ms)
     got = classes(report)
     assert {"unknown_entity", "missing_implementation", "hidden_assumption"} <= set(got)
@@ -285,16 +321,16 @@ def test_unknown_skill_item_line_and_hidden_toggle_are_detected():
 
 
 def test_hidden_config_option_is_informational_and_quests_are_ignored():
-    ms = mods(config=[{"var": "conditionOnslaught", "shown": False, "input": True},
-                      {"var": "questAct 1X", "shown": True, "input": True},
-                      {"var": "enemyLevel", "shown": True, "placeholder": 82}])
-    report, decision = run(ms=ms)
+    ms = capture(build(), config=[{"var": "conditionOnslaught", "shown": False, "input": True},
+                                  {"var": "questAct 1X", "shown": True, "input": True},
+                                  {"var": "enemyLevel", "shown": True, "placeholder": 82}])
+    report, decision = run(ms=ms, scenario=TARGETED)
     assert decision.eligible
     assert [f.gap_class for f in report.findings] == ["not_applicable"]
 
 
 def test_missing_engine_parse_data_is_missing_data_not_a_pass():
-    b = build(items=(ItemFacts("Ring 1", "1", "Ring"),), passives=("123",))
+    b = build(items=(item("Ring 1", "1", "Ring"),), passives=("123",))
     report = analyse(b, SCENARIO, settled_registry(), rotation=rotation(*ROT),
                      mod_support=None, patch_profile_id=PROFILE,
                      patch_compatibility="verified", pinned_commit=PIN, inputs=INPUTS)
@@ -519,10 +555,297 @@ def test_unknown_impact_marks_the_family_or_everything_stale():
     everything = CoverageLedger(reg, []).invalidate_for_patch("profile/next", None,
                                                               at="2026-10-19T00:00:00Z")
     assert all(e.rule.validation is RuleValidation.STALE for e in everything)
-    report = analyse(build(), SCENARIO, everything, rotation=rotation(*ROT), mod_support=mods(),
+    report = analyse(build(), SCENARIO, everything, rotation=rotation(*ROT),
+                     mod_support=capture(build()),
                      patch_profile_id="profile/next", patch_compatibility="verified",
                      pinned_commit=PIN, inputs=INPUTS)
     assert "stale_patch" in classes(report)
+
+
+# ------------------------------------------- PR #19 R1: selected loadout ===
+
+def loadout_doc(*, skill_sets, item_sets, specs, config_sets, active, items=None, titles=None):
+    """A PoB document with explicit sets. ``active`` maps tab to selector value."""
+    titles = titles or {}
+    items = items or {}
+
+    def title(tag, key):
+        return ' title="%s"' % titles[(tag, key)] if (tag, key) in titles else ""
+
+    parts = ['<PathOfBuilding2><Build level="90" mainSocketGroup="1"/>']
+    parts.append('<Skills activeSkillSet="%s">' % active["Skills"])
+    for sid, gems in skill_sets.items():
+        parts.append('<SkillSet id="%s"%s>' % (sid, title("Skills", sid)))
+        for group in gems:
+            parts.append('<Skill enabled="true">' + "".join(
+                '<Gem enabled="true" skillId="%s"/>' % g for g in group) + "</Skill>")
+        parts.append("</SkillSet>")
+    parts.append('</Skills><Tree activeSpec="%s">' % active["Tree"])
+    for index, nodes in enumerate(specs, 1):
+        parts.append('<Spec nodes="%s"%s/>' % (",".join(nodes), title("Tree", str(index))))
+    parts.append('</Tree><Items activeItemSet="%s">' % active["Items"])
+    for iid, text in items.items():
+        parts.append('<Item id="%s">%s</Item>' % (iid, text))
+    for sid, slots in item_sets.items():
+        parts.append('<ItemSet id="%s"%s>' % (sid, title("Items", sid)) + "".join(
+            '<Slot name="%s" itemId="%s"/>' % kv for kv in slots.items()) + "</ItemSet>")
+    parts.append('</Items><Config activeConfigSet="%s">' % active["Config"])
+    for sid, inputs in config_sets.items():
+        parts.append('<ConfigSet id="%s"%s>' % (sid, title("Config", sid)) + "".join(
+            '<Input name="%s" boolean="true"/>' % k for k in inputs) + "</ConfigSet>")
+    parts.append("</Config></PathOfBuilding2>")
+    return "".join(parts)
+
+
+GOOD = [["Strike", "SupportGate"], ["Builder"]]
+BAD = [["Strike", "SupportGate"], ["Builder"], ["Mystery"]]
+RING_A = "Rarity: RARE\nA\nGold Ring"
+RING_B = "Rarity: RARE\nB\nGold Ring"
+
+
+def two_loadouts(active, titles=None, config_b=("conditionOnslaught",)):
+    return loadout_doc(
+        skill_sets={"3": GOOD, "7": BAD}, specs=[["10"], ["10", "11"]],
+        item_sets={"4": {"Ring 1": "21"}, "9": {"Ring 1": "22"}},
+        config_sets={"2": [], "5": list(config_b)},
+        items={"21": RING_A, "22": RING_B}, active=active, titles=titles)
+
+
+FIRST = {"Skills": "3", "Tree": "1", "Items": "4", "Config": "2"}
+SECOND = {"Skills": "7", "Tree": "2", "Items": "9", "Config": "5"}
+
+
+def analyse_doc(doc, *, loadout=None, registry=None):
+    facts = build_facts_from_pob_xml(doc, loadout=loadout, engine=EngineState(PIN, False))
+    return run(registry, b=facts)
+
+
+def test_r1_unsupported_state_only_in_the_selected_second_loadout_blocks():
+    facts = build_facts_from_pob_xml(two_loadouts(SECOND))
+    assert dict(facts.selection) == SECOND
+    assert [g.skill_id for grp in facts.groups for g in grp.gems][-1] == "Mystery"
+    assert facts.passive_ids == ("10", "11")
+    assert [(i.slot, i.item_id) for i in facts.items] == [("Ring 1", "22")]
+    assert dict(facts.config_explicit) == {"conditionOnslaught": True}
+    report, decision = analyse_doc(two_loadouts(SECOND))
+    assert not decision.eligible
+    assert {"unknown_entity", "hidden_assumption"} <= set(classes(report))
+
+
+def test_r1_selecting_the_supported_first_loadout_analyses_it():
+    facts = build_facts_from_pob_xml(two_loadouts(FIRST))
+    assert dict(facts.selection) == FIRST
+    assert [(i.slot, i.item_id) for i in facts.items] == [("Ring 1", "21")]
+    report, decision = analyse_doc(two_loadouts(FIRST))
+    assert decision.eligible, report.to_json()["findings"]
+
+
+def test_r1_missing_selector_target_blocks_instead_of_falling_back():
+    for tab, bad in (("Skills", "8"), ("Items", "5"), ("Config", "9"), ("Tree", "3")):
+        active = dict(FIRST, **{tab: bad})
+        facts = build_facts_from_pob_xml(two_loadouts(active))
+        assert tab not in facts.selection
+        assert any(p.startswith("/%s" % tab) for p in facts.loadout_problems), tab
+        report, decision = analyse_doc(two_loadouts(active))
+        assert "loadout" in classes(report) and not decision.eligible
+
+
+LINKED = {("Tree", "1"): "Boss {1}", ("Tree", "2"): "Map {2}",
+          ("Skills", "3"): "a {1}", ("Skills", "7"): "b {2}",
+          ("Items", "4"): "a {1}", ("Items", "9"): "b {2}",
+          ("Config", "2"): "a {1}", ("Config", "5"): "b {2}"}
+
+
+def test_r1_named_loadout_uses_pob_links_and_ambiguity_blocks():
+    doc = two_loadouts(FIRST, titles=LINKED)
+    assert dict(build_facts_from_pob_xml(doc, loadout="Map {2}").selection) == SECOND
+    assert dict(build_facts_from_pob_xml(doc, loadout="Boss {1}").selection) == FIRST
+    missing = build_facts_from_pob_xml(doc, loadout="Nope")
+    assert missing.loadout_problems and not missing.selection
+    ambiguous = {**LINKED, ("Items", "9"): "b {1}"}
+    facts = build_facts_from_pob_xml(two_loadouts(FIRST, titles=ambiguous), loadout="Boss {1}")
+    assert any("ambiguous" in p for p in facts.loadout_problems)
+    report, decision = run(b=replace(facts, engine=EngineState(PIN, False)))
+    assert "loadout" in classes(report) and not decision.eligible
+
+
+def test_r1_capture_of_another_loadout_is_not_used():
+    second = build_facts_from_pob_xml(two_loadouts(SECOND), engine=EngineState(PIN, False))
+    first = build_facts_from_pob_xml(two_loadouts(FIRST), engine=EngineState(PIN, False))
+    report, decision = run(b=first, ms=capture(second))
+    assert "unbound_evidence" in classes(report) and not decision.eligible
+
+
+# ----------------------------------------- PR #19 R2: bound parse evidence ===
+
+def r2_build(**kw):
+    defaults = dict(items=(item("Ring 1", "1", "Ring", "ring text"),), passives=("5",),
+                    config={"conditionX": False})
+    defaults.update(kw)
+    return build(**defaults)
+
+
+def unbound_fields(report):
+    return {p for f in report.findings if f.gap_class == "unbound_evidence" for p in f.field_paths}
+
+
+def test_r2_complete_bound_capture_passes():
+    b = r2_build()
+    report, decision = run(b=b, ms=capture(b))
+    assert decision.eligible, report.to_json()["findings"]
+    assert not unbound_fields(report)
+
+
+def test_r2_changed_item_passive_config_or_engine_invalidates():
+    old = r2_build()
+    old_capture = capture(old)
+    baseline = run(b=old, ms=old_capture)[0].input_identity
+    cases = {
+        "item text": (r2_build(items=(item("Ring 1", "1", "Ring", "other text"),)),
+                      "/engine_parse/items/Ring 1"),
+        "item id": (r2_build(items=(item("Ring 1", "2", "Ring", "ring text"),)),
+                    "/engine_parse/items/Ring 1"),
+        "passive": (r2_build(passives=("5", "6")), "/engine_parse/nodes/6"),
+        "config": (r2_build(config={"conditionX": True}), "/config"),
+    }
+    for name, (new, field) in cases.items():
+        report, decision = run(b=new, ms=old_capture)
+        assert field in unbound_fields(report), name
+        assert not decision.eligible, name
+        assert report.input_identity != baseline, name
+    for commit, dirty in (("wrong-commit", False), (PIN, True), (PIN, None)):
+        report, decision = run(b=old, ms=capture(old, commit=commit, dirty=dirty))
+        assert "/engine_parse/binding/engine" in unbound_fields(report)
+        assert not decision.eligible
+        assert report.input_identity != baseline
+    other_doc = replace(old, document_hash="doc-other")
+    report, decision = run(b=other_doc, ms=old_capture)
+    assert "/engine_parse/binding/document" in unbound_fields(report) and not decision.eligible
+
+
+def test_r2_absent_node_entry_is_not_a_verified_empty_set():
+    b = r2_build(passives=("5", "99999999"))
+    ms = capture(b)
+    nodes = {k: v for k, v in ms.nodes.items() if k != "99999999"}
+    report, decision = run(b=b, ms=replace(ms, nodes=nodes))
+    missing = [f for f in report.findings if f.field_paths == ("/engine_parse/nodes/99999999",)]
+    assert missing and missing[0].severity is GapSeverity.BLOCKING and not decision.eligible
+    assert run(b=b, ms=ms)[1].eligible  # present and empty is verified
+    reg = settled_registry(**{"passive/99999999": entry("passive/99999999",
+                                                        subjects=("passive:99999999",))})
+    assert run(reg, b=b, ms=replace(ms, nodes=nodes))[1].eligible
+
+
+def test_r2_absent_item_entry_and_unknown_item_identity_block():
+    b = r2_build()
+    ms = capture(b)
+    report, decision = run(b=b, ms=replace(ms, items={}))
+    assert any(f.field_paths == ("/engine_parse/items/Ring 1",)
+               and f.severity is GapSeverity.BLOCKING for f in report.findings)
+    assert not decision.eligible
+    unknown = r2_build(items=(ItemFacts("Ring 1", "1", "Ring"),))
+    report, decision = run(b=unknown, ms=capture(unknown))
+    assert "/engine_parse/items/Ring 1" in unbound_fields(report) and not decision.eligible
+
+
+def test_r2_seed_capture_is_bound_and_complete():
+    ms = load_mod_support(PROBE)
+    facts = build_facts_from_pob_xml(SEED.read_bytes())
+    assert ms.binding is not None
+    assert ms.binding.document_hash == facts.document_hash
+    assert dict(ms.binding.selection) == dict(facts.selection)
+    assert ms.binding.pob_commit == PIN and ms.binding.pob_dirty is False
+    assert set(ms.binding.items) == {i.slot for i in facts.items}
+    assert all(tuple(ms.binding.items[i.slot]) == (i.item_id, i.text_sha256)
+               for i in facts.items)
+    assert any(i.slot.startswith("Jewel ") for i in facts.items)
+    assert set(ms.nodes) == set(facts.passive_ids) == set(ms.binding.nodes)
+    report, _, _ = seed_report()
+    assert not unbound_fields(report)
+
+
+# ------------------------------------------- PR #19 R3: target bindings ===
+
+BENCH_TARGET = {"enemyIsBoss": "Pinnacle", "enemyLevel": 82, "enemyArmour": 8063}
+TARGET_SCENARIO = ScenarioFacts("bench", "dps_benchmark", frozenset(), {},
+                                target_config=BENCH_TARGET)
+
+
+def target_rows(**values):
+    rows = {"enemyIsBoss": {"input": "Pinnacle"}, "enemyLevel": {"placeholder": 82},
+            "enemyArmour": {"placeholder": 8063}}
+    rows.update(values)
+    return [dict(var=k, shown=True, **v) for k, v in rows.items() if v is not None]
+
+
+def target_registry(**extra):
+    target = entry("target/bench", owner=SCN, domain="target", subjects=("scenario:bench",))
+    return settled_registry(**{"target/bench": target}, **extra)
+
+
+def test_r3_exact_target_values_pass():
+    b = build()
+    report, decision = run(target_registry(), ms=capture(b, config=target_rows()),
+                           scenario=TARGET_SCENARIO)
+    assert decision.eligible, report.to_json()["findings"]
+    assert "target/bench" in report.rule_ids
+
+
+def test_r3_mismatched_or_absent_target_values_block():
+    b = build()
+    for rows, var in ((target_rows(enemyLevel={"placeholder": 83}), "enemyLevel"),
+                      (target_rows(enemyArmour={"placeholder": 5000}), "enemyArmour"),
+                      (target_rows(enemyIsBoss={"input": "Uber"}), "enemyIsBoss"),
+                      (target_rows(enemyArmour=None), "enemyArmour")):
+        report, decision = run(target_registry(), ms=capture(b, config=rows),
+                               scenario=TARGET_SCENARIO)
+        hits = [f for f in report.findings if f.gap_class == "target_mismatch"]
+        assert [f.field_paths for f in hits] == [("/config/" + var,)], var
+        assert not decision.eligible
+
+
+def test_r3_unproven_critical_weakness_stacks_block():
+    b = build()
+    rows = target_rows(enemyCriticalWeaknessStacks={"input": 20})
+    report, decision = run(target_registry(), ms=capture(b, config=rows),
+                           scenario=TARGET_SCENARIO)
+    hidden = [f for f in report.findings if f.gap_class == "hidden_assumption"]
+    assert [f.field_paths for f in hidden] == [("/config/enemyCriticalWeaknessStacks",)]
+    assert not decision.eligible
+
+
+def test_r3_debuff_rule_must_establish_magnitude_and_be_settled():
+    b = build()
+    rows = target_rows(enemyCriticalWeaknessStacks={"input": 20})
+
+    def with_rule(**kw):
+        rule = entry("debuff/critical-weakness", owner=SIM, domain="config",
+                     subjects=("config:enemyCriticalWeaknessStacks",), **kw)
+        return target_registry(**{"debuff/critical-weakness": rule})
+
+    ok = with_rule(config_values={"enemyCriticalWeaknessStacks": 20})
+    report, decision = run(ok, ms=capture(b, config=rows), scenario=TARGET_SCENARIO)
+    assert decision.eligible, report.to_json()["findings"]
+    more = target_rows(enemyCriticalWeaknessStacks={"input": 25})
+    report, decision = run(ok, ms=capture(b, config=more), scenario=TARGET_SCENARIO)
+    assert "hidden_assumption" in classes(report) and not decision.eligible
+    report, decision = run(with_rule(), ms=capture(b, config=rows), scenario=TARGET_SCENARIO)
+    assert "hidden_assumption" in classes(report) and not decision.eligible
+    unsettled = with_rule(config_values={"enemyCriticalWeaknessStacks": 20},
+                          support=UNK, validation=UNTESTED, reviewed=None)
+    report, decision = run(unsettled, ms=capture(b, config=rows), scenario=TARGET_SCENARIO)
+    assert "unknown_rule" in classes(report) and not decision.eligible
+
+
+def test_r3_seed_scenario_target_binding_is_explicit():
+    scenarios = load_scenarios(SCENARIOS)
+    assert dict(scenarios["flicker_sustained_v1"].target_config) == {
+        "enemyIsBoss": "Pinnacle", "presetBossSkills": "None", "enemyLevel": 82,
+        "enemyFireResist": 50, "enemyColdResist": 50, "enemyLightningResist": 50,
+        "enemyChaosResist": 0, "enemyArmour": 8063, "enemyEvasion": 1175}
+    assert not scenarios["p09-flk-boss-short"].target_config
+    report, _, _ = seed_report()
+    assert not [f for f in report.findings if f.gap_class == "target_mismatch"]
 
 
 # ------------------------------------------------------- config options ===

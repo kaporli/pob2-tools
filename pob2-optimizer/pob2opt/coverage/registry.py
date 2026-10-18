@@ -20,7 +20,7 @@ entries with ``support: unknown``, never dropped.
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
-from typing import Iterable, Mapping
+from typing import Any, Iterable, Mapping
 
 from ..domain.codec import to_jsonable
 from ..domain.enums import RuleOwner, RuleSupport, RuleValidation
@@ -85,6 +85,10 @@ class RuleEntry:
     #: Scenario events the effect needs (``kill``, ``incoming_hit``). In a
     #: scenario without them the effect supplies nothing.
     requires_events: tuple[str, ...] = ()
+    #: PoB config values this rule establishes, e.g. a debuff's stack count
+    #: under the rotation. An applied value differing from it, or a config
+    #: variable the rule covers without a value here, blocks.
+    config_values: Mapping[str, Any] = field(default_factory=dict)
 
     @property
     def mechanic_id(self) -> str:
@@ -105,6 +109,7 @@ class RuleEntry:
             "assignments": dict(sorted(self.assignments.items())),
             "reviewed_by": self.reviewed_by,
             "requires_events": sorted(self.requires_events),
+            "config_values": dict(sorted(self.config_values.items())),
         }
 
     def is_settled(self) -> bool:

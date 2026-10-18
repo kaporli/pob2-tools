@@ -25,6 +25,10 @@ Finding classes are distinct so each yields a different request:
 ``unassigned_damage``      a damage source without an ownership class
 ``conflicting_evidence``   accepted evidence disagrees
 ``not_applicable``         the scenario supplies nothing for the effect
+``unbound_evidence``       parse or config evidence not bound to this document,
+                           loadout, engine and state
+``loadout``                the document's selected sets cannot be determined
+``target_mismatch``        a scenario-owned target value differs or is absent
 """
 
 from __future__ import annotations
@@ -56,6 +60,9 @@ GAP_KIND = {
     "unassigned_damage": GapKind.UNSUPPORTED_RULE,
     "conflicting_evidence": GapKind.CONFLICTING_EVIDENCE,
     "not_applicable": GapKind.UNVALIDATED_PREDICTION,
+    "unbound_evidence": GapKind.MISSING_INPUT,
+    "loadout": GapKind.UNRESOLVED_ENTITY,
+    "target_mismatch": GapKind.CONFLICTING_EVIDENCE,
 }
 
 COLLECTION = {
@@ -70,10 +77,11 @@ COLLECTION = {
     "unassigned_damage": "An accepted attribution class for the damage source in the attribution rule.",
     "conflicting_evidence": "A controlled trial that separates the contradicting results; contradictions are never averaged.",
     "not_applicable": "None for this scenario; a scenario supplying the event would need the rule.",
+    "unbound_evidence": "Recapture PoB parse verdicts and config from the exact selected document on a clean checkout of the pinned engine (scripts/p06_seed_engine_mod_support.py).",
+    "loadout": "Fix the document's set selectors or loadout titles so exactly one set per tab is selected, then re-import.",
+    "target_mismatch": "Set the PoB target configuration to the scenario's value and recapture.",
 }
 
-#: PoB config variables owned by the scenario's target configuration.
-TARGET_VAR = re.compile(r"^(enemy(?!Distance)[A-Z].*|presetBossSkills|resistancePenalty)$")
 #: Calculation-mode switches. They change how PoB averages, not game state.
 MODE_VAR = re.compile(r"Mode$")
 #: Variable types PoB applies from a placeholder (ConfigTab:BuildModList).
@@ -133,6 +141,9 @@ class CoverageReport:
     findings: tuple[Finding, ...]
     protocol_gaps: tuple[DataGap, ...]
     notes: tuple[str, ...] = ()
+    #: Identity of everything the verdicts were checked against: document,
+    #: selection, engine, item identities, nodes and config.
+    input_identity: str = ""
 
     def gaps(self, *, created_at: str = "2026-10-18T00:00:00Z") -> list[DataGap]:
         out = []
@@ -163,6 +174,7 @@ class CoverageReport:
             "rotation_id": self.rotation_id, "registry_id": self.registry_id,
             "registry_hash": self.registry_hash, "rule_ids": list(self.rule_ids),
             "rule_closure_hash": self.rule_closure_hash,
+            "input_identity": self.input_identity,
             "critical_rule_ids": list(self.critical_rule_ids),
             "domains": {k: dict(v) for k, v in sorted(self.domains.items())},
             "findings": [{"gap_id": f.gap_id, "class": f.gap_class, "domain": f.domain,
@@ -257,11 +269,13 @@ def analyse(build: BuildFacts, scenario: ScenarioFacts, registry: MechanicsRegis
     w.use(registry.for_subject("scenario:" + scenario.scenario_id))
 
     _walk_patch(w, build, patch_profile_id, patch_compatibility)
+    _walk_loadout(w, build)
     _walk_engine(w, build, pinned_commit)
+    verified = _verify_capture(w, build, mod_support, pinned_commit)
     _walk_skills(w, active_groups)
-    _walk_passives(w, build, mod_support)
-    _walk_items(w, build, mod_support, sets)
-    _walk_config(w, build, mod_support, config_options, skill_names)
+    _walk_passives(w, build, verified)
+    _walk_items(w, build, verified, sets)
+    _walk_config(w, build, verified, config_options, skill_names)
     _walk_rotation(w, rotation, active_groups, skill_ids)
     _walk_scenario(w)
     _walk_rules(w, patch_profile_id)
@@ -280,7 +294,18 @@ def analyse(build: BuildFacts, scenario: ScenarioFacts, registry: MechanicsRegis
         critical_rule_ids=critical,
         domains=_domain_states(registry, rule_ids, findings),
         findings=findings, protocol_gaps=scenario.protocol_gaps,
-        notes=tuple(w.notes))
+        notes=tuple(w.notes),
+        input_identity=content_hash({
+            "build": build.build_id, "document_hash": build.document_hash,
+            "selection": dict(sorted(build.selection.items())),
+            "engine": None if build.engine is None else [build.engine.pob_commit,
+                                                          build.engine.pob_dirty],
+            "items": sorted([i.slot, i.item_id, i.text_sha256] for i in build.items),
+            "nodes": list(build.passive_ids),
+            "config": {k: build.config_explicit[k] for k in sorted(build.config_explicit)},
+            "capture": None if mod_support is None or mod_support.binding is None
+            else mod_support.binding.identity(),
+        }))
 
 
 def _dedupe(findings: list[Finding]) -> tuple[Finding, ...]:
@@ -306,6 +331,121 @@ def _walk_patch(w, build, profile_id, compatibility):
     if build.declared_patch:
         w.notes.append("build declares %r; the declaration does not override profile "
                        "compatibility %r" % (build.declared_patch, compatibility))
+
+
+def _walk_loadout(w, build):
+    for problem in build.loadout_problems:
+        path = problem.split(":", 1)[0]
+        w.add("loadout", "build", BLOCKING, subjects=(build.build_id,), fields=(path,),
+              explanation="The evaluated loadout cannot be determined: %s. No set is chosen "
+                          "in its place." % problem,
+              needed="A document whose selectors or loadout links name exactly one set in "
+                     "%s." % path)
+
+
+@dataclass
+class _Verified:
+    """The parts of a capture that are bound to this exact candidate.
+
+    ``items``/``nodes`` hold only verdicts whose identity matched; ``config``
+    is None unless the captured config state equals the candidate's.
+    """
+
+    items: dict
+    nodes: dict
+    config: tuple | None
+
+
+def _verify_capture(w, build, mods, pinned_commit) -> _Verified | None:
+    if mods is None:
+        return None
+
+    def unbound(field, explanation, subjects=(build.build_id,)):
+        w.add("unbound_evidence", "evidence", BLOCKING, subjects=subjects, fields=(field,),
+              explanation=explanation,
+              needed="Parse verdicts captured from document %s, selection %s, on a clean "
+                     "checkout of %s, covering %s." % (
+                         (build.document_hash or "?")[:16], dict(build.selection),
+                         pinned_commit, field))
+
+    b = mods.binding
+    if b is None:
+        unbound("/engine_parse/binding",
+                "The parse capture %s names no document, loadout, engine or state, so none "
+                "of its verdicts can be attributed to this candidate." % mods.source)
+        return _Verified({}, {}, None)
+    if build.document_hash is None or b.document_hash != build.document_hash             or dict(b.selection) != dict(build.selection):
+        unbound("/engine_parse/binding/document",
+                "The capture was taken from document %s selection %s; this candidate is "
+                "document %s selection %s." % (
+                    b.document_hash[:16], dict(b.selection),
+                    (build.document_hash or "unknown")[:16], dict(build.selection)))
+        return _Verified({}, {}, None)
+    if b.pob_commit != pinned_commit or mods.pob_commit != b.pob_commit or b.pob_dirty is not False:
+        unbound("/engine_parse/binding/engine",
+                "The capture ran on %s (dirty=%s); verdicts count only from a clean %s."
+                % (b.pob_commit, b.pob_dirty, pinned_commit))
+        return _Verified({}, {}, None)
+    items = {}
+    for item in build.items:
+        identity = b.items.get(item.slot)
+        if item.text_sha256 is None or identity is None                 or tuple(identity) != (item.item_id, item.text_sha256):
+            unbound("/engine_parse/items/" + item.slot,
+                    "Slot %s holds item %s (text %s); the capture saw %s." % (
+                        item.slot, item.item_id, (item.text_sha256 or "unknown")[:16],
+                        "nothing" if identity is None else "%s (text %s)" % (
+                            identity[0], str(identity[1])[:16])),
+                    subjects=("item:" + item.slot,))
+        elif item.slot in mods.items:
+            items[item.slot] = mods.items[item.slot]
+    captured_nodes = set(b.nodes)
+    nodes = {}
+    for node in build.passive_ids:
+        if node not in captured_nodes:
+            unbound("/engine_parse/nodes/" + node,
+                    "Passive %s is allocated but was not allocated when the capture ran."
+                    % node, subjects=("passive:" + node,))
+        elif node in mods.nodes:
+            nodes[node] = mods.nodes[node]
+    for node in sorted(captured_nodes - set(build.passive_ids), key=str):
+        unbound("/engine_parse/nodes/" + node,
+                "The capture had passive %s allocated; this candidate does not." % node,
+                subjects=("passive:" + node,))
+    config = None
+    if _same_config(b.config, build.config_explicit):
+        config = mods.config
+        if config is not None:
+            seen = {r["var"]: r.get("input") for r in config}
+            for var, value in sorted(build.config_explicit.items()):
+                if not _same_value(seen.get(var), value):
+                    unbound("/config/" + var,
+                            "The captured config rows show %s = %r; the candidate sets %r."
+                            % (var, seen.get(var), value))
+                    config = None
+    else:
+        changed = sorted(set(b.config) ^ set(build.config_explicit)
+                         | {k for k in set(b.config) & set(build.config_explicit)
+                            if not _same_value(b.config[k], build.config_explicit[k])})
+        unbound("/config",
+                "The capture's config state differs from the candidate's in %s."
+                % ", ".join(changed))
+    return _Verified(items, nodes, config)
+
+
+def _same_value(a, b) -> bool:
+    if isinstance(a, bool) or isinstance(b, bool):
+        return a is b or a == b and type(a) is type(b)
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return abs(a - b) <= 1e-9 * max(1.0, abs(a), abs(b))
+    if isinstance(a, str) and isinstance(b, str):
+        # XML attribute normalisation turns newlines and tabs into spaces;
+        # PoB keeps them. Whitespace runs are one value either way.
+        return a.split() == b.split()
+    return a == b
+
+
+def _same_config(a, b) -> bool:
+    return set(a) == set(b) and all(_same_value(a[k], b[k]) for k in a)
 
 
 def _walk_engine(w, build, pinned_commit):
@@ -400,16 +540,25 @@ def _line_finding(w, domain, subject, text, line, inherited_event=None):
                  "evidence that it has no effect in %s." % (text, w.scenario.scenario_id))
 
 
-def _walk_passives(w, build, mod_support):
+def _walk_passives(w, build, verified):
     for node in build.passive_ids:
         entries = w.registry.for_subject("passive:" + node)
         w.use(entries or w.registry.for_subject("passive:*"))
-        if entries or mod_support is None:
+        if entries or verified is None:
             continue
-        for line in mod_support.nodes.get(node, ()):
+        lines = verified.nodes.get(node)
+        if lines is None:
+            w.add("missing_data", "passive", BLOCKING, subjects=("passive:" + node,),
+                  fields=("/engine_parse/nodes/" + node,),
+                  explanation="No bound PoB parse verdict for allocated passive %s and no "
+                              "registry rule covers it." % node,
+                  needed="PoB's per-line parse verdicts for passive %s from the bound "
+                         "capture, or a registry rule for it." % node)
+            continue
+        for line in lines:
             if not line.parsed or line.extra:
                 _line_finding(w, "passive", "passive:" + node, line.line, line)
-    if mod_support is None and build.passive_ids:
+    if verified is None and build.passive_ids:
         w.add("missing_data", "passive", BLOCKING, subjects=(build.build_id,),
               fields=("/engine_parse/nodes",),
               explanation="Which allocated passive lines PoB parses is not recorded, so "
@@ -418,11 +567,11 @@ def _walk_passives(w, build, mod_support):
                      "(scripts/p06_seed_engine_mod_support.py output).")
 
 
-def _walk_items(w, build, mod_support, sets):
+def _walk_items(w, build, verified, sets):
     if not build.items:
         return
     w.use(w.registry.for_subject("item:*"))
-    if mod_support is None:
+    if verified is None:
         w.add("missing_data", "item", BLOCKING, subjects=(build.build_id,),
               fields=("/engine_parse/items",),
               explanation="Which equipped item lines PoB parses is not recorded, so unknown "
@@ -435,12 +584,13 @@ def _walk_items(w, build, mod_support, sets):
         if swap and 2 not in sets:
             w.notes.append("%s (%s) is on weapon set 2, not walked" % (item.slot, item.name))
             continue
-        lines = mod_support.items.get(item.slot)
+        lines = verified.items.get(item.slot)
         if lines is None:
             w.add("missing_data", "item", BLOCKING, subjects=("item:" + item.slot,),
                   fields=("/engine_parse/items/" + item.slot,),
-                  explanation="No PoB parse verdicts for %s (%s)." % (item.slot, item.name),
-                  needed="PoB parse verdicts for %s." % item.slot)
+                  explanation="No bound PoB parse verdicts for %s (%s)." % (item.slot, item.name),
+                  needed="PoB parse verdicts for the item in %s from the bound capture."
+                         % item.slot)
             continue
         inherited = None
         if item.slot.startswith("Flask") and any(FLASK_EFFECT.search(l.line) for l in lines):
@@ -453,26 +603,29 @@ def _walk_items(w, build, mod_support, sets):
                 _line_finding(w, "item", "item:" + item.slot, line.line, line, inherited)
 
 
-def _walk_config(w, build, mod_support, options, skill_names):
+def _walk_config(w, build, verified, options, skill_names):
     rows = []
-    if mod_support is not None and getattr(mod_support, "config", None) is not None:
-        rows = list(mod_support.config)
+    if verified is not None and verified.config is not None:
+        rows = list(verified.config)
     else:
         effective = dict(build.config_explicit)
         if build.config_effective is not None:
             effective.update(build.config_effective)
-        elif options is not None:
-            for var, opt in options.items():
-                if var not in effective and opt.default not in (None, False) and _gate_open(opt, skill_names, effective):
-                    effective[var] = opt.default
         else:
+            if options is not None:
+                for var, opt in options.items():
+                    if var not in effective and opt.default not in (None, False) \
+                            and _gate_open(opt, skill_names, effective):
+                        effective[var] = opt.default
             w.add("missing_data", "config", BLOCKING, subjects=(build.build_id,),
                   fields=("/config/effective",),
-                  explanation="Only the document's explicit config inputs are known; PoB's "
-                              "default-on options and placeholders are invisible.",
+                  explanation="No bound engine config capture: PoB's default-on options and "
+                              "placeholders are not observed for this candidate.",
                   needed="The engine's effective config input and placeholders for this build.")
         rows = [{"var": k, "shown": None, "input": v, "placeholder": None}
                 for k, v in effective.items()]
+    targets = dict(w.scenario.target_config)
+    seen_targets = set()
     for row in sorted(rows, key=lambda r: r["var"]):
         var = row["var"]
         if var.startswith("quest"):
@@ -488,6 +641,18 @@ def _walk_config(w, build, mod_support, options, skill_names):
         if shown is None and opt is not None:
             shown = True if _gate_open(opt, skill_names, {}) else None
         subject = "config:" + var
+        if var in targets:
+            seen_targets.add(var)
+            if _same_value(value, targets[var]):
+                w.use(e for e in w.registry.for_subject("scenario:" + w.scenario.scenario_id)
+                      if e.domain == "target")
+            else:
+                w.add("target_mismatch", "target", BLOCKING, subjects=(subject,),
+                      fields=("/config/" + var,),
+                      explanation="PoB applies %s = %r; scenario %s fixes it at %r."
+                                  % (var, value, w.scenario.scenario_id, targets[var]),
+                      needed="%s set to %r and PoB outputs recaptured." % (var, targets[var]))
+            continue
         if shown is False:
             w.add("not_applicable", "config", INFO, subjects=(subject,), fields=("/config/" + var,),
                   explanation="%s = %r is applied but PoB hides the option for this build; its "
@@ -496,11 +661,29 @@ def _walk_config(w, build, mod_support, options, skill_names):
             continue
         entries = w.registry.for_subject(subject)
         if entries:
-            w.use(entries)
-            continue
-        if TARGET_VAR.match(var):
-            w.use(e for e in w.registry.for_subject("scenario:" + w.scenario.scenario_id)
-                  if e.domain == "target")
+            applicable = [e for e in entries
+                          if not set(e.requires_events) - w.scenario.events]
+            if not applicable:
+                w.add("not_applicable", "config", INFO, subjects=(subject,),
+                      fields=("/config/" + var,),
+                      explanation="%s = %r feeds %s, which needs events %s does not supply."
+                                  % (var, value, ", ".join(e.mechanic_id for e in entries),
+                                     w.scenario.scenario_id),
+                      needed="Only for a scenario with those events: the rule's evidence.")
+                continue
+            w.use(applicable)
+            bound = {}
+            for e in applicable:
+                bound.update(e.config_values)
+            if var not in bound or not _same_value(bound[var], value):
+                w.add("hidden_assumption", "config", BLOCKING, subjects=(subject,),
+                      mechanics=tuple(e.mechanic_id for e in applicable),
+                      fields=("/config/" + var,),
+                      explanation="PoB applies %s = %r; rule %s establishes %s." % (
+                          var, value, ", ".join(e.mechanic_id for e in applicable),
+                          "no value for it" if var not in bound else repr(bound[var])),
+                      needed="Evidence fixing the magnitude and uptime of %s under the "
+                             "rotation, recorded as the rule's value." % var)
             continue
         if MODE_VAR.search(var):
             w.add("unvalidated", "config", RANKING, subjects=(subject,), fields=("/config/" + var,),
@@ -517,6 +700,12 @@ def _walk_config(w, build, mod_support, options, skill_names):
               needed="A registry rule deriving %s from the rotation's state, or the value "
                      "removed and PoB outputs recaptured." % var,
               protocol=registry_gaps(w, "config/condition-sustain"))
+    for var in sorted(set(targets) - seen_targets):
+        w.add("target_mismatch", "target", BLOCKING, subjects=("config:" + var,),
+              fields=("/config/" + var,),
+              explanation="Scenario %s fixes %s = %r; the capture shows no value for it."
+                          % (w.scenario.scenario_id, var, targets[var]),
+              needed="%s applied at %r in a bound capture." % (var, targets[var]))
 
 
 def _gate_open(opt, skill_names, effective) -> bool | None:

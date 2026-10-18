@@ -1,15 +1,37 @@
 {
   "build": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml",
   "counts": {
+    "blocking/hidden_assumption": 21,
     "blocking/missing_data": 17,
-    "blocking/missing_implementation": 21,
-    "blocking/unknown_rule": 8,
+    "blocking/missing_implementation": 22,
+    "blocking/unknown_rule": 9,
     "informational/not_applicable": 47,
     "ranking_sensitive/unvalidated": 11
   },
   "decision": {
     "blocking_gap_ids": [
-      "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+      "gap-p06-hidden-assumption-config-condition-sustain-02c5818e3a",
+      "gap-p06-hidden-assumption-config-condition-sustain-13bf851b0e",
+      "gap-p06-hidden-assumption-config-condition-sustain-1acc203c66",
+      "gap-p06-hidden-assumption-config-condition-sustain-2499d8dbfd",
+      "gap-p06-hidden-assumption-config-condition-sustain-4155d8f4d4",
+      "gap-p06-hidden-assumption-config-condition-sustain-53d64e0af8",
+      "gap-p06-hidden-assumption-config-condition-sustain-a42d846c9e",
+      "gap-p06-hidden-assumption-config-condition-sustain-aaa6a179be",
+      "gap-p06-hidden-assumption-config-condition-sustain-fef375f94a",
+      "gap-p06-hidden-assumption-target-incoming-damage-0d9268fb35",
+      "gap-p06-hidden-assumption-target-incoming-damage-18d26ddc03",
+      "gap-p06-hidden-assumption-target-incoming-damage-51f008aabd",
+      "gap-p06-hidden-assumption-target-incoming-damage-5b0cdef834",
+      "gap-p06-hidden-assumption-target-incoming-damage-68e9395f9e",
+      "gap-p06-hidden-assumption-target-incoming-damage-7f12e154f4",
+      "gap-p06-hidden-assumption-target-incoming-damage-878faa66c2",
+      "gap-p06-hidden-assumption-target-incoming-damage-8ffdc98d37",
+      "gap-p06-hidden-assumption-target-incoming-damage-ce2fce447c",
+      "gap-p06-hidden-assumption-target-incoming-damage-cf201a3c73",
+      "gap-p06-hidden-assumption-target-incoming-damage-dfb7866780",
+      "gap-p06-hidden-assumption-target-incoming-damage-e6517c3afd",
+      "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
       "gap-p06-missing-data-p09-flk-boss-short-00962d3fac",
       "gap-p06-missing-data-p09-flk-boss-short-0a659dc992",
       "gap-p06-missing-data-p09-flk-boss-short-0c23d3e586",
@@ -27,6 +49,7 @@
       "gap-p06-missing-data-p09-flk-boss-short-d78480699d",
       "gap-p06-missing-data-p09-flk-boss-short-e82213bd6e",
       "gap-p06-missing-implementation-charges-charged-staff-consumption-15354938ae",
+      "gap-p06-missing-implementation-config-condition-sustain-1a2192b2bc",
       "gap-p06-missing-implementation-item-body-armour-ab7470f2ab",
       "gap-p06-missing-implementation-item-charm-1-0701d4a4d7",
       "gap-p06-missing-implementation-item-charm-1-7e1d474c9b",
@@ -55,6 +78,7 @@
       "gap-p06-unknown-rule-support-supportblazingcriticalplayer-884d9707fd",
       "gap-p06-unknown-rule-support-supportconcussiverunesplayer-3cb4119d48",
       "gap-p06-unknown-rule-support-supportlivinglightningplayertwo-f468e65a88",
+      "gap-p06-unknown-rule-target-incoming-damage-fc7c42ce6d",
       "gap-p09-t011-boss-windows",
       "gap-p09-t011-charge-cycle-rules",
       "gap-p09-t011-duration-limit",
@@ -71,7 +95,7 @@
     ],
     "eligible": false,
     "reasons": [
-      "59 blocking gaps open",
+      "82 blocking gaps open",
       "critical rules not settled: activation/hit-and-run-reuse"
     ],
     "unsettled_critical": [
@@ -81,6 +105,615 @@
   "gaps": [
     {
       "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyLevel = 82; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyLevel"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-02c5818e3a",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyLevel from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-02c5818e3a",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyLevel",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies presetBossSkills = 'None'; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/presetBossSkills"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-13bf851b0e",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving presetBossSkills from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-13bf851b0e",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:presetBossSkills",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyIsBoss = 'Pinnacle'; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyIsBoss"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-1acc203c66",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyIsBoss from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-1acc203c66",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyIsBoss",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyColdResist = 50; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyColdResist"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-2499d8dbfd",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyColdResist from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-2499d8dbfd",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyColdResist",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyChaosResist = 0; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyChaosResist"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-4155d8f4d4",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyChaosResist from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-4155d8f4d4",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyChaosResist",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyFireResist = 50; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyFireResist"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-53d64e0af8",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyFireResist from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-53d64e0af8",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyFireResist",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyArmour = 8063; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyArmour"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-a42d846c9e",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyArmour from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-a42d846c9e",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyArmour",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyLightningResist = 50; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyLightningResist"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-aaa6a179be",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyLightningResist from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-aaa6a179be",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyLightningResist",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyEvasion = 1175; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+      "field_paths": [
+        "/config/enemyEvasion"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-fef375f94a",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "A registry rule deriving enemyEvasion from the rotation's state, or the value removed and PoB outputs recaptured.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-config-condition-sustain-fef375f94a",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyEvasion",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies resistancePenalty = -60; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/resistancePenalty"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-0d9268fb35",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of resistancePenalty under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-0d9268fb35",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:resistancePenalty",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyPhysicalDamage = 965; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyPhysicalDamage"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-18d26ddc03",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyPhysicalDamage under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-18d26ddc03",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyPhysicalDamage",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyFireDamage = 965; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyFireDamage"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-51f008aabd",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyFireDamage under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-51f008aabd",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyFireDamage",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyLightningPen = 3; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyLightningPen"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-5b0cdef834",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyLightningPen under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-5b0cdef834",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyLightningPen",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyFirePen = 3; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyFirePen"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-68e9395f9e",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyFirePen under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-68e9395f9e",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyFirePen",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyColdDamage = 965; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyColdDamage"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-7f12e154f4",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyColdDamage under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-7f12e154f4",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyColdDamage",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyCritDamage = 30; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyCritDamage"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-878faa66c2",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyCritDamage under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-878faa66c2",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyCritDamage",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemySpeed = 700; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemySpeed"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-8ffdc98d37",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemySpeed under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-8ffdc98d37",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemySpeed",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyChaosDamage = 386; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyChaosDamage"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-ce2fce447c",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyChaosDamage under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-ce2fce447c",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyChaosDamage",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyLightningDamage = 965; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyLightningDamage"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-cf201a3c73",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyLightningDamage under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-cf201a3c73",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyLightningDamage",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyColdPen = 3; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyColdPen"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-dfb7866780",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyColdPen under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-dfb7866780",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyColdPen",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Either a rule showing the build generates the state under the rotation, or remove the config value.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "PoB applies enemyCritChance = 5; rule target/incoming-damage establishes no value for it.",
+      "field_paths": [
+        "/config/enemyCritChance"
+      ],
+      "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-e6517c3afd",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Evidence fixing the magnitude and uptime of enemyCritChance under the rotation, recorded as the rule's value.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-hidden-assumption-target-incoming-damage-e6517c3afd",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyCritChance",
+        "p09-flk-boss-short"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
       "collection_method": "Import or record the named input; a reviewer checks its source.",
       "created_at": "2026-10-18T00:00:00Z",
       "explanation": "The engine checkout that produced this build's PoB outputs is not recorded with a clean-tree check.",
@@ -88,7 +721,7 @@
         "/engine/pob_commit",
         "/engine/pob_dirty"
       ],
-      "gap_id": "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+      "gap_id": "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
       "kind": "missing_input",
       "mechanic_ids": [
         "engine/pinned-checkout"
@@ -98,7 +731,7 @@
         "p06-coverage",
         "p06-flicker-v1"
       ],
-      "record_id": "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+      "record_id": "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
       "resolution_evidence_ids": [],
       "schema_version": 1,
       "sensitivity_result_id": null,
@@ -106,7 +739,7 @@
       "status": "open",
       "subject_ids": [
         "p09-flk-boss-short",
-        "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed"
+        "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed/Config=1;Items=1;Skills=1;Tree=1"
       ]
     },
     {
@@ -550,6 +1183,32 @@
       "subject_ids": [
         "p09-flk-boss-short",
         "skill:ChargedStaffPlayer"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Engine or simulator implementation of the named rule, with a fixture test.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "config/condition-sustain (Config conditions must be generated by the build) is required and no code calculates it. D07: no free maximum-state toggles.",
+      "field_paths": [],
+      "gap_id": "gap-p06-missing-implementation-config-condition-sustain-1a2192b2bc",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "config/condition-sustain"
+      ],
+      "needed_evidence": "An implementation of config/condition-sustain owned by simulator, with fixture tests and the evidence for its parameters.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-missing-implementation-config-condition-sustain-1a2192b2bc",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "p09-flk-boss-short"
       ]
     },
     {
@@ -1311,6 +1970,45 @@
       "subject_ids": [
         "p09-flk-boss-short",
         "support:SupportLivingLightningPlayerTwo"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "Catalog evidence or a manual interaction trial establishing the behaviour, then a rule update through the coverage ledger.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "How target/incoming-damage (Enemy hit damage, penalties and speed PoB applies) behaves is not established. Preset values for the enemy's attacks on the character; no scenario fixes them.",
+      "field_paths": [],
+      "gap_id": "gap-p06-unknown-rule-target-incoming-damage-fc7c42ce6d",
+      "kind": "unsupported_rule",
+      "mechanic_ids": [
+        "target/incoming-damage"
+      ],
+      "needed_evidence": "Catalog evidence or a recorded trial establishing Enemy hit damage, penalties and speed PoB applies under the scenario's conditions.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-unknown-rule-target-incoming-damage-fc7c42ce6d",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "blocking",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyChaosDamage",
+        "config:enemyColdDamage",
+        "config:enemyColdPen",
+        "config:enemyCritChance",
+        "config:enemyCritDamage",
+        "config:enemyDamageRollRange",
+        "config:enemyFireDamage",
+        "config:enemyFirePen",
+        "config:enemyLightningDamage",
+        "config:enemyLightningPen",
+        "config:enemyPhysicalDamage",
+        "config:enemySpeed",
+        "config:resistancePenalty",
+        "p09-flk-boss-short"
       ]
     },
     {
@@ -2932,17 +3630,17 @@
       "implemented/fixture_checked": 1,
       "implemented/untested": 35,
       "partial/untested": 5,
-      "unknown/untested": 9,
+      "unknown/untested": 10,
       "unsupported/untested": 13
     },
-    "registry_hash": "9f11c08d0dd4028625c20f1640ca0c28920c116894707117d98abbf5b8dd8384",
+    "registry_hash": "c22d9a46bb6024e54a69112a44ab54d9eff0a4613389672b16873616c3cb2729",
     "registry_id": "p06-flicker-v1",
-    "rules": 63,
+    "rules": 64,
     "version": "1"
   },
-  "registry_hash": "9f11c08d0dd4028625c20f1640ca0c28920c116894707117d98abbf5b8dd8384",
+  "registry_hash": "c22d9a46bb6024e54a69112a44ab54d9eff0a4613389672b16873616c3cb2729",
   "report": {
-    "build_id": "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+    "build_id": "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed/Config=1;Items=1;Skills=1;Tree=1",
     "critical_rule_ids": [
       "activation/hit-and-run-reuse"
     ],
@@ -2999,12 +3697,391 @@
         "coverage": "partial",
         "validation": "unvalidated"
       },
+      "target": {
+        "coverage": "unsupported",
+        "validation": "unvalidated"
+      },
       "timing": {
         "coverage": "partial",
         "validation": "unvalidated"
       }
     },
     "findings": [
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyLevel = 82; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyLevel"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-02c5818e3a",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyLevel"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies presetBossSkills = 'None'; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/presetBossSkills"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-13bf851b0e",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:presetBossSkills"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyIsBoss = 'Pinnacle'; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyIsBoss"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-1acc203c66",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyIsBoss"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyColdResist = 50; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyColdResist"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-2499d8dbfd",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyColdResist"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyChaosResist = 0; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyChaosResist"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-4155d8f4d4",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyChaosResist"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyFireResist = 50; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyFireResist"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-53d64e0af8",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyFireResist"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyArmour = 8063; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyArmour"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-a42d846c9e",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyArmour"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyLightningResist = 50; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyLightningResist"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-aaa6a179be",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyLightningResist"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyEvasion = 1175; nothing shows the build generates it under the rotation (D07: no free state toggles).",
+        "fields": [
+          "/config/enemyEvasion"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-config-condition-sustain-fef375f94a",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyEvasion"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies resistancePenalty = -60; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/resistancePenalty"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-0d9268fb35",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:resistancePenalty"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyPhysicalDamage = 965; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyPhysicalDamage"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-18d26ddc03",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyPhysicalDamage"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyFireDamage = 965; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyFireDamage"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-51f008aabd",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyFireDamage"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyLightningPen = 3; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyLightningPen"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-5b0cdef834",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyLightningPen"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyFirePen = 3; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyFirePen"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-68e9395f9e",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyFirePen"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyColdDamage = 965; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyColdDamage"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-7f12e154f4",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyColdDamage"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyCritDamage = 30; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyCritDamage"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-878faa66c2",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyCritDamage"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemySpeed = 700; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemySpeed"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-8ffdc98d37",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemySpeed"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyChaosDamage = 386; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyChaosDamage"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-ce2fce447c",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyChaosDamage"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyLightningDamage = 965; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyLightningDamage"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-cf201a3c73",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyLightningDamage"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyColdPen = 3; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyColdPen"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-dfb7866780",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyColdPen"
+        ]
+      },
+      {
+        "class": "hidden_assumption",
+        "domain": "config",
+        "explanation": "PoB applies enemyCritChance = 5; rule target/incoming-damage establishes no value for it.",
+        "fields": [
+          "/config/enemyCritChance"
+        ],
+        "gap_id": "gap-p06-hidden-assumption-target-incoming-damage-e6517c3afd",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyCritChance"
+        ]
+      },
       {
         "class": "missing_data",
         "domain": "engine",
@@ -3013,7 +4090,7 @@
           "/engine/pob_commit",
           "/engine/pob_dirty"
         ],
-        "gap_id": "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+        "gap_id": "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
         "mechanics": [
           "engine/pinned-checkout"
         ],
@@ -3022,7 +4099,7 @@
         ],
         "severity": "blocking",
         "subjects": [
-          "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed"
+          "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed/Config=1;Items=1;Skills=1;Tree=1"
         ]
       },
       {
@@ -3316,6 +4393,21 @@
         "subjects": [
           "skill:ChargedStaffPlayer"
         ]
+      },
+      {
+        "class": "missing_implementation",
+        "domain": "config",
+        "explanation": "config/condition-sustain (Config conditions must be generated by the build) is required and no code calculates it. D07: no free maximum-state toggles.",
+        "fields": [],
+        "gap_id": "gap-p06-missing-implementation-config-condition-sustain-1a2192b2bc",
+        "mechanics": [
+          "config/condition-sustain"
+        ],
+        "protocol_gap_ids": [
+          "gap-p09-t011-config-conditions"
+        ],
+        "severity": "blocking",
+        "subjects": []
       },
       {
         "class": "missing_implementation",
@@ -3761,6 +4853,33 @@
         "severity": "blocking",
         "subjects": [
           "support:SupportLivingLightningPlayerTwo"
+        ]
+      },
+      {
+        "class": "unknown_rule",
+        "domain": "target",
+        "explanation": "How target/incoming-damage (Enemy hit damage, penalties and speed PoB applies) behaves is not established. Preset values for the enemy's attacks on the character; no scenario fixes them.",
+        "fields": [],
+        "gap_id": "gap-p06-unknown-rule-target-incoming-damage-fc7c42ce6d",
+        "mechanics": [
+          "target/incoming-damage"
+        ],
+        "protocol_gap_ids": [],
+        "severity": "blocking",
+        "subjects": [
+          "config:enemyPhysicalDamage",
+          "config:enemyFireDamage",
+          "config:enemyColdDamage",
+          "config:enemyLightningDamage",
+          "config:enemyChaosDamage",
+          "config:enemyFirePen",
+          "config:enemyColdPen",
+          "config:enemyLightningPen",
+          "config:enemyCritChance",
+          "config:enemyCritDamage",
+          "config:enemySpeed",
+          "config:enemyDamageRollRange",
+          "config:resistancePenalty"
         ]
       },
       {
@@ -4648,6 +5767,7 @@
         ]
       }
     ],
+    "input_identity": "0df6d759df5459661a1522d0d469ea3914fc35810758464d92d730a555c4bd9f",
     "notes": [
       "group 2 not on active weapon sets [1] or disabled; not walked",
       "group 4 not on active weapon sets [1] or disabled; not walked",
@@ -4731,14 +5851,15 @@
         "severity": "ranking_sensitive"
       }
     ],
-    "registry_hash": "9f11c08d0dd4028625c20f1640ca0c28920c116894707117d98abbf5b8dd8384",
+    "registry_hash": "c22d9a46bb6024e54a69112a44ab54d9eff0a4613389672b16873616c3cb2729",
     "registry_id": "p06-flicker-v1",
     "rotation_id": null,
-    "rule_closure_hash": "30b2dbf2596b6effb38775a72c6a83561f0502f5ec9e75ba4edd5cf17188b52c",
+    "rule_closure_hash": "6b87b729ecc0a55f1de1e4cac51af5e2cd56a44cf11fe6815e15a5387c23960a",
     "rule_ids": [
       "activation/hit-and-run-reuse",
       "charges/charged-staff-consumption",
       "config/FlickerStrikeBypassCD",
+      "config/condition-sustain",
       "config/enemyDistance",
       "cost/mana-per-use",
       "damage/pob-modifiers",
@@ -4789,6 +5910,7 @@
       "support/SupportRakiatasFlowPlayer",
       "support/SupportStunPlayerThree",
       "support/SupportUhtredOmenPlayer",
+      "target/incoming-damage",
       "timing/flicker-strike-strike-duration"
     ],
     "scenario_id": "p09-flk-boss-short"
