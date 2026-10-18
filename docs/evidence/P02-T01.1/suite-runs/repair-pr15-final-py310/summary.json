@@ -1,0 +1,22 @@
+{
+  "run": "repair-pr15-final-py310",
+  "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\review-pr15",
+  "plugin": false,
+  "head": "28921162678ead27934860257865b84163fae1e0",
+  "seed": "15",
+  "args": [
+    "-m",
+    "pytest",
+    "-vv",
+    "-p",
+    "no:cacheprovider",
+    "tests/engine/test_p05_t02_item_conversion.py"
+  ],
+  "exit_code": 0,
+  "parent_guard": null,
+  "limit_mb": 2048,
+  "peak_tree_rss": 565305344,
+  "elapsed_s": 8.3,
+  "python": "3.10.22",
+  "last_line": "Startup time: 0 ms"
+}

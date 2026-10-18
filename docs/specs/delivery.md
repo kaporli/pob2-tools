@@ -11,7 +11,7 @@ The owner amendment recorded in [PR #17](https://github.com/kaporli/pob2-tools/p
 | #16 `644c7b8` | **R1/R2 repaired; stacked on #15** | Catalog/realm/league scope is enforced before matching; conflicting duplicate readiness/content is refused deterministically. Real slot categories remain missing; [review](../reviews/P05-T03.md). |
 | #17 `9f32dfe` | **R1 repaired; retargeted to main** | Activation and attribution remain open blocking prerequisites, including when every other blocker is resolved. Seed/scope/protocol evidence exists; no cycle score yet; [review](../reviews/P09-T01.1.md). |
 
-[Repair verification](../reviews/PR-15-17-repair-verification.md) records 1,603 / 1,643 / 1,569 offline passes for #15 / #16 / #17 respectively on both interpreters, one existing prepare-service xfail each, and 11 native item-conversion passes on each interpreter. Thirty-four new regression cases fail on the original reviewed heads and pass after repair. Final GitHub checks must match the heads being merged. These are software checks, not acceptance of an optimizer or gameplay gate.
+[Repair verification](../reviews/PR-15-17-repair-verification.md) records 1,606 / 1,646 / 1,569 offline passes for #15 / #16 / #17 respectively on both interpreters, one existing prepare-service xfail each, and 11 native item-conversion passes on each interpreter. Thirty-seven new regression cases fail on the original reviewed heads and pass after repair. Final GitHub checks must match the heads being merged. These are software checks, not acceptance of an optimizer or gameplay gate.
 
 ## Next assignments
 
