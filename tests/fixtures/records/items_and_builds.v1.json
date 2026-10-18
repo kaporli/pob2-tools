@@ -400,6 +400,157 @@
           "expect_path": "/status"
         }
       ]
+    },
+    "equipment_pool": {
+      "valid": {
+        "schema_version": 1,
+        "record_id": "equipment-pool/fixture-1",
+        "created_at": "2026-10-04T12:00:00Z",
+        "provenance_ids": [
+          "fixture-source-1"
+        ],
+        "pool_id": "equipment-pool/fixture-1",
+        "catalog_hash": "0ca331a45dd4dc21991c8d4c7b144e900c220f74a8156ae55773fe028b48826a",
+        "patch_profile_id": "fixture-profile-1",
+        "sampling": {
+          "listings_per_slot": 500,
+          "enabling_queries_per_run": 100
+        },
+        "slots": [
+          {
+            "slot_id": "fixture-slot-ring-1",
+            "weapon_set_id": null,
+            "accepted_base_categories": [
+              "fixture-ring"
+            ],
+            "status": "populated",
+            "candidates": [
+              {
+                "item_hash": "dbf501729ab6ca575dab619a900c0037bb9766baf1930c1283d5c3f9b7d7f7c4",
+                "listing_id": null,
+                "availability": "owned",
+                "quantity": 1,
+                "retained_for": [
+                  "owned"
+                ]
+              },
+              {
+                "item_hash": "dbf501729ab6ca575dab619a900c0037bb9766baf1930c1283d5c3f9b7d7f7c4",
+                "listing_id": "fixture-listing-1",
+                "availability": "observed",
+                "quantity": 1,
+                "retained_for": [
+                  "enabling:fixture-query-1"
+                ]
+              }
+            ],
+            "considered_count": 1,
+            "retained_count": 1,
+            "truncated": false,
+            "unavailable_count": 0,
+            "partial_count": 0
+          },
+          {
+            "slot_id": "fixture-slot-charm-1",
+            "weapon_set_id": null,
+            "accepted_base_categories": [],
+            "status": "missing_category_rule",
+            "candidates": [],
+            "considered_count": 0,
+            "retained_count": 0,
+            "truncated": false,
+            "unavailable_count": 0,
+            "partial_count": 0
+          }
+        ],
+        "enabling_queries": [
+          {
+            "query_id": "fixture-query-1",
+            "description": "invented enabler",
+            "slot_ids": [],
+            "base_ids": [
+              "fixture-base-1"
+            ],
+            "modifier_patterns": [],
+            "status": "unexecuted",
+            "reason": "no approved market route",
+            "matched_item_hashes": [
+              "dbf501729ab6ca575dab619a900c0037bb9766baf1930c1283d5c3f9b7d7f7c4"
+            ]
+          }
+        ],
+        "unplaced_item_hashes": [],
+        "gap_ids": [
+          "fixture-gap-1"
+        ]
+      },
+      "also_valid": [
+        {
+          "name": "a truncated slot says so",
+          "patch": {
+            "/slots/0/considered_count": 7,
+            "/slots/0/truncated": true
+          }
+        },
+        {
+          "name": "an imported item without a listing has unknown availability",
+          "patch": {
+            "/slots/0/candidates/1/listing_id": null,
+            "/slots/0/candidates/1/availability": "unknown",
+            "/slots/0/candidates/1/quantity": null
+          }
+        }
+      ],
+      "invalid": [
+        {
+          "name": "a negative sampling bound",
+          "patch": {
+            "/sampling/listings_per_slot": -1
+          },
+          "expect_code": "schema_violation",
+          "expect_path": "/sampling/listings_per_slot"
+        },
+        {
+          "name": "truncation that contradicts the counts",
+          "patch": {
+            "/slots/0/considered_count": 7
+          },
+          "expect_code": "truncation_mismatch",
+          "expect_path": "/slots/0/truncated"
+        },
+        {
+          "name": "a slot with no category rule reported as populated",
+          "patch": {
+            "/slots/1/status": "populated"
+          },
+          "expect_code": "slot_status_mismatch",
+          "expect_path": "/slots/1/status"
+        },
+        {
+          "name": "an owned candidate that names a listing",
+          "patch": {
+            "/slots/0/candidates/0/listing_id": "fixture-listing-1"
+          },
+          "expect_code": "owned_with_listing",
+          "expect_path": "/slots/0/candidates/0/listing_id"
+        },
+        {
+          "name": "more queries inside the bound than it allows",
+          "patch": {
+            "/sampling/enabling_queries_per_run": 0
+          },
+          "expect_code": "enabling_queries_over_bound",
+          "expect_path": "/enabling_queries"
+        },
+        {
+          "name": "a candidate item that does not resolve",
+          "patch": {
+            "/slots/0/candidates/1/item_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+          },
+          "expect_code": "unresolved_reference",
+          "expect_path": "/slots/0/candidates/1/item_hash"
+        }
+      ]
     }
   }
 }

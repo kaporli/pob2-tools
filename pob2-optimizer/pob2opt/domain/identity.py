@@ -80,6 +80,9 @@ hashes. It excludes the two locator strings, which name where the content was
 read from, and the class scope: classes are compared under one objective, so
 the scope belongs to the request and the manifest, not the objective hash.
 
+``pool_identity`` (P05-T03) is every field of an equipment pool except the
+base record fields and ``pool_id``, which is derived from it.
+
 ``listing_snapshot_hash`` is the opposite projection: price, currency,
 availability and the observation timestamps, which are exactly the fields the
 combat hashes ignore.
@@ -180,6 +183,25 @@ def listing_snapshot_identity(listing: Any) -> dict[str, Any]:
 
 def listing_snapshot_hash(listing: Any) -> str:
     return content_hash(listing_snapshot_identity(listing))
+
+
+def pool_identity(pool: Any) -> dict[str, Any]:
+    """Everything an equipment pool holds except the base record fields and
+    its own ID. Slot and candidate order is the builder's deterministic
+    order and is kept."""
+    return {
+        "catalog_hash": pool.catalog_hash,
+        "patch_profile_id": pool.patch_profile_id,
+        "sampling": _json(pool.sampling),
+        "slots": [_json(slot) for slot in pool.slots],
+        "enabling_queries": [_json(query) for query in pool.enabling_queries],
+        "unplaced_item_hashes": list(pool.unplaced_item_hashes),
+        "gap_ids": list(pool.gap_ids),
+    }
+
+
+def pool_hash(pool: Any) -> str:
+    return content_hash(pool_identity(pool))
 
 
 # --------------------------------------------------------------- builds ===

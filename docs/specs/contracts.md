@@ -42,6 +42,8 @@ Each modifier includes `category`, `source_position`, `text`, `native_id` (nulla
 
 `Listing` contains `listing_id`, `provider`, `realm`, `league_id`, `item_hash`, `price_amount` (nullable decimal string), `price_currency` (nullable), `listed_at` (nullable), `observed_at`, `last_checked_at`, `availability: observed|rechecked|unavailable|unknown`, `listing_url` (nullable) and `source_document_id`. Listing identity is separate from item identity. Two equal-stat items can be distinct purchasable instances; one listing cannot fill two slots simultaneously unless explicit quantity supports it.
 
+**P05-T03 addition (awaiting review):** `EquipmentPool` contains `pool_id` (`equipment-pool/` plus the hash of every other non-base field), `catalog_hash`, `patch_profile_id`, `sampling` (`listings_per_slot`, `enabling_queries_per_run`), `slots`, `enabling_queries`, `unplaced_item_hashes` and `gap_ids`. Each slot entry has `slot_id`, `weapon_set_id` (nullable), `accepted_base_categories`, `status: populated|empty|missing_category_rule`, `candidates`, `considered_count`, `retained_count`, `truncated`, `unavailable_count` and `partial_count`. Each candidate has `item_hash`, `listing_id` (nullable), `availability: owned|observed|rechecked|unknown`, `quantity` (nullable) and `retained_for`. Each enabling query outcome has `query_id`, `description`, `slot_ids`, `base_ids`, `modifier_patterns`, `status: unexecuted|over_bound`, `reason` and `matched_item_hashes`. A pool holds no price, budget or score. `RunRequest.item_pool_ids` names these records.
+
 ## BuildSpec
 
 | Field | Meaning |
