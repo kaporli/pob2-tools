@@ -150,9 +150,10 @@ def test_the_clean_slice_export_drops_the_fidelity_and_checkout_gaps(rows):
     gap_ids = {gap.gap_id for gap in export.gaps}
     assert "gap/p02-t02/release-evidence-not-verbatim" not in gap_ids
     assert "gap/p02-t02/unpinned-checkout" not in gap_ids
-    # Still retained: the engine release date and the slot rule.
+    # Still retained: the engine release date. The slot rule gap closed when
+    # the slice was regenerated with the P02-T03.1 slot acceptance probe.
     assert "gap/p02-t02/catalog-predates-current-patch" in gap_ids
-    assert "gap/p02-t02/slot-accepted-base-categories" in gap_ids
+    assert "gap/p02-t02/slot-accepted-base-categories" not in gap_ids
     assert export.validation_errors == []
 
 

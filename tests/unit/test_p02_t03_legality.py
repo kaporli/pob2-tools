@@ -9,8 +9,8 @@ Two sources of rules, neither of them this test file:
   citations captured from the pinned checkout;
 * `docs/evidence/P02/catalog-rows-slice.json`, the committed slice of real
   engine rows, exported the same way. That lane checks the claims this task
-  makes about the *shipped* profile: that its slot rules carry no categories,
-  that its budgets count levelling points only, and that the validator says so
+  makes about the *shipped* profile: that its slot rules carry the engine's
+  categories (P02-T03.1), that its budgets count levelling points only, and that the validator says so
   instead of filling them in.
 
 The expected violations and unknowns live in `p02_t03_cases.json`, written by
@@ -286,17 +286,15 @@ def _shipped_build(shipped, **overrides):
     return fixtures.make_build(spec, catalog_hash=shipped.catalog.catalog_hash)
 
 
-def test_the_shipped_profile_still_has_no_slot_categories(shipped):
-    """The premise of this task, asserted against the real export."""
-    assert shipped.profile.character_rules.slots
-    assert all(not rule.accepted_base_categories
-               for rule in shipped.profile.character_rules.slots)
-    blocking = [gap for gap in shipped.gaps
-                if gap.gap_id == T02_SLOT_CATEGORIES]
-    assert blocking and blocking[0].severity is GapSeverity.BLOCKING
+def test_the_shipped_profile_carries_engine_slot_categories(shipped):
+    """P02-T03 found none; the slice regenerated in P02-T03.1 carries the
+    engine's slot acceptance probe, so the categories are now decided."""
+    rules = {r.slot_id: r for r in shipped.profile.character_rules.slots}
+    assert "Staff/Warstaff" in rules["poe2/slots/Weapon 1"].accepted_base_categories
+    assert T02_SLOT_CATEGORIES not in {gap.gap_id for gap in shipped.gaps}
 
 
-def test_equipment_on_the_shipped_profile_is_unknown_and_cites_the_gap(shipped):
+def test_equipment_on_the_shipped_profile_is_decided(shipped):
     item_hash = "shipped-item"
     item = fixtures.make_item(item_hash, {
         "catalog_hash": shipped.catalog.catalog_hash,
@@ -308,10 +306,13 @@ def test_equipment_on_the_shipped_profile_is_unknown_and_cites_the_gap(shipped):
     report = LegalityValidator(catalog=shipped.catalog,
                                items={item_hash: item}).validate(
         build, shipped.profile)
-    assert report.decision(CHECK_SLOTS) is Legality.UNKNOWN
-    assert "slot_base_category_undecidable" in report.unknown_codes
-    assert T02_SLOT_CATEGORIES in report.cited_gap_ids
-    assert report.legality is Legality.UNKNOWN
+    assert report.decision(CHECK_SLOTS) is Legality.LEGAL
+    assert T02_SLOT_CATEGORIES not in report.cited_gap_ids
+    wrong = _shipped_build(shipped, equipment={"Amulet": {"item": item_hash}})
+    report = LegalityValidator(catalog=shipped.catalog,
+                               items={item_hash: item}).validate(
+        wrong, shipped.profile)
+    assert report.decision(CHECK_SLOTS) is Legality.ILLEGAL
 
 
 def test_the_shipped_class_list_decides_membership(shipped):
