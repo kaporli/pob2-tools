@@ -200,14 +200,15 @@ def import_game_item(text: str, naming: CatalogNaming, *, record_id: str,
 
     for index, section in enumerate(sections[1:], 1):
         in_requirements = False
-        in_reminder = False
+        reminder_depth = 0
         for number, line in section:
             locator = "/text/line/%d" % number
-            if in_reminder:
-                in_reminder = not line.endswith(")")
-                continue
-            if line.startswith("(") and not _SUFFIX.match(line):
-                in_reminder = not line.endswith(")")
+            if reminder_depth or (line.startswith("(") and not _split_markers(line)[1]):
+                reminder_depth += line.count("(") - line.count(")")
+                if reminder_depth < 0 or (reminder_depth == 0 and not line.endswith(")")):
+                    raise GameTextRefused(
+                        "malformed_reminder",
+                        "reminder parentheses must balance and close at the end of a line")
                 continue
             if line in GAME_FLAG_LINES:
                 flags[GAME_FLAG_LINES[line]] = True
@@ -286,7 +287,7 @@ def import_game_item(text: str, naming: CatalogNaming, *, record_id: str,
                 flags={name: True for name in markers if name in FLAG_MARKERS},
                 parse_status=status))
 
-        if in_reminder:
+        if reminder_depth:
             raise GameTextRefused(
                 "unterminated_reminder",
                 "a reminder must close before the end of its section; "

@@ -64,9 +64,10 @@ def by_listing(result):
 
 
 @pytest.mark.parametrize("ending", ["", "\n--------\nNote: fixture"])
-def test_unterminated_reminder_refuses_the_item_and_capture(ending):
+@pytest.mark.parametrize("modifier", ["+21 to Dexterity", "+21 to Dexterity (crafted)"])
+def test_unterminated_reminder_refuses_the_item_and_capture(ending, modifier):
     text = fx.game_items()["ring_shared_name_a"].replace(
-        "+21 to Dexterity", "(unterminated reminder\n+21 to Dexterity") + ending
+        "+21 to Dexterity", "(unterminated reminder\n" + modifier) + ending
     out = read_item_text(text, fx.document(text.encode(), media_type="text/plain"),
                          fx.context(), record_id="bad-reminder")
     assert out.item is None
@@ -78,7 +79,8 @@ def test_unterminated_reminder_refuses_the_item_and_capture(ending):
     assert not result.items and not result.listings
 
 
-@pytest.mark.parametrize("reminder", ["(valid reminder)", "(valid reminder\non two lines)"])
+@pytest.mark.parametrize("reminder", ["(valid reminder)", "(valid reminder\non two lines)",
+                                      "(valid (nested)\nreminder)"])
 def test_closed_reminder_preserves_following_modifiers(reminder):
     text = fx.game_items()["ring_shared_name_a"].replace(
         "+21 to Dexterity", reminder + "\n+21 to Dexterity")
