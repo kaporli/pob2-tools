@@ -57,8 +57,13 @@ NUMERIC_PROPERTY_LINES = {
     "spirit": "Spirit",
     "charm_slots": "Charm Slots",
     "limit": "Limited to",
+    "runic_ward": "Runic Ward",
 }
 TEXT_PROPERTY_LINES = {"radius": "Radius"}
+
+#: Header lines PoB writes that identify one physical copy, not its stats.
+#: Read and dropped: an item is its stats, so two copies are one item.
+INSTANCE_LINES = ("Unique ID",)
 
 #: Item flags PoB writes as their own line.
 FLAG_LINES = {
@@ -92,6 +97,7 @@ SUPPORT = {
         "requirements other than level",
         "Socket.contents_id and a socket_id that is not its index",
         "modifier source positions that are not 0..n-1 in block order",
+        "PoB's per-copy Unique ID line: read and dropped, never a modifier",
     ),
 }
 
@@ -367,7 +373,7 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
     known_labels = (
         {"Item Level", "LevelReq", "Sockets", "Implicits", "Variant",
          "Selected Variant", "Rune"}
-        | set(numeric_by_label) | set(text_by_label))
+        | set(numeric_by_label) | set(text_by_label) | set(INSTANCE_LINES))
 
     for line in lines[index:]:
         if line in flag_by_line:
@@ -378,6 +384,8 @@ def import_item(text: str, naming: CatalogNaming, *, record_id: str,
         # header labels are read as headers.
         if not separator or label not in known_labels:
             modifier_lines.append(line)
+            continue
+        if label in INSTANCE_LINES:
             continue
         if label == "Item Level":
             item_level = source_int(value, "/text/Item Level", minimum=0)

@@ -96,7 +96,10 @@ def main() -> int:
     from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineState,
                                     pob_worker_spec, resolve_checkout)
     from pob2opt.market.importer import import_market
-    from pob2opt.market.pools import OwnedItem, build_pool, pool_report
+    from collections import Counter
+
+    from pob2opt.market.pools import (OwnedItem, build_pool, pool_report,
+                                      stat_known)
     from pob2opt.parsers.pob import ParseContext
 
     checkout = resolve_checkout(pob_root)
@@ -205,6 +208,12 @@ def main() -> int:
                        category=base_category(raws.get(item.base_id)),
                        item_parse_status=item.parse_status.value,
                        rarity=item.rarity,
+                       line_statuses=dict(Counter(
+                           m.parse_status.value for m in item.modifiers)),
+                       unresolved_lines=[m.text for m in item.modifiers
+                                         if m.parse_status.value
+                                         == "unresolved"],
+                       stat_known=stat_known(item),
                        fits=sorted(r.slot_id for r in rules.slots
                                    if accepts(r.accepted_base_categories,
                                               raws.get(item.base_id))))

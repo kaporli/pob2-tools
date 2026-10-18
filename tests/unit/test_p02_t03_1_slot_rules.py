@@ -48,6 +48,7 @@ def _export(slot_acceptance):
     rows = json.loads(SLICE.read_text(encoding="utf-8"))
     rows["tables"]["item_bases"] = [*rows["tables"]["item_bases"], DIAMOND]
     rule_sources = dict(rows["rule_sources"])
+    rule_sources.pop("slotAcceptance", None)
     if slot_acceptance is not None:
         rule_sources["slotAcceptance"] = slot_acceptance
     provider = PobCatalogProvider(
@@ -339,3 +340,26 @@ def test_a_rarity_refused_for_only_some_categories_is_a_gap(probe):
     gap = [g for g in export.gaps
            if g.gap_id == "gap/p02-t03.1/slot-rarity-partial"]
     assert gap and "Weapon 1" in gap[0].explanation
+
+
+def test_a_stat_known_partial_ring_is_placed_and_marked(probed):
+    """Parser `.6`: the stats are known, only the affix is not."""
+    from pob2opt.market.pools import STAT_KNOWN_PARTIAL, build_pool
+    from pob2opt.domain.enums import RecordParseStatus
+
+    def ring(name, status):
+        item = fixtures.make_item(name * 64, {
+            "catalog_hash": probed.catalog.catalog_hash,
+            "base_id": "poe2/item_bases/Amethyst Ring", "rarity": "rare",
+            "modifiers": [{"text": "+56% to Fire Resistance",
+                           "parse_status": status}],
+            "parse_status": "partial"})
+        return item
+    known, unknown = ring("k", "stat_resolved"), ring("u", "unresolved")
+    pool = build_pool(catalog=probed.catalog, profile=probed.profile,
+                      items=[known, unknown], created_at="2026-10-18T00:00:00Z")
+    (slot,) = [s for s in pool.slots if s.slot_id == S + "Ring 1"]
+    assert [(c.item_hash, c.retained_for) for c in slot.candidates] == [
+        (known.item_hash, ["sample", STAT_KNOWN_PARTIAL])]
+    assert slot.partial_count == 1
+    assert known.parse_status is RecordParseStatus.PARTIAL

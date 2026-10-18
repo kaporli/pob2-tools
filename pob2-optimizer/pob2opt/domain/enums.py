@@ -76,6 +76,12 @@ class ModifierParseStatus(StrEnum):
     RESOLVED = "resolved"
     UNRESOLVED = "unresolved"
     AMBIGUOUS = "ambiguous"
+    #: P04-T01.6. No random affix of this patch explains the line, but it has
+    #: the text of a catalog modifier line and a value within what all lines
+    #: of that text can sum to: a summed, exclusive, corrupted or desecrated
+    #: roll. The stat is known; which affix rolled it is not. The item stays
+    #: partial.
+    STAT_RESOLVED = "stat_resolved"
 
 
 class RecordParseStatus(StrEnum):

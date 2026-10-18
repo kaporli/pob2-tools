@@ -38,8 +38,8 @@ from typing import Callable, Iterable, Mapping, Sequence
 from ..catalog.slotrules import base_category
 from ..domain.absent import Absent
 from ..domain.enums import (Availability, CandidateAvailability,
-                            EnablingQueryStatus, PoolSlotStatus,
-                            RecordParseStatus)
+                            EnablingQueryStatus, ModifierParseStatus,
+                            PoolSlotStatus, RecordParseStatus)
 from ..domain.identity import build_hash, item_identity, pool_hash
 from ..domain.records import (SCHEMA_VERSION, BuildSpec, DataGap,
                               EnablingQueryOutcome, EquipmentPool,
@@ -184,6 +184,37 @@ def _candidate_key(entry) -> tuple:
     return (item.item_hash, candidate.listing_id or "")
 
 
+#: ``retained_for`` mark of a partial item placed because its stats are
+#: known (``stat_known``). A build using it stays non-recommendable.
+STAT_KNOWN_PARTIAL = "stat_known_partial"
+_STAT_KNOWN = (ModifierParseStatus.RESOLVED, ModifierParseStatus.AMBIGUOUS,
+               ModifierParseStatus.STAT_RESOLVED)
+
+
+def stat_known(item: ItemInstance) -> bool:
+    """A partial item whose every stat is a catalog stat (P02-T03.1).
+
+    Its base is resolved, it has modifier lines, and each line is resolved,
+    ambiguous between catalog affixes, or ``stat_resolved``: the stats are
+    known and only which affix rolled a line is not. Such an item is placed in
+    the pool, marked ``stat_known_partial``; it is not made complete, so a
+    build equipping it keeps its P04 partial status. An item with an
+    unresolved line or base is never placed.
+    """
+    statuses = [m.parse_status for m in item.modifiers]
+    # Partial for an affix identity and nothing else: at least one line is
+    # not resolved, and every line's stat is known.
+    return (item.parse_status is RecordParseStatus.PARTIAL
+            and item.base_id is not None
+            and any(st is not ModifierParseStatus.RESOLVED for st in statuses)
+            and all(st in _STAT_KNOWN for st in statuses))
+
+
+def marks(item: ItemInstance) -> list[str]:
+    return ([STAT_KNOWN_PARTIAL]
+            if item.parse_status is not RecordParseStatus.COMPLETE else [])
+
+
 def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
                items: Iterable[ItemInstance], listings: Iterable[Listing] = (),
                owned: Iterable[OwnedItem] = (),
@@ -286,7 +317,8 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
                 normalize_id("slots", slot) for slot in own.slot_ids})
             if not here:
                 continue
-            if item.parse_status is not RecordParseStatus.COMPLETE:
+            if (item.parse_status is not RecordParseStatus.COMPLETE
+                    and not stat_known(item)):
                 partial += 1
                 continue
             placed.add(item_hash)
@@ -295,7 +327,7 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
                     item_hash=item_hash, listing_id=None,
                     availability=CandidateAvailability.OWNED,
                     quantity=own.count,
-                    retained_for=["owned", *reasons(item)]))
+                    retained_for=["owned", *reasons(item), *marks(item)]))
             if not fits(item):
                 continue
             item_listings = sorted(listed.get(item_hash, ()),
@@ -320,7 +352,7 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
         kept = sorted(required, key=_candidate_key) + _sample(
             sorted(rest, key=_candidate_key), room)
         candidates = owned_here + [
-            replace(c, retained_for=reasons(item) or ["sample"])
+            replace(c, retained_for=(reasons(item) or ["sample"]) + marks(item))
             for item, c in kept]
         if not accepted:
             status = PoolSlotStatus.MISSING_CATEGORY_RULE

@@ -390,6 +390,51 @@ def _affix_templates(entities: Mapping[str, Sequence[CatalogEntity]]
     return out
 
 
+@dataclass
+class _StatForm:
+    pattern: re.Pattern[str]
+    #: Per numeric slot: lowest low and summed high over every catalog line
+    #: of this form, so a value several modifiers add up to still fits.
+    low: list[float]
+    high: list[float]
+
+
+def _stat_forms(entities: Mapping[str, Sequence[CatalogEntity]]
+                ) -> list[_StatForm]:
+    """Every catalog modifier line of any type, keyed by its text form.
+
+    Unlike the affix templates this includes unique, implicit, corrupted and
+    desecrated lines. It says which stat a line names and bounds its value by
+    what all lines of that stat can sum to; it never says which affix rolled
+    it.
+    """
+    out: dict[str, _StatForm] = {}
+    for entity in entities.get("item_modifiers", ()):
+        for line in _raw(entity).get("lines") or ():
+            template = _compile(entity.entity_id, str(line), ())
+            key = template.pattern.pattern
+            form = out.get(key)
+            if form is None:
+                form = out[key] = _StatForm(
+                    template.pattern, [low for low, _ in template.slots],
+                    [0.0] * len(template.slots))
+            for index, (low, high) in enumerate(template.slots):
+                form.low[index] = min(form.low[index], low)
+                form.high[index] += max(high, 0.0)
+    return list(out.values())
+
+
+def _stat_known(forms: Sequence[_StatForm], text: str) -> bool:
+    for form in forms:
+        match = form.pattern.match(text)
+        if match is None:
+            continue
+        if all(low <= float(value) <= max(high, low) for value, low, high
+               in zip(match.groups(), form.low, form.high)):
+            return True
+    return False
+
+
 def _spawns_on(template: _Template, tags: Sequence[str] | None) -> bool:
     """PoB's spawn rule: the first weight key the base has decides."""
     if tags is None:
@@ -443,11 +488,14 @@ def resolve_item_modifiers(item: ItemInstance,
     A template matches when its text matches with every rolled number inside
     the template's range, and it can spawn on the item's base (its first
     weight key present in the base's tags has a positive weight). One match
-    resolves the line. Several leave it ``ambiguous`` with the candidate IDs;
-    none leaves it ``unresolved``. Category, text and values are untouched.
+    resolves the line. Several leave it ``ambiguous`` with the candidate IDs.
+    With none, a line that has the text of any catalog modifier line and a
+    value within what all lines of that text can sum to is ``stat_resolved``;
+    anything else is ``unresolved``. Category, text and values are untouched.
     The returned item is partial when any line is not resolved.
     """
     templates = _affix_templates(entities)
+    forms = None
     tags = _base_tags(item, entities)
     matches: list[ModifierMatch] = []
     modifiers = []
@@ -461,8 +509,14 @@ def resolve_item_modifiers(item: ItemInstance,
                                resolved_effect_ids=[candidates[0]],
                                parse_status=status)
         else:
-            status = (ModifierParseStatus.AMBIGUOUS if candidates
-                      else ModifierParseStatus.UNRESOLVED)
+            if forms is None:
+                forms = _stat_forms(entities)
+            if candidates:
+                status = ModifierParseStatus.AMBIGUOUS
+            elif _stat_known(forms, modifier.text):
+                status = ModifierParseStatus.STAT_RESOLVED
+            else:
+                status = ModifierParseStatus.UNRESOLVED
             modifier = replace(modifier, native_id=None,
                                resolved_effect_ids=[], parse_status=status)
         modifiers.append(modifier)
