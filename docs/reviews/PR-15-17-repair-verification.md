@@ -8,11 +8,16 @@ probe outputs remain unchanged. PR #14 is merged as `3046609`.
 
 | PR / original head | Finding | Result |
 |---|---|---|
-| #15 / `63d8a58` | R1: unterminated reminder discards modifiers | Refused at the section boundary or EOF with `unterminated_reminder`; no reduced item or listing is emitted. Closed single/multiline reminders preserve the following modifier and identity. |
+| #15 / `63d8a58` | R1: unterminated reminder discards modifiers | Refused at the section boundary or EOF with `unterminated_reminder`; no reduced item or listing is emitted. Balanced single/multiline and nested reminders preserve the following modifier and identity. |
 | #15 / `63d8a58` | R2: impossible capture timestamps accepted | Strict UTC representation plus calendar/time parsing; capture observed time, listing override and listing creation time all reject invalid dates. CLI exits 2 and stores no items/listings. Valid leap days and fractional seconds are preserved. |
 | #16 / `644c7b8` | R1: foreign catalog/realm/league enters pool | Refuse the whole mixed-scope input before deduplication, enabling matching or sampling. Errors sort the offending record IDs. Empty listing scope does not match a populated profile scope. |
 | #16 / `644c7b8` | R2: duplicate readiness depends on order | Same-hash records with different canonical item data or parse readiness are refused in either order. Equivalent duplicates are collapsed deterministically; all-partial duplicates remain excluded. |
 | #17 / `9f32dfe` | R1: activation and attribution are nonblocking | Both remain open **blocking** gaps. Method prerequisites and measurement dependencies explicitly include them. Resolving every other gap still blocks the protocol. First-use activation and reuse need evidence or timed movement; unassigned secondary damage cannot enter the score. |
+
+The final adversarial pass also found that a modifier ending in `(crafted)`
+could falsely close an earlier reminder. The parser now tracks parenthesis
+depth, refuses unbalanced sections and preserves valid nested reminders.
+The two malformed-tail cases and one valid nested case are regressions.
 
 Parser version is `p04-t01.5`. Its version participates in both ordinary parse
 and market-import cache keys. Reparse affected older sources; previously
@@ -36,8 +41,8 @@ Windows, Python 3.12.4 and 3.10.22. Full offline command:
 
 | Checkout tested | Python 3.12 | Python 3.10 | Evidence |
 |---|---|---|---|
-| #15 code `c65eea1` on merged #14 | 1,603 passed, 1 xfailed | 1,603 passed, 1 xfailed | `docs/evidence/P05-T02/repairs/offline-py*.txt` |
-| #16 code `99169c7`, including repaired #15 | 1,643 passed, 1 xfailed | 1,643 passed, 1 xfailed | `docs/evidence/P05-T03/repairs/offline-py*.txt` |
+| #15 code `2892116` on merged #14 | 1,606 passed, 1 xfailed | 1,606 passed, 1 xfailed | `docs/evidence/P05-T02/repairs/offline-py*.txt` |
+| #16 code `0dfea0f`, including repaired #15 | 1,646 passed, 1 xfailed | 1,646 passed, 1 xfailed | `docs/evidence/P05-T03/repairs/offline-py*.txt` |
 | #17 code `01c3aea` on merged #14 | 1,569 passed, 1 xfailed | 1,569 passed, 1 xfailed | `docs/evidence/P09-T01.1/repairs/offline-py*.txt` |
 
 The existing xfail is the unimplemented P08 prepare service. Schema freshness
@@ -46,16 +51,16 @@ pass on the changed Python files. Final commits additionally carry documentation
 evidence and branch reconciliation; GitHub checks must pass on those pushed heads.
 
 All 11 affected native item-conversion tests pass on **each** interpreter
-against clean pinned PoB `ce566ea`. External monitor: 9.3 seconds / 553,164,800
-bytes peak tree RSS on 3.12; 11.2 seconds / 556,949,504 bytes on 3.10; no guard
-trigger. Logs are in `docs/evidence/P02-T01.1/suite-runs/repair-pr15-py312/`
-and `repair-pr15-py310/`. These tests cover synthetic conversion fidelity,
+against clean pinned PoB `ce566ea`. External monitor: 8.8 seconds / 523,739,136
+bytes peak tree RSS on 3.12; 8.3 seconds / 565,305,344 bytes on 3.10; no guard
+trigger. Logs are in `docs/evidence/P02-T01.1/suite-runs/repair-pr15-final-py312/`
+and `repair-pr15-final-py310/`. These tests cover synthetic conversion fidelity,
 not game observations. The unrelated whole native suite was not repeated.
 
 Negative controls copied only the new tests onto the original reviewed heads,
 then selected the repair cases on Python 3.12:
 
-- #15: 23 failures, 8 passing valid-input controls.
+- #15: 26 failures, 8 passing valid-input controls.
 - #16: 8 failures, 2 passing equivalent-duplicate controls.
 - #17: 3 failures, including both independently unresolved prerequisites.
 
