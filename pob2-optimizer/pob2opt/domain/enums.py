@@ -102,6 +102,34 @@ class Availability(StrEnum):
     UNKNOWN = "unknown"
 
 
+# ---------------------------------------------------- equipment pools (P05-T03)
+
+class PoolSlotStatus(StrEnum):
+    POPULATED = "populated"
+    EMPTY = "empty"
+    #: The slot rule names no accepted base category, so imported items
+    #: cannot be placed in it. Only owned items placed by a source build are.
+    MISSING_CATEGORY_RULE = "missing_category_rule"
+
+
+class CandidateAvailability(StrEnum):
+    """A pool candidate's availability: owned, or its listing's evidence."""
+
+    OWNED = "owned"
+    OBSERVED = "observed"
+    RECHECKED = "rechecked"
+    #: An imported item without listing evidence, or a listing whose current
+    #: state is unknown.
+    UNKNOWN = "unknown"
+
+
+class EnablingQueryStatus(StrEnum):
+    #: Declared inside the run bound; no approved route ran it (D01).
+    UNEXECUTED = "unexecuted"
+    #: Past the run's enabling-query bound; neither run nor applied.
+    OVER_BOUND = "over_bound"
+
+
 class ConfigOrigin(StrEnum):
     SOURCE = "source"
     SCENARIO = "scenario"

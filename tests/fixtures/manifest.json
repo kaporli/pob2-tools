@@ -85,11 +85,11 @@
     },
     {
       "path": "records/items_and_builds.v1.json",
-      "sha256": "03b3103c25b42477a293894d744508ba6d948f34ddd3c5f13558a0c295860f65",
-      "bytes": 12420,
+      "sha256": "74712d92f8316a7bc526f641d0152036e335ca54412fb9b0171faeec921d6e39",
+      "bytes": 17304,
       "origin": "synthetic",
       "author": "P01-T01",
-      "description": "Valid and invalid ItemInstance, Listing, BuildSpec and ParseResult examples, including the cases that keep item and listing identity apart.",
+      "description": "Valid and invalid ItemInstance, Listing, EquipmentPool, BuildSpec and ParseResult examples, including the cases that keep item and listing identity apart.",
       "used_by": [
         "tests/unit/test_p01_review_regressions.py",
         "tests/unit/test_p01_t01_records.py",
