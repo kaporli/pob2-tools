@@ -73,3 +73,7 @@ them separate.
 | `P05-T02/offline-py312.txt`, `P05-T02/offline-py310.txt` | P05-T02 | Offline suite logs on Python 3.12 and 3.10 after the item and listing import |
 | `P05-T02/engine-py312.txt`, `P05-T02/engine-py312-run2.txt` | P05-T02 | Engine suite logs against PoB `ce566ea`: the first run stopped by the test-session memory guard in an existing P02 test, the second complete. Synthetic items, no gameplay measurement |
 | `P05-T03/offline-py312.txt`, `P05-T03/offline-py310.txt` | P05-T03 | Offline suite logs on Python 3.12 and 3.10 after the equipment pools |
+| `P02-T03.1/README.md` | P02-T03.1 | Engine slot rules: how they are read, the categories per slot, off-hand and rarity rules, the engine cross-check, the real pool and the open gaps |
+| `P02-T03.1/slot-acceptance.json` | P02-T03.1 | PoB-derived. The engine's slot acceptance probe from a clean checkout of `ce566ea`; the offline tests replay it |
+| `P02-T03.1/slot-rules.json`, `P02-T03.1/real-pool.json` | P02-T03.1 | PoB-derived. Exported slot, off-hand and rarity rules with their gaps; a pool from 46 real items (owner seed owned, reference build not owned) with the reason for every empty slot |
+| `P02-T03.1/offline-py312.txt`, `P02-T03.1/offline-py310.txt`, `P02-T03.1/engine-py312.txt` | P02-T03.1 | Offline suite tails on 3.12 and 3.10; targeted engine test tails |

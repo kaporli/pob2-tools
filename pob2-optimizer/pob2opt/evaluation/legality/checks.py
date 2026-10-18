@@ -17,9 +17,10 @@ thereby illegal: that is an unknown, and the gap says so.
 
 **Nothing is inferred from a name.** Equipment legality needs the base
 categories each slot accepts. P02-T02 exported every slot rule with an empty
-category list and a blocking gap, so the slot check answers ``unknown`` and
-cites it. Reading the categories off an item's name would be inventing the
-rule the gap exists to request.
+category list and a blocking gap, so for such a profile the slot check
+answers ``unknown`` and cites it. Since P02-T03.1 the categories and the
+off-hand rules are read from the engine; a slot left empty there (a jewel
+socket on an item) is still ``unknown``.
 """
 
 from __future__ import annotations
@@ -27,6 +28,8 @@ from __future__ import annotations
 from collections import deque
 from typing import Iterable, Sequence
 
+from ...catalog.slotrules import NO_FLAG, UNARMED, base_category
+from ...domain.absent import ABSENT, Absent
 from ...domain.enums import Legality, ModifierParseStatus, RecordParseStatus
 from ...domain.records import SkillEntry
 from . import gaps as gapdefs
@@ -625,7 +628,7 @@ def _check_slot_categories(ctx: Context, out: ReportBuilder, entry, rule) -> Non
             rule_id=rule.slot_id,
             field_paths=("/equipment/%s" % entry.slot_id,),
             subject_ids=(entry.slot_id,),
-            gap_ids=(gapdefs.T02_SLOT_CATEGORIES,))
+            gap_ids=_slot_rule_gaps(ctx))
         return
     category = _base_category(ctx, entry)
     if category is None:
@@ -648,6 +651,39 @@ def _check_slot_categories(ctx: Context, out: ReportBuilder, entry, rule) -> Non
             field_paths=("/equipment/%s" % entry.slot_id,),
             subject_ids=(entry.slot_id,),
             evidence_ids=tuple(rule.evidence_ids))
+        return
+    rarity = _rarity(entry)
+    if rarity is not None and rarity in _refused(rule):
+        out.violation(
+            CHECK_SLOTS, "rarity_not_accepted",
+            "slot %s refuses %s items and %s is %s"
+            % (entry.slot_id, ", ".join(_refused(rule)), entry.label, rarity),
+            rule_id=rule.slot_id,
+            field_paths=("/equipment/%s" % entry.slot_id,),
+            subject_ids=(entry.slot_id,),
+            evidence_ids=tuple(rule.evidence_ids))
+
+
+def _rarity(entry) -> str | None:
+    for source in (entry.record, entry.imported):
+        value = getattr(source, "rarity", None) if source is not None else None
+        if value:
+            return str(value).lower()
+    return None
+
+
+def _refused(rule) -> list[str]:
+    refused = getattr(rule, "refused_rarities", ABSENT)
+    return [] if isinstance(refused, Absent) else list(refused)
+
+
+def _slot_rule_gaps(ctx: Context) -> tuple[str, ...]:
+    """The gaps that explain why a slot rule is empty in this profile."""
+    known = set(ctx.rules.rules.missing_rule_gap_ids)
+    if gapdefs.T02_SLOT_CATEGORIES in known or not known:
+        return (gapdefs.T02_SLOT_CATEGORIES,)
+    cited = tuple(sorted(known & set(gapdefs.T031_EMPTY_SLOT_GAPS)))
+    return cited or (gapdefs.T02_SLOT_CATEGORIES,)
 
 
 def _base_category(ctx: Context, entry) -> str | None:
@@ -661,7 +697,7 @@ def _base_category(ctx: Context, entry) -> str | None:
     raw = ctx.catalog.base_raw(base_id)
     if not raw:
         return None
-    return raw.get("type")
+    return base_category(raw)
 
 
 def check_hands(ctx: Context, out: ReportBuilder) -> None:
@@ -717,7 +753,10 @@ def check_hands(ctx: Context, out: ReportBuilder) -> None:
                 field_paths=("/weapon_sets/%s/hand_slots" % set_id,),
                 evidence_ids=tuple(ctx.rules.weapon_sets.evidence_ids))
 
-    if weapon_slots:
+    off_hand_rules = ctx.rules.weapon_sets.off_hand_rules
+    if weapon_slots and not isinstance(off_hand_rules, Absent):
+        _check_off_hands(ctx, out, off_hand_rules)
+    elif weapon_slots:
         out.unknown(
             CHECK_HANDS, "hand_conflict_undecidable",
             "%d weapon slot(s) are occupied and the profile carries no rule "
@@ -733,6 +772,81 @@ def check_hands(ctx: Context, out: ReportBuilder) -> None:
         out.ran(CHECK_HANDS, "no weapon slot is occupied and %d hand binding(s) "
                              "were examined"
                              % sum(len(v) for v in declared_hands.values()))
+
+
+def _check_off_hands(ctx: Context, out: ReportBuilder, rules) -> None:
+    """Is each occupied off-hand slot allowed next to its main hand?
+
+    The engine decides this from the main-hand base category and three
+    keystone flags (P02-T03.1). A pairing the no-flag rule allows passes; one
+    only a keystone allows is unknown, because the build's flag state is not
+    read here; one no rule allows is a violation.
+    """
+    by_slot = {entry.slot_id: entry for entry in ctx.equipped}
+    pairs = sorted({(r.off_hand_slot_id, r.main_hand_slot_id) for r in rules})
+    examined = 0
+    for off_slot, main_slot in pairs:
+        off = by_slot.get(off_slot)
+        if off is None:
+            continue
+        examined += 1
+        path = "/equipment/%s" % off_slot
+        main = by_slot.get(main_slot)
+        main_category = UNARMED if main is None else _base_category(ctx, main)
+        off_category = _base_category(ctx, off)
+        if main_category is None or off_category is None:
+            out.unknown(
+                CHECK_HANDS, "hand_item_base_unresolved",
+                "the base category of the item in %s or %s could not be "
+                "resolved, so the off-hand rule was not applied"
+                % (main_slot, off_slot), field_paths=(path,),
+                subject_ids=(off_slot, main_slot),
+                gaps=[ctx.gaps.gap(_gap("unresolved-catalog-entity"),
+                                   references=(off_slot,))])
+            continue
+        applicable = [r for r in rules if r.off_hand_slot_id == off_slot
+                      and r.main_hand_category == main_category]
+        if not applicable:
+            out.unknown(
+                CHECK_HANDS, "off_hand_rule_missing",
+                "no off-hand rule covers %s in %s with a %s in %s"
+                % (off.label, off_slot, main_category, main_slot),
+                field_paths=(path,), subject_ids=(off_slot, main_slot),
+                gap_ids=_slot_rule_gaps(ctx))
+            continue
+        rarity = _rarity(off)
+
+        def takes(rule) -> bool:
+            return (off_category in rule.accepted_base_categories
+                    and not (rarity and rarity in _refused(rule)))
+
+        plain = [r for r in applicable if r.required_flag == NO_FLAG]
+        if any(takes(r) for r in plain):
+            continue
+        flags = sorted(r.required_flag for r in applicable
+                       if r.required_flag != NO_FLAG and takes(r))
+        evidence = tuple(sorted({e for r in applicable for e in r.evidence_ids}))
+        if flags:
+            out.unknown(
+                CHECK_HANDS, "off_hand_needs_keystone",
+                "%s (%s) in %s next to a %s in %s is allowed only with %s, "
+                "and the build's flag state was not read"
+                % (off.label, off_category, off_slot, main_category,
+                   main_slot, " or ".join(flags)),
+                field_paths=(path,), subject_ids=(off_slot, main_slot),
+                gap_ids=(gapdefs.T031_OFF_HAND_FLAGS,))
+            continue
+        allowed = sorted({c for r in plain for c in r.accepted_base_categories})
+        out.violation(
+            CHECK_HANDS, "off_hand_not_accepted",
+            "%s (%s) in %s is not allowed next to a %s in %s; that main hand "
+            "allows %s" % (off.label, off_category, off_slot, main_category,
+                           main_slot, ", ".join(allowed) or "no off-hand item"),
+            rule_id="character_rules/weapon_sets/off_hand_rules",
+            field_paths=(path, "/equipment/%s" % main_slot),
+            subject_ids=(off_slot, main_slot), evidence_ids=evidence)
+    out.ran(CHECK_HANDS, "%d occupied off-hand slot(s) checked against the "
+                         "engine's off-hand rules" % examined)
 
 
 def check_item_requirements(ctx: Context, out: ReportBuilder) -> None:

@@ -200,6 +200,51 @@
       ],
       "additionalProperties": false
     },
+    "OffHandRule": {
+      "type": "object",
+      "properties": {
+        "off_hand_slot_id": {
+          "type": "string"
+        },
+        "main_hand_slot_id": {
+          "type": "string"
+        },
+        "main_hand_category": {
+          "type": "string"
+        },
+        "required_flag": {
+          "type": "string"
+        },
+        "accepted_base_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "refused_rarities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "off_hand_slot_id",
+        "main_hand_slot_id",
+        "main_hand_category",
+        "required_flag",
+        "accepted_base_categories",
+        "evidence_ids"
+      ],
+      "additionalProperties": false,
+      "description": "What an off-hand slot accepts while its main-hand slot holds one category."
+    },
     "PointBudgetRule": {
       "type": "object",
       "properties": {
@@ -261,6 +306,12 @@
           ]
         },
         "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "refused_rarities": {
           "type": "array",
           "items": {
             "type": "string"
@@ -335,6 +386,12 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        "off_hand_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OffHandRule"
           }
         }
       },

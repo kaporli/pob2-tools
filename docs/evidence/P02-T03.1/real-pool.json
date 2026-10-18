@@ -1,0 +1,3257 @@
+{
+ "catalog_hash": "ac0e930898cb3951d96780a8a87bda8b7d08e722cd6e5c0087253bc0516ca998",
+ "empty_slot_reasons": {
+  "poe2/slots/Amulet": [
+   {
+    "item_parse_status": "partial",
+    "source": "seed",
+    "source_slot": "Amulet"
+   },
+   {
+    "item_parse_status": "partial",
+    "source": "ninja-25c49",
+    "source_slot": "Amulet"
+   }
+  ],
+  "poe2/slots/Boots": [
+   {
+    "item_parse_status": "partial",
+    "source": "seed",
+    "source_slot": "Boots"
+   },
+   {
+    "item_parse_status": "partial",
+    "source": "ninja-25c49",
+    "source_slot": "Boots"
+   }
+  ],
+  "poe2/slots/Gloves": [
+   {
+    "item_parse_status": "partial",
+    "source": "seed",
+    "source_slot": "Gloves"
+   },
+   {
+    "item_parse_status": "partial",
+    "source": "ninja-25c49",
+    "source_slot": "Gloves"
+   }
+  ],
+  "poe2/slots/Helmet": [
+   {
+    "item_parse_status": "partial",
+    "source": "seed",
+    "source_slot": "Helmet"
+   },
+   {
+    "item_parse_status": "partial",
+    "source": "ninja-25c49",
+    "source_slot": "Helmet"
+   }
+  ],
+  "poe2/slots/Weapon 2": "no real input item has an accepted category",
+  "poe2/slots/Weapon 2 Swap": "no real input item has an accepted category"
+ },
+ "inputs": [
+  {
+   "base_id": "poe2/item_bases/Absent Amulet",
+   "category": "Amulet",
+   "fits": [
+    "poe2/slots/Amulet"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Carrion Braid: Grants Skill: Level 18 Trinity",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Carrion Braid: +4 to Level of all Melee Skills",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "80fc896e2defacf80c321c8405fad157edc9dfa0b3f4d9ad0429d79bcb171141",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "seed",
+   "source_slot": "Amulet"
+  },
+  {
+   "base_id": "poe2/item_bases/Utility Belt",
+   "category": "Belt",
+   "fits": [
+    "poe2/slots/Belt"
+   ],
+   "issues": [],
+   "item_hash": "23d72fd9a7b54ee02b754f0b6b9bdc2f27e9823ed79eb116b62154703ad300cd",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Belt"
+  },
+  {
+   "base_id": "poe2/item_bases/Runemastered Ancient Mail",
+   "category": "Body Armour/Armour/Energy Shield",
+   "fits": [
+    "poe2/slots/Body Armour"
+   ],
+   "issues": [],
+   "item_hash": "164aa6736eef1808266fc5d91a4433ed8fd8f792fce7721b02e5055c6650fe38",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Body Armour"
+  },
+  {
+   "base_id": "poe2/item_bases/Runeforged Apostle Leggings",
+   "category": "Boots/Armour/Energy Shield",
+   "fits": [
+    "poe2/slots/Boots"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Loath Slippers: Unique ID: 0cce47627480d1090d0de8bdf28d20fecbb34cdcbf206c48dcd352a6c9f5af7f",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Loath Slippers: +9 to Stun Threshold",
+     "code": "ambiguous_affix"
+    }
+   ],
+   "item_hash": "971132c95d9718f4a70382cd7d04d2697ecd19dfb5914140edd0ba1ea31a0cfc",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "seed",
+   "source_slot": "Boots"
+  },
+  {
+   "base_id": "poe2/item_bases/Thawing Charm",
+   "category": "Charm",
+   "fits": [
+    "poe2/slots/Charm 1",
+    "poe2/slots/Charm 2",
+    "poe2/slots/Charm 3"
+   ],
+   "issues": [],
+   "item_hash": "19b83d45186846f85b2ea0c94c786b04fe9b2208400b31dd5b42a32ef6923963",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Charm 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Stone Charm",
+   "category": "Charm",
+   "fits": [
+    "poe2/slots/Charm 1",
+    "poe2/slots/Charm 2",
+    "poe2/slots/Charm 3"
+   ],
+   "issues": [],
+   "item_hash": "662fef5fdf3fd2b7e7257f0a9c1ccce1f286f9af3f9980272848ae40f93dcb9a",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Charm 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Silver Charm",
+   "category": "Charm",
+   "fits": [
+    "poe2/slots/Charm 1",
+    "poe2/slots/Charm 2",
+    "poe2/slots/Charm 3"
+   ],
+   "issues": [],
+   "item_hash": "a340303466391928e4332919088b1c3cac4e776439ec22fd93e59c53f6d496a1",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Charm 3"
+  },
+  {
+   "base_id": "poe2/item_bases/Gargantuan Life Flask",
+   "category": "Flask/Life",
+   "fits": [
+    "poe2/slots/Flask 1"
+   ],
+   "issues": [],
+   "item_hash": "81eb9aa0c3940704a03ed8c1a378d39d271ccee2620dc53f5fedc7d6efe0e6f4",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Flask 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Ultimate Mana Flask",
+   "category": "Flask/Mana",
+   "fits": [
+    "poe2/slots/Flask 2"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Bubbling Ultimate Mana Flask of the Sylvan: Unique ID: 09e5e263a610cdb182e32b0bc7954f1e69ca9c628f5ef2470c3aca2090f07c7f",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Bubbling Ultimate Mana Flask of the Sylvan: Gains 0.25 Charges per Second",
+     "code": "ambiguous_affix"
+    }
+   ],
+   "item_hash": "7e9ea49906e1232bf6576f86ced3ca202af8e90966050cea7b172b940ce73b75",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "magic",
+   "source": "seed",
+   "source_slot": "Flask 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Runeforged Fists of Stone",
+   "category": "Gloves",
+   "fits": [
+    "poe2/slots/Gloves"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Skull Claw: Has +1 to maximum Runic Ward per player level",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Skull Claw: 20% more Global Evasion Rating and Energy Shield",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Skull Claw: Attacks Gain 13% of Damage as Extra Physical Damage",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Skull Claw: 13% less damage taken while on Low Life",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Skull Claw: 10% chance to gain Onslaught for 4 seconds on Hit",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Skull Claw: +2% to Maximum Fire Resistance",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Skull Claw: +2% to Maximum Cold Resistance",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "2fe027a34c37ba2d47bb519f93e71226622dd55c0ce65d36a85d3e5da2461017",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "seed",
+   "source_slot": "Gloves"
+  },
+  {
+   "base_id": "poe2/item_bases/Ancestral Tiara",
+   "category": "Helmet/Energy Shield",
+   "fits": [
+    "poe2/slots/Helmet"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Morbid Veil: 40% increased Energy Shield",
+     "code": "ambiguous_affix"
+    },
+    {
+     "at": "/entries/0:Morbid Veil: +33 to maximum Mana",
+     "code": "ambiguous_affix"
+    },
+    {
+     "at": "/entries/0:Morbid Veil: 16% increased Rarity of Items found",
+     "code": "ambiguous_affix"
+    }
+   ],
+   "item_hash": "aef7adc4810dd7f5420678a865043e97e5e4cba245deb2938a35d091e7c12d87",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "seed",
+   "source_slot": "Helmet"
+  },
+  {
+   "base_id": "poe2/item_bases/Sapphire",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "rare",
+   "source": "seed",
+   "source_slot": "Jewel 21984"
+  },
+  {
+   "base_id": "poe2/item_bases/Diamond",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Jewel 32763"
+  },
+  {
+   "base_id": "poe2/item_bases/Diamond",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Jewel 61834"
+  },
+  {
+   "base_id": "poe2/item_bases/Gold Ring",
+   "category": "Ring",
+   "fits": [
+    "poe2/slots/Ring 1",
+    "poe2/slots/Ring 2",
+    "poe2/slots/Ring 3"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Damnation Twirl: 13% increased Rarity of Items found",
+     "code": "ambiguous_affix"
+    },
+    {
+     "at": "/entries/0:Damnation Twirl: +56% to Fire Resistance",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Damnation Twirl: +51% to Cold Resistance",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Damnation Twirl: +51% to Lightning Resistance",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "63cd05ea989c7a2b870aaf0d28cb12c26c223840a4ebe82009f6daf26a3046fd",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "seed",
+   "source_slot": "Ring 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Sapphire Ring",
+   "category": "Ring",
+   "fits": [
+    "poe2/slots/Ring 1",
+    "poe2/slots/Ring 2",
+    "poe2/slots/Ring 3"
+   ],
+   "issues": [],
+   "item_hash": "282a0098d96aee23e4b6611e1372054937cc9704447943c558eaa9d9bc905eb2",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Ring 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Sinister Quarterstaff",
+   "category": "Staff/Warstaff",
+   "fits": [
+    "poe2/slots/Weapon 1",
+    "poe2/slots/Weapon 1 Swap"
+   ],
+   "issues": [],
+   "item_hash": "7919ff0cd3b21ec3c6518650743d16efa2fb49c2d6fa580dca6371439327a01f",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "rare",
+   "source": "seed",
+   "source_slot": "Weapon 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Nettle Talisman",
+   "category": "Talisman",
+   "fits": [
+    "poe2/slots/Weapon 1",
+    "poe2/slots/Weapon 1 Swap"
+   ],
+   "issues": [],
+   "item_hash": "b7ca7a2793984321c3c6e2690fba70adcbc24b875e5f24b8c30c0698b2260492",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "seed",
+   "source_slot": "Weapon 1 Swap"
+  },
+  {
+   "base_id": "poe2/item_bases/Staunching Charm",
+   "category": "Charm",
+   "fits": [
+    "poe2/slots/Charm 1",
+    "poe2/slots/Charm 2",
+    "poe2/slots/Charm 3"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Sunburst Staunching Charm of the Ample: Used when you start Bleeding",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Sunburst Staunching Charm of the Ample: 68% increased Charges",
+     "code": "ambiguous_affix"
+    }
+   ],
+   "item_hash": "bdaf731fd0ba434eeca0e9eb348959015e5d3226c6e9a1979127556b7cf2e296",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "magic",
+   "source": "ninja-25c49",
+   "source_slot": "Charm 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Golden Charm",
+   "category": "Charm",
+   "fits": [
+    "poe2/slots/Charm 1",
+    "poe2/slots/Charm 2",
+    "poe2/slots/Charm 3"
+   ],
+   "issues": [],
+   "item_hash": "06fa7e18d84822cfc0676dfa298bb608bf3b7192e2eb7332e69675ebb816f268",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Charm 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Utility Belt",
+   "category": "Belt",
+   "fits": [
+    "poe2/slots/Belt"
+   ],
+   "issues": [],
+   "item_hash": "5c4670df84d3321e7ae9d08f5de758d51c58aa825d64c9846d859147b6f63458",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Belt"
+  },
+  {
+   "base_id": "poe2/item_bases/Evasive Leg",
+   "category": "Transcendent Limb/Transcendent Leg",
+   "fits": [
+    "poe2/slots/Leg 1",
+    "poe2/slots/Leg 2"
+   ],
+   "issues": [],
+   "item_hash": "639e38866ef0609322c336f3430b3e5739b193dbf1f45b34b411da2c875202b7",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "normal",
+   "source": "ninja-25c49",
+   "source_slot": "Leg 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Evasive Leg",
+   "category": "Transcendent Limb/Transcendent Leg",
+   "fits": [
+    "poe2/slots/Leg 1",
+    "poe2/slots/Leg 2"
+   ],
+   "issues": [],
+   "item_hash": "639e38866ef0609322c336f3430b3e5739b193dbf1f45b34b411da2c875202b7",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "normal",
+   "source": "ninja-25c49",
+   "source_slot": "Leg 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Combat Arm",
+   "category": "Transcendent Limb/Transcendent Arm",
+   "fits": [
+    "poe2/slots/Arm 1",
+    "poe2/slots/Arm 2"
+   ],
+   "issues": [],
+   "item_hash": "adddbe5626ce19197aae7a0c3881526a2d8eee580a53d5b983ec2d572ae5ea59",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "normal",
+   "source": "ninja-25c49",
+   "source_slot": "Arm 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Combat Arm",
+   "category": "Transcendent Limb/Transcendent Arm",
+   "fits": [
+    "poe2/slots/Arm 1",
+    "poe2/slots/Arm 2"
+   ],
+   "issues": [],
+   "item_hash": "adddbe5626ce19197aae7a0c3881526a2d8eee580a53d5b983ec2d572ae5ea59",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "normal",
+   "source": "ninja-25c49",
+   "source_slot": "Arm 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Gargantuan Mana Flask",
+   "category": "Flask/Mana",
+   "fits": [
+    "poe2/slots/Flask 2"
+   ],
+   "issues": [],
+   "item_hash": "e4de323790822dbfd3229dc2aca6a0d563fe1ffa11d7623ae60ff6425c750185",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Flask 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Sinister Quarterstaff",
+   "category": "Staff/Warstaff",
+   "fits": [
+    "poe2/slots/Weapon 1",
+    "poe2/slots/Weapon 1 Swap"
+   ],
+   "issues": [],
+   "item_hash": "b93d53e35ccc5e80197c56b6feaa52303ee6be58797551b7c69823e0738e7954",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Weapon 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Absent Amulet",
+   "category": "Amulet",
+   "fits": [
+    "poe2/slots/Amulet"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Torment Charm: Grants Skill: Level 17 Eternal Rage",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Torment Charm: +4 to Level of all Melee Skills",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "242f2a824dcfb2b0b811292886f49963fcc37f4cc2f3c5edd0eb6b09b569675d",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Amulet"
+  },
+  {
+   "base_id": "poe2/item_bases/Ancestral Tiara",
+   "category": "Helmet/Energy Shield",
+   "fits": [
+    "poe2/slots/Helmet"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Viper Dome: 16% increased Rarity of Items found",
+     "code": "ambiguous_affix"
+    }
+   ],
+   "item_hash": "4bc4bb2528fa0e1b34e68f6f802a71987c617e74247f21187c5c884b220d1833",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Helmet"
+  },
+  {
+   "base_id": "poe2/item_bases/Ancient Mail",
+   "category": "Body Armour/Armour/Energy Shield",
+   "fits": [
+    "poe2/slots/Body Armour"
+   ],
+   "issues": [],
+   "item_hash": "b8f7cf40fb13129f2fd0b1e05d93a1086f4e0c9bf2ef5617487d1515604b1a60",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Body Armour"
+  },
+  {
+   "base_id": "poe2/item_bases/Fists of Stone",
+   "category": "Gloves",
+   "fits": [
+    "poe2/slots/Gloves"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Golem Claw: Has +1 to maximum Energy Shield per player level",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Golem Claw: 20% more Global Evasion Rating and Energy Shiel",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Golem Claw: +12% to Quality of all Skills",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Golem Claw: 30% chance to gain Onslaught for 4 seconds on Hit",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Golem Claw: +2.99% to Critical Hit Chance",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Golem Claw: Enemies you kill have a 45% chance to explode, dealing a tenth of their maximum Life as Physical damage",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Golem Claw: Enemies you kill have a 19% chance to explode, dealing a quarter of their maximum Life as Chaos damage",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "4b3c0b9259814b441e016a4537a90f98e8f7980eb2bd37cd8e91459bdebdf2a7",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Gloves"
+  },
+  {
+   "base_id": "poe2/item_bases/Daggerfoot Shoes",
+   "category": "Boots/Evasion/Energy Shield",
+   "fits": [
+    "poe2/slots/Boots"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Miracle Spark: +54% to Chaos Resistance",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "22dcd2e55ef2ea1ad5bf5ba26af6beef2de7225f53e5d21b82cf01a4a7582a25",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Boots"
+  },
+  {
+   "base_id": "poe2/item_bases/Prismatic Ring",
+   "category": "Ring",
+   "fits": [
+    "poe2/slots/Ring 1",
+    "poe2/slots/Ring 2",
+    "poe2/slots/Ring 3"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Pain Circle: Adds 33 to 50 Cold damage to Attacks",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Pain Circle: 17% increased Rarity of Items found",
+     "code": "ambiguous_affix"
+    },
+    {
+     "at": "/entries/0:Pain Circle: +22% to all Elemental Resistances",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "d0e71c7afc93187f917b6ce5e83d6643d9fbc0cc0580e3479987f3a5dff9f642",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Ring 1"
+  },
+  {
+   "base_id": "poe2/item_bases/Ring",
+   "category": "Ring",
+   "fits": [
+    "poe2/slots/Ring 1",
+    "poe2/slots/Ring 2",
+    "poe2/slots/Ring 3"
+   ],
+   "issues": [],
+   "item_hash": "46cee3e03530a7760f0adfda0fa7f871ba14e7f15ab5e41bb453a8aea0cf696d",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Ring 2"
+  },
+  {
+   "base_id": "poe2/item_bases/Thawing Charm",
+   "category": "Charm",
+   "fits": [
+    "poe2/slots/Charm 1",
+    "poe2/slots/Charm 2",
+    "poe2/slots/Charm 3"
+   ],
+   "issues": [],
+   "item_hash": "533f7a8718be25b502f4d49f539ccc7d4cf57d50499b0aeac03e4c7b574ca129",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Charm 3"
+  },
+  {
+   "base_id": "poe2/item_bases/Sapphire",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Loath Stone: Unique ID: 626afa0201956da43e77738b7cf516fab8ba73e9b1891efe4a1a9bbf1abdd9ad",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Loath Stone: 32% increased maximum Energy Shield",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Loath Stone: 10% increased Attack Damage",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "75960c8c6beecfe137c3726e6627b4505bdce3a228a76e5a0eef04774f7fa608",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 62152"
+  },
+  {
+   "base_id": "poe2/item_bases/Time-Lost Emerald",
+   "category": "Jewel/Radius",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Spirit Wound: Unique ID: dd3f83caaef10ab02f54901f04e4abb926597791f6a0d0c14d910f47d47f6ee9",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Spirit Wound: Notable Passive Skills in Radius also grant 12% increased Critical Damage Bonus for Attack Damage",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "e26a63e11ffef7c27f8f049b21767214f8ff176ff02696f9abbdb94a24724b40",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 32763"
+  },
+  {
+   "base_id": "poe2/item_bases/Diamond",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 21984"
+  },
+  {
+   "base_id": "poe2/item_bases/Sapphire",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Dusk Prism: Unique ID: 2d656a3bf9229d57ab5bdecece1c46b7c05b1a6b8ecae6601674c24cd57cce9a",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Dusk Prism: Gain additional Ailment Threshold equal to 23% of maximum Energy Shield",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Dusk Prism: 24% increased maximum Energy Shield",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Dusk Prism: Gain additional Stun Threshold equal to 17% of maximum Energy Shield",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Dusk Prism: 23% increased Critical Damage Bonus",
+     "code": "unresolved_affix"
+    }
+   ],
+   "item_hash": "ef2756068d74221662c439ad93679d1e1e177f1769fc552f0eabce1b2f7dd606",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 11184"
+  },
+  {
+   "base_id": "poe2/item_bases/Sapphire",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 60735"
+  },
+  {
+   "base_id": "poe2/item_bases/Diamond",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 46882"
+  },
+  {
+   "base_id": "poe2/item_bases/Diamond",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 61834"
+  },
+  {
+   "base_id": "poe2/item_bases/Sapphire",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [
+    {
+     "at": "/entries/0:Luminous Dew: Unique ID: e0c51759ae0d3f538cbfa32db6b23f3cbfd8f3e474731fded8ead5ef5f93e38b",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Luminous Dew: 34% increased maximum Energy Shield",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Luminous Dew: 22% increased Elemental Damage",
+     "code": "unresolved_affix"
+    },
+    {
+     "at": "/entries/0:Luminous Dew: 10% increased maximum Energy Shield",
+     "code": "ambiguous_affix"
+    },
+    {
+     "at": "/entries/0:Luminous Dew: 6% increased Attack Damage",
+     "code": "ambiguous_affix"
+    }
+   ],
+   "item_hash": "b057e4d2eea10059bd29e00e62e361ea772b8645d0c81bb591955c976ada0748",
+   "item_parse_status": "partial",
+   "parse_status": "partial",
+   "rarity": "rare",
+   "source": "ninja-25c49",
+   "source_slot": "Jewel 26178"
+  },
+  {
+   "base_id": "poe2/item_bases/Diamond",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": null
+  },
+  {
+   "base_id": "poe2/item_bases/Deflective Arm",
+   "category": "Transcendent Limb/Transcendent Arm",
+   "fits": [
+    "poe2/slots/Arm 1",
+    "poe2/slots/Arm 2"
+   ],
+   "issues": [],
+   "item_hash": "16258a3c09e33cbd170c32b573ee4b887415633dbc8ca3dc06f583870422ae83",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "normal",
+   "source": "ninja-25c49",
+   "source_slot": null
+  },
+  {
+   "base_id": "poe2/item_bases/Diamond",
+   "category": "Jewel",
+   "fits": [
+    "poe2/slots/Jewel 11184",
+    "poe2/slots/Jewel 17788",
+    "poe2/slots/Jewel 21984",
+    "poe2/slots/Jewel 23960",
+    "poe2/slots/Jewel 2491",
+    "poe2/slots/Jewel 26178",
+    "poe2/slots/Jewel 26196",
+    "poe2/slots/Jewel 26725",
+    "poe2/slots/Jewel 32763",
+    "poe2/slots/Jewel 3367",
+    "poe2/slots/Jewel 39087",
+    "poe2/slots/Jewel 46882",
+    "poe2/slots/Jewel 54127",
+    "poe2/slots/Jewel 55190",
+    "poe2/slots/Jewel 60735",
+    "poe2/slots/Jewel 61419",
+    "poe2/slots/Jewel 61834",
+    "poe2/slots/Jewel 62152",
+    "poe2/slots/Jewel 7960"
+   ],
+   "issues": [],
+   "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+   "item_parse_status": "complete",
+   "parse_status": "complete",
+   "rarity": "unique",
+   "source": "ninja-25c49",
+   "source_slot": null
+  }
+ ],
+ "kind": "PoB-derived",
+ "not_a_claim": "Read out of the pinned Path of Building checkout. Which slot accepts which base is the engine's ItemsTab:IsItemValidForSlot, not a statement about the live game. Nothing here is a gameplay measurement.",
+ "owned_policy": "seed items owned in their source slots (account import of the owner's character); reference-build items not owned, availability unknown",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "pob_dirty_hash": null,
+ "pool_id": "equipment-pool/bc3f0055d934ad2372b14794780c942767b99eb93729d5b6ec9f12d5f05fb6f8",
+ "report": {
+  "empty_slots": [
+   "poe2/slots/Amulet",
+   "poe2/slots/Boots",
+   "poe2/slots/Gloves",
+   "poe2/slots/Helmet",
+   "poe2/slots/Weapon 2",
+   "poe2/slots/Weapon 2 Swap"
+  ],
+  "gap_ids": [
+   "gap/p02-t03.1/socketed-item-jewel-slots"
+  ],
+  "missing_category_slots": [
+   "poe2/slots/Belt Jewel Socket 1",
+   "poe2/slots/Belt Jewel Socket 2",
+   "poe2/slots/Belt Jewel Socket 3",
+   "poe2/slots/Belt Jewel Socket 4",
+   "poe2/slots/Belt Jewel Socket 5",
+   "poe2/slots/Belt Jewel Socket 6",
+   "poe2/slots/Body Armour Jewel Socket 1",
+   "poe2/slots/Body Armour Jewel Socket 2",
+   "poe2/slots/Body Armour Jewel Socket 3",
+   "poe2/slots/Body Armour Jewel Socket 4",
+   "poe2/slots/Body Armour Jewel Socket 5",
+   "poe2/slots/Body Armour Jewel Socket 6",
+   "poe2/slots/Boots Jewel Socket 1",
+   "poe2/slots/Boots Jewel Socket 2",
+   "poe2/slots/Boots Jewel Socket 3",
+   "poe2/slots/Boots Jewel Socket 4",
+   "poe2/slots/Boots Jewel Socket 5",
+   "poe2/slots/Boots Jewel Socket 6",
+   "poe2/slots/Gloves Jewel Socket 1",
+   "poe2/slots/Gloves Jewel Socket 2",
+   "poe2/slots/Gloves Jewel Socket 3",
+   "poe2/slots/Gloves Jewel Socket 4",
+   "poe2/slots/Gloves Jewel Socket 5",
+   "poe2/slots/Gloves Jewel Socket 6",
+   "poe2/slots/Helmet Jewel Socket 1",
+   "poe2/slots/Helmet Jewel Socket 2",
+   "poe2/slots/Helmet Jewel Socket 3",
+   "poe2/slots/Helmet Jewel Socket 4",
+   "poe2/slots/Helmet Jewel Socket 5",
+   "poe2/slots/Helmet Jewel Socket 6",
+   "poe2/slots/Ring 1 Jewel Socket 1",
+   "poe2/slots/Ring 1 Jewel Socket 2",
+   "poe2/slots/Ring 1 Jewel Socket 3",
+   "poe2/slots/Ring 1 Jewel Socket 4",
+   "poe2/slots/Ring 1 Jewel Socket 5",
+   "poe2/slots/Ring 1 Jewel Socket 6",
+   "poe2/slots/Ring 2 Jewel Socket 1",
+   "poe2/slots/Ring 2 Jewel Socket 2",
+   "poe2/slots/Ring 2 Jewel Socket 3",
+   "poe2/slots/Ring 2 Jewel Socket 4",
+   "poe2/slots/Ring 2 Jewel Socket 5",
+   "poe2/slots/Ring 2 Jewel Socket 6",
+   "poe2/slots/Ring 3 Jewel Socket 1",
+   "poe2/slots/Ring 3 Jewel Socket 2",
+   "poe2/slots/Ring 3 Jewel Socket 3",
+   "poe2/slots/Ring 3 Jewel Socket 4",
+   "poe2/slots/Ring 3 Jewel Socket 5",
+   "poe2/slots/Ring 3 Jewel Socket 6",
+   "poe2/slots/Weapon 1 Jewel Socket 1",
+   "poe2/slots/Weapon 1 Jewel Socket 2",
+   "poe2/slots/Weapon 1 Jewel Socket 3",
+   "poe2/slots/Weapon 1 Jewel Socket 4",
+   "poe2/slots/Weapon 1 Jewel Socket 5",
+   "poe2/slots/Weapon 1 Jewel Socket 6",
+   "poe2/slots/Weapon 1 Swap Jewel Socket 1",
+   "poe2/slots/Weapon 1 Swap Jewel Socket 2",
+   "poe2/slots/Weapon 1 Swap Jewel Socket 3",
+   "poe2/slots/Weapon 1 Swap Jewel Socket 4",
+   "poe2/slots/Weapon 1 Swap Jewel Socket 5",
+   "poe2/slots/Weapon 1 Swap Jewel Socket 6",
+   "poe2/slots/Weapon 2 Jewel Socket 1",
+   "poe2/slots/Weapon 2 Jewel Socket 2",
+   "poe2/slots/Weapon 2 Jewel Socket 3",
+   "poe2/slots/Weapon 2 Jewel Socket 4",
+   "poe2/slots/Weapon 2 Jewel Socket 5",
+   "poe2/slots/Weapon 2 Jewel Socket 6",
+   "poe2/slots/Weapon 2 Swap Jewel Socket 1",
+   "poe2/slots/Weapon 2 Swap Jewel Socket 2",
+   "poe2/slots/Weapon 2 Swap Jewel Socket 3",
+   "poe2/slots/Weapon 2 Swap Jewel Socket 4",
+   "poe2/slots/Weapon 2 Swap Jewel Socket 5",
+   "poe2/slots/Weapon 2 Swap Jewel Socket 6"
+  ],
+  "pool_id": "equipment-pool/bc3f0055d934ad2372b14794780c942767b99eb93729d5b6ec9f12d5f05fb6f8",
+  "queries": {
+   "declared": 0,
+   "executed": 0,
+   "locally_matched": 0,
+   "over_bound": 0,
+   "unexecuted": 0
+  },
+  "sampling": {
+   "claim": "sampling bounds, not an exhaustive market",
+   "enabling_queries_per_run": 100,
+   "listings_per_slot": 500
+  },
+  "slots": {
+   "poe2/slots/Amulet": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 2,
+    "retained": 0,
+    "status": "empty",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Arm 1": {
+    "candidates": 2,
+    "considered": 2,
+    "partial": 0,
+    "retained": 2,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Arm 2": {
+    "candidates": 2,
+    "considered": 2,
+    "partial": 0,
+    "retained": 2,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Belt": {
+    "candidates": 2,
+    "considered": 1,
+    "partial": 0,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Belt Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Belt Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Belt Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Belt Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Belt Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Belt Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Body Armour": {
+    "candidates": 2,
+    "considered": 1,
+    "partial": 0,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Body Armour Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Body Armour Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Body Armour Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Body Armour Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Body Armour Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Body Armour Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Boots": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 2,
+    "retained": 0,
+    "status": "empty",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Boots Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Boots Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Boots Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Boots Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Boots Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Boots Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Charm 1": {
+    "candidates": 5,
+    "considered": 2,
+    "partial": 1,
+    "retained": 2,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Charm 2": {
+    "candidates": 5,
+    "considered": 2,
+    "partial": 1,
+    "retained": 2,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Charm 3": {
+    "candidates": 5,
+    "considered": 2,
+    "partial": 1,
+    "retained": 2,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Flask 1": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Flask 2": {
+    "candidates": 1,
+    "considered": 1,
+    "partial": 1,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Gloves": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 2,
+    "retained": 0,
+    "status": "empty",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Gloves Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Gloves Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Gloves Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Gloves Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Gloves Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Gloves Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Helmet": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 2,
+    "retained": 0,
+    "status": "empty",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Helmet Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Helmet Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Helmet Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Helmet Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Helmet Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Helmet Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 11184": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 4,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 17788": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 3,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 21984": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 23960": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 4,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 2491": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 26178": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 4,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 26196": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 26725": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 32763": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 3367": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 4,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 39087": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 4,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 46882": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 54127": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 55190": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 60735": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 61419": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 61834": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 62152": {
+    "candidates": 1,
+    "considered": 0,
+    "partial": 4,
+    "retained": 0,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Jewel 7960": {
+    "candidates": 9,
+    "considered": 6,
+    "partial": 4,
+    "retained": 6,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Leg 1": {
+    "candidates": 1,
+    "considered": 1,
+    "partial": 0,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Leg 2": {
+    "candidates": 1,
+    "considered": 1,
+    "partial": 0,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 1": {
+    "candidates": 2,
+    "considered": 1,
+    "partial": 2,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 1 Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 1 Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 1 Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 1 Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 1 Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 1 Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 2": {
+    "candidates": 2,
+    "considered": 1,
+    "partial": 2,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 2 Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 2 Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 2 Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 2 Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 2 Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 2 Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 3": {
+    "candidates": 2,
+    "considered": 1,
+    "partial": 2,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 3 Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 3 Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 3 Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 3 Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 3 Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Ring 3 Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1": {
+    "candidates": 3,
+    "considered": 1,
+    "partial": 0,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Swap": {
+    "candidates": 3,
+    "considered": 1,
+    "partial": 0,
+    "retained": 1,
+    "status": "populated",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Swap Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Swap Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Swap Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Swap Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Swap Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 1 Swap Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "empty",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Swap": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "empty",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Swap Jewel Socket 1": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Swap Jewel Socket 2": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Swap Jewel Socket 3": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Swap Jewel Socket 4": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Swap Jewel Socket 5": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   },
+   "poe2/slots/Weapon 2 Swap Jewel Socket 6": {
+    "candidates": 0,
+    "considered": 0,
+    "partial": 0,
+    "retained": 0,
+    "status": "missing_category_rule",
+    "truncated": false,
+    "unavailable": 0
+   }
+  },
+  "truncated_slots": [],
+  "unplaced_items": 16
+ },
+ "slots_with_candidates": {
+  "poe2/slots/Arm 1": {
+   "candidates": [
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Deflective Arm",
+     "item_hash": "16258a3c09e33cbd170c32b573ee4b887415633dbc8ca3dc06f583870422ae83"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Combat Arm",
+     "item_hash": "adddbe5626ce19197aae7a0c3881526a2d8eee580a53d5b983ec2d572ae5ea59"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Arm 2": {
+   "candidates": [
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Deflective Arm",
+     "item_hash": "16258a3c09e33cbd170c32b573ee4b887415633dbc8ca3dc06f583870422ae83"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Combat Arm",
+     "item_hash": "adddbe5626ce19197aae7a0c3881526a2d8eee580a53d5b983ec2d572ae5ea59"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Belt": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Utility Belt",
+     "item_hash": "23d72fd9a7b54ee02b754f0b6b9bdc2f27e9823ed79eb116b62154703ad300cd"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Utility Belt",
+     "item_hash": "5c4670df84d3321e7ae9d08f5de758d51c58aa825d64c9846d859147b6f63458"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Body Armour": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Runemastered Ancient Mail",
+     "item_hash": "164aa6736eef1808266fc5d91a4433ed8fd8f792fce7721b02e5055c6650fe38"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Ancient Mail",
+     "item_hash": "b8f7cf40fb13129f2fd0b1e05d93a1086f4e0c9bf2ef5617487d1515604b1a60"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Charm 1": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Thawing Charm",
+     "item_hash": "19b83d45186846f85b2ea0c94c786b04fe9b2208400b31dd5b42a32ef6923963"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Stone Charm",
+     "item_hash": "662fef5fdf3fd2b7e7257f0a9c1ccce1f286f9af3f9980272848ae40f93dcb9a"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Silver Charm",
+     "item_hash": "a340303466391928e4332919088b1c3cac4e776439ec22fd93e59c53f6d496a1"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Golden Charm",
+     "item_hash": "06fa7e18d84822cfc0676dfa298bb608bf3b7192e2eb7332e69675ebb816f268"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Thawing Charm",
+     "item_hash": "533f7a8718be25b502f4d49f539ccc7d4cf57d50499b0aeac03e4c7b574ca129"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Charm 2": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Thawing Charm",
+     "item_hash": "19b83d45186846f85b2ea0c94c786b04fe9b2208400b31dd5b42a32ef6923963"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Stone Charm",
+     "item_hash": "662fef5fdf3fd2b7e7257f0a9c1ccce1f286f9af3f9980272848ae40f93dcb9a"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Silver Charm",
+     "item_hash": "a340303466391928e4332919088b1c3cac4e776439ec22fd93e59c53f6d496a1"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Golden Charm",
+     "item_hash": "06fa7e18d84822cfc0676dfa298bb608bf3b7192e2eb7332e69675ebb816f268"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Thawing Charm",
+     "item_hash": "533f7a8718be25b502f4d49f539ccc7d4cf57d50499b0aeac03e4c7b574ca129"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Charm 3": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Thawing Charm",
+     "item_hash": "19b83d45186846f85b2ea0c94c786b04fe9b2208400b31dd5b42a32ef6923963"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Stone Charm",
+     "item_hash": "662fef5fdf3fd2b7e7257f0a9c1ccce1f286f9af3f9980272848ae40f93dcb9a"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Silver Charm",
+     "item_hash": "a340303466391928e4332919088b1c3cac4e776439ec22fd93e59c53f6d496a1"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Golden Charm",
+     "item_hash": "06fa7e18d84822cfc0676dfa298bb608bf3b7192e2eb7332e69675ebb816f268"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Thawing Charm",
+     "item_hash": "533f7a8718be25b502f4d49f539ccc7d4cf57d50499b0aeac03e4c7b574ca129"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Flask 1": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Gargantuan Life Flask",
+     "item_hash": "81eb9aa0c3940704a03ed8c1a378d39d271ccee2620dc53f5fedc7d6efe0e6f4"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Flask 2": {
+   "candidates": [
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Gargantuan Mana Flask",
+     "item_hash": "e4de323790822dbfd3229dc2aca6a0d563fe1ffa11d7623ae60ff6425c750185"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 11184": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 17788": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 21984": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 23960": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 2491": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 26178": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 26196": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 26725": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 32763": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 3367": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 39087": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 46882": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 54127": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 55190": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 60735": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 61419": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 61834": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 62152": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Jewel 7960": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "045610c8a1caf36c5b836a26ceb1e656d7bca4c141e893b6131a7d71bf043916"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "1264e815938188028c58505223c98d8fa28b114a6eff0480d13245531605217f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "b6202866f37868664d0bb90e94739984466283d11726288af4131f407371788a"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "237486955af96c3de2cf97671432ef900f43f32a8114d741528de3ec5b3e82ab"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "a0c6a5b79a643807acf28761eec01873bb6daafde8c347ffa8825d882cb2e9ec"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Diamond",
+     "item_hash": "ad13f99c8ce167d5bbeaa251a54dba8f97e9bb0bfdbefef2ee10333d7d77fdf4"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sapphire",
+     "item_hash": "e57721e3c91fedd249cdbaa44d0c9140c8e1e8fd6bad93ad50d2ac5088225b4b"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Leg 1": {
+   "candidates": [
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Evasive Leg",
+     "item_hash": "639e38866ef0609322c336f3430b3e5739b193dbf1f45b34b411da2c875202b7"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Leg 2": {
+   "candidates": [
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Evasive Leg",
+     "item_hash": "639e38866ef0609322c336f3430b3e5739b193dbf1f45b34b411da2c875202b7"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Ring 1": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire Ring",
+     "item_hash": "282a0098d96aee23e4b6611e1372054937cc9704447943c558eaa9d9bc905eb2"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Ring",
+     "item_hash": "46cee3e03530a7760f0adfda0fa7f871ba14e7f15ab5e41bb453a8aea0cf696d"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Ring 2": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire Ring",
+     "item_hash": "282a0098d96aee23e4b6611e1372054937cc9704447943c558eaa9d9bc905eb2"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Ring",
+     "item_hash": "46cee3e03530a7760f0adfda0fa7f871ba14e7f15ab5e41bb453a8aea0cf696d"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Ring 3": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sapphire Ring",
+     "item_hash": "282a0098d96aee23e4b6611e1372054937cc9704447943c558eaa9d9bc905eb2"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Ring",
+     "item_hash": "46cee3e03530a7760f0adfda0fa7f871ba14e7f15ab5e41bb453a8aea0cf696d"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Weapon 1": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sinister Quarterstaff",
+     "item_hash": "7919ff0cd3b21ec3c6518650743d16efa2fb49c2d6fa580dca6371439327a01f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Nettle Talisman",
+     "item_hash": "b7ca7a2793984321c3c6e2690fba70adcbc24b875e5f24b8c30c0698b2260492"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sinister Quarterstaff",
+     "item_hash": "b93d53e35ccc5e80197c56b6feaa52303ee6be58797551b7c69823e0738e7954"
+    }
+   ],
+   "status": "populated"
+  },
+  "poe2/slots/Weapon 1 Swap": {
+   "candidates": [
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Sinister Quarterstaff",
+     "item_hash": "7919ff0cd3b21ec3c6518650743d16efa2fb49c2d6fa580dca6371439327a01f"
+    },
+    {
+     "availability": "owned",
+     "base_id": "poe2/item_bases/Nettle Talisman",
+     "item_hash": "b7ca7a2793984321c3c6e2690fba70adcbc24b875e5f24b8c30c0698b2260492"
+    },
+    {
+     "availability": "unknown",
+     "base_id": "poe2/item_bases/Sinister Quarterstaff",
+     "item_hash": "b93d53e35ccc5e80197c56b6feaa52303ee6be58797551b7c69823e0738e7954"
+    }
+   ],
+   "status": "populated"
+  }
+ },
+ "written_at": "2026-10-18T19:47:22Z"
+}

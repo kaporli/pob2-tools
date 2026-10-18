@@ -30,6 +30,11 @@ T02_ASCENDANCY_SCHEDULE = "gap/p02-t02/ascendancy-point-unlock-schedule"
 T02_WEAPON_SET_UNLOCK = "gap/p02-t02/weapon-set-point-unlock-levels"
 T02_GEM_LEVEL_LEGALITY = "gap/p02-t02/gem-level-legality"
 T02_SKILL_LEVEL_LIMIT = "gap/p02-t02/skill-level-limit"
+#: P02-T03.1 gaps that leave a slot rule empty, and the keystone flag gap.
+T031_EMPTY_SLOT_GAPS = ("gap/p02-t03.1/slot-accepts-nothing",
+                        "gap/p02-t03.1/slot-unprobed",
+                        "gap/p02-t03.1/socketed-item-jewel-slots")
+T031_OFF_HAND_FLAGS = "gap/p02-t03.1/off-hand-keystone-flags"
 
 
 @dataclass(frozen=True, slots=True)

@@ -66,7 +66,7 @@ def world():
 
 def with_categories(profile):
     """SYNTHETIC: three slot rules given the categories the export lacks."""
-    categories = {RING_1: ["Ring"], RING_2: ["Ring"], WEAPON_1: ["Two Handed Axe"]}
+    categories = {RING_1: ["Ring"], RING_2: ["Ring"], WEAPON_1: ["Two Handed Axe/Axe"]}
     rules = profile.character_rules
     slots = [replace(rule, accepted_base_categories=categories.get(rule.slot_id, []))
              for rule in rules.slots]
@@ -445,8 +445,20 @@ def test_owned_items_come_from_a_build_and_are_not_listings(world):
         "Ring 2": EquipmentSlot("a" * 64, None),
         "Weapon 1": EquipmentSlot("b" * 64, "listing/x"),
         "Amulet": None})
-    assert owned_from_build(build) == [OwnedItem("a" * 64, 2,
-                                                 ("Ring 1", "Ring 2"))]
+    assert owned_from_build(build, origin=pools_module.OWNED_CHARACTER) == [
+        OwnedItem("a" * 64, 2, ("Ring 1", "Ring 2"))]
+
+
+def test_an_imported_guide_owns_nothing(world):
+    """P02-T03.1: an item without a listing is not ownership evidence."""
+    base = lf.make_build({"class_id": "poe2/classes/1", "level": 10},
+                         catalog_hash=world.catalog.catalog_hash)
+    build = replace(base, equipment={"Ring 1": EquipmentSlot("a" * 64, None)})
+    assert owned_from_build(build, origin=pools_module.IMPORTED_GUIDE) == []
+    with pytest.raises(ValueError):
+        owned_from_build(build, origin="unspecified")
+    with pytest.raises(TypeError):
+        owned_from_build(build)
 
 
 def test_a_pool_candidate_must_come_from_that_slots_pool(world):

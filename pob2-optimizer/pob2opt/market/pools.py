@@ -5,12 +5,13 @@ owned items, imported listings and imported items without a listing. It
 replaces the legacy weapon-only harvester for new work.
 
 Which items fit a slot comes only from the profile's ``SlotRule``
-``accepted_base_categories`` matched against the catalog base's ``type``.
-A slot whose rule names no category is ``missing_category_rule``: imported
-items are not placed there by guess, only owned items a source build put in
-that slot. The pinned P02 export names no category for any slot (its gap
-``slot-accepted-base-categories``), so a pool built from it holds owned items
-only, and says so per slot.
+``accepted_base_categories`` matched against the catalog base's category
+(``type``, or ``type/subType``; see ``catalog/slotrules.py``). A slot whose
+rule names no category is ``missing_category_rule``: imported items are not
+placed there by guess, only owned items a source build put in that slot.
+Profiles exported before P02-T03.1 name no category for any slot (gap
+``slot-accepted-base-categories``); since P02-T03.1 the categories are read
+from the engine and only conditional slots stay empty.
 
 Bounds are sampling bounds, recorded in the pool and for the run manifest
 (``sampling_parameters``): up to ``listings_per_slot`` non-owned candidates
@@ -34,6 +35,8 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, replace
 from typing import Callable, Iterable, Mapping, Sequence
 
+from ..catalog.slotrules import base_category
+from ..domain.absent import Absent
 from ..domain.enums import (Availability, CandidateAvailability,
                             EnablingQueryStatus, PoolSlotStatus,
                             RecordParseStatus)
@@ -119,12 +122,25 @@ class OwnedItem:
     slot_ids: tuple[str, ...] = ()
 
 
-def owned_from_build(build: BuildSpec) -> list[OwnedItem]:
+#: Where a build came from, for ``owned_from_build``.
+OWNED_CHARACTER = "owned_character"
+IMPORTED_GUIDE = "imported_guide"
+
+
+def owned_from_build(build: BuildSpec, *, origin: str) -> list[OwnedItem]:
     """The items a build equips, with the slots it equips them in.
 
+    ``origin`` is required: only the user's own character (an account import
+    the user asked for) proves ownership. An imported guide or any other
+    build owns nothing, and an item without a listing is not thereby owned.
     An item equipped through a listing is not owned. Each equipped slot is one
     physical item, so an item hash in two slots counts two.
     """
+    if origin == IMPORTED_GUIDE:
+        return []
+    if origin != OWNED_CHARACTER:
+        raise ValueError("origin must be %r or %r, not %r"
+                         % (OWNED_CHARACTER, IMPORTED_GUIDE, origin))
     slots: dict[str, list[str]] = defaultdict(list)
     for slot_id, content in sorted(build.equipment.items()):
         if content is not None and content.listing_id is None:
@@ -195,7 +211,7 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
         raise ValueError("pool input scope mismatch: items=%r; listings=%r"
                          % (wrong_items, wrong_listings))
     bounds = bounds or sampling()
-    categories = {entity.entity_id: (entity.raw_reference or {}).get("type")
+    categories = {entity.entity_id: base_category(entity.raw_reference)
                   for entity in catalog.entities.get("item_bases", ())}
     by_hash: dict[str, ItemInstance] = {}
     conflicting = set()
@@ -247,9 +263,13 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
     slots: list[SlotPool] = []
     for rule in sorted(profile.character_rules.slots, key=lambda r: r.slot_id):
         accepted = set(rule.accepted_base_categories)
+        refused = (set() if isinstance(rule.refused_rarities, Absent)
+                   else set(rule.refused_rarities))
 
         def fits(item: ItemInstance) -> bool:
-            return bool(accepted) and categories.get(item.base_id) in accepted
+            return (bool(accepted)
+                    and categories.get(item.base_id) in accepted
+                    and str(item.rarity or "").lower() not in refused)
 
         def reasons(item: ItemInstance) -> list[str]:
             return ["enabling:%s" % q.query_id for q in in_bound

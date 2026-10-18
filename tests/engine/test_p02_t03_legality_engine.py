@@ -34,7 +34,8 @@ from pob2opt.catalog.sources import read_citations
 from pob2opt.domain.enums import Fidelity, Legality
 from pob2opt.evaluation import (BuildDocument, EngineAdapter, EngineState,
                                 pob_worker_spec, resolve_checkout)
-from pob2opt.evaluation.legality import (CHECK_CONNECTIVITY, CHECK_IMPORT,
+from pob2opt.evaluation.legality import (CHECK_CONNECTIVITY, CHECK_HANDS,
+                                         CHECK_IMPORT,
                                          CHECK_ITEM_REQUIREMENTS,
                                          CHECK_PASSIVE_BUDGET,
                                          CHECK_RESERVATION, CHECK_SLOTS,
@@ -239,15 +240,17 @@ def test_the_faithful_record_agrees_with_the_engine(
     assert report.decision(CHECK_IMPORT) is Legality.LEGAL
     assert report.decision(CHECK_CONNECTIVITY) is Legality.LEGAL
     assert report.decision(CHECK_RESERVATION) is Legality.LEGAL
-    # Two things stay undecidable on this profile, and both say why. The
-    # build spends 36 points at level 29, which is more than levelling
-    # grants and less than a real character's budget; the quest reward
-    # total is the gap. Equipment legality has no slot categories at all.
+    # The passive budget stays undecidable and says why: the build spends
+    # 36 points at level 29, more than levelling grants and less than a real
+    # character's budget; the quest reward total is the gap. Since
+    # P02-T03.1 the slot rules come from the engine, so the quarterstaff in
+    # the main hand and its empty off hand are decided.
     assert report.decision(CHECK_PASSIVE_BUDGET) is Legality.UNKNOWN
     assert "passive_points_above_levelling_budget" in report.unknown_codes
     assert T02_QUEST_PASSIVE_POINTS in report.cited_gap_ids
-    assert report.decision(CHECK_SLOTS) is Legality.UNKNOWN
-    assert T02_SLOT_CATEGORIES in report.cited_gap_ids
+    assert report.decision(CHECK_SLOTS) is Legality.LEGAL
+    assert report.decision(CHECK_HANDS) is Legality.LEGAL
+    assert T02_SLOT_CATEGORIES not in report.cited_gap_ids
     assert report.legality is Legality.UNKNOWN
 
 
@@ -299,8 +302,13 @@ def test_a_disconnected_allocation_in_the_real_tree_is_illegal(
     assert "disconnected_passive_allocation" in report.violation_codes
 
 
-def test_the_live_profile_still_carries_no_slot_categories(live_export):
+def test_the_live_profile_carries_engine_slot_categories(live_export):
+    """P02-T03.1 replaced the P02-T02 premise of empty slot rules."""
     rules = live_export.profile.character_rules
-    assert rules.slots
-    assert all(not rule.accepted_base_categories for rule in rules.slots)
-    assert T02_SLOT_CATEGORIES in rules.missing_rule_gap_ids
+    by_id = {rule.slot_id: rule for rule in rules.slots}
+    assert by_id["poe2/slots/Weapon 1"].accepted_base_categories
+    assert by_id["poe2/slots/Ring 1"].accepted_base_categories == ["Ring"]
+    assert T02_SLOT_CATEGORIES not in rules.missing_rule_gap_ids
+    # Jewel sockets on items stay empty, and a gap says why.
+    assert not by_id["poe2/slots/Helmet Jewel Socket 1"].accepted_base_categories
+    assert "gap/p02-t03.1/socketed-item-jewel-slots" in         rules.missing_rule_gap_ids
