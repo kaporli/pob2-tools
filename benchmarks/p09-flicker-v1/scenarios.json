@@ -1,0 +1,2899 @@
+{
+  "suite_id": "p09-flicker-v1",
+  "task": "P09-T01.1",
+  "kind": "representative_protocol",
+  "status": "proposed, not accepted",
+  "not_a_claim": "PROTOCOL, NOT A MEASUREMENT. No enemy statistic, encounter timing, threshold or performance value in this suite was measured. Null fields are unresolved inputs with DataGap records. The seed export supplies a configuration, not a trial. PoB values are proxy_only.",
+  "schema_version": 1,
+  "generated_by": "scripts/p09_t01_1_flicker_suite.py",
+  "protocol": "benchmarks/p09-flicker-v1/protocol.md",
+  "field_bases": {
+    "specification": "Stated by docs/specs (scenarios.md, contracts.md, product.md).",
+    "decision_D07": "Fixed by docs/decisions/D07-flicker-strike-objective.md.",
+    "product_default": "A product default from docs/specs.",
+    "seed_export": "Read from the stored seed export (configuration, not performance).",
+    "catalog": "Read from the pinned catalog export or engine data.",
+    "owner_statement": "The owner's verbatim rotation or answers (seed/manifest.json owner_answers).",
+    "protocol_choice": "Proposed by this protocol; needs reviewer acceptance.",
+    "unresolved": "Unknown. Value null; gap_ids say what closes it."
+  },
+  "seed_facts": {
+    "class": "Monk",
+    "ascendancy": "Martial Artist",
+    "level": 93,
+    "passive_points_used": 116,
+    "flicker_group": [
+      {
+        "name": "Flicker Strike",
+        "level": 20,
+        "quality": 23,
+        "granted_effect_id": "FlickerStrikePlayer"
+      },
+      {
+        "name": "Hit and Run",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportHitAndRunPlayer"
+      },
+      {
+        "name": "Concentrated Area",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportConcentratedAreaPlayer"
+      },
+      {
+        "name": "Close Combat II",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportCloseCombatPlayerTwo"
+      },
+      {
+        "name": "Perpetual Charge",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportPerpetualChargePlayer"
+      },
+      {
+        "name": "Rakiata's Flow",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportRakiatasFlowPlayer"
+      }
+    ],
+    "whirling_assault_group": [
+      {
+        "name": "Whirling Assault",
+        "level": 18,
+        "quality": 20,
+        "granted_effect_id": "WhirlingAssaultPlayer"
+      },
+      {
+        "name": "Living Lightning II",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportLivingLightningPlayerTwo"
+      },
+      {
+        "name": "Culmination II",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportCulminationPlayerTwo"
+      },
+      {
+        "name": "Ailith's Chimes",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportAilithLineagePlayer"
+      },
+      {
+        "name": "Rage II",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportRagePlayerTwo"
+      },
+      {
+        "name": "Oisin's Oath",
+        "level": 1,
+        "quality": 0,
+        "granted_effect_id": "SupportOisinsOathPlayer"
+      }
+    ],
+    "other_active_skills": [
+      "Charged Staff",
+      "Ghost Dance",
+      "Herald of Ice",
+      "Herald of Thunder",
+      "Pounce",
+      "Quarterstaff Strike",
+      "Remnants of Kalguur",
+      "Sanguine Revelry",
+      "Trinity",
+      "Wind Dancer"
+    ],
+    "weapon_1_base": "Sinister Quarterstaff",
+    "weapon_1_swap_base": "Nettle Talisman",
+    "belt": "Mageblood",
+    "power_charges_max": 5,
+    "power_charges_max_sources": [
+      {
+        "source": "Base",
+        "value": 3
+      },
+      {
+        "source": "passive 65204 Overflowing Power",
+        "value": 2,
+        "allocated": true
+      }
+    ],
+    "chaos_inoculation_allocated": true,
+    "life": 1,
+    "energy_shield": 3902,
+    "mana": 887,
+    "flicker_mana_cost_per_use": 248,
+    "mana_regen_per_s": 47.9,
+    "req_dex": 137,
+    "req_int": 115,
+    "martial_artist_nodes": [
+      "Martial Adept",
+      "Martial Master",
+      "Runic Meridians",
+      "Way of the Stonefist"
+    ]
+  },
+  "scenarios": [
+    {
+      "scenario_id": "p09-flk-clear-dense",
+      "version": "1",
+      "category": "clear",
+      "shape": "clear_dense",
+      "fields": {
+        "scenario_id": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md four shapes",
+          "value": "p09-flk-clear-dense",
+          "gap_ids": []
+        },
+        "version": {
+          "basis": "product_default",
+          "source": "docs/specs/scenarios.md: a version change starts a new aggregate identity",
+          "value": "1",
+          "gap_ids": []
+        },
+        "category": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "clear",
+          "gap_ids": []
+        },
+        "kind": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md: representative scenarios are a separate dataset",
+          "value": "representative",
+          "gap_ids": []
+        },
+        "shape": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "clear_dense",
+          "gap_ids": []
+        },
+        "selection_criterion": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md; T16 from owner Q7",
+          "value": "One named T16 area whose packs stand close together; measures time to clear a fixed enemy workload with little travel.",
+          "gap_ids": []
+        },
+        "encounter": {
+          "basis": "owner_statement",
+          "source": "Owner Q7: runs T16 maps comfortably, struggles with 'monsters have increased ailment threshold' (chill does not apply, Polcirkeln does not shatter). Placing that modifier on the dense shape is this protocol's choice",
+          "value": {
+            "waystone_tier": 16,
+            "map": null,
+            "required_modifiers": [
+              "monsters have increased ailment threshold"
+            ],
+            "why": "the owner's evidenced weak case"
+          },
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.count": {
+          "basis": "unresolved",
+          "source": "Depends on the named encounter",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-density"
+          ]
+        },
+        "target_entities.health": {
+          "basis": "unresolved",
+          "source": "No monster life held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-health"
+          ]
+        },
+        "target_entities.level": {
+          "basis": "unresolved",
+          "source": "No monster level held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses",
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.defenses": {
+          "basis": "unresolved",
+          "source": "No mitigation held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses"
+          ]
+        },
+        "target_entities.position": {
+          "basis": "unresolved",
+          "source": "No positions or unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-density",
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "target_entities.targetable_windows": {
+          "basis": "unresolved",
+          "source": "No timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "initial_state.resources": {
+          "basis": "unresolved",
+          "source": "Start state not recorded",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-initial-resources"
+          ]
+        },
+        "event_schedule": {
+          "basis": "unresolved",
+          "source": "No spawn, phase or damage timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-density",
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "spatial_model_id": {
+          "basis": "unresolved",
+          "source": "No unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "movement_model_id": {
+          "basis": "unresolved",
+          "source": "No route or movement model",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-movement-model",
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "duration_limit_s": {
+          "basis": "unresolved",
+          "source": "Needs observed completion times",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-duration-limit"
+          ]
+        },
+        "minimum_success_fraction": {
+          "basis": "unresolved",
+          "source": "docs/specs/scenarios.md requires it before collection",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-success-fraction"
+          ]
+        },
+        "completion_condition": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": {
+            "type": "all_targets_dead",
+            "start_event": "First frame the character is in the named area (clear) or the boss arena with the encounter started (boss).",
+            "completion_event": "The last declared target of the fixed workload dies; the clock includes movement, targeting, preparation and cleanup.",
+            "failure_events": [
+              "character death",
+              "duration limit reached"
+            ]
+          },
+          "gap_ids": []
+        },
+        "incoming_damage_model_id": {
+          "basis": "unresolved",
+          "source": "No damage events held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "allowed_preparation": {
+          "basis": "product_default",
+          "source": "docs/specs/product.md (one configuration, no party buffs, no outside resource generation, timed weapon-set changes); owner Q4 (Spirit skills persistent, Pounce movement only)",
+          "value": {
+            "party_buffs": false,
+            "outside_resource_generation": false,
+            "weapon_set_changes": "allowed when represented and timed",
+            "persistent_skills": [
+              "Herald of Ice",
+              "Herald of Thunder",
+              "Wind Dancer",
+              "Ghost Dance",
+              "Trinity",
+              "Remnants of Kalguur"
+            ],
+            "movement_only_skills": [
+              "Pounce"
+            ]
+          },
+          "gap_ids": []
+        },
+        "capability_floor_ratio": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md provisional floor",
+          "value": 0.5,
+          "gap_ids": []
+        },
+        "survival_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md (deaths); threshold of the energy shield gate unresolved",
+          "value": [
+            {
+              "gate_id": "deaths",
+              "definition": "event",
+              "path": "/metrics/survival/deaths",
+              "operator": "eq",
+              "threshold": 0.0,
+              "event": "Character death during the trial (death screen in a recording; death event in an evaluator).",
+              "threshold_basis": "docs/specs/scenarios.md: death is a failure, not a missing trial."
+            },
+            {
+              "gate_id": "minimum-energy-shield",
+              "definition": "numeric",
+              "path": "/metrics/minimum_resources/energy_shield_fraction",
+              "operator": "gte",
+              "threshold": null,
+              "threshold_gap": "gap-p09-t011-survival-threshold",
+              "why_energy_shield": "Seed allocates Chaos Inoculation (passive 56349): maximum life 1, so a life margin is meaningless for it."
+            }
+          ],
+          "gap_ids": [
+            "gap-p09-t011-survival-threshold"
+          ]
+        },
+        "patch_profile_id": {
+          "basis": "catalog",
+          "source": "docs/evidence/P02-T02.1/catalog-export.json patch_profile_id (verdict partial)",
+          "value": "patch-profile/0.5.5e/ac0e930898cb3951",
+          "gap_ids": [
+            "gap-p09-t011-patch-profile"
+          ]
+        },
+        "initial_state.configuration": {
+          "basis": "seed_export",
+          "source": "docs/evidence/P09-T01.1/seed/export-as-imported.xml (sha256 in seed/manifest.json)",
+          "value": "seed export, Monk / Martial Artist level 93",
+          "gap_ids": []
+        },
+        "rng_seeds": {
+          "basis": "product_default",
+          "source": "Recorded gameplay is not seeded; docs/specs/scenarios.md requires a stochastic suite to fix its minimum success fraction instead",
+          "value": [],
+          "gap_ids": []
+        },
+        "reference_build_id": {
+          "basis": "unresolved",
+          "source": "Seed is a candidate configuration only; see references.json",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "reference_result_id": {
+          "basis": "unresolved",
+          "source": "No result exists",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "rotation_id": {
+          "basis": "owner_statement",
+          "source": "Owner rotation and answers Q1 to Q6, in scenarios.json rotation",
+          "value": "p09-flk-rotation-owner-v1",
+          "gap_ids": [
+            "gap-p09-t011-rotation-details",
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "resource_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md and the seed export",
+          "value": [
+            {
+              "path": "/metrics/minimum_resources/mana",
+              "operator": "gte",
+              "threshold": 0.0,
+              "basis": "docs/specs/scenarios.md: an empty pool is downtime, not illegality; a pool never goes negative."
+            },
+            {
+              "path": "/metrics/maximum_resources/power_charges",
+              "operator": "lte",
+              "threshold": 5,
+              "basis": "Seed PowerChargesMax 5: base 3 plus Overflowing Power +2 (passive 65204). A count above it is an evaluator error."
+            }
+          ],
+          "gap_ids": []
+        },
+        "evidence_ids": {
+          "basis": "seed_export",
+          "source": "Seed manifest, mechanics extract, PoB charge table, P02-T02.1 catalog export",
+          "value": [
+            "docs/evidence/P09-T01.1/seed/manifest.json",
+            "docs/evidence/P09-T01.1/mechanics.json",
+            "docs/evidence/P09-T01.1/pob-charge-table.json",
+            "docs/evidence/P02-T02.1/catalog-export.json"
+          ],
+          "gap_ids": []
+        },
+        "validation_status": {
+          "basis": "specification",
+          "source": "docs/specs/contracts.md RuleValidation; no evaluator has run these",
+          "value": "untested",
+          "gap_ids": []
+        }
+      }
+    },
+    {
+      "scenario_id": "p09-flk-clear-spread",
+      "version": "1",
+      "category": "clear",
+      "shape": "clear_spread",
+      "fields": {
+        "scenario_id": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md four shapes",
+          "value": "p09-flk-clear-spread",
+          "gap_ids": []
+        },
+        "version": {
+          "basis": "product_default",
+          "source": "docs/specs/scenarios.md: a version change starts a new aggregate identity",
+          "value": "1",
+          "gap_ids": []
+        },
+        "category": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "clear",
+          "gap_ids": []
+        },
+        "kind": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md: representative scenarios are a separate dataset",
+          "value": "representative",
+          "gap_ids": []
+        },
+        "shape": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "clear_spread",
+          "gap_ids": []
+        },
+        "selection_criterion": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md; T16 from owner Q7",
+          "value": "One named T16 area whose packs are spread along a route; measures time including travel between packs.",
+          "gap_ids": []
+        },
+        "encounter": {
+          "basis": "owner_statement",
+          "source": "Owner Q7: runs T16 maps comfortably",
+          "value": {
+            "waystone_tier": 16,
+            "map": null,
+            "required_modifiers": []
+          },
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.count": {
+          "basis": "unresolved",
+          "source": "Depends on the named encounter",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-density"
+          ]
+        },
+        "target_entities.health": {
+          "basis": "unresolved",
+          "source": "No monster life held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-health"
+          ]
+        },
+        "target_entities.level": {
+          "basis": "unresolved",
+          "source": "No monster level held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses",
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.defenses": {
+          "basis": "unresolved",
+          "source": "No mitigation held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses"
+          ]
+        },
+        "target_entities.position": {
+          "basis": "unresolved",
+          "source": "No positions or unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-density",
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "target_entities.targetable_windows": {
+          "basis": "unresolved",
+          "source": "No timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "initial_state.resources": {
+          "basis": "unresolved",
+          "source": "Start state not recorded",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-initial-resources"
+          ]
+        },
+        "event_schedule": {
+          "basis": "unresolved",
+          "source": "No spawn, phase or damage timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-density",
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "spatial_model_id": {
+          "basis": "unresolved",
+          "source": "No unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "movement_model_id": {
+          "basis": "unresolved",
+          "source": "No route or movement model",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-movement-model",
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "duration_limit_s": {
+          "basis": "unresolved",
+          "source": "Needs observed completion times",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-duration-limit"
+          ]
+        },
+        "minimum_success_fraction": {
+          "basis": "unresolved",
+          "source": "docs/specs/scenarios.md requires it before collection",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-success-fraction"
+          ]
+        },
+        "completion_condition": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": {
+            "type": "all_targets_dead",
+            "start_event": "First frame the character is in the named area (clear) or the boss arena with the encounter started (boss).",
+            "completion_event": "The last declared target of the fixed workload dies; the clock includes movement, targeting, preparation and cleanup.",
+            "failure_events": [
+              "character death",
+              "duration limit reached"
+            ]
+          },
+          "gap_ids": []
+        },
+        "incoming_damage_model_id": {
+          "basis": "unresolved",
+          "source": "No damage events held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "allowed_preparation": {
+          "basis": "product_default",
+          "source": "docs/specs/product.md (one configuration, no party buffs, no outside resource generation, timed weapon-set changes); owner Q4 (Spirit skills persistent, Pounce movement only)",
+          "value": {
+            "party_buffs": false,
+            "outside_resource_generation": false,
+            "weapon_set_changes": "allowed when represented and timed",
+            "persistent_skills": [
+              "Herald of Ice",
+              "Herald of Thunder",
+              "Wind Dancer",
+              "Ghost Dance",
+              "Trinity",
+              "Remnants of Kalguur"
+            ],
+            "movement_only_skills": [
+              "Pounce"
+            ]
+          },
+          "gap_ids": []
+        },
+        "capability_floor_ratio": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md provisional floor",
+          "value": 0.5,
+          "gap_ids": []
+        },
+        "survival_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md (deaths); threshold of the energy shield gate unresolved",
+          "value": [
+            {
+              "gate_id": "deaths",
+              "definition": "event",
+              "path": "/metrics/survival/deaths",
+              "operator": "eq",
+              "threshold": 0.0,
+              "event": "Character death during the trial (death screen in a recording; death event in an evaluator).",
+              "threshold_basis": "docs/specs/scenarios.md: death is a failure, not a missing trial."
+            },
+            {
+              "gate_id": "minimum-energy-shield",
+              "definition": "numeric",
+              "path": "/metrics/minimum_resources/energy_shield_fraction",
+              "operator": "gte",
+              "threshold": null,
+              "threshold_gap": "gap-p09-t011-survival-threshold",
+              "why_energy_shield": "Seed allocates Chaos Inoculation (passive 56349): maximum life 1, so a life margin is meaningless for it."
+            }
+          ],
+          "gap_ids": [
+            "gap-p09-t011-survival-threshold"
+          ]
+        },
+        "patch_profile_id": {
+          "basis": "catalog",
+          "source": "docs/evidence/P02-T02.1/catalog-export.json patch_profile_id (verdict partial)",
+          "value": "patch-profile/0.5.5e/ac0e930898cb3951",
+          "gap_ids": [
+            "gap-p09-t011-patch-profile"
+          ]
+        },
+        "initial_state.configuration": {
+          "basis": "seed_export",
+          "source": "docs/evidence/P09-T01.1/seed/export-as-imported.xml (sha256 in seed/manifest.json)",
+          "value": "seed export, Monk / Martial Artist level 93",
+          "gap_ids": []
+        },
+        "rng_seeds": {
+          "basis": "product_default",
+          "source": "Recorded gameplay is not seeded; docs/specs/scenarios.md requires a stochastic suite to fix its minimum success fraction instead",
+          "value": [],
+          "gap_ids": []
+        },
+        "reference_build_id": {
+          "basis": "unresolved",
+          "source": "Seed is a candidate configuration only; see references.json",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "reference_result_id": {
+          "basis": "unresolved",
+          "source": "No result exists",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "rotation_id": {
+          "basis": "owner_statement",
+          "source": "Owner rotation and answers Q1 to Q6, in scenarios.json rotation",
+          "value": "p09-flk-rotation-owner-v1",
+          "gap_ids": [
+            "gap-p09-t011-rotation-details",
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "resource_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md and the seed export",
+          "value": [
+            {
+              "path": "/metrics/minimum_resources/mana",
+              "operator": "gte",
+              "threshold": 0.0,
+              "basis": "docs/specs/scenarios.md: an empty pool is downtime, not illegality; a pool never goes negative."
+            },
+            {
+              "path": "/metrics/maximum_resources/power_charges",
+              "operator": "lte",
+              "threshold": 5,
+              "basis": "Seed PowerChargesMax 5: base 3 plus Overflowing Power +2 (passive 65204). A count above it is an evaluator error."
+            }
+          ],
+          "gap_ids": []
+        },
+        "evidence_ids": {
+          "basis": "seed_export",
+          "source": "Seed manifest, mechanics extract, PoB charge table, P02-T02.1 catalog export",
+          "value": [
+            "docs/evidence/P09-T01.1/seed/manifest.json",
+            "docs/evidence/P09-T01.1/mechanics.json",
+            "docs/evidence/P09-T01.1/pob-charge-table.json",
+            "docs/evidence/P02-T02.1/catalog-export.json"
+          ],
+          "gap_ids": []
+        },
+        "validation_status": {
+          "basis": "specification",
+          "source": "docs/specs/contracts.md RuleValidation; no evaluator has run these",
+          "value": "untested",
+          "gap_ids": []
+        }
+      }
+    },
+    {
+      "scenario_id": "p09-flk-boss-short",
+      "version": "1",
+      "category": "boss",
+      "shape": "boss_short",
+      "fields": {
+        "scenario_id": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md four shapes",
+          "value": "p09-flk-boss-short",
+          "gap_ids": []
+        },
+        "version": {
+          "basis": "product_default",
+          "source": "docs/specs/scenarios.md: a version change starts a new aggregate identity",
+          "value": "1",
+          "gap_ids": []
+        },
+        "category": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "boss",
+          "gap_ids": []
+        },
+        "kind": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md: representative scenarios are a separate dataset",
+          "value": "representative",
+          "gap_ids": []
+        },
+        "shape": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "boss_short",
+          "gap_ids": []
+        },
+        "selection_criterion": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md; T16 from owner Q7",
+          "value": "One named boss that stays targetable; measures time from encounter start to kill.",
+          "gap_ids": []
+        },
+        "encounter": {
+          "basis": "protocol_choice",
+          "source": "Owner named no boss. PoB has no named PoE 2 boss preset (engine/boss-skill-presets lists PoE 1 bosses); proposed: PoB tier Guardian/Pinnacle Boss as the enemy configuration, boss name open",
+          "value": {
+            "boss": null,
+            "proposed_pob_enemy_tier": "Pinnacle",
+            "status": "proposed"
+          },
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.count": {
+          "basis": "unresolved",
+          "source": "Depends on the named encounter",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.health": {
+          "basis": "unresolved",
+          "source": "No monster life held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-health"
+          ]
+        },
+        "target_entities.level": {
+          "basis": "unresolved",
+          "source": "No monster level held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses",
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.defenses": {
+          "basis": "unresolved",
+          "source": "No mitigation held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses"
+          ]
+        },
+        "target_entities.position": {
+          "basis": "unresolved",
+          "source": "No positions or unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "target_entities.targetable_windows": {
+          "basis": "unresolved",
+          "source": "No timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-boss-windows"
+          ]
+        },
+        "initial_state.resources": {
+          "basis": "unresolved",
+          "source": "Start state not recorded",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-initial-resources"
+          ]
+        },
+        "event_schedule": {
+          "basis": "unresolved",
+          "source": "No spawn, phase or damage timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-boss-windows",
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "spatial_model_id": {
+          "basis": "unresolved",
+          "source": "No unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "movement_model_id": {
+          "basis": "unresolved",
+          "source": "No route or movement model",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "duration_limit_s": {
+          "basis": "unresolved",
+          "source": "Needs observed completion times",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-duration-limit"
+          ]
+        },
+        "minimum_success_fraction": {
+          "basis": "unresolved",
+          "source": "docs/specs/scenarios.md requires it before collection",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-success-fraction"
+          ]
+        },
+        "completion_condition": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": {
+            "type": "target_dead",
+            "start_event": "First frame the character is in the named area (clear) or the boss arena with the encounter started (boss).",
+            "completion_event": "The named boss dies; the clock stops at the kill and includes only the untargetable windows that elapsed before it.",
+            "failure_events": [
+              "character death",
+              "duration limit reached"
+            ]
+          },
+          "gap_ids": []
+        },
+        "incoming_damage_model_id": {
+          "basis": "unresolved",
+          "source": "No damage events held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "allowed_preparation": {
+          "basis": "product_default",
+          "source": "docs/specs/product.md (one configuration, no party buffs, no outside resource generation, timed weapon-set changes); owner Q4 (Spirit skills persistent, Pounce movement only)",
+          "value": {
+            "party_buffs": false,
+            "outside_resource_generation": false,
+            "weapon_set_changes": "allowed when represented and timed",
+            "persistent_skills": [
+              "Herald of Ice",
+              "Herald of Thunder",
+              "Wind Dancer",
+              "Ghost Dance",
+              "Trinity",
+              "Remnants of Kalguur"
+            ],
+            "movement_only_skills": [
+              "Pounce"
+            ]
+          },
+          "gap_ids": []
+        },
+        "capability_floor_ratio": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md provisional floor",
+          "value": 0.5,
+          "gap_ids": []
+        },
+        "survival_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md (deaths); threshold of the energy shield gate unresolved",
+          "value": [
+            {
+              "gate_id": "deaths",
+              "definition": "event",
+              "path": "/metrics/survival/deaths",
+              "operator": "eq",
+              "threshold": 0.0,
+              "event": "Character death during the trial (death screen in a recording; death event in an evaluator).",
+              "threshold_basis": "docs/specs/scenarios.md: death is a failure, not a missing trial."
+            },
+            {
+              "gate_id": "minimum-energy-shield",
+              "definition": "numeric",
+              "path": "/metrics/minimum_resources/energy_shield_fraction",
+              "operator": "gte",
+              "threshold": null,
+              "threshold_gap": "gap-p09-t011-survival-threshold",
+              "why_energy_shield": "Seed allocates Chaos Inoculation (passive 56349): maximum life 1, so a life margin is meaningless for it."
+            }
+          ],
+          "gap_ids": [
+            "gap-p09-t011-survival-threshold"
+          ]
+        },
+        "patch_profile_id": {
+          "basis": "catalog",
+          "source": "docs/evidence/P02-T02.1/catalog-export.json patch_profile_id (verdict partial)",
+          "value": "patch-profile/0.5.5e/ac0e930898cb3951",
+          "gap_ids": [
+            "gap-p09-t011-patch-profile"
+          ]
+        },
+        "initial_state.configuration": {
+          "basis": "seed_export",
+          "source": "docs/evidence/P09-T01.1/seed/export-as-imported.xml (sha256 in seed/manifest.json)",
+          "value": "seed export, Monk / Martial Artist level 93",
+          "gap_ids": []
+        },
+        "rng_seeds": {
+          "basis": "product_default",
+          "source": "Recorded gameplay is not seeded; docs/specs/scenarios.md requires a stochastic suite to fix its minimum success fraction instead",
+          "value": [],
+          "gap_ids": []
+        },
+        "reference_build_id": {
+          "basis": "unresolved",
+          "source": "Seed is a candidate configuration only; see references.json",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "reference_result_id": {
+          "basis": "unresolved",
+          "source": "No result exists",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "rotation_id": {
+          "basis": "owner_statement",
+          "source": "Owner rotation and answers Q1 to Q6, in scenarios.json rotation",
+          "value": "p09-flk-rotation-owner-v1",
+          "gap_ids": [
+            "gap-p09-t011-rotation-details",
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "resource_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md and the seed export",
+          "value": [
+            {
+              "path": "/metrics/minimum_resources/mana",
+              "operator": "gte",
+              "threshold": 0.0,
+              "basis": "docs/specs/scenarios.md: an empty pool is downtime, not illegality; a pool never goes negative."
+            },
+            {
+              "path": "/metrics/maximum_resources/power_charges",
+              "operator": "lte",
+              "threshold": 5,
+              "basis": "Seed PowerChargesMax 5: base 3 plus Overflowing Power +2 (passive 65204). A count above it is an evaluator error."
+            }
+          ],
+          "gap_ids": []
+        },
+        "evidence_ids": {
+          "basis": "seed_export",
+          "source": "Seed manifest, mechanics extract, PoB charge table, P02-T02.1 catalog export",
+          "value": [
+            "docs/evidence/P09-T01.1/seed/manifest.json",
+            "docs/evidence/P09-T01.1/mechanics.json",
+            "docs/evidence/P09-T01.1/pob-charge-table.json",
+            "docs/evidence/P02-T02.1/catalog-export.json"
+          ],
+          "gap_ids": []
+        },
+        "validation_status": {
+          "basis": "specification",
+          "source": "docs/specs/contracts.md RuleValidation; no evaluator has run these",
+          "value": "untested",
+          "gap_ids": []
+        }
+      }
+    },
+    {
+      "scenario_id": "p09-flk-boss-sustained",
+      "version": "1",
+      "category": "boss",
+      "shape": "boss_sustained",
+      "fields": {
+        "scenario_id": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md four shapes",
+          "value": "p09-flk-boss-sustained",
+          "gap_ids": []
+        },
+        "version": {
+          "basis": "product_default",
+          "source": "docs/specs/scenarios.md: a version change starts a new aggregate identity",
+          "value": "1",
+          "gap_ids": []
+        },
+        "category": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "boss",
+          "gap_ids": []
+        },
+        "kind": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md: representative scenarios are a separate dataset",
+          "value": "representative",
+          "gap_ids": []
+        },
+        "shape": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": "boss_sustained",
+          "gap_ids": []
+        },
+        "selection_criterion": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md; T16 from owner Q7",
+          "value": "One named boss with phases or untargetable windows; measures start to kill including the windows that elapse before the kill.",
+          "gap_ids": []
+        },
+        "encounter": {
+          "basis": "protocol_choice",
+          "source": "Owner named no boss. Proposed: PoB tier Uber Pinnacle Boss as the enemy configuration, boss name open",
+          "value": {
+            "boss": null,
+            "proposed_pob_enemy_tier": "Uber",
+            "status": "proposed"
+          },
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.count": {
+          "basis": "unresolved",
+          "source": "Depends on the named encounter",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.health": {
+          "basis": "unresolved",
+          "source": "No monster life held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-health"
+          ]
+        },
+        "target_entities.level": {
+          "basis": "unresolved",
+          "source": "No monster level held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses",
+            "gap-p09-t011-encounter-selection"
+          ]
+        },
+        "target_entities.defenses": {
+          "basis": "unresolved",
+          "source": "No mitigation held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-enemy-defenses"
+          ]
+        },
+        "target_entities.position": {
+          "basis": "unresolved",
+          "source": "No positions or unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "target_entities.targetable_windows": {
+          "basis": "unresolved",
+          "source": "No timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-boss-windows"
+          ]
+        },
+        "initial_state.resources": {
+          "basis": "unresolved",
+          "source": "Start state not recorded",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-initial-resources"
+          ]
+        },
+        "event_schedule": {
+          "basis": "unresolved",
+          "source": "No spawn, phase or damage timings held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-boss-windows",
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "spatial_model_id": {
+          "basis": "unresolved",
+          "source": "No unit conversion",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-spatial-unit"
+          ]
+        },
+        "movement_model_id": {
+          "basis": "unresolved",
+          "source": "No route or movement model",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "duration_limit_s": {
+          "basis": "unresolved",
+          "source": "Needs observed completion times",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-duration-limit"
+          ]
+        },
+        "minimum_success_fraction": {
+          "basis": "unresolved",
+          "source": "docs/specs/scenarios.md requires it before collection",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-success-fraction"
+          ]
+        },
+        "completion_condition": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md",
+          "value": {
+            "type": "target_dead",
+            "start_event": "First frame the character is in the named area (clear) or the boss arena with the encounter started (boss).",
+            "completion_event": "The named boss dies; the clock stops at the kill and includes only the untargetable windows that elapsed before it.",
+            "failure_events": [
+              "character death",
+              "duration limit reached"
+            ]
+          },
+          "gap_ids": []
+        },
+        "incoming_damage_model_id": {
+          "basis": "unresolved",
+          "source": "No damage events held",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-incoming-damage"
+          ]
+        },
+        "allowed_preparation": {
+          "basis": "product_default",
+          "source": "docs/specs/product.md (one configuration, no party buffs, no outside resource generation, timed weapon-set changes); owner Q4 (Spirit skills persistent, Pounce movement only)",
+          "value": {
+            "party_buffs": false,
+            "outside_resource_generation": false,
+            "weapon_set_changes": "allowed when represented and timed",
+            "persistent_skills": [
+              "Herald of Ice",
+              "Herald of Thunder",
+              "Wind Dancer",
+              "Ghost Dance",
+              "Trinity",
+              "Remnants of Kalguur"
+            ],
+            "movement_only_skills": [
+              "Pounce"
+            ]
+          },
+          "gap_ids": []
+        },
+        "capability_floor_ratio": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md provisional floor",
+          "value": 0.5,
+          "gap_ids": []
+        },
+        "survival_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md (deaths); threshold of the energy shield gate unresolved",
+          "value": [
+            {
+              "gate_id": "deaths",
+              "definition": "event",
+              "path": "/metrics/survival/deaths",
+              "operator": "eq",
+              "threshold": 0.0,
+              "event": "Character death during the trial (death screen in a recording; death event in an evaluator).",
+              "threshold_basis": "docs/specs/scenarios.md: death is a failure, not a missing trial."
+            },
+            {
+              "gate_id": "minimum-energy-shield",
+              "definition": "numeric",
+              "path": "/metrics/minimum_resources/energy_shield_fraction",
+              "operator": "gte",
+              "threshold": null,
+              "threshold_gap": "gap-p09-t011-survival-threshold",
+              "why_energy_shield": "Seed allocates Chaos Inoculation (passive 56349): maximum life 1, so a life margin is meaningless for it."
+            }
+          ],
+          "gap_ids": [
+            "gap-p09-t011-survival-threshold"
+          ]
+        },
+        "patch_profile_id": {
+          "basis": "catalog",
+          "source": "docs/evidence/P02-T02.1/catalog-export.json patch_profile_id (verdict partial)",
+          "value": "patch-profile/0.5.5e/ac0e930898cb3951",
+          "gap_ids": [
+            "gap-p09-t011-patch-profile"
+          ]
+        },
+        "initial_state.configuration": {
+          "basis": "seed_export",
+          "source": "docs/evidence/P09-T01.1/seed/export-as-imported.xml (sha256 in seed/manifest.json)",
+          "value": "seed export, Monk / Martial Artist level 93",
+          "gap_ids": []
+        },
+        "rng_seeds": {
+          "basis": "product_default",
+          "source": "Recorded gameplay is not seeded; docs/specs/scenarios.md requires a stochastic suite to fix its minimum success fraction instead",
+          "value": [],
+          "gap_ids": []
+        },
+        "reference_build_id": {
+          "basis": "unresolved",
+          "source": "Seed is a candidate configuration only; see references.json",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "reference_result_id": {
+          "basis": "unresolved",
+          "source": "No result exists",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "rotation_id": {
+          "basis": "owner_statement",
+          "source": "Owner rotation and answers Q1 to Q6, in scenarios.json rotation",
+          "value": "p09-flk-rotation-owner-v1",
+          "gap_ids": [
+            "gap-p09-t011-rotation-details",
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "resource_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md and the seed export",
+          "value": [
+            {
+              "path": "/metrics/minimum_resources/mana",
+              "operator": "gte",
+              "threshold": 0.0,
+              "basis": "docs/specs/scenarios.md: an empty pool is downtime, not illegality; a pool never goes negative."
+            },
+            {
+              "path": "/metrics/maximum_resources/power_charges",
+              "operator": "lte",
+              "threshold": 5,
+              "basis": "Seed PowerChargesMax 5: base 3 plus Overflowing Power +2 (passive 65204). A count above it is an evaluator error."
+            }
+          ],
+          "gap_ids": []
+        },
+        "evidence_ids": {
+          "basis": "seed_export",
+          "source": "Seed manifest, mechanics extract, PoB charge table, P02-T02.1 catalog export",
+          "value": [
+            "docs/evidence/P09-T01.1/seed/manifest.json",
+            "docs/evidence/P09-T01.1/mechanics.json",
+            "docs/evidence/P09-T01.1/pob-charge-table.json",
+            "docs/evidence/P02-T02.1/catalog-export.json"
+          ],
+          "gap_ids": []
+        },
+        "validation_status": {
+          "basis": "specification",
+          "source": "docs/specs/contracts.md RuleValidation; no evaluator has run these",
+          "value": "untested",
+          "gap_ids": []
+        }
+      }
+    },
+    {
+      "scenario_id": "flicker_sustained_v1",
+      "version": "1",
+      "category": "dps_benchmark",
+      "shape": "flicker_sustained_v1",
+      "fields": {
+        "scenario_id": {
+          "basis": "decision_D07",
+          "source": "docs/decisions/D07-flicker-strike-objective.md item 1",
+          "value": "flicker_sustained_v1",
+          "gap_ids": []
+        },
+        "version": {
+          "basis": "decision_D07",
+          "source": "D07: separately versioned benchmark",
+          "value": "1",
+          "gap_ids": []
+        },
+        "category": {
+          "basis": "decision_D07",
+          "source": "D07: controlled damage benchmark alongside the four scenarios",
+          "value": "dps_benchmark",
+          "gap_ids": []
+        },
+        "kind": {
+          "basis": "decision_D07",
+          "source": "D07 amendment 2026-10-18: PoB calculation benchmark",
+          "value": "pob_calculation",
+          "gap_ids": []
+        },
+        "objective": {
+          "basis": "decision_D07",
+          "source": "pob2opt/domain/objectives.py FLICKER_SUSTAINED_DPS_V1",
+          "value": {
+            "objective_id": "flicker_sustained_dps",
+            "version": 1,
+            "target_skill": {
+              "gem_id": "Metadata/Items/Gems/SkillGemFlickerStrike",
+              "granted_skill_id": "FlickerStrikePlayer"
+            }
+          },
+          "gap_ids": []
+        },
+        "window_s": {
+          "basis": "decision_D07",
+          "source": "D07 item 2; objectives.py sustained window",
+          "value": [
+            0.0,
+            120.0
+          ],
+          "gap_ids": []
+        },
+        "burst_window_s": {
+          "basis": "decision_D07",
+          "source": "D07 item 5; objectives.py burst window",
+          "value": [
+            0.0,
+            5.0
+          ],
+          "gap_ids": []
+        },
+        "metric_definition": {
+          "basis": "decision_D07",
+          "source": "D07 items 3 and 5",
+          "value": {
+            "flicker_sustained_dps": "attributed_damage_in_[0,120) / 120",
+            "flicker_burst_dps": "attributed_damage_in_[0,5) / 5, same initial conditions, never the most favourable segment"
+          },
+          "gap_ids": []
+        },
+        "target_entities.count": {
+          "basis": "decision_D07",
+          "source": "D07 item 1: one enemy",
+          "value": 1,
+          "gap_ids": []
+        },
+        "target_entities.dies": {
+          "basis": "decision_D07",
+          "source": "D07 item 1: non-dying; a PoB calculation has no death",
+          "value": false,
+          "gap_ids": []
+        },
+        "target_entities.targetable_windows": {
+          "basis": "decision_D07",
+          "source": "D07 item 1: continuously targetable",
+          "value": [
+            [
+              0.0,
+              120.0
+            ]
+          ],
+          "gap_ids": []
+        },
+        "target_entities.identity": {
+          "basis": "decision_D07",
+          "source": "D07 amendment 2026-10-18; engine/enemy-is-boss-option, engine/pinnacle-enemy-preset",
+          "value": {
+            "pob_config": {
+              "enemyIsBoss": "Pinnacle",
+              "presetBossSkills": "None"
+            },
+            "label": "Guardian/Pinnacle Boss",
+            "engine_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e"
+          },
+          "gap_ids": []
+        },
+        "target_entities.level": {
+          "basis": "catalog",
+          "source": "engine/pinnacle-enemy-preset: defaultLevel 82; read back by PoB (pob-charge-table.json enemy)",
+          "value": 82,
+          "gap_ids": []
+        },
+        "target_entities.defenses": {
+          "basis": "catalog",
+          "source": "engine/pinnacle-enemy-preset: elemental resist 50, chaos 0, armour and evasion from the monster tables at level 82; values read back by PoB (pob-charge-table.json enemy)",
+          "value": {
+            "resist": {
+              "Fire": 50,
+              "Cold": 50,
+              "Lightning": 50,
+              "Chaos": 0
+            },
+            "armour": 8063,
+            "evasion": 1175
+          },
+          "gap_ids": []
+        },
+        "target_entities.conditions": {
+          "basis": "unresolved",
+          "source": "Enemy and player condition inputs must be sustained by the build, not toggled (D07 item 2)",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-config-conditions"
+          ]
+        },
+        "target_entities.health": {
+          "basis": "decision_D07",
+          "source": "D07 amendment: the PoB calculation does not model target life or death",
+          "value": "not modelled",
+          "gap_ids": []
+        },
+        "adds": {
+          "basis": "decision_D07",
+          "source": "D07 item 4: no adds",
+          "value": [],
+          "gap_ids": []
+        },
+        "kill_events": {
+          "basis": "decision_D07",
+          "source": "D07 item 4: no kill events; on-kill dependencies are unavailable",
+          "value": [],
+          "gap_ids": []
+        },
+        "initial_state.resources": {
+          "basis": "protocol_choice",
+          "source": "D07 item 2: stated, obtainable state, no free maximum-state toggles. Proposed: 0 Power Charges, 0 Combo, energy shield and mana full. Needs reviewer acceptance",
+          "value": {
+            "power_charges": 0,
+            "combo": 0,
+            "energy_shield": "full",
+            "mana": "full"
+          },
+          "gap_ids": []
+        },
+        "allowed_preparation": {
+          "basis": "owner_statement",
+          "source": "D07 item 2 (preparation inside the window); owner Q4: Spirit skills persistent and active from t = 0, Pounce movement only",
+          "value": {
+            "inside_window": true,
+            "party_buffs": false,
+            "persistent_skills": [
+              "Herald of Ice",
+              "Herald of Thunder",
+              "Wind Dancer",
+              "Ghost Dance",
+              "Trinity",
+              "Remnants of Kalguur"
+            ],
+            "excluded_from_rotation": [
+              "Pounce"
+            ]
+          },
+          "gap_ids": []
+        },
+        "movement_model_id": {
+          "basis": "owner_statement",
+          "source": "Owner Q5: the Flicker Strike dash supplies Hit and Run's movement; no separate movement action",
+          "value": "none",
+          "gap_ids": [
+            "gap-p09-t011-hit-and-run-movement",
+            "gap-p09-t011-flicker-strike-timing"
+          ]
+        },
+        "spatial_model_id": {
+          "basis": "decision_D07",
+          "source": "D07 amendment: PoB calculation, no positions",
+          "value": "none",
+          "gap_ids": []
+        },
+        "incoming_damage_model_id": {
+          "basis": "decision_D07",
+          "source": "D07 amendment: PoB calculation, no incoming damage",
+          "value": "none",
+          "gap_ids": []
+        },
+        "duration_limit_s": {
+          "basis": "decision_D07",
+          "source": "D07 item 2: fixed window",
+          "value": 120.0,
+          "gap_ids": []
+        },
+        "completion_condition": {
+          "basis": "decision_D07",
+          "source": "D07 items 2 and 4",
+          "value": {
+            "type": "fixed_window",
+            "start_event": "Scenario time zero with the stated initial state.",
+            "completion_event": "t = 120 s. No kill or completion event exists.",
+            "failure_events": [
+              "character death"
+            ]
+          },
+          "gap_ids": []
+        },
+        "attribution_rules": {
+          "basis": "protocol_choice",
+          "source": "D07 item 3. Proposed: only Flicker Strike's own PoB AverageBurstDamage counts; other skills reported separately",
+          "value": {
+            "counted": "Flicker Strike main skill AverageBurstDamage",
+            "reported_separately": [
+              "Whirling Assault",
+              "Living Lightning",
+              "Herald of Ice",
+              "Herald of Thunder",
+              "Wind Dancer",
+              "Trinity",
+              "Remnants of Kalguur",
+              "Charged Staff"
+            ]
+          },
+          "gap_ids": [
+            "gap-p09-t011-attribution-rules",
+            "gap-p09-t011-charged-staff-shared-charges"
+          ]
+        },
+        "measurement_method": {
+          "basis": "decision_D07",
+          "source": "D07 amendment 2026-10-18; method defined in benchmarks/p09-flicker-v1/protocol.md",
+          "value": {
+            "method_id": "pob-cycle-v1",
+            "required_gap_ids": [
+              "gap-p09-t011-charge-cycle-rules",
+              "gap-p09-t011-rotation-details",
+              "gap-p09-t011-charged-staff-shared-charges",
+              "gap-p09-t011-config-conditions",
+              "gap-p09-t011-engine-checkout-state",
+              "gap-p09-t011-sustain-cycle",
+              "gap-p09-t011-hit-and-run-movement",
+              "gap-p09-t011-attribution-rules"
+            ],
+            "damage_source": "Path of Building on the pinned engine (D07 amendment 2026-10-18)",
+            "target": "flicker_sustained_v1 PoB enemy configuration (target_entities fields)",
+            "inputs": [
+              {
+                "name": "t_WA",
+                "meaning": "seconds per Whirling Assault use",
+                "source": "PoB output Time (= 1 / Speed) with socket group 8 as main skill; docs/evidence/P09-T01.1/pob-charge-table.json whirling_assault",
+                "seed_value": 1.2997682791202
+              },
+              {
+                "name": "S_F(c)",
+                "meaning": "Flicker Strike strikes per second at c Power Charges",
+                "source": "PoB output Speed with Flicker Strike as main skill (includes the skill's 285% more attack speed and Hit and Run's 40% more skill speed); docs/evidence/P09-T01.1/pob-charge-table.json",
+                "seed_values": {
+                  "0": 9.3279,
+                  "1": 9.3279,
+                  "2": 9.3279,
+                  "3": 9.3279,
+                  "4": 9.3279,
+                  "5": 9.3279
+                }
+              },
+              {
+                "name": "H(c)",
+                "meaning": "strikes per Flicker Strike use",
+                "source": "PoB AverageBurstHits = 1 + AdditionalFlickersPerPowerCharge (2 per removable charge); skill/FlickerStrikePlayer preDamageFunc, statdesc/flicker_strike_additional_flickers_from_power_charges",
+                "seed_values": {
+                  "0": 1,
+                  "1": 3,
+                  "2": 5,
+                  "3": 7,
+                  "4": 9,
+                  "5": 11
+                }
+              },
+              {
+                "name": "D(c)",
+                "meaning": "damage per Flicker Strike use at c Power Charges",
+                "source": "PoB AverageBurstDamage at c forced charges (0: usePowerCharges unset); docs/evidence/P09-T01.1/pob-charge-table.json. Which table (Charged Staff enabled or disabled) is gap-p09-t011-charged-staff-shared-charges",
+                "seed_values_charged_staff_enabled": {
+                  "0": 112388.62833962,
+                  "1": 379896.2001426,
+                  "2": 645169.38687452,
+                  "3": 920033.24970045,
+                  "4": 1204473.5862869,
+                  "5": 1498554.438422
+                }
+              },
+              {
+                "name": "C_max",
+                "meaning": "maximum Power Charges",
+                "source": "PoB PowerChargesMax",
+                "seed_value": 5
+              },
+              {
+                "name": "p",
+                "meaning": "Power Charge chance per Combo expended",
+                "source": "Ailith's Chimes chance_%_to_gain_power_charges_per_combo_spent 25, 'Surpassing' (support/SupportAilithLineagePlayer)",
+                "value": 0.25
+              },
+              {
+                "name": "K_max",
+                "meaning": "Combo cap of the Culmination-supported skill",
+                "source": "Culmination II skill_maximum_number_of_combo_stacks 10",
+                "value": 10
+              },
+              {
+                "name": "q",
+                "meaning": "chance a consumed charge is not removed",
+                "source": "Perpetual Charge charge_skip_consume_chance_% 25 (support/SupportPerpetualChargePlayer)",
+                "value": 0.25
+              },
+              {
+                "name": "g",
+                "meaning": "Combo Whirling Assault gains per Flicker Strike strike and per own hit",
+                "source": "unknown",
+                "value": null,
+                "gap_id": "gap-p09-t011-charge-cycle-rules"
+              },
+              {
+                "name": "m_F, m_WA",
+                "meaning": "mana per use",
+                "source": "PoB ManaCost, groups 6 and 8",
+                "seed_values": {
+                  "m_F": 248,
+                  "m_WA": 160
+                }
+              }
+            ],
+            "procedure": [
+              "Prerequisites: every required_gap_id must be resolved with evidence. Before the first and each subsequent Flicker Strike use, establish Hit and Run activation. If teleport does not re-enable it, account for an evidenced movement action and its elapsed time, or stop with a blocking gap. Unassigned secondary damage cannot enter D(c) or the score; attribution must be accepted before computation.",
+              "1. t = 0: 0 Power Charges, 0 Combo, persistent Spirit skills active (owner Q4), energy shield and mana full.",
+              "2. Cycle k = 1, 2, ...: one Whirling Assault use lasting t_WA, then one Flicker Strike use (owner Q1, Q2). Charged Staff's place is gap-p09-t011-rotation-details; no value is computed until it closes.",
+              "3. At Whirling Assault use k, Combo K_k = min(K_max, Combo gained since the previous Whirling Assault use, per g). It is expended; the Power Charges gained follow Ailith's Chimes, expected p x K_k, with the distribution the Surpassing rule gives (gap-p09-t011-charge-cycle-rules). Charges held C_k = min(C_max, carried_k + gained_k). Flicker Strike's 'cannot gain Power Charges while using this Skill' means no charge is gained during step 4.",
+              "4. Flicker Strike use k performs H(C_k) strikes, each lasting 1 / S_F(C_k) (gap-p09-t011-flicker-strike-timing). D(C_k) is credited in equal parts D(C_k) / H(C_k) at each strike's end. Over a charge distribution, use E[D] = sum over c of P(C_k = c) x D(c); never interpolate D between charge counts.",
+              "5. Charges carried into cycle k + 1: each consumed charge is kept with probability q (Perpetual Charge), capped at C_max.",
+              "6. flicker_sustained_dps = credited damage whose strike ends in [0, 120) divided by 120. flicker_burst_dps = credited damage whose strike ends in [0, 5) divided by 5, from the same t = 0 state. Only completed strikes count at a window end.",
+              "7. Report mana: m_WA per Whirling Assault use and m_F per Flicker Strike use against maximum mana and regeneration; flask use is gap-p09-t011-sustain-cycle. Report whether the cycle reaches a repeating charge state (D07 item 6).",
+              "8. Whirling Assault's own damage and every other skill's damage are reported separately and never enter the score (D07 item 3)."
+            ],
+            "community_method_difference": "The community reference (poe.ninja 25c49) reads AverageBurstDamage at forced charges (7, above its maximum of 6) with forced Combo, Rage, Onslaught and enemy conditions: burst per use, no charge generation time. pob-cycle-v1 uses the same PoB outputs but only charges the rotation generates, and divides by elapsed time including each Whirling Assault use. PoB TotalDPS (AverageDamage x Speed) also ignores charge generation time.",
+            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-rotation-details, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-engine-checkout-state, gap-p09-t011-sustain-cycle, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules."
+          },
+          "gap_ids": [
+            "gap-p09-t011-charge-cycle-rules",
+            "gap-p09-t011-rotation-details",
+            "gap-p09-t011-charged-staff-shared-charges",
+            "gap-p09-t011-config-conditions",
+            "gap-p09-t011-engine-checkout-state",
+            "gap-p09-t011-sustain-cycle",
+            "gap-p09-t011-hit-and-run-movement",
+            "gap-p09-t011-attribution-rules",
+            "gap-p09-t011-flicker-strike-timing"
+          ]
+        },
+        "gameplay_recordings": {
+          "basis": "decision_D07",
+          "source": "D07 amendment: optional validation, not a prerequisite",
+          "value": "optional",
+          "gap_ids": []
+        },
+        "sustain_report": {
+          "basis": "decision_D07",
+          "source": "D07 item 6: report depletion and whether the cycle repeats",
+          "value": {
+            "required": true,
+            "repeatable_cycle": null
+          },
+          "gap_ids": [
+            "gap-p09-t011-sustain-cycle",
+            "gap-p09-t011-charge-cycle-rules"
+          ]
+        },
+        "survival_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md (deaths). No incoming damage in the PoB calculation, so no energy shield gate applies",
+          "value": [
+            {
+              "gate_id": "deaths",
+              "definition": "event",
+              "path": "/metrics/survival/deaths",
+              "operator": "eq",
+              "threshold": 0.0,
+              "event": "Character death during the trial (death screen in a recording; death event in an evaluator).",
+              "threshold_basis": "docs/specs/scenarios.md: death is a failure, not a missing trial."
+            }
+          ],
+          "gap_ids": []
+        },
+        "pob_proxy": {
+          "basis": "seed_export",
+          "source": "docs/evidence/P09-T01.1/seed/manifest.json pob_proxy_flicker_main",
+          "value": {
+            "label": "proxy_only",
+            "path": "docs/evidence/P09-T01.1/seed/stats-flicker-main.json"
+          },
+          "gap_ids": [
+            "gap-p09-t011-engine-checkout-state"
+          ]
+        },
+        "pob_inputs": {
+          "basis": "seed_export",
+          "source": "PoB outputs at 0 to 5 charges and Whirling Assault; PoB-derived",
+          "value": {
+            "path": "docs/evidence/P09-T01.1/pob-charge-table.json"
+          },
+          "gap_ids": [
+            "gap-p09-t011-engine-checkout-state"
+          ]
+        },
+        "patch_profile_id": {
+          "basis": "catalog",
+          "source": "docs/evidence/P02-T02.1/catalog-export.json patch_profile_id (verdict partial)",
+          "value": "patch-profile/0.5.5e/ac0e930898cb3951",
+          "gap_ids": [
+            "gap-p09-t011-patch-profile"
+          ]
+        },
+        "initial_state.configuration": {
+          "basis": "seed_export",
+          "source": "docs/evidence/P09-T01.1/seed/export-as-imported.xml (sha256 in seed/manifest.json)",
+          "value": "seed export, Monk / Martial Artist level 93",
+          "gap_ids": []
+        },
+        "rng_seeds": {
+          "basis": "product_default",
+          "source": "Recorded gameplay is not seeded; docs/specs/scenarios.md requires a stochastic suite to fix its minimum success fraction instead",
+          "value": [],
+          "gap_ids": []
+        },
+        "reference_build_id": {
+          "basis": "unresolved",
+          "source": "Seed is a candidate configuration only; see references.json",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "reference_result_id": {
+          "basis": "unresolved",
+          "source": "No result exists",
+          "value": null,
+          "gap_ids": [
+            "gap-p09-t011-reference-result"
+          ]
+        },
+        "rotation_id": {
+          "basis": "owner_statement",
+          "source": "Owner rotation and answers Q1 to Q6, in scenarios.json rotation",
+          "value": "p09-flk-rotation-owner-v1",
+          "gap_ids": [
+            "gap-p09-t011-rotation-details",
+            "gap-p09-t011-hit-and-run-movement"
+          ]
+        },
+        "resource_gates": {
+          "basis": "specification",
+          "source": "docs/specs/scenarios.md and the seed export",
+          "value": [
+            {
+              "path": "/metrics/minimum_resources/mana",
+              "operator": "gte",
+              "threshold": 0.0,
+              "basis": "docs/specs/scenarios.md: an empty pool is downtime, not illegality; a pool never goes negative."
+            },
+            {
+              "path": "/metrics/maximum_resources/power_charges",
+              "operator": "lte",
+              "threshold": 5,
+              "basis": "Seed PowerChargesMax 5: base 3 plus Overflowing Power +2 (passive 65204). A count above it is an evaluator error."
+            }
+          ],
+          "gap_ids": []
+        },
+        "evidence_ids": {
+          "basis": "seed_export",
+          "source": "Seed manifest, mechanics extract, PoB charge table, P02-T02.1 catalog export",
+          "value": [
+            "docs/evidence/P09-T01.1/seed/manifest.json",
+            "docs/evidence/P09-T01.1/mechanics.json",
+            "docs/evidence/P09-T01.1/pob-charge-table.json",
+            "docs/evidence/P02-T02.1/catalog-export.json"
+          ],
+          "gap_ids": []
+        },
+        "validation_status": {
+          "basis": "specification",
+          "source": "docs/specs/contracts.md RuleValidation; no evaluator has run these",
+          "value": "untested",
+          "gap_ids": []
+        }
+      }
+    }
+  ],
+  "rotation": {
+    "rotation_id": "p09-flk-rotation-owner-v1",
+    "version": "2",
+    "owner_statement_verbatim": "whirling assault to get 5 power charges & then flicker strike, rince and repeat",
+    "received": "2026-10-17",
+    "answers_received": "2026-10-18",
+    "source": "Owner (Elias), P09-T01.1 assignment and answers Q1 to Q9",
+    "cycle": {
+      "opener": "Whirling Assault (Q2: 'whirling assault')",
+      "repeat": [
+        "Whirling Assault x1 (Q1: 'just 1')",
+        "Flicker Strike x1"
+      ],
+      "charged_staff": "Pressed 'when i have a charge' (Q3); place in the cycle unresolved",
+      "persistent_buffs_not_pressed": [
+        "Herald of Ice",
+        "Herald of Thunder",
+        "Wind Dancer",
+        "Ghost Dance",
+        "Trinity",
+        "Remnants of Kalguur"
+      ],
+      "movement_only": [
+        "Pounce (Q4: 'I press pounce, but only for mobility')"
+      ],
+      "hit_and_run_movement": "Flicker Strike's dash (Q5: 'the dash from flicker itself'); unverified by the catalog",
+      "mana": "Mana flask on bosses; mana on kill does nothing there (Q6)"
+    },
+    "derived_from_evidence": [
+      {
+        "claim": "Whirling Assault in the seed carries Culmination II and Ailith's Chimes (skill group 8).",
+        "source": "docs/evidence/P09-T01.1/seed/skill-groups.json"
+      },
+      {
+        "claim": "Culmination II adds ComboStacking, holds up to 10 Combo gained from strikes with other melee attacks, expends all Combo on use, decay delay 6000 ms.",
+        "mechanic_ids": [
+          "support/SupportCulminationPlayerTwo",
+          "statdesc/skill_maximum_number_of_combo_stacks"
+        ]
+      },
+      {
+        "claim": "Ailith's Chimes requires ComboStacking and gives a 25% Surpassing chance per Combo expended to gain a Power Charge. This is the seed's only cited Power Charge source.",
+        "mechanic_ids": [
+          "support/SupportAilithLineagePlayer",
+          "statdesc/chance_%_to_gain_power_charges_per_combo_spent"
+        ]
+      },
+      {
+        "claim": "Seed ascendancy: Martial Adept (additional Combo when gaining Combo) and Martial Master (Combo from all Attack Hits) are allocated.",
+        "mechanic_ids": [
+          "passive/41751",
+          "passive/61586"
+        ],
+        "source": "docs/evidence/P09-T01.1/seed/passive-nodes.json"
+      },
+      {
+        "claim": "Maximum Power Charges 5: base 3 plus Overflowing Power +2, matching the owner's 5.",
+        "mechanic_ids": [
+          "passive/65204"
+        ],
+        "source": "docs/evidence/P09-T01.1/seed/stats-flicker-main.json"
+      },
+      {
+        "claim": "Flicker Strike consumes Power Charges for 2 additional teleporting strikes per charge and cannot gain Power Charges while used. PoB models the extra strikes as 2 x removable Power Charges (AverageBurstHits 1, 3, 5, 7, 9, 11 at 0 to 5 charges).",
+        "mechanic_ids": [
+          "skill/FlickerStrikePlayer",
+          "statdesc/flicker_strike_additional_flickers_from_power_charges",
+          "statdesc/cannot_gain_power_charges_during_skill",
+          "engine/removable-power-charges"
+        ],
+        "source": "docs/evidence/P09-T01.1/pob-charge-table.json"
+      },
+      {
+        "claim": "Perpetual Charge on Flicker Strike: 25% chance to not remove Charges but still count as consuming them.",
+        "mechanic_ids": [
+          "support/SupportPerpetualChargePlayer",
+          "statdesc/charge_skip_consume_chance_%"
+        ]
+      },
+      {
+        "claim": "Hit and Run on Flicker Strike: usable after moving 10 metres, unusable again after use, 40% more skill speed.",
+        "mechanic_ids": [
+          "support/SupportHitAndRunPlayer",
+          "statdesc/skill_unusable_until_moved_X_distance"
+        ]
+      },
+      {
+        "claim": "Charged Staff consumes all Power Charges and requires 1; in PoB its per-charge buff reads the same charges Flicker Strike's strikes do.",
+        "mechanic_ids": [
+          "skill/ChargedStaffPlayer"
+        ],
+        "source": "docs/evidence/P09-T01.1/pob-charge-table.json"
+      },
+      {
+        "claim": "Mana: Flicker Strike 85 base cost at gem level 20; PoB shows 248 per use, Whirling Assault 160, against 887 maximum mana (proxy_only).",
+        "mechanic_ids": [
+          "skill/FlickerStrikePlayer"
+        ],
+        "source": "docs/evidence/P09-T01.1/pob-charge-table.json"
+      }
+    ],
+    "unresolved": [
+      {
+        "question_id": "Q10",
+        "gap_ids": [
+          "gap-p09-t011-rotation-details",
+          "gap-p09-t011-charged-staff-shared-charges"
+        ]
+      },
+      {
+        "question_id": "Q5",
+        "gap_ids": [
+          "gap-p09-t011-hit-and-run-movement"
+        ]
+      },
+      {
+        "question_id": "Q6",
+        "gap_ids": [
+          "gap-p09-t011-sustain-cycle"
+        ]
+      },
+      {
+        "question_id": "Q1",
+        "gap_ids": [
+          "gap-p09-t011-charge-cycle-rules"
+        ]
+      }
+    ],
+    "not_a_rotation_policy": "Not a RotationPolicy record: Charged Staff's predicate and place are unresolved, and writing them would invent what the owner has not stated."
+  },
+  "owner_questions": [
+    {
+      "question_id": "Q1",
+      "question": "Whirling Assault uses per Flicker Strike.",
+      "status": "answered"
+    },
+    {
+      "question_id": "Q2",
+      "question": "Opener at 0 charges and 0 Combo.",
+      "status": "answered"
+    },
+    {
+      "question_id": "Q3",
+      "question": "When Charged Staff is pressed.",
+      "status": "answered"
+    },
+    {
+      "question_id": "Q4",
+      "question": "Which buff and utility skills are pressed.",
+      "status": "answered"
+    },
+    {
+      "question_id": "Q5",
+      "question": "What supplies Hit and Run's 10 metres.",
+      "status": "answered"
+    },
+    {
+      "question_id": "Q6",
+      "question": "Mana flask use.",
+      "status": "answered"
+    },
+    {
+      "question_id": "Q7",
+      "question": "Maps and bosses.",
+      "status": "answered in part: T16 maps, ailment threshold weak case; no map or boss named"
+    },
+    {
+      "question_id": "Q8",
+      "question": "Benchmark target.",
+      "status": "answered: decision 1, PoB is the damage source"
+    },
+    {
+      "question_id": "Q9",
+      "question": "Class and variant scope.",
+      "status": "answered: decision 2, all approved"
+    },
+    {
+      "question_id": "Q10",
+      "question": "Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or at another point? About how often?",
+      "status": "open"
+    },
+    {
+      "question_id": "Q11",
+      "question": "Which T16 maps (one with packs close together, one spread out) and which two bosses (one you kill without breaks, one with phases or untargetable time) do you run? Are PoB's Pinnacle and Uber tiers acceptable enemy configurations for them?",
+      "status": "open"
+    }
+  ],
+  "data_gaps": [
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-encounter-selection",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-encounter-selection",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/encounter"
+      ],
+      "mechanic_ids": [
+        "engine/boss-skill-presets",
+        "engine/enemy-is-boss-option"
+      ],
+      "severity": "blocking",
+      "explanation": "Owner Q7: T16 maps for clearing, one with the 'monsters have increased ailment threshold' modifier (the owner's evidenced weak case). No map name or layout and no boss is named. PoB has no named PoE 2 boss preset: its boss skill presets are Atziri, Shaper, Sirus, Cortex, Exarch, Eater and Maven, and its enemy tiers are Standard Boss, Guardian/Pinnacle Boss and Uber Pinnacle Boss.",
+      "needed_evidence": "For each clear shape, the T16 map name and layout the owner runs, with its modifiers; for each boss shape, the boss name and area level. The proposed PoB tiers for the boss shapes accepted or replaced.",
+      "collection_method": "Owner answer to Q11 in benchmarks/p09-flicker-v1/protocol.md; a reviewer checks each against its shape in docs/specs/scenarios.md.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-enemy-health",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-enemy-health",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/target_entities/*/health"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "No PoE 2 monster life is held for the clear and boss encounters. A recording's health bar is a fraction of an unknown maximum.",
+      "needed_evidence": "Maximum life of each named monster and boss at a stated area level, rarity and patch, with the catalog row or experiment it came from. One value per entity.",
+      "collection_method": "An identified catalog row from an accepted patch profile, or a controlled experiment with a known damage figure. A health bar alone does not close this.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-enemy-defenses",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-enemy-defenses",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/target_entities/*/defenses",
+        "/target_entities/*/level"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "No monster level, resistance, armour or evasion is held for the named clear and boss encounters. flicker_sustained_v1 uses the PoB preset instead (D07 amendment).",
+      "needed_evidence": "Per named monster at a stated area level and patch: level, elemental and chaos resistances, armour, evasion, with the catalog row or capture each came from.",
+      "collection_method": "Catalog export from an accepted patch profile, or a measured damage-taken comparison against a known hit.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-encounter-density",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-encounter-density",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread"
+      ],
+      "field_paths": [
+        "/target_entities/*/count",
+        "/target_entities/*/position"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "Dense and spread differ by pack size and spacing; neither is held for any area.",
+      "needed_evidence": "For each named clear area: monsters per pack, packs per run, and distance between successive packs along the walked route, with the distance unit.",
+      "collection_method": "Owner recordings of full runs of the named area with route and pack positions marked, five runs or more so a spread is stated.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-spatial-unit",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-spatial-unit",
+      "kind": "unresolved_entity",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/spatial_model_id",
+        "/target_entities/*/position"
+      ],
+      "mechanic_ids": [
+        "statdesc/skill_unusable_until_moved_X_distance"
+      ],
+      "severity": "blocking",
+      "explanation": "PoB's stat description formatter prints skill_unusable_until_moved_X_distance 100 as 10 metres (divide_by_ten), which ties catalog distance values to metres in description text. Recorded positions are in screen or minimap space and no conversion to either exists.",
+      "needed_evidence": "The conversion between recorded screen or minimap distance and catalog distance units, with the two measurements that fix it.",
+      "collection_method": "A controlled measurement: a skill of known catalog radius used on a target at measured distances, at two distances.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-movement-model",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-movement-model",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread"
+      ],
+      "field_paths": [
+        "/movement_model_id"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "No pathfinding is implemented. Clear routes have no model.",
+      "needed_evidence": "Per-leg route times for each named clear area, read off a recording's clock in seconds.",
+      "collection_method": "Owner recordings; per-leg times read frame by frame with the frame rate stated.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-incoming-damage",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-incoming-damage",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/incoming_damage_model_id",
+        "/event_schedule"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "No timestamped damage event is held for any encounter.",
+      "needed_evidence": "Timestamped damage events for each named encounter and patch with the character's maximum and current energy shield, mitigation and recovery at each event.",
+      "collection_method": "Owner recordings with the resource globes legible, plus a reviewer-accepted method separating damage from recovery.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-boss-windows",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-boss-windows",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/target_entities/*/targetable_windows",
+        "/event_schedule"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "No phase or invulnerability timing is held for any boss.",
+      "needed_evidence": "Start and end of every phase and untargetable window of each named boss in seconds from encounter start, at a stated area level and patch, over at least five attempts.",
+      "collection_method": "Owner recordings; times read off the recording clock with frame rate and reaction precision stated.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-duration-limit",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-duration-limit",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/duration_limit_s"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "A limit decides which builds fail; setting it needs observed completion times.",
+      "needed_evidence": "Completion time of every attempt, failures included, for each named encounter with the seed configuration.",
+      "collection_method": "Owner recordings, start and completion events per the protocol, at least five attempts per encounter.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-success-fraction",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-success-fraction",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/minimum_success_fraction"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "Recorded gameplay trials are stochastic. scenarios.md requires a stochastic suite to state its minimum success fraction before data collection. None is set.",
+      "needed_evidence": "A minimum fraction of successful trials per encounter, fixed by the owner or reviewer before collection starts.",
+      "collection_method": "Product decision recorded in a review before P09-T02 collection.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-reference-result",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-reference-result",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained",
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/reference_build_id",
+        "/reference_result_id"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "The seed export begins reference selection. A reference also needs a result on the scenario: an observed completion time for the four workloads, and for flicker_sustained_v1 a pob-cycle-v1 computation, which cannot run until its blocking gaps close.",
+      "needed_evidence": "For each workload an accepted observation of the seed; for flicker_sustained_v1 a pob-cycle-v1 result of the seed in a clean pinned engine, accepted by a reviewer.",
+      "collection_method": "P09-T02 observation import for the workloads; the P07 evaluator or a scripted PoB computation for the benchmark.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-benchmark-target",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-benchmark-target",
+      "kind": "missing_input",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/target_entities/0/identity",
+        "/target_entities/0/level",
+        "/target_entities/0/defenses"
+      ],
+      "mechanic_ids": [
+        "engine/pinnacle-enemy-preset"
+      ],
+      "severity": "blocking",
+      "explanation": "D07 needed one non-dying, continuously targetable in-game enemy with evidenced level and defenses.",
+      "needed_evidence": "A fixed, versioned enemy configuration with level and defenses.",
+      "collection_method": "Owner decision 2026-10-18: the target is a fixed PoB enemy configuration (D07 amendment); the Guardian/Pinnacle Boss preset is used.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18",
+        "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-benchmark-measurement",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-benchmark-measurement",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/measurement_method"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "P09-T02 needed a way to measure attributed damage in [0, 120) in game.",
+      "needed_evidence": "A damage source and computation method for flicker_sustained_v1.",
+      "collection_method": "Owner decision 2026-10-18: PoB is the damage source (D07 amendment); method pob-cycle-v1 defined in the protocol.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18",
+        "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-attribution-rules",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-attribution-rules",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/attribution_rules"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "Proposed rule: only Flicker Strike's own PoB AverageBurstDamage counts; Whirling Assault, Living Lightning, the heralds, Wind Dancer, Trinity and Remnants of Kalguur are reported separately. Not yet accepted by a reviewer. Charged Staff's buff share is gap-p09-t011-charged-staff-shared-charges.",
+      "needed_evidence": "Reviewer acceptance of the proposed rule, or a replacement rule per seed damage source with catalog evidence.",
+      "collection_method": "P07-T02 attribution rule review against the catalog.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-rotation-details",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-rotation-details",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained",
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/rotation_id"
+      ],
+      "mechanic_ids": [
+        "skill/ChargedStaffPlayer"
+      ],
+      "severity": "blocking",
+      "explanation": "Owner Q1 to Q6 fix the cycle (one Whirling Assault, one Flicker Strike, Whirling Assault opener). Charged Staff is pressed 'when i have a charge'; it consumes all Power Charges, and its place relative to Flicker Strike in the cycle is not stated.",
+      "needed_evidence": "Where Charged Staff sits in the cycle: after Whirling Assault and before Flicker Strike, after Flicker Strike on charges left by Perpetual Charge, or otherwise; and how often.",
+      "collection_method": "Owner answer to Q10; a reviewer checks the rotation record.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-charge-cycle-rules",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-charge-cycle-rules",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "flicker_sustained_v1",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/measurement_method",
+        "/sustain_report"
+      ],
+      "mechanic_ids": [
+        "support/SupportAilithLineagePlayer",
+        "support/SupportCulminationPlayerTwo",
+        "passive/41751",
+        "passive/61586",
+        "support/SupportPerpetualChargePlayer",
+        "statdesc/cannot_gain_power_charges_during_skill"
+      ],
+      "severity": "blocking",
+      "explanation": "pob-cycle-v1 needs the Combo Whirling Assault holds at each use. Catalog text gives the parts, not the game semantics: whether Flicker Strike strikes are 'other Melee Attacks' that grant Combo to the Culmination-supported Whirling Assault, how many per strike with Martial Adept (one extra per gain) and Martial Master (Combo from all Attack Hits), whether Whirling Assault's own hits grant it Combo, whether the 10 Combo cap applies before or after Martial Adept's extra, what distribution '25% Surpassing chance per Combo expended' gives, and how Perpetual Charge's kept charges carry into the next cycle.",
+      "needed_evidence": "For each question, evidence: an official statement, a catalog or engine implementation that settles it, or a recording with the Combo and Power Charge counters legible over at least 20 cycles.",
+      "collection_method": "Engine or catalog lookup first; recordings as optional validation; a reviewer accepts each rule before any pob-cycle-v1 value is computed.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-charged-staff-shared-charges",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-charged-staff-shared-charges",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/measurement_method",
+        "/attribution_rules"
+      ],
+      "mechanic_ids": [
+        "skill/ChargedStaffPlayer",
+        "engine/removable-power-charges"
+      ],
+      "severity": "blocking",
+      "explanation": "PoB applies Charged Staff's per-charge added lightning and Flicker Strike's per-charge strikes from the same RemovablePowerCharges: with Charged Staff enabled, per-strike AverageDamage is 136232 at 5 forced charges, with it disabled 124231. Both skills consume all Power Charges, so in game the same charges cannot feed both on one use.",
+      "needed_evidence": "Which D(c) table pob-cycle-v1 uses: Charged Staff buff stacks from charges actually consumed by Charged Staff under the rotation (needs Q10), or Charged Staff disabled.",
+      "collection_method": "Owner answer to Q10, then a reviewer rule; the PoB table with Charged Staff disabled is already captured.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-flicker-strike-timing",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-flicker-strike-timing",
+      "kind": "unvalidated_prediction",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/measurement_method"
+      ],
+      "mechanic_ids": [],
+      "severity": "ranking_sensitive",
+      "explanation": "pob-cycle-v1 times every Flicker Strike strike, including the extra teleporting strikes, at 1 / PoB Speed, with no travel or Hit and Run movement time. PoB's TotalDPS makes the same assumption for a single strike. Not validated.",
+      "needed_evidence": "Recorded duration of Flicker Strike uses at known charge counts, or an engine or official statement of the extra strikes' timing.",
+      "collection_method": "Optional owner recording of Flicker Strike uses at 1 and 5 charges, read frame by frame.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-hit-and-run-movement",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-hit-and-run-movement",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained",
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/movement_model_id",
+        "/measurement_method"
+      ],
+      "mechanic_ids": [
+        "support/SupportHitAndRunPlayer",
+        "statdesc/skill_unusable_until_moved_X_distance"
+      ],
+      "severity": "blocking",
+      "explanation": "Hit and Run makes Flicker Strike usable after moving 10 metres. Owner Q5: 'the dash from flicker itself' supplies it. The catalog does not confirm that Flicker Strike's teleport counts as moving.",
+      "needed_evidence": "Engine, official or recorded evidence that Flicker Strike's teleport re-enables Hit and Run, including the first-use activation condition; otherwise a legal movement action with its time charged to the cycle, or a supported replacement setup.",
+      "collection_method": "Engine or official rule lookup; a recording of consecutive uses is an optional evidence route, not a waiver of activation.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-sustain-cycle",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-sustain-cycle",
+      "kind": "missing_input",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/sustain_report"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "D07 item 6 needs resource depletion and whether the cycle repeats. PoB: Flicker Strike 248 mana per use, Whirling Assault 160, 887 maximum mana, 47.9 mana regeneration per second. Owner Q6: mana flask used on bosses; mana on kill does nothing there. Flask recovery and charge gain are not in the method yet.",
+      "needed_evidence": "PoB's mana flask recovery and charge gain for the seed's flask, or a reviewer rule for flask use in the 120 s window.",
+      "collection_method": "PoB outputs for the seed's mana flask; reviewer rule.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-config-conditions",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-config-conditions",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/target_entities/0/conditions",
+        "/initial_state"
+      ],
+      "mechanic_ids": [
+        "engine/pinnacle-enemy-preset"
+      ],
+      "severity": "blocking",
+      "explanation": "D07 forbids free maximum-state toggles. The seed's imported PoB config carries condition inputs (for example conditionChampionIntimidate, inDemonForm, touchedDebuffsCount 10, purpleFlameStacks 10, targetBrandedEnemy, SecondsSinceInevitableCrit 10, multiplierCurrentManaPercentage 100) whose effect on Flicker Strike and whose sustain under the rotation are not checked.",
+      "needed_evidence": "For each condition input that changes a Flicker Strike output: evidence the build sustains it under the rotation, or the input switched off in the benchmark configuration.",
+      "collection_method": "PoB comparison with each input toggled; reviewer rule.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-patch-profile",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-patch-profile",
+      "kind": "stale_patch",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained",
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/patch_profile_id"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "The catalog verdict is partial: the engine data release predates 0.5.5e and slot-accepted-base-categories is open (P02-T02.1).",
+      "needed_evidence": "An accepted patch profile with compatibility verified for 0.5.5e or the patch the measurements are taken on.",
+      "collection_method": "P02-T02 re-export after an engine data release for the live patch, plus the D03 decision.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-engine-checkout-state",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-engine-checkout-state",
+      "kind": "missing_input",
+      "subject_ids": [
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/pob_proxy",
+        "/measurement_method"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "With PoB as the damage source, benchmark numbers must come from a clean checkout of the pin. The seed's stats and the charge table came from the operator's checkout at the pinned HEAD with an unchecked working tree.",
+      "needed_evidence": "The charge table and Whirling Assault outputs recomputed from the stored export in a clean checkout of ce566ea.",
+      "collection_method": "Load docs/evidence/P09-T01.1/seed/export-flicker-main.xml in a clean pinned engine and repeat the pob-charge-table.json procedure.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-variant-exports",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-variant-exports",
+      "kind": "missing_input",
+      "subject_ids": [
+        "flk-var-shock-consume",
+        "flk-var-cull-kill"
+      ],
+      "field_paths": [
+        "/variants/*/status"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "Only the combo-expenditure variant has an export. Each approved variant needs complete configurations.",
+      "needed_evidence": "One complete export per variant (Siphoning Strike with a Shock source; Killing Palm) with the rotation played, then enough configurations for the P09-T02 split.",
+      "collection_method": "Owner or independently sourced exports, imported as account characters or local share codes; no provider scraping.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-class-scope-decision",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-class-scope-decision",
+      "kind": "missing_input",
+      "subject_ids": [
+        "scope-proposal"
+      ],
+      "field_paths": [
+        "/ascendancies/*/in_approved_scope",
+        "/variants"
+      ],
+      "mechanic_ids": [],
+      "severity": "blocking",
+      "explanation": "The class list and variants were proposals; D07 makes scope the owner's decision.",
+      "needed_evidence": "The owner's approved ascendancy list and variants.",
+      "collection_method": "Owner answer to Q9: 'any class, any ascendancy, any variant'.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-survival-threshold",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-survival-threshold",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/survival_gates/1/threshold"
+      ],
+      "mechanic_ids": [],
+      "severity": "ranking_sensitive",
+      "explanation": "The seed runs Chaos Inoculation (maximum life 1), so its survivable pool is energy shield. Any margin stricter than deaths equal zero would be a fitted threshold.",
+      "needed_evidence": "A minimum energy shield fraction per encounter, set from recorded incoming damage, or an explicit decision to keep deaths equal zero as the only gate.",
+      "collection_method": "Reviewer decision after gap-p09-t011-incoming-damage has data.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-initial-resources",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-initial-resources",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/initial_state/resources"
+      ],
+      "mechanic_ids": [],
+      "severity": "ranking_sensitive",
+      "explanation": "The state at encounter start is not recorded, and whether Power Charges and Combo persist across area transitions is unknown.",
+      "needed_evidence": "Energy shield, mana, Power Charges and Combo at the start event of each recorded trial, and whether charges persist after an area transition.",
+      "collection_method": "Owner recordings, read at the start event.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t011-preparation-allowance",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t011-preparation-allowance",
+      "kind": "missing_input",
+      "subject_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained",
+        "flicker_sustained_v1"
+      ],
+      "field_paths": [
+        "/allowed_preparation"
+      ],
+      "mechanic_ids": [],
+      "severity": "ranking_sensitive",
+      "explanation": "Which pre-encounter actions persist into an encounter was not recorded.",
+      "needed_evidence": "For each seed buff skill: whether it is active at the start event.",
+      "collection_method": "Owner answer to Q4: Spirit skills are persistent and always active; Pounce is movement only.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+      ]
+    }
+  ]
+}

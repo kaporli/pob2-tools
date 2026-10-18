@@ -1,0 +1,143 @@
+{
+  "suite_id": "p09-flicker-v1",
+  "task": "P09-T01.1",
+  "kind": "representative_protocol",
+  "status": "proposed, not accepted",
+  "not_a_claim": "PROTOCOL, NOT A MEASUREMENT. No enemy statistic, encounter timing, threshold or performance value in this suite was measured. Null fields are unresolved inputs with DataGap records. The seed export supplies a configuration, not a trial. PoB values are proxy_only.",
+  "protocol": "benchmarks/p09-flicker-v1/protocol.md",
+  "hashing": "File entries: SHA-256 of the raw bytes (identity.document_hash). definition_hash: identity.content_hash (canonical JSON SHA-256) of each scenario object in scenarios.json. suite_hash: content_hash of suite_identity, the sorted definition hashes with their reference slots. Representative ScenarioSpec records cannot be written while required fields are unknown, so scenario_hash over ScenarioSpec does not apply yet.",
+  "sources": {
+    "scenarios": {
+      "path": "benchmarks/p09-flicker-v1/scenarios.json",
+      "sha256": "dd4f5f6a03ab73b98ee868de22ec02d7bfd831f7fcae2346283d9ed4df735d14",
+      "bytes": 111626
+    },
+    "references": {
+      "path": "benchmarks/p09-flicker-v1/references.json",
+      "sha256": "d063c88d22fffe495b05f7b509ad4ca691d6dfda369a83924282d40cd1cde4e8",
+      "bytes": 2680
+    },
+    "seed_manifest": {
+      "path": "docs/evidence/P09-T01.1/seed/manifest.json",
+      "sha256": "96b57d617cbe394a803c5339b9a688b8f43b0807dd3a5b54874fc560ac9323d5",
+      "bytes": 7552
+    },
+    "scope_proposal": {
+      "path": "docs/evidence/P09-T01.1/scope-proposal.json",
+      "sha256": "60989673642d43489d9dd19368ab3c229cdcb4dac112da5d6e6580c4dad1b522",
+      "bytes": 16775
+    },
+    "mechanics": {
+      "path": "docs/evidence/P09-T01.1/mechanics.json",
+      "sha256": "731127814c2bbe9b7ac3eeb46ab623a810fd4d5531bb9b74384fdece0cbe285b",
+      "bytes": 35467
+    },
+    "pob_charge_table": {
+      "path": "docs/evidence/P09-T01.1/pob-charge-table.json",
+      "sha256": "55a210a331e40fe32b6bb34592d9a0dc424ff634a20b1ffad24419fcc6567701",
+      "bytes": 4141
+    },
+    "reference_ninja_share_code": {
+      "path": "docs/evidence/P09-T01.1/reference-ninja-25c49/share-code.txt",
+      "sha256": "a51102cb6b54535cd2bf6d6861c8e00cae5712df7bcb6ec823b176ab7666ce7f",
+      "bytes": 14064
+    },
+    "reference_ninja_decoded": {
+      "path": "docs/evidence/P09-T01.1/reference-ninja-25c49/decoded.xml",
+      "sha256": "d9c5ef47e0a6f1b595b9ff18ec2002872373af084c096670777e7345529bde0d",
+      "bytes": 52925
+    },
+    "reference_ninja_evaluation": {
+      "path": "docs/evidence/P09-T01.1/reference-ninja-25c49/evaluation.json",
+      "sha256": "5cdc2c7596cdc5a2404bf4f2e2db2205b1d3286051fee39afa3a344fb7aac4b3",
+      "bytes": 2953
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "flicker_sustained_v1",
+      "version": "1",
+      "definition_hash": "3992aa150c95d3b64c33f6fa6a1de864e9073974bf6ea5d8db498dc69e760007",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-boss-short",
+      "version": "1",
+      "definition_hash": "7411db3bac8aba1e638aacc5def95c429ae87ea6d61c1cc2debc0332130282da",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-boss-sustained",
+      "version": "1",
+      "definition_hash": "cac1917b7e94d5784fd8d19057fc591be2d943fcb55020291f0cd6b406afeae1",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-clear-dense",
+      "version": "1",
+      "definition_hash": "4b7d6696feb5a876ffc02de543e52201844e8027417467fe193bc20bd7d9e1b3",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    },
+    {
+      "scenario_id": "p09-flk-clear-spread",
+      "version": "1",
+      "definition_hash": "400cb3eaa2dccc212fd6743f25e94aaff8d95c3f35530901fd849efc7dea6a3c",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved"
+    }
+  ],
+  "suite_hash": "d0820302432a1a047e11f1a066f0ae5b1ec12db141f84583db4afbf1349c6505",
+  "suite_hash_note": "Both reference slots are null for every scenario. Freezing a reference later changes this hash and starts a separate leaderboard.",
+  "open_gaps": [
+    "gap-p09-t011-encounter-selection",
+    "gap-p09-t011-enemy-health",
+    "gap-p09-t011-enemy-defenses",
+    "gap-p09-t011-encounter-density",
+    "gap-p09-t011-spatial-unit",
+    "gap-p09-t011-movement-model",
+    "gap-p09-t011-incoming-damage",
+    "gap-p09-t011-boss-windows",
+    "gap-p09-t011-duration-limit",
+    "gap-p09-t011-success-fraction",
+    "gap-p09-t011-reference-result",
+    "gap-p09-t011-attribution-rules",
+    "gap-p09-t011-rotation-details",
+    "gap-p09-t011-charge-cycle-rules",
+    "gap-p09-t011-charged-staff-shared-charges",
+    "gap-p09-t011-flicker-strike-timing",
+    "gap-p09-t011-hit-and-run-movement",
+    "gap-p09-t011-sustain-cycle",
+    "gap-p09-t011-config-conditions",
+    "gap-p09-t011-patch-profile",
+    "gap-p09-t011-engine-checkout-state",
+    "gap-p09-t011-variant-exports",
+    "gap-p09-t011-survival-threshold",
+    "gap-p09-t011-initial-resources"
+  ],
+  "resolved_gaps": [
+    "gap-p09-t011-benchmark-target",
+    "gap-p09-t011-benchmark-measurement",
+    "gap-p09-t011-class-scope-decision",
+    "gap-p09-t011-preparation-allowance"
+  ],
+  "usable_for": [
+    "computing flicker_sustained_v1 with pob-cycle-v1 once its blocking gaps close",
+    "the owner's answers and recordings that P09-T02 collection needs",
+    "reviewer acceptance of scope, variants and protocol before any constant is fitted"
+  ],
+  "not_usable_for": [
+    "any statement about clear speed, kill time or DPS",
+    "calibrating or fitting any constant",
+    "ranking real builds",
+    "a D04 practical claim"
+  ]
+}

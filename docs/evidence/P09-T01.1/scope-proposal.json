@@ -1,0 +1,415 @@
+{
+  "task": "P09-T01.1",
+  "status": "approved scope (owner decision 2026-10-18). Evidence statuses below are unchanged by the approval.",
+  "kind": "PoB-derived proposal, approved by the owner",
+  "approval": {
+    "authority": "Elias",
+    "date": "2026-10-18",
+    "verbatim": "any class, any ascendancy, any variant",
+    "ascendancies": "all 23",
+    "variants": [
+      "flk-var-combo-expend",
+      "flk-var-shock-consume",
+      "flk-var-cull-kill"
+    ],
+    "source": "docs/evidence/P09-T01.1/seed/manifest.json#owner_answers"
+  },
+  "flicker_strike_requirements": {
+    "weapon": "Quarterstaff (gem weaponRequirements) / Staff (granted skill weaponTypes)",
+    "req_dex_base": 50,
+    "req_int_base": 50,
+    "source": "docs/evidence/P02-T02.1/flicker-coverage.json coverage.gem",
+    "seed_level_20_requirement": {
+      "ReqDex": 137,
+      "ReqInt": 115,
+      "source": "docs/evidence/P09-T01.1/seed/stats-flicker-main.json (PoB-derived)"
+    }
+  },
+  "class_restriction_evidence": "The Flicker Strike gem row carries gemType, naturalMaxLevel, reqDex, reqInt, reqStr, tagString, tags, tier and weaponRequirements; none names a class. The catalog character rules (docs/evidence/P02-T02.1/catalog-export.json character_rules) hold class to ascendancy links, levels, point budgets, weapon sets and the support limit; none binds a gem or a weapon to a class. Absence of a rule in PoB data is not proof the game has none.",
+  "class_source": "docs/evidence/P09-T01.1/mechanics.json classes (pinned tree 0_5)",
+  "ascendancies": [
+    {
+      "class": "Ranger",
+      "ascendancy": "Deadeye",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Ranger",
+      "ascendancy": "Pathfinder",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Huntress",
+      "ascendancy": "Amazon",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [
+        "passive/7979",
+        "passive/42441"
+      ],
+      "note": "Consuming a Charge triggers Elemental Surge; Flicker Strike consumes Power Charges.",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Huntress",
+      "ascendancy": "Spirit Walker",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Huntress",
+      "ascendancy": "Ritualist",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Warrior",
+      "ascendancy": "Titan",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Warrior",
+      "ascendancy": "Warbringer",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Warrior",
+      "ascendancy": "Smith of Kitava",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Mercenary",
+      "ascendancy": "Tactician",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Mercenary",
+      "ascendancy": "Witchhunter",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Mercenary",
+      "ascendancy": "Gemling Legionnaire",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Druid",
+      "ascendancy": "Oracle",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Druid",
+      "ascendancy": "Shaman",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Witch",
+      "ascendancy": "Infernalist",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Witch",
+      "ascendancy": "Blood Mage",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Witch",
+      "ascendancy": "Lich",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [
+        "passive/2516"
+      ],
+      "note": "Its power charge node applies to Spells only; Flicker Strike is an Attack.",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Witch",
+      "ascendancy": "Abyssal Lich",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Sorceress",
+      "ascendancy": "Stormweaver",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Sorceress",
+      "ascendancy": "Chronomancer",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Sorceress",
+      "ascendancy": "Disciple of Varashta",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Monk",
+      "ascendancy": "Martial Artist",
+      "status": "evidenced_by_seed",
+      "reason": "The seed export is a Monk / Martial Artist using Flicker Strike on a Quarterstaff.",
+      "relevant_nodes": [
+        "passive/41751",
+        "passive/61586",
+        "passive/36643"
+      ],
+      "note": "Seed character. Martial Adept and Martial Master are allocated in the seed; Additional Power Charge Chance is not.",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Monk",
+      "ascendancy": "Invoker",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [
+        "passive/52448"
+      ],
+      "note": "Triggers Elemental Expression on Melee Critical Hit; Flicker Strike is a Melee Attack.",
+      "in_approved_scope": true
+    },
+    {
+      "class": "Monk",
+      "ascendancy": "Acolyte of Chayula",
+      "status": "catalog_possible",
+      "reason": "No catalog row restricts Flicker Strike or a Quarterstaff to a class. No export of this ascendancy using Flicker Strike exists.",
+      "relevant_nodes": [],
+      "note": "",
+      "in_approved_scope": true
+    }
+  ],
+  "excluded": [],
+  "excluded_note": "No ascendancy is excluded: no evidence found makes Flicker Strike unusable for any of them. The owner approved all 23. Only Monk / Martial Artist has an export.",
+  "variants": [
+    {
+      "variant_id": "flk-var-combo-expend",
+      "name": "Combo expenditure power charges",
+      "status": "evidenced_by_seed",
+      "charge_source_event": "A Culmination-supported melee attack expends Combo; Ailith's Chimes grants Power Charges per Combo expended.",
+      "required_mechanics": [
+        {
+          "requirement": "Flicker Strike on a Quarterstaff",
+          "mechanic_ids": [
+            "skill/FlickerStrikePlayer"
+          ]
+        },
+        {
+          "requirement": "A melee attack other than Flicker Strike supported by Culmination (adds ComboStacking; up to 10 Combo; Combo gained from other melee strikes; all Combo expended on use; 6000 ms decay delay). Seed: Whirling Assault",
+          "mechanic_ids": [
+            "support/SupportCulminationPlayerTwo",
+            "statdesc/skill_maximum_number_of_combo_stacks",
+            "skill/WhirlingAssaultPlayer"
+          ]
+        },
+        {
+          "requirement": "Ailith's Chimes on that attack (requires ComboStacking): 25% Surpassing chance per Combo expended to gain a Power Charge",
+          "mechanic_ids": [
+            "support/SupportAilithLineagePlayer",
+            "statdesc/chance_%_to_gain_power_charges_per_combo_spent"
+          ]
+        },
+        {
+          "requirement": "Flicker Strike consumes the Power Charges: 2 additional teleporting strikes per Power Charge; no Power Charges gained while using it",
+          "mechanic_ids": [
+            "statdesc/flicker_strike_additional_flickers_from_power_charges",
+            "statdesc/cannot_gain_power_charges_during_skill",
+            "engine/removable-power-charges"
+          ]
+        }
+      ],
+      "seed_amplifiers": [
+        {
+          "what": "Overflowing Power, +2 maximum Power Charges (5 in the seed)",
+          "mechanic_ids": [
+            "passive/65204"
+          ]
+        },
+        {
+          "what": "Martial Adept (additional Combo) and Martial Master (Combo from all Attack Hits), Martial Artist only",
+          "mechanic_ids": [
+            "passive/41751",
+            "passive/61586"
+          ]
+        },
+        {
+          "what": "Perpetual Charge on Flicker Strike, 25% chance to not remove Charges but still count as consuming them",
+          "mechanic_ids": [
+            "support/SupportPerpetualChargePlayer",
+            "statdesc/charge_skip_consume_chance_%"
+          ]
+        }
+      ],
+      "benchmark_applicability": "No kill or add event appears in the cited text, so flicker_sustained_v1 can supply this cycle, subject to gap-p09-t011-charge-cycle-rules.",
+      "gap_ids": [
+        "gap-p09-t011-charge-cycle-rules",
+        "gap-p09-t011-rotation-details"
+      ]
+    },
+    {
+      "variant_id": "flk-var-shock-consume",
+      "name": "Shock consumption power charges",
+      "status": "catalog_only",
+      "charge_source_event": "Siphoning Strike hits a Shocked target, consumes its Shock and grants a Power Charge.",
+      "required_mechanics": [
+        {
+          "requirement": "Flicker Strike on a Quarterstaff",
+          "mechanic_ids": [
+            "skill/FlickerStrikePlayer"
+          ]
+        },
+        {
+          "requirement": "Siphoning Strike (Quarterstaff; base_consume_enemy_shock_on_hit; grants a Power Charge when it consumes Shock)",
+          "mechanic_ids": [
+            "skill/SiphoningStrikePlayer"
+          ]
+        },
+        {
+          "requirement": "A separate source of Shock on the target: Siphoning Strike has never_shock",
+          "mechanic_ids": [
+            "skill/SiphoningStrikePlayer"
+          ]
+        },
+        {
+          "requirement": "Flicker Strike consumes the Power Charges: 2 additional strikes per Power Charge",
+          "mechanic_ids": [
+            "statdesc/flicker_strike_additional_flickers_from_power_charges",
+            "statdesc/cannot_gain_power_charges_during_skill"
+          ]
+        }
+      ],
+      "seed_amplifiers": [],
+      "benchmark_applicability": "Needs the PoB benchmark enemy to be Shocked, and the Shock to be sustained by the build under the rotation rather than toggled in config (gap-p09-t011-config-conditions). No kill event in the cited text.",
+      "gap_ids": [
+        "gap-p09-t011-variant-exports",
+        "gap-p09-t011-config-conditions"
+      ]
+    },
+    {
+      "variant_id": "flk-var-cull-kill",
+      "name": "Kill and cull power charges",
+      "status": "catalog_only",
+      "charge_source_event": "Killing Palm kills or culls an enemy (cull below 10% life) and grants Power Charges by rarity: 1 normal or magic, 2 rare, 3 unique.",
+      "required_mechanics": [
+        {
+          "requirement": "Flicker Strike on a Quarterstaff",
+          "mechanic_ids": [
+            "skill/FlickerStrikePlayer"
+          ]
+        },
+        {
+          "requirement": "Killing Palm (Quarterstaff; kill_enemy_on_hit_if_under_10%_life; skill_grant_X_power_charges_against_* 1/2/3)",
+          "mechanic_ids": [
+            "skill/KillingPalmPlayer"
+          ]
+        },
+        {
+          "requirement": "Flicker Strike consumes the Power Charges: 2 additional strikes per Power Charge",
+          "mechanic_ids": [
+            "statdesc/flicker_strike_additional_flickers_from_power_charges",
+            "statdesc/cannot_gain_power_charges_during_skill"
+          ]
+        }
+      ],
+      "seed_amplifiers": [],
+      "benchmark_applicability": "Kill-dependent. D07 item 4 allows no adds or kill events in flicker_sustained_v1, so this source supplies no Power Charges there; only the clear and boss workloads supply kills.",
+      "gap_ids": [
+        "gap-p09-t011-variant-exports"
+      ]
+    }
+  ],
+  "variant_distinctness": "The three variants differ in the event that grants the Power Charges Flicker Strike consumes: Combo expenditure, Shock consumption, enemy kill or cull. Each needs a different skill. Only the first has an export. All three approved by the owner.",
+  "candidates_not_proposed": [
+    {
+      "candidate": "Perpetual Charge",
+      "reason": "Changes charge consumption, not the charge source. Shared amplifier."
+    },
+    {
+      "candidate": "Charged Staff",
+      "reason": "Consumes all Power Charges (requires 1): competes with Flicker Strike for charges, grants none.",
+      "mechanic_ids": [
+        "skill/ChargedStaffPlayer"
+      ]
+    },
+    {
+      "candidate": "Power Siphon (item-granted)",
+      "reason": "Same kill/cull event as flk-var-cull-kill: a near-duplicate."
+    },
+    {
+      "candidate": "Lingering Illusion",
+      "reason": "Power Charge from a Remnant dropped when an enemy destroys the copy: depends on enemy damage. Not checked further."
+    },
+    {
+      "candidate": "Devour, Wing Blast",
+      "reason": "Wyvern shapeshift skills; compatibility with a Quarterstaff Flicker Strike not checked."
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "suite_id": "p09-flicker-v1",
+  "task": "P09-T01.1",
+  "reference_policy": "docs/specs/scenarios.md: one approved reference build and result per scenario, legal and complete, evaluated under identical rules, frozen before a comparison campaign.",
+  "candidates": [
+    {
+      "reference_candidate_id": "p09-flk-ref-candidate-seed-v1",
+      "source": "docs/evidence/P09-T01.1/seed/manifest.json",
+      "configuration_document": "docs/evidence/P09-T01.1/seed/export-as-imported.xml",
+      "configuration_sha256": "2cdcb1b762b694e9dcab4636d464540261bd39c7907d487dc545a707422f8938",
+      "status": "candidate_configuration_only",
+      "scenario_ids": [
+        "p09-flk-clear-dense",
+        "p09-flk-clear-spread",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained",
+        "flicker_sustained_v1"
+      ],
+      "closes": [],
+      "begins": [
+        "gap-p09-t011-reference-result"
+      ],
+      "note": "An export carries no trial. A reference result needs an accepted observation of this configuration on each workload, and an accepted pob-cycle-v1 result for flicker_sustained_v1."
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "p09-flk-clear-dense",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "candidate_ids": [
+        "p09-flk-ref-candidate-seed-v1"
+      ],
+      "gap_ids": [
+        "gap-p09-t011-reference-result"
+      ]
+    },
+    {
+      "scenario_id": "p09-flk-clear-spread",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "candidate_ids": [
+        "p09-flk-ref-candidate-seed-v1"
+      ],
+      "gap_ids": [
+        "gap-p09-t011-reference-result"
+      ]
+    },
+    {
+      "scenario_id": "p09-flk-boss-short",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "candidate_ids": [
+        "p09-flk-ref-candidate-seed-v1"
+      ],
+      "gap_ids": [
+        "gap-p09-t011-reference-result"
+      ]
+    },
+    {
+      "scenario_id": "p09-flk-boss-sustained",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "candidate_ids": [
+        "p09-flk-ref-candidate-seed-v1"
+      ],
+      "gap_ids": [
+        "gap-p09-t011-reference-result"
+      ]
+    },
+    {
+      "scenario_id": "flicker_sustained_v1",
+      "reference_build_id": null,
+      "reference_result_id": null,
+      "reference_status": "unresolved",
+      "candidate_ids": [
+        "p09-flk-ref-candidate-seed-v1"
+      ],
+      "gap_ids": [
+        "gap-p09-t011-reference-result"
+      ]
+    }
+  ]
+}

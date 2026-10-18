@@ -1,0 +1,157 @@
+{
+  "task": "P09-T01.1",
+  "kind": "account_character_import",
+  "evidence_class": "PoB-derived configuration",
+  "not_a_claim": "A configuration exported from the owner's character. It is not a trial, a completion time or a damage measurement, and it closes no performance gap. PoB stats in this folder are proxy_only.",
+  "provenance": {
+    "captured_on": "2026-10-17",
+    "operator": "implementation agent for the owner (Elias)",
+    "access_path": "Account-character import through the operator's pob2 MCP server (import_character, account already authenticated). D01 separates this from market access; it is not a provider build source and no provider was contacted.",
+    "character_name": "JewsOfPalestine",
+    "character_name_note": "Recorded here for provenance only.",
+    "league": "Forbidden Rites",
+    "class": "Monk",
+    "ascendancy": "Martial Artist",
+    "level": 93,
+    "passive_points_used": 116,
+    "mcp_server": "python -m pob2mcp.server, package at C:/Users/Elias/PycharmProjects/pob2-mcp",
+    "engine_checkout": "C:/Users/Elias/PycharmProjects/PathOfBuilding-PoE2",
+    "engine_head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "engine_working_tree": "not checked by this task (P02-T02.1 records it as carrying user scratch files)",
+    "engine_version_reported": "0.23.1",
+    "calls": [
+      "import_character(JewsOfPalestine): Monk, Martial Artist, level 93, 116 points, main skill Herald of Ice (group 5)",
+      "get_build_info, get_skills, get_items(include_raw=true), get_config",
+      "export_build_code: share code of the as-imported state",
+      "eval_lua build:SaveDB('code') written to export-as-imported.xml (the same call the server's save_build_xml handler makes)",
+      "eval_lua: socket groups with gem ids and passive nodes written to skill-groups.json and passive-nodes.json",
+      "set_main_skill(group=6): Flicker Strike",
+      "get_stats; eval_lua: build:SaveDB('code') to export-flicker-main.xml, mainOutput scalars to stats-flicker-main.json, item raw text to items-raw.json, config input to config-input.json"
+    ],
+    "share_code_check": "export-as-imported.code.txt is regenerated from export-as-imported.xml with the server's encoding (zlib level 9, base64, URL-safe). Its length, first 80 and last 40 characters equal the export_build_code output of the same session, and it decodes back to the XML bytes."
+  },
+  "owner_rotation": {
+    "verbatim": "whirling assault to get 5 power charges & then flicker strike, rince and repeat",
+    "received": "2026-10-17",
+    "status": "the only rotation evidence; details not stated are unresolved inputs"
+  },
+  "owner_answers": {
+    "received": "2026-10-18",
+    "relayed_by": "coordinator",
+    "answers": [
+      {
+        "question_id": "Q1",
+        "verbatim": "just 1",
+        "recorded": "One Whirling Assault use per Flicker Strike use."
+      },
+      {
+        "question_id": "Q2",
+        "verbatim": "whirling assault",
+        "recorded": "The opener at 0 Power Charges and 0 Combo is Whirling Assault."
+      },
+      {
+        "question_id": "Q3",
+        "verbatim": "when i have a charge",
+        "recorded": "Charged Staff is pressed when at least one Power Charge is held. Its place in the cycle relative to Flicker Strike is not stated."
+      },
+      {
+        "question_id": "Q4",
+        "verbatim": "I press pounce, but only for mobility",
+        "recorded": "Herald of Ice, Herald of Thunder, Wind Dancer, Ghost Dance, Trinity, Remnants of Kalguur and the other Spirit skills are persistent and always active, not pressed (relayed summary). Pounce is movement only, not part of the damage rotation."
+      },
+      {
+        "question_id": "Q5",
+        "verbatim": "the dash from flicker itself",
+        "recorded": "Flicker Strike's own teleport supplies Hit and Run's 10 metres. Owner statement; the catalog does not confirm it."
+      },
+      {
+        "question_id": "Q6",
+        "verbatim": "yes when i'm on a boss & my refund 2% mana on kill jewel doesnt see use",
+        "recorded": "Mana flask used on bosses; the mana-on-kill jewel does nothing on a boss."
+      },
+      {
+        "question_id": "Q7",
+        "verbatim": null,
+        "recorded": "Runs T16 (maximum tier) maps comfortably. Struggles on maps with the 'monsters have increased ailment threshold' modifier: chill does not apply and Polcirkeln does not shatter. Bosses not named (relayed summary)."
+      },
+      {
+        "question_id": "Q8",
+        "verbatim": "we damage calc with PoB, not ingame testing",
+        "recorded": "Decision 1: PoB is the accepted damage source. Recorded as the D07 amendment of 2026-10-18."
+      },
+      {
+        "question_id": "Q9",
+        "verbatim": "any class, any ascendancy, any variant",
+        "recorded": "Decision 2: all 23 ascendancies and all three variants are approved scope."
+      }
+    ]
+  },
+  "owner_decisions": [
+    {
+      "decision": "PoB is the accepted damage source; the flicker_sustained_v1 target is a fixed, versioned PoB enemy configuration; gameplay recordings are optional validation for the DPS benchmark.",
+      "authority": "Elias",
+      "date": "2026-10-18",
+      "recorded_in": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18"
+    },
+    {
+      "decision": "Class scope: any class, any ascendancy (all 23); all three variants approved.",
+      "authority": "Elias",
+      "date": "2026-10-18",
+      "recorded_in": "docs/evidence/P09-T01.1/scope-proposal.json approval"
+    }
+  ],
+  "pob_main_skill_as_imported": "Herald of Ice (group 5)",
+  "pob_proxy_flicker_main": {
+    "label": "proxy_only",
+    "main_skill_group": 6,
+    "TotalDPS": 1048349.8862892,
+    "AverageDamage": 112388.62833962,
+    "Speed": 9.3279,
+    "ManaCost": 248,
+    "PowerCharges": 0,
+    "PowerChargesMax": 5,
+    "conditions": "Imported PoB config: enemyIsBoss Pinnacle, enemy level 82, enemy elemental resistances 50, power charges 0 in the calculation, so one Flicker strike per use. PoB's displayed value, not D07's time-accounted benchmark."
+  },
+  "files": [
+    {
+      "path": "docs/evidence/P09-T01.1/seed/export-as-imported.xml",
+      "sha256": "2cdcb1b762b694e9dcab4636d464540261bd39c7907d487dc545a707422f8938",
+      "bytes": 44252
+    },
+    {
+      "path": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml",
+      "sha256": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+      "bytes": 44438
+    },
+    {
+      "path": "docs/evidence/P09-T01.1/seed/export-as-imported.code.txt",
+      "sha256": "00955312fbfeb436856c98a6576892b465115a6bfd79d7e08e644cf840daa5b4",
+      "bytes": 11753
+    },
+    {
+      "path": "docs/evidence/P09-T01.1/seed/items-raw.json",
+      "sha256": "e9ba6839c9da125e08d8977152af21d795a51289b445b5e34e11d314fd24bc9f",
+      "bytes": 8253
+    },
+    {
+      "path": "docs/evidence/P09-T01.1/seed/skill-groups.json",
+      "sha256": "333531906761bb1e63d9c347acfcbd0b8616d60bdda25fa9e9e4591d44d4f491",
+      "bytes": 22728
+    },
+    {
+      "path": "docs/evidence/P09-T01.1/seed/passive-nodes.json",
+      "sha256": "93dbc6c0190859d891ba260481adaa90b57ed5ef335e4cc1fdf55816a64e7d53",
+      "bytes": 21604
+    },
+    {
+      "path": "docs/evidence/P09-T01.1/seed/config-input.json",
+      "sha256": "1f5665de6ade566a027f16f234c22045ef4d7ca47f0fd07f6935e4bb68f40fef",
+      "bytes": 2105
+    },
+    {
+      "path": "docs/evidence/P09-T01.1/seed/stats-flicker-main.json",
+      "sha256": "2f65c741ecbb36cfaf8a9bd60fba85728baae1c5cb4d0a60f1df78107fc665ae",
+      "bytes": 21143
+    }
+  ]
+}
