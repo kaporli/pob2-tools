@@ -90,7 +90,14 @@ OWNER_ANSWERS = [
      "Decision 1: PoB is the accepted damage source. Recorded as the D07 amendment of 2026-10-18."),
     ("Q9", "any class, any ascendancy, any variant",
      "Decision 2: all 23 ascendancies and all three variants are approved scope."),
+    ("Q10", "Once per N cycles",
+     "Charged Staff is pressed only periodically, once per N Whirling Assault to Flicker Strike cycles, to refresh its buff (owner's chosen option, relayed by the coordinator 2026-10-18). N is not given yet: gap-p09-t012-charged-staff-period."),
 ]
+
+#: P09-T01.2 evidence: the clean pinned replay and the rule table.
+T012 = "docs/evidence/P09-T01.2"
+REPLAY_REF = T012 + "/replay.json"
+RULES_REF = T012 + "/mechanics-rules.json"
 
 NOT_A_CLAIM = (
     "PROTOCOL, NOT A MEASUREMENT. No enemy statistic, encounter timing, "
@@ -609,16 +616,23 @@ def build_gaps():
              "buff share is gap-p09-t011-charged-staff-shared-charges.",
              "Reviewer acceptance of the proposed rule, or a replacement rule "
              "per seed damage source with catalog evidence.",
-             "P07-T02 attribution rule review against the catalog."),
+             "P07-T02 attribution rule review against the catalog. P09-T01.2 "
+             "proposes an ownership table: Flicker Strike hits including the "
+             "Charged Staff buff's added lightning counted; ignite, Charged "
+             "Shockwave, Whirling Assault, Living Lightning and the heralds "
+             "reported separately (" + RULES_REF + " attribution)."),
         _gap("gap-p09-t011-rotation-details", MI, B, ALL_IDS, ["/rotation_id"],
              "Owner Q1 to Q6 fix the cycle (one Whirling Assault, one Flicker "
-             "Strike, Whirling Assault opener). Charged Staff is pressed "
-             "'when i have a charge'; it consumes all Power Charges, and its "
-             "place relative to Flicker Strike in the cycle is not stated.",
-             "Where Charged Staff sits in the cycle: after Whirling Assault "
-             "and before Flicker Strike, after Flicker Strike on charges left "
-             "by Perpetual Charge, or otherwise; and how often.",
-             "Owner answer to Q10; a reviewer checks the rotation record.",
+             "Strike, Whirling Assault opener). Q10: Charged Staff is pressed "
+             "once per N cycles to refresh its buff, consuming all held "
+             "charges. Open: N (gap-p09-t012-charged-staff-period) and the "
+             "press's position inside its cycle (after Whirling Assault and "
+             "before Flicker Strike is the only point with a charge held, "
+             "unless Perpetual Charge kept one).",
+             "N, and whether the refresh press follows Whirling Assault or "
+             "follows a Flicker Strike that kept a charge.",
+             "Owner follow-up to Q10; a reviewer checks the rotation record. "
+             "Rule table: " + RULES_REF + " charged-staff-period.",
              ["skill/ChargedStaffPlayer"]),
         _gap("gap-p09-t011-charge-cycle-rules", UR, B, [DPS_ID] + BOSS_IDS,
              ["/measurement_method", "/sustain_report"],
@@ -638,7 +652,11 @@ def build_gaps():
              "cycles.",
              "Engine or catalog lookup first; recordings as optional "
              "validation; a reviewer accepts each rule before any "
-             "pob-cycle-v1 value is computed.",
+             "pob-cycle-v1 value is computed. P09-T01.2 settled the Surpassing "
+             "distribution and Perpetual Charge's per-charge rule, and left "
+             "Combo per strike and Whirling Assault's own Combo open with "
+             "both alternatives and their conflict with the owner's '5 power "
+             "charges' written out (" + RULES_REF + ").",
              ["support/SupportAilithLineagePlayer", "support/SupportCulminationPlayerTwo",
               "passive/41751", "passive/61586", "support/SupportPerpetualChargePlayer",
               "statdesc/cannot_gain_power_charges_during_skill"]),
@@ -653,8 +671,11 @@ def build_gaps():
              "Which D(c) table pob-cycle-v1 uses: Charged Staff buff stacks "
              "from charges actually consumed by Charged Staff under the "
              "rotation (needs Q10), or Charged Staff disabled.",
-             "Owner answer to Q10, then a reviewer rule; the PoB table with "
-             "Charged Staff disabled is already captured.",
+             "Owner answer to Q10 (once per N cycles) and N, then a reviewer "
+             "rule. P09-T01.2 proposes buff stacks from the charges Charged "
+             "Staff consumed, captures A_CS(s) and the no-buff values on the "
+             "benchmark document, and states the open refresh rule ("
+             + RULES_REF + " charged-staff-buff-ownership).",
              ["skill/ChargedStaffPlayer", "engine/removable-power-charges"]),
         _gap("gap-p09-t011-flicker-strike-timing", UP, R, [DPS_ID],
              ["/measurement_method"],
@@ -677,7 +698,11 @@ def build_gaps():
              "activation condition; otherwise a legal movement action with "
              "its time charged to the cycle, or a supported replacement setup.",
              "Engine or official rule lookup; a recording of consecutive uses "
-             "is an optional evidence route, not a waiver of activation.",
+             "is an optional evidence route, not a waiver of activation. "
+             "P09-T01.2 found no pinned or retrieved evidence either way and "
+             "wrote three labelled variants: teleport re-enables (owner Q5), "
+             "no Hit and Run (S_F 6.6588 captured), and a timed 10 m movement "
+             "(needs movement speed in metres per second) (" + RULES_REF + ").",
              ["support/SupportHitAndRunPlayer", "statdesc/skill_unusable_until_moved_X_distance"]),
         _gap("gap-p09-t011-sustain-cycle", MI, B, [DPS_ID], ["/sustain_report"],
              "D07 item 6 needs resource depletion and whether the cycle "
@@ -687,7 +712,11 @@ def build_gaps():
              "Flask recovery and charge gain are not in the method yet.",
              "PoB's mana flask recovery and charge gain for the seed's flask, "
              "or a reviewer rule for flask use in the 120 s window.",
-             "PoB outputs for the seed's mana flask; reviewer rule."),
+             "P09-T01.2 captured the mana flask from PoB (356.5 mana per use, "
+             "10 of 75 charges, 0.25 charges per second, no kill charges on "
+             "the benchmark). Still open: flask charges at t = 0, when the "
+             "flask is used, and per-use versus per-strike Flicker Strike "
+             "mana (gap-p09-t012-flicker-mana-charging); reviewer rule."),
         _gap("gap-p09-t011-config-conditions", UR, B, [DPS_ID],
              ["/target_entities/0/conditions", "/initial_state"],
              "D07 forbids free maximum-state toggles. The seed's imported PoB "
@@ -700,7 +729,14 @@ def build_gaps():
              "For each condition input that changes a Flicker Strike output: "
              "evidence the build sustains it under the rotation, or the input "
              "switched off in the benchmark configuration.",
-             "PoB comparison with each input toggled; reviewer rule.",
+             "PoB comparison with each input toggled; reviewer rule. P09-T01.2 "
+             "swept every socket group and listed every Config-sourced, "
+             "conditional and enemy modifier: one forced state found "
+             "(Pounce's Predator's Mark, 24% increased damage taken from "
+             "eight Living Lightning minions), switched off in the benchmark "
+             "documents; no imported config input feeds a Flicker Strike "
+             "modifier (" + RULES_REF + " pounce-predators-mark, "
+             "pob-default-states). Awaiting reviewer acceptance.",
              ["engine/pinnacle-enemy-preset"]),
         _gap("gap-p09-t011-patch-profile", GapKind.STALE_PATCH, B, ALL_IDS,
              ["/patch_profile_id"],
@@ -719,7 +755,10 @@ def build_gaps():
              "the stored export in a clean checkout of ce566ea.",
              "Load docs/evidence/P09-T01.1/seed/export-flicker-main.xml in a "
              "clean pinned engine and repeat the pob-charge-table.json "
-             "procedure."),
+             "procedure. Done by scripts/p09_t01_2_seed_replay.py: all 734 "
+             "imported outputs, the charge table, Whirling Assault and the "
+             "enemy agree exactly on a clean checkout of the pin.",
+             resolved_by=[REPLAY_REF]),
         _gap("gap-p09-t011-variant-exports", MI, B, ["flk-var-shock-consume", "flk-var-cull-kill"],
              ["/variants/*/status"],
              "Only the combo-expenditure variant has an export. Each approved "
@@ -729,6 +768,27 @@ def build_gaps():
              "configurations for the P09-T02 split.",
              "Owner or independently sourced exports, imported as account "
              "characters or local share codes; no provider scraping."),
+        _gap("gap-p09-t012-charged-staff-period", MI, B, [DPS_ID] + BOSS_IDS,
+             ["/rotation_id", "/measurement_method"],
+             "Owner Q10: Charged Staff is pressed once per N Whirling Assault "
+             "to Flicker Strike cycles to refresh its buff. N decides how "
+             "many charges Charged Staff takes from Flicker Strike, how much "
+             "of the window its buff covers, and its time and mana.",
+             "The number N, and the press's position inside its cycle.",
+             "Owner answer relayed by the coordinator; a reviewer records it "
+             "in the rotation.",
+             ["skill/ChargedStaffPlayer"]),
+        _gap("gap-p09-t012-flicker-mana-charging", UR, B, [DPS_ID] + BOSS_IDS,
+             ["/sustain_report", "/measurement_method"],
+             "Flicker Strike costs 248 mana in PoB. Its text describes one use "
+             "with additional teleporting strikes (one payment), while PoB's "
+             "ManaPerSecondCost multiplies the cost by the strike rate (one "
+             "payment per strike). At 5 charges the two differ elevenfold.",
+             "An official statement, a pinned engine rule, or a recording of "
+             "the mana globe across Flicker Strike uses at known charges.",
+             "Engine or official lookup; optional owner recording read frame "
+             "by frame.",
+             ["skill/FlickerStrikePlayer"]),
         _gap("gap-p09-t011-class-scope-decision", MI, B, ["scope-proposal"],
              ["/ascendancies/*/in_approved_scope", "/variants"],
              "The class list and variants were proposals; D07 makes scope the "
@@ -926,7 +986,12 @@ POB_CYCLE_REQUIRED_GAPS = (
     "gap-p09-t011-sustain-cycle",
     "gap-p09-t011-hit-and-run-movement",
     "gap-p09-t011-attribution-rules",
+    "gap-p09-t012-charged-staff-period",
+    "gap-p09-t012-flicker-mana-charging",
 )
+
+#: Prerequisites closed with evidence. They stay in required_gap_ids.
+RESOLVED_PREREQUISITES = frozenset({"gap-p09-t011-engine-checkout-state"})
 
 
 def pob_cycle_method():
@@ -983,7 +1048,10 @@ def pob_cycle_method():
             "charges the rotation generates, and divides by elapsed time "
             "including each Whirling Assault use. PoB TotalDPS (AverageDamage "
             "x Speed) also ignores charge generation time."),
-        "status": "Defined, not computed. Blocking: " + ", ".join(POB_CYCLE_REQUIRED_GAPS) + ".",
+        "status": "Defined, not computed. Blocking: " + ", ".join(
+            g for g in POB_CYCLE_REQUIRED_GAPS if g not in RESOLVED_PREREQUISITES) + ".",
+        "resolved_prerequisites": sorted(RESOLVED_PREREQUISITES),
+        "rule_table": RULES_REF,
     }
 
 
@@ -1079,7 +1147,7 @@ def build_rotation(facts):
         "cycle": {
             "opener": "Whirling Assault (Q2: 'whirling assault')",
             "repeat": ["Whirling Assault x1 (Q1: 'just 1')", "Flicker Strike x1"],
-            "charged_staff": "Pressed 'when i have a charge' (Q3); place in the cycle unresolved",
+            "charged_staff": "Pressed 'when i have a charge' (Q3), once per N cycles to refresh its buff (Q10); N unresolved",
             "persistent_buffs_not_pressed": PERSISTENT_SKILLS,
             "movement_only": ["Pounce (Q4: 'I press pounce, but only for mobility')"],
             "hit_and_run_movement": "Flicker Strike's dash (Q5: 'the dash from flicker itself'); unverified by the catalog",
@@ -1111,7 +1179,8 @@ def build_rotation(facts):
              "mechanic_ids": ["skill/FlickerStrikePlayer"], "source": "docs/evidence/P09-T01.1/pob-charge-table.json"},
         ],
         "unresolved": [
-            {"question_id": "Q10", "gap_ids": ["gap-p09-t011-rotation-details", "gap-p09-t011-charged-staff-shared-charges"]},
+            {"question_id": "Q10", "gap_ids": ["gap-p09-t011-rotation-details", "gap-p09-t011-charged-staff-shared-charges",
+                                               "gap-p09-t012-charged-staff-period"]},
             {"question_id": "Q5", "gap_ids": ["gap-p09-t011-hit-and-run-movement"]},
             {"question_id": "Q6", "gap_ids": ["gap-p09-t011-sustain-cycle"]},
             {"question_id": "Q1", "gap_ids": ["gap-p09-t011-charge-cycle-rules"]},
@@ -1135,7 +1204,7 @@ QUESTIONS = [
     ("Q7", "Maps and bosses.", "answered in part: T16 maps, ailment threshold weak case; no map or boss named"),
     ("Q8", "Benchmark target.", "answered: decision 1, PoB is the damage source"),
     ("Q9", "Class and variant scope.", "answered: decision 2, all approved"),
-    ("Q10", "Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or at another point? About how often?", "open"),
+    ("Q10", "Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or at another point? About how often?", "answered in part: once per N cycles; N open"),
     ("Q11", "Which T16 maps (one with packs close together, one spread out) and which two bosses (one you kill without breaks, one with phases or untargetable time) do you run? Are PoB's Pinnacle and Uber tiers acceptable enemy configurations for them?", "open"),
 ]
 

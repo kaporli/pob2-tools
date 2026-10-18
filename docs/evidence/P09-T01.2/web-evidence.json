@@ -1,0 +1,61 @@
+{
+ "task": "P09-T01.2",
+ "kind": "secondary_web_evidence",
+ "retrieved": "2026-10-18",
+ "not_a_claim": "Text retrieved from public pages. None is an official GGG statement unless marked. poe2wiki.net refused automated access (bot check, HTTP 403) for every page tried; its text below is the search engine's summary of the page, not the page itself.",
+ "retrieval_failures": [
+  {"url": "https://www.poe2wiki.net/wiki/Chance_can_Surpass_100%25", "result": "HTTP 403, Anubis bot check"},
+  {"url": "https://www.poe2wiki.net/wiki/Hit_and_Run", "result": "HTTP 403, Anubis bot check"},
+  {"url": "https://www.poe2wiki.net/wiki/Combo", "result": "HTTP 403, Anubis bot check"},
+  {"url": "https://www.poe2wiki.net/w/api.php?action=parse&page=<page>&prop=wikitext", "result": "bot-check HTML for Hit_and_Run, Combo, Chance_can_Surpass_100%25, Flicker_Strike, Ailith's_Chimes, Charged_Staff, Perpetual_Charge, Culmination_II"},
+  {"url": "https://pathofexile2.wiki.fextralife.com/Combo", "result": "HTTP 404"}
+ ],
+ "items": [
+  {
+   "evidence_id": "web/poe2wiki-surpassing-chance",
+   "url": "https://www.poe2wiki.net/wiki/Chance_can_Surpass_100%25",
+   "source_class": "community wiki, search-engine summary only (page refused automated access)",
+   "text": "When a chance surpasses 100%, the event will occur once for each 100% chance you have, and then have a normal percentage chance to occur again based on the remaining value. For example, a 215% surpassing chance for an event will cause the event to occur twice and have a 15% chance for it to occur a third time.",
+   "used_for": "rule ailith-surpassing-distribution"
+  },
+  {
+   "evidence_id": "web/fextralife-hit-and-run",
+   "url": "https://pathofexile2.wiki.fextralife.com/Hit+and+Run",
+   "source_class": "community wiki",
+   "page_last_updated": "2026-09-22 00:32",
+   "text": "Supported Skills become usable after you have moved 10 metres. Supported Skills become unusable again after use. Supported Skills have 40% more Skill Speed.",
+   "finding": "The page does not say how distance is counted or whether teleports count.",
+   "used_for": "rule hit-and-run-reuse (no evidence either way)"
+  },
+  {
+   "evidence_id": "web/fextralife-flicker-strike",
+   "url": "https://pathofexile2.wiki.fextralife.com/Flicker_Strike",
+   "source_class": "community wiki",
+   "page_last_updated": "2026-09-22",
+   "text": "Teleport to a enemy and Strike them. Consumes Power Charges to perform additional teleporting Strikes on nearby enemies. Teleports and Strikes 2 additional times per Power Charge, with 285% more Attack Speed. You cannot gain Power Charges while using this Skill.",
+   "finding": "Matches the pinned skill and stat description text. Says nothing on cooldown, timing of the extra strikes, mana per strike or Hit and Run.",
+   "used_for": "rules flicker-extra-strikes, flicker-no-charge-gain"
+  },
+  {
+   "evidence_id": "web/forum-3591721-combo",
+   "url": "https://www.pathofexile.com/forum/view-thread/3591721",
+   "source_class": "official forum, player posts (no GGG staff reply), December 2024 (patch 0.1)",
+   "text": [
+    "Combo is not a global counter. You gain and spend combo separately for each skill. (TrashCondor#0180, 2024-12-03)",
+    "you get +1 to the combo count of the skill you attacked with. (staudd#4625, 2024-12-03)",
+    "Yes, you can spend from any pool, but the pools are tracked seperately. (staudd#4625, 2024-12-03)"
+   ],
+   "finding": "Player statements from patch 0.1 about Combo in general; they predate Culmination II, Martial Adept and Martial Master as pinned and say nothing about multi-strike skills.",
+   "used_for": "rule combo-gain-per-strike (insufficient)"
+  },
+  {
+   "evidence_id": "web/game8-combo",
+   "url": "https://game8.co/games/Path-of-Exile-2/archives/498783",
+   "source_class": "game guide site",
+   "page_last_updated": "2025-12-16",
+   "text": "Combo is built by successfully Striking Enemies. Combo count will fall off after a short duration of not building or maintaining further Combo.",
+   "finding": "Does not say whether one Strike hitting one enemy grants one Combo gain event, or how teleporting extra strikes count.",
+   "used_for": "rule combo-gain-per-strike (insufficient)"
+  }
+ ]
+}

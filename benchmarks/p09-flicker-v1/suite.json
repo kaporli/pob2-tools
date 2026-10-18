@@ -9,8 +9,8 @@
   "sources": {
     "scenarios": {
       "path": "benchmarks/p09-flicker-v1/scenarios.json",
-      "sha256": "dd4f5f6a03ab73b98ee868de22ec02d7bfd831f7fcae2346283d9ed4df735d14",
-      "bytes": 111626
+      "sha256": "6c4b72eb01b7d0a3028bfadc5da6c3622ad33b42c48a29e29409ba06b2ac600c",
+      "bytes": 116754
     },
     "references": {
       "path": "benchmarks/p09-flicker-v1/references.json",
@@ -19,8 +19,8 @@
     },
     "seed_manifest": {
       "path": "docs/evidence/P09-T01.1/seed/manifest.json",
-      "sha256": "96b57d617cbe394a803c5339b9a688b8f43b0807dd3a5b54874fc560ac9323d5",
-      "bytes": 7552
+      "sha256": "d01e9a3d2f1ec41adf42fc80593b8b403c9b11a0125d23ab54993e1d4935a876",
+      "bytes": 7899
     },
     "scope_proposal": {
       "path": "docs/evidence/P09-T01.1/scope-proposal.json",
@@ -57,7 +57,7 @@
     {
       "scenario_id": "flicker_sustained_v1",
       "version": "1",
-      "definition_hash": "3992aa150c95d3b64c33f6fa6a1de864e9073974bf6ea5d8db498dc69e760007",
+      "definition_hash": "248e158563a3154e392dbdef5d21346bfc10c44ccc5e58a001a44bc6c54ac35d",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
@@ -95,7 +95,7 @@
       "reference_status": "unresolved"
     }
   ],
-  "suite_hash": "d0820302432a1a047e11f1a066f0ae5b1ec12db141f84583db4afbf1349c6505",
+  "suite_hash": "ab28b208ce19a0a3d94840ca7d0c9ab289b70f7636a8a760b77c874ac0927468",
   "suite_hash_note": "Both reference slots are null for every scenario. Freezing a reference later changes this hash and starts a separate leaderboard.",
   "open_gaps": [
     "gap-p09-t011-encounter-selection",
@@ -118,14 +118,16 @@
     "gap-p09-t011-sustain-cycle",
     "gap-p09-t011-config-conditions",
     "gap-p09-t011-patch-profile",
-    "gap-p09-t011-engine-checkout-state",
     "gap-p09-t011-variant-exports",
+    "gap-p09-t012-charged-staff-period",
+    "gap-p09-t012-flicker-mana-charging",
     "gap-p09-t011-survival-threshold",
     "gap-p09-t011-initial-resources"
   ],
   "resolved_gaps": [
     "gap-p09-t011-benchmark-target",
     "gap-p09-t011-benchmark-measurement",
+    "gap-p09-t011-engine-checkout-state",
     "gap-p09-t011-class-scope-decision",
     "gap-p09-t011-preparation-allowance"
   ],

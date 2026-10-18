@@ -1650,7 +1650,9 @@
               "gap-p09-t011-engine-checkout-state",
               "gap-p09-t011-sustain-cycle",
               "gap-p09-t011-hit-and-run-movement",
-              "gap-p09-t011-attribution-rules"
+              "gap-p09-t011-attribution-rules",
+              "gap-p09-t012-charged-staff-period",
+              "gap-p09-t012-flicker-mana-charging"
             ],
             "damage_source": "Path of Building on the pinned engine (D07 amendment 2026-10-18)",
             "target": "flicker_sustained_v1 PoB enemy configuration (target_entities fields)",
@@ -1753,7 +1755,11 @@
               "8. Whirling Assault's own damage and every other skill's damage are reported separately and never enter the score (D07 item 3)."
             ],
             "community_method_difference": "The community reference (poe.ninja 25c49) reads AverageBurstDamage at forced charges (7, above its maximum of 6) with forced Combo, Rage, Onslaught and enemy conditions: burst per use, no charge generation time. pob-cycle-v1 uses the same PoB outputs but only charges the rotation generates, and divides by elapsed time including each Whirling Assault use. PoB TotalDPS (AverageDamage x Speed) also ignores charge generation time.",
-            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-rotation-details, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-engine-checkout-state, gap-p09-t011-sustain-cycle, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules."
+            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-rotation-details, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-sustain-cycle, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules, gap-p09-t012-charged-staff-period, gap-p09-t012-flicker-mana-charging.",
+            "resolved_prerequisites": [
+              "gap-p09-t011-engine-checkout-state"
+            ],
+            "rule_table": "docs/evidence/P09-T01.2/mechanics-rules.json"
           },
           "gap_ids": [
             "gap-p09-t011-charge-cycle-rules",
@@ -1764,6 +1770,8 @@
             "gap-p09-t011-sustain-cycle",
             "gap-p09-t011-hit-and-run-movement",
             "gap-p09-t011-attribution-rules",
+            "gap-p09-t012-charged-staff-period",
+            "gap-p09-t012-flicker-mana-charging",
             "gap-p09-t011-flicker-strike-timing"
           ]
         },
@@ -1919,7 +1927,7 @@
         "Whirling Assault x1 (Q1: 'just 1')",
         "Flicker Strike x1"
       ],
-      "charged_staff": "Pressed 'when i have a charge' (Q3); place in the cycle unresolved",
+      "charged_staff": "Pressed 'when i have a charge' (Q3), once per N cycles to refresh its buff (Q10); N unresolved",
       "persistent_buffs_not_pressed": [
         "Herald of Ice",
         "Herald of Thunder",
@@ -2012,7 +2020,8 @@
         "question_id": "Q10",
         "gap_ids": [
           "gap-p09-t011-rotation-details",
-          "gap-p09-t011-charged-staff-shared-charges"
+          "gap-p09-t011-charged-staff-shared-charges",
+          "gap-p09-t012-charged-staff-period"
         ]
       },
       {
@@ -2085,7 +2094,7 @@
     {
       "question_id": "Q10",
       "question": "Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or at another point? About how often?",
-      "status": "open"
+      "status": "answered in part: once per N cycles; N open"
     },
     {
       "question_id": "Q11",
@@ -2487,7 +2496,7 @@
       "severity": "blocking",
       "explanation": "Proposed rule: only Flicker Strike's own PoB AverageBurstDamage counts; Whirling Assault, Living Lightning, the heralds, Wind Dancer, Trinity and Remnants of Kalguur are reported separately. Not yet accepted by a reviewer. Charged Staff's buff share is gap-p09-t011-charged-staff-shared-charges.",
       "needed_evidence": "Reviewer acceptance of the proposed rule, or a replacement rule per seed damage source with catalog evidence.",
-      "collection_method": "P07-T02 attribution rule review against the catalog.",
+      "collection_method": "P07-T02 attribution rule review against the catalog. P09-T01.2 proposes an ownership table: Flicker Strike hits including the Charged Staff buff's added lightning counted; ignite, Charged Shockwave, Whirling Assault, Living Lightning and the heralds reported separately (docs/evidence/P09-T01.2/mechanics-rules.json attribution).",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",
@@ -2516,9 +2525,9 @@
         "skill/ChargedStaffPlayer"
       ],
       "severity": "blocking",
-      "explanation": "Owner Q1 to Q6 fix the cycle (one Whirling Assault, one Flicker Strike, Whirling Assault opener). Charged Staff is pressed 'when i have a charge'; it consumes all Power Charges, and its place relative to Flicker Strike in the cycle is not stated.",
-      "needed_evidence": "Where Charged Staff sits in the cycle: after Whirling Assault and before Flicker Strike, after Flicker Strike on charges left by Perpetual Charge, or otherwise; and how often.",
-      "collection_method": "Owner answer to Q10; a reviewer checks the rotation record.",
+      "explanation": "Owner Q1 to Q6 fix the cycle (one Whirling Assault, one Flicker Strike, Whirling Assault opener). Q10: Charged Staff is pressed once per N cycles to refresh its buff, consuming all held charges. Open: N (gap-p09-t012-charged-staff-period) and the press's position inside its cycle (after Whirling Assault and before Flicker Strike is the only point with a charge held, unless Perpetual Charge kept one).",
+      "needed_evidence": "N, and whether the refresh press follows Whirling Assault or follows a Flicker Strike that kept a charge.",
+      "collection_method": "Owner follow-up to Q10; a reviewer checks the rotation record. Rule table: docs/evidence/P09-T01.2/mechanics-rules.json charged-staff-period.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",
@@ -2553,7 +2562,7 @@
       "severity": "blocking",
       "explanation": "pob-cycle-v1 needs the Combo Whirling Assault holds at each use. Catalog text gives the parts, not the game semantics: whether Flicker Strike strikes are 'other Melee Attacks' that grant Combo to the Culmination-supported Whirling Assault, how many per strike with Martial Adept (one extra per gain) and Martial Master (Combo from all Attack Hits), whether Whirling Assault's own hits grant it Combo, whether the 10 Combo cap applies before or after Martial Adept's extra, what distribution '25% Surpassing chance per Combo expended' gives, and how Perpetual Charge's kept charges carry into the next cycle.",
       "needed_evidence": "For each question, evidence: an official statement, a catalog or engine implementation that settles it, or a recording with the Combo and Power Charge counters legible over at least 20 cycles.",
-      "collection_method": "Engine or catalog lookup first; recordings as optional validation; a reviewer accepts each rule before any pob-cycle-v1 value is computed.",
+      "collection_method": "Engine or catalog lookup first; recordings as optional validation; a reviewer accepts each rule before any pob-cycle-v1 value is computed. P09-T01.2 settled the Surpassing distribution and Perpetual Charge's per-charge rule, and left Combo per strike and Whirling Assault's own Combo open with both alternatives and their conflict with the owner's '5 power charges' written out (docs/evidence/P09-T01.2/mechanics-rules.json).",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",
@@ -2582,7 +2591,7 @@
       "severity": "blocking",
       "explanation": "PoB applies Charged Staff's per-charge added lightning and Flicker Strike's per-charge strikes from the same RemovablePowerCharges: with Charged Staff enabled, per-strike AverageDamage is 136232 at 5 forced charges, with it disabled 124231. Both skills consume all Power Charges, so in game the same charges cannot feed both on one use.",
       "needed_evidence": "Which D(c) table pob-cycle-v1 uses: Charged Staff buff stacks from charges actually consumed by Charged Staff under the rotation (needs Q10), or Charged Staff disabled.",
-      "collection_method": "Owner answer to Q10, then a reviewer rule; the PoB table with Charged Staff disabled is already captured.",
+      "collection_method": "Owner answer to Q10 (once per N cycles) and N, then a reviewer rule. P09-T01.2 proposes buff stacks from the charges Charged Staff consumed, captures A_CS(s) and the no-buff values on the benchmark document, and states the open refresh rule (docs/evidence/P09-T01.2/mechanics-rules.json charged-staff-buff-ownership).",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",
@@ -2640,7 +2649,7 @@
       "severity": "blocking",
       "explanation": "Hit and Run makes Flicker Strike usable after moving 10 metres. Owner Q5: 'the dash from flicker itself' supplies it. The catalog does not confirm that Flicker Strike's teleport counts as moving.",
       "needed_evidence": "Engine, official or recorded evidence that Flicker Strike's teleport re-enables Hit and Run, including the first-use activation condition; otherwise a legal movement action with its time charged to the cycle, or a supported replacement setup.",
-      "collection_method": "Engine or official rule lookup; a recording of consecutive uses is an optional evidence route, not a waiver of activation.",
+      "collection_method": "Engine or official rule lookup; a recording of consecutive uses is an optional evidence route, not a waiver of activation. P09-T01.2 found no pinned or retrieved evidence either way and wrote three labelled variants: teleport re-enables (owner Q5), no Hit and Run (S_F 6.6588 captured), and a timed 10 m movement (needs movement speed in metres per second) (docs/evidence/P09-T01.2/mechanics-rules.json).",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",
@@ -2665,7 +2674,7 @@
       "severity": "blocking",
       "explanation": "D07 item 6 needs resource depletion and whether the cycle repeats. PoB: Flicker Strike 248 mana per use, Whirling Assault 160, 887 maximum mana, 47.9 mana regeneration per second. Owner Q6: mana flask used on bosses; mana on kill does nothing there. Flask recovery and charge gain are not in the method yet.",
       "needed_evidence": "PoB's mana flask recovery and charge gain for the seed's flask, or a reviewer rule for flask use in the 120 s window.",
-      "collection_method": "PoB outputs for the seed's mana flask; reviewer rule.",
+      "collection_method": "P09-T01.2 captured the mana flask from PoB (356.5 mana per use, 10 of 75 charges, 0.25 charges per second, no kill charges on the benchmark). Still open: flask charges at t = 0, when the flask is used, and per-use versus per-strike Flicker Strike mana (gap-p09-t012-flicker-mana-charging); reviewer rule.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",
@@ -2693,7 +2702,7 @@
       "severity": "blocking",
       "explanation": "D07 forbids free maximum-state toggles. The seed's imported PoB config carries condition inputs (for example conditionChampionIntimidate, inDemonForm, touchedDebuffsCount 10, purpleFlameStacks 10, targetBrandedEnemy, SecondsSinceInevitableCrit 10, multiplierCurrentManaPercentage 100) whose effect on Flicker Strike and whose sustain under the rotation are not checked.",
       "needed_evidence": "For each condition input that changes a Flicker Strike output: evidence the build sustains it under the rotation, or the input switched off in the benchmark configuration.",
-      "collection_method": "PoB comparison with each input toggled; reviewer rule.",
+      "collection_method": "PoB comparison with each input toggled; reviewer rule. P09-T01.2 swept every socket group and listed every Config-sourced, conditional and enemy modifier: one forced state found (Pounce's Predator's Mark, 24% increased damage taken from eight Living Lightning minions), switched off in the benchmark documents; no imported config input feeds a Flicker Strike modifier (docs/evidence/P09-T01.2/mechanics-rules.json pounce-predators-mark, pob-default-states). Awaiting reviewer acceptance.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",
@@ -2748,11 +2757,13 @@
       "severity": "blocking",
       "explanation": "With PoB as the damage source, benchmark numbers must come from a clean checkout of the pin. The seed's stats and the charge table came from the operator's checkout at the pinned HEAD with an unchecked working tree.",
       "needed_evidence": "The charge table and Whirling Assault outputs recomputed from the stored export in a clean checkout of ce566ea.",
-      "collection_method": "Load docs/evidence/P09-T01.1/seed/export-flicker-main.xml in a clean pinned engine and repeat the pob-charge-table.json procedure.",
+      "collection_method": "Load docs/evidence/P09-T01.1/seed/export-flicker-main.xml in a clean pinned engine and repeat the pob-charge-table.json procedure. Done by scripts/p09_t01_2_seed_replay.py: all 734 imported outputs, the charge table, Whirling Assault and the enemy agree exactly on a clean checkout of the pin.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
-      "status": "open",
-      "resolution_evidence_ids": []
+      "status": "resolved",
+      "resolution_evidence_ids": [
+        "docs/evidence/P09-T01.2/replay.json"
+      ]
     },
     {
       "schema_version": 1,
@@ -2775,6 +2786,66 @@
       "explanation": "Only the combo-expenditure variant has an export. Each approved variant needs complete configurations.",
       "needed_evidence": "One complete export per variant (Siphoning Strike with a Shock source; Killing Palm) with the rotation played, then enough configurations for the P09-T02 split.",
       "collection_method": "Owner or independently sourced exports, imported as account characters or local share codes; no provider scraping.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t012-charged-staff-period",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t012-charged-staff-period",
+      "kind": "missing_input",
+      "subject_ids": [
+        "flicker_sustained_v1",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/rotation_id",
+        "/measurement_method"
+      ],
+      "mechanic_ids": [
+        "skill/ChargedStaffPlayer"
+      ],
+      "severity": "blocking",
+      "explanation": "Owner Q10: Charged Staff is pressed once per N Whirling Assault to Flicker Strike cycles to refresh its buff. N decides how many charges Charged Staff takes from Flicker Strike, how much of the window its buff covers, and its time and mana.",
+      "needed_evidence": "The number N, and the press's position inside its cycle.",
+      "collection_method": "Owner answer relayed by the coordinator; a reviewer records it in the rotation.",
+      "affected_evaluation_ids": [],
+      "sensitivity_result_id": null,
+      "status": "open",
+      "resolution_evidence_ids": []
+    },
+    {
+      "schema_version": 1,
+      "record_id": "gap-p09-t012-flicker-mana-charging",
+      "created_at": "2026-10-17T00:00:00Z",
+      "provenance_ids": [
+        "p09-flk-protocol-v1"
+      ],
+      "gap_id": "gap-p09-t012-flicker-mana-charging",
+      "kind": "unsupported_rule",
+      "subject_ids": [
+        "flicker_sustained_v1",
+        "p09-flk-boss-short",
+        "p09-flk-boss-sustained"
+      ],
+      "field_paths": [
+        "/sustain_report",
+        "/measurement_method"
+      ],
+      "mechanic_ids": [
+        "skill/FlickerStrikePlayer"
+      ],
+      "severity": "blocking",
+      "explanation": "Flicker Strike costs 248 mana in PoB. Its text describes one use with additional teleporting strikes (one payment), while PoB's ManaPerSecondCost multiplies the cost by the strike rate (one payment per strike). At 5 charges the two differ elevenfold.",
+      "needed_evidence": "An official statement, a pinned engine rule, or a recording of the mana globe across Flicker Strike uses at known charges.",
+      "collection_method": "Engine or official lookup; optional owner recording read frame by frame.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",

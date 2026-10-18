@@ -1,7 +1,8 @@
 # Measurement protocol, suite `p09-flicker-v1`
 
 Task P09-T01.1. Specification version 1.1. Written 2026-10-17, updated
-2026-10-18 with the owner's answers and two owner decisions. Status:
+2026-10-18 with the owner's answers and two owner decisions, and again on
+2026-10-18 by P09-T01.2 (clean replay, rule table, Q10 answer). Status:
 proposed, not accepted.
 
 This protocol starts the Flicker Strike scope of D07 from one owner export,
@@ -23,16 +24,16 @@ boss workloads.
 
 | Artefact | Path | SHA-256 |
 |---|---|---|
-| Scenario definitions, rotation record, owner questions, DataGaps | `benchmarks/p09-flicker-v1/scenarios.json` | `06e1f49ece386abe348ba51e7905dcc2a3a4dfca38b773aa7ebf6f4e8d0606aa` |
+| Scenario definitions, rotation record, owner questions, DataGaps | `benchmarks/p09-flicker-v1/scenarios.json` | `6c4b72eb01b7d0a3028bfadc5da6c3622ad33b42c48a29e29409ba06b2ac600c` |
 | Reference manifest | `benchmarks/p09-flicker-v1/references.json` | `d063c88d22fffe495b05f7b509ad4ca691d6dfda369a83924282d40cd1cde4e8` |
 | Suite manifest and hashes | `benchmarks/p09-flicker-v1/suite.json` | see the file |
-| Seed export manifest, owner answers and decisions | `docs/evidence/P09-T01.1/seed/manifest.json` | `96b57d617cbe394a803c5339b9a688b8f43b0807dd3a5b54874fc560ac9323d5` |
+| Seed export manifest, owner answers and decisions | `docs/evidence/P09-T01.1/seed/manifest.json` | `d01e9a3d2f1ec41adf42fc80593b8b403c9b11a0125d23ab54993e1d4935a876` |
 | Approved scope | `docs/evidence/P09-T01.1/scope-proposal.json` | `60989673642d43489d9dd19368ab3c229cdcb4dac112da5d6e6580c4dad1b522` |
 | Pinned engine data extract | `docs/evidence/P09-T01.1/mechanics.json` | `731127814c2bbe9b7ac3eeb46ab623a810fd4d5531bb9b74384fdece0cbe285b` |
 | PoB outputs at 0 to 5 charges | `docs/evidence/P09-T01.1/pob-charge-table.json` | `55a210a331e40fe32b6bb34592d9a0dc424ff634a20b1ffad24419fcc6567701` |
 | Community reference build (poe.ninja 25c49) | `docs/evidence/P09-T01.1/reference-ninja-25c49/` | `share-code.txt` `a51102cb6b54535cd2bf6d6861c8e00cae5712df7bcb6ec823b176ab7666ce7f`, `evaluation.json` `5cdc2c7596cdc5a2404bf4f2e2db2205b1d3286051fee39afa3a344fb7aac4b3` |
 
-`suite_hash` is `c846d70ad30131ded1a4f68509801f2d9ebaffdf11812e6918556448fab363d0`.
+`suite_hash` is `ab28b208ce19a0a3d94840ca7d0c9ab289b70f7636a8a760b77c874ac0927468`.
 
 | Scenario | `definition_hash` |
 |---|---|
@@ -40,7 +41,7 @@ boss workloads.
 | `p09-flk-clear-spread` | `400cb3eaa2dccc212fd6743f25e94aaff8d95c3f35530901fd849efc7dea6a3c` |
 | `p09-flk-boss-short` | `7411db3bac8aba1e638aacc5def95c429ae87ea6d61c1cc2debc0332130282da` |
 | `p09-flk-boss-sustained` | `cac1917b7e94d5784fd8d19057fc591be2d943fcb55020291f0cd6b406afeae1` |
-| `flicker_sustained_v1` | `81f9fa70ddd4cc834ff0b8e6dba15e190cbd6e6b64b29031f2678aa44fa3a755` |
+| `flicker_sustained_v1` | `248e158563a3154e392dbdef5d21346bfc10c44ccc5e58a001a44bc6c54ac35d` |
 
 Hashing follows `pob2opt/domain/identity.py`: files by SHA-256 of their raw
 bytes, each scenario object by `content_hash` (canonical JSON), and the suite
@@ -64,8 +65,10 @@ Stored under `docs/evidence/P09-T01.1/seed/`: the PoB document as imported
 with gem and granted-effect ids, allocated passive nodes, PoB config input,
 PoB stats with Flicker Strike as main skill, and the manifest. The engine was
 the operator's checkout at the pinned HEAD `ce566ea` with an unchecked working
-tree (`gap-p09-t011-engine-checkout-state`, blocking now that PoB is the
-damage source).
+tree. P09-T01.2 replayed it on a clean checkout of the pin through
+`EngineAdapter`: all 734 outputs, the charge table, Whirling Assault and the
+enemy agree exactly (`docs/evidence/P09-T01.2/replay.json`), which resolves
+`gap-p09-t011-engine-checkout-state`.
 
 Facts the export supplies (configuration only): Flicker Strike 20/23 with Hit
 and Run, Concentrated Area, Close Combat II, Perpetual Charge, Rakiata's Flow;
@@ -93,6 +96,7 @@ Answers, 2026-10-18 (verbatim where quoted; all in `seed/manifest.json`):
 | Q7 | T16 maps comfortably; struggles with "monsters have increased ailment threshold" | Clear workloads on T16 maps, one with that modifier; bosses not named |
 | Q8 | "we damage calc with PoB, not ingame testing" | Decision 1: D07 amendment 2026-10-18 |
 | Q9 | "any class, any ascendancy, any variant" | Decision 2: all 23 ascendancies and all three variants approved |
+| Q10 | "Once per N cycles" | Charged Staff pressed once per N cycles to refresh its buff; N open (`gap-p09-t012-charged-staff-period`) |
 
 What the pinned engine data says about the parts of the cycle (citations are
 `mechanic_id`s in `mechanics.json`):
@@ -289,8 +293,12 @@ Procedure:
    separately, never in the score.
 
 Status: defined, not computed. Blocking: charge-cycle rules, Charged Staff
-placement and shared charges, config conditions, clean-engine rerun, mana
-sustain, Hit and Run activation/reuse, and damage attribution. The method's
+period N and shared charges, config conditions, mana sustain and Flicker
+Strike's mana charging, Hit and Run activation/reuse, and damage attribution.
+The clean-engine rerun is resolved and stays listed as a met prerequisite.
+`docs/evidence/P09-T01.2/mechanics-rules.json` holds the rule table: each
+rule resolved, conditional (alternatives written out) or blocking, with
+citations into the pinned engine. The method's
 `required_gap_ids` enumerates these prerequisites; they also appear in the
 measurement field's `gap_ids`. Resolving every other gap does not permit a
 score while either activation or attribution remains unresolved.
@@ -318,10 +326,11 @@ No field is a gameplay measurement.
 
 ## Gaps
 
-28 `DataGap` records ship in `scenarios.json`. Resolved (4):
+30 `DataGap` records ship in `scenarios.json`. Resolved (5):
 `benchmark-target` and `benchmark-measurement` (D07 amendment),
-`class-scope-decision` (Q9), `preparation-allowance` (Q4). Open (24): 21
-blocking, 3 ranking sensitive, 0 informational.
+`class-scope-decision` (Q9), `preparation-allowance` (Q4),
+`engine-checkout-state` (P09-T01.2 replay). Open (25): 22 blocking, 3 ranking
+sensitive, 0 informational.
 
 | Gap | Kind | Severity | Status |
 |---|---|---|---|
@@ -342,13 +351,15 @@ blocking, 3 ranking sensitive, 0 informational.
 | `gap-p09-t011-sustain-cycle` | missing_input | blocking | open |
 | `gap-p09-t011-config-conditions` | unsupported_rule | blocking | open |
 | `gap-p09-t011-patch-profile` | stale_patch | blocking | open |
-| `gap-p09-t011-engine-checkout-state` | missing_input | blocking | open |
+| `gap-p09-t011-engine-checkout-state` | missing_input | blocking | resolved |
 | `gap-p09-t011-variant-exports` | missing_input | blocking | open |
 | `gap-p09-t011-attribution-rules` | unsupported_rule | blocking | open |
 | `gap-p09-t011-flicker-strike-timing` | unvalidated_prediction | ranking_sensitive | open |
 | `gap-p09-t011-survival-threshold` | missing_input | ranking_sensitive | open |
 | `gap-p09-t011-initial-resources` | missing_input | ranking_sensitive | open |
 | `gap-p09-t011-hit-and-run-movement` | unsupported_rule | blocking | open |
+| `gap-p09-t012-charged-staff-period` | missing_input | blocking | open |
+| `gap-p09-t012-flicker-mana-charging` | unsupported_rule | blocking | open |
 | `gap-p09-t011-benchmark-target` | missing_input | blocking | resolved |
 | `gap-p09-t011-benchmark-measurement` | unsupported_rule | blocking | resolved |
 | `gap-p09-t011-class-scope-decision` | missing_input | blocking | resolved |
@@ -358,7 +369,7 @@ blocking, 3 ranking sensitive, 0 informational.
 
 | Id | Question | Gaps |
 |---|---|---|
-| Q10 | Charged Staff consumes all Power Charges. In the cycle, do you press it after Whirling Assault and before Flicker Strike (taking the charges Flicker Strike would use), after Flicker Strike on a charge Perpetual Charge kept, or elsewhere? How often? | rotation-details, charged-staff-shared-charges |
+| Q10 | Answered in part: "Once per N cycles". Still open: N, and whether the press follows Whirling Assault or a Flicker Strike that kept a charge. | rotation-details, charged-staff-shared-charges, charged-staff-period |
 | Q11 | Which T16 maps (packs close together; spread out) and which two bosses (no breaks; phases or untargetable time)? Are PoB's Pinnacle and Uber tiers acceptable enemy configurations for them? | encounter-selection |
 
 ## Recordings (optional for the DPS benchmark)
@@ -381,6 +392,9 @@ kept. A recording closes only what it measures, and a reviewer accepts it.
 POB2_ROOT=<clean checkout of ce566ea> python scripts/p09_t01_1_mechanics.py   # optional, needs PoB
 python scripts/p09_t01_1_flicker_suite.py
 python -m pytest tests/unit/test_p09_t01_1_flicker_suite.py -q
+POB2_ROOT=<clean checkout of ce566ea> python scripts/p09_t01_2_seed_replay.py   # needs PoB
+POB2_ROOT=<clean checkout of ce566ea> python scripts/p09_t01_2_mechanics_rules.py
+python -m pytest tests/unit/test_p09_t01_2_seed_replay.py -q
 ```
 
 The extract refuses an unpinned or dirty checkout. The generator is offline

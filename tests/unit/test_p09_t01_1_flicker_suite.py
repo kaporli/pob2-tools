@@ -412,7 +412,15 @@ def test_all_method_prerequisites_are_blocking_and_exposed_to_consumers(bundle):
     for gid in field["value"]["required_gap_ids"]:
         assert gid in field["gap_ids"]
         assert gaps[gid]["severity"] == "blocking"
-        assert gaps[gid]["status"] == "open"
+        # A prerequisite closes only with linked evidence and leaves the
+        # method's status text; every other one stays open and named there.
+        if gaps[gid]["status"] == "resolved":
+            assert gaps[gid]["resolution_evidence_ids"]
+            assert gid in field["value"]["resolved_prerequisites"]
+            assert gid not in field["value"]["status"]
+        else:
+            assert gaps[gid]["status"] == "open"
+            assert gid in field["value"]["status"]
 
 
 def test_suite_lists_open_and_resolved_gaps(bundle, suite):
