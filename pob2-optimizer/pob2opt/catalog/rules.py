@@ -458,10 +458,16 @@ def _slot_rules(slots: Sequence[CatalogEntity],
         "probe_failures": acceptance.probe_failures,
         "accepted": acceptance.accepted,
         "partial": acceptance.partial,
+        "refused_rarities": acceptance.refused_rarities,
+        "rarity_undecided": acceptance.rarity_undecided,
         "off_hand": [{"off_slot": c.off_slot, "main_slot": c.main_slot,
                       "flag": c.flag, "main_category": c.main_category,
                       "accepted": list(c.accepted), "partial": list(c.partial),
-                      "uniform": c.uniform} for c in acceptance.off_hand],
+                      "uniform": c.uniform,
+                      "refused_rarities": list(c.refused_rarities),
+                      "rarity_undecided": {r: list(v) for r, v
+                                           in c.rarity_undecided.items()}}
+                     for c in acceptance.off_hand],
     }, pob_commit)
     evidence_ids.append(probe_evidence)
     rule_evidence = [slot_evidence, probe_evidence]
@@ -472,27 +478,57 @@ def _slot_rules(slots: Sequence[CatalogEntity],
         rule_evidence.append(source_evidence)
 
     off_slots = acceptance.off_hand_slots
+    failed = acceptance.failed_bases
+    gap_partial = "%s/slot-partial-categories" % GAP_PREFIX_T031
+    gap_rarity = "%s/slot-rarity-partial" % GAP_PREFIX_T031
+    gap_mixed = "%s/off-hand-mixed-main-hand" % GAP_PREFIX_T031
+    gap_failed = "%s/slot-probe-failures" % GAP_PREFIX_T031
+
+    def rule_gap_ids(undecided, rarities, mixed=False):
+        out = []
+        if undecided:
+            out.append(gap_mixed if mixed or "*" in undecided else gap_partial)
+        if rarities:
+            out.append(gap_rarity)
+        if failed:
+            out.append(gap_failed)
+        return sorted(set(out))
+
     rules: list[SlotRule] = []
     unprobed, empty, socketed = [], [], []
     for slot in slots:
         name = str(slot.raw_reference.get("name") or "")
         refused = acceptance.refused_rarities.get(name, [])
+        rarities = acceptance.rarity_undecided.get(name, {})
+        undecided = list(acceptance.partial.get(name, []))
         if name in off_slots:
             accepted = acceptance.off_hand_union(name)
             refused = acceptance.off_hand_refused(name)
+            undecided = acceptance.off_hand_undecided(name)
+            # A rarity a context leaves undecided stays undecided for the slot.
+            merged: dict[str, set] = {}
+            for c in acceptance.off_hand:
+                if c.off_slot == name:
+                    for rarity, cats in c.rarity_undecided.items():
+                        merged.setdefault(rarity, set()).update(cats)
+            rarities = {r: sorted(c) for r, c in sorted(merged.items())}
         elif name in acceptance.accepted:
             accepted = acceptance.accepted[name]
         else:
             accepted = []
             unprobed.append(slot.entity_id)
-        if not accepted and name in acceptance.accepted:
+        if not accepted and not undecided and name in acceptance.accepted:
             (socketed if slot.raw_reference.get("parentSlot") else empty
              ).append(slot.entity_id)
         rules.append(SlotRule(
             slot_id=slot.entity_id, accepted_base_categories=list(accepted),
             weapon_set_id=weapon_set_of(slot),
             evidence_ids=list(rule_evidence),
-            refused_rarities=list(refused)))
+            refused_rarities=list(refused),
+            undecided_categories=list(undecided),
+            undecided_rarities={r: list(c) for r, c in rarities.items()},
+            undecided_bases=list(failed),
+            gap_ids=rule_gap_ids(undecided, rarities)))
 
     by_name = {str(slot.raw_reference.get("name") or ""): slot.entity_id
                for slot in slots}
@@ -504,8 +540,15 @@ def _slot_rules(slots: Sequence[CatalogEntity],
         main_hand_category=c.main_category, required_flag=c.flag,
         accepted_base_categories=list(c.accepted),
         evidence_ids=list(rule_evidence),
-        refused_rarities=list(c.refused_rarities))
-        for c in acceptance.off_hand if c.uniform]
+        refused_rarities=list(c.refused_rarities),
+        undecided=not c.uniform,
+        undecided_categories=list(c.partial),
+        undecided_rarities={r: list(v) for r, v in c.rarity_undecided.items()},
+        undecided_bases=list(failed),
+        gap_ids=rule_gap_ids(c.partial, c.rarity_undecided,
+                             mixed=not c.uniform)
+        if c.uniform else sorted({gap_mixed, *([gap_failed] if failed else [])}))
+        for c in acceptance.off_hand]
 
     def gap(suffix, subjects, explanation, needed,
             kind=GapKind.UNSUPPORTED_RULE, severity=GapSeverity.BLOCKING,
@@ -523,8 +566,8 @@ def _slot_rules(slots: Sequence[CatalogEntity],
 
     if acceptance.probe_failures:
         gap("slot-probe-failures", [],
-            "%d item base(s) could not be built as probe items, so no slot "
-            "rule covers them: %s"
+            "%d item base(s) could not be built as probe items, so every slot "
+            "answers undecided for them: %s"
             % (len(acceptance.probe_failures),
                ", ".join(acceptance.probe_failures[:20])),
             "an item text the engine parses for each listed base",
@@ -573,16 +616,19 @@ def _slot_rules(slots: Sequence[CatalogEntity],
             "%d slot(s) accepted no probe base at all" % len(empty),
             "the condition under which the engine accepts an item in each "
             "listed slot")
-    rarity_partial = dict(acceptance.rarity_partial)
+    rarity_partial = {"%s at %s" % (slot, rarity): list(cats)
+                      for slot, by in acceptance.rarity_undecided.items()
+                      for rarity, cats in by.items()}
     for c in acceptance.off_hand:
-        if c.rarity_partial:
-            rarity_partial["%s with %s, %s" % (c.off_slot, c.main_category,
-                                                c.flag)] = list(c.rarity_partial)
+        for rarity, cats in c.rarity_undecided.items():
+            rarity_partial["%s with %s, %s at %s" % (
+                c.off_slot, c.main_category, c.flag, rarity)] = list(cats)
     if rarity_partial:
         gap("slot-rarity-partial", [],
-            "The engine refuses these rarities for only some of the "
-            "categories a slot accepts, so a refused-rarity list cannot "
-            "express the rule: %s"
+            "At these rarities the engine's answer for these categories "
+            "differs from normal rarity while the slot does not refuse the "
+            "rarity outright. Probe items are not real uniques, so these "
+            "combinations are undecided: %s"
             % "; ".join("%s: %s" % (k, ", ".join(v))
                         for k, v in sorted(rarity_partial.items())),
             "the category and rarity condition the engine applies in each "

@@ -35,6 +35,10 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 SLICE = REPO_ROOT / "docs" / "evidence" / "P02" / "catalog-rows-slice.json"
 PROBE = REPO_ROOT / "docs" / "evidence" / "P02-T03.1" / "slot-acceptance.json"
 S = "poe2/slots/"
+GAP_PARTIAL = "gap/p02-t03.1/slot-partial-categories"
+GAP_RARITY = "gap/p02-t03.1/slot-rarity-partial"
+GAP_MIXED = "gap/p02-t03.1/off-hand-mixed-main-hand"
+GAP_FAILED = "gap/p02-t03.1/slot-probe-failures"
 
 
 #: The engine's Diamond jewel base row, added to the slice so a jewel can be
@@ -201,18 +205,19 @@ def test_a_partially_accepted_category_is_not_widened(probe):
     assert gap[0].severity is GapSeverity.BLOCKING
 
 
-def test_a_main_hand_category_with_mixed_results_gets_no_rule(probe):
+def test_a_main_hand_category_with_mixed_results_gets_an_undecided_rule(probe):
     probe = copy.deepcopy(probe)
     for row in probe["offHand"]:
         if row["mainCategory"] == "Bow" and row["flag"] == "none":
             row["variants"] = 2
             row["categories"] = None
     export = _export(probe)
-    rules = export.profile.character_rules.weapon_sets.off_hand_rules
-    assert not [r for r in rules if r.main_hand_category == "Bow"
-                and r.required_flag == "none"]
-    assert "gap/p02-t03.1/off-hand-mixed-main-hand" in {
-        g.gap_id for g in export.gaps}
+    rules = [r for r in export.profile.character_rules.weapon_sets.off_hand_rules
+             if r.main_hand_category == "Bow" and r.required_flag == "none"]
+    assert rules and all(r.undecided is True and r.accepted_base_categories == []
+                         for r in rules)
+    assert all(GAP_MIXED in r.gap_ids for r in rules)
+    assert GAP_MIXED in {g.gap_id for g in export.gaps}
 
 
 # ------------------------------------------------------- legality
@@ -344,7 +349,8 @@ def test_a_rarity_refused_for_only_some_categories_is_a_gap(probe):
 
 def test_a_stat_known_partial_ring_is_placed_and_marked(probed):
     """Parser `.6`: the stats are known, only the affix is not."""
-    from pob2opt.market.pools import STAT_KNOWN_PARTIAL, build_pool
+    from pob2opt.market.pools import (EXPLORATORY, STAT_KNOWN_PARTIAL,
+                                      build_pool)
     from pob2opt.domain.enums import RecordParseStatus
 
     def ring(name, status):
@@ -360,6 +366,146 @@ def test_a_stat_known_partial_ring_is_placed_and_marked(probed):
                       items=[known, unknown], created_at="2026-10-18T00:00:00Z")
     (slot,) = [s for s in pool.slots if s.slot_id == S + "Ring 1"]
     assert [(c.item_hash, c.retained_for) for c in slot.candidates] == [
-        (known.item_hash, ["sample", STAT_KNOWN_PARTIAL])]
+        (known.item_hash, ["sample", EXPLORATORY, STAT_KNOWN_PARTIAL])]
+    assert slot.status.value == "exploratory_only"
     assert slot.partial_count == 1
     assert known.parse_status is RecordParseStatus.PARTIAL
+
+
+# ------------------------------------------- PR #22 review R8 regressions
+#
+# The reviewer's probes (docs/evidence/PR-18-22/slot_probes.py): a rule the
+# engine probe leaves undecided must reach legality and the pool as unknown
+# and exploratory, citing its gap; unaffected combinations keep definite
+# answers. All of these fail on 2f9a9f7.
+
+BOW = "Adherent Bow"
+
+
+def _mutated(probe, slot, change):
+    probe = copy.deepcopy(probe)
+    for row in probe["slots"]:
+        if row["slot"] == slot:
+            change(row)
+    return _export(probe)
+
+
+def _pool(export, *items):
+    from pob2opt.market.pools import build_pool
+    return build_pool(catalog=export.catalog, profile=export.profile,
+                      items=list(items), gaps=export.gaps,
+                      created_at="2026-10-19T00:00:00Z")
+
+
+def _pool_item(export, name, base, rarity="rare"):
+    return _item(export, name * 64, "poe2/item_bases/" + base, rarity)
+
+
+def test_r8_a_rarity_undecided_category_is_unknown_not_legal(probe):
+    export = _mutated(probe, "Weapon 1",
+                      lambda row: row["byRarity"]["unique"].pop("Bow"))
+    rule = {r.slot_id: r for r in export.profile.character_rules.slots}[
+        S + "Weapon 1"]
+    assert rule.undecided_rarities == {"unique": ["Bow"]}
+    assert GAP_RARITY in rule.gap_ids
+    unique = _validate(export, {"bow": ("Weapon 1", BOW)},
+                       rarity={"bow": "unique"})
+    assert unique.decision(CHECK_SLOTS) is Legality.UNKNOWN
+    assert "slot_rule_undecided" in unique.unknown_codes
+    assert GAP_RARITY in unique.cited_gap_ids
+    # Unaffected combinations keep definite answers.
+    assert _validate(export, {"bow": ("Weapon 1", BOW)}).decision(
+        CHECK_SLOTS) is Legality.LEGAL
+    assert _validate(export, {"staff": ("Weapon 1", "Long Quarterstaff")},
+                     rarity={"staff": "unique"}).decision(
+        CHECK_SLOTS) is Legality.LEGAL
+    assert _validate(export, {"ring": ("Weapon 1", "Amethyst Ring")},
+                     rarity={"ring": "unique"}).decision(
+        CHECK_SLOTS) is Legality.ILLEGAL
+
+
+def test_r8_a_partially_accepted_category_is_unknown_not_illegal(probe):
+    export = _mutated(probe, "Weapon 1", lambda row: row["categories"]["Bow"]
+                      .__setitem__("accepted", 1))
+    report = _validate(export, {"bow": ("Weapon 1", BOW)})
+    assert report.decision(CHECK_SLOTS) is Legality.UNKNOWN
+    assert "base_category_not_accepted" not in report.violation_codes
+    assert GAP_PARTIAL in report.cited_gap_ids
+    assert _validate(export, {"ring": ("Weapon 1", "Amethyst Ring")}).decision(
+        CHECK_SLOTS) is Legality.ILLEGAL
+    assert _validate(export, {"staff": ("Weapon 1", "Long Quarterstaff")}
+                     ).decision(CHECK_SLOTS) is Legality.LEGAL
+
+
+def test_r8_undecided_items_are_exploratory_pool_candidates(probe):
+    from pob2opt.market.pools import (EXPLORATORY, SLOT_RULE_UNDECIDED,
+                                      pool_report)
+    export = _mutated(probe, "Weapon 1",
+                      lambda row: row["byRarity"]["unique"].pop("Bow"))
+    bow = _pool_item(export, "b", BOW, "unique")
+    staff = _pool_item(export, "s", "Long Quarterstaff", "unique")
+    pool = _pool(export, bow, staff)
+    (slot,) = [s for s in pool.slots if s.slot_id == S + "Weapon 1"]
+    marks = {c.item_hash: c.retained_for for c in slot.candidates}
+    assert marks[bow.item_hash][-2:] == [EXPLORATORY, SLOT_RULE_UNDECIDED]
+    assert EXPLORATORY not in marks[staff.item_hash]
+    assert slot.status.value == "populated"
+    assert GAP_RARITY in pool.gap_ids
+    report = pool_report(pool)
+    counts = report["slots"][S + "Weapon 1"]
+    assert (counts["complete_candidates"], counts["exploratory_candidates"]) \
+        == (1, 1)
+    only_bow = _pool(export, bow)
+    (slot,) = [s for s in only_bow.slots if s.slot_id == S + "Weapon 1"]
+    assert slot.status.value == "exploratory_only"
+    report = pool_report(only_bow)
+    assert S + "Weapon 1" in report["exploratory_only_slots"]
+    assert S + "Weapon 1" not in report["populated_slots"]
+
+
+def test_r8_a_mixed_off_hand_context_is_unknown(probe):
+    probe = copy.deepcopy(probe)
+    for row in probe["offHand"]:
+        if (row["offSlot"], row["mainCategory"], row["flag"]) == (
+                "Weapon 2", "Bow", "none"):
+            row["variants"], row["categories"], row["byRarity"] = 2, None, None
+    export = _export(probe)
+    report = _validate(export, {"bow": ("Weapon 1", BOW),
+                                "shield": ("Weapon 2", "Aegis Buckler")})
+    assert report.decision(CHECK_HANDS) is Legality.UNKNOWN
+    assert "off_hand_rule_undecided" in report.unknown_codes
+    assert GAP_MIXED in report.cited_gap_ids
+    # A definite context elsewhere still decides.
+    report = _validate(export, {"staff": ("Weapon 1", "Long Quarterstaff"),
+                                "shield": ("Weapon 2", "Aegis Buckler")})
+    assert report.decision(CHECK_HANDS) is Legality.ILLEGAL
+
+
+def test_r8_a_partial_off_hand_context_is_unknown(probe):
+    probe = copy.deepcopy(probe)
+    for row in probe["offHand"]:
+        if (row["offSlot"], row["mainCategory"], row["flag"]) == (
+                "Weapon 2", "One Hand Mace", "none"):
+            row["categories"]["Shield/Evasion"]["accepted"] = 1
+    export = _export(probe)
+    report = _validate(export, {"club": ("Weapon 1", "Akoyan Club"),
+                                "shield": ("Weapon 2", "Aegis Buckler")})
+    assert report.decision(CHECK_HANDS) is Legality.UNKNOWN
+    assert GAP_PARTIAL in report.cited_gap_ids
+    report = _validate(export, {"club": ("Weapon 1", "Akoyan Club"),
+                                "focus": ("Weapon 2", "Antler Focus")})
+    assert report.decision(CHECK_HANDS) is Legality.LEGAL
+
+
+def test_r8_a_probe_failure_leaves_that_base_undecided(probe):
+    probe = copy.deepcopy(probe)
+    probe["probeFailures"] = ["normal:" + BOW]
+    export = _export(probe)
+    assert GAP_FAILED in {g.gap_id for g in export.gaps}
+    report = _validate(export, {"bow": ("Weapon 1", BOW)})
+    assert report.decision(CHECK_SLOTS) is Legality.UNKNOWN
+    assert GAP_FAILED in report.cited_gap_ids
+    other = _validate(export, {"staff": ("Weapon 1", "Long Quarterstaff")})
+    assert other.decision(CHECK_SLOTS) is Legality.LEGAL
+    elsewhere = _validate(export, {"bow": ("Amulet", BOW)})
+    assert elsewhere.decision(CHECK_SLOTS) is Legality.UNKNOWN

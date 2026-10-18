@@ -152,6 +152,14 @@ def main() -> int:
         "patch_profile_id": profile.record_id,
         "slots": {rule.slot_id: rule.accepted_base_categories
                   for rule in rules.slots},
+        "undecided": {rule.slot_id: {
+            "categories": rule.undecided_categories,
+            "rarities": rule.undecided_rarities,
+            "bases": rule.undecided_bases}
+            for rule in rules.slots
+            if not isinstance(rule.undecided_categories, Absent)
+            and (rule.undecided_categories or rule.undecided_rarities
+                 or rule.undecided_bases)},
         "refused_rarities": {rule.slot_id: rule.refused_rarities
                              for rule in rules.slots
                              if not isinstance(rule.refused_rarities, Absent)
@@ -249,7 +257,8 @@ def main() -> int:
                 "status": slot.status.value,
                 "candidates": [{"item_hash": c.item_hash,
                                 "availability": c.availability.value,
-                                "base_id": items[c.item_hash].base_id}
+                                "base_id": items[c.item_hash].base_id,
+                                "retained_for": c.retained_for}
                                for c in slot.candidates]}
     _write("real-pool.json", {
         **recorded,

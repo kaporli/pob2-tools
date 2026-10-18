@@ -1341,11 +1341,17 @@
  "owned_policy": "seed items owned in their source slots (account import of the owner's character); reference-build items not owned, availability unknown",
  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
  "pob_dirty_hash": null,
- "pool_id": "equipment-pool/f599343f7e7ab07ef588441c4063aa1740b144d7a20b1a7d9606b75e56b2568e",
+ "pool_id": "equipment-pool/b13a620c6e75f8224f027b61065709ecb41a6850e48d0772b1dc0752e213446e",
  "report": {
   "empty_slots": [
    "poe2/slots/Weapon 2",
    "poe2/slots/Weapon 2 Swap"
+  ],
+  "exploratory_only_slots": [
+   "poe2/slots/Amulet",
+   "poe2/slots/Boots",
+   "poe2/slots/Gloves",
+   "poe2/slots/Helmet"
   ],
   "gap_ids": [
    "gap/p02-t03.1/socketed-item-jewel-slots"
@@ -1424,7 +1430,44 @@
    "poe2/slots/Weapon 2 Swap Jewel Socket 5",
    "poe2/slots/Weapon 2 Swap Jewel Socket 6"
   ],
-  "pool_id": "equipment-pool/f599343f7e7ab07ef588441c4063aa1740b144d7a20b1a7d9606b75e56b2568e",
+  "pool_id": "equipment-pool/b13a620c6e75f8224f027b61065709ecb41a6850e48d0772b1dc0752e213446e",
+  "populated_slots": [
+   "poe2/slots/Arm 1",
+   "poe2/slots/Arm 2",
+   "poe2/slots/Belt",
+   "poe2/slots/Body Armour",
+   "poe2/slots/Charm 1",
+   "poe2/slots/Charm 2",
+   "poe2/slots/Charm 3",
+   "poe2/slots/Flask 1",
+   "poe2/slots/Flask 2",
+   "poe2/slots/Jewel 11184",
+   "poe2/slots/Jewel 17788",
+   "poe2/slots/Jewel 21984",
+   "poe2/slots/Jewel 23960",
+   "poe2/slots/Jewel 2491",
+   "poe2/slots/Jewel 26178",
+   "poe2/slots/Jewel 26196",
+   "poe2/slots/Jewel 26725",
+   "poe2/slots/Jewel 32763",
+   "poe2/slots/Jewel 3367",
+   "poe2/slots/Jewel 39087",
+   "poe2/slots/Jewel 46882",
+   "poe2/slots/Jewel 54127",
+   "poe2/slots/Jewel 55190",
+   "poe2/slots/Jewel 60735",
+   "poe2/slots/Jewel 61419",
+   "poe2/slots/Jewel 61834",
+   "poe2/slots/Jewel 62152",
+   "poe2/slots/Jewel 7960",
+   "poe2/slots/Leg 1",
+   "poe2/slots/Leg 2",
+   "poe2/slots/Ring 1",
+   "poe2/slots/Ring 2",
+   "poe2/slots/Ring 3",
+   "poe2/slots/Weapon 1",
+   "poe2/slots/Weapon 1 Swap"
+  ],
   "queries": {
    "declared": 0,
    "executed": 0,
@@ -1440,16 +1483,20 @@
   "slots": {
    "poe2/slots/Amulet": {
     "candidates": 2,
+    "complete_candidates": 0,
     "considered": 1,
+    "exploratory_candidates": 2,
     "partial": 0,
     "retained": 1,
-    "status": "populated",
+    "status": "exploratory_only",
     "truncated": false,
     "unavailable": 0
    },
    "poe2/slots/Arm 1": {
     "candidates": 2,
+    "complete_candidates": 2,
     "considered": 2,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 2,
     "status": "populated",
@@ -1458,7 +1505,9 @@
    },
    "poe2/slots/Arm 2": {
     "candidates": 2,
+    "complete_candidates": 2,
     "considered": 2,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 2,
     "status": "populated",
@@ -1467,7 +1516,9 @@
    },
    "poe2/slots/Belt": {
     "candidates": 2,
+    "complete_candidates": 2,
     "considered": 1,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 1,
     "status": "populated",
@@ -1476,7 +1527,9 @@
    },
    "poe2/slots/Belt Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1485,7 +1538,9 @@
    },
    "poe2/slots/Belt Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1494,7 +1549,9 @@
    },
    "poe2/slots/Belt Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1503,7 +1560,9 @@
    },
    "poe2/slots/Belt Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1512,7 +1571,9 @@
    },
    "poe2/slots/Belt Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1521,7 +1582,9 @@
    },
    "poe2/slots/Belt Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1530,7 +1593,9 @@
    },
    "poe2/slots/Body Armour": {
     "candidates": 2,
+    "complete_candidates": 2,
     "considered": 1,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 1,
     "status": "populated",
@@ -1539,7 +1604,9 @@
    },
    "poe2/slots/Body Armour Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1548,7 +1615,9 @@
    },
    "poe2/slots/Body Armour Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1557,7 +1626,9 @@
    },
    "poe2/slots/Body Armour Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1566,7 +1637,9 @@
    },
    "poe2/slots/Body Armour Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1575,7 +1648,9 @@
    },
    "poe2/slots/Body Armour Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1584,7 +1659,9 @@
    },
    "poe2/slots/Body Armour Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1593,16 +1670,20 @@
    },
    "poe2/slots/Boots": {
     "candidates": 2,
+    "complete_candidates": 0,
     "considered": 1,
+    "exploratory_candidates": 2,
     "partial": 0,
     "retained": 1,
-    "status": "populated",
+    "status": "exploratory_only",
     "truncated": false,
     "unavailable": 0
    },
    "poe2/slots/Boots Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1611,7 +1692,9 @@
    },
    "poe2/slots/Boots Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1620,7 +1703,9 @@
    },
    "poe2/slots/Boots Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1629,7 +1714,9 @@
    },
    "poe2/slots/Boots Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1638,7 +1725,9 @@
    },
    "poe2/slots/Boots Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1647,7 +1736,9 @@
    },
    "poe2/slots/Boots Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1656,7 +1747,9 @@
    },
    "poe2/slots/Charm 1": {
     "candidates": 6,
+    "complete_candidates": 5,
     "considered": 3,
+    "exploratory_candidates": 1,
     "partial": 0,
     "retained": 3,
     "status": "populated",
@@ -1665,7 +1758,9 @@
    },
    "poe2/slots/Charm 2": {
     "candidates": 6,
+    "complete_candidates": 5,
     "considered": 3,
+    "exploratory_candidates": 1,
     "partial": 0,
     "retained": 3,
     "status": "populated",
@@ -1674,7 +1769,9 @@
    },
    "poe2/slots/Charm 3": {
     "candidates": 6,
+    "complete_candidates": 5,
     "considered": 3,
+    "exploratory_candidates": 1,
     "partial": 0,
     "retained": 3,
     "status": "populated",
@@ -1683,7 +1780,9 @@
    },
    "poe2/slots/Flask 1": {
     "candidates": 1,
+    "complete_candidates": 1,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "populated",
@@ -1692,7 +1791,9 @@
    },
    "poe2/slots/Flask 2": {
     "candidates": 2,
+    "complete_candidates": 1,
     "considered": 1,
+    "exploratory_candidates": 1,
     "partial": 0,
     "retained": 1,
     "status": "populated",
@@ -1701,16 +1802,20 @@
    },
    "poe2/slots/Gloves": {
     "candidates": 1,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 1,
     "partial": 1,
     "retained": 0,
-    "status": "populated",
+    "status": "exploratory_only",
     "truncated": false,
     "unavailable": 0
    },
    "poe2/slots/Gloves Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1719,7 +1824,9 @@
    },
    "poe2/slots/Gloves Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1728,7 +1835,9 @@
    },
    "poe2/slots/Gloves Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1737,7 +1846,9 @@
    },
    "poe2/slots/Gloves Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1746,7 +1857,9 @@
    },
    "poe2/slots/Gloves Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1755,7 +1868,9 @@
    },
    "poe2/slots/Gloves Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1764,16 +1879,20 @@
    },
    "poe2/slots/Helmet": {
     "candidates": 2,
+    "complete_candidates": 0,
     "considered": 1,
+    "exploratory_candidates": 2,
     "partial": 0,
     "retained": 1,
-    "status": "populated",
+    "status": "exploratory_only",
     "truncated": false,
     "unavailable": 0
    },
    "poe2/slots/Helmet Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1782,7 +1901,9 @@
    },
    "poe2/slots/Helmet Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1791,7 +1912,9 @@
    },
    "poe2/slots/Helmet Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1800,7 +1923,9 @@
    },
    "poe2/slots/Helmet Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1809,7 +1934,9 @@
    },
    "poe2/slots/Helmet Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1818,7 +1945,9 @@
    },
    "poe2/slots/Helmet Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -1827,7 +1956,9 @@
    },
    "poe2/slots/Jewel 11184": {
     "candidates": 4,
+    "complete_candidates": 1,
     "considered": 3,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 3,
     "status": "populated",
@@ -1836,7 +1967,9 @@
    },
    "poe2/slots/Jewel 17788": {
     "candidates": 4,
+    "complete_candidates": 1,
     "considered": 3,
+    "exploratory_candidates": 3,
     "partial": 0,
     "retained": 3,
     "status": "populated",
@@ -1845,7 +1978,9 @@
    },
    "poe2/slots/Jewel 21984": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1854,7 +1989,9 @@
    },
    "poe2/slots/Jewel 23960": {
     "candidates": 4,
+    "complete_candidates": 1,
     "considered": 3,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 3,
     "status": "populated",
@@ -1863,7 +2000,9 @@
    },
    "poe2/slots/Jewel 2491": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1872,7 +2011,9 @@
    },
    "poe2/slots/Jewel 26178": {
     "candidates": 4,
+    "complete_candidates": 1,
     "considered": 3,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 3,
     "status": "populated",
@@ -1881,7 +2022,9 @@
    },
    "poe2/slots/Jewel 26196": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1890,7 +2033,9 @@
    },
    "poe2/slots/Jewel 26725": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1899,7 +2044,9 @@
    },
    "poe2/slots/Jewel 32763": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1908,7 +2055,9 @@
    },
    "poe2/slots/Jewel 3367": {
     "candidates": 4,
+    "complete_candidates": 1,
     "considered": 3,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 3,
     "status": "populated",
@@ -1917,7 +2066,9 @@
    },
    "poe2/slots/Jewel 39087": {
     "candidates": 4,
+    "complete_candidates": 1,
     "considered": 3,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 3,
     "status": "populated",
@@ -1926,7 +2077,9 @@
    },
    "poe2/slots/Jewel 46882": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1935,7 +2088,9 @@
    },
    "poe2/slots/Jewel 54127": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1944,7 +2099,9 @@
    },
    "poe2/slots/Jewel 55190": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1953,7 +2110,9 @@
    },
    "poe2/slots/Jewel 60735": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1962,7 +2121,9 @@
    },
    "poe2/slots/Jewel 61419": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1971,7 +2132,9 @@
    },
    "poe2/slots/Jewel 61834": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1980,7 +2143,9 @@
    },
    "poe2/slots/Jewel 62152": {
     "candidates": 4,
+    "complete_candidates": 1,
     "considered": 3,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 3,
     "status": "populated",
@@ -1989,7 +2154,9 @@
    },
    "poe2/slots/Jewel 7960": {
     "candidates": 12,
+    "complete_candidates": 9,
     "considered": 9,
+    "exploratory_candidates": 3,
     "partial": 1,
     "retained": 9,
     "status": "populated",
@@ -1998,7 +2165,9 @@
    },
    "poe2/slots/Leg 1": {
     "candidates": 1,
+    "complete_candidates": 1,
     "considered": 1,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 1,
     "status": "populated",
@@ -2007,7 +2176,9 @@
    },
    "poe2/slots/Leg 2": {
     "candidates": 1,
+    "complete_candidates": 1,
     "considered": 1,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 1,
     "status": "populated",
@@ -2016,7 +2187,9 @@
    },
    "poe2/slots/Ring 1": {
     "candidates": 4,
+    "complete_candidates": 2,
     "considered": 2,
+    "exploratory_candidates": 2,
     "partial": 0,
     "retained": 2,
     "status": "populated",
@@ -2025,7 +2198,9 @@
    },
    "poe2/slots/Ring 1 Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2034,7 +2209,9 @@
    },
    "poe2/slots/Ring 1 Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2043,7 +2220,9 @@
    },
    "poe2/slots/Ring 1 Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2052,7 +2231,9 @@
    },
    "poe2/slots/Ring 1 Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2061,7 +2242,9 @@
    },
    "poe2/slots/Ring 1 Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2070,7 +2253,9 @@
    },
    "poe2/slots/Ring 1 Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2079,7 +2264,9 @@
    },
    "poe2/slots/Ring 2": {
     "candidates": 4,
+    "complete_candidates": 2,
     "considered": 2,
+    "exploratory_candidates": 2,
     "partial": 0,
     "retained": 2,
     "status": "populated",
@@ -2088,7 +2275,9 @@
    },
    "poe2/slots/Ring 2 Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2097,7 +2286,9 @@
    },
    "poe2/slots/Ring 2 Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2106,7 +2297,9 @@
    },
    "poe2/slots/Ring 2 Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2115,7 +2308,9 @@
    },
    "poe2/slots/Ring 2 Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2124,7 +2319,9 @@
    },
    "poe2/slots/Ring 2 Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2133,7 +2330,9 @@
    },
    "poe2/slots/Ring 2 Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2142,7 +2341,9 @@
    },
    "poe2/slots/Ring 3": {
     "candidates": 4,
+    "complete_candidates": 2,
     "considered": 2,
+    "exploratory_candidates": 2,
     "partial": 0,
     "retained": 2,
     "status": "populated",
@@ -2151,7 +2352,9 @@
    },
    "poe2/slots/Ring 3 Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2160,7 +2363,9 @@
    },
    "poe2/slots/Ring 3 Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2169,7 +2374,9 @@
    },
    "poe2/slots/Ring 3 Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2178,7 +2385,9 @@
    },
    "poe2/slots/Ring 3 Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2187,7 +2396,9 @@
    },
    "poe2/slots/Ring 3 Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2196,7 +2407,9 @@
    },
    "poe2/slots/Ring 3 Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2205,7 +2418,9 @@
    },
    "poe2/slots/Weapon 1": {
     "candidates": 3,
+    "complete_candidates": 3,
     "considered": 1,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 1,
     "status": "populated",
@@ -2214,7 +2429,9 @@
    },
    "poe2/slots/Weapon 1 Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2223,7 +2440,9 @@
    },
    "poe2/slots/Weapon 1 Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2232,7 +2451,9 @@
    },
    "poe2/slots/Weapon 1 Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2241,7 +2462,9 @@
    },
    "poe2/slots/Weapon 1 Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2250,7 +2473,9 @@
    },
    "poe2/slots/Weapon 1 Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2259,7 +2484,9 @@
    },
    "poe2/slots/Weapon 1 Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2268,7 +2495,9 @@
    },
    "poe2/slots/Weapon 1 Swap": {
     "candidates": 3,
+    "complete_candidates": 3,
     "considered": 1,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 1,
     "status": "populated",
@@ -2277,7 +2506,9 @@
    },
    "poe2/slots/Weapon 1 Swap Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2286,7 +2517,9 @@
    },
    "poe2/slots/Weapon 1 Swap Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2295,7 +2528,9 @@
    },
    "poe2/slots/Weapon 1 Swap Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2304,7 +2539,9 @@
    },
    "poe2/slots/Weapon 1 Swap Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2313,7 +2550,9 @@
    },
    "poe2/slots/Weapon 1 Swap Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2322,7 +2561,9 @@
    },
    "poe2/slots/Weapon 1 Swap Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2331,7 +2572,9 @@
    },
    "poe2/slots/Weapon 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "empty",
@@ -2340,7 +2583,9 @@
    },
    "poe2/slots/Weapon 2 Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2349,7 +2594,9 @@
    },
    "poe2/slots/Weapon 2 Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2358,7 +2605,9 @@
    },
    "poe2/slots/Weapon 2 Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2367,7 +2616,9 @@
    },
    "poe2/slots/Weapon 2 Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2376,7 +2627,9 @@
    },
    "poe2/slots/Weapon 2 Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2385,7 +2638,9 @@
    },
    "poe2/slots/Weapon 2 Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2394,7 +2649,9 @@
    },
    "poe2/slots/Weapon 2 Swap": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "empty",
@@ -2403,7 +2660,9 @@
    },
    "poe2/slots/Weapon 2 Swap Jewel Socket 1": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2412,7 +2671,9 @@
    },
    "poe2/slots/Weapon 2 Swap Jewel Socket 2": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2421,7 +2682,9 @@
    },
    "poe2/slots/Weapon 2 Swap Jewel Socket 3": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2430,7 +2693,9 @@
    },
    "poe2/slots/Weapon 2 Swap Jewel Socket 4": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2439,7 +2704,9 @@
    },
    "poe2/slots/Weapon 2 Swap Jewel Socket 5": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2448,7 +2715,9 @@
    },
    "poe2/slots/Weapon 2 Swap Jewel Socket 6": {
     "candidates": 0,
+    "complete_candidates": 0,
     "considered": 0,
+    "exploratory_candidates": 0,
     "partial": 0,
     "retained": 0,
     "status": "missing_category_rule",
@@ -2465,27 +2734,43 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Absent Amulet",
-     "item_hash": "6a0ee54758f71de25ed53cfe5129bb3a2539691ddfdbb4adcecdd06ededa9c73"
+     "item_hash": "6a0ee54758f71de25ed53cfe5129bb3a2539691ddfdbb4adcecdd06ededa9c73",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Absent Amulet",
-     "item_hash": "bfadb807d5fa112be83852c97a1dc7d928b54219af5ee93531a042941a18f064"
+     "item_hash": "bfadb807d5fa112be83852c97a1dc7d928b54219af5ee93531a042941a18f064",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
-   "status": "populated"
+   "status": "exploratory_only"
   },
   "poe2/slots/Arm 1": {
    "candidates": [
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Combat Arm",
-     "item_hash": "8d76be0ba388cff53023a9d6499260f26e685989c82508dd9787a656aaa20624"
+     "item_hash": "8d76be0ba388cff53023a9d6499260f26e685989c82508dd9787a656aaa20624",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Deflective Arm",
-     "item_hash": "e4f2b0aa590f264a5031bd33ff56c6adaa86f868dd648265b49d5ebd975f6664"
+     "item_hash": "e4f2b0aa590f264a5031bd33ff56c6adaa86f868dd648265b49d5ebd975f6664",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -2495,12 +2780,18 @@
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Combat Arm",
-     "item_hash": "8d76be0ba388cff53023a9d6499260f26e685989c82508dd9787a656aaa20624"
+     "item_hash": "8d76be0ba388cff53023a9d6499260f26e685989c82508dd9787a656aaa20624",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Deflective Arm",
-     "item_hash": "e4f2b0aa590f264a5031bd33ff56c6adaa86f868dd648265b49d5ebd975f6664"
+     "item_hash": "e4f2b0aa590f264a5031bd33ff56c6adaa86f868dd648265b49d5ebd975f6664",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -2510,12 +2801,18 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Utility Belt",
-     "item_hash": "562739bbfa983618bdf728f781a962e046e57f30eb7625ce93531161ec39440e"
+     "item_hash": "562739bbfa983618bdf728f781a962e046e57f30eb7625ce93531161ec39440e",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Utility Belt",
-     "item_hash": "fc31e91f60488f0f4ebe181b2ae83ea4767ae7de2e72b8b84afe6dd96a632b80"
+     "item_hash": "fc31e91f60488f0f4ebe181b2ae83ea4767ae7de2e72b8b84afe6dd96a632b80",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -2525,12 +2822,18 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Runemastered Ancient Mail",
-     "item_hash": "1086a458b381efd96e3571387db45ecb8425d998c5ae89249fb55b007e88235e"
+     "item_hash": "1086a458b381efd96e3571387db45ecb8425d998c5ae89249fb55b007e88235e",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Ancient Mail",
-     "item_hash": "53ffbb248b88547b2514a7f7b679c44c80f77c6f5f68efd570534747b9debef1"
+     "item_hash": "53ffbb248b88547b2514a7f7b679c44c80f77c6f5f68efd570534747b9debef1",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -2540,47 +2843,77 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Runeforged Apostle Leggings",
-     "item_hash": "1c73ef9fb01b1b68f58b6ee3c31fb055884b51ed5d7cfe851525eda7ec209265"
+     "item_hash": "1c73ef9fb01b1b68f58b6ee3c31fb055884b51ed5d7cfe851525eda7ec209265",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Daggerfoot Shoes",
-     "item_hash": "53305cd60506299015cc615bcc914933356e748d9bcaf2acca63f5d8b90df2e5"
+     "item_hash": "53305cd60506299015cc615bcc914933356e748d9bcaf2acca63f5d8b90df2e5",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
-   "status": "populated"
+   "status": "exploratory_only"
   },
   "poe2/slots/Charm 1": {
    "candidates": [
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Silver Charm",
-     "item_hash": "39931f7dd515635845567ee232fc3414df1b8d98399096e350615ee9b8f4bca2"
+     "item_hash": "39931f7dd515635845567ee232fc3414df1b8d98399096e350615ee9b8f4bca2",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Thawing Charm",
-     "item_hash": "41ac9708a8eccb18ffade0a7945e3b8d6e950a25c7a0f1052447ccb1db3111ba"
+     "item_hash": "41ac9708a8eccb18ffade0a7945e3b8d6e950a25c7a0f1052447ccb1db3111ba",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Stone Charm",
-     "item_hash": "8e64b17ea41667409100477d9699786b8f13d140902be64405ab26ade5c2e1cc"
+     "item_hash": "8e64b17ea41667409100477d9699786b8f13d140902be64405ab26ade5c2e1cc",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Thawing Charm",
-     "item_hash": "00399121c4ca98b51e7f4d2e7640cc7e8e724098fc009ea1b9b100820eb9b9fb"
+     "item_hash": "00399121c4ca98b51e7f4d2e7640cc7e8e724098fc009ea1b9b100820eb9b9fb",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Golden Charm",
-     "item_hash": "65ed23860455bd1074d2000e2cc945b44c91f9fc3baf91f264536223b6f02233"
+     "item_hash": "65ed23860455bd1074d2000e2cc945b44c91f9fc3baf91f264536223b6f02233",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Staunching Charm",
-     "item_hash": "99c7045a3986e2acc4d6c4ba93ae2daa0476674018452d5e668af155de5281f4"
+     "item_hash": "99c7045a3986e2acc4d6c4ba93ae2daa0476674018452d5e668af155de5281f4",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -2590,32 +2923,52 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Silver Charm",
-     "item_hash": "39931f7dd515635845567ee232fc3414df1b8d98399096e350615ee9b8f4bca2"
+     "item_hash": "39931f7dd515635845567ee232fc3414df1b8d98399096e350615ee9b8f4bca2",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Thawing Charm",
-     "item_hash": "41ac9708a8eccb18ffade0a7945e3b8d6e950a25c7a0f1052447ccb1db3111ba"
+     "item_hash": "41ac9708a8eccb18ffade0a7945e3b8d6e950a25c7a0f1052447ccb1db3111ba",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Stone Charm",
-     "item_hash": "8e64b17ea41667409100477d9699786b8f13d140902be64405ab26ade5c2e1cc"
+     "item_hash": "8e64b17ea41667409100477d9699786b8f13d140902be64405ab26ade5c2e1cc",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Thawing Charm",
-     "item_hash": "00399121c4ca98b51e7f4d2e7640cc7e8e724098fc009ea1b9b100820eb9b9fb"
+     "item_hash": "00399121c4ca98b51e7f4d2e7640cc7e8e724098fc009ea1b9b100820eb9b9fb",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Golden Charm",
-     "item_hash": "65ed23860455bd1074d2000e2cc945b44c91f9fc3baf91f264536223b6f02233"
+     "item_hash": "65ed23860455bd1074d2000e2cc945b44c91f9fc3baf91f264536223b6f02233",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Staunching Charm",
-     "item_hash": "99c7045a3986e2acc4d6c4ba93ae2daa0476674018452d5e668af155de5281f4"
+     "item_hash": "99c7045a3986e2acc4d6c4ba93ae2daa0476674018452d5e668af155de5281f4",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -2625,32 +2978,52 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Silver Charm",
-     "item_hash": "39931f7dd515635845567ee232fc3414df1b8d98399096e350615ee9b8f4bca2"
+     "item_hash": "39931f7dd515635845567ee232fc3414df1b8d98399096e350615ee9b8f4bca2",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Thawing Charm",
-     "item_hash": "41ac9708a8eccb18ffade0a7945e3b8d6e950a25c7a0f1052447ccb1db3111ba"
+     "item_hash": "41ac9708a8eccb18ffade0a7945e3b8d6e950a25c7a0f1052447ccb1db3111ba",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Stone Charm",
-     "item_hash": "8e64b17ea41667409100477d9699786b8f13d140902be64405ab26ade5c2e1cc"
+     "item_hash": "8e64b17ea41667409100477d9699786b8f13d140902be64405ab26ade5c2e1cc",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Thawing Charm",
-     "item_hash": "00399121c4ca98b51e7f4d2e7640cc7e8e724098fc009ea1b9b100820eb9b9fb"
+     "item_hash": "00399121c4ca98b51e7f4d2e7640cc7e8e724098fc009ea1b9b100820eb9b9fb",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Golden Charm",
-     "item_hash": "65ed23860455bd1074d2000e2cc945b44c91f9fc3baf91f264536223b6f02233"
+     "item_hash": "65ed23860455bd1074d2000e2cc945b44c91f9fc3baf91f264536223b6f02233",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Staunching Charm",
-     "item_hash": "99c7045a3986e2acc4d6c4ba93ae2daa0476674018452d5e668af155de5281f4"
+     "item_hash": "99c7045a3986e2acc4d6c4ba93ae2daa0476674018452d5e668af155de5281f4",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -2660,7 +3033,10 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Gargantuan Life Flask",
-     "item_hash": "05b1f1475c7f214023388ec55e93634058dd07acd66e9b28bf63caca90fb0aba"
+     "item_hash": "05b1f1475c7f214023388ec55e93634058dd07acd66e9b28bf63caca90fb0aba",
+     "retained_for": [
+      "owned"
+     ]
     }
    ],
    "status": "populated"
@@ -2670,12 +3046,20 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Ultimate Mana Flask",
-     "item_hash": "54eab57e702f773974825d1e8f9180e83e90634c4cad248792b4a5a8202919e9"
+     "item_hash": "54eab57e702f773974825d1e8f9180e83e90634c4cad248792b4a5a8202919e9",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Gargantuan Mana Flask",
-     "item_hash": "5345887c14c3080661202d8ee494bcb8fc200fc650397a735bbf7c9f3b5da954"
+     "item_hash": "5345887c14c3080661202d8ee494bcb8fc200fc650397a735bbf7c9f3b5da954",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -2685,47 +3069,80 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Runeforged Fists of Stone",
-     "item_hash": "a574ae90943c4b62b9108b46224238efb2778db4b2212af48790a7c07a5c0dba"
+     "item_hash": "a574ae90943c4b62b9108b46224238efb2778db4b2212af48790a7c07a5c0dba",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
-   "status": "populated"
+   "status": "exploratory_only"
   },
   "poe2/slots/Helmet": {
    "candidates": [
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Ancestral Tiara",
-     "item_hash": "53adfd10518e5408bb8359aa28d58c9db8ee22172c0a10922c327cf0bf3fa556"
+     "item_hash": "53adfd10518e5408bb8359aa28d58c9db8ee22172c0a10922c327cf0bf3fa556",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Ancestral Tiara",
-     "item_hash": "fc8f3754670a4f791c7b3999974d1aa71695f84fccee4f14779e54190d03fabc"
+     "item_hash": "fc8f3754670a4f791c7b3999974d1aa71695f84fccee4f14779e54190d03fabc",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
-   "status": "populated"
+   "status": "exploratory_only"
   },
   "poe2/slots/Jewel 11184": {
    "candidates": [
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -2735,22 +3152,40 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -2760,62 +3195,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -2825,22 +3302,40 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -2850,62 +3345,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -2915,22 +3452,40 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -2940,62 +3495,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3005,62 +3602,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3070,62 +3709,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3135,22 +3816,40 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -3160,22 +3859,40 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -3185,62 +3902,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3250,62 +4009,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3315,62 +4116,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3380,62 +4223,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3445,62 +4330,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3510,62 +4437,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3575,22 +4544,40 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -3600,62 +4587,104 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b"
+     "item_hash": "7d4414a2b5f52271b3ae07b756f5fc07596d33abe66596c73c6aaa7a4a74fc0b",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a"
+     "item_hash": "a5504ce40a1f5f869cede35308ad8e61b9d01d51fdcde1ad9d5b6db080b7485a",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef"
+     "item_hash": "ac88447b05731a3d8a329fec1558c279c2601dd82b73bad8cffb82825b4d97ef",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345"
+     "item_hash": "20b1b4835c3841ad4ab3582c42976b8953617055d4795321cd4f3f31c159d345",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929"
+     "item_hash": "348918c07e9e7b1862a3ac9abfb00cc93f45ccaed7e9a47d160fc64ad6ddc929",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc"
+     "item_hash": "40ff4ca7be56776f1148a78ff169994cd22602427f4ade61ed385bbf44865dbc",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e"
+     "item_hash": "618b525b38146e391739f373d84e51176b1a67f38d13e32c161e32805537196e",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be"
+     "item_hash": "7523a161237eaeb93f03f243b8386829f6915b514b196ab0d581b4b2fc9728be",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532"
+     "item_hash": "84bc88e691d2a89b646541833d3573f9d434956bfb425cf0a8a3cdd58f6a5532",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976"
+     "item_hash": "a8dd1b89fc976ae15713a3f663965d4380df82a2994c78bc5c4c4bd79cc61976",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sapphire",
-     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0"
+     "item_hash": "d83c5649c95f11bab3bec986473d849b87abc57380bbbb4936ac66890bcb75f0",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Diamond",
-     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b"
+     "item_hash": "fc5e9a8e65cc658e00ddfed646fe1417ec038c782c8b97fb6a666ae07f57264b",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3665,7 +4694,10 @@
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Evasive Leg",
-     "item_hash": "b96feed56b20e6148c09d660992c99a191ff8989896a358724769a9e9b8c60c2"
+     "item_hash": "b96feed56b20e6148c09d660992c99a191ff8989896a358724769a9e9b8c60c2",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3675,7 +4707,10 @@
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Evasive Leg",
-     "item_hash": "b96feed56b20e6148c09d660992c99a191ff8989896a358724769a9e9b8c60c2"
+     "item_hash": "b96feed56b20e6148c09d660992c99a191ff8989896a358724769a9e9b8c60c2",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3685,22 +4720,38 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Gold Ring",
-     "item_hash": "0b0ef2686c8a472b4a64cdaa41c3a8adeedd3376d08b05439072fec1a956213f"
+     "item_hash": "0b0ef2686c8a472b4a64cdaa41c3a8adeedd3376d08b05439072fec1a956213f",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire Ring",
-     "item_hash": "554b5daee628f87015ad904b84ba596e4c07a4af3f3cee2d7d02e4c72a53dc8d"
+     "item_hash": "554b5daee628f87015ad904b84ba596e4c07a4af3f3cee2d7d02e4c72a53dc8d",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Ring",
-     "item_hash": "311b227723c3b26a5121cfb2b0b850ce303e37a0eda9dcc6416ab10b13a6aba3"
+     "item_hash": "311b227723c3b26a5121cfb2b0b850ce303e37a0eda9dcc6416ab10b13a6aba3",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Prismatic Ring",
-     "item_hash": "f3fcbda0473b8d9ac58ef88f6421752287d4176344aa1e801d975fb24c556a1e"
+     "item_hash": "f3fcbda0473b8d9ac58ef88f6421752287d4176344aa1e801d975fb24c556a1e",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -3710,22 +4761,38 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Gold Ring",
-     "item_hash": "0b0ef2686c8a472b4a64cdaa41c3a8adeedd3376d08b05439072fec1a956213f"
+     "item_hash": "0b0ef2686c8a472b4a64cdaa41c3a8adeedd3376d08b05439072fec1a956213f",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire Ring",
-     "item_hash": "554b5daee628f87015ad904b84ba596e4c07a4af3f3cee2d7d02e4c72a53dc8d"
+     "item_hash": "554b5daee628f87015ad904b84ba596e4c07a4af3f3cee2d7d02e4c72a53dc8d",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Ring",
-     "item_hash": "311b227723c3b26a5121cfb2b0b850ce303e37a0eda9dcc6416ab10b13a6aba3"
+     "item_hash": "311b227723c3b26a5121cfb2b0b850ce303e37a0eda9dcc6416ab10b13a6aba3",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Prismatic Ring",
-     "item_hash": "f3fcbda0473b8d9ac58ef88f6421752287d4176344aa1e801d975fb24c556a1e"
+     "item_hash": "f3fcbda0473b8d9ac58ef88f6421752287d4176344aa1e801d975fb24c556a1e",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -3735,22 +4802,38 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Gold Ring",
-     "item_hash": "0b0ef2686c8a472b4a64cdaa41c3a8adeedd3376d08b05439072fec1a956213f"
+     "item_hash": "0b0ef2686c8a472b4a64cdaa41c3a8adeedd3376d08b05439072fec1a956213f",
+     "retained_for": [
+      "owned",
+      "exploratory",
+      "stat_known_partial"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sapphire Ring",
-     "item_hash": "554b5daee628f87015ad904b84ba596e4c07a4af3f3cee2d7d02e4c72a53dc8d"
+     "item_hash": "554b5daee628f87015ad904b84ba596e4c07a4af3f3cee2d7d02e4c72a53dc8d",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Ring",
-     "item_hash": "311b227723c3b26a5121cfb2b0b850ce303e37a0eda9dcc6416ab10b13a6aba3"
+     "item_hash": "311b227723c3b26a5121cfb2b0b850ce303e37a0eda9dcc6416ab10b13a6aba3",
+     "retained_for": [
+      "sample"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Prismatic Ring",
-     "item_hash": "f3fcbda0473b8d9ac58ef88f6421752287d4176344aa1e801d975fb24c556a1e"
+     "item_hash": "f3fcbda0473b8d9ac58ef88f6421752287d4176344aa1e801d975fb24c556a1e",
+     "retained_for": [
+      "sample",
+      "exploratory",
+      "stat_known_partial"
+     ]
     }
    ],
    "status": "populated"
@@ -3760,17 +4843,26 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sinister Quarterstaff",
-     "item_hash": "1835ef22c4af890105125f274cc3313e2923f96f7ffe3f37cbdc0980c6f67d9e"
+     "item_hash": "1835ef22c4af890105125f274cc3313e2923f96f7ffe3f37cbdc0980c6f67d9e",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Nettle Talisman",
-     "item_hash": "49d390ca46ffb20ce3bae9526ec7aaaeed8517fb24d91327013e69085ef0e013"
+     "item_hash": "49d390ca46ffb20ce3bae9526ec7aaaeed8517fb24d91327013e69085ef0e013",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sinister Quarterstaff",
-     "item_hash": "8dfbf42906b7cf06b87ea9fd9b5c53fe90d51199820bc221d30ae95b24f72e3f"
+     "item_hash": "8dfbf42906b7cf06b87ea9fd9b5c53fe90d51199820bc221d30ae95b24f72e3f",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
@@ -3780,21 +4872,30 @@
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Sinister Quarterstaff",
-     "item_hash": "1835ef22c4af890105125f274cc3313e2923f96f7ffe3f37cbdc0980c6f67d9e"
+     "item_hash": "1835ef22c4af890105125f274cc3313e2923f96f7ffe3f37cbdc0980c6f67d9e",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "owned",
      "base_id": "poe2/item_bases/Nettle Talisman",
-     "item_hash": "49d390ca46ffb20ce3bae9526ec7aaaeed8517fb24d91327013e69085ef0e013"
+     "item_hash": "49d390ca46ffb20ce3bae9526ec7aaaeed8517fb24d91327013e69085ef0e013",
+     "retained_for": [
+      "owned"
+     ]
     },
     {
      "availability": "unknown",
      "base_id": "poe2/item_bases/Sinister Quarterstaff",
-     "item_hash": "8dfbf42906b7cf06b87ea9fd9b5c53fe90d51199820bc221d30ae95b24f72e3f"
+     "item_hash": "8dfbf42906b7cf06b87ea9fd9b5c53fe90d51199820bc221d30ae95b24f72e3f",
+     "retained_for": [
+      "sample"
+     ]
     }
    ],
    "status": "populated"
   }
  },
- "written_at": "2026-10-18T20:46:08Z"
+ "written_at": "2026-10-18T23:29:58Z"
 }

@@ -1,14 +1,14 @@
 == tests/engine/test_p02_t03_1_slot_rules_engine.py
-4 passed in 14.69s
+4 passed in 13.90s
 == tests/engine/test_p02_t03_legality_engine.py
-7 passed in 15.88s
+7 passed in 15.10s
 == tests/engine/test_p02_t02_1_flicker_engine.py
-4 passed in 19.98s
+4 passed in 18.67s
 == tests/engine/test_p02_t02_catalog_engine.py
-15 passed in 33.36s
+15 passed in 32.25s
 == tests/engine/test_p04_round_trips.py
-53 passed in 24.89s
+53 passed in 22.78s
 == tests/engine/test_p05_t02_item_conversion.py
-11 passed in 5.58s
+11 passed in 5.80s
 == tests/engine/test_f12_item_conversion_golden.py
-8 passed in 4.52s
+8 passed in 4.44s

@@ -232,6 +232,36 @@
           "items": {
             "type": "string"
           }
+        },
+        "undecided": {
+          "type": "boolean"
+        },
+        "undecided_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "undecided_rarities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "undecided_bases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gap_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -312,6 +342,33 @@
           }
         },
         "refused_rarities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "undecided_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "undecided_rarities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "undecided_bases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gap_ids": {
           "type": "array",
           "items": {
             "type": "string"

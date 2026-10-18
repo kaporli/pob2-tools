@@ -194,6 +194,14 @@ class SlotRule:
     #: P02-T03.1. Item rarities (lower case) the slot refuses whatever their
     #: category. Absent on profiles exported before rarities were probed.
     refused_rarities: list[str] | Absent = ABSENT
+    #: P02-T03.1. What the probe could not decide; see catalog/slotrules.py.
+    #: Categories accepted for only some bases (``*``: any category not
+    #: accepted), per rarity the categories whose answer differs, and base
+    #: names whose probe failed. ``gap_ids`` names the gaps that explain them.
+    undecided_categories: list[str] | Absent = ABSENT
+    undecided_rarities: dict[str, list[str]] | Absent = ABSENT
+    undecided_bases: list[str] | Absent = ABSENT
+    gap_ids: list[str] | Absent = ABSENT
 
 
 @_frozen
@@ -222,6 +230,12 @@ class OffHandRule:
     accepted_base_categories: list[str]
     evidence_ids: list[str]
     refused_rarities: list[str] | Absent = ABSENT
+    #: True when the main-hand category's bases disagree: no answer.
+    undecided: bool | Absent = ABSENT
+    undecided_categories: list[str] | Absent = ABSENT
+    undecided_rarities: dict[str, list[str]] | Absent = ABSENT
+    undecided_bases: list[str] | Absent = ABSENT
+    gap_ids: list[str] | Absent = ABSENT
 
 
 @_frozen

@@ -28,7 +28,8 @@ from __future__ import annotations
 from collections import deque
 from typing import Iterable, Sequence
 
-from ...catalog.slotrules import NO_FLAG, UNARMED, base_category
+from ...catalog.slotrules import (ACCEPTED, NO_FLAG, REFUSED, UNARMED,
+                                  UNDECIDED, base_category, decide, rule_gaps)
 from ...domain.absent import ABSENT, Absent
 from ...domain.enums import Legality, ModifierParseStatus, RecordParseStatus
 from ...domain.records import SkillEntry
@@ -615,12 +616,13 @@ def check_slots(ctx: Context, out: ReportBuilder) -> None:
 def _check_slot_categories(ctx: Context, out: ReportBuilder, entry, rule) -> None:
     """Does this slot accept this item's base category?
 
-    The rule decides. P02-T02 exported every ``SlotRule`` with an empty
-    category list and a blocking gap, so today this is always ``unknown``.
-    The branch above it is not dead code: a profile that carries the
-    categories is checked against them, which is what closing the gap means.
+    The rule decides. A P02-T02 profile has empty rules and a blocking gap,
+    so it answers ``unknown``. A P02-T03.1 rule decides category and rarity,
+    and answers ``unknown`` citing the rule's own gaps for a combination the
+    engine probe left undecided (catalog/slotrules.py ``decide``).
     """
-    if not rule.accepted_base_categories:
+    if not rule.accepted_base_categories and not _rule_list(
+            rule, "undecided_categories"):
         out.unknown(
             CHECK_SLOTS, "slot_base_category_undecidable",
             "slot %s declares no accepted base categories, so whether it "
@@ -640,6 +642,18 @@ def _check_slot_categories(ctx: Context, out: ReportBuilder, entry, rule) -> Non
             subject_ids=(entry.slot_id,),
             gaps=[ctx.gaps.gap(_gap("unresolved-catalog-entity"),
                                references=(entry.item_hash or entry.slot_id,))])
+        return
+    verdict = decide(rule, _base_raw(ctx, entry), _rarity(entry))
+    if verdict == UNDECIDED:
+        out.unknown(
+            CHECK_SLOTS, "slot_rule_undecided",
+            "the engine probe left %s (%s, %s) in slot %s undecided"
+            % (entry.label, category, _rarity(entry) or "rarity unknown",
+               entry.slot_id),
+            rule_id=rule.slot_id,
+            field_paths=("/equipment/%s" % entry.slot_id,),
+            subject_ids=(entry.slot_id,),
+            gap_ids=rule_gaps(rule) or _slot_rule_gaps(ctx))
         return
     if category not in rule.accepted_base_categories:
         out.violation(
@@ -662,6 +676,20 @@ def _check_slot_categories(ctx: Context, out: ReportBuilder, entry, rule) -> Non
             field_paths=("/equipment/%s" % entry.slot_id,),
             subject_ids=(entry.slot_id,),
             evidence_ids=tuple(rule.evidence_ids))
+
+
+def _rule_list(rule, name: str) -> list:
+    value = getattr(rule, name, None)
+    return list(value) if isinstance(value, (list, tuple)) else []
+
+
+def _base_raw(ctx: Context, entry):
+    base_id = None
+    if entry.record is not None:
+        base_id = entry.record.base_id
+    if base_id is None and entry.imported is not None:
+        base_id = entry.imported.base_name
+    return ctx.catalog.base_raw(base_id) if base_id is not None else None
 
 
 def _rarity(entry) -> str | None:
@@ -815,16 +843,24 @@ def _check_off_hands(ctx: Context, out: ReportBuilder, rules) -> None:
                 gap_ids=_slot_rule_gaps(ctx))
             continue
         rarity = _rarity(off)
-
-        def takes(rule) -> bool:
-            return (off_category in rule.accepted_base_categories
-                    and not (rarity and rarity in _refused(rule)))
-
+        raw = _base_raw(ctx, off)
         plain = [r for r in applicable if r.required_flag == NO_FLAG]
-        if any(takes(r) for r in plain):
+        verdicts = [decide(r, raw, rarity) for r in plain]
+        if ACCEPTED in verdicts:
+            continue
+        if UNDECIDED in verdicts:
+            out.unknown(
+                CHECK_HANDS, "off_hand_rule_undecided",
+                "the engine probe left %s (%s) in %s next to a %s in %s "
+                "undecided" % (off.label, off_category, off_slot,
+                               main_category, main_slot),
+                field_paths=(path,), subject_ids=(off_slot, main_slot),
+                gap_ids=tuple(sorted({g for r in plain for g in rule_gaps(r)}))
+                or _slot_rule_gaps(ctx))
             continue
         flags = sorted(r.required_flag for r in applicable
-                       if r.required_flag != NO_FLAG and takes(r))
+                       if r.required_flag != NO_FLAG
+                       and decide(r, raw, rarity) != REFUSED)
         evidence = tuple(sorted({e for r in applicable for e in r.evidence_ids}))
         if flags:
             out.unknown(

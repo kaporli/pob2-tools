@@ -35,8 +35,8 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, replace
 from typing import Callable, Iterable, Mapping, Sequence
 
-from ..catalog.slotrules import base_category
-from ..domain.absent import Absent
+from ..catalog.slotrules import (ACCEPTED, REFUSED, UNDECIDED, decide,
+                                 rule_gaps)
 from ..domain.enums import (Availability, CandidateAvailability,
                             EnablingQueryStatus, ModifierParseStatus,
                             PoolSlotStatus, RecordParseStatus)
@@ -184,9 +184,18 @@ def _candidate_key(entry) -> tuple:
     return (item.item_hash, candidate.listing_id or "")
 
 
-#: ``retained_for`` mark of a partial item placed because its stats are
-#: known (``stat_known``). A build using it stays non-recommendable.
+#: ``retained_for`` marks. Every exploratory candidate carries EXPLORATORY
+#: plus its reason; a slot holding only exploratory candidates is
+#: ``exploratory_only``, never ``populated``, and none of them counts as
+#: complete or recommendation-ready coverage.
+EXPLORATORY = "exploratory"
+#: A partial item placed because its stats are known (``stat_known``). A
+#: build using it stays partial and non-recommendable.
 STAT_KNOWN_PARTIAL = "stat_known_partial"
+#: The slot rule leaves this base, category or rarity undecided.
+SLOT_RULE_UNDECIDED = "slot_rule_undecided"
+#: An owned item kept in its source slot although the rule does not accept it.
+OWNED_SLOT_UNVERIFIED = "owned_slot_unverified"
 _STAT_KNOWN = (ModifierParseStatus.RESOLVED, ModifierParseStatus.AMBIGUOUS,
                ModifierParseStatus.STAT_RESOLVED)
 
@@ -210,9 +219,25 @@ def stat_known(item: ItemInstance) -> bool:
             and all(st in _STAT_KNOWN for st in statuses))
 
 
-def marks(item: ItemInstance) -> list[str]:
-    return ([STAT_KNOWN_PARTIAL]
-            if item.parse_status is not RecordParseStatus.COMPLETE else [])
+def marks(item: ItemInstance, verdict: str = ACCEPTED) -> list[str]:
+    """Exploratory marks for one item in one slot; empty when it is neither."""
+    out = []
+    if item.parse_status is not RecordParseStatus.COMPLETE:
+        out.append(STAT_KNOWN_PARTIAL)
+    if verdict == UNDECIDED:
+        out.append(SLOT_RULE_UNDECIDED)
+    elif verdict == REFUSED:
+        out.append(OWNED_SLOT_UNVERIFIED)
+    return [EXPLORATORY, *out] if out else []
+
+
+def is_exploratory(candidate: PoolCandidate) -> bool:
+    return EXPLORATORY in candidate.retained_for
+
+
+def _undecided_categories(rule) -> list:
+    value = getattr(rule, "undecided_categories", None)
+    return list(value) if isinstance(value, list) else []
 
 
 def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
@@ -242,8 +267,8 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
         raise ValueError("pool input scope mismatch: items=%r; listings=%r"
                          % (wrong_items, wrong_listings))
     bounds = bounds or sampling()
-    categories = {entity.entity_id: base_category(entity.raw_reference)
-                  for entity in catalog.entities.get("item_bases", ())}
+    raws = {entity.entity_id: entity.raw_reference
+            for entity in catalog.entities.get("item_bases", ())}
     by_hash: dict[str, ItemInstance] = {}
     conflicting = set()
     for item in sorted(items, key=lambda i: (i.item_hash, i.record_id)):
@@ -291,16 +316,18 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
     matched = {o.query_id: set(o.matched_item_hashes) for o in outcomes}
 
     placed: set[str] = set()
+    undecided_gaps: set[str] = set()
     slots: list[SlotPool] = []
     for rule in sorted(profile.character_rules.slots, key=lambda r: r.slot_id):
         accepted = set(rule.accepted_base_categories)
-        refused = (set() if isinstance(rule.refused_rarities, Absent)
-                   else set(rule.refused_rarities))
+
+        def verdict(item: ItemInstance) -> str:
+            if item.base_id not in raws:
+                return REFUSED
+            return decide(rule, raws[item.base_id], item.rarity)
 
         def fits(item: ItemInstance) -> bool:
-            return (bool(accepted)
-                    and categories.get(item.base_id) in accepted
-                    and str(item.rarity or "").lower() not in refused)
+            return verdict(item) in (ACCEPTED, UNDECIDED)
 
         def reasons(item: ItemInstance) -> list[str]:
             return ["enabling:%s" % q.query_id for q in in_bound
@@ -327,7 +354,8 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
                     item_hash=item_hash, listing_id=None,
                     availability=CandidateAvailability.OWNED,
                     quantity=own.count,
-                    retained_for=["owned", *reasons(item), *marks(item)]))
+                    retained_for=["owned", *reasons(item),
+                                  *marks(item, verdict(item))]))
             if not fits(item):
                 continue
             item_listings = sorted(listed.get(item_hash, ()),
@@ -352,12 +380,17 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
         kept = sorted(required, key=_candidate_key) + _sample(
             sorted(rest, key=_candidate_key), room)
         candidates = owned_here + [
-            replace(c, retained_for=(reasons(item) or ["sample"]) + marks(item))
+            replace(c, retained_for=(reasons(item) or ["sample"])
+                    + marks(item, verdict(item)))
             for item, c in kept]
-        if not accepted:
+        if any(SLOT_RULE_UNDECIDED in c.retained_for for c in candidates):
+            undecided_gaps.update(rule_gaps(rule))
+        if not accepted and not _undecided_categories(rule):
             status = PoolSlotStatus.MISSING_CATEGORY_RULE
-        elif candidates:
+        elif any(not is_exploratory(c) for c in candidates):
             status = PoolSlotStatus.POPULATED
+        elif candidates:
+            status = PoolSlotStatus.EXPLORATORY_ONLY
         else:
             status = PoolSlotStatus.EMPTY
         slots.append(SlotPool(
@@ -367,10 +400,11 @@ def build_pool(*, catalog: GameCatalog, profile: PatchProfile,
             retained_count=len(kept), truncated=len(others) > len(kept),
             unavailable_count=unavailable, partial_count=partial))
 
-    gap_ids = []
+    gap_ids = set(undecided_gaps)
     if any(s.status is PoolSlotStatus.MISSING_CATEGORY_RULE for s in slots):
-        gap_ids = sorted(g.gap_id for g in gaps
-                         if SLOT_RULES_PATH in g.field_paths)
+        gap_ids.update(g.gap_id for g in gaps
+                       if SLOT_RULES_PATH in g.field_paths)
+    gap_ids = sorted(gap_ids)
     pool = EquipmentPool(
         schema_version=SCHEMA_VERSION, record_id="", created_at=created_at,
         provenance_ids=list(dict.fromkeys(
@@ -394,6 +428,11 @@ def pool_report(pool: EquipmentPool) -> dict:
                      "claim": "sampling bounds, not an exhaustive market"},
         "slots": {s.slot_id: {"status": s.status.value,
                               "candidates": len(s.candidates),
+                              "complete_candidates": sum(
+                                  1 for c in s.candidates
+                                  if not is_exploratory(c)),
+                              "exploratory_candidates": sum(
+                                  1 for c in s.candidates if is_exploratory(c)),
                               "considered": s.considered_count,
                               "retained": s.retained_count,
                               "truncated": s.truncated,
@@ -406,6 +445,12 @@ def pool_report(pool: EquipmentPool) -> dict:
             if s.status is PoolSlotStatus.MISSING_CATEGORY_RULE],
         "empty_slots": [s.slot_id for s in pool.slots
                         if s.status is PoolSlotStatus.EMPTY],
+        # Coverage counts only complete, rule-accepted candidates.
+        "populated_slots": [s.slot_id for s in pool.slots
+                            if s.status is PoolSlotStatus.POPULATED],
+        "exploratory_only_slots": [
+            s.slot_id for s in pool.slots
+            if s.status is PoolSlotStatus.EXPLORATORY_ONLY],
         "queries": {"declared": len(pool.enabling_queries),
                     "unexecuted": statuses.get("unexecuted", 0),
                     "over_bound": statuses.get("over_bound", 0),

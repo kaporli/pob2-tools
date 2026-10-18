@@ -11,9 +11,9 @@ POB2_ROOT=<clean checkout of ce566ea> python scripts/p02_t03_1_slot_rules.py
 
 | File | What | SHA-256 |
 |---|---|---|
-| `slot-acceptance.json` | `rule_sources.slotAcceptance` as the engine returned it: per slot and per off-hand context, how many probe bases of each category `ItemsTab:IsItemValidForSlot` accepts at normal, unique and relic rarity | `6be152854950f4f1f5d0efeec2f13e2cc978810f89dfc3d77bf6ff9d65f95929` |
-| `slot-rules.json` | The slot rules, refused rarities, 152 off-hand rules and P02-T03.1 gaps the exporter built from it | `958ff81f0c39b2e893a32cc1e7a3c8c1ecca1599b378624d221d36fc7fd276f6` |
-| `real-pool.json` | A pool from 46 real items: the owner's seed character (owned, in its source slots) and poe.ninja reference 25c49 (an imported guide: not owned, availability unknown). Per item: parse status, line statuses, any unresolved line | `ccb71b88504fb7e7945a98996362ed6831e2eaaeb6f4856f8303de85185ac472` |
+| `slot-acceptance.json` | `rule_sources.slotAcceptance` as the engine returned it: per slot and per off-hand context, how many probe bases of each category `ItemsTab:IsItemValidForSlot` accepts at normal, unique and relic rarity | `87ed4772e1558cfadc9f0cd4dfe406d5b2658a9ec6eb02a5b2db61da4275ec7b` |
+| `slot-rules.json` | The slot rules, refused rarities, 152 off-hand rules and P02-T03.1 gaps the exporter built from it | `694116bcbadfa4c6bc1701edd96cc616a15c79c40d933eac3eab1d4f318122a1` |
+| `real-pool.json` | A pool from 46 real items: the owner's seed character (owned, in its source slots) and poe.ninja reference 25c49 (an imported guide: not owned, availability unknown). Per item: parse status, line statuses, any unresolved line | `06c4661c333aa05059e3897407339865d01b3978ed0b02e157cc9f6dcb7dfde2` |
 | `../P02/catalog-rows-slice.json` | The P02 row slice regenerated from the same clean checkout: tables unchanged, `rule_sources` gains `slotAcceptance` and citations gain `slot_validity`, so a replayed profile carries the slot rules | `5e0d18cd1714c65b0b1c2d8acb417241f3519860f746b43ab94b88a6f79d130d` |
 | `offline-py312.txt`, `offline-py310.txt` | Offline suite tails | |
 | `engine-py312.txt` | Targeted engine test tails | |
@@ -90,11 +90,33 @@ matches no catalog text and are not placed:
 | 25c49 Gloves (Golem Claw) | `20% more Global Evasion Rating and Energy Shiel`, truncated in the source |
 | 25c49 Jewel 32763 (Spirit Wound) | `Notable Passive Skills in Radius also grant 12% increased Critical Damage Bonus for Attack Damage`; the catalog line is (5-10)% |
 
-39 slots hold candidates: every armour and jewelry slot, all three charm
-slots, both flasks, both limb pairs, Weapon 1 and Weapon 1 Swap and every
-tree jewel socket. Unique jewels are kept out of the seven refusing sockets.
-Only Weapon 2 and Weapon 2 Swap are empty: neither real build holds an
-off-hand item (quarterstaff and talisman).
+Pool coverage after the PR #22 R8 repair: 35 slots are `populated` with
+154 complete candidates (rings, belt, body armour, charms, flasks, limbs,
+both weapon sets, every tree jewel socket). Amulet, Helmet, Gloves and Boots
+are `exploratory_only`: their 74 exploratory candidates in total across the
+pool are stat-known partial items, marked `exploratory` and
+`stat_known_partial`, never complete or recommendation-ready coverage.
+Weapon 2 and Weapon 2 Swap are empty: neither real build holds an off-hand
+item (quarterstaff and talisman). Unique jewels are kept out of the seven
+refusing sockets. Nothing in the pinned probe is undecided, so no candidate
+is placed for an undecided slot rule.
+
+## Undecided rules (PR #22 R8 repair)
+
+Slot and off-hand rules carry what the probe could not decide:
+`undecided_categories` (a category accepted for only some bases; `*` for an
+off hand whose main-hand bases disagree), `undecided_rarities` (per rarity,
+categories whose answer differs from normal rarity while the rarity is not
+refused outright), `undecided_bases` (probe failures), an off-hand rule's
+`undecided` flag, and the rule's `gap_ids`. `catalog/slotrules.py` `decide`
+answers `undecided` for exactly those combinations. Legality then reports
+`slot_rule_undecided` or `off_hand_rule_undecided` as `unknown` citing the
+rule's gaps; the pool places the item only as an exploratory candidate
+(`slot_rule_undecided`) and adds the gaps to the pool. Unaffected
+combinations keep their definite answers. The reviewer's probes are
+regression tests in `tests/unit/test_p02_t03_1_slot_rules.py`; run against
+the reviewed head `2f9a9f7` they fail
+(`repairs/negative-control-2f9a9f7-py312.txt`: 8 failed, 20 passed).
 
 ## Open gaps
 

@@ -88,6 +88,10 @@ def test_the_live_probe_matches_the_committed_capture(live_probe):
     assert not live.probe_failures
     assert live.accepted == capture.accepted
     assert live.partial == capture.partial == {}
+    # Nothing on the pinned engine is undecided, so every rule is definite.
+    assert live.rarity_undecided == {} and not live.failed_bases
+    assert all(c.uniform and not c.partial and not c.rarity_undecided
+               for c in live.off_hand)
     assert sorted(live.off_hand, key=repr) == sorted(capture.off_hand, key=repr)
 
 
