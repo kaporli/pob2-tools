@@ -88,7 +88,7 @@ Answers, 2026-10-18 (verbatim where quoted; all in `seed/manifest.json`):
 | Q2 | "whirling assault" | Opener at 0 charges, 0 Combo |
 | Q3 | "when i have a charge" | Charged Staff pressed with at least one charge; place in the cycle unresolved (Q10) |
 | Q4 | Spirit skills always active; "I press pounce, but only for mobility" | Herald of Ice, Herald of Thunder, Wind Dancer, Ghost Dance, Trinity, Remnants of Kalguur persistent, not rotation actions; Pounce movement only |
-| Q5 | "the dash from flicker itself" | Flicker Strike's teleport supplies Hit and Run's 10 metres; owner statement, unconfirmed by the catalog (non-blocking) |
+| Q5 | "the dash from flicker itself" | Flicker Strike's teleport supplies Hit and Run's 10 metres; owner statement, unconfirmed by the catalog (blocking until activation is evidenced) |
 | Q6 | "yes when i'm on a boss & my refund 2% mana on kill jewel doesnt see use" | Mana flask on bosses; mana on kill does nothing there |
 | Q7 | T16 maps comfortably; struggles with "monsters have increased ailment threshold" | Clear workloads on T16 maps, one with that modifier; bosses not named |
 | Q8 | "we damage calc with PoB, not ingame testing" | Decision 1: D07 amendment 2026-10-18 |
@@ -290,7 +290,18 @@ Procedure:
 
 Status: defined, not computed. Blocking: charge-cycle rules, Charged Staff
 placement and shared charges, config conditions, clean-engine rerun, mana
-sustain.
+sustain, Hit and Run activation/reuse, and damage attribution. The method's
+`required_gap_ids` enumerates these prerequisites; they also appear in the
+measurement field's `gap_ids`. Resolving every other gap does not permit a
+score while either activation or attribution remains unresolved.
+
+Before the first and every subsequent Flicker Strike use, establish the
+activation condition. If teleport does not re-enable Hit and Run, provide an
+evidenced movement action and count its time, or retain a blocking gap. An
+owner statement alone does not establish the mechanic. Unassigned secondary
+damage cannot enter D(c) or the score. PoB damage acceptance and optional
+recordings do not waive either prerequisite. This is a protocol contract;
+P06/P07 must implement its enforcement before computing a result.
 
 ## Field sourcing
 
@@ -309,8 +320,8 @@ No field is a gameplay measurement.
 
 28 `DataGap` records ship in `scenarios.json`. Resolved (4):
 `benchmark-target` and `benchmark-measurement` (D07 amendment),
-`class-scope-decision` (Q9), `preparation-allowance` (Q4). Open (24): 19
-blocking, 4 ranking sensitive, 1 informational.
+`class-scope-decision` (Q9), `preparation-allowance` (Q4). Open (24): 21
+blocking, 3 ranking sensitive, 0 informational.
 
 | Gap | Kind | Severity | Status |
 |---|---|---|---|
@@ -333,11 +344,11 @@ blocking, 4 ranking sensitive, 1 informational.
 | `gap-p09-t011-patch-profile` | stale_patch | blocking | open |
 | `gap-p09-t011-engine-checkout-state` | missing_input | blocking | open |
 | `gap-p09-t011-variant-exports` | missing_input | blocking | open |
-| `gap-p09-t011-attribution-rules` | unsupported_rule | ranking_sensitive | open |
+| `gap-p09-t011-attribution-rules` | unsupported_rule | blocking | open |
 | `gap-p09-t011-flicker-strike-timing` | unvalidated_prediction | ranking_sensitive | open |
 | `gap-p09-t011-survival-threshold` | missing_input | ranking_sensitive | open |
 | `gap-p09-t011-initial-resources` | missing_input | ranking_sensitive | open |
-| `gap-p09-t011-hit-and-run-movement` | unsupported_rule | informational | open |
+| `gap-p09-t011-hit-and-run-movement` | unsupported_rule | blocking | open |
 | `gap-p09-t011-benchmark-target` | missing_input | blocking | resolved |
 | `gap-p09-t011-benchmark-measurement` | unsupported_rule | blocking | resolved |
 | `gap-p09-t011-class-scope-decision` | missing_input | blocking | resolved |

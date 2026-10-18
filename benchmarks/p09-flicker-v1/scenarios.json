@@ -1642,6 +1642,16 @@
           "source": "D07 amendment 2026-10-18; method defined in benchmarks/p09-flicker-v1/protocol.md",
           "value": {
             "method_id": "pob-cycle-v1",
+            "required_gap_ids": [
+              "gap-p09-t011-charge-cycle-rules",
+              "gap-p09-t011-rotation-details",
+              "gap-p09-t011-charged-staff-shared-charges",
+              "gap-p09-t011-config-conditions",
+              "gap-p09-t011-engine-checkout-state",
+              "gap-p09-t011-sustain-cycle",
+              "gap-p09-t011-hit-and-run-movement",
+              "gap-p09-t011-attribution-rules"
+            ],
             "damage_source": "Path of Building on the pinned engine (D07 amendment 2026-10-18)",
             "target": "flicker_sustained_v1 PoB enemy configuration (target_entities fields)",
             "inputs": [
@@ -1732,6 +1742,7 @@
               }
             ],
             "procedure": [
+              "Prerequisites: every required_gap_id must be resolved with evidence. Before the first and each subsequent Flicker Strike use, establish Hit and Run activation. If teleport does not re-enable it, account for an evidenced movement action and its elapsed time, or stop with a blocking gap. Unassigned secondary damage cannot enter D(c) or the score; attribution must be accepted before computation.",
               "1. t = 0: 0 Power Charges, 0 Combo, persistent Spirit skills active (owner Q4), energy shield and mana full.",
               "2. Cycle k = 1, 2, ...: one Whirling Assault use lasting t_WA, then one Flicker Strike use (owner Q1, Q2). Charged Staff's place is gap-p09-t011-rotation-details; no value is computed until it closes.",
               "3. At Whirling Assault use k, Combo K_k = min(K_max, Combo gained since the previous Whirling Assault use, per g). It is expended; the Power Charges gained follow Ailith's Chimes, expected p x K_k, with the distribution the Surpassing rule gives (gap-p09-t011-charge-cycle-rules). Charges held C_k = min(C_max, carried_k + gained_k). Flicker Strike's 'cannot gain Power Charges while using this Skill' means no charge is gained during step 4.",
@@ -1742,15 +1753,18 @@
               "8. Whirling Assault's own damage and every other skill's damage are reported separately and never enter the score (D07 item 3)."
             ],
             "community_method_difference": "The community reference (poe.ninja 25c49) reads AverageBurstDamage at forced charges (7, above its maximum of 6) with forced Combo, Rage, Onslaught and enemy conditions: burst per use, no charge generation time. pob-cycle-v1 uses the same PoB outputs but only charges the rotation generates, and divides by elapsed time including each Whirling Assault use. PoB TotalDPS (AverageDamage x Speed) also ignores charge generation time.",
-            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules (g, Surpassing distribution), gap-p09-t011-rotation-details (Charged Staff), gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-engine-checkout-state, gap-p09-t011-sustain-cycle."
+            "status": "Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules, gap-p09-t011-rotation-details, gap-p09-t011-charged-staff-shared-charges, gap-p09-t011-config-conditions, gap-p09-t011-engine-checkout-state, gap-p09-t011-sustain-cycle, gap-p09-t011-hit-and-run-movement, gap-p09-t011-attribution-rules."
           },
           "gap_ids": [
             "gap-p09-t011-charge-cycle-rules",
+            "gap-p09-t011-rotation-details",
             "gap-p09-t011-charged-staff-shared-charges",
-            "gap-p09-t011-flicker-strike-timing",
             "gap-p09-t011-config-conditions",
             "gap-p09-t011-engine-checkout-state",
-            "gap-p09-t011-rotation-details"
+            "gap-p09-t011-sustain-cycle",
+            "gap-p09-t011-hit-and-run-movement",
+            "gap-p09-t011-attribution-rules",
+            "gap-p09-t011-flicker-strike-timing"
           ]
         },
         "gameplay_recordings": {
@@ -2470,7 +2484,7 @@
         "/attribution_rules"
       ],
       "mechanic_ids": [],
-      "severity": "ranking_sensitive",
+      "severity": "blocking",
       "explanation": "Proposed rule: only Flicker Strike's own PoB AverageBurstDamage counts; Whirling Assault, Living Lightning, the heralds, Wind Dancer, Trinity and Remnants of Kalguur are reported separately. Not yet accepted by a reviewer. Charged Staff's buff share is gap-p09-t011-charged-staff-shared-charges.",
       "needed_evidence": "Reviewer acceptance of the proposed rule, or a replacement rule per seed damage source with catalog evidence.",
       "collection_method": "P07-T02 attribution rule review against the catalog.",
@@ -2616,16 +2630,17 @@
         "flicker_sustained_v1"
       ],
       "field_paths": [
-        "/movement_model_id"
+        "/movement_model_id",
+        "/measurement_method"
       ],
       "mechanic_ids": [
         "support/SupportHitAndRunPlayer",
         "statdesc/skill_unusable_until_moved_X_distance"
       ],
-      "severity": "informational",
+      "severity": "blocking",
       "explanation": "Hit and Run makes Flicker Strike usable after moving 10 metres. Owner Q5: 'the dash from flicker itself' supplies it. The catalog does not confirm that Flicker Strike's teleport counts as moving.",
-      "needed_evidence": "Engine, official or recorded evidence that Flicker Strike's teleport re-enables Hit and Run.",
-      "collection_method": "Optional: a recording of consecutive Flicker Strike uses without other movement.",
+      "needed_evidence": "Engine, official or recorded evidence that Flicker Strike's teleport re-enables Hit and Run, including the first-use activation condition; otherwise a legal movement action with its time charged to the cycle, or a supported replacement setup.",
+      "collection_method": "Engine or official rule lookup; a recording of consecutive uses is an optional evidence route, not a waiver of activation.",
       "affected_evaluation_ids": [],
       "sensitivity_result_id": null,
       "status": "open",

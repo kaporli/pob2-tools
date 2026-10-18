@@ -600,7 +600,7 @@ def build_gaps():
              "Owner decision 2026-10-18: PoB is the damage source (D07 "
              "amendment); method pob-cycle-v1 defined in the protocol.",
              resolved_by=[D07_AMENDMENT, OWNER_ANSWERS_REF]),
-        _gap("gap-p09-t011-attribution-rules", UR, R, [DPS_ID],
+        _gap("gap-p09-t011-attribution-rules", UR, B, [DPS_ID],
              ["/attribution_rules"],
              "Proposed rule: only Flicker Strike's own PoB AverageBurstDamage "
              "counts; Whirling Assault, Living Lightning, the heralds, Wind "
@@ -666,15 +666,18 @@ def build_gaps():
              "or an engine or official statement of the extra strikes' timing.",
              "Optional owner recording of Flicker Strike uses at 1 and 5 "
              "charges, read frame by frame."),
-        _gap("gap-p09-t011-hit-and-run-movement", UR, I, ALL_IDS, ["/movement_model_id"],
+        _gap("gap-p09-t011-hit-and-run-movement", UR, B, ALL_IDS,
+             ["/movement_model_id", "/measurement_method"],
              "Hit and Run makes Flicker Strike usable after moving 10 metres. "
              "Owner Q5: 'the dash from flicker itself' supplies it. The "
              "catalog does not confirm that Flicker Strike's teleport counts "
              "as moving.",
              "Engine, official or recorded evidence that Flicker Strike's "
-             "teleport re-enables Hit and Run.",
-             "Optional: a recording of consecutive Flicker Strike uses without "
-             "other movement.",
+             "teleport re-enables Hit and Run, including the first-use "
+             "activation condition; otherwise a legal movement action with "
+             "its time charged to the cycle, or a supported replacement setup.",
+             "Engine or official rule lookup; a recording of consecutive uses "
+             "is an optional evidence route, not a waiver of activation.",
              ["support/SupportHitAndRunPlayer", "statdesc/skill_unusable_until_moved_X_distance"]),
         _gap("gap-p09-t011-sustain-cycle", MI, B, [DPS_ID], ["/sustain_report"],
              "D07 item 6 needs resource depletion and whether the cycle "
@@ -914,6 +917,18 @@ def _charge_table():
     return json.loads(CHARGE_TABLE_PATH.read_text(encoding="utf-8"))
 
 
+POB_CYCLE_REQUIRED_GAPS = (
+    "gap-p09-t011-charge-cycle-rules",
+    "gap-p09-t011-rotation-details",
+    "gap-p09-t011-charged-staff-shared-charges",
+    "gap-p09-t011-config-conditions",
+    "gap-p09-t011-engine-checkout-state",
+    "gap-p09-t011-sustain-cycle",
+    "gap-p09-t011-hit-and-run-movement",
+    "gap-p09-t011-attribution-rules",
+)
+
+
 def pob_cycle_method():
     """pob-cycle-v1: the flicker_sustained_v1 computation, defined, not run."""
     t = _charge_table()
@@ -921,6 +936,7 @@ def pob_cycle_method():
     table = "docs/evidence/P09-T01.1/pob-charge-table.json"
     return {
         "method_id": "pob-cycle-v1",
+        "required_gap_ids": list(POB_CYCLE_REQUIRED_GAPS),
         "damage_source": "Path of Building on the pinned engine (D07 amendment 2026-10-18)",
         "target": "flicker_sustained_v1 PoB enemy configuration (target_entities fields)",
         "inputs": [
@@ -949,6 +965,7 @@ def pob_cycle_method():
              "source": "PoB ManaCost, groups 6 and 8", "seed_values": {"m_F": rows[0]["ManaCost"], "m_WA": t["whirling_assault"]["ManaCost"]}},
         ],
         "procedure": [
+            "Prerequisites: every required_gap_id must be resolved with evidence. Before the first and each subsequent Flicker Strike use, establish Hit and Run activation. If teleport does not re-enable it, account for an evidenced movement action and its elapsed time, or stop with a blocking gap. Unassigned secondary damage cannot enter D(c) or the score; attribution must be accepted before computation.",
             "1. t = 0: 0 Power Charges, 0 Combo, persistent Spirit skills active (owner Q4), energy shield and mana full.",
             "2. Cycle k = 1, 2, ...: one Whirling Assault use lasting t_WA, then one Flicker Strike use (owner Q1, Q2). Charged Staff's place is gap-p09-t011-rotation-details; no value is computed until it closes.",
             "3. At Whirling Assault use k, Combo K_k = min(K_max, Combo gained since the previous Whirling Assault use, per g). It is expended; the Power Charges gained follow Ailith's Chimes, expected p x K_k, with the distribution the Surpassing rule gives (gap-p09-t011-charge-cycle-rules). Charges held C_k = min(C_max, carried_k + gained_k). Flicker Strike's 'cannot gain Power Charges while using this Skill' means no charge is gained during step 4.",
@@ -966,11 +983,7 @@ def pob_cycle_method():
             "charges the rotation generates, and divides by elapsed time "
             "including each Whirling Assault use. PoB TotalDPS (AverageDamage "
             "x Speed) also ignores charge generation time."),
-        "status": ("Defined, not computed. Blocking: gap-p09-t011-charge-cycle-rules "
-                   "(g, Surpassing distribution), gap-p09-t011-rotation-details "
-                   "(Charged Staff), gap-p09-t011-charged-staff-shared-charges, "
-                   "gap-p09-t011-config-conditions, gap-p09-t011-engine-checkout-state, "
-                   "gap-p09-t011-sustain-cycle."),
+        "status": "Defined, not computed. Blocking: " + ", ".join(POB_CYCLE_REQUIRED_GAPS) + ".",
     }
 
 
@@ -1036,9 +1049,7 @@ def dps_scenario(mechanics_ids):
                                ["gap-p09-t011-attribution-rules", "gap-p09-t011-charged-staff-shared-charges"]),
         "measurement_method": F("decision_D07", "D07 amendment 2026-10-18; method defined in benchmarks/p09-flicker-v1/protocol.md",
                                 pob_cycle_method(),
-                                ["gap-p09-t011-charge-cycle-rules", "gap-p09-t011-charged-staff-shared-charges",
-                                 "gap-p09-t011-flicker-strike-timing", "gap-p09-t011-config-conditions",
-                                 "gap-p09-t011-engine-checkout-state", "gap-p09-t011-rotation-details"]),
+                                [*POB_CYCLE_REQUIRED_GAPS, "gap-p09-t011-flicker-strike-timing"]),
         "gameplay_recordings": F("decision_D07", "D07 amendment: optional validation, not a prerequisite", "optional"),
         "sustain_report": F("decision_D07", "D07 item 6: report depletion and whether the cycle repeats",
                             {"required": True, "repeatable_cycle": None},

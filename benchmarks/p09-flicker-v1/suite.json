@@ -9,8 +9,8 @@
   "sources": {
     "scenarios": {
       "path": "benchmarks/p09-flicker-v1/scenarios.json",
-      "sha256": "06e1f49ece386abe348ba51e7905dcc2a3a4dfca38b773aa7ebf6f4e8d0606aa",
-      "bytes": 110399
+      "sha256": "dd4f5f6a03ab73b98ee868de22ec02d7bfd831f7fcae2346283d9ed4df735d14",
+      "bytes": 111626
     },
     "references": {
       "path": "benchmarks/p09-flicker-v1/references.json",
@@ -57,7 +57,7 @@
     {
       "scenario_id": "flicker_sustained_v1",
       "version": "1",
-      "definition_hash": "81f9fa70ddd4cc834ff0b8e6dba15e190cbd6e6b64b29031f2678aa44fa3a755",
+      "definition_hash": "3992aa150c95d3b64c33f6fa6a1de864e9073974bf6ea5d8db498dc69e760007",
       "reference_build_id": null,
       "reference_result_id": null,
       "reference_status": "unresolved"
@@ -95,7 +95,7 @@
       "reference_status": "unresolved"
     }
   ],
-  "suite_hash": "c846d70ad30131ded1a4f68509801f2d9ebaffdf11812e6918556448fab363d0",
+  "suite_hash": "d0820302432a1a047e11f1a066f0ae5b1ec12db141f84583db4afbf1349c6505",
   "suite_hash_note": "Both reference slots are null for every scenario. Freezing a reference later changes this hash and starts a separate leaderboard.",
   "open_gaps": [
     "gap-p09-t011-encounter-selection",

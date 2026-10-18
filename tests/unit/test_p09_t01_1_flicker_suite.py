@@ -389,9 +389,30 @@ def test_scope_is_approved_for_all_ascendancies_and_variants(scope, bundle):
     assert gap["status"] == "resolved"
 
 
-def test_hit_and_run_movement_is_non_blocking(bundle):
-    gap = next(g for g in bundle["data_gaps"] if g["gap_id"] == "gap-p09-t011-hit-and-run-movement")
-    assert gap["severity"] == "informational" and gap["status"] == "open"
+@pytest.mark.parametrize("unresolved", [
+    "gap-p09-t011-hit-and-run-movement",
+    "gap-p09-t011-attribution-rules",
+], ids=["no-evidenced-reenable", "unassigned-secondary-damage"])
+def test_activation_and_attribution_still_block_after_other_gaps_close(bundle, unresolved):
+    # Protocol contract only: no production cycle evaluator exists yet. A
+    # consumer resolving every other gap must still refuse a score here.
+    field = _scenario(bundle, gen.DPS_ID)["fields"]["measurement_method"]
+    method = field["value"]
+    gaps = {g["gap_id"]: dict(g, status="resolved") for g in bundle["data_gaps"]}
+    gaps[unresolved]["status"] = "open"
+    blockers = {gid for gid in field["gap_ids"]
+                if gaps[gid]["status"] != "resolved" and gaps[gid]["severity"] == "blocking"}
+    assert blockers == {unresolved}
+    assert unresolved in method["required_gap_ids"] and unresolved in method["status"]
+
+
+def test_all_method_prerequisites_are_blocking_and_exposed_to_consumers(bundle):
+    field = _scenario(bundle, gen.DPS_ID)["fields"]["measurement_method"]
+    gaps = {g["gap_id"]: g for g in bundle["data_gaps"]}
+    for gid in field["value"]["required_gap_ids"]:
+        assert gid in field["gap_ids"]
+        assert gaps[gid]["severity"] == "blocking"
+        assert gaps[gid]["status"] == "open"
 
 
 def test_suite_lists_open_and_resolved_gaps(bundle, suite):
