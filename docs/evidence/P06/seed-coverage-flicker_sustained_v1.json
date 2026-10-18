@@ -5,12 +5,12 @@
     "blocking/missing_implementation": 15,
     "blocking/unassigned_damage": 5,
     "blocking/unknown_rule": 7,
-    "informational/not_applicable": 59,
+    "informational/not_applicable": 71,
     "ranking_sensitive/unvalidated": 11
   },
   "decision": {
     "blocking_gap_ids": [
-      "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+      "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
       "gap-p06-missing-data-flicker-sustained-v1-0b2f7ef8fa",
       "gap-p06-missing-data-flicker-sustained-v1-5a807dfa4a",
       "gap-p06-missing-data-flicker-sustained-v1-8c9d8962b7",
@@ -73,7 +73,7 @@
         "/engine/pob_commit",
         "/engine/pob_dirty"
       ],
-      "gap_id": "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+      "gap_id": "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
       "kind": "missing_input",
       "mechanic_ids": [
         "engine/pinned-checkout"
@@ -83,7 +83,7 @@
         "p06-coverage",
         "p06-flicker-v1"
       ],
-      "record_id": "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+      "record_id": "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
       "resolution_evidence_ids": [],
       "schema_version": 1,
       "sensitivity_result_id": null,
@@ -91,7 +91,7 @@
       "status": "open",
       "subject_ids": [
         "flicker_sustained_v1",
-        "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed"
+        "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed/Config=1;Items=1;Skills=1;Tree=1"
       ]
     },
     {
@@ -1520,6 +1520,141 @@
       "affected_evaluation_ids": [],
       "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
       "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyChaosDamage = 386 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyChaosDamage"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemychaosdamage-10022ed7c6",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemychaosdamage-10022ed7c6",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyChaosDamage",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyColdDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyColdDamage"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemycolddamage-dbd08f5b27",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemycolddamage-dbd08f5b27",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyColdDamage",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyColdPen = 3 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyColdPen"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemycoldpen-821574d6e7",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemycoldpen-821574d6e7",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyColdPen",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyCritChance = 5 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyCritChance"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemycritchance-0f63e01e8f",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemycritchance-0f63e01e8f",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyCritChance",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyCritDamage = 30 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyCritDamage"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemycritdamage-43a9dc9064",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemycritdamage-43a9dc9064",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyCritDamage",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
       "explanation": "enemyCriticalWeaknessStacks = 20 is applied but PoB hides the option for this build; its condition does not hold.",
       "field_paths": [
         "/config/enemyCriticalWeaknessStacks"
@@ -1574,6 +1709,141 @@
       "affected_evaluation_ids": [],
       "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
       "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyFireDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyFireDamage"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemyfiredamage-5f0bda4506",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemyfiredamage-5f0bda4506",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyFireDamage",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyFirePen = 3 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyFirePen"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemyfirepen-e5f9023ed2",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemyfirepen-e5f9023ed2",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyFirePen",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyLightningDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyLightningDamage"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemylightningdamage-c32b7b64cc",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemylightningdamage-c32b7b64cc",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyLightningDamage",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyLightningPen = 3 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyLightningPen"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemylightningpen-6a7d376f64",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemylightningpen-6a7d376f64",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyLightningPen",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemyPhysicalDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemyPhysicalDamage"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemyphysicaldamage-e519fcd88b",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemyphysicaldamage-e519fcd88b",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemyPhysicalDamage",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
       "explanation": "enemySizePreset = 'Medium' is applied but PoB hides the option for this build; its condition does not hold.",
       "field_paths": [
         "/config/enemySizePreset"
@@ -1594,6 +1864,33 @@
       "status": "open",
       "subject_ids": [
         "config:enemySizePreset",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "enemySpeed = 700 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/enemySpeed"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-enemyspeed-951603bc89",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-enemyspeed-951603bc89",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:enemySpeed",
         "flicker_sustained_v1"
       ]
     },
@@ -1945,6 +2242,33 @@
       "status": "open",
       "subject_ids": [
         "config:repeatMode",
+        "flicker_sustained_v1"
+      ]
+    },
+    {
+      "affected_evaluation_ids": [],
+      "collection_method": "None for this scenario; a scenario supplying the event would need the rule.",
+      "created_at": "2026-10-18T00:00:00Z",
+      "explanation": "resistancePenalty = -60 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+      "field_paths": [
+        "/config/resistancePenalty"
+      ],
+      "gap_id": "gap-p06-not-applicable-config-resistancepenalty-bc9df0aea2",
+      "kind": "unvalidated_prediction",
+      "mechanic_ids": [],
+      "needed_evidence": "Only for a scenario with those events: the rule's evidence.",
+      "provenance_ids": [
+        "p06-coverage",
+        "p06-flicker-v1"
+      ],
+      "record_id": "gap-p06-not-applicable-config-resistancepenalty-bc9df0aea2",
+      "resolution_evidence_ids": [],
+      "schema_version": 1,
+      "sensitivity_result_id": null,
+      "severity": "informational",
+      "status": "open",
+      "subject_ids": [
+        "config:resistancePenalty",
         "flicker_sustained_v1"
       ]
     },
@@ -2877,17 +3201,17 @@
       "implemented/fixture_checked": 1,
       "implemented/untested": 35,
       "partial/untested": 5,
-      "unknown/untested": 9,
+      "unknown/untested": 10,
       "unsupported/untested": 13
     },
-    "registry_hash": "9f11c08d0dd4028625c20f1640ca0c28920c116894707117d98abbf5b8dd8384",
+    "registry_hash": "c22d9a46bb6024e54a69112a44ab54d9eff0a4613389672b16873616c3cb2729",
     "registry_id": "p06-flicker-v1",
-    "rules": 63,
+    "rules": 64,
     "version": "1"
   },
-  "registry_hash": "9f11c08d0dd4028625c20f1640ca0c28920c116894707117d98abbf5b8dd8384",
+  "registry_hash": "c22d9a46bb6024e54a69112a44ab54d9eff0a4613389672b16873616c3cb2729",
   "report": {
-    "build_id": "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+    "build_id": "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed/Config=1;Items=1;Skills=1;Tree=1",
     "critical_rule_ids": [
       "activation/hit-and-run-reuse",
       "attribution/flicker-sustained-v1"
@@ -2971,7 +3295,7 @@
           "/engine/pob_commit",
           "/engine/pob_dirty"
         ],
-        "gap_id": "gap-p06-missing-data-engine-pinned-checkout-9cd64aed8b",
+        "gap_id": "gap-p06-missing-data-engine-pinned-checkout-c32f518656",
         "mechanics": [
           "engine/pinned-checkout"
         ],
@@ -2980,7 +3304,7 @@
         ],
         "severity": "blocking",
         "subjects": [
-          "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed"
+          "sha256:bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed/Config=1;Items=1;Skills=1;Tree=1"
         ]
       },
       {
@@ -3831,6 +4155,81 @@
       {
         "class": "not_applicable",
         "domain": "config",
+        "explanation": "enemyChaosDamage = 386 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyChaosDamage"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemychaosdamage-10022ed7c6",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyChaosDamage"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyColdDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyColdDamage"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemycolddamage-dbd08f5b27",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyColdDamage"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyColdPen = 3 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyColdPen"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemycoldpen-821574d6e7",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyColdPen"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyCritChance = 5 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyCritChance"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemycritchance-0f63e01e8f",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyCritChance"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyCritDamage = 30 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyCritDamage"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemycritdamage-43a9dc9064",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyCritDamage"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
         "explanation": "enemyCriticalWeaknessStacks = 20 is applied but PoB hides the option for this build; its condition does not hold.",
         "fields": [
           "/config/enemyCriticalWeaknessStacks"
@@ -3861,6 +4260,81 @@
       {
         "class": "not_applicable",
         "domain": "config",
+        "explanation": "enemyFireDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyFireDamage"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemyfiredamage-5f0bda4506",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyFireDamage"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyFirePen = 3 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyFirePen"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemyfirepen-e5f9023ed2",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyFirePen"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyLightningDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyLightningDamage"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemylightningdamage-c32b7b64cc",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyLightningDamage"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyLightningPen = 3 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyLightningPen"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemylightningpen-6a7d376f64",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyLightningPen"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemyPhysicalDamage = 965 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemyPhysicalDamage"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemyphysicaldamage-e519fcd88b",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemyPhysicalDamage"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
         "explanation": "enemySizePreset = 'Medium' is applied but PoB hides the option for this build; its condition does not hold.",
         "fields": [
           "/config/enemySizePreset"
@@ -3871,6 +4345,21 @@
         "severity": "informational",
         "subjects": [
           "config:enemySizePreset"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "enemySpeed = 700 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/enemySpeed"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-enemyspeed-951603bc89",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:enemySpeed"
         ]
       },
       {
@@ -4066,6 +4555,21 @@
         "severity": "informational",
         "subjects": [
           "config:repeatMode"
+        ]
+      },
+      {
+        "class": "not_applicable",
+        "domain": "config",
+        "explanation": "resistancePenalty = -60 feeds target/incoming-damage, which needs events flicker_sustained_v1 does not supply.",
+        "fields": [
+          "/config/resistancePenalty"
+        ],
+        "gap_id": "gap-p06-not-applicable-config-resistancepenalty-bc9df0aea2",
+        "mechanics": [],
+        "protocol_gap_ids": [],
+        "severity": "informational",
+        "subjects": [
+          "config:resistancePenalty"
         ]
       },
       {
@@ -4564,6 +5068,7 @@
         ]
       }
     ],
+    "input_identity": "0df6d759df5459661a1522d0d469ea3914fc35810758464d92d730a555c4bd9f",
     "notes": [
       "group 2 not on active weapon sets [1] or disabled; not walked",
       "group 4 not on active weapon sets [1] or disabled; not walked",
@@ -4627,10 +5132,10 @@
         "severity": "blocking"
       }
     ],
-    "registry_hash": "9f11c08d0dd4028625c20f1640ca0c28920c116894707117d98abbf5b8dd8384",
+    "registry_hash": "c22d9a46bb6024e54a69112a44ab54d9eff0a4613389672b16873616c3cb2729",
     "registry_id": "p06-flicker-v1",
     "rotation_id": null,
-    "rule_closure_hash": "a338f9023027354ba4d9fed21eab46c2e27179f8d4d5f752fb354314768768c5",
+    "rule_closure_hash": "6176e1bc4935170461d42e5e6b5d9976371c6b367001dec5c2d55ed2c1401384",
     "rule_ids": [
       "activation/hit-and-run-reuse",
       "attribution/flicker-sustained-v1",

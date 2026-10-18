@@ -1,4 +1,227 @@
 {
+  "binding": {
+    "config": {
+      "questAct 2Valley of the TitansMedallion": "30% increased Charm Charges Gained  +1 Charm Slot",
+      "questAct 3Venom CryptsVenom Draught": "25% increased Stun Threshold",
+      "questAct 4Abandoned PrisonGoddess of Justice": "30% increased Life Recovery from Flasks",
+      "questAct 4Eye of HinekoraTribal Medicine": "30% increased Global Armour, Evasion and Energy Shield",
+      "questAct 4Halls Of The DeadNgamahu's Test": "+5% to Fire Resistance",
+      "questAct 4Halls Of The DeadTasalio's Test": "+5% to Cold Resistance",
+      "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
+      "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
+    },
+    "document_hash": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+    "items": {
+      "Amulet": [
+        "15",
+        "114d6fe3a67db45b95fc2c4bc8a6a5bdc27b9c7504ead3b0c88d88d794797b08"
+      ],
+      "Belt": [
+        "6",
+        "c5e13263505087961bc69f01ec30a99e66f6462783685ae412d7950c24ff3109"
+      ],
+      "Body Armour": [
+        "1",
+        "34174a0e8a4c7d1fcb172333b2cdc438fb394f6b2fee2760043e1ad8b7ce71ce"
+      ],
+      "Boots": [
+        "3",
+        "504448a357afade44cd3562427b35f41007b5926f9e0037826dc5f27c197775d"
+      ],
+      "Charm 1": [
+        "13",
+        "162f169100cb69eb7821b2043b621c6ef415ee09c12ae5a70c150532a7420606"
+      ],
+      "Charm 2": [
+        "8",
+        "c8be2a633a68c01b7f7099d54528edeab34cb61219f33f501a6886cbeb9d6dcd"
+      ],
+      "Charm 3": [
+        "11",
+        "e985a9476397673f7c353ff2da16431ddd3e870bc4e7fe475e1cee4b6d3ae3ea"
+      ],
+      "Flask 1": [
+        "7",
+        "98c3e9bc4d8522443549944b358b15c195152bf230fd599fafa48c83f3934199"
+      ],
+      "Flask 2": [
+        "14",
+        "b9d1879dcb7c803b7ae6f287b62099116a404a40da522fc993821e680de7f1f5"
+      ],
+      "Gloves": [
+        "9",
+        "668285d6b0ac7ca2984f9b7455f2596ffd83d6c1ca26c10afc06285e890da113"
+      ],
+      "Helmet": [
+        "2",
+        "0642b83f61846eff6b676b5b2ff708402c03a3578e9a6e0e1fe769025b99fbeb"
+      ],
+      "Jewel 21984": [
+        "17",
+        "f6d1eed74782909e301ce13896c9c8f72cb1db867647e13ff109a8faca4eb4ae"
+      ],
+      "Jewel 32763": [
+        "16",
+        "310f62e9ae4858d1108aeceed915b41d4139620fc846e200254951d7fe535a77"
+      ],
+      "Jewel 61834": [
+        "18",
+        "298834e3b494201ea4743f39b8af2c1168ac030e972b5350036c6c1f1af69bfc"
+      ],
+      "Ring 1": [
+        "4",
+        "8c6968b6fc0692a4f62c144471c10df609a02e2c9f7fd553f175ca437953c9a3"
+      ],
+      "Ring 2": [
+        "12",
+        "5f7ef0421bf75180e2b85f70c8861d1af036bb6236edc1b3a25a612f1ee60307"
+      ],
+      "Weapon 1": [
+        "5",
+        "05b01b7d46f5f9e248634d13fc9e7a8c8577716409b3f5bb1055dab10a098fb7"
+      ],
+      "Weapon 1 Swap": [
+        "10",
+        "74e47a5fe1582d072fd2641564115c3f55f24a6a3f96c5c9656b444443be0db8"
+      ]
+    },
+    "nodes": [
+      "535",
+      "722",
+      "1420",
+      "2113",
+      "2582",
+      "2936",
+      "3336",
+      "3700",
+      "4157",
+      "4536",
+      "6842",
+      "7054",
+      "7809",
+      "10364",
+      "11495",
+      "11598",
+      "11604",
+      "12249",
+      "12761",
+      "13407",
+      "13457",
+      "13724",
+      "14262",
+      "14267",
+      "14446",
+      "14725",
+      "15343",
+      "15775",
+      "15975",
+      "16705",
+      "17088",
+      "17367",
+      "17548",
+      "19722",
+      "20024",
+      "20437",
+      "20677",
+      "21336",
+      "21945",
+      "21984",
+      "22713",
+      "24287",
+      "24786",
+      "26034",
+      "26556",
+      "26572",
+      "27705",
+      "28044",
+      "28329",
+      "28835",
+      "29408",
+      "29959",
+      "30615",
+      "30657",
+      "30808",
+      "31765",
+      "31888",
+      "32763",
+      "34015",
+      "34168",
+      "34300",
+      "34316",
+      "34621",
+      "36231",
+      "36723",
+      "36931",
+      "37250",
+      "37514",
+      "37691",
+      "38342",
+      "38493",
+      "38537",
+      "38541",
+      "39369",
+      "39552",
+      "39595",
+      "41751",
+      "41811",
+      "42750",
+      "42805",
+      "42857",
+      "44223",
+      "44516",
+      "44683",
+      "45702",
+      "46197",
+      "47009",
+      "47514",
+      "47976",
+      "48116",
+      "48198",
+      "48773",
+      "49220",
+      "49356",
+      "51741",
+      "52295",
+      "53280",
+      "53941",
+      "54983",
+      "55088",
+      "55621",
+      "56045",
+      "56265",
+      "56349",
+      "56453",
+      "56838",
+      "56847",
+      "57821",
+      "58692",
+      "59538",
+      "59657",
+      "60239",
+      "60362",
+      "61196",
+      "61333",
+      "61403",
+      "61586",
+      "61601",
+      "61632",
+      "61718",
+      "61834",
+      "62841",
+      "62984",
+      "64700",
+      "65204",
+      "65228"
+    ],
+    "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "pob_dirty": false,
+    "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+    }
+  },
   "config": [
     {
       "input": "AVERAGE",
@@ -400,6 +623,7 @@
   "items": [
     {
       "base": "Absent Amulet",
+      "item_id": "15",
       "lines": [
         {
           "block": "implicitModLines",
@@ -442,6 +666,7 @@
     },
     {
       "base": "Utility Belt",
+      "item_id": "6",
       "lines": [
         {
           "block": "implicitModLines",
@@ -484,6 +709,7 @@
     },
     {
       "base": "Runemastered Ancient Mail",
+      "item_id": "1",
       "lines": [
         {
           "block": "enchantModLines",
@@ -552,6 +778,7 @@
     },
     {
       "base": "Runeforged Apostle Leggings",
+      "item_id": "3",
       "lines": [
         {
           "block": "runeModLines",
@@ -599,6 +826,7 @@
     },
     {
       "base": "Thawing Charm",
+      "item_id": "13",
       "lines": [
         {
           "block": "implicitModLines",
@@ -629,6 +857,7 @@
     },
     {
       "base": "Stone Charm",
+      "item_id": "8",
       "lines": [
         {
           "block": "implicitModLines",
@@ -652,6 +881,7 @@
     },
     {
       "base": "Silver Charm",
+      "item_id": "11",
       "lines": [
         {
           "block": "implicitModLines",
@@ -676,6 +906,7 @@
     },
     {
       "base": "Gargantuan Life Flask",
+      "item_id": "7",
       "lines": [
         {
           "block": "explicitModLines",
@@ -717,6 +948,7 @@
     },
     {
       "base": "Ultimate Mana Flask",
+      "item_id": "14",
       "lines": [
         {
           "block": "explicitModLines",
@@ -734,6 +966,7 @@
     },
     {
       "base": "Runeforged Fists of Stone",
+      "item_id": "9",
       "lines": [
         {
           "block": "runeModLines",
@@ -811,6 +1044,7 @@
     },
     {
       "base": "Ancestral Tiara",
+      "item_id": "2",
       "lines": [
         {
           "block": "runeModLines",
@@ -868,6 +1102,7 @@
     },
     {
       "base": "Sapphire",
+      "item_id": "17",
       "lines": [
         {
           "block": "enchantModLines",
@@ -900,6 +1135,7 @@
     },
     {
       "base": "Diamond",
+      "item_id": "16",
       "lines": [
         {
           "block": "explicitModLines",
@@ -917,6 +1153,7 @@
     },
     {
       "base": "Diamond",
+      "item_id": "18",
       "lines": [
         {
           "block": "explicitModLines",
@@ -939,6 +1176,7 @@
     },
     {
       "base": "Gold Ring",
+      "item_id": "4",
       "lines": [
         {
           "block": "implicitModLines",
@@ -981,6 +1219,7 @@
     },
     {
       "base": "Sapphire Ring",
+      "item_id": "12",
       "lines": [
         {
           "block": "implicitModLines",
@@ -1014,6 +1253,7 @@
     },
     {
       "base": "Sinister Quarterstaff",
+      "item_id": "5",
       "lines": [
         {
           "block": "enchantModLines",
@@ -1071,6 +1311,7 @@
     },
     {
       "base": "Nettle Talisman",
+      "item_id": "10",
       "lines": [
         {
           "block": "implicitModLines",
@@ -2641,5 +2882,11 @@
   "pob_dirty": false,
   "seed_sha256": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
   "seed_xml": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml",
+  "selection": {
+    "Config": "1",
+    "Items": "1",
+    "Skills": "1",
+    "Tree": "1"
+  },
   "task": "P06-T02"
 }

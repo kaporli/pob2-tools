@@ -8,8 +8,15 @@ is a gameplay measurement or a score.
 | `seed-engine-mod-support.json` | PoB-derived. For the P09-T01.1 seed export loaded on a clean checkout of `ce566ea`: every equipped item line and allocated passive line with PoB's parse verdict (`parsed`, unparsed remainder `extra`), and every config variable holding an input or placeholder with PoB's own `control.shown` test |
 | `seed-coverage-<scenario>.json` | Coverage of the seed under registry `p06-flicker-v1` for each of the five `p09-flicker-v1` scenarios: registry hash, PoB inputs used, findings, DataGaps and the `decide` result |
 | `offline-py312.txt`, `offline-py310.txt` | Offline suite logs |
+| `repair-negative-control-3cc334d-py312.txt` | PR #19 review probes as regression tests, run on the reviewed head `3cc334d`: 5 failed |
+| `repair-review-probes-py312.json` | `docs/evidence/PR-18-22/review_probes.py` run on the repaired tree |
+| `repair-engine-loadout-py312.txt` | Native check that coverage reads the loadout PoB selects |
 
 ## What the engine probe found
+
+The capture is bound to the document hash, selected sets, clean engine
+commit, each equipped item's id and text hash (18 items, three of them
+jewels), the 126 allocated nodes and the config inputs.
 
 15 item lines and 7 passive lines that PoB leaves unparsed or without a
 modifier list, including Martial Adept ("When you gain Combo, gain an
