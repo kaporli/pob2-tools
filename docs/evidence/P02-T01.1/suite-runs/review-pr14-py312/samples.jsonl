@@ -1,0 +1,27 @@
+{"t": 0.03, "tree_rss": 2080768, "progress": ""}
+{"t": 0.53, "tree_rss": 39837696, "progress": "collecting ... "}
+{"t": 1.05, "tree_rss": 71319552, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 1.58, "tree_rss": 111472640, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 2.08, "tree_rss": 142794752, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 2.59, "tree_rss": 228188160, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 3.11, "tree_rss": 245522432, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 3.62, "tree_rss": 248242176, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 4.14, "tree_rss": 352694272, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 4.64, "tree_rss": 439324672, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 5.16, "tree_rss": 500568064, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 5.67, "tree_rss": 591405056, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 6.19, "tree_rss": 646729728, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 6.7, "tree_rss": 677445632, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 7.22, "tree_rss": 684998656, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 7.72, "tree_rss": 674189312, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 8.23, "tree_rss": 695980032, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 8.75, "tree_rss": 695980032, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 9.27, "tree_rss": 695980032, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 9.78, "tree_rss": 710127616, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 10.28, "tree_rss": 724971520, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_every_fixture_matches_including_flicker_behaviour "}
+{"t": 10.8, "tree_rss": 788193280, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_the_static_support_list_equals_pobs_answer_in_a_build "}
+{"t": 11.31, "tree_rss": 838123520, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_the_static_support_list_equals_pobs_answer_in_a_build "}
+{"t": 11.83, "tree_rss": 838987776, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_the_static_support_list_equals_pobs_answer_in_a_build "}
+{"t": 12.34, "tree_rss": 840003584, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_the_static_support_list_equals_pobs_answer_in_a_build "}
+{"t": 12.86, "tree_rss": 940736512, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_the_static_support_list_equals_pobs_answer_in_a_build "}
+{"t": 13.36, "tree_rss": 910974976, "progress": "tests/engine/test_p02_t02_1_flicker_engine.py::test_the_static_support_list_equals_pobs_answer_in_a_build PASSED [100%]"}

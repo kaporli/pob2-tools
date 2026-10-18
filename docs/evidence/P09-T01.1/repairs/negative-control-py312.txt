@@ -1,0 +1,28 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+_ test_activation_and_attribution_still_block_after_other_gaps_close[no-evidenced-reenable] _
+tests\unit\test_p09_t01_1_flicker_suite.py:405: in test_activation_and_attribution_still_block_after_other_gaps_close
+    assert blockers == {unresolved}
+E   AssertionError: assert set() == {'gap-p09-t01...run-movement'}
+E     
+E     Extra items in the right set:
+E     'gap-p09-t011-hit-and-run-movement'
+E     Use -v to get more diff
+_ test_activation_and_attribution_still_block_after_other_gaps_close[unassigned-secondary-damage] _
+tests\unit\test_p09_t01_1_flicker_suite.py:405: in test_activation_and_attribution_still_block_after_other_gaps_close
+    assert blockers == {unresolved}
+E   AssertionError: assert set() == {'gap-p09-t01...bution-rules'}
+E     
+E     Extra items in the right set:
+E     'gap-p09-t011-attribution-rules'
+E     Use -v to get more diff
+_____ test_all_method_prerequisites_are_blocking_and_exposed_to_consumers _____
+tests\unit\test_p09_t01_1_flicker_suite.py:412: in test_all_method_prerequisites_are_blocking_and_exposed_to_consumers
+    for gid in field["value"]["required_gap_ids"]:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'required_gap_ids'
+=========================== short test summary info ===========================
+FAILED tests/unit/test_p09_t01_1_flicker_suite.py::test_activation_and_attribution_still_block_after_other_gaps_close[no-evidenced-reenable]
+FAILED tests/unit/test_p09_t01_1_flicker_suite.py::test_activation_and_attribution_still_block_after_other_gaps_close[unassigned-secondary-damage]
+FAILED tests/unit/test_p09_t01_1_flicker_suite.py::test_all_method_prerequisites_are_blocking_and_exposed_to_consumers
+3 failed, 34 deselected in 0.58s

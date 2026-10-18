@@ -1,0 +1,23 @@
+{
+  "pr": 16,
+  "python312": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "7784cb",
+      "wall_time_seconds": 6.0723184,
+      "exit_code": 0,
+      "original_token_count": 26,
+      "output": "...............                                                          [100%]\r\n15 passed in 5.21s\r\n"
+    }
+  },
+  "python310": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "eea288",
+      "wall_time_seconds": 4.0010109,
+      "exit_code": 0,
+      "original_token_count": 26,
+      "output": "...............                                                          [100%]\r\n15 passed in 2.58s\r\n"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+FFFFFFFF..                                                               [100%]
+================================== FAILURES ===================================
+_______ test_foreign_catalog_refused_before_enabling_or_sampling[False] _______
+tests\unit\test_p05_t03_pools.py:164: in test_foreign_catalog_refused_before_enabling_or_sampling
+    with pytest.raises(ValueError, match="scope mismatch") as error:
+E   Failed: DID NOT RAISE ValueError
+_______ test_foreign_catalog_refused_before_enabling_or_sampling[True] ________
+tests\unit\test_p05_t03_pools.py:164: in test_foreign_catalog_refused_before_enabling_or_sampling
+    with pytest.raises(ValueError, match="scope mismatch") as error:
+E   Failed: DID NOT RAISE ValueError
+______ test_foreign_listing_refused_even_for_an_enabling_item[foreign0] _______
+tests\unit\test_p05_t03_pools.py:179: in test_foreign_listing_refused_even_for_an_enabling_item
+    with pytest.raises(ValueError, match="scope mismatch") as error:
+E   Failed: DID NOT RAISE ValueError
+______ test_foreign_listing_refused_even_for_an_enabling_item[foreign1] _______
+tests\unit\test_p05_t03_pools.py:179: in test_foreign_listing_refused_even_for_an_enabling_item
+    with pytest.raises(ValueError, match="scope mismatch") as error:
+E   Failed: DID NOT RAISE ValueError
+______ test_foreign_listing_refused_even_for_an_enabling_item[foreign2] _______
+tests\unit\test_p05_t03_pools.py:179: in test_foreign_listing_refused_even_for_an_enabling_item
+    with pytest.raises(ValueError, match="scope mismatch") as error:
+E   Failed: DID NOT RAISE ValueError
+______ test_foreign_listing_refused_even_for_an_enabling_item[foreign3] _______
+tests\unit\test_p05_t03_pools.py:179: in test_foreign_listing_refused_even_for_an_enabling_item
+    with pytest.raises(ValueError, match="scope mismatch") as error:
+E   Failed: DID NOT RAISE ValueError
+_____ test_conflicting_same_hash_items_refused_in_every_order[readiness] ______
+tests\unit\test_p05_t03_pools.py:195: in test_conflicting_same_hash_items_refused_in_every_order
+    with pytest.raises(ValueError, match="conflicting pool item") as error:
+E   Failed: DID NOT RAISE ValueError
+______ test_conflicting_same_hash_items_refused_in_every_order[identity] ______
+tests\unit\test_p05_t03_pools.py:195: in test_conflicting_same_hash_items_refused_in_every_order
+    with pytest.raises(ValueError, match="conflicting pool item") as error:
+E   Failed: DID NOT RAISE ValueError
+=========================== short test summary info ===========================
+FAILED tests/unit/test_p05_t03_pools.py::test_foreign_catalog_refused_before_enabling_or_sampling[False]
+FAILED tests/unit/test_p05_t03_pools.py::test_foreign_catalog_refused_before_enabling_or_sampling[True]
+FAILED tests/unit/test_p05_t03_pools.py::test_foreign_listing_refused_even_for_an_enabling_item[foreign0]
+FAILED tests/unit/test_p05_t03_pools.py::test_foreign_listing_refused_even_for_an_enabling_item[foreign1]
+FAILED tests/unit/test_p05_t03_pools.py::test_foreign_listing_refused_even_for_an_enabling_item[foreign2]
+FAILED tests/unit/test_p05_t03_pools.py::test_foreign_listing_refused_even_for_an_enabling_item[foreign3]
+FAILED tests/unit/test_p05_t03_pools.py::test_conflicting_same_hash_items_refused_in_every_order[readiness]
+FAILED tests/unit/test_p05_t03_pools.py::test_conflicting_same_hash_items_refused_in_every_order[identity]
+8 failed, 2 passed, 15 deselected in 1.56s
