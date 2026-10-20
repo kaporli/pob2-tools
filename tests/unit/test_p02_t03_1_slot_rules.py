@@ -509,3 +509,63 @@ def test_r8_a_probe_failure_leaves_that_base_undecided(probe):
     assert other.decision(CHECK_SLOTS) is Legality.LEGAL
     elsewhere = _validate(export, {"bow": ("Amulet", BOW)})
     assert elsewhere.decision(CHECK_SLOTS) is Legality.UNKNOWN
+
+
+# ------------------------------------- PR #19-22 re-review F2 regressions
+#
+# Both directions of a rarity difference leave the special-rarity item
+# undecided; an unaffected normal refusal stays refused. Fail on c04d1c5.
+
+def _rarity_case(probe, change):
+    from pob2opt.market.pools import EXPLORATORY, SLOT_RULE_UNDECIDED
+    export = _mutated(probe, "Weapon 1", change)
+    report = _validate(export, {"bow": ("Weapon 1", BOW)},
+                       rarity={"bow": "unique"})
+    pool = _pool(export, _pool_item(export, "u", BOW, "unique"))
+    (slot,) = [s for s in pool.slots if s.slot_id == S + "Weapon 1"]
+    return export, report, slot, EXPLORATORY, SLOT_RULE_UNDECIDED
+
+
+def test_f2_normal_refused_unique_accepted_is_unknown(probe):
+    def change(row):
+        row["categories"].pop("Bow")
+    export, report, slot, exploratory, undecided = _rarity_case(probe, change)
+    rule = {r.slot_id: r for r in export.profile.character_rules.slots}[
+        S + "Weapon 1"]
+    assert "Bow" not in rule.accepted_base_categories
+    assert "Bow" in rule.undecided_rarities["unique"]
+    assert report.decision(CHECK_SLOTS) is Legality.UNKNOWN
+    assert "base_category_not_accepted" not in report.violation_codes
+    assert GAP_RARITY in report.cited_gap_ids
+    (candidate,) = slot.candidates
+    assert exploratory in candidate.retained_for
+    assert undecided in candidate.retained_for
+    # The normal-rarity bow stays refused: the normal probe decided it.
+    normal = _validate(export, {"bow": ("Weapon 1", BOW)})
+    assert normal.decision(CHECK_SLOTS) is Legality.ILLEGAL
+    assert "base_category_not_accepted" in normal.violation_codes
+
+
+def test_f2_normal_accepted_unique_refused_is_unknown(probe):
+    def change(row):
+        row["byRarity"]["unique"].pop("Bow")
+    export, report, slot, exploratory, undecided = _rarity_case(probe, change)
+    assert report.decision(CHECK_SLOTS) is Legality.UNKNOWN
+    assert GAP_RARITY in report.cited_gap_ids
+    (candidate,) = slot.candidates
+    assert exploratory in candidate.retained_for
+    assert undecided in candidate.retained_for
+
+
+def test_f2_an_unaffected_normal_refusal_stays_refused(probe):
+    def change(row):
+        row["categories"].pop("Bow")
+    export = _mutated(probe, "Weapon 1", change)
+    for rarity in ("unique", "rare", None):
+        spec = {"ring": rarity} if rarity else None
+        report = _validate(export, {"ring": ("Weapon 1", "Amethyst Ring")},
+                           rarity=spec)
+        assert report.decision(CHECK_SLOTS) is Legality.ILLEGAL, rarity
+    pool = _pool(export, _pool_item(export, "r", "Amethyst Ring", "unique"))
+    (slot,) = [s for s in pool.slots if s.slot_id == S + "Weapon 1"]
+    assert slot.candidates == []

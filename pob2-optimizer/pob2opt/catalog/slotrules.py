@@ -217,18 +217,32 @@ def decide(rule: Any, raw: Mapping[str, Any] | None,
         return UNDECIDED
     accepted = set(_list(rule, "accepted_base_categories"))
     undecided = set(_list(rule, "undecided_categories"))
+    by_rarity = _dict(rule, "undecided_rarities")
+    rarity = str(rarity).lower() if rarity else None
+    # A slot refusing this rarity for every category is the most specific
+    # known answer. Otherwise rarity uncertainty is consulted before the
+    # normal-rarity category answer, in both directions: the normal probe
+    # may refuse a category another rarity accepts, or the reverse.
+    if rarity and rarity in _list(rule, "refused_rarities")             and category in accepted:
+        return REFUSED
+    if rarity and category in by_rarity.get(rarity, ()):
+        return UNDECIDED
+    if rarity is None and rarity_unknown_matters(by_rarity, category):
+        return UNDECIDED
     if category not in accepted:
         if category in undecided or ANY_OTHER in undecided:
             return UNDECIDED
         return REFUSED
     if category in undecided:
         return UNDECIDED
-    rarity = str(rarity).lower() if rarity else None
     if rarity and rarity in _list(rule, "refused_rarities"):
         return REFUSED
-    if rarity and category in _dict(rule, "undecided_rarities").get(rarity, ()):
-        return UNDECIDED
     return ACCEPTED
+
+
+def rarity_unknown_matters(by_rarity: Mapping[str, Any], category: str) -> bool:
+    """With the item's rarity unknown, any rarity leaving it open leaves it open."""
+    return any(category in cats for cats in by_rarity.values())
 
 
 def accepts(accepted: Iterable[str], raw: Mapping[str, Any] | None,
