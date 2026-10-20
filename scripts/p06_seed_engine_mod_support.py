@@ -89,6 +89,11 @@ for var, control in pairs(cfg.varControls) do
       input = input, placeholder = placeholder }
   end
 end
+out.custom_mods = {}
+for _, block in ipairs(set.customModsList or {}) do
+  out.custom_mods[#out.custom_mods + 1] = { title = block.title or "Default",
+    enabled = block.enabled ~= false, text = block.text or "" }
+end
 out.selection = {
   Tree = tostring(build.treeTab.activeSpec),
   Skills = tostring(build.skillsTab.activeSkillSetId),
@@ -146,6 +151,11 @@ def main() -> int:
                 else engine_value == value)
         if not same:
             problems.append("config %s: engine %r, document %r" % (var, inputs.get(var), value))
+    engine_blocks = [(b["title"], bool(b["enabled"]), b["text"])
+                     for b in result.pop("custom_mods") or []]
+    if engine_blocks != list(facts.custom_mods):
+        problems.append("custom modifier blocks: engine %r, document %r" % (
+            engine_blocks, list(facts.custom_mods)))
     if problems:
         print("refused: " + "; ".join(problems))
         return 2
@@ -157,6 +167,7 @@ def main() -> int:
         "items": {slot: [i.item_id, i.text_sha256] for slot, i in sorted(by_slot.items())},
         "nodes": list(facts.passive_ids),
         "config": dict(sorted(facts.config_explicit.items())),
+        "custom_mods": [list(b) for b in facts.custom_mods],
     }
     result["items"].sort(key=lambda e: e["slot"])
     result["nodes"].sort(key=lambda e: int(e["id"]))

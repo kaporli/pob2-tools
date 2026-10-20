@@ -10,7 +10,9 @@ is a gameplay measurement or a score.
 | `offline-py312.txt`, `offline-py310.txt` | Offline suite logs |
 | `repair-negative-control-3cc334d-py312.txt` | PR #19 review probes as regression tests, run on the reviewed head `3cc334d`: 5 failed |
 | `repair-review-probes-py312.json` | `docs/evidence/PR-18-22/review_probes.py` run on the repaired tree |
-| `repair-engine-loadout-py312.txt` | Native check that coverage reads the loadout PoB selects |
+| `repair-engine-loadout-py312.txt` | Native checks that coverage reads the loadout and custom modifier blocks PoB selects |
+| `repair-f1-negative-control-128064c-py312.txt` | Re-review F1 case on `128064c`: fails |
+| `repair-f1-rereview-probes-py312.json` | `docs/evidence/PR-19-22-rereview/probes.py` on the repaired tree |
 
 ## What the engine probe found
 

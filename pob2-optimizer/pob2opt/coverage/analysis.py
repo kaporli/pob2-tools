@@ -29,6 +29,7 @@ Finding classes are distinct so each yields a different request:
                            loadout, engine and state
 ``loadout``                the document's selected sets cannot be determined
 ``target_mismatch``        a scenario-owned target value differs or is absent
+``unsupported_modifier``   an enabled custom modifier block in the config
 """
 
 from __future__ import annotations
@@ -42,7 +43,8 @@ from ..domain.enums import (CoverageState, GapKind, GapSeverity, GapStatus,
 from ..domain.identity import content_hash
 from ..domain.records import DataGap, RotationPolicy
 from ..domain.validation import validate_record
-from .inputs import BuildFacts, ConfigOption, ModSupport, ScenarioFacts
+from .inputs import (BuildFacts, ConfigOption, ModSupport, ScenarioFacts,
+                     active_custom_mods)
 from .registry import CHECKED, MechanicsRegistry, RuleEntry
 
 BLOCKING, RANKING, INFO = (GapSeverity.BLOCKING, GapSeverity.RANKING_SENSITIVE,
@@ -63,6 +65,7 @@ GAP_KIND = {
     "unbound_evidence": GapKind.MISSING_INPUT,
     "loadout": GapKind.UNRESOLVED_ENTITY,
     "target_mismatch": GapKind.CONFLICTING_EVIDENCE,
+    "unsupported_modifier": GapKind.UNSUPPORTED_RULE,
 }
 
 COLLECTION = {
@@ -80,6 +83,7 @@ COLLECTION = {
     "unbound_evidence": "Recapture PoB parse verdicts and config from the exact selected document on a clean checkout of the pinned engine (scripts/p06_seed_engine_mod_support.py).",
     "loadout": "Fix the document's set selectors or loadout titles so exactly one set per tab is selected, then re-import.",
     "target_mismatch": "Set the PoB target configuration to the scenario's value and recapture.",
+    "unsupported_modifier": "Remove or disable the custom modifier block and recapture, or add a registry rule that establishes the modifier from the build.",
 }
 
 #: Calculation-mode switches. They change how PoB averages, not game state.
@@ -276,6 +280,7 @@ def analyse(build: BuildFacts, scenario: ScenarioFacts, registry: MechanicsRegis
     _walk_passives(w, build, verified)
     _walk_items(w, build, verified, sets)
     _walk_config(w, build, verified, config_options, skill_names)
+    _walk_custom_mods(w, build)
     _walk_rotation(w, rotation, active_groups, skill_ids)
     _walk_scenario(w)
     _walk_rules(w, patch_profile_id)
@@ -303,6 +308,7 @@ def analyse(build: BuildFacts, scenario: ScenarioFacts, registry: MechanicsRegis
             "items": sorted([i.slot, i.item_id, i.text_sha256] for i in build.items),
             "nodes": list(build.passive_ids),
             "config": {k: build.config_explicit[k] for k in sorted(build.config_explicit)},
+            "custom_mods": [list(b) for b in build.custom_mods],
             "capture": None if mod_support is None or mod_support.binding is None
             else mod_support.binding.identity(),
         }))
@@ -411,6 +417,12 @@ def _verify_capture(w, build, mods, pinned_commit) -> _Verified | None:
         unbound("/engine_parse/nodes/" + node,
                 "The capture had passive %s allocated; this candidate does not." % node,
                 subjects=("passive:" + node,))
+    if b.custom_mods is None or [tuple(x) for x in b.custom_mods] != \
+            [tuple(x) for x in build.custom_mods]:
+        unbound("/config/custom_mods",
+                "The capture's custom modifier blocks (%s) differ from the candidate's (%s)." % (
+                    "not recorded" if b.custom_mods is None else len(b.custom_mods),
+                    len(build.custom_mods)))
     config = None
     if _same_config(b.config, build.config_explicit):
         config = mods.config
@@ -706,6 +718,27 @@ def _walk_config(w, build, verified, options, skill_names):
               explanation="Scenario %s fixes %s = %r; the capture shows no value for it."
                           % (w.scenario.scenario_id, var, targets[var]),
               needed="%s applied at %r in a bound capture." % (var, targets[var]))
+
+
+def _walk_custom_mods(w, build):
+    """Enabled nonempty custom modifier blocks are not covered by any rule.
+
+    PoB parses and applies them (ConfigTab:BuildModList), so they can change
+    any output. No mechanism here establishes such a modifier, so each one
+    blocks. Disabled and empty blocks are inactive; blocks of unselected
+    config sets are never read.
+    """
+    blocks = list(build.custom_mods)
+    for index, block in enumerate(blocks):
+        if block not in active_custom_mods([block]):
+            continue
+        title, _, text = block
+        w.add("unsupported_modifier", "config", BLOCKING,
+              subjects=("config:custom_mods",), fields=("/config/custom_mods/%d" % index,),
+              explanation="Custom modifier block %r is enabled with %r; PoB applies it to "
+                          "every calculation and no rule establishes it." % (title, text.strip()),
+              needed="The block removed or disabled and PoB outputs recaptured, or a rule "
+                     "deriving %r from the build." % text.strip())
 
 
 def _gate_open(opt, skill_names, effective) -> bool | None:

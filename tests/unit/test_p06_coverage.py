@@ -134,7 +134,8 @@ def capture(b, *, items=None, nodes=None, config=(), commit=PIN, dirty=False, of
         document_hash=source.document_hash, selection=dict(source.selection),
         pob_commit=commit, pob_dirty=dirty,
         items={i.slot: (i.item_id, i.text_sha256) for i in source.items},
-        nodes=tuple(source.passive_ids), config=dict(source.config_explicit))
+        nodes=tuple(source.passive_ids), config=dict(source.config_explicit),
+        custom_mods=tuple(source.custom_mods))
     item_lines = {i.slot: () for i in source.items}
     item_lines.update(items or {})
     node_lines = {n: () for n in source.passive_ids}
@@ -846,6 +847,98 @@ def test_r3_seed_scenario_target_binding_is_explicit():
     assert not scenarios["p09-flk-boss-short"].target_config
     report, _, _ = seed_report()
     assert not [f for f in report.findings if f.gap_class == "target_mismatch"]
+
+
+# ------------------------------- PR #19 re-review F1: custom modifiers ===
+
+def custom_doc(blocks_1="", blocks_2="", active="1", inputs_1=""):
+    return ('<PathOfBuilding2><Build level="90" mainSocketGroup="1"/>'
+            '<Skills><Skill enabled="true"><Gem skillId="Strike" enabled="true"/>'
+            '<Gem skillId="SupportGate" enabled="true"/></Skill>'
+            '<Skill enabled="true"><Gem skillId="Builder" enabled="true"/></Skill></Skills>'
+            '<Tree><Spec nodes=""/></Tree><Config activeConfigSet="%s">'
+            '<ConfigSet id="1">%s%s</ConfigSet><ConfigSet id="2">%s</ConfigSet>'
+            '</Config></PathOfBuilding2>' % (active, inputs_1, blocks_1, blocks_2))
+
+
+def custom_run(doc):
+    facts = build_facts_from_pob_xml(doc, engine=EngineState(PIN, False))
+    return facts, run(b=facts, ms=capture(facts))
+
+
+def modifier_findings(report):
+    return [f for f in report.findings if f.gap_class == "unsupported_modifier"]
+
+
+ENABLED = '<CustomModifierBlock enabled="true" title="Boost">1000% more Damage</CustomModifierBlock>'
+
+
+def test_f1_enabled_block_is_read_and_blocks():
+    facts, (report, decision) = custom_run(custom_doc(ENABLED))
+    assert facts.custom_mods == (("Boost", True, "1000% more Damage"),)
+    found = modifier_findings(report)
+    assert [f.field_paths for f in found] == [("/config/custom_mods/0",)]
+    assert found[0].severity is GapSeverity.BLOCKING
+    gap = next(g for g in report.gaps() if g.gap_id == found[0].gap_id)
+    assert gap.kind is GapKind.UNSUPPORTED_RULE
+    assert not decision.eligible
+    # An absent enabled attribute means enabled, as in PoB.
+    facts, (report, _) = custom_run(custom_doc("<CustomModifierBlock>10% more Damage</CustomModifierBlock>"))
+    assert facts.custom_mods == (("Default", True, "10% more Damage"),)
+    assert modifier_findings(report)
+
+
+def test_f1_disabled_and_empty_blocks_stay_inactive():
+    disabled = '<CustomModifierBlock enabled="false">1000% more Damage</CustomModifierBlock>'
+    empty = '<CustomModifierBlock enabled="true">  \n  </CustomModifierBlock>'
+    for doc, blocks in ((custom_doc(disabled), (("Default", False, "1000% more Damage"),)),
+                        (custom_doc(empty), (("Default", True, ""),)),
+                        (custom_doc(), (("Default", True, ""),))):
+        facts, (report, decision) = custom_run(doc)
+        assert facts.custom_mods == blocks
+        assert not modifier_findings(report)
+        assert decision.eligible, report.to_json()["findings"]
+
+
+def test_f1_legacy_custom_mods_input_migrates_like_pob():
+    legacy = '<Input name="customMods" string="50% more Damage"/>'
+    facts, (report, decision) = custom_run(custom_doc(inputs_1=legacy))
+    assert facts.custom_mods == (("Default", True, "50% more Damage"),)
+    assert "customMods" not in facts.config_explicit
+    assert modifier_findings(report) and not decision.eligible
+    # A block with text wins; the legacy input is dropped.
+    facts, (report, _) = custom_run(custom_doc(
+        '<CustomModifierBlock enabled="false">x</CustomModifierBlock>', inputs_1=legacy))
+    assert facts.custom_mods == (("Default", False, "x"),)
+    assert not modifier_findings(report)
+
+
+def test_f1_block_in_the_inactive_config_set_is_not_read():
+    facts, (report, decision) = custom_run(custom_doc(blocks_2=ENABLED, active="1"))
+    assert facts.custom_mods == (("Default", True, ""),)
+    assert decision.eligible
+    facts, (report, decision) = custom_run(custom_doc(blocks_2=ENABLED, active="2"))
+    assert modifier_findings(report) and not decision.eligible
+
+
+def test_f1_custom_blocks_are_part_of_the_capture_binding():
+    plain = build_facts_from_pob_xml(custom_doc(), engine=EngineState(PIN, False))
+    boosted = build_facts_from_pob_xml(custom_doc(ENABLED), engine=EngineState(PIN, False))
+    report, decision = run(b=replace(boosted, document_hash=plain.document_hash),
+                           ms=capture(plain))
+    assert "/config/custom_mods" in unbound_fields(report) and not decision.eligible
+    assert run(b=plain, ms=capture(plain))[0].input_identity != \
+        run(b=boosted, ms=capture(boosted))[0].input_identity
+    unrecorded = capture(plain)
+    unrecorded = replace(unrecorded, binding=replace(unrecorded.binding, custom_mods=None))
+    report, decision = run(b=plain, ms=unrecorded)
+    assert "/config/custom_mods" in unbound_fields(report) and not decision.eligible
+
+
+def test_f1_seed_capture_records_its_custom_blocks():
+    ms = load_mod_support(PROBE)
+    facts = build_facts_from_pob_xml(SEED.read_bytes())
+    assert ms.binding.custom_mods == facts.custom_mods == (("Default", True, ""),)
 
 
 # ------------------------------------------------------- config options ===
