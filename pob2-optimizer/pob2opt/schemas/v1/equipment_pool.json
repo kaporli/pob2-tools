@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pob2-tools.invalid/schemas/v1/equipment_pool.json",
+  "title": "EquipmentPool",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "provenance_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pool_id": {
+      "type": "string"
+    },
+    "catalog_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "patch_profile_id": {
+      "type": "string"
+    },
+    "sampling": {
+      "$ref": "#/$defs/PoolSampling"
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SlotPool"
+      }
+    },
+    "enabling_queries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/EnablingQueryOutcome"
+      }
+    },
+    "unplaced_item_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "gap_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "created_at",
+    "provenance_ids",
+    "pool_id",
+    "catalog_hash",
+    "patch_profile_id",
+    "sampling",
+    "slots",
+    "enabling_queries",
+    "unplaced_item_hashes",
+    "gap_ids"
+  ],
+  "additionalProperties": false,
+  "description": "Candidates per catalog slot for one run (P05-T03).",
+  "$defs": {
+    "EnablingQueryOutcome": {
+      "type": "object",
+      "properties": {
+        "query_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "slot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "base_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "modifier_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "unexecuted",
+            "over_bound"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "matched_item_hashes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "required": [
+        "query_id",
+        "description",
+        "slot_ids",
+        "base_ids",
+        "modifier_patterns",
+        "status",
+        "reason",
+        "matched_item_hashes"
+      ],
+      "additionalProperties": false
+    },
+    "PoolCandidate": {
+      "type": "object",
+      "properties": {
+        "item_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "listing_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "availability": {
+          "type": "string",
+          "enum": [
+            "owned",
+            "observed",
+            "rechecked",
+            "unknown"
+          ]
+        },
+        "quantity": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "retained_for": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "item_hash",
+        "listing_id",
+        "availability",
+        "quantity",
+        "retained_for"
+      ],
+      "additionalProperties": false
+    },
+    "PoolSampling": {
+      "type": "object",
+      "properties": {
+        "listings_per_slot": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "enabling_queries_per_run": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "listings_per_slot",
+        "enabling_queries_per_run"
+      ],
+      "additionalProperties": false,
+      "description": "Sampling bounds, not an exhaustive-market claim."
+    },
+    "SlotPool": {
+      "type": "object",
+      "properties": {
+        "slot_id": {
+          "type": "string"
+        },
+        "weapon_set_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "accepted_base_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "populated",
+            "empty",
+            "missing_category_rule"
+          ]
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PoolCandidate"
+          }
+        },
+        "considered_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "retained_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "unavailable_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "partial_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "slot_id",
+        "weapon_set_id",
+        "accepted_base_categories",
+        "status",
+        "candidates",
+        "considered_count",
+        "retained_count",
+        "truncated",
+        "unavailable_count",
+        "partial_count"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

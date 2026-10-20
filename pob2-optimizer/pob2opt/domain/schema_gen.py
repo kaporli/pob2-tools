@@ -56,6 +56,7 @@ SHA256_FIELDS = frozenset({
     "rotation_hash", "software_dirty_hash", "source_item_hash",
     "trace_blob_hash", "raw_blob_hashes", "candidate_archive_hashes",
     "benchmark_scenario_hash", "attribution_rules_hash",
+    "unplaced_item_hashes", "matched_item_hashes",
 })
 
 #: Numeric fields that may not be negative but are not covered by a suffix.
@@ -66,6 +67,8 @@ NON_NEGATIVE = frozenset({
     "missing", "next_generation_id", "normal_point_budget", "passive_points",
     "present", "quality", "resolved", "rule_index", "seed", "rng_seed",
     "skill_level_limit", "source_position", "weapon_switches",
+    "listings_per_slot", "enabling_queries_per_run", "considered_count",
+    "retained_count", "unavailable_count", "partial_count",
 })
 
 #: Numeric fields that must be at least one.

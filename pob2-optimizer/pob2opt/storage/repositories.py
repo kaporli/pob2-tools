@@ -62,6 +62,7 @@ _NORMALIZED_HASHES: dict[str, str | None] = {
     "game_catalog": "catalog_hash",
     "item_instance": "item_hash",
     "listing": "item_hash",
+    "equipment_pool": "catalog_hash",
     "build_spec": "build_hash",
     "parse_result": None,
     "mechanic_claim": None,
