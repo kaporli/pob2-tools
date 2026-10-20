@@ -1,8 +1,8 @@
 {
  "agreement": {
   "evaluation_ids": [
-   "a3c8a291ee581fa4d4982ed40a689368308c1ab0f0b872ab43b50f9afd6cf76c",
-   "a3c8a291ee581fa4d4982ed40a689368308c1ab0f0b872ab43b50f9afd6cf76c"
+   "ae1f370219e6b91ec3450e9473218670346074ba6bc2d60f149a583c37fc5cc6",
+   "ae1f370219e6b91ec3450e9473218670346074ba6bc2d60f149a583c37fc5cc6"
   ],
   "evaluations_identical": true,
   "flasks_equal_frozen_bundle": true,
@@ -42,6 +42,13 @@
      "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
      "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
     },
+    "custom_mods": [
+     [
+      "Default",
+      true,
+      ""
+     ]
+    ],
     "document_hash": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
     "items": {
      "Amulet": [
@@ -265,6 +272,13 @@
      "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
      "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
     },
+    "custom_mods": [
+     [
+      "Default",
+      true,
+      ""
+     ]
+    ],
     "document_hash": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
     "items": {
      "Amulet": [
@@ -5809,7 +5823,7 @@
   {
    "diagnostic_burst": 241702.32877773402,
    "diagnostic_sustained": 231631.3984119951,
-   "evaluation_id": "a3c8a291ee581fa4d4982ed40a689368308c1ab0f0b872ab43b50f9afd6cf76c",
+   "evaluation_id": "ae1f370219e6b91ec3450e9473218670346074ba6bc2d60f149a583c37fc5cc6",
    "label": "A",
    "status": "blocked",
    "values": {
@@ -5835,6 +5849,13 @@
         "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
         "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
        },
+       "custom_mods": [
+        [
+         "Default",
+         true,
+         ""
+        ]
+       ],
        "document_hash": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
        "items": {
         "Amulet": [
@@ -8717,10 +8738,10 @@
       "forced_power_charges": 5
      },
      "worker_pids": [
-      17124,
-      28664,
-      21740,
-      34412
+      10600,
+      10708,
+      18804,
+      11564
      ]
     },
     "flasks": [
@@ -8772,43 +8793,43 @@
     {
      "end": "recycled: 4 requests served",
      "generation": 1,
-     "peak_memory_bytes": 512790528,
-     "pid": 17124,
+     "peak_memory_bytes": 561266688,
+     "pid": 10600,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 2,
-     "peak_memory_bytes": 476807168,
-     "pid": 28664,
+     "peak_memory_bytes": 479858688,
+     "pid": 10708,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 3,
-     "peak_memory_bytes": 532213760,
-     "pid": 21740,
+     "peak_memory_bytes": 509616128,
+     "pid": 18804,
      "requests": 4
     },
     {
      "end": "closed",
      "generation": 4,
-     "peak_memory_bytes": 339517440,
-     "pid": 34412,
+     "peak_memory_bytes": 341635072,
+     "pid": 11564,
      "requests": 3
     }
    ],
    "worker_pids": [
-    17124,
-    28664,
-    21740,
-    34412
+    10600,
+    10708,
+    18804,
+    11564
    ]
   },
   {
    "diagnostic_burst": 241702.32877773402,
    "diagnostic_sustained": 231631.3984119951,
-   "evaluation_id": "a3c8a291ee581fa4d4982ed40a689368308c1ab0f0b872ab43b50f9afd6cf76c",
+   "evaluation_id": "ae1f370219e6b91ec3450e9473218670346074ba6bc2d60f149a583c37fc5cc6",
    "label": "B",
    "status": "blocked",
    "values": {
@@ -8834,6 +8855,13 @@
         "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
         "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
        },
+       "custom_mods": [
+        [
+         "Default",
+         true,
+         ""
+        ]
+       ],
        "document_hash": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
        "items": {
         "Amulet": [
@@ -11716,10 +11744,10 @@
       "forced_power_charges": 5
      },
      "worker_pids": [
-      10100,
-      32880,
-      31808,
-      19572
+      9056,
+      26380,
+      19804,
+      25552
      ]
     },
     "flasks": [
@@ -11771,37 +11799,37 @@
     {
      "end": "recycled: 4 requests served",
      "generation": 1,
-     "peak_memory_bytes": 549740544,
-     "pid": 10100,
+     "peak_memory_bytes": 565559296,
+     "pid": 9056,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 2,
-     "peak_memory_bytes": 461905920,
-     "pid": 32880,
+     "peak_memory_bytes": 481316864,
+     "pid": 26380,
      "requests": 4
     },
     {
      "end": "recycled: 4 requests served",
      "generation": 3,
-     "peak_memory_bytes": 531902464,
-     "pid": 31808,
+     "peak_memory_bytes": 504070144,
+     "pid": 19804,
      "requests": 4
     },
     {
      "end": "closed",
      "generation": 4,
-     "peak_memory_bytes": 354684928,
-     "pid": 19572,
+     "peak_memory_bytes": 362487808,
+     "pid": 25552,
      "requests": 3
     }
    ],
    "worker_pids": [
-    10100,
-    32880,
-    31808,
-    19572
+    9056,
+    26380,
+    19804,
+    25552
    ]
   }
  ],

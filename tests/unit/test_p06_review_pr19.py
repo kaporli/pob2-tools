@@ -66,3 +66,21 @@ def test_r3_unearned_enemy_critical_weakness_blocks():
         {"var": "enemyCriticalWeaknessStacks", "input": 20, "shown": True},)))
     assert not decision.eligible
     assert c.classes(report)
+
+
+# ---------------------------------------- PR #19 re-review F1 (128064c) ===
+
+CUSTOM_BLOCK = '''<PathOfBuilding2><Build level="90" mainSocketGroup="1"/>
+    <Skills><Skill enabled="true"><Gem skillId="Strike" enabled="true"/>
+    <Gem skillId="SupportGate" enabled="true"/></Skill>
+    <Skill enabled="true"><Gem skillId="Builder" enabled="true"/></Skill></Skills>
+    <Tree><Spec nodes=""/></Tree><Config activeConfigSet="1"><ConfigSet id="1">
+    <CustomModifierBlock enabled="true">1000% more Damage</CustomModifierBlock>
+    </ConfigSet></Config></PathOfBuilding2>'''
+
+
+def test_f1_enabled_custom_modifier_block_blocks_with_everything_else_settled():
+    facts = build_facts_from_pob_xml(CUSTOM_BLOCK, engine=c.EngineState(c.PIN, False))
+    report, decision = c.run(b=facts, ms=c.capture(facts))
+    assert not decision.eligible
+    assert c.classes(report)

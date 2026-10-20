@@ -41,6 +41,11 @@ for name, slot in pairs(build.itemsTab.slots) do
   end
 end
 local set = build.configTab.configSets[build.configTab.activeConfigSetId]
+out.custom_mods = {}
+for _, block in ipairs(set.customModsList or {}) do
+  out.custom_mods[#out.custom_mods + 1] = { title = block.title or "Default",
+    enabled = block.enabled ~= false, text = block.text or "" }
+end
 for var, value in pairs(set.input) do
   if type(value) ~= "table" then out.inputs[#out.inputs + 1] = { var = var, value = value } end
 end
@@ -106,3 +111,22 @@ def test_facts_match_pobs_selected_loadout(engine):
             assert engine_value.split() == value.split(), var
         else:
             assert engine_value == value, var
+
+
+def test_custom_modifier_blocks_match_pob(engine):
+    """Re-review F1: PoB's active custom blocks equal the facts; others unread."""
+    root = ET.fromstring(two_loadout_seed())
+    sets = root.find("Config").findall("ConfigSet")
+    inactive, active = sets[0], sets[1]
+    for node in active.findall("CustomModifierBlock"):
+        active.remove(node)
+    ET.SubElement(active, "CustomModifierBlock", {"enabled": "true", "title": "Boost"}).text =         "1000% more Damage"
+    ET.SubElement(active, "CustomModifierBlock", {"enabled": "false", "title": "Off"}).text =         "50% more Damage"
+    ET.SubElement(inactive, "CustomModifierBlock", {"enabled": "true"}).text = "9999% more Damage"
+    doc = ET.tostring(root, encoding="unicode")
+    facts = build_facts_from_pob_xml(doc)
+    assert facts.custom_mods == (("Boost", True, "1000% more Damage"),
+                                 ("Off", False, "50% more Damage"))
+    engine.call("load_build_xml", {"xml": doc, "name": "p06-custom"})
+    state = engine.eval_lua(STATE_LUA)
+    assert [(b["title"], bool(b["enabled"]), b["text"]) for b in state["custom_mods"]] ==         list(facts.custom_mods)

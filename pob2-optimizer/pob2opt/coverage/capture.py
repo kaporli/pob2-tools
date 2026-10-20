@@ -2,12 +2,13 @@
 
 ``PARSE_SUPPORT_LUA`` reads, after a document is loaded, every equipped item
 modifier line and every allocated passive line with PoB's parse verdict, the
-applied config rows with PoB's visibility test, and the selected set ids.
+applied config rows with PoB's visibility test, the selected config set's
+custom modifier blocks, and the selected set ids.
 ``bind_capture`` checks that what the engine held equals the document's own
 selection, items, nodes and inputs, and returns the capture payload with its
 ``binding`` (document hash, selection, engine commit and clean state, item id
-and text hash per slot, nodes, config). Coverage verifies that binding before
-using any verdict.
+and text hash per slot, nodes, config, custom modifier blocks). Coverage
+verifies that binding before using any verdict.
 
 Shared by ``scripts/p06_seed_engine_mod_support.py`` and the P07 cycle
 capture, which runs the same Lua through ``EngineAdapter.parse_support``.
@@ -72,6 +73,11 @@ for var, control in pairs(cfg.varControls) do
       input = input, placeholder = placeholder }
   end
 end
+out.custom_mods = {}
+for _, block in ipairs(set.customModsList or {}) do
+  out.custom_mods[#out.custom_mods + 1] = { title = block.title or "Default",
+    enabled = block.enabled ~= false, text = block.text or "" }
+end
 out.selection = {
   Tree = tostring(build.treeTab.activeSpec),
   Skills = tostring(build.skillsTab.activeSkillSetId),
@@ -103,7 +109,7 @@ def bind_capture(xml: str | bytes, result: Mapping[str, Any], *, pob_commit: str
     if facts.loadout_problems:
         raise CaptureRefused(list(facts.loadout_problems))
     result = dict(result)
-    for key in ("items", "nodes", "config"):
+    for key in ("items", "nodes", "config", "custom_mods"):
         result[key] = _lua_list(result.get(key))
     by_slot = {i.slot: i for i in facts.items}
     engine_items = {e["slot"]: e["item_id"] for e in result["items"]}
@@ -125,6 +131,13 @@ def bind_capture(xml: str | bytes, result: Mapping[str, Any], *, pob_commit: str
                 else engine_value == value)
         if not same:
             problems.append("config %s: engine %r, document %r" % (var, inputs.get(var), value))
+    # Custom modifier blocks of the selected config set as the engine holds
+    # them (legacy customMods migrated by PoB); review PR-19-22 F1.
+    engine_blocks = [(b["title"], bool(b["enabled"]), b["text"])
+                     for b in result.pop("custom_mods")]
+    if engine_blocks != list(facts.custom_mods):
+        problems.append("custom modifier blocks: engine %r, document %r" % (
+            engine_blocks, list(facts.custom_mods)))
     if problems:
         raise CaptureRefused(problems)
     result["items"].sort(key=lambda e: e["slot"])
@@ -141,6 +154,7 @@ def bind_capture(xml: str | bytes, result: Mapping[str, Any], *, pob_commit: str
             "items": {slot: [i.item_id, i.text_sha256] for slot, i in sorted(by_slot.items())},
             "nodes": list(facts.passive_ids),
             "config": dict(sorted(facts.config_explicit.items())),
+            "custom_mods": [list(b) for b in facts.custom_mods],
         },
         **result,
     }

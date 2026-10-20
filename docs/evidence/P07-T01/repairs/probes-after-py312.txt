@@ -15,4 +15,11 @@ PASSED tests/unit/test_pr21_review_probes.py::test_r2_capture_from_an_unclean_or
 PASSED tests/unit/test_pr21_review_probes.py::test_r2_capture_of_another_document_blocks
 PASSED tests/unit/test_pr21_review_probes.py::test_r2_missing_capture_blocks
 PASSED tests/unit/test_pr21_review_probes.py::test_r3_unearned_enemy_debuff_blocks
-17 passed in 1.09s
+PASSED tests/unit/test_pr21_review_probes.py::test_f1_enabled_custom_block_blocks_with_everything_else_settled
+PASSED tests/unit/test_pr21_review_probes.py::test_f1_inactive_custom_blocks_do_not_block[disabled]
+PASSED tests/unit/test_pr21_review_probes.py::test_f1_inactive_custom_blocks_do_not_block[empty]
+PASSED tests/unit/test_pr21_review_probes.py::test_f1_inactive_custom_blocks_do_not_block[whitespace]
+PASSED tests/unit/test_pr21_review_probes.py::test_f1_legacy_custom_mods_input_blocks
+PASSED tests/unit/test_pr21_review_probes.py::test_f1_only_the_selected_config_set_counts[1-True]
+PASSED tests/unit/test_pr21_review_probes.py::test_f1_only_the_selected_config_set_counts[4-False]
+24 passed in 1.37s

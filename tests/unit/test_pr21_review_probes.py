@@ -192,3 +192,47 @@ def test_r3_unearned_enemy_debuff_blocks(bench):
     assert any(b["class"] == "hidden_assumption"
                and b["fields"] == ["/config/enemyCriticalWeaknessStacks"]
                for b in result.decision["blocking"])
+
+
+# Re-review F1: custom modifier blocks (PR-19-22-rereview.md) ----------------
+
+def _with_config(body: str) -> str:
+    return (f.SYNTH_XML % "").replace(
+        "</PathOfBuilding2>", "<Config>%s</Config>\n</PathOfBuilding2>" % body)
+
+
+def test_f1_enabled_custom_block_blocks_with_everything_else_settled(bench):
+    xml = _with_config('<ConfigSet id="1"><CustomModifierBlock enabled="true">'
+                       "1000% more Damage</CustomModifierBlock></ConfigSet>")
+    result = _evaluate_doc(bench, xml)
+    assert blocked(result)
+    assert any(b["class"] == "unsupported_modifier" for b in result.decision["blocking"])
+
+
+@pytest.mark.parametrize("body", [
+    '<ConfigSet id="1"><CustomModifierBlock enabled="false">1000% more Damage'
+    "</CustomModifierBlock></ConfigSet>",
+    '<ConfigSet id="1"><CustomModifierBlock enabled="true"></CustomModifierBlock></ConfigSet>',
+    '<ConfigSet id="1"><CustomModifierBlock enabled="true">   </CustomModifierBlock></ConfigSet>',
+], ids=["disabled", "empty", "whitespace"])
+def test_f1_inactive_custom_blocks_do_not_block(bench, body):
+    assert _evaluate_doc(bench, _with_config(body)).status == "eligible"
+
+
+def test_f1_legacy_custom_mods_input_blocks(bench):
+    xml = _with_config('<ConfigSet id="1"><Input name="customMods" string="1000% more Damage"/>'
+                       "</ConfigSet>")
+    result = _evaluate_doc(bench, xml)
+    assert blocked(result)
+    assert any(b["class"] == "unsupported_modifier" for b in result.decision["blocking"])
+
+
+@pytest.mark.parametrize("active,eligible", [("1", True), ("4", False)])
+def test_f1_only_the_selected_config_set_counts(bench, active, eligible):
+    xml = (f.SYNTH_XML % "").replace(
+        "</PathOfBuilding2>",
+        '<Config activeConfigSet="%s"><ConfigSet id="1"/><ConfigSet id="4">'
+        '<CustomModifierBlock enabled="true">1000%% more Damage</CustomModifierBlock>'
+        "</ConfigSet></Config>\n</PathOfBuilding2>" % active)
+    result = _evaluate_doc(bench, xml)
+    assert (result.status == "eligible") is eligible, result.decision["reasons"]

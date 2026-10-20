@@ -10,6 +10,13 @@
    "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
    "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
   },
+  "custom_mods": [
+   [
+    "Default",
+    true,
+    ""
+   ]
+  ],
   "document_hash": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
   "items": {
    "Amulet": [

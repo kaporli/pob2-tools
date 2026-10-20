@@ -46,7 +46,8 @@ def engine_result(scored_xml: str, **changes) -> dict:
     out = {"items": [], "nodes": [],
            "config": [{"var": k, "shown": True, "input": v, "placeholder": None}
                       for k, v in sorted(facts.config_explicit.items())],
-           "selection": dict(facts.selection)}
+           "selection": dict(facts.selection),
+           "custom_mods": [{"title": t, "enabled": e, "text": x} for t, e, x in facts.custom_mods]}
     out.update(changes)
     return out
 

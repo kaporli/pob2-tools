@@ -89,17 +89,26 @@ values: the live capture reads it through the new read-only `parse_support` work
 operation and binds it with `coverage.capture.bind_capture`; the frozen bundle carries
 `benchmark-parse-capture.json` (scoring document) or P06's seed capture (as imported). The
 evaluator has no default parse report. P06's capture script now uses the same module; its
-committed output is byte-identical after the change. The live capture's head, dirty state, document hashes
+committed output is byte-identical after the change.
+
+Re-review PR-19-22 F1 (merged P06 head `96d8914`): the capture Lua also reads the selected
+config set's `customModsList`, and `bind_capture` refuses a capture whose blocks differ from
+the document's and records them in the binding. Through `evaluate_flicker`, an enabled
+nonempty block (or a legacy `customMods` input) gives a blocking `unsupported_modifier` gap
+and a null objective with every other rule settled; disabled, empty and whitespace blocks and
+blocks in an unselected config set do not block. That case failed on `f73a750`
+(`repairs/f1-negative-control-f73a750.txt`). The native test captures an enabled block from
+the real seed into the binding. P06's seed capture regenerates byte-identical. The live capture's head, dirty state, document hashes
 and state equal the frozen bundle's (`fresh-worker-agreement.json#/provenance`).
 
 ## Files
 
 | File | SHA-256 | What |
 |---|---|---|
-| `seed-evaluation.json` | `d82a81a6271172da44b78800631811d65db92da4096733a1ca303466d5a50d86` | Scoring document: decision, blocking gaps, diagnostic, full action/impact trace, mana ledger, repeatable-cycle check, applied resolutions, ledger history, registry and closure hashes |
-| `seed-as-imported-evaluation.json` | `f3b92f449f6cf589b727873b3ee1dbb71bb8b5a9f25951c206ab539acd0b0d0e` | Same, document as imported (diagnostic) |
-| `benchmark-parse-capture.json` | `6b4835e366f2b8d5ba763efb12bd338ea49013da8f2c0c3208fe7835b5a40f93` | PoB parse verdicts and config rows for the scoring document, bound to its hash, selected sets, clean `ce566ea`, item ids and text hashes, nodes and config (P06 binding). Written by run A of `--live`; run B equals it; the frozen bundle carries it |
-| `fresh-worker-agreement.json` | `576592c763e94c7553a056c3bc712649712dc3629d7b78b06503d015d150e07d` | Two live captures, pids, worker history, comparison with the bundle |
+| `seed-evaluation.json` | `a410a0dc785a7e458f4dfd7563c86ade0c5f5a9bd144d3ff87655c27cb771905` | Scoring document: decision, blocking gaps, diagnostic, full action/impact trace, mana ledger, repeatable-cycle check, applied resolutions, ledger history, registry and closure hashes |
+| `seed-as-imported-evaluation.json` | `dcf4093f94b4ba4f48554d65693d202fb7839ef3f5c134464b35a0d5c94bf7dc` | Same, document as imported (diagnostic) |
+| `benchmark-parse-capture.json` | `e6af8a772faf60e10f46a083d8bb494e49dd0eec708aa8bec112984cabd0958e` | PoB parse verdicts and config rows for the scoring document, bound to its hash, selected sets, clean `ce566ea`, item ids and text hashes, nodes and config (P06 binding). Written by run A of `--live`; run B equals it; the frozen bundle carries it |
+| `fresh-worker-agreement.json` | `f5d3fed57e7ef34cdedb5143ce09f5e120b642e0f584ec8db617c7e86daac4f3` | Two live captures, pids, worker history, comparison with the bundle |
 | `engine-py312.txt` | | Engine test tail |
 | `offline-py312.txt`, `offline-py310.txt` | | Offline suite tails |
 | `repairs/negative-control-db40827.txt`, `repairs/probes-after-py312.txt` | | R4 to R7 regression cases before and after repair |

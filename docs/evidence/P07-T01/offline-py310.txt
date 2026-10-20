@@ -1,3 +1,3 @@
 =========================== short test summary info ===========================
 XFAIL tests/unit/test_f05_run_identity_and_assumptions.py::test_production_prepare_contract_binding_is_pending - P08-T01: prepare service and production contract binding are not implemented
-1806 passed, 1 xfailed in 106.29s (0:01:46)
+1820 passed, 1 xfailed in 101.06s (0:01:41)

@@ -77,3 +77,29 @@ def test_fresh_workers_agree(captures):
     ra, rb = evaluate_flicker(xml, a, p09_resolutions=p09), evaluate_flicker(xml, b, p09_resolutions=p09)
     for key in ("status", "objective", "decision", "diagnostic", "timeline", "repeatable"):
         assert ra.to_json()[key] == rb.to_json()[key], key
+
+
+def test_enabled_custom_block_is_captured_and_blocks(pob_root: Path, repo_root: Path):
+    """Re-review F1 natively: the engine's custom block reaches the binding."""
+    from pob2opt.coverage.capture import bind_capture
+    from pob2opt.coverage.inputs import mod_support_from_json
+    from pob2opt.combat.values import benchmark_document
+    from pob2opt.evaluation import BuildDocument
+
+    checkout = resolve_checkout(pob_root)
+    if checkout.commit != PIN or checkout.dirty_hash is not None:
+        pytest.skip("needs a clean checkout of %s" % PIN)
+    seed = (repo_root / "docs/evidence/P09-T01.1/seed/export-flicker-main.xml").read_text(encoding="utf-8")
+    start = seed.index("<CustomModifierBlock")
+    end = seed.index("</CustomModifierBlock>") + len("</CustomModifierBlock>")
+    doc = benchmark_document(seed[:start] + '<CustomModifierBlock enabled="true" title="Default">'
+                             "1000% more Damage</CustomModifierBlock>" + seed[end:])
+    adapter = _adapter(pob_root)
+    try:
+        raw = adapter.parse_support(BuildDocument(build_hash="p07-t01-test/custom", xml=doc))
+    finally:
+        adapter.close()
+    payload = bind_capture(doc, raw, pob_commit=PIN, pob_dirty=False)
+    assert payload["binding"]["custom_mods"] == [["Default", True, "1000% more Damage"]]
+    mods = mod_support_from_json(payload, "native")
+    assert mods.binding.custom_mods == (("Default", True, "1000% more Damage"),)

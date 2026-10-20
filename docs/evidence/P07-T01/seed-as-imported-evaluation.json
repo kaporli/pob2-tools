@@ -937,7 +937,7 @@
   }
  },
  "document": "seed",
- "evaluation_id": "14a483248711f84ebdee7672eb42cf33db3a06567c8607fe9321196e18289332",
+ "evaluation_id": "005843c7d0e176dcbec322532e2ec5d908b67004f1eb2e90e2b434c116768fa6",
  "kind": "evaluation from frozen engine bundle",
  "mana_ignored": {
   "flicker_burst_dps": 299710.887684406,
@@ -4847,6 +4847,13 @@
       "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
       "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
      },
+     "custom_mods": [
+      [
+       "Default",
+       true,
+       ""
+      ]
+     ],
      "document_hash": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
      "items": {
       "Amulet": [

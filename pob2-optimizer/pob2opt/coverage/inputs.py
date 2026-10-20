@@ -85,6 +85,15 @@ class BuildFacts:
     selection: Mapping[str, str] = field(default_factory=dict)
     #: Why a tab's set could not be selected. Each one blocks coverage.
     loadout_problems: tuple[str, ...] = ()
+    #: Custom modifier blocks of the selected config set as PoB holds them
+    #: after loading: ``(title, enabled, text)``, legacy ``customMods``
+    #: migrated, and one empty enabled ``Default`` block when there is none.
+    custom_mods: tuple[tuple[str, bool, str], ...] = ()
+
+
+def active_custom_mods(blocks) -> list[tuple[str, bool, str]]:
+    """Blocks PoB applies in BuildModList: enabled with nonempty text."""
+    return [b for b in blocks if b[1] and b[2].strip()]
 
 
 def _bool(value: str | None) -> bool:
@@ -216,9 +225,27 @@ def build_facts_from_pob_xml(xml: str | bytes, *, loadout: str | None = None,
                                text_sha256=item_text_hash(text)))
     config_set = chosen.get("Config")
     explicit = {}
+    blocks: list[tuple[str, bool, str]] = []
     if config_set is not None:
         for node in config_set.findall("Input"):
             explicit[node.get("name")] = _input_value(node)
+        # ConfigTab:Load (src/Classes/ConfigTab.lua ~927): enabled unless the
+        # attribute says otherwise, text is the element's first text node.
+        for node in config_set.findall("CustomModifierBlock"):
+            enabled = node.get("enabled") in ("true", None)
+            text = node.text or ""
+            # PoB's XML reader keeps no whitespace-only text node.
+            blocks.append((node.get("title") or "Default", enabled,
+                           text if text.strip() else ""))
+    # PoB's legacy migration (~962): a nonempty customMods input becomes the
+    # Default block when there is no block or one empty block; the input is
+    # then dropped either way.
+    legacy = explicit.pop("customMods", None)
+    legacy = legacy if isinstance(legacy, str) else ""
+    if legacy and (not blocks or (len(blocks) == 1 and not blocks[0][2])):
+        blocks = [("Default", True, legacy)]
+    elif not blocks:
+        blocks = [("Default", True, "")]
     main = build.get("mainSocketGroup") if build is not None else None
     level = build.get("level") if build is not None else None
     digest = hashlib.sha256(raw).hexdigest()
@@ -233,7 +260,7 @@ def build_facts_from_pob_xml(xml: str | bytes, *, loadout: str | None = None,
         groups=tuple(groups), passive_ids=passive_ids, items=tuple(items),
         config_explicit=explicit, config_effective=config_effective, engine=engine,
         document_hash=digest, selection=dict(selection),
-        loadout_problems=tuple(problems))
+        loadout_problems=tuple(problems), custom_mods=tuple(blocks))
 
 
 # ------------------------------------------------------- engine parse data ===
@@ -262,6 +289,9 @@ class CaptureBinding:
     items: Mapping[str, tuple[str, str]]
     nodes: tuple[str, ...]
     config: Mapping[str, Any]
+    #: The engine's custom modifier blocks for the selected set; None when
+    #: the capture did not record them.
+    custom_mods: tuple[tuple[str, bool, str], ...] | None = None
 
     def identity(self) -> dict:
         return {"document_hash": self.document_hash,
@@ -269,7 +299,9 @@ class CaptureBinding:
                 "pob_commit": self.pob_commit, "pob_dirty": self.pob_dirty,
                 "items": {k: list(v) for k, v in sorted(self.items.items())},
                 "nodes": sorted(self.nodes, key=str),
-                "config": dict(sorted(self.config.items()))}
+                "config": dict(sorted(self.config.items())),
+                "custom_mods": None if self.custom_mods is None
+                else [list(b) for b in self.custom_mods]}
 
 
 @dataclass(frozen=True)
@@ -320,7 +352,9 @@ def _binding(data) -> CaptureBinding | None:
         document_hash=data["document_hash"], selection=dict(data["selection"]),
         pob_commit=data["pob_commit"], pob_dirty=data["pob_dirty"],
         items={k: tuple(v) for k, v in data["items"].items()},
-        nodes=tuple(str(n) for n in data["nodes"]), config=dict(data["config"]))
+        nodes=tuple(str(n) for n in data["nodes"]), config=dict(data["config"]),
+        custom_mods=None if data.get("custom_mods") is None
+        else tuple((t, bool(e), x) for t, e, x in data["custom_mods"]))
 
 
 # ------------------------------------------------------- PoB config options ===
