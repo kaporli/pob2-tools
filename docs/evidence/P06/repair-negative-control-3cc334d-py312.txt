@@ -1,0 +1,13 @@
+C:\Users\Elias\AppData\Local\Temp\claude\C--Users-Elias-PycharmProjects-pob2-tools\90187218-0641-4cf3-8fc2-20dfbbf5cbe4\scratchpad\nc-3cc334d\pob2-optimizer\pob2opt\__init__.py
+            {"var": "enemyCriticalWeaknessStacks", "input": 20, "shown": True},)))
+>       assert not decision.eligible
+E       assert not True
+E        +  where True = Decision(eligible=True, blocking_gap_ids=(), unsettled_critical=(), reasons=()).eligible
+tests\unit\test_p06_review_pr19.py:67: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/unit/test_p06_review_pr19.py::test_r1_active_sets_are_read_not_the_first_ones
+FAILED tests/unit/test_p06_review_pr19.py::test_r2_stale_config_evidence_blocks
+FAILED tests/unit/test_p06_review_pr19.py::test_r2_missing_passive_evidence_blocks
+FAILED tests/unit/test_p06_review_pr19.py::test_r2_changed_item_with_wrong_engine_evidence_blocks
+FAILED tests/unit/test_p06_review_pr19.py::test_r3_unearned_enemy_critical_weakness_blocks
+5 failed in 0.49s

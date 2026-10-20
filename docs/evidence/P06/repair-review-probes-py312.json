@@ -1,0 +1,54 @@
+{
+  "active_sets": {
+    "skills": [
+      "UnknownActiveSkill"
+    ],
+    "passives": [
+      "2"
+    ],
+    "items": [
+      "2"
+    ],
+    "config": {
+      "conditionOnslaught": true
+    }
+  },
+  "stale_config_evidence": {
+    "eligible": false,
+    "blocking": [
+      "hidden_assumption",
+      "missing_data",
+      "unbound_evidence"
+    ]
+  },
+  "missing_passive_evidence": {
+    "eligible": false,
+    "blocking": [
+      "missing_data",
+      "unbound_evidence"
+    ]
+  },
+  "stale_item_wrong_engine_evidence": {
+    "eligible": false,
+    "blocking": [
+      "missing_data",
+      "unbound_evidence"
+    ]
+  },
+  "unearned_enemy_critical_weakness": {
+    "eligible": false,
+    "blocking": [
+      "missing_data",
+      "unbound_evidence"
+    ],
+    "rules": [
+      "activation/gate",
+      "attribution/bench",
+      "resource/charges",
+      "skill/Builder",
+      "skill/Strike",
+      "support/SupportGate",
+      "target/bench"
+    ]
+  }
+}
