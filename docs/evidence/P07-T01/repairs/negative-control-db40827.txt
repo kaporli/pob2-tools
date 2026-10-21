@@ -1,0 +1,13 @@
+PASSED tests/unit/test_pr21_review_probes.py::test_r4_unrelated_damage_leaves_an_eligible_objective_unchanged
+FAILED tests/unit/test_pr21_review_probes.py::test_r4_unaccepted_table_on_a_settled_registry_is_refused
+FAILED tests/unit/test_pr21_review_probes.py::test_r4_acceptance_of_another_table_does_not_approve_this_one
+FAILED tests/unit/test_pr21_review_probes.py::test_r5_foreign_or_missing_engine_identity_blocks[wrong-commit]
+FAILED tests/unit/test_pr21_review_probes.py::test_r5_foreign_or_missing_engine_identity_blocks[dirty]
+FAILED tests/unit/test_pr21_review_probes.py::test_r5_foreign_or_missing_engine_identity_blocks[both]
+FAILED tests/unit/test_pr21_review_probes.py::test_r5_foreign_or_missing_engine_identity_blocks[absent]
+FAILED tests/unit/test_pr21_review_probes.py::test_r5_values_from_another_document_block
+FAILED tests/unit/test_pr21_review_probes.py::test_r6_alternate_windows_are_not_the_v1_objective
+FAILED tests/unit/test_pr21_review_probes.py::test_r6_changed_scenario_changes_identity
+FAILED tests/unit/test_pr21_review_probes.py::test_r7_unsupported_method_is_refused_with_a_settled_registry[pob-cycle-v1]
+FAILED tests/unit/test_pr21_review_probes.py::test_r7_unsupported_method_is_refused_with_a_settled_registry[no-such-method]
+11 failed, 1 passed in 1.63s

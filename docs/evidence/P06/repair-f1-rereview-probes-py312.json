@@ -1,0 +1,9 @@
+{
+  "custom_modifier_coverage": {
+    "eligible": false,
+    "blocking": [
+      "unsupported_modifier"
+    ],
+    "config_explicit": {}
+  }
+}

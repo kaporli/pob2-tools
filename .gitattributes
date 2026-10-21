@@ -20,3 +20,13 @@ docs/evidence/P02-T02.1/official/** -text
 # benchmarks/p09-flicker-v1/suite.json and seed/manifest.json.
 benchmarks/p09-flicker-v1/** -text
 docs/evidence/P09-T01.1/** -text
+
+# P09-T01.2 evidence. mechanics-rules.json records the SHA-256 of replay.json
+# and web-evidence.json.
+docs/evidence/P09-T01.2/** -text
+
+# P07-T01 evidence. Its README records the SHA-256 of the JSON files.
+docs/evidence/P07-T01/** -text
+
+# P07-T01 attribution table. table_hash is recorded inside it.
+benchmarks/p09-flicker-v1-attribution/** -text

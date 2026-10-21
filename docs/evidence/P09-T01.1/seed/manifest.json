@@ -83,6 +83,11 @@
         "question_id": "Q9",
         "verbatim": "any class, any ascendancy, any variant",
         "recorded": "Decision 2: all 23 ascendancies and all three variants are approved scope."
+      },
+      {
+        "question_id": "Q10",
+        "verbatim": "Once per N cycles",
+        "recorded": "Charged Staff is pressed only periodically, once per N Whirling Assault to Flicker Strike cycles, to refresh its buff (owner's chosen option, relayed by the coordinator 2026-10-18). Owner decision 2026-10-18 (2) then gave the full rotation: the press repeats when the buff expires, so N follows from the buff duration (gap-p09-t012-charged-staff-period resolved)."
       }
     ]
   },
@@ -98,6 +103,14 @@
       "authority": "Elias",
       "date": "2026-10-18",
       "recorded_in": "docs/evidence/P09-T01.1/scope-proposal.json approval"
+    },
+    {
+      "decision": "Rotation and DPS method: Whirling Assault, Charged Staff, then Whirling Assault and Flicker Strike until the Charged Staff buff expires, repeated; per-use Flicker Strike damage as community PoB builds compute it, with charges assumed (method pob-community-v2).",
+      "verbatim": "it's obvious, whirling assault to generate charges, charged staff, whirling assault to generate charges, flicker, whirling, flicker, whirling, flicker, etc until charged runs out & repeat? but again, look at how those other PoBs did DPS calcs, don't stray from their methods, match them. Assume we have charges for flicker for the dps calcs",
+      "authority": "Elias",
+      "date": "2026-10-18",
+      "relayed_by": "coordinator",
+      "recorded_in": "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2"
     }
   ],
   "pob_main_skill_as_imported": "Herald of Ice (group 5)",

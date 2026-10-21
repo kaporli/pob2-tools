@@ -1,0 +1,2898 @@
+{
+ "binding": {
+  "config": {
+   "questAct 2Valley of the TitansMedallion": "30% increased Charm Charges Gained  +1 Charm Slot",
+   "questAct 3Venom CryptsVenom Draught": "25% increased Stun Threshold",
+   "questAct 4Abandoned PrisonGoddess of Justice": "30% increased Life Recovery from Flasks",
+   "questAct 4Eye of HinekoraTribal Medicine": "30% increased Global Armour, Evasion and Energy Shield",
+   "questAct 4Halls Of The DeadNgamahu's Test": "+5% to Fire Resistance",
+   "questAct 4Halls Of The DeadTasalio's Test": "+5% to Cold Resistance",
+   "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
+   "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
+  },
+  "custom_mods": [
+   [
+    "Default",
+    true,
+    ""
+   ]
+  ],
+  "document_hash": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
+  "items": {
+   "Amulet": [
+    "15",
+    "114d6fe3a67db45b95fc2c4bc8a6a5bdc27b9c7504ead3b0c88d88d794797b08"
+   ],
+   "Belt": [
+    "6",
+    "c5e13263505087961bc69f01ec30a99e66f6462783685ae412d7950c24ff3109"
+   ],
+   "Body Armour": [
+    "1",
+    "34174a0e8a4c7d1fcb172333b2cdc438fb394f6b2fee2760043e1ad8b7ce71ce"
+   ],
+   "Boots": [
+    "3",
+    "504448a357afade44cd3562427b35f41007b5926f9e0037826dc5f27c197775d"
+   ],
+   "Charm 1": [
+    "13",
+    "162f169100cb69eb7821b2043b621c6ef415ee09c12ae5a70c150532a7420606"
+   ],
+   "Charm 2": [
+    "8",
+    "c8be2a633a68c01b7f7099d54528edeab34cb61219f33f501a6886cbeb9d6dcd"
+   ],
+   "Charm 3": [
+    "11",
+    "e985a9476397673f7c353ff2da16431ddd3e870bc4e7fe475e1cee4b6d3ae3ea"
+   ],
+   "Flask 1": [
+    "7",
+    "98c3e9bc4d8522443549944b358b15c195152bf230fd599fafa48c83f3934199"
+   ],
+   "Flask 2": [
+    "14",
+    "b9d1879dcb7c803b7ae6f287b62099116a404a40da522fc993821e680de7f1f5"
+   ],
+   "Gloves": [
+    "9",
+    "668285d6b0ac7ca2984f9b7455f2596ffd83d6c1ca26c10afc06285e890da113"
+   ],
+   "Helmet": [
+    "2",
+    "0642b83f61846eff6b676b5b2ff708402c03a3578e9a6e0e1fe769025b99fbeb"
+   ],
+   "Jewel 21984": [
+    "17",
+    "f6d1eed74782909e301ce13896c9c8f72cb1db867647e13ff109a8faca4eb4ae"
+   ],
+   "Jewel 32763": [
+    "16",
+    "310f62e9ae4858d1108aeceed915b41d4139620fc846e200254951d7fe535a77"
+   ],
+   "Jewel 61834": [
+    "18",
+    "298834e3b494201ea4743f39b8af2c1168ac030e972b5350036c6c1f1af69bfc"
+   ],
+   "Ring 1": [
+    "4",
+    "8c6968b6fc0692a4f62c144471c10df609a02e2c9f7fd553f175ca437953c9a3"
+   ],
+   "Ring 2": [
+    "12",
+    "5f7ef0421bf75180e2b85f70c8861d1af036bb6236edc1b3a25a612f1ee60307"
+   ],
+   "Weapon 1": [
+    "5",
+    "05b01b7d46f5f9e248634d13fc9e7a8c8577716409b3f5bb1055dab10a098fb7"
+   ],
+   "Weapon 1 Swap": [
+    "10",
+    "74e47a5fe1582d072fd2641564115c3f55f24a6a3f96c5c9656b444443be0db8"
+   ]
+  },
+  "nodes": [
+   "535",
+   "722",
+   "1420",
+   "2113",
+   "2582",
+   "2936",
+   "3336",
+   "3700",
+   "4157",
+   "4536",
+   "6842",
+   "7054",
+   "7809",
+   "10364",
+   "11495",
+   "11598",
+   "11604",
+   "12249",
+   "12761",
+   "13407",
+   "13457",
+   "13724",
+   "14262",
+   "14267",
+   "14446",
+   "14725",
+   "15343",
+   "15775",
+   "15975",
+   "16705",
+   "17088",
+   "17367",
+   "17548",
+   "19722",
+   "20024",
+   "20437",
+   "20677",
+   "21336",
+   "21945",
+   "21984",
+   "22713",
+   "24287",
+   "24786",
+   "26034",
+   "26556",
+   "26572",
+   "27705",
+   "28044",
+   "28329",
+   "28835",
+   "29408",
+   "29959",
+   "30615",
+   "30657",
+   "30808",
+   "31765",
+   "31888",
+   "32763",
+   "34015",
+   "34168",
+   "34300",
+   "34316",
+   "34621",
+   "36231",
+   "36723",
+   "36931",
+   "37250",
+   "37514",
+   "37691",
+   "38342",
+   "38493",
+   "38537",
+   "38541",
+   "39369",
+   "39552",
+   "39595",
+   "41751",
+   "41811",
+   "42750",
+   "42805",
+   "42857",
+   "44223",
+   "44516",
+   "44683",
+   "45702",
+   "46197",
+   "47009",
+   "47514",
+   "47976",
+   "48116",
+   "48198",
+   "48773",
+   "49220",
+   "49356",
+   "51741",
+   "52295",
+   "53280",
+   "53941",
+   "54983",
+   "55088",
+   "55621",
+   "56045",
+   "56265",
+   "56349",
+   "56453",
+   "56838",
+   "56847",
+   "57821",
+   "58692",
+   "59538",
+   "59657",
+   "60239",
+   "60362",
+   "61196",
+   "61333",
+   "61403",
+   "61586",
+   "61601",
+   "61632",
+   "61718",
+   "61834",
+   "62841",
+   "62984",
+   "64700",
+   "65204",
+   "65228"
+  ],
+  "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+  "pob_dirty": false,
+  "selection": {
+   "Config": "1",
+   "Items": "1",
+   "Skills": "1",
+   "Tree": "1"
+  }
+ },
+ "config": [
+  {
+   "input": "AVERAGE",
+   "shown": false,
+   "var": "ChanceToIgnoreEnemyPhysicalDamageReductionMode"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "ChillStacks"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "ConcPathBypassCD"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "FlickerStrikeBypassCD"
+  },
+  {
+   "input": 20,
+   "shown": false,
+   "var": "GamblesprintMovementSpeed"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "ScorchStacks"
+  },
+  {
+   "input": 10,
+   "shown": false,
+   "var": "SecondsSinceInevitableCrit"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "ShockStacks"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "VigilantStrikeBypassCD"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "companionInPresence"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "conditionChampionIntimidate"
+  },
+  {
+   "placeholder": 10,
+   "shown": false,
+   "var": "conditionCorruptingCryStages"
+  },
+  {
+   "placeholder": 59,
+   "shown": false,
+   "var": "configBossFaceBroken"
+  },
+  {
+   "placeholder": 10,
+   "shown": false,
+   "var": "demonFormStacks"
+  },
+  {
+   "input": "vixen",
+   "shown": false,
+   "var": "doomBlastSource"
+  },
+  {
+   "input": 1,
+   "shown": false,
+   "var": "elementalConfluxElement"
+  },
+  {
+   "placeholder": 8063,
+   "shown": true,
+   "var": "enemyArmour"
+  },
+  {
+   "placeholder": 386,
+   "shown": true,
+   "var": "enemyChaosDamage"
+  },
+  {
+   "placeholder": 0,
+   "shown": true,
+   "var": "enemyChaosResist"
+  },
+  {
+   "placeholder": 965,
+   "shown": true,
+   "var": "enemyColdDamage"
+  },
+  {
+   "placeholder": 3,
+   "shown": true,
+   "var": "enemyColdPen"
+  },
+  {
+   "placeholder": 50,
+   "shown": true,
+   "var": "enemyColdResist"
+  },
+  {
+   "placeholder": 5,
+   "shown": true,
+   "var": "enemyCritChance"
+  },
+  {
+   "placeholder": 30,
+   "shown": true,
+   "var": "enemyCritDamage"
+  },
+  {
+   "placeholder": 20,
+   "shown": false,
+   "var": "enemyCriticalWeaknessStacks"
+  },
+  {
+   "placeholder": 70,
+   "shown": false,
+   "var": "enemyDamageRollRange"
+  },
+  {
+   "placeholder": 20,
+   "shown": true,
+   "var": "enemyDistance"
+  },
+  {
+   "placeholder": 1175,
+   "shown": true,
+   "var": "enemyEvasion"
+  },
+  {
+   "placeholder": 965,
+   "shown": true,
+   "var": "enemyFireDamage"
+  },
+  {
+   "placeholder": 3,
+   "shown": true,
+   "var": "enemyFirePen"
+  },
+  {
+   "placeholder": 50,
+   "shown": true,
+   "var": "enemyFireResist"
+  },
+  {
+   "input": "Pinnacle",
+   "shown": true,
+   "var": "enemyIsBoss"
+  },
+  {
+   "placeholder": 82,
+   "shown": true,
+   "var": "enemyLevel"
+  },
+  {
+   "placeholder": 965,
+   "shown": true,
+   "var": "enemyLightningDamage"
+  },
+  {
+   "placeholder": 3,
+   "shown": true,
+   "var": "enemyLightningPen"
+  },
+  {
+   "placeholder": 50,
+   "shown": true,
+   "var": "enemyLightningResist"
+  },
+  {
+   "placeholder": 965,
+   "shown": true,
+   "var": "enemyPhysicalDamage"
+  },
+  {
+   "input": "Medium",
+   "shown": false,
+   "var": "enemySizePreset"
+  },
+  {
+   "placeholder": 700,
+   "shown": true,
+   "var": "enemySpeed"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "inDemonForm"
+  },
+  {
+   "placeholder": 100,
+   "shown": false,
+   "var": "multiplierCurrentEnergyShield"
+  },
+  {
+   "input": 100,
+   "shown": false,
+   "var": "multiplierCurrentManaPercentage"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "multiplierDifferentAmmoFired"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "multiplierDifferentGrenadeFired"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "multiplierStunnedRecently"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "multiplierWarcryUsedRecently"
+  },
+  {
+   "placeholder": 15,
+   "shown": false,
+   "var": "multiplierWitheredStackCountSelf"
+  },
+  {
+   "input": "None",
+   "shown": true,
+   "var": "presetBossSkills"
+  },
+  {
+   "input": 10,
+   "shown": false,
+   "var": "purpleFlameStacks"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questAct 1ClearfellBeira"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questAct 1FreythornKing In The Mists"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questAct 1Ogham ManorCandlemass"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questAct 2Spires of DesharSisters of Garukhan Shrine"
+  },
+  {
+   "input": "30% increased Charm Charges Gained\n\t+1 Charm Slot",
+   "shown": true,
+   "var": "questAct 2Valley of the TitansMedallion"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questAct 3Azak BogIgnagduk"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questAct 3Jiquani's MachinariumBlackjaw"
+  },
+  {
+   "input": "25% increased Stun Threshold",
+   "shown": true,
+   "var": "questAct 3Venom CryptsVenom Draught"
+  },
+  {
+   "input": "30% increased Life Recovery from Flasks",
+   "shown": true,
+   "var": "questAct 4Abandoned PrisonGoddess of Justice"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questAct 4Eye of HinekoraSilent Hall"
+  },
+  {
+   "input": "30% increased Global Armour, Evasion and Energy Shield",
+   "shown": true,
+   "var": "questAct 4Eye of HinekoraTribal Medicine"
+  },
+  {
+   "input": "+5% to Fire Resistance",
+   "shown": true,
+   "var": "questAct 4Halls Of The DeadNgamahu's Test"
+  },
+  {
+   "input": "+5% to Cold Resistance",
+   "shown": true,
+   "var": "questAct 4Halls Of The DeadTasalio's Test"
+  },
+  {
+   "input": "+5% to Lightning Resistance",
+   "shown": true,
+   "var": "questAct 4Halls Of The DeadTawhoa's Test"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questInterlude 2Khari CrossingMolten Shrine"
+  },
+  {
+   "input": "15% increased Global Armour, Evasion and Energy Shield",
+   "shown": true,
+   "var": "questInterlude 2QimahSeven Pillars"
+  },
+  {
+   "input": true,
+   "shown": true,
+   "var": "questInterlude 3Kriar VillageLythara"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "raiseSpectreEnableBuffs"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "raiseSpectreEnableCurses"
+  },
+  {
+   "input": "AVERAGE",
+   "shown": false,
+   "var": "repeatMode"
+  },
+  {
+   "input": -60,
+   "shown": true,
+   "var": "resistancePenalty"
+  },
+  {
+   "input": "AVERAGE",
+   "shown": false,
+   "var": "resourceGainMode"
+  },
+  {
+   "placeholder": 1,
+   "shown": false,
+   "var": "sigilOfPowerStages"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "summonCompanionEnableBuffs"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "summonCompanionEnableCurses"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "summonElementalRelicEnableAngerAura"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "summonElementalRelicEnableHatredAura"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "summonElementalRelicEnableWrathAura"
+  },
+  {
+   "input": true,
+   "shown": false,
+   "var": "targetBrandedEnemy"
+  },
+  {
+   "input": 10,
+   "shown": false,
+   "var": "touchedDebuffsCount"
+  }
+ ],
+ "document": "benchmark document of docs/evidence/P09-T01.1/seed/export-flicker-main.xml (Pounce disabled)",
+ "generated_by": "python scripts/p07_t01_flicker_cycle.py --live (run A)",
+ "items": [
+  {
+   "base": "Absent Amulet",
+   "item_id": "15",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "line": "-1 Prefix Modifier allowed",
+     "parsed": false
+    },
+    {
+     "block": "implicitModLines",
+     "line": "-1 Suffix Modifier allowed",
+     "parsed": false
+    },
+    {
+     "block": "implicitModLines",
+     "line": "Grants Skill: Level 18 Trinity",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+50 to Spirit",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+4 to Level of all Melee Skills",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "27% increased Global Armour, Evasion and Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "34% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Carrion Braid, Absent Amulet",
+   "slot": "Amulet"
+  },
+  {
+   "base": "Utility Belt",
+   "item_id": "6",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "line": "Has 3 Charm Slots",
+     "parsed": true
+    },
+    {
+     "block": "implicitModLines",
+     "line": "20% of Flask Recovery applied Instantly",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Legacy of Jade",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Legacy of Jade",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Legacy of Silver",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Legacy of Diamond",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "All Mage's Legacies have 40% increased effect per duplicate Mage's Legacy you have",
+     "parsed": true
+    }
+   ],
+   "name": "Mageblood, Utility Belt",
+   "slot": "Belt"
+  },
+  {
+   "base": "Runemastered Ancient Mail",
+   "item_id": "1",
+   "lines": [
+    {
+     "block": "enchantModLines",
+     "line": "+16% to Chaos Resistance",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Bonded: +5% to Quality of all Skills",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Bonded: +8% to Chaos Resistance",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "+13% to Chaos Resistance",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "+10% of Armour also applies to Chaos Damage",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Idols socketed in this item gain the benefits of their Bonded modifiers",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "251% increased Armour and Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+20 to Strength and Intelligence",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+2% to Maximum Chaos Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Convert 1% of maximum Life to twice as much Armour per 1% Chaos Resistance above 0%",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Defend with 197% of Armour while you have Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "Damage over Time cannot bypass your Energy Shield",
+     "line": "Damage over Time cannot bypass your Energy Shield",
+     "parsed": false
+    }
+   ],
+   "name": "Decree of Loyalty, Runemastered Ancient Mail",
+   "slot": "Body Armour"
+  },
+  {
+   "base": "Runeforged Apostle Leggings",
+   "item_id": "3",
+   "lines": [
+    {
+     "block": "runeModLines",
+     "line": "+13% to Chaos Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+73 to Armour",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+25 to maximum Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "92% increased Armour and Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+24% to Cold Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+28% to Lightning Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+25% of Armour also applies to Elemental Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+9 to Stun Threshold",
+     "parsed": true
+    }
+   ],
+   "name": "Loath Slippers, Runeforged Apostle Leggings",
+   "slot": "Boots"
+  },
+  {
+   "base": "Thawing Charm",
+   "item_id": "13",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "extra": "Used when you become Frozen",
+     "line": "Used when you become Frozen",
+     "parsed": false
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "25% Chance to gain a Charge when you kill an enemy",
+     "line": "25% Chance to gain a Charge when you kill an enemy",
+     "parsed": false
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "Energy Shield Recharge starts on use",
+     "line": "Energy Shield Recharge starts on use",
+     "parsed": false
+    },
+    {
+     "block": "buffModLines",
+     "line": "Immune to Freeze",
+     "parsed": true
+    }
+   ],
+   "name": "Nascent Hope, Thawing Charm",
+   "slot": "Charm 1"
+  },
+  {
+   "base": "Stone Charm",
+   "item_id": "8",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "extra": "Used when you become Stunned",
+     "line": "Used when you become Stunned",
+     "parsed": false
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Defend with 200% of Armour during effect",
+     "parsed": true
+    },
+    {
+     "block": "buffModLines",
+     "line": "Cannot be Stunned",
+     "parsed": true
+    }
+   ],
+   "name": "For Utopia, Stone Charm",
+   "slot": "Charm 2"
+  },
+  {
+   "base": "Silver Charm",
+   "item_id": "11",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "extra": "Used when you are affected by a Slow",
+     "line": "Used when you are affected by a Slow",
+     "parsed": false
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "Grants Onslaught during effect",
+     "line": "Grants Onslaught during effect",
+     "parsed": false
+    },
+    {
+     "block": "buffModLines",
+     "line": "Your speed is unaffected by Slows",
+     "parsed": true
+    }
+   ],
+   "name": "The Fall of the Axe, Silver Charm",
+   "slot": "Charm 3"
+  },
+  {
+   "base": "Gargantuan Life Flask",
+   "item_id": "7",
+   "lines": [
+    {
+     "block": "explicitModLines",
+     "line": "90% less Life Recovered",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "Effect is not removed when Unreserved Life is Filled",
+     "line": "Effect is not removed when Unreserved Life is Filled",
+     "parsed": false
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "   Recouped as Life Gain 3 Rage when Hit by an Enemy  ",
+     "line": "28% of Damage taken during effect Recouped as Life",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "extra": " Rage when Hit by an Enemy  No Inherent loss of Rage  ",
+     "line": "Gain 3 Rage when Hit by an Enemy during effect",
+     "parsed": false
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "No Inherent loss of Rage during effect",
+     "line": "No Inherent loss of Rage during effect",
+     "parsed": false
+    },
+    {
+     "block": "explicitModLines",
+     "line": "41% increased Duration",
+     "parsed": true
+    }
+   ],
+   "name": "Blood of the Warrior, Gargantuan Life Flask",
+   "slot": "Flask 1"
+  },
+  {
+   "base": "Ultimate Mana Flask",
+   "item_id": "14",
+   "lines": [
+    {
+     "block": "explicitModLines",
+     "line": "Gains 0.25 Charges per Second",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "30% of Recovery applied Instantly",
+     "parsed": true
+    }
+   ],
+   "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+   "slot": "Flask 2"
+  },
+  {
+   "base": "Runeforged Fists of Stone",
+   "item_id": "9",
+   "lines": [
+    {
+     "block": "runeModLines",
+     "line": "Bonded: +20 to maximum Life",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Bonded: +20 to maximum Mana",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "+18% to Lightning Resistance",
+     "parsed": true
+    },
+    {
+     "block": "implicitModLines",
+     "line": "Has +2 to Evasion Rating per player level",
+     "parsed": true
+    },
+    {
+     "block": "implicitModLines",
+     "line": "Has +1 to maximum Energy Shield per player level",
+     "parsed": true
+    },
+    {
+     "block": "implicitModLines",
+     "line": "Has +1 to maximum Runic Ward per player level",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "20% more Global Evasion Rating and Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Attacks Gain 13% of Damage as Extra Physical Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "13% less damage taken while on Low Life",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "10% chance to gain Onslaught for 4 seconds on Hit",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+2% to Maximum Fire Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+2% to Maximum Cold Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+30% to Fire Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+23% to Cold Resistance",
+     "parsed": true
+    }
+   ],
+   "name": "Skull Claw, Runeforged Fists of Stone",
+   "slot": "Gloves"
+  },
+  {
+   "base": "Ancestral Tiara",
+   "item_id": "2",
+   "lines": [
+    {
+     "block": "runeModLines",
+     "line": "20% increased Armour, Evasion and Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Bonded: +20 to maximum Life",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Bonded: +20 to maximum Mana",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+72 to maximum Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "40% increased Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+33 to maximum Mana",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+33 to Intelligence",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+37% to Fire Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+43% to Lightning Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "16% increased Rarity of Items found",
+     "parsed": true
+    }
+   ],
+   "name": "Morbid Veil, Ancestral Tiara",
+   "slot": "Helmet"
+  },
+  {
+   "base": "Sapphire",
+   "item_id": "17",
+   "lines": [
+    {
+     "block": "enchantModLines",
+     "line": "+4 to Strength",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "14% increased Cold Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "17% increased maximum Energy Shield",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "19% increased Critical Damage Bonus",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Recover 2% of maximum Mana on Kill",
+     "parsed": true
+    }
+   ],
+   "name": "Carrion Breath, Sapphire",
+   "slot": "Jewel 21984"
+  },
+  {
+   "base": "Diamond",
+   "item_id": "16",
+   "lines": [
+    {
+     "block": "explicitModLines",
+     "line": "Pain Attunement",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "12% less maximum Life",
+     "parsed": true
+    }
+   ],
+   "name": "Flesh Crucible, Diamond",
+   "slot": "Jewel 32763"
+  },
+  {
+   "base": "Diamond",
+   "item_id": "18",
+   "lines": [
+    {
+     "block": "explicitModLines",
+     "line": "Only affects Passives in Massive Ring",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Passives in Radius can be Allocated without being connected to your tree",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "-5% to all Elemental Resistances",
+     "parsed": true
+    }
+   ],
+   "name": "Controlled Metamorphosis, Diamond",
+   "slot": "Jewel 61834"
+  },
+  {
+   "base": "Gold Ring",
+   "item_id": "4",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "line": "13% increased Rarity of Items found",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+233 to Evasion Rating",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+97 to maximum Mana",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+56% to Fire Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+51% to Cold Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+51% to Lightning Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "28% increased Explicit Resistance Modifier magnitudes",
+     "parsed": false
+    }
+   ],
+   "name": "Damnation Twirl, Gold Ring",
+   "slot": "Ring 1"
+  },
+  {
+   "base": "Sapphire Ring",
+   "item_id": "12",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "line": "+23% to Cold Resistance",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "22% increased Cold Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+45 to maximum Mana",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+15 to Strength",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "extra": "Enemies Chilled by your Hits can be Shattered as though Frozen",
+     "line": "Enemies Chilled by your Hits can be Shattered as though Frozen",
+     "parsed": false
+    }
+   ],
+   "name": "Polcirkeln, Sapphire Ring",
+   "slot": "Ring 2"
+  },
+  {
+   "base": "Sinister Quarterstaff",
+   "item_id": "5",
+   "lines": [
+    {
+     "block": "enchantModLines",
+     "line": "25% increased Physical Damage",
+     "parsed": true
+    },
+    {
+     "block": "enchantModLines",
+     "line": "8% increased Attack Speed",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Adds 2 to 60 Lightning Damage",
+     "parsed": true
+    },
+    {
+     "block": "runeModLines",
+     "line": "Bonded: 60% increased Magnitude of Shock you inflict",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Adds 121 to 182 Cold Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Adds 64 to 103 Fire Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Adds 14 to 284 Lightning Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+5 to Level of all Melee Skills",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "25% increased Attack Speed",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+4.99% to Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Woe Mast, Sinister Quarterstaff",
+   "slot": "Weapon 1"
+  },
+  {
+   "base": "Nettle Talisman",
+   "item_id": "10",
+   "lines": [
+    {
+     "block": "implicitModLines",
+     "line": "Grants Skill: Level 18 Sanguine Revelry",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "90% increased Physical Damage",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "7% increased Attack Speed",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "+9 to Strength",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "27% chance to cause Bleeding on Hit",
+     "parsed": true
+    },
+    {
+     "block": "explicitModLines",
+     "line": "Every 5 Rage also grants 5% of Damage taken Recouped as Life",
+     "parsed": true
+    }
+   ],
+   "name": "Spiteful Floret, Nettle Talisman",
+   "slot": "Weapon 1 Swap"
+  }
+ ],
+ "kind": "engine_parse_support",
+ "nodes": [
+  {
+   "id": "535",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage"
+  },
+  {
+   "id": "722",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "1420",
+   "lines": [
+    {
+     "line": "15% increased Attack Area Damage",
+     "parsed": true
+    },
+    {
+     "line": "10% increased Area of Effect for Attacks",
+     "parsed": true
+    },
+    {
+     "line": "5% chance to Daze on Hit",
+     "parsed": true
+    }
+   ],
+   "name": "Dizzying Sweep"
+  },
+  {
+   "id": "2113",
+   "lines": [
+    {
+     "line": "25% increased Accuracy Rating with Quarterstaves",
+     "parsed": true
+    },
+    {
+     "line": "25% increased Critical Damage Bonus with Quarterstaves",
+     "parsed": true
+    },
+    {
+     "line": "+25 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Martial Artistry"
+  },
+  {
+   "id": "2582",
+   "lines": [
+    {
+     "line": "+5 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Intelligence"
+  },
+  {
+   "id": "2936",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus for Attack Damage",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Critical Damage"
+  },
+  {
+   "id": "3336",
+   "lines": [
+    {
+     "line": "20% increased Critical Damage Bonus if you've consumed a Power Charge Recently",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage when consuming a Power Charge"
+  },
+  {
+   "id": "3700",
+   "lines": [
+    {
+     "line": "15% increased Stun Buildup",
+     "parsed": true
+    },
+    {
+     "line": "15% increased Freeze Buildup",
+     "parsed": true
+    }
+   ],
+   "name": "Stun and Freeze Buildup"
+  },
+  {
+   "id": "4157",
+   "lines": [
+    {
+     "line": "10% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Chance"
+  },
+  {
+   "id": "4536",
+   "lines": [
+    {
+     "line": "3% increased Attack Speed with Quarterstaves",
+     "parsed": true
+    }
+   ],
+   "name": "Quarterstaff Speed"
+  },
+  {
+   "id": "6842",
+   "lines": [
+    {
+     "line": "15% increased Stun Buildup",
+     "parsed": true
+    },
+    {
+     "line": "15% increased Freeze Buildup",
+     "parsed": true
+    }
+   ],
+   "name": "Stun and Freeze Buildup"
+  },
+  {
+   "id": "7054",
+   "lines": [
+    {
+     "line": "6% increased Attack Area Damage",
+     "parsed": true
+    },
+    {
+     "line": "4% increased Area of Effect for Attacks",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Area Damage and Area"
+  },
+  {
+   "id": "7809",
+   "lines": [
+    {
+     "line": "Gain 4% of Damage as Extra Cold Damage",
+     "parsed": true
+    },
+    {
+     "line": "Gain 4% of Damage as Extra Lightning Damage",
+     "parsed": true
+    },
+    {
+     "line": "+10 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Wild Storm"
+  },
+  {
+   "id": "10364",
+   "lines": [
+    {
+     "line": "4% increased Skill Speed",
+     "parsed": true
+    }
+   ],
+   "name": "Skill Speed"
+  },
+  {
+   "id": "11495",
+   "lines": [],
+   "name": "Martial Artist"
+  },
+  {
+   "id": "11598",
+   "lines": [
+    {
+     "line": "3% increased Attack Speed with Quarterstaves",
+     "parsed": true
+    }
+   ],
+   "name": "Quarterstaff Speed"
+  },
+  {
+   "id": "11604",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "12249",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "12761",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "13407",
+   "lines": [
+    {
+     "line": "25% increased Critical Damage Bonus",
+     "parsed": true
+    },
+    {
+     "line": "+10 to Strength",
+     "parsed": true
+    }
+   ],
+   "name": "Heartbreaking"
+  },
+  {
+   "id": "13457",
+   "lines": [
+    {
+     "line": "40% increased Evasion Rating if you have been Hit Recently",
+     "parsed": true
+    },
+    {
+     "line": "40% faster start of Energy Shield Recharge if you've been Stunned Recently",
+     "parsed": true
+    }
+   ],
+   "name": "Shadow Dancing"
+  },
+  {
+   "id": "13724",
+   "lines": [
+    {
+     "line": "15% increased Damage if you've dealt a Critical Hit in the past 8 seconds",
+     "parsed": true
+    },
+    {
+     "line": "15% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Deadly Force"
+  },
+  {
+   "id": "14262",
+   "lines": [
+    {
+     "line": "+5 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Intelligence"
+  },
+  {
+   "id": "14267",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "14446",
+   "lines": [
+    {
+     "line": "+5 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Intelligence"
+  },
+  {
+   "id": "14725",
+   "lines": [
+    {
+     "line": "3% increased Skill Speed",
+     "parsed": true
+    }
+   ],
+   "name": "Skill Speed"
+  },
+  {
+   "id": "15343",
+   "lines": [
+    {
+     "line": "Gain Deflection Rating equal to 5% of Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "4% faster start of Energy Shield Recharge",
+     "parsed": true
+    }
+   ],
+   "name": "Deflection and Energy Shield Delay"
+  },
+  {
+   "id": "15775",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "15975",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "16705",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "17088",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "17367",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "17548",
+   "lines": [
+    {
+     "line": "25% increased Critical Damage Bonus if you've dealt a Non-Critical Hit Recently",
+     "parsed": true
+    },
+    {
+     "line": "15% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Moment of Truth"
+  },
+  {
+   "id": "19722",
+   "lines": [
+    {
+     "line": "20% increased Freeze Buildup",
+     "parsed": true
+    },
+    {
+     "line": "50% increased Damage with Hits against Frozen Enemies",
+     "parsed": true
+    }
+   ],
+   "name": "Thin Ice"
+  },
+  {
+   "id": "20024",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage"
+  },
+  {
+   "id": "20437",
+   "lines": [
+    {
+     "line": "+5 to all Attributes",
+     "parsed": true
+    }
+   ],
+   "name": "Attributes"
+  },
+  {
+   "id": "20677",
+   "lines": [
+    {
+     "line": "25% increased Critical Damage Bonus",
+     "parsed": true
+    },
+    {
+     "line": "+10 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "For the Jugular"
+  },
+  {
+   "id": "21336",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "21945",
+   "lines": [
+    {
+     "line": "5% chance to Daze on Hit",
+     "parsed": true
+    }
+   ],
+   "name": "Damage and Criticals vs Dazed Enemies"
+  },
+  {
+   "id": "21984",
+   "lines": [],
+   "name": "Jewel Socket"
+  },
+  {
+   "id": "22713",
+   "lines": [
+    {
+     "line": "10% increased Cold Damage",
+     "parsed": true
+    }
+   ],
+   "name": "Cold Damage"
+  },
+  {
+   "id": "24287",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "24786",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "26034",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "26556",
+   "lines": [
+    {
+     "line": "Gain Deflection Rating equal to 5% of Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "4% faster start of Energy Shield Recharge",
+     "parsed": true
+    }
+   ],
+   "name": "Deflection and Energy Shield Delay"
+  },
+  {
+   "id": "26572",
+   "lines": [
+    {
+     "line": "12% increased Critical Hit Chance against Dazed Enemies",
+     "parsed": true
+    }
+   ],
+   "name": "Criticals vs Dazed Enemies"
+  },
+  {
+   "id": "27705",
+   "lines": [
+    {
+     "line": "+5 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Intelligence"
+  },
+  {
+   "id": "28044",
+   "lines": [
+    {
+     "line": "40% increased Cold Damage while affected by Herald of Ice",
+     "parsed": true
+    },
+    {
+     "line": "40% increased Fire Damage while affected by Herald of Ash",
+     "parsed": true
+    },
+    {
+     "line": "40% increased Lightning Damage while affected by Herald of Thunder",
+     "parsed": true
+    }
+   ],
+   "name": "Coming Calamity"
+  },
+  {
+   "id": "28329",
+   "lines": [
+    {
+     "line": "35% increased Stun Buildup",
+     "parsed": true
+    },
+    {
+     "line": "35% increased Freeze Buildup",
+     "parsed": true
+    }
+   ],
+   "name": "Pressure Points"
+  },
+  {
+   "id": "28835",
+   "lines": [
+    {
+     "line": "12% increased Damage while affected by a Herald",
+     "parsed": true
+    }
+   ],
+   "name": "Herald Damage"
+  },
+  {
+   "id": "29408",
+   "lines": [
+    {
+     "line": "8% increased Mana Cost Efficiency",
+     "parsed": true
+    }
+   ],
+   "name": "Mana Cost Efficiency"
+  },
+  {
+   "id": "29959",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage"
+  },
+  {
+   "id": "30615",
+   "lines": [
+    {
+     "line": "20% increased Critical Damage Bonus if you've consumed a Power Charge Recently",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage when consuming a Power Charge"
+  },
+  {
+   "id": "30657",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "30808",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "31765",
+   "lines": [
+    {
+     "line": "+5 to Strength",
+     "parsed": true
+    }
+   ],
+   "name": "Strength"
+  },
+  {
+   "id": "31888",
+   "lines": [
+    {
+     "line": "8% increased Mana Cost Efficiency",
+     "parsed": true
+    }
+   ],
+   "name": "Mana Cost Efficiency"
+  },
+  {
+   "id": "32763",
+   "lines": [],
+   "name": "Jewel Socket"
+  },
+  {
+   "id": "34015",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "34168",
+   "lines": [
+    {
+     "line": "25% increased Damage if you've dealt a Critical Hit in the past 8 seconds",
+     "parsed": true
+    }
+   ],
+   "name": "Crashing Wave"
+  },
+  {
+   "id": "34300",
+   "lines": [
+    {
+     "line": "20% increased Mana Regeneration Rate",
+     "parsed": true
+    },
+    {
+     "line": "15% increased Mana Cost Efficiency",
+     "parsed": true
+    }
+   ],
+   "name": "Conservative Casting"
+  },
+  {
+   "id": "34316",
+   "lines": [
+    {
+     "line": "10% chance to Daze on Hit",
+     "parsed": true
+    },
+    {
+     "line": "30% increased Armour, Evasion and Energy Shield while wielding a Quarterstaff",
+     "parsed": true
+    },
+    {
+     "line": "30% increased Freeze Buildup with Quarterstaves",
+     "parsed": true
+    },
+    {
+     "line": "30% increased Stun Buildup with Quarterstaves",
+     "parsed": true
+    }
+   ],
+   "name": "One with the River"
+  },
+  {
+   "id": "34621",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage"
+  },
+  {
+   "id": "36231",
+   "lines": [
+    {
+     "line": "20% increased Critical Damage Bonus if you've consumed a Power Charge Recently",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage when consuming a Power Charge"
+  },
+  {
+   "id": "36723",
+   "lines": [
+    {
+     "line": "15% increased Stun Buildup",
+     "parsed": true
+    },
+    {
+     "line": "15% increased Freeze Buildup",
+     "parsed": true
+    }
+   ],
+   "name": "Stun and Freeze Buildup"
+  },
+  {
+   "id": "36931",
+   "lines": [
+    {
+     "line": "25% increased Attack Damage",
+     "parsed": true
+    },
+    {
+     "line": "5% chance to Daze on Hit",
+     "parsed": true
+    }
+   ],
+   "name": "Concussive Attack"
+  },
+  {
+   "id": "37250",
+   "lines": [
+    {
+     "line": "10% increased Attack Area Damage",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Area Damage"
+  },
+  {
+   "id": "37514",
+   "lines": [
+    {
+     "line": "8% increased Attack Speed with Quarterstaves",
+     "parsed": true
+    },
+    {
+     "line": "Knocks Back Enemies if you get a Critical Hit with a Quarterstaff",
+     "parsed": true
+    }
+   ],
+   "name": "Whirling Assault"
+  },
+  {
+   "id": "37691",
+   "lines": [
+    {
+     "line": "10% increased Attack Damage",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Damage"
+  },
+  {
+   "id": "38342",
+   "lines": [
+    {
+     "line": "10% chance to Daze on Hit",
+     "parsed": true
+    },
+    {
+     "line": "30% increased Damage against Dazed Enemies",
+     "parsed": true
+    }
+   ],
+   "name": "Stupefy"
+  },
+  {
+   "id": "38493",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage"
+  },
+  {
+   "id": "38537",
+   "lines": [
+    {
+     "line": "+10 to Intelligence",
+     "parsed": true
+    },
+    {
+     "line": "20% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Heartstopping"
+  },
+  {
+   "id": "38541",
+   "lines": [
+    {
+     "line": "10% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Chance"
+  },
+  {
+   "id": "39369",
+   "lines": [
+    {
+     "line": "Attacks have +1% to Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Struck Through"
+  },
+  {
+   "id": "39552",
+   "lines": [
+    {
+     "line": "Can tattoo Runes onto your body, gaining",
+     "parsed": true
+    },
+    {
+     "line": "additional Rune-only sockets:",
+     "parsed": true
+    },
+    {
+     "line": "1 Helmet socket",
+     "parsed": true
+    },
+    {
+     "line": "2 Body Armour sockets",
+     "parsed": true
+    },
+    {
+     "line": "1 Gloves socket",
+     "parsed": true
+    },
+    {
+     "line": "1 Boots socket",
+     "parsed": true
+    }
+   ],
+   "name": "Runic Meridians"
+  },
+  {
+   "id": "39595",
+   "lines": [
+    {
+     "extra": "Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves ",
+     "line": "Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and",
+     "parsed": false
+    },
+    {
+     "extra": "their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves ",
+     "line": "their Explicit Modifiers are transformed into more powerful related Modifiers",
+     "parsed": false
+    },
+    {
+     "extra": "Ignore Attribute Requirements to equip Gloves ",
+     "line": "Ignore Attribute Requirements to equip Gloves",
+     "parsed": false
+    }
+   ],
+   "name": "Way of the Stonefist"
+  },
+  {
+   "id": "41751",
+   "lines": [
+    {
+     "extra": "When you gain Combo, gain an additional Combo -0.2 seconds to current Energy Shield Recharge delay per Combo expended when using Skills ",
+     "line": "When you gain Combo, gain an additional Combo",
+     "parsed": false
+    },
+    {
+     "extra": " seconds to current  Recharge delay per Combo expended when using Skills ",
+     "line": "-0.2 seconds to current Energy Shield Recharge delay per Combo expended when using Skills",
+     "parsed": true
+    }
+   ],
+   "name": "Martial Adept"
+  },
+  {
+   "id": "41811",
+   "lines": [
+    {
+     "line": "20% increased Critical Damage Bonus",
+     "parsed": true
+    },
+    {
+     "line": "30% increased Stun Buildup",
+     "parsed": true
+    }
+   ],
+   "name": "Shatter Palm"
+  },
+  {
+   "id": "42750",
+   "lines": [
+    {
+     "line": "10% increased Attack Damage",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Damage"
+  },
+  {
+   "id": "42805",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "42857",
+   "lines": [
+    {
+     "line": "4% increased Skill Speed",
+     "parsed": true
+    }
+   ],
+   "name": "Skill Speed"
+  },
+  {
+   "id": "44223",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage"
+  },
+  {
+   "id": "44516",
+   "lines": [
+    {
+     "line": "3% increased Attack Speed with Quarterstaves",
+     "parsed": true
+    }
+   ],
+   "name": "Quarterstaff Speed"
+  },
+  {
+   "id": "44683",
+   "lines": [],
+   "name": "SIX"
+  },
+  {
+   "id": "45702",
+   "lines": [
+    {
+     "line": "10% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Chance"
+  },
+  {
+   "id": "46197",
+   "lines": [
+    {
+     "line": "20% reduced Critical Damage Bonus",
+     "parsed": true
+    },
+    {
+     "line": "50% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Careful Assassin"
+  },
+  {
+   "id": "47009",
+   "lines": [
+    {
+     "line": "10% increased Attack Area Damage",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Area Damage"
+  },
+  {
+   "id": "47514",
+   "lines": [
+    {
+     "line": "10% chance to Daze on Hit",
+     "parsed": true
+    },
+    {
+     "line": "25% increased Critical Hit Chance against Dazed Enemies",
+     "parsed": true
+    }
+   ],
+   "name": "Dizzying Hits"
+  },
+  {
+   "id": "47976",
+   "lines": [
+    {
+     "line": "+5 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Intelligence"
+  },
+  {
+   "id": "48116",
+   "lines": [
+    {
+     "line": "+5 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Intelligence"
+  },
+  {
+   "id": "48198",
+   "lines": [
+    {
+     "line": "4% increased Movement Speed",
+     "parsed": true
+    },
+    {
+     "line": "15% increased Mana Regeneration Rate",
+     "parsed": true
+    },
+    {
+     "line": "+5 to Dexterity and Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Step Like Mist"
+  },
+  {
+   "id": "48773",
+   "lines": [
+    {
+     "line": "+5 to Strength",
+     "parsed": true
+    }
+   ],
+   "name": "Strength"
+  },
+  {
+   "id": "49220",
+   "lines": [
+    {
+     "line": "8% increased Attack and Cast Speed",
+     "parsed": true
+    },
+    {
+     "line": "+5 to Dexterity and Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Flow Like Water"
+  },
+  {
+   "id": "49356",
+   "lines": [
+    {
+     "line": "20% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "20% increased maximum Energy Shield",
+     "parsed": true
+    },
+    {
+     "line": "+5% to Cold Resistance",
+     "parsed": true
+    },
+    {
+     "line": "+5% to Lightning Resistance",
+     "parsed": true
+    }
+   ],
+   "name": "First Principle of the Hollow"
+  },
+  {
+   "id": "51741",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "52295",
+   "lines": [
+    {
+     "line": "15% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "15% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "53280",
+   "lines": [
+    {
+     "line": "4% increased Attack Speed",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Speed"
+  },
+  {
+   "id": "53941",
+   "lines": [
+    {
+     "line": "10% faster start of Energy Shield Recharge",
+     "parsed": true
+    },
+    {
+     "line": "20% increased Evasion Rating if you haven't been Hit Recently",
+     "parsed": true
+    },
+    {
+     "line": "3% increased Movement Speed while you have Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Shimmering"
+  },
+  {
+   "id": "54983",
+   "lines": [
+    {
+     "line": "10% increased Critical Hit Chance for Attacks",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Critical Chance"
+  },
+  {
+   "id": "55088",
+   "lines": [
+    {
+     "line": "10% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Chance"
+  },
+  {
+   "id": "55621",
+   "lines": [
+    {
+     "line": "10% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Chance"
+  },
+  {
+   "id": "56045",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "56265",
+   "lines": [
+    {
+     "line": "60% increased Critical Damage Bonus",
+     "parsed": true
+    },
+    {
+     "line": "20% reduced Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Throatseeker"
+  },
+  {
+   "id": "56349",
+   "lines": [
+    {
+     "line": "Maximum Life is 1",
+     "parsed": true
+    },
+    {
+     "line": "Immune to Chaos Damage and Bleeding",
+     "parsed": true
+    }
+   ],
+   "name": "Chaos Inoculation"
+  },
+  {
+   "id": "56453",
+   "lines": [
+    {
+     "line": "40% increased Attack Damage while on Full Life",
+     "parsed": true
+    },
+    {
+     "line": "60% increased Attack Damage while on Low Life",
+     "parsed": true
+    }
+   ],
+   "name": "Killer Instinct"
+  },
+  {
+   "id": "56838",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "56847",
+   "lines": [
+    {
+     "line": "12% increased Damage while affected by a Herald",
+     "parsed": true
+    }
+   ],
+   "name": "Herald Damage"
+  },
+  {
+   "id": "57821",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "58692",
+   "lines": [
+    {
+     "line": "Gain Deflection Rating equal to 5% of Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "4% faster start of Energy Shield Recharge",
+     "parsed": true
+    }
+   ],
+   "name": "Deflection and Energy Shield Delay"
+  },
+  {
+   "id": "59538",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "59657",
+   "lines": [
+    {
+     "line": "+5% to Fire Resistance",
+     "parsed": true
+    },
+    {
+     "line": "+5% to Chaos Resistance",
+     "parsed": true
+    },
+    {
+     "line": "Gain Deflection Rating equal to 8% of Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "10% faster start of Energy Shield Recharge",
+     "parsed": true
+    }
+   ],
+   "name": "First Teachings of the Keeper"
+  },
+  {
+   "id": "60239",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "60362",
+   "lines": [
+    {
+     "line": "15% increased Critical Damage Bonus",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Damage"
+  },
+  {
+   "id": "61196",
+   "lines": [
+    {
+     "line": "+5 to Dexterity",
+     "parsed": true
+    }
+   ],
+   "name": "Dexterity"
+  },
+  {
+   "id": "61333",
+   "lines": [
+    {
+     "line": "10% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "Critical Chance"
+  },
+  {
+   "id": "61403",
+   "lines": [
+    {
+     "line": "+5 to Intelligence",
+     "parsed": true
+    }
+   ],
+   "name": "Intelligence"
+  },
+  {
+   "id": "61586",
+   "lines": [
+    {
+     "extra": "Skills can build and retain Combo regardless of Weapon Set Gain Combo from all Attack Hits ",
+     "line": "Skills can build and retain Combo regardless of Weapon Set",
+     "parsed": false
+    },
+    {
+     "extra": "Combo from all Attack Hits ",
+     "line": "Gain Combo from all Attack Hits",
+     "parsed": false
+    }
+   ],
+   "name": "Martial Master"
+  },
+  {
+   "id": "61601",
+   "lines": [
+    {
+     "line": "+10 to Dexterity",
+     "parsed": true
+    },
+    {
+     "line": "20% increased Critical Hit Chance",
+     "parsed": true
+    }
+   ],
+   "name": "True Strike"
+  },
+  {
+   "id": "61632",
+   "lines": [
+    {
+     "line": "5% chance to Daze on Hit",
+     "parsed": true
+    },
+    {
+     "line": "20% increased Freeze Buildup with Quarterstaves",
+     "parsed": true
+    }
+   ],
+   "name": "Quarterstaff Freeze and Daze Buildup"
+  },
+  {
+   "id": "61718",
+   "lines": [
+    {
+     "line": "15% increased Damage against Dazed Enemies",
+     "parsed": true
+    }
+   ],
+   "name": "Damage vs Dazed Enemies"
+  },
+  {
+   "id": "61834",
+   "lines": [],
+   "name": "Jewel Socket"
+  },
+  {
+   "id": "62841",
+   "lines": [
+    {
+     "line": "12% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "12% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Evasion and Energy Shield"
+  },
+  {
+   "id": "62984",
+   "lines": [
+    {
+     "line": "24% increased Evasion Rating",
+     "parsed": true
+    },
+    {
+     "line": "24% increased maximum Energy Shield",
+     "parsed": true
+    }
+   ],
+   "name": "Mindful Awareness"
+  },
+  {
+   "id": "64700",
+   "lines": [
+    {
+     "line": "5% chance to Daze on Hit",
+     "parsed": true
+    },
+    {
+     "line": "20% increased Freeze Buildup with Quarterstaves",
+     "parsed": true
+    }
+   ],
+   "name": "Quarterstaff Freeze and Daze Buildup"
+  },
+  {
+   "id": "65204",
+   "lines": [
+    {
+     "line": "+2 to Maximum Power Charges",
+     "parsed": true
+    }
+   ],
+   "name": "Overflowing Power"
+  },
+  {
+   "id": "65228",
+   "lines": [
+    {
+     "line": "4% increased Attack Speed",
+     "parsed": true
+    }
+   ],
+   "name": "Attack Speed"
+  }
+ ],
+ "not_a_claim": "Parsed means PoB produced a modifier list; it does not mean the modifier is implemented correctly.",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "pob_dirty": false,
+ "selection": {
+  "Config": "1",
+  "Items": "1",
+  "Skills": "1",
+  "Tree": "1"
+ },
+ "task": "P07-T01"
+}

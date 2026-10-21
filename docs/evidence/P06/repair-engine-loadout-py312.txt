@@ -1,0 +1,13 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\PycharmProjects\pob2-tools\.claude\worktrees\coverage\.venv312\Scripts\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.claude\worktrees\coverage
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 2 items
+
+tests/engine/test_p06_loadout_selection.py::test_facts_match_pobs_selected_loadout PASSED [ 50%]
+tests/engine/test_p06_loadout_selection.py::test_custom_modifier_blocks_match_pob PASSED [100%]
+
+native fault diagnostics: 16716589 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-592\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================== 2 passed in 6.06s ==============================

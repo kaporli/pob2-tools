@@ -592,7 +592,8 @@ class EngineAdapter:
         # may leave the old state marked reusable. Successful operations
         # publish their known state only after the complete response is checked.
         if op in (protocol.OP_LOAD_EXACT_BUILD, protocol.OP_CREATE_BLANK_BUILD,
-                  protocol.OP_PRIMITIVES):
+                  protocol.OP_PRIMITIVES, protocol.OP_CYCLE_INPUTS,
+                  protocol.OP_PARSE_SUPPORT):
             self._forget_loaded_build()
         handle = self._ensure_worker()
         if deadline is not None:
@@ -809,6 +810,36 @@ class EngineAdapter:
         self._loaded = LoadedBuild.from_wire(payload.get("summary") or {})
         self._loaded_generation = self._generation
         return dict(payload.get("values") or {})
+
+    @_operation_boundary
+    def cycle_inputs(self, document: BuildDocument, state: EngineState | None = None,
+                     *, timeout_s: float | None = None) -> dict:
+        """Load a document and read flask data and duration modifiers (P07-T01).
+
+        Like ``probe``, a raw mapping with no profile behind it. Only the
+        state's config and main skill are applied; ``stat_keys`` is ignored.
+        """
+        state = state or EngineState()
+        timeout_s = self.detailed_timeout_s if timeout_s is None else timeout_s
+        self.load_exact_build(document, name="cycle-inputs", timeout_s=timeout_s)
+        wire = state.to_wire()
+        payload = self._request(protocol.OP_CYCLE_INPUTS,
+                                {"config": wire["config"], "main_skill": wire["main_skill"]},
+                                timeout_s)
+        # The applied config and main skill differ from what a primitives
+        # read would assume, so the loaded build is not marked reusable.
+        return dict(payload or {})
+
+    @_operation_boundary
+    def parse_support(self, document: BuildDocument, *,
+                      timeout_s: float | None = None) -> dict:
+        """Load a document unchanged and read PoB's parse verdicts (P06-T02).
+
+        A raw mapping for ``coverage.capture.bind_capture``; nothing applied.
+        """
+        timeout_s = self.detailed_timeout_s if timeout_s is None else timeout_s
+        self.load_exact_build(document, name="parse-support", timeout_s=timeout_s)
+        return dict(self._request(protocol.OP_PARSE_SUPPORT, {}, timeout_s) or {})
 
     @_operation_boundary
     def legality_state(self, build: BuildSpec, profile: PatchProfile, *,
