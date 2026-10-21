@@ -1,0 +1,7511 @@
+{
+ "attribution": {
+  "evidence": [
+   "docs/evidence/P09-T01.2/mechanics-rules.json#/attribution"
+  ],
+  "not_modelled": {
+   "charged_shockwave": "unrelated: owned by Charged Staff",
+   "flicker_strike_ignite": "unrelated: excluded from the v1 score, PoB IgniteDPS reported",
+   "herald_of_ice": "unrelated: needs shatters or kills, absent on the benchmark",
+   "herald_of_thunder": "unrelated",
+   "living_lightning": "unrelated: minion damage"
+  },
+  "notes": {
+   "skill/ChargedStaffPlayer": "Charged Shockwave is a separate hidden attack owned by Charged Staff",
+   "skill/FlickerStrikePlayer": "PoB AverageDamage per strike at the method's charges; includes the Charged Staff buff lightning while the buff is up",
+   "skill/MeleeQuarterstaffPlayer": "default attack, not in the rotation",
+   "skill/WhirlingAssaultPlayer": "PoB AverageBurstDamage per use; separate skill",
+   "support/SupportLivingLightningPlayerTwo": "minion damage"
+  },
+  "rows": [
+   [
+    "skill/ChargedStaffPlayer",
+    "unrelated"
+   ],
+   [
+    "skill/FlickerStrikePlayer",
+    "flicker_direct"
+   ],
+   [
+    "skill/MeleeQuarterstaffPlayer",
+    "unrelated"
+   ],
+   [
+    "skill/WhirlingAssaultPlayer",
+    "unrelated"
+   ],
+   [
+    "support/SupportLivingLightningPlayerTwo",
+    "unrelated"
+   ]
+  ],
+  "table_hash": "sha256:b0a9fd762ab6991447140bd247c0a6efe85e66f0d4e0e887df90735175a9ef6e",
+  "table_id": "p09-t012-attribution-proposed",
+  "version": "1"
+ },
+ "build": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml",
+ "command": "python scripts/p07_t01_flicker_cycle.py",
+ "coverage": {
+  "applied_resolutions": [
+   {
+    "detail": "p09-t012:flicker-extra-strikes",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+    "mechanic_id": "skill/FlickerStrikePlayer",
+    "resolution_id": "p09-t012/flicker-extra-strikes",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:perpetual-charge",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "p09-t012/perpetual-charge",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:ailith-surpassing-distribution",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "p09-t012/ailith-surpassing-distribution",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:combo-cap-and-decay",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "p09-t012/combo-cap-and-decay",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:whirling-assault-use",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+    "mechanic_id": "skill/WhirlingAssaultPlayer",
+    "resolution_id": "p09-t012/whirling-assault-use",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:charged-staff-use",
+    "gap_id": "gap-p06-missing-implementation-charges-charged-staff-consumption-15354938ae",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p09-t012/charged-staff-use",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "no open gap names this mechanic in the report",
+    "gap_id": null,
+    "mechanic_id": "skill/WolfPouncePlayer",
+    "resolution_id": "p09-t012/pounce-predators-mark",
+    "result": "skipped",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "p09-t012:flicker-bypass-cd-default",
+    "gap_id": "gap-p06-unknown-rule-config-flickerstrikebypasscd-d4f84c80ba",
+    "mechanic_id": "config/FlickerStrikeBypassCD",
+    "resolution_id": "p09-t012/flicker-bypass-cd-default",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "clean pinned replay agrees with every earlier value",
+    "gap_id": "gap-p09-t011-engine-checkout-state",
+    "mechanic_id": "engine/pinned-checkout",
+    "resolution_id": "p09-t012/engine-checkout",
+    "result": "applied",
+    "source": "p09_t012"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-flask-3710fdb984",
+    "mechanic_id": "resource/mana-flask",
+    "resolution_id": "p07-t01/mana-flask",
+    "result": "applied",
+    "source": "implementation"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-sustain-0653e3349b",
+    "mechanic_id": "resource/mana-sustain",
+    "resolution_id": "p07-t01/mana-sustain",
+    "result": "applied",
+    "source": "implementation"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p09-t011-rotation-details",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p07-t01/charged-staff-buff-window",
+    "result": "applied",
+    "source": "implementation"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p09-t011-charge-cycle-rules",
+    "mechanic_id": "resource/power-charges",
+    "resolution_id": "pob-community-v2/resource/power-charges",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "pob-community-v2/resource/combo",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-support-supportculminationplayertwo-417d6b46f1",
+    "mechanic_id": "support/SupportCulminationPlayerTwo",
+    "resolution_id": "pob-community-v2/support/SupportCulminationPlayerTwo",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "pob-community-v2/support/SupportAilithLineagePlayer",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "pob-community-v2/support/SupportPerpetualChargePlayer",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-passive-41751-b1cda48394",
+    "mechanic_id": "passive/41751",
+    "resolution_id": "pob-community-v2/passive/41751",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p06-missing-implementation-passive-61586-20fa93d7fb",
+    "mechanic_id": "passive/61586",
+    "resolution_id": "pob-community-v2/passive/61586",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "rule/input corrected",
+    "gap_id": "gap-p09-t011-charged-staff-shared-charges",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "pob-community-v2/charged-staff-shared-charges",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "method:pob-community-v2:teleport-satisfies",
+    "gap_id": "gap-p09-t011-hit-and-run-movement",
+    "mechanic_id": "activation/hit-and-run-reuse",
+    "resolution_id": "pob-community-v2/hit-and-run",
+    "result": "applied",
+    "source": "method"
+   },
+   {
+    "detail": "no reviewer acceptance supplied for table sha256:b0a9fd762ab6991447140bd247c0a6efe85e66f0d4e0e887df90735175a9ef6e",
+    "gap_id": null,
+    "mechanic_id": "attribution/flicker-sustained-v1",
+    "resolution_id": "attribution/flicker-sustained-v1",
+    "result": "not_applied",
+    "source": "attribution"
+   }
+  ],
+  "engine_state": {
+   "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+   "pob_dirty": false
+  },
+  "ledger_history": [
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/flicker-description, pob/flicker-strikes-per-charge, pob/flicker-prediamage, pob/removable-power-charges, web/fextralife-flicker-strike, docs/evidence/P09-T01.2/replay.json#/flicker_seed",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+    "kind": "resolved",
+    "mechanic_id": "skill/FlickerStrikePlayer",
+    "resolution_id": "p09-t012/flicker-extra-strikes"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/perpetual-charge-description, pob/perpetual-charge-chance, docs/evidence/P09-T01.1/seed/skill-groups.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "p09-t012/perpetual-charge"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/ailith-description, pob/statdesc-ailith-surpassing, web/poe2wiki-surpassing-chance",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "p09-t012/ailith-surpassing-distribution"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/culmination-cap, pob/culmination-decay",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "kind": "resolved",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "p09-t012/combo-cap-and-decay"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence docs/evidence/P09-T01.2/replay.json#/whirling_assault",
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+    "kind": "resolved",
+    "mechanic_id": "skill/WhirlingAssaultPlayer",
+    "resolution_id": "p09-t012/whirling-assault-use"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/charged-staff-description, pob/charged-staff-requires, docs/evidence/P09-T01.2/replay.json#/charged_staff",
+    "gap_id": "gap-p06-missing-implementation-charges-charged-staff-consumption-15354938ae",
+    "kind": "resolved",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p09-t012/charged-staff-use"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence pob/flicker-bypass-cd, docs/evidence/P09-T01.2/replay.json#/config_probes, docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/config_mods",
+    "gap_id": "gap-p06-unknown-rule-config-flickerstrikebypasscd-d4f84c80ba",
+    "kind": "resolved",
+    "mechanic_id": "config/FlickerStrikeBypassCD",
+    "resolution_id": "p09-t012/flicker-bypass-cd-default"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P09-T01.2, reviewed by nobody yet; evidence docs/evidence/P09-T01.2/replay.json",
+    "gap_id": "gap-p09-t011-engine-checkout-state",
+    "kind": "resolved",
+    "mechanic_id": "engine/pinned-checkout",
+    "resolution_id": "p09-t012/engine-checkout"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by nobody yet; evidence tests/unit/test_p07_t01_flicker_cycle.py, docs/evidence/P07-T01/README.md, docs/evidence/P09-T01.2/replay.json, docs/evidence/P09-T01.2/mechanics-rules.json#mana-sustain",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-flask-3710fdb984",
+    "kind": "resolved",
+    "mechanic_id": "resource/mana-flask",
+    "resolution_id": "p07-t01/mana-flask"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by nobody yet; evidence tests/unit/test_p07_t01_flicker_cycle.py, docs/evidence/P07-T01/README.md, docs/evidence/P09-T01.2/replay.json",
+    "gap_id": "gap-p06-missing-implementation-resource-mana-sustain-0653e3349b",
+    "kind": "resolved",
+    "mechanic_id": "resource/mana-sustain",
+    "resolution_id": "p07-t01/mana-sustain"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by nobody yet; evidence tests/unit/test_p07_t01_flicker_cycle.py, docs/evidence/P07-T01/README.md, docs/evidence/P09-T01.2/replay.json, docs/evidence/P09-T01.2/mechanics-rules.json#charged-staff-period",
+    "gap_id": "gap-p09-t011-rotation-details",
+    "kind": "resolved",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "p07-t01/charged-staff-buff-window"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p09-t011-charge-cycle-rules",
+    "kind": "resolved",
+    "mechanic_id": "resource/power-charges",
+    "resolution_id": "pob-community-v2/resource/power-charges"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-resource-combo-5fa038a1c9",
+    "kind": "resolved",
+    "mechanic_id": "resource/combo",
+    "resolution_id": "pob-community-v2/resource/combo"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportculminationplayertwo-417d6b46f1",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportCulminationPlayerTwo",
+    "resolution_id": "pob-community-v2/support/SupportCulminationPlayerTwo"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportailithlineageplayer-6e1c9ffcf7",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportAilithLineagePlayer",
+    "resolution_id": "pob-community-v2/support/SupportAilithLineagePlayer"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-support-supportperpetualchargeplayer-79c50c0b55",
+    "kind": "resolved",
+    "mechanic_id": "support/SupportPerpetualChargePlayer",
+    "resolution_id": "pob-community-v2/support/SupportPerpetualChargePlayer"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-passive-41751-b1cda48394",
+    "kind": "resolved",
+    "mechanic_id": "passive/41751",
+    "resolution_id": "pob-community-v2/passive/41751"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p06-missing-implementation-passive-61586-20fa93d7fb",
+    "kind": "resolved",
+    "mechanic_id": "passive/61586",
+    "resolution_id": "pob-community-v2/passive/61586"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p09-t011-charged-staff-shared-charges",
+    "kind": "resolved",
+    "mechanic_id": "charges/charged-staff-consumption",
+    "resolution_id": "pob-community-v2/charged-staff-shared-charges"
+   },
+   {
+    "at": "2026-10-18T00:00:00Z",
+    "detail": "by P07-T01, reviewed by owner decision (D07 amendment 2026-10-18 (2)); evidence docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2, docs/evidence/P09-T01.1/seed/manifest.json#owner_decisions, docs/evidence/P09-T01.2/mechanics-rules.json",
+    "gap_id": "gap-p09-t011-hit-and-run-movement",
+    "kind": "resolved",
+    "mechanic_id": "activation/hit-and-run-reuse",
+    "resolution_id": "pob-community-v2/hit-and-run"
+   }
+  ],
+  "ranking_sensitive": [
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: config/enemyDistance.",
+    "gap_id": "gap-p06-unvalidated-config-enemydistance-773fb42908",
+    "mechanics": [
+     "config/enemyDistance"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: cost/mana-per-use.",
+    "gap_id": "gap-p06-unvalidated-cost-mana-per-use-9b0dc81422",
+    "mechanics": [
+     "cost/mana-per-use"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: damage/pob-modifiers, skill/ChargedStaffPlayer, skill/MeleeQuarterstaffPlayer.",
+    "gap_id": "gap-p06-unvalidated-damage-pob-modifiers-648802f8c5",
+    "mechanics": [
+     "damage/pob-modifiers",
+     "skill/ChargedStaffPlayer",
+     "skill/MeleeQuarterstaffPlayer"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: initial-state/flicker-sustained-v1.",
+    "gap_id": "gap-p06-unvalidated-initial-state-flicker-sustained-v1-26bf2c8684",
+    "mechanics": [
+     "initial-state/flicker-sustained-v1"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "PoB returns no modifier and no unparsed remainder for '28% increased Explicit Resistance Modifier magnitudes' on item:Ring 1; any effect is applied elsewhere or not at all.",
+    "gap_id": "gap-p06-unvalidated-item-ring-1-e85f3dd71e",
+    "mechanics": []
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "patch/profile-0.5.5e is partial and untested. Compatibility is partial (P02-T02.1).",
+    "gap_id": "gap-p06-unvalidated-patch-profile-0-5-5e-0af1d317ec",
+    "mechanics": [
+     "patch/profile-0.5.5e"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: resource/mana-regeneration, resource/power-charges-max.",
+    "gap_id": "gap-p06-unvalidated-resource-mana-regeneration-43622a2ef9",
+    "mechanics": [
+     "resource/mana-regeneration",
+     "resource/power-charges-max"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: support/SupportBlindPlayerTwo, support/SupportCloseCombatPlayerTwo, support/SupportColdMasteryPlayer, support/SupportConcentratedAreaPlayer, support/SupportCooldownRecoveryPlayerTwo, support/SupportElementalArmamentPlayerTwo, support/SupportEmbitterPlayer, support/SupportFireMasteryPlayer, support/SupportFreezePlayer, support/SupportMagnifiedAreaPlayerTwo, support/SupportOisinsOathPlayer, support/SupportRagePlayerTwo, support/SupportRakiatasFlowPlayer, support/SupportStunPlayerThree, support/SupportUhtredOmenPlayer.",
+    "gap_id": "gap-p06-unvalidated-support-supportblindplayertwo-62328fd54c",
+    "mechanics": [
+     "support/SupportBlindPlayerTwo",
+     "support/SupportCloseCombatPlayerTwo",
+     "support/SupportColdMasteryPlayer",
+     "support/SupportConcentratedAreaPlayer",
+     "support/SupportCooldownRecoveryPlayerTwo",
+     "support/SupportElementalArmamentPlayerTwo",
+     "support/SupportEmbitterPlayer",
+     "support/SupportFireMasteryPlayer",
+     "support/SupportFreezePlayer",
+     "support/SupportMagnifiedAreaPlayerTwo",
+     "support/SupportOisinsOathPlayer",
+     "support/SupportRagePlayerTwo",
+     "support/SupportRakiatasFlowPlayer",
+     "support/SupportStunPlayerThree",
+     "support/SupportUhtredOmenPlayer"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "Calculated but not checked against evidence: support/SupportHitAndRunPlayer.",
+    "gap_id": "gap-p06-unvalidated-support-supporthitandrunplayer-a15c4b4a83",
+    "mechanics": [
+     "support/SupportHitAndRunPlayer"
+    ]
+   },
+   {
+    "class": "unvalidated",
+    "explanation": "timing/flicker-strike-strike-duration is partial and untested. pob-cycle-v1 takes H(c) strikes of 1/S_F(c) each; unvalidated.",
+    "gap_id": "gap-p06-unvalidated-timing-flicker-strike-strike-duration-3c52ba774b",
+    "mechanics": [
+     "timing/flicker-strike-strike-duration"
+    ]
+   }
+  ],
+  "registry_hash": "2804710f265f449e2a4b167854deed698b3aaf97615db42ba102d403f34ec9f9",
+  "registry_id": "p06-flicker-v1",
+  "registry_version": "21",
+  "report_notes": [
+   "group 2 not on active weapon sets [1] or disabled; not walked",
+   "group 4 not on active weapon sets [1] or disabled; not walked",
+   "build declares '0_1'; the declaration does not override profile compatibility 'partial'",
+   "Weapon 1 Swap (Spiteful Floret, Nettle Talisman) is on weapon set 2, not walked",
+   "group 13 (MeleeQuarterstaffPlayer) is not used by the rotation; not a damage source"
+  ],
+  "rule_closure_hash": "93b530d874704e8552d5af489035b220b83a0aac5c174111274c68e0b0b5e26e",
+  "rule_ids": [
+   "activation/hit-and-run-reuse",
+   "attribution/flicker-sustained-v1",
+   "charges/charged-staff-consumption",
+   "config/FlickerStrikeBypassCD",
+   "config/enemyDistance",
+   "cost/mana-per-use",
+   "damage/pob-modifiers",
+   "engine/pinned-checkout",
+   "initial-state/flicker-sustained-v1",
+   "passive/41751",
+   "passive/61586",
+   "patch/profile-0.5.5e",
+   "resource/combo",
+   "resource/mana-flask",
+   "resource/mana-regeneration",
+   "resource/mana-sustain",
+   "resource/power-charges",
+   "resource/power-charges-max",
+   "resource/rage",
+   "skill/ChargedStaffPlayer",
+   "skill/FlickerStrikePlayer",
+   "skill/GhostDancePlayer",
+   "skill/HeraldOfIcePlayer",
+   "skill/HeraldOfThunderPlayer",
+   "skill/MeleeQuarterstaffPlayer",
+   "skill/MetaRemnantsOfKalguurPlayer",
+   "skill/TrinityPlayer",
+   "skill/WhirlingAssaultPlayer",
+   "skill/WindDancerPlayer",
+   "support/SupportAilithLineagePlayer",
+   "support/SupportBhatairsVengeancePlayer",
+   "support/SupportBlazingCriticalPlayer",
+   "support/SupportBlindPlayerTwo",
+   "support/SupportCloseCombatPlayerTwo",
+   "support/SupportColdMasteryPlayer",
+   "support/SupportConcentratedAreaPlayer",
+   "support/SupportConcussiveRunesPlayer",
+   "support/SupportCooldownRecoveryPlayerTwo",
+   "support/SupportCulminationPlayerTwo",
+   "support/SupportElementalArmamentPlayerTwo",
+   "support/SupportEmbitterPlayer",
+   "support/SupportFireMasteryPlayer",
+   "support/SupportFleetingRemnantsPlayerTwo",
+   "support/SupportFreezePlayer",
+   "support/SupportHitAndRunPlayer",
+   "support/SupportInnervatePlayer",
+   "support/SupportInterludePlayer",
+   "support/SupportLivingLightningPlayerTwo",
+   "support/SupportMagnifiedAreaPlayerTwo",
+   "support/SupportOisinsOathPlayer",
+   "support/SupportPerpetualChargePlayer",
+   "support/SupportRagePlayerTwo",
+   "support/SupportRakiatasFlowPlayer",
+   "support/SupportStunPlayerThree",
+   "support/SupportUhtredOmenPlayer",
+   "target/pinnacle-preset",
+   "timing/flicker-strike-strike-duration"
+  ]
+ },
+ "decision": {
+  "blocking": [
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "coverage rule assignments {} differ from the scored table p09-t012-attribution-proposed (sha256:b0a9fd762ab6991447140bd247c0a6efe85e66f0d4e0e887df90735175a9ef6e)",
+    "gap_id": "gap-p07-attribution-table-unbound",
+    "mechanics": [
+     "attribution/flicker-sustained-v1"
+    ],
+    "needed_evidence": "A reviewer acceptance naming table sha256:b0a9fd762ab6991447140bd247c0a6efe85e66f0d4e0e887df90735175a9ef6e, applied to the coverage rule."
+   },
+   {
+    "class": "missing_data",
+    "domain": "scenario",
+    "explanation": "Scenario field /reference_result_id has no value.",
+    "fields": [
+     "/reference_result_id"
+    ],
+    "gap_id": "gap-p06-missing-data-flicker-sustained-v1-5a807dfa4a",
+    "mechanics": [],
+    "needed_evidence": "The value of /reference_result_id from the evidence its protocol gap names.",
+    "subjects": [
+     "flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_data",
+    "domain": "scenario",
+    "explanation": "Scenario field /target_entities.conditions has no value.",
+    "fields": [
+     "/target_entities.conditions"
+    ],
+    "gap_id": "gap-p06-missing-data-flicker-sustained-v1-8c9d8962b7",
+    "mechanics": [],
+    "needed_evidence": "The value of /target_entities.conditions from the evidence its protocol gap names.",
+    "subjects": [
+     "flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_data",
+    "domain": "scenario",
+    "explanation": "Scenario field /reference_build_id has no value.",
+    "fields": [
+     "/reference_build_id"
+    ],
+    "gap_id": "gap-p06-missing-data-flicker-sustained-v1-f5c52da736",
+    "mechanics": [],
+    "needed_evidence": "The value of /reference_build_id from the evidence its protocol gap names.",
+    "subjects": [
+     "flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "attribution",
+    "explanation": "attribution/flicker-sustained-v1 (Damage ownership for flicker_sustained_v1) is required and no code calculates it. No source is assigned until the attribution rule is accepted.",
+    "fields": [],
+    "gap_id": "gap-p06-missing-implementation-attribution-flicker-sustained-v1-59343bef87",
+    "mechanics": [
+     "attribution/flicker-sustained-v1"
+    ],
+    "needed_evidence": "An implementation of attribution/flicker-sustained-v1 owned by simulator, with fixture tests and the evidence for its parameters.",
+    "subjects": [
+     "scenario:flicker_sustained_v1"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "passive",
+    "explanation": "PoB does not parse 'Ignore Attribute Requirements to equip Gloves' on passive:39595 (unparsed remainder 'Ignore Attribute Requirements to equip Gloves '); its effect is not calculated.",
+    "fields": [
+     "Ignore Attribute Requirements to equip Gloves"
+    ],
+    "gap_id": "gap-p06-missing-implementation-passive-39595-046f03426f",
+    "mechanics": [],
+    "needed_evidence": "An engine or simulator implementation of 'Ignore Attribute Requirements to equip Gloves' with a fixture test, or evidence that it has no effect in flicker_sustained_v1.",
+    "subjects": [
+     "passive:39595"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "passive",
+    "explanation": "PoB does not parse 'Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and' on passive:39595 (unparsed remainder 'Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves '); its effect is not calculated.",
+    "fields": [
+     "Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and"
+    ],
+    "gap_id": "gap-p06-missing-implementation-passive-39595-07fe64d789",
+    "mechanics": [],
+    "needed_evidence": "An engine or simulator implementation of 'Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and' with a fixture test, or evidence that it has no effect in flicker_sustained_v1.",
+    "subjects": [
+     "passive:39595"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "passive",
+    "explanation": "PoB does not parse 'their Explicit Modifiers are transformed into more powerful related Modifiers' on passive:39595 (unparsed remainder 'their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves '); its effect is not calculated.",
+    "fields": [
+     "their Explicit Modifiers are transformed into more powerful related Modifiers"
+    ],
+    "gap_id": "gap-p06-missing-implementation-passive-39595-58eb0a271d",
+    "mechanics": [],
+    "needed_evidence": "An engine or simulator implementation of 'their Explicit Modifiers are transformed into more powerful related Modifiers' with a fixture test, or evidence that it has no effect in flicker_sustained_v1.",
+    "subjects": [
+     "passive:39595"
+    ]
+   },
+   {
+    "class": "missing_implementation",
+    "domain": "resource",
+    "explanation": "resource/rage (Rage state over time) is required and no code calculates it. Rage II grants Rage on hit; no simulator rule tracks Rage.",
+    "fields": [],
+    "gap_id": "gap-p06-missing-implementation-resource-rage-f2f8561aa5",
+    "mechanics": [
+     "resource/rage"
+    ],
+    "needed_evidence": "An implementation of resource/rage owned by simulator, with fixture tests and the evidence for its parameters.",
+    "subjects": [
+     "support:SupportRagePlayerTwo"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source support/SupportLivingLightningPlayerTwo has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-184d06a9f2",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "support/SupportLivingLightningPlayerTwo"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for support/SupportLivingLightningPlayerTwo in the attribution rule.",
+    "subjects": [
+     "support:SupportLivingLightningPlayerTwo"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source skill/FlickerStrikePlayer has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "skill/FlickerStrikePlayer"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for skill/FlickerStrikePlayer in the attribution rule.",
+    "subjects": [
+     "skill:FlickerStrikePlayer"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source skill/WhirlingAssaultPlayer has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "skill/WhirlingAssaultPlayer"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for skill/WhirlingAssaultPlayer in the attribution rule.",
+    "subjects": [
+     "skill:WhirlingAssaultPlayer"
+    ]
+   },
+   {
+    "class": "unassigned_damage",
+    "domain": "attribution",
+    "explanation": "Damage source skill/ChargedStaffPlayer has no ownership class in attribution/flicker-sustained-v1; its damage cannot enter or be excluded from the score.",
+    "fields": [],
+    "gap_id": "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-f46ddde2fd",
+    "mechanics": [
+     "attribution/flicker-sustained-v1",
+     "skill/ChargedStaffPlayer"
+    ],
+    "needed_evidence": "An accepted class (flicker_direct, flicker_secondary or unrelated) for skill/ChargedStaffPlayer in the attribution rule.",
+    "subjects": [
+     "skill:ChargedStaffPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "buff",
+    "explanation": "How skill/TrinityPlayer (Trinity Affinity build-up) behaves is not established. Affinity is built by hits over time; PoB's assumed level is not generated by the rotation.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-skill-trinityplayer-6a2e46bff0",
+    "mechanics": [
+     "skill/TrinityPlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Trinity Affinity build-up under the scenario's conditions.",
+    "subjects": [
+     "skill:TrinityPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "buff",
+    "explanation": "How support/SupportBhatairsVengeancePlayer (Bhatair's Vengeance: freezing infuses cold) behaves is not established. Freeze on the Pinnacle target and infusion uptime are not established.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportbhatairsvengeanceplayer-a37aefd0aa",
+    "mechanics": [
+     "support/SupportBhatairsVengeancePlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Bhatair's Vengeance: freezing infuses cold under the scenario's conditions.",
+    "subjects": [
+     "support:SupportBhatairsVengeancePlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "buff",
+    "explanation": "How support/SupportBlazingCriticalPlayer (Blazing Critical: crit imbues attacks with fire) behaves is not established. Buff uptime from critical hits is not established.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportblazingcriticalplayer-884d9707fd",
+    "mechanics": [
+     "support/SupportBlazingCriticalPlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Blazing Critical: crit imbues attacks with fire under the scenario's conditions.",
+    "subjects": [
+     "support:SupportBlazingCriticalPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "damage",
+    "explanation": "How support/SupportConcussiveRunesPlayer (Concussive Runes shockwave on heavy stun) behaves is not established. Heavy stun on the target and Runic Ward are not modelled.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportconcussiverunesplayer-3cb4119d48",
+    "mechanics": [
+     "support/SupportConcussiveRunesPlayer"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Concussive Runes shockwave on heavy stun under the scenario's conditions.",
+    "subjects": [
+     "support:SupportConcussiveRunesPlayer"
+    ]
+   },
+   {
+    "class": "unknown_rule",
+    "domain": "damage",
+    "explanation": "How support/SupportLivingLightningPlayerTwo (Living Lightning II minions) behaves is not established. Minion creation and damage are not established.",
+    "fields": [],
+    "gap_id": "gap-p06-unknown-rule-support-supportlivinglightningplayertwo-f468e65a88",
+    "mechanics": [
+     "support/SupportLivingLightningPlayerTwo"
+    ],
+    "needed_evidence": "Catalog evidence or a recorded trial establishing Living Lightning II minions under the scenario's conditions.",
+    "subjects": [
+     "support:SupportLivingLightningPlayerTwo"
+    ]
+   },
+   {
+    "class": "protocol:missing_input",
+    "domain": "protocol",
+    "explanation": "The seed export begins reference selection. A reference also needs a result on the scenario: an observed completion time for the four workloads, and for flicker_sustained_v1 a pob-cycle-v1 computation, which cannot run until its blocking gaps close.",
+    "gap_id": "gap-p09-t011-reference-result",
+    "needed_evidence": "For each workload an accepted observation of the seed; for flicker_sustained_v1 a pob-cycle-v1 result of the seed in a clean pinned engine, accepted by a reviewer."
+   },
+   {
+    "class": "protocol:unsupported_rule",
+    "domain": "protocol",
+    "explanation": "Proposed rule: only Flicker Strike's own PoB AverageBurstDamage counts; Whirling Assault, Living Lightning, the heralds, Wind Dancer, Trinity and Remnants of Kalguur are reported separately. Not yet accepted by a reviewer. Charged Staff's buff share is gap-p09-t011-charged-staff-shared-charges.",
+    "gap_id": "gap-p09-t011-attribution-rules",
+    "needed_evidence": "Reviewer acceptance of the proposed rule, or a replacement rule per seed damage source with catalog evidence."
+   },
+   {
+    "class": "protocol:unsupported_rule",
+    "domain": "protocol",
+    "explanation": "D07 forbids free maximum-state toggles. The seed's imported PoB config carries condition inputs (for example conditionChampionIntimidate, inDemonForm, touchedDebuffsCount 10, purpleFlameStacks 10, targetBrandedEnemy, SecondsSinceInevitableCrit 10, multiplierCurrentManaPercentage 100) whose effect on Flicker Strike and whose sustain under the rotation are not checked.",
+    "gap_id": "gap-p09-t011-config-conditions",
+    "needed_evidence": "For each condition input that changes a Flicker Strike output: evidence the build sustains it under the rotation, or the input switched off in the benchmark configuration."
+   },
+   {
+    "class": "protocol:stale_patch",
+    "domain": "protocol",
+    "explanation": "The catalog verdict is partial: the engine data release predates 0.5.5e and slot-accepted-base-categories is open (P02-T02.1).",
+    "gap_id": "gap-p09-t011-patch-profile",
+    "needed_evidence": "An accepted patch profile with compatibility verified for 0.5.5e or the patch the measurements are taken on."
+   }
+  ],
+  "blocking_gap_ids": [
+   "gap-p06-missing-data-flicker-sustained-v1-5a807dfa4a",
+   "gap-p06-missing-data-flicker-sustained-v1-8c9d8962b7",
+   "gap-p06-missing-data-flicker-sustained-v1-f5c52da736",
+   "gap-p06-missing-implementation-attribution-flicker-sustained-v1-59343bef87",
+   "gap-p06-missing-implementation-passive-39595-046f03426f",
+   "gap-p06-missing-implementation-passive-39595-07fe64d789",
+   "gap-p06-missing-implementation-passive-39595-58eb0a271d",
+   "gap-p06-missing-implementation-resource-rage-f2f8561aa5",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-184d06a9f2",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-87b57907e2",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-9a4b8d4c32",
+   "gap-p06-unassigned-damage-attribution-flicker-sustained-v1-f46ddde2fd",
+   "gap-p06-unknown-rule-skill-trinityplayer-6a2e46bff0",
+   "gap-p06-unknown-rule-support-supportbhatairsvengeanceplayer-a37aefd0aa",
+   "gap-p06-unknown-rule-support-supportblazingcriticalplayer-884d9707fd",
+   "gap-p06-unknown-rule-support-supportconcussiverunesplayer-3cb4119d48",
+   "gap-p06-unknown-rule-support-supportlivinglightningplayertwo-f468e65a88",
+   "gap-p07-attribution-table-unbound",
+   "gap-p09-t011-attribution-rules",
+   "gap-p09-t011-config-conditions",
+   "gap-p09-t011-patch-profile",
+   "gap-p09-t011-reference-result"
+  ],
+  "eligible": false,
+  "reasons": [
+   "21 blocking gaps open",
+   "critical rules not settled: attribution/flicker-sustained-v1",
+   "coverage rule assignments {} differ from the scored table p09-t012-attribution-proposed (sha256:b0a9fd762ab6991447140bd247c0a6efe85e66f0d4e0e887df90735175a9ef6e)"
+  ],
+  "unsettled_critical": [
+   "attribution/flicker-sustained-v1"
+  ]
+ },
+ "diagnostic": {
+  "attributed_damage_0_120": 27795767.80943941,
+  "attributed_damage_0_5": 1208511.64388867,
+  "contributions": {
+   "by_source": {
+    "skill/FlickerStrikePlayer": {
+     "damage": 27795767.80943941,
+     "impacts": 253,
+     "owner": "flicker_direct"
+    }
+   },
+   "flicker_strikes_counted": 253,
+   "flicker_with_charged_staff_buff": 27795767.80943941,
+   "flicker_without_buff": 0.0
+  },
+  "flicker_burst_dps": 241702.32877773402,
+  "flicker_sustained_dps": 231631.3984119951,
+  "flicker_uses_started": 23,
+  "label": "NOT ELIGIBLE: diagnostic only; not the objective and not a supported score",
+  "pob_plain": {
+   "AverageBurstDamage": 1208511.6438887,
+   "IgniteDPS": null,
+   "TotalDPS": 1024806.8875481,
+   "note": "PoB's own numbers at the method's charges; no rotation time; proxy_only"
+  },
+  "preparation_time_s": 35.666928999999996,
+  "time_in_window_s": {
+   "Charged Staff": 0.9543809999999868,
+   "Flicker Strike": 27.12293399999999,
+   "Whirling Assault": 34.71254800000001,
+   "wait for mana": 57.21013700000002
+  },
+  "windows": {
+   "burst": [
+    0.0,
+    5.0
+   ],
+   "sustained": [
+    0.0,
+    120.0
+   ]
+  }
+ },
+ "document": "benchmark",
+ "evaluation_id": "c2ad302cc3bfd9bd23d759b2903bbd9a8f417b567485aa674523a17e09c14504",
+ "kind": "evaluation from frozen engine bundle",
+ "mana_ignored": {
+  "flicker_burst_dps": 241702.32877773402,
+  "flicker_sustained_dps": 458685.10120319977,
+  "flicker_uses_started": 46,
+  "mana": {
+   "end_balance": -9384.00000000001,
+   "first_deficit_s": 22.749871,
+   "flask": {
+    "charges_max": 75.0,
+    "charges_per_s": 0.25,
+    "charges_used": 10.0,
+    "duration_s": 3.0,
+    "instant_percent": 30.0,
+    "mana_total": 356.5,
+    "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+    "slot": "Flask 2"
+   },
+   "flask_mana_recovered_raw": 3565.0,
+   "flask_uses": 10,
+   "lowest_balance": -9416.21188780001,
+   "policy": "flask: start full; not while recovering; when its recovery fits under the pool or the next cost is unaffordable; no waiting, balance may go negative (comparison only)",
+   "pool": 887,
+   "regen_per_s": 47.9,
+   "spent_in_window": 19584.0,
+   "waited_s": 0.0
+  },
+  "note": "same rotation without waiting for mana; balance goes negative; comparison only, not attainable as written"
+ },
+ "method": "pob-community-v2",
+ "not_a_claim": "PoB-derived computation by method pob-community-v2 (owner decision, D07 amendment 2026-10-18 (2)). Not a gameplay measurement and not a best-build recommendation.",
+ "notes": [],
+ "objective": {
+  "label": "proxy_only: PoB-derived, model_estimate at best",
+  "metrics": {
+   "flicker_burst_dps": null,
+   "flicker_sustained_dps": null
+  },
+  "objective_id": "flicker_sustained_dps",
+  "objective_version": 1,
+  "score": null
+ },
+ "repeatable": {
+  "charged_staff_periods": [
+   {
+    "end_s": 41.571167,
+    "sequence": [
+     "ChargedStaffPlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer"
+    ],
+    "start_s": 1.299768,
+    "waited_s": 6.4261659999999985
+   },
+   {
+    "end_s": 80.976178,
+    "sequence": [
+     "ChargedStaffPlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer",
+     "wait",
+     "FlickerStrikePlayer",
+     "wait",
+     "WhirlingAssaultPlayer"
+    ],
+    "start_s": 41.571167,
+    "waited_s": 25.39198600000001
+   }
+  ],
+  "no_wait_period": {
+   "mana_demand": 6732,
+   "mana_supply_regen_plus_flask": 2345.3514877832754,
+   "pairs": 16,
+   "period_s": 41.28231441642729,
+   "sustainable_without_waiting": false
+  },
+  "note": "The mana-limited timeline repeats by waiting; indefinite sustain without waiting needs supply >= demand per period.",
+  "repeating_sequence": false
+ },
+ "rotation": {
+  "record": {
+   "category": "boss",
+   "created_at": "2026-10-18T00:00:00Z",
+   "name": "Flicker seed: Whirling Assault, Charged Staff when down, else Flicker Strike",
+   "provenance_ids": [
+    "docs/decisions/D07-flicker-strike-objective.md#amendment-2026-10-18-2: whirling assault to generate charges, charged staff, whirling assault to generate charges, flicker, whirling, flicker, whirling, flicker, etc until charged runs out & repeat"
+   ],
+   "record_id": "p07-flicker-seed-rotation",
+   "rotation_id": "p07-flicker-seed-rotation",
+   "rules": [
+    {
+     "action": "use_skill",
+     "action_id": "refresh-charged-staff",
+     "predicate": {
+      "operands": [
+       {
+        "operator": "gte",
+        "path": "state.power_charges",
+        "value": 1
+       },
+       {
+        "operator": "eq",
+        "path": "buff.charged_staff.active",
+        "value": false
+       }
+      ],
+      "operator": "all"
+     },
+     "rule_index": 0,
+     "skill_id": "ChargedStaffPlayer",
+     "target_selector": "single_target",
+     "weapon_set_id": null
+    },
+    {
+     "action": "use_skill",
+     "action_id": "flicker-strike",
+     "predicate": {
+      "operator": "gte",
+      "path": "state.power_charges",
+      "value": 1
+     },
+     "rule_index": 1,
+     "skill_id": "FlickerStrikePlayer",
+     "target_selector": "single_target",
+     "weapon_set_id": null
+    },
+    {
+     "action": "use_skill",
+     "action_id": "whirling-assault",
+     "predicate": {
+      "operator": "eq",
+      "path": "state.power_charges",
+      "value": 0
+     },
+     "rule_index": 2,
+     "skill_id": "WhirlingAssaultPlayer",
+     "target_selector": "single_target",
+     "weapon_set_id": null
+    }
+   ],
+   "schema_version": 1,
+   "version": "1"
+  },
+  "rotation_hash": "f5728ee9058b715849463555a2322d00cd2b6548ebba12aba9ba54a6e7a08716",
+  "rotation_id": "p07-flicker-seed-rotation"
+ },
+ "status": "blocked",
+ "task": "P07-T01",
+ "timeline": {
+  "actions": [
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 1.299768,
+    "mana_after": 727,
+    "mana_before": 887,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 0.0
+   },
+   {
+    "action": "refresh-charged-staff",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 1.617895,
+    "mana_after": 745.2588872,
+    "mana_before": 789.2588872,
+    "mana_cost": 44,
+    "skill": "ChargedStaffPlayer",
+    "start_s": 1.299768
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 2.917663,
+    "mana_after": 600.4971705,
+    "mana_before": 760.4971705,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 1.617895
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 4.096921,
+    "mana_after": 414.75605770000004,
+    "mana_before": 662.7560577,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 2.917663,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 5.396689,
+    "mana_after": 418.1925159000001,
+    "mana_before": 578.1925159000001,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 4.096921
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 6.575947,
+    "mana_after": 340.5704379000001,
+    "mana_before": 588.5704379000001,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 5.396689,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 7.875715,
+    "mana_after": 335.1515074000001,
+    "mana_before": 495.1515074000001,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 6.575947
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 9.054973,
+    "mana_after": 299.6967485000001,
+    "mana_before": 547.6967485000001,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 7.875715,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 10.354741,
+    "mana_after": 294.27781800000014,
+    "mana_before": 454.27781800000014,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 9.054973
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 11.533999,
+    "mana_after": 216.65574000000015,
+    "mana_before": 464.65574000000015,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 10.354741,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 12.833767,
+    "mana_after": 263.42855210000016,
+    "mana_before": 423.42855210000016,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 11.533999
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 14.013025,
+    "mana_after": 185.80647410000017,
+    "mana_before": 433.8064741000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 12.833767,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 15.312793,
+    "mana_after": 180.38754360000019,
+    "mana_before": 340.3875436000002,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 14.013025
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 16.492051,
+    "mana_after": 144.93278470000018,
+    "mana_before": 392.9327847000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 15.312793,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 17.791819,
+    "mana_after": 139.5138542000002,
+    "mana_before": 299.5138542000002,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 16.492051
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 18.971077,
+    "mana_after": 61.89177620000021,
+    "mana_before": 309.8917762000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 17.791819,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 20.270845,
+    "mana_after": 108.66458830000022,
+    "mana_before": 268.6645883000002,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 18.971077
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 21.450103,
+    "mana_after": 31.04251030000023,
+    "mana_before": 279.04251030000023,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 20.270845,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 22.749871,
+    "mana_after": 25.623579800000243,
+    "mana_before": 185.62357980000024,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 21.450103
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 22.824871,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 22.749871
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 24.004129,
+    "mana_after": 7.090000025300469e-05,
+    "mana_before": 248.00007090000025,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 22.824871,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 24.045469,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 24.004129
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 25.345237,
+    "mana_after": 0.00012540000025751397,
+    "mana_before": 160.00012540000026,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 24.045469
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 25.749871,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 25.345237
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 26.929129,
+    "mana_after": 82.36882090000029,
+    "mana_before": 330.3688209000003,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 25.749871,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 28.228897,
+    "mana_after": 76.9498904000003,
+    "mana_before": 236.9498904000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 26.929129
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 28.234025,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 28.228897
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 29.413283,
+    "mana_after": 7.73333363213169e-06,
+    "mana_before": 248.00000773333363,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 28.234025,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 30.713051,
+    "mana_after": 46.34625570000031,
+    "mana_before": 206.3462557000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 29.413283
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 30.951646,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 30.713051
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 32.130904,
+    "mana_after": 5.616666982177776e-06,
+    "mana_before": 248.00000561666698,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 30.951646,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 32.172244,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 32.130904
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 33.472012,
+    "mana_after": 6.011666698668705e-05,
+    "mana_before": 160.000060116667,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 32.172244
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 36.931107,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 33.472012
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 38.110365,
+    "mana_after": 2.5300000345396256e-05,
+    "mana_before": 248.00002530000035,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 36.931107,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 40.271399,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 38.110365
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 41.571167,
+    "mana_after": 1.2100000333248317e-05,
+    "mana_before": 160.00001210000033,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 40.271399
+   },
+   {
+    "action": "refresh-charged-staff",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 41.889294,
+    "mana_after": 18.25889930000033,
+    "mana_before": 62.25889930000033,
+    "mana_cost": 44,
+    "skill": "ChargedStaffPlayer",
+    "start_s": 41.571167
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 44.530272,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 41.889294
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 45.83004,
+    "mana_after": 2.8800000336559606e-05,
+    "mana_before": 160.00002880000034,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 44.530272
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 49.707725,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 45.83004
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 50.886983,
+    "mana_after": 2.7500000328473106e-05,
+    "mana_before": 248.00002750000033,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 49.707725,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 53.048017,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 50.886983
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 54.347785,
+    "mana_after": 1.4300000316325168e-05,
+    "mana_before": 160.00001430000032,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 53.048017
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 58.22547,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 54.347785
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 59.404728,
+    "mana_after": 1.3000000308238668e-05,
+    "mana_before": 248.0000130000003,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 58.22547,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 61.565763,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 59.404728
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 62.865531,
+    "mana_after": 4.7700000294526035e-05,
+    "mana_before": 160.0000477000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 61.565763
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 64.248028,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 62.865531
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 65.427286,
+    "mana_after": 0.00012515000025814516,
+    "mana_before": 248.00012515000026,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 64.248028,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 65.468625,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 65.427286
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 66.768393,
+    "mana_after": 4.8566666947635895e-05,
+    "mana_before": 160.00004856666695,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 65.468625
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 67.818372,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 66.768393
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 68.99763,
+    "mana_after": 1.880000030496376e-05,
+    "mana_before": 248.0000188000003,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 67.818372,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 71.158664,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 68.99763
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 72.458432,
+    "mana_after": 5.600000292815821e-06,
+    "mana_before": 160.0000056000003,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 71.158664
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 76.336117,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 72.458432
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 77.515375,
+    "mana_after": 4.300000284729322e-06,
+    "mana_before": 248.00000430000028,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 76.336117,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 79.67641,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 77.515375
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 80.976178,
+    "mana_after": 3.900000027101669e-05,
+    "mana_before": 160.00003900000027,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 79.67641
+   },
+   {
+    "action": "refresh-charged-staff",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 81.294305,
+    "mana_after": 18.258926200000268,
+    "mana_before": 62.25892620000027,
+    "mana_cost": 44,
+    "skill": "ChargedStaffPlayer",
+    "start_s": 80.976178
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 83.935282,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 81.294305
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 85.23505,
+    "mana_after": 7.800000275892671e-06,
+    "mana_before": 160.00000780000028,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 83.935282
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 89.112735,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 85.23505
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 90.291993,
+    "mana_after": 6.500000267806172e-06,
+    "mana_before": 248.00000650000027,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 89.112735,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 92.453028,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 90.291993
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 93.752796,
+    "mana_after": 4.120000025409354e-05,
+    "mana_before": 160.00004120000025,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 92.453028
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 97.630481,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 93.752796
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 98.809739,
+    "mana_after": 3.990000024600704e-05,
+    "mana_before": 248.00003990000025,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 97.630481,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 100.970773,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 98.809739
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 102.270541,
+    "mana_after": 2.67000002338591e-05,
+    "mana_before": 160.00002670000023,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 100.970773
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 104.096921,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 102.270541
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 105.276179,
+    "mana_after": 8.692515900000217,
+    "mana_before": 256.6925159000002,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 104.096921,
+    "strikes": 11
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 106.575947,
+    "mana_after": 3.273585400000229,
+    "mana_before": 163.27358540000023,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 105.276179
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 107.223383,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 106.575947
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 108.402641,
+    "mana_after": 4.570000027115384e-05,
+    "mana_before": 248.00004570000027,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 107.223383,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 110.563675,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 108.402641
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 111.863443,
+    "mana_after": 3.25000002590059e-05,
+    "mana_before": 160.00003250000026,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 110.563675
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 115.741128,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 111.863443
+   },
+   {
+    "action": "flicker-strike",
+    "charges_before": 5,
+    "charges_consumed": 5,
+    "end_s": 116.920386,
+    "mana_after": 3.12000002509194e-05,
+    "mana_before": 248.00003120000025,
+    "mana_cost": 248,
+    "skill": "FlickerStrikePlayer",
+    "start_s": 115.741128,
+    "strikes": 11
+   },
+   {
+    "action": "wait for mana",
+    "end_s": 119.08142,
+    "mana_cost": 0.0,
+    "skill": null,
+    "start_s": 116.920386
+   },
+   {
+    "action": "whirling-assault",
+    "charges_after": 5,
+    "charges_before": 0,
+    "charges_note": "assumed by method pob-community-v2",
+    "end_s": 120.381188,
+    "mana_after": 1.8000000238771463e-05,
+    "mana_before": 160.00001800000024,
+    "mana_cost": 160,
+    "skill": "WhirlingAssaultPlayer",
+    "start_s": 119.08142
+   }
+  ],
+  "buff_windows": [
+   {
+    "end_s": 39.117895,
+    "stacks": 5,
+    "start_s": 1.617895
+   },
+   {
+    "end_s": 79.389294,
+    "stacks": 5,
+    "start_s": 41.889294
+   },
+   {
+    "end_s": 118.794305,
+    "stacks": 5,
+    "start_s": 81.294305
+   }
+  ],
+  "burst_s": 5.0,
+  "events_processed": 391,
+  "flask_uses_s": [
+   4.096921,
+   7.875715,
+   11.533999,
+   15.312793,
+   18.971077,
+   22.749871,
+   25.749871,
+   29.413283,
+   64.096921,
+   104.096921
+  ],
+  "impacts": [
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 3.024868,
+    "t_us": 3024868,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 3.132074,
+    "t_us": 3132074,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 3.239279,
+    "t_us": 3239279,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 3.346484,
+    "t_us": 3346484,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 3.453689,
+    "t_us": 3453689,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 3.560895,
+    "t_us": 3560895,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 3.6681,
+    "t_us": 3668100,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 3.775305,
+    "t_us": 3775305,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 3.88251,
+    "t_us": 3882510,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 3.989716,
+    "t_us": 3989716,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 4.096921,
+    "t_us": 4096921,
+    "use": 1
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 5.503894,
+    "t_us": 5503894,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 5.6111,
+    "t_us": 5611100,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 5.718305,
+    "t_us": 5718305,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 5.82551,
+    "t_us": 5825510,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 5.932715,
+    "t_us": 5932715,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 6.039921,
+    "t_us": 6039921,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 6.147126,
+    "t_us": 6147126,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 6.254331,
+    "t_us": 6254331,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 6.361536,
+    "t_us": 6361536,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 6.468742,
+    "t_us": 6468742,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 6.575947,
+    "t_us": 6575947,
+    "use": 2
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 7.98292,
+    "t_us": 7982920,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 8.090126,
+    "t_us": 8090126,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 8.197331,
+    "t_us": 8197331,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 8.304536,
+    "t_us": 8304536,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 8.411741,
+    "t_us": 8411741,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 8.518947,
+    "t_us": 8518947,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 8.626152,
+    "t_us": 8626152,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 8.733357,
+    "t_us": 8733357,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 8.840562,
+    "t_us": 8840562,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 8.947768,
+    "t_us": 8947768,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 9.054973,
+    "t_us": 9054973,
+    "use": 3
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 10.461946,
+    "t_us": 10461946,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 10.569152,
+    "t_us": 10569152,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 10.676357,
+    "t_us": 10676357,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 10.783562,
+    "t_us": 10783562,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 10.890767,
+    "t_us": 10890767,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 10.997973,
+    "t_us": 10997973,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 11.105178,
+    "t_us": 11105178,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 11.212383,
+    "t_us": 11212383,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 11.319588,
+    "t_us": 11319588,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 11.426794,
+    "t_us": 11426794,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 11.533999,
+    "t_us": 11533999,
+    "use": 4
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 12.940972,
+    "t_us": 12940972,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 13.048178,
+    "t_us": 13048178,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 13.155383,
+    "t_us": 13155383,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 13.262588,
+    "t_us": 13262588,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 13.369793,
+    "t_us": 13369793,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 13.476999,
+    "t_us": 13476999,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 13.584204,
+    "t_us": 13584204,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 13.691409,
+    "t_us": 13691409,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 13.798614,
+    "t_us": 13798614,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 13.90582,
+    "t_us": 13905820,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 14.013025,
+    "t_us": 14013025,
+    "use": 5
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 15.419998,
+    "t_us": 15419998,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 15.527204,
+    "t_us": 15527204,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 15.634409,
+    "t_us": 15634409,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 15.741614,
+    "t_us": 15741614,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 15.848819,
+    "t_us": 15848819,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 15.956025,
+    "t_us": 15956025,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 16.06323,
+    "t_us": 16063230,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 16.170435,
+    "t_us": 16170435,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 16.27764,
+    "t_us": 16277640,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 16.384846,
+    "t_us": 16384846,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 16.492051,
+    "t_us": 16492051,
+    "use": 6
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 17.899024,
+    "t_us": 17899024,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 18.00623,
+    "t_us": 18006230,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 18.113435,
+    "t_us": 18113435,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 18.22064,
+    "t_us": 18220640,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 18.327845,
+    "t_us": 18327845,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 18.435051,
+    "t_us": 18435051,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 18.542256,
+    "t_us": 18542256,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 18.649461,
+    "t_us": 18649461,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 18.756666,
+    "t_us": 18756666,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 18.863872,
+    "t_us": 18863872,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 18.971077,
+    "t_us": 18971077,
+    "use": 7
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 20.37805,
+    "t_us": 20378050,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 20.485256,
+    "t_us": 20485256,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 20.592461,
+    "t_us": 20592461,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 20.699666,
+    "t_us": 20699666,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 20.806871,
+    "t_us": 20806871,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 20.914077,
+    "t_us": 20914077,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 21.021282,
+    "t_us": 21021282,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 21.128487,
+    "t_us": 21128487,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 21.235692,
+    "t_us": 21235692,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 21.342898,
+    "t_us": 21342898,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 21.450103,
+    "t_us": 21450103,
+    "use": 8
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 22.932076,
+    "t_us": 22932076,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 23.039282,
+    "t_us": 23039282,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 23.146487,
+    "t_us": 23146487,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 23.253692,
+    "t_us": 23253692,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 23.360897,
+    "t_us": 23360897,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 23.468103,
+    "t_us": 23468103,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 23.575308,
+    "t_us": 23575308,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 23.682513,
+    "t_us": 23682513,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 23.789718,
+    "t_us": 23789718,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 23.896924,
+    "t_us": 23896924,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 24.004129,
+    "t_us": 24004129,
+    "use": 9
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 25.857076,
+    "t_us": 25857076,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 25.964282,
+    "t_us": 25964282,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 26.071487,
+    "t_us": 26071487,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 26.178692,
+    "t_us": 26178692,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 26.285897,
+    "t_us": 26285897,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 26.393103,
+    "t_us": 26393103,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 26.500308,
+    "t_us": 26500308,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 26.607513,
+    "t_us": 26607513,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 26.714718,
+    "t_us": 26714718,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 26.821924,
+    "t_us": 26821924,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 26.929129,
+    "t_us": 26929129,
+    "use": 10
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 28.34123,
+    "t_us": 28341230,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 28.448436,
+    "t_us": 28448436,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 28.555641,
+    "t_us": 28555641,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 28.662846,
+    "t_us": 28662846,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 28.770051,
+    "t_us": 28770051,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 28.877257,
+    "t_us": 28877257,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 28.984462,
+    "t_us": 28984462,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 29.091667,
+    "t_us": 29091667,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 29.198872,
+    "t_us": 29198872,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 29.306078,
+    "t_us": 29306078,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 29.413283,
+    "t_us": 29413283,
+    "use": 11
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 31.058851,
+    "t_us": 31058851,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 31.166057,
+    "t_us": 31166057,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 31.273262,
+    "t_us": 31273262,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 31.380467,
+    "t_us": 31380467,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 31.487672,
+    "t_us": 31487672,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 31.594878,
+    "t_us": 31594878,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 31.702083,
+    "t_us": 31702083,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 31.809288,
+    "t_us": 31809288,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 31.916493,
+    "t_us": 31916493,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 32.023699,
+    "t_us": 32023699,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 32.130904,
+    "t_us": 32130904,
+    "use": 12
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 37.038312,
+    "t_us": 37038312,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 37.145518,
+    "t_us": 37145518,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 37.252723,
+    "t_us": 37252723,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 37.359928,
+    "t_us": 37359928,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 37.467133,
+    "t_us": 37467133,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 37.574339,
+    "t_us": 37574339,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 37.681544,
+    "t_us": 37681544,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 37.788749,
+    "t_us": 37788749,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 37.895954,
+    "t_us": 37895954,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 38.00316,
+    "t_us": 38003160,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 38.110365,
+    "t_us": 38110365,
+    "use": 13
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 49.81493,
+    "t_us": 49814930,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 49.922136,
+    "t_us": 49922136,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 50.029341,
+    "t_us": 50029341,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 50.136546,
+    "t_us": 50136546,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 50.243751,
+    "t_us": 50243751,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 50.350957,
+    "t_us": 50350957,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 50.458162,
+    "t_us": 50458162,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 50.565367,
+    "t_us": 50565367,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 50.672572,
+    "t_us": 50672572,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 50.779778,
+    "t_us": 50779778,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 50.886983,
+    "t_us": 50886983,
+    "use": 14
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 58.332675,
+    "t_us": 58332675,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 58.439881,
+    "t_us": 58439881,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 58.547086,
+    "t_us": 58547086,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 58.654291,
+    "t_us": 58654291,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 58.761496,
+    "t_us": 58761496,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 58.868702,
+    "t_us": 58868702,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 58.975907,
+    "t_us": 58975907,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 59.083112,
+    "t_us": 59083112,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 59.190317,
+    "t_us": 59190317,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 59.297523,
+    "t_us": 59297523,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 59.404728,
+    "t_us": 59404728,
+    "use": 15
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 64.355233,
+    "t_us": 64355233,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 64.462439,
+    "t_us": 64462439,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 64.569644,
+    "t_us": 64569644,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 64.676849,
+    "t_us": 64676849,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 64.784054,
+    "t_us": 64784054,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 64.89126,
+    "t_us": 64891260,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 64.998465,
+    "t_us": 64998465,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 65.10567,
+    "t_us": 65105670,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 65.212875,
+    "t_us": 65212875,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 65.320081,
+    "t_us": 65320081,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 65.427286,
+    "t_us": 65427286,
+    "use": 16
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 67.925577,
+    "t_us": 67925577,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 68.032783,
+    "t_us": 68032783,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 68.139988,
+    "t_us": 68139988,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 68.247193,
+    "t_us": 68247193,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 68.354398,
+    "t_us": 68354398,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 68.461604,
+    "t_us": 68461604,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 68.568809,
+    "t_us": 68568809,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 68.676014,
+    "t_us": 68676014,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 68.783219,
+    "t_us": 68783219,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 68.890425,
+    "t_us": 68890425,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 68.99763,
+    "t_us": 68997630,
+    "use": 17
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 76.443322,
+    "t_us": 76443322,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 76.550528,
+    "t_us": 76550528,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 76.657733,
+    "t_us": 76657733,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 76.764938,
+    "t_us": 76764938,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 76.872143,
+    "t_us": 76872143,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 76.979349,
+    "t_us": 76979349,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 77.086554,
+    "t_us": 77086554,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 77.193759,
+    "t_us": 77193759,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 77.300964,
+    "t_us": 77300964,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 77.40817,
+    "t_us": 77408170,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 77.515375,
+    "t_us": 77515375,
+    "use": 18
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 89.21994,
+    "t_us": 89219940,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 89.327146,
+    "t_us": 89327146,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 89.434351,
+    "t_us": 89434351,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 89.541556,
+    "t_us": 89541556,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 89.648761,
+    "t_us": 89648761,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 89.755967,
+    "t_us": 89755967,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 89.863172,
+    "t_us": 89863172,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 89.970377,
+    "t_us": 89970377,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 90.077582,
+    "t_us": 90077582,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 90.184788,
+    "t_us": 90184788,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 90.291993,
+    "t_us": 90291993,
+    "use": 19
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 97.737686,
+    "t_us": 97737686,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 97.844892,
+    "t_us": 97844892,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 97.952097,
+    "t_us": 97952097,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 98.059302,
+    "t_us": 98059302,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 98.166507,
+    "t_us": 98166507,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 98.273713,
+    "t_us": 98273713,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 98.380918,
+    "t_us": 98380918,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 98.488123,
+    "t_us": 98488123,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 98.595328,
+    "t_us": 98595328,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 98.702534,
+    "t_us": 98702534,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 98.809739,
+    "t_us": 98809739,
+    "use": 20
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 104.204126,
+    "t_us": 104204126,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 104.311332,
+    "t_us": 104311332,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 104.418537,
+    "t_us": 104418537,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 104.525742,
+    "t_us": 104525742,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 104.632947,
+    "t_us": 104632947,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 104.740153,
+    "t_us": 104740153,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 104.847358,
+    "t_us": 104847358,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 104.954563,
+    "t_us": 104954563,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 105.061768,
+    "t_us": 105061768,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 105.168974,
+    "t_us": 105168974,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 105.276179,
+    "t_us": 105276179,
+    "use": 21
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 107.330588,
+    "t_us": 107330588,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 107.437794,
+    "t_us": 107437794,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 107.544999,
+    "t_us": 107544999,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 107.652204,
+    "t_us": 107652204,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 107.759409,
+    "t_us": 107759409,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 107.866615,
+    "t_us": 107866615,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 107.97382,
+    "t_us": 107973820,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 108.081025,
+    "t_us": 108081025,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 108.18823,
+    "t_us": 108188230,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 108.295436,
+    "t_us": 108295436,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 108.402641,
+    "t_us": 108402641,
+    "use": 22
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 1,
+    "t_s": 115.848333,
+    "t_us": 115848333,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 2,
+    "t_s": 115.955539,
+    "t_us": 115955539,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 3,
+    "t_s": 116.062744,
+    "t_us": 116062744,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 4,
+    "t_s": 116.169949,
+    "t_us": 116169949,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 5,
+    "t_s": 116.277154,
+    "t_us": 116277154,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 6,
+    "t_s": 116.38436,
+    "t_us": 116384360,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 7,
+    "t_s": 116.491565,
+    "t_us": 116491565,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 8,
+    "t_s": 116.59877,
+    "t_us": 116598770,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 9,
+    "t_s": 116.705975,
+    "t_us": 116705975,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 10,
+    "t_s": 116.813181,
+    "t_us": 116813181,
+    "use": 23
+   },
+   {
+    "charged_staff_buff": true,
+    "damage": 109864.69489897,
+    "owner": "flicker_direct",
+    "source": "skill/FlickerStrikePlayer",
+    "strike": 11,
+    "t_s": 116.920386,
+    "t_us": 116920386,
+    "use": 23
+   }
+  ],
+  "mana": {
+   "end_balance": 44.000000000000234,
+   "first_deficit_s": null,
+   "flask": {
+    "charges_max": 75.0,
+    "charges_per_s": 0.25,
+    "charges_used": 10.0,
+    "duration_s": 3.0,
+    "instant_percent": 30.0,
+    "mana_total": 356.5,
+    "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+    "slot": "Flask 2"
+   },
+   "flask_mana_recovered_raw": 3564.999999999999,
+   "flask_uses": 10,
+   "lowest_balance": 4.300000284729322e-06,
+   "policy": "flask: start full; not while recovering; when its recovery fits under the pool or the next cost is unaffordable; actions wait for mana",
+   "pool": 887,
+   "regen_per_s": 47.9,
+   "spent_in_window": 10156.0,
+   "waited_s": 57.21013700000002
+  },
+  "mana_enforced": true,
+  "stopped": null,
+  "window_s": 120.0
+ },
+ "values": {
+  "buff_duration_s": 37.5,
+  "charged_staff_mana": 44,
+  "charged_staff_time_s": 0.31812686899536,
+  "charges": 5,
+  "document": "benchmark",
+  "engine": {
+   "adapter_version": "p02.2",
+   "build": "docs/evidence/P09-T01.1/seed/export-flicker-main.xml",
+   "dirty_hash": null,
+   "document_sha256": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
+   "head": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+   "parse_capture": {
+    "binding": {
+     "config": {
+      "questAct 2Valley of the TitansMedallion": "30% increased Charm Charges Gained  +1 Charm Slot",
+      "questAct 3Venom CryptsVenom Draught": "25% increased Stun Threshold",
+      "questAct 4Abandoned PrisonGoddess of Justice": "30% increased Life Recovery from Flasks",
+      "questAct 4Eye of HinekoraTribal Medicine": "30% increased Global Armour, Evasion and Energy Shield",
+      "questAct 4Halls Of The DeadNgamahu's Test": "+5% to Fire Resistance",
+      "questAct 4Halls Of The DeadTasalio's Test": "+5% to Cold Resistance",
+      "questAct 4Halls Of The DeadTawhoa's Test": "+5% to Lightning Resistance",
+      "questInterlude 2QimahSeven Pillars": "15% increased Global Armour, Evasion and Energy Shield"
+     },
+     "custom_mods": [
+      [
+       "Default",
+       true,
+       ""
+      ]
+     ],
+     "document_hash": "7db0f1804adfd8ff5b76a3226d78db4fd70fd853edfecd68b69998bcd928aaee",
+     "items": {
+      "Amulet": [
+       "15",
+       "114d6fe3a67db45b95fc2c4bc8a6a5bdc27b9c7504ead3b0c88d88d794797b08"
+      ],
+      "Belt": [
+       "6",
+       "c5e13263505087961bc69f01ec30a99e66f6462783685ae412d7950c24ff3109"
+      ],
+      "Body Armour": [
+       "1",
+       "34174a0e8a4c7d1fcb172333b2cdc438fb394f6b2fee2760043e1ad8b7ce71ce"
+      ],
+      "Boots": [
+       "3",
+       "504448a357afade44cd3562427b35f41007b5926f9e0037826dc5f27c197775d"
+      ],
+      "Charm 1": [
+       "13",
+       "162f169100cb69eb7821b2043b621c6ef415ee09c12ae5a70c150532a7420606"
+      ],
+      "Charm 2": [
+       "8",
+       "c8be2a633a68c01b7f7099d54528edeab34cb61219f33f501a6886cbeb9d6dcd"
+      ],
+      "Charm 3": [
+       "11",
+       "e985a9476397673f7c353ff2da16431ddd3e870bc4e7fe475e1cee4b6d3ae3ea"
+      ],
+      "Flask 1": [
+       "7",
+       "98c3e9bc4d8522443549944b358b15c195152bf230fd599fafa48c83f3934199"
+      ],
+      "Flask 2": [
+       "14",
+       "b9d1879dcb7c803b7ae6f287b62099116a404a40da522fc993821e680de7f1f5"
+      ],
+      "Gloves": [
+       "9",
+       "668285d6b0ac7ca2984f9b7455f2596ffd83d6c1ca26c10afc06285e890da113"
+      ],
+      "Helmet": [
+       "2",
+       "0642b83f61846eff6b676b5b2ff708402c03a3578e9a6e0e1fe769025b99fbeb"
+      ],
+      "Jewel 21984": [
+       "17",
+       "f6d1eed74782909e301ce13896c9c8f72cb1db867647e13ff109a8faca4eb4ae"
+      ],
+      "Jewel 32763": [
+       "16",
+       "310f62e9ae4858d1108aeceed915b41d4139620fc846e200254951d7fe535a77"
+      ],
+      "Jewel 61834": [
+       "18",
+       "298834e3b494201ea4743f39b8af2c1168ac030e972b5350036c6c1f1af69bfc"
+      ],
+      "Ring 1": [
+       "4",
+       "8c6968b6fc0692a4f62c144471c10df609a02e2c9f7fd553f175ca437953c9a3"
+      ],
+      "Ring 2": [
+       "12",
+       "5f7ef0421bf75180e2b85f70c8861d1af036bb6236edc1b3a25a612f1ee60307"
+      ],
+      "Weapon 1": [
+       "5",
+       "05b01b7d46f5f9e248634d13fc9e7a8c8577716409b3f5bb1055dab10a098fb7"
+      ],
+      "Weapon 1 Swap": [
+       "10",
+       "74e47a5fe1582d072fd2641564115c3f55f24a6a3f96c5c9656b444443be0db8"
+      ]
+     },
+     "nodes": [
+      "535",
+      "722",
+      "1420",
+      "2113",
+      "2582",
+      "2936",
+      "3336",
+      "3700",
+      "4157",
+      "4536",
+      "6842",
+      "7054",
+      "7809",
+      "10364",
+      "11495",
+      "11598",
+      "11604",
+      "12249",
+      "12761",
+      "13407",
+      "13457",
+      "13724",
+      "14262",
+      "14267",
+      "14446",
+      "14725",
+      "15343",
+      "15775",
+      "15975",
+      "16705",
+      "17088",
+      "17367",
+      "17548",
+      "19722",
+      "20024",
+      "20437",
+      "20677",
+      "21336",
+      "21945",
+      "21984",
+      "22713",
+      "24287",
+      "24786",
+      "26034",
+      "26556",
+      "26572",
+      "27705",
+      "28044",
+      "28329",
+      "28835",
+      "29408",
+      "29959",
+      "30615",
+      "30657",
+      "30808",
+      "31765",
+      "31888",
+      "32763",
+      "34015",
+      "34168",
+      "34300",
+      "34316",
+      "34621",
+      "36231",
+      "36723",
+      "36931",
+      "37250",
+      "37514",
+      "37691",
+      "38342",
+      "38493",
+      "38537",
+      "38541",
+      "39369",
+      "39552",
+      "39595",
+      "41751",
+      "41811",
+      "42750",
+      "42805",
+      "42857",
+      "44223",
+      "44516",
+      "44683",
+      "45702",
+      "46197",
+      "47009",
+      "47514",
+      "47976",
+      "48116",
+      "48198",
+      "48773",
+      "49220",
+      "49356",
+      "51741",
+      "52295",
+      "53280",
+      "53941",
+      "54983",
+      "55088",
+      "55621",
+      "56045",
+      "56265",
+      "56349",
+      "56453",
+      "56838",
+      "56847",
+      "57821",
+      "58692",
+      "59538",
+      "59657",
+      "60239",
+      "60362",
+      "61196",
+      "61333",
+      "61403",
+      "61586",
+      "61601",
+      "61632",
+      "61718",
+      "61834",
+      "62841",
+      "62984",
+      "64700",
+      "65204",
+      "65228"
+     ],
+     "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+     "pob_dirty": false,
+     "selection": {
+      "Config": "1",
+      "Items": "1",
+      "Skills": "1",
+      "Tree": "1"
+     }
+    },
+    "config": [
+     {
+      "input": "AVERAGE",
+      "shown": false,
+      "var": "ChanceToIgnoreEnemyPhysicalDamageReductionMode"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "ChillStacks"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "ConcPathBypassCD"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "FlickerStrikeBypassCD"
+     },
+     {
+      "input": 20,
+      "shown": false,
+      "var": "GamblesprintMovementSpeed"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "ScorchStacks"
+     },
+     {
+      "input": 10,
+      "shown": false,
+      "var": "SecondsSinceInevitableCrit"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "ShockStacks"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "VigilantStrikeBypassCD"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "companionInPresence"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "conditionChampionIntimidate"
+     },
+     {
+      "placeholder": 10,
+      "shown": false,
+      "var": "conditionCorruptingCryStages"
+     },
+     {
+      "placeholder": 59,
+      "shown": false,
+      "var": "configBossFaceBroken"
+     },
+     {
+      "placeholder": 10,
+      "shown": false,
+      "var": "demonFormStacks"
+     },
+     {
+      "input": "vixen",
+      "shown": false,
+      "var": "doomBlastSource"
+     },
+     {
+      "input": 1,
+      "shown": false,
+      "var": "elementalConfluxElement"
+     },
+     {
+      "placeholder": 8063,
+      "shown": true,
+      "var": "enemyArmour"
+     },
+     {
+      "placeholder": 386,
+      "shown": true,
+      "var": "enemyChaosDamage"
+     },
+     {
+      "placeholder": 0,
+      "shown": true,
+      "var": "enemyChaosResist"
+     },
+     {
+      "placeholder": 965,
+      "shown": true,
+      "var": "enemyColdDamage"
+     },
+     {
+      "placeholder": 3,
+      "shown": true,
+      "var": "enemyColdPen"
+     },
+     {
+      "placeholder": 50,
+      "shown": true,
+      "var": "enemyColdResist"
+     },
+     {
+      "placeholder": 5,
+      "shown": true,
+      "var": "enemyCritChance"
+     },
+     {
+      "placeholder": 30,
+      "shown": true,
+      "var": "enemyCritDamage"
+     },
+     {
+      "placeholder": 20,
+      "shown": false,
+      "var": "enemyCriticalWeaknessStacks"
+     },
+     {
+      "placeholder": 70,
+      "shown": false,
+      "var": "enemyDamageRollRange"
+     },
+     {
+      "placeholder": 20,
+      "shown": true,
+      "var": "enemyDistance"
+     },
+     {
+      "placeholder": 1175,
+      "shown": true,
+      "var": "enemyEvasion"
+     },
+     {
+      "placeholder": 965,
+      "shown": true,
+      "var": "enemyFireDamage"
+     },
+     {
+      "placeholder": 3,
+      "shown": true,
+      "var": "enemyFirePen"
+     },
+     {
+      "placeholder": 50,
+      "shown": true,
+      "var": "enemyFireResist"
+     },
+     {
+      "input": "Pinnacle",
+      "shown": true,
+      "var": "enemyIsBoss"
+     },
+     {
+      "placeholder": 82,
+      "shown": true,
+      "var": "enemyLevel"
+     },
+     {
+      "placeholder": 965,
+      "shown": true,
+      "var": "enemyLightningDamage"
+     },
+     {
+      "placeholder": 3,
+      "shown": true,
+      "var": "enemyLightningPen"
+     },
+     {
+      "placeholder": 50,
+      "shown": true,
+      "var": "enemyLightningResist"
+     },
+     {
+      "placeholder": 965,
+      "shown": true,
+      "var": "enemyPhysicalDamage"
+     },
+     {
+      "input": "Medium",
+      "shown": false,
+      "var": "enemySizePreset"
+     },
+     {
+      "placeholder": 700,
+      "shown": true,
+      "var": "enemySpeed"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "inDemonForm"
+     },
+     {
+      "placeholder": 100,
+      "shown": false,
+      "var": "multiplierCurrentEnergyShield"
+     },
+     {
+      "input": 100,
+      "shown": false,
+      "var": "multiplierCurrentManaPercentage"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "multiplierDifferentAmmoFired"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "multiplierDifferentGrenadeFired"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "multiplierStunnedRecently"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "multiplierWarcryUsedRecently"
+     },
+     {
+      "placeholder": 15,
+      "shown": false,
+      "var": "multiplierWitheredStackCountSelf"
+     },
+     {
+      "input": "None",
+      "shown": true,
+      "var": "presetBossSkills"
+     },
+     {
+      "input": 10,
+      "shown": false,
+      "var": "purpleFlameStacks"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questAct 1ClearfellBeira"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questAct 1FreythornKing In The Mists"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questAct 1Ogham ManorCandlemass"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questAct 2Spires of DesharSisters of Garukhan Shrine"
+     },
+     {
+      "input": "30% increased Charm Charges Gained\n\t+1 Charm Slot",
+      "shown": true,
+      "var": "questAct 2Valley of the TitansMedallion"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questAct 3Azak BogIgnagduk"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questAct 3Jiquani's MachinariumBlackjaw"
+     },
+     {
+      "input": "25% increased Stun Threshold",
+      "shown": true,
+      "var": "questAct 3Venom CryptsVenom Draught"
+     },
+     {
+      "input": "30% increased Life Recovery from Flasks",
+      "shown": true,
+      "var": "questAct 4Abandoned PrisonGoddess of Justice"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questAct 4Eye of HinekoraSilent Hall"
+     },
+     {
+      "input": "30% increased Global Armour, Evasion and Energy Shield",
+      "shown": true,
+      "var": "questAct 4Eye of HinekoraTribal Medicine"
+     },
+     {
+      "input": "+5% to Fire Resistance",
+      "shown": true,
+      "var": "questAct 4Halls Of The DeadNgamahu's Test"
+     },
+     {
+      "input": "+5% to Cold Resistance",
+      "shown": true,
+      "var": "questAct 4Halls Of The DeadTasalio's Test"
+     },
+     {
+      "input": "+5% to Lightning Resistance",
+      "shown": true,
+      "var": "questAct 4Halls Of The DeadTawhoa's Test"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questInterlude 2Khari CrossingMolten Shrine"
+     },
+     {
+      "input": "15% increased Global Armour, Evasion and Energy Shield",
+      "shown": true,
+      "var": "questInterlude 2QimahSeven Pillars"
+     },
+     {
+      "input": true,
+      "shown": true,
+      "var": "questInterlude 3Kriar VillageLythara"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "raiseSpectreEnableBuffs"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "raiseSpectreEnableCurses"
+     },
+     {
+      "input": "AVERAGE",
+      "shown": false,
+      "var": "repeatMode"
+     },
+     {
+      "input": -60,
+      "shown": true,
+      "var": "resistancePenalty"
+     },
+     {
+      "input": "AVERAGE",
+      "shown": false,
+      "var": "resourceGainMode"
+     },
+     {
+      "placeholder": 1,
+      "shown": false,
+      "var": "sigilOfPowerStages"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "summonCompanionEnableBuffs"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "summonCompanionEnableCurses"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "summonElementalRelicEnableAngerAura"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "summonElementalRelicEnableHatredAura"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "summonElementalRelicEnableWrathAura"
+     },
+     {
+      "input": true,
+      "shown": false,
+      "var": "targetBrandedEnemy"
+     },
+     {
+      "input": 10,
+      "shown": false,
+      "var": "touchedDebuffsCount"
+     }
+    ],
+    "document": "benchmark document of docs/evidence/P09-T01.1/seed/export-flicker-main.xml (Pounce disabled)",
+    "generated_by": "python scripts/p07_t01_flicker_cycle.py --live (run A)",
+    "items": [
+     {
+      "base": "Absent Amulet",
+      "item_id": "15",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "line": "-1 Prefix Modifier allowed",
+        "parsed": false
+       },
+       {
+        "block": "implicitModLines",
+        "line": "-1 Suffix Modifier allowed",
+        "parsed": false
+       },
+       {
+        "block": "implicitModLines",
+        "line": "Grants Skill: Level 18 Trinity",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+50 to Spirit",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+4 to Level of all Melee Skills",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "27% increased Global Armour, Evasion and Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "34% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Carrion Braid, Absent Amulet",
+      "slot": "Amulet"
+     },
+     {
+      "base": "Utility Belt",
+      "item_id": "6",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "line": "Has 3 Charm Slots",
+        "parsed": true
+       },
+       {
+        "block": "implicitModLines",
+        "line": "20% of Flask Recovery applied Instantly",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Legacy of Jade",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Legacy of Jade",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Legacy of Silver",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Legacy of Diamond",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "All Mage's Legacies have 40% increased effect per duplicate Mage's Legacy you have",
+        "parsed": true
+       }
+      ],
+      "name": "Mageblood, Utility Belt",
+      "slot": "Belt"
+     },
+     {
+      "base": "Runemastered Ancient Mail",
+      "item_id": "1",
+      "lines": [
+       {
+        "block": "enchantModLines",
+        "line": "+16% to Chaos Resistance",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Bonded: +5% to Quality of all Skills",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Bonded: +8% to Chaos Resistance",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "+13% to Chaos Resistance",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "+10% of Armour also applies to Chaos Damage",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Idols socketed in this item gain the benefits of their Bonded modifiers",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "251% increased Armour and Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+20 to Strength and Intelligence",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+2% to Maximum Chaos Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Convert 1% of maximum Life to twice as much Armour per 1% Chaos Resistance above 0%",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Defend with 197% of Armour while you have Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "Damage over Time cannot bypass your Energy Shield",
+        "line": "Damage over Time cannot bypass your Energy Shield",
+        "parsed": false
+       }
+      ],
+      "name": "Decree of Loyalty, Runemastered Ancient Mail",
+      "slot": "Body Armour"
+     },
+     {
+      "base": "Runeforged Apostle Leggings",
+      "item_id": "3",
+      "lines": [
+       {
+        "block": "runeModLines",
+        "line": "+13% to Chaos Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+73 to Armour",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+25 to maximum Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "92% increased Armour and Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+24% to Cold Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+28% to Lightning Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+25% of Armour also applies to Elemental Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+9 to Stun Threshold",
+        "parsed": true
+       }
+      ],
+      "name": "Loath Slippers, Runeforged Apostle Leggings",
+      "slot": "Boots"
+     },
+     {
+      "base": "Thawing Charm",
+      "item_id": "13",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "extra": "Used when you become Frozen",
+        "line": "Used when you become Frozen",
+        "parsed": false
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "25% Chance to gain a Charge when you kill an enemy",
+        "line": "25% Chance to gain a Charge when you kill an enemy",
+        "parsed": false
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "Energy Shield Recharge starts on use",
+        "line": "Energy Shield Recharge starts on use",
+        "parsed": false
+       },
+       {
+        "block": "buffModLines",
+        "line": "Immune to Freeze",
+        "parsed": true
+       }
+      ],
+      "name": "Nascent Hope, Thawing Charm",
+      "slot": "Charm 1"
+     },
+     {
+      "base": "Stone Charm",
+      "item_id": "8",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "extra": "Used when you become Stunned",
+        "line": "Used when you become Stunned",
+        "parsed": false
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Defend with 200% of Armour during effect",
+        "parsed": true
+       },
+       {
+        "block": "buffModLines",
+        "line": "Cannot be Stunned",
+        "parsed": true
+       }
+      ],
+      "name": "For Utopia, Stone Charm",
+      "slot": "Charm 2"
+     },
+     {
+      "base": "Silver Charm",
+      "item_id": "11",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "extra": "Used when you are affected by a Slow",
+        "line": "Used when you are affected by a Slow",
+        "parsed": false
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "Grants Onslaught during effect",
+        "line": "Grants Onslaught during effect",
+        "parsed": false
+       },
+       {
+        "block": "buffModLines",
+        "line": "Your speed is unaffected by Slows",
+        "parsed": true
+       }
+      ],
+      "name": "The Fall of the Axe, Silver Charm",
+      "slot": "Charm 3"
+     },
+     {
+      "base": "Gargantuan Life Flask",
+      "item_id": "7",
+      "lines": [
+       {
+        "block": "explicitModLines",
+        "line": "90% less Life Recovered",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "Effect is not removed when Unreserved Life is Filled",
+        "line": "Effect is not removed when Unreserved Life is Filled",
+        "parsed": false
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "   Recouped as Life Gain 3 Rage when Hit by an Enemy  ",
+        "line": "28% of Damage taken during effect Recouped as Life",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "extra": " Rage when Hit by an Enemy  No Inherent loss of Rage  ",
+        "line": "Gain 3 Rage when Hit by an Enemy during effect",
+        "parsed": false
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "No Inherent loss of Rage during effect",
+        "line": "No Inherent loss of Rage during effect",
+        "parsed": false
+       },
+       {
+        "block": "explicitModLines",
+        "line": "41% increased Duration",
+        "parsed": true
+       }
+      ],
+      "name": "Blood of the Warrior, Gargantuan Life Flask",
+      "slot": "Flask 1"
+     },
+     {
+      "base": "Ultimate Mana Flask",
+      "item_id": "14",
+      "lines": [
+       {
+        "block": "explicitModLines",
+        "line": "Gains 0.25 Charges per Second",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "30% of Recovery applied Instantly",
+        "parsed": true
+       }
+      ],
+      "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+      "slot": "Flask 2"
+     },
+     {
+      "base": "Runeforged Fists of Stone",
+      "item_id": "9",
+      "lines": [
+       {
+        "block": "runeModLines",
+        "line": "Bonded: +20 to maximum Life",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Bonded: +20 to maximum Mana",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "+18% to Lightning Resistance",
+        "parsed": true
+       },
+       {
+        "block": "implicitModLines",
+        "line": "Has +2 to Evasion Rating per player level",
+        "parsed": true
+       },
+       {
+        "block": "implicitModLines",
+        "line": "Has +1 to maximum Energy Shield per player level",
+        "parsed": true
+       },
+       {
+        "block": "implicitModLines",
+        "line": "Has +1 to maximum Runic Ward per player level",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "20% more Global Evasion Rating and Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Attacks Gain 13% of Damage as Extra Physical Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "13% less damage taken while on Low Life",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "10% chance to gain Onslaught for 4 seconds on Hit",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+2% to Maximum Fire Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+2% to Maximum Cold Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+30% to Fire Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+23% to Cold Resistance",
+        "parsed": true
+       }
+      ],
+      "name": "Skull Claw, Runeforged Fists of Stone",
+      "slot": "Gloves"
+     },
+     {
+      "base": "Ancestral Tiara",
+      "item_id": "2",
+      "lines": [
+       {
+        "block": "runeModLines",
+        "line": "20% increased Armour, Evasion and Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Bonded: +20 to maximum Life",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Bonded: +20 to maximum Mana",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+72 to maximum Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "40% increased Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+33 to maximum Mana",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+33 to Intelligence",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+37% to Fire Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+43% to Lightning Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "16% increased Rarity of Items found",
+        "parsed": true
+       }
+      ],
+      "name": "Morbid Veil, Ancestral Tiara",
+      "slot": "Helmet"
+     },
+     {
+      "base": "Sapphire",
+      "item_id": "17",
+      "lines": [
+       {
+        "block": "enchantModLines",
+        "line": "+4 to Strength",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "14% increased Cold Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "17% increased maximum Energy Shield",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "19% increased Critical Damage Bonus",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Recover 2% of maximum Mana on Kill",
+        "parsed": true
+       }
+      ],
+      "name": "Carrion Breath, Sapphire",
+      "slot": "Jewel 21984"
+     },
+     {
+      "base": "Diamond",
+      "item_id": "16",
+      "lines": [
+       {
+        "block": "explicitModLines",
+        "line": "Pain Attunement",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "12% less maximum Life",
+        "parsed": true
+       }
+      ],
+      "name": "Flesh Crucible, Diamond",
+      "slot": "Jewel 32763"
+     },
+     {
+      "base": "Diamond",
+      "item_id": "18",
+      "lines": [
+       {
+        "block": "explicitModLines",
+        "line": "Only affects Passives in Massive Ring",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Passives in Radius can be Allocated without being connected to your tree",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "-5% to all Elemental Resistances",
+        "parsed": true
+       }
+      ],
+      "name": "Controlled Metamorphosis, Diamond",
+      "slot": "Jewel 61834"
+     },
+     {
+      "base": "Gold Ring",
+      "item_id": "4",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "line": "13% increased Rarity of Items found",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+233 to Evasion Rating",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+97 to maximum Mana",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+56% to Fire Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+51% to Cold Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+51% to Lightning Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "28% increased Explicit Resistance Modifier magnitudes",
+        "parsed": false
+       }
+      ],
+      "name": "Damnation Twirl, Gold Ring",
+      "slot": "Ring 1"
+     },
+     {
+      "base": "Sapphire Ring",
+      "item_id": "12",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "line": "+23% to Cold Resistance",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "22% increased Cold Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+45 to maximum Mana",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+15 to Strength",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "extra": "Enemies Chilled by your Hits can be Shattered as though Frozen",
+        "line": "Enemies Chilled by your Hits can be Shattered as though Frozen",
+        "parsed": false
+       }
+      ],
+      "name": "Polcirkeln, Sapphire Ring",
+      "slot": "Ring 2"
+     },
+     {
+      "base": "Sinister Quarterstaff",
+      "item_id": "5",
+      "lines": [
+       {
+        "block": "enchantModLines",
+        "line": "25% increased Physical Damage",
+        "parsed": true
+       },
+       {
+        "block": "enchantModLines",
+        "line": "8% increased Attack Speed",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Adds 2 to 60 Lightning Damage",
+        "parsed": true
+       },
+       {
+        "block": "runeModLines",
+        "line": "Bonded: 60% increased Magnitude of Shock you inflict",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Adds 121 to 182 Cold Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Adds 64 to 103 Fire Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Adds 14 to 284 Lightning Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+5 to Level of all Melee Skills",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "25% increased Attack Speed",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+4.99% to Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Woe Mast, Sinister Quarterstaff",
+      "slot": "Weapon 1"
+     },
+     {
+      "base": "Nettle Talisman",
+      "item_id": "10",
+      "lines": [
+       {
+        "block": "implicitModLines",
+        "line": "Grants Skill: Level 18 Sanguine Revelry",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "90% increased Physical Damage",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "7% increased Attack Speed",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "+9 to Strength",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "27% chance to cause Bleeding on Hit",
+        "parsed": true
+       },
+       {
+        "block": "explicitModLines",
+        "line": "Every 5 Rage also grants 5% of Damage taken Recouped as Life",
+        "parsed": true
+       }
+      ],
+      "name": "Spiteful Floret, Nettle Talisman",
+      "slot": "Weapon 1 Swap"
+     }
+    ],
+    "kind": "engine_parse_support",
+    "nodes": [
+     {
+      "id": "535",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage"
+     },
+     {
+      "id": "722",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "1420",
+      "lines": [
+       {
+        "line": "15% increased Attack Area Damage",
+        "parsed": true
+       },
+       {
+        "line": "10% increased Area of Effect for Attacks",
+        "parsed": true
+       },
+       {
+        "line": "5% chance to Daze on Hit",
+        "parsed": true
+       }
+      ],
+      "name": "Dizzying Sweep"
+     },
+     {
+      "id": "2113",
+      "lines": [
+       {
+        "line": "25% increased Accuracy Rating with Quarterstaves",
+        "parsed": true
+       },
+       {
+        "line": "25% increased Critical Damage Bonus with Quarterstaves",
+        "parsed": true
+       },
+       {
+        "line": "+25 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Martial Artistry"
+     },
+     {
+      "id": "2582",
+      "lines": [
+       {
+        "line": "+5 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Intelligence"
+     },
+     {
+      "id": "2936",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus for Attack Damage",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Critical Damage"
+     },
+     {
+      "id": "3336",
+      "lines": [
+       {
+        "line": "20% increased Critical Damage Bonus if you've consumed a Power Charge Recently",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage when consuming a Power Charge"
+     },
+     {
+      "id": "3700",
+      "lines": [
+       {
+        "line": "15% increased Stun Buildup",
+        "parsed": true
+       },
+       {
+        "line": "15% increased Freeze Buildup",
+        "parsed": true
+       }
+      ],
+      "name": "Stun and Freeze Buildup"
+     },
+     {
+      "id": "4157",
+      "lines": [
+       {
+        "line": "10% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Chance"
+     },
+     {
+      "id": "4536",
+      "lines": [
+       {
+        "line": "3% increased Attack Speed with Quarterstaves",
+        "parsed": true
+       }
+      ],
+      "name": "Quarterstaff Speed"
+     },
+     {
+      "id": "6842",
+      "lines": [
+       {
+        "line": "15% increased Stun Buildup",
+        "parsed": true
+       },
+       {
+        "line": "15% increased Freeze Buildup",
+        "parsed": true
+       }
+      ],
+      "name": "Stun and Freeze Buildup"
+     },
+     {
+      "id": "7054",
+      "lines": [
+       {
+        "line": "6% increased Attack Area Damage",
+        "parsed": true
+       },
+       {
+        "line": "4% increased Area of Effect for Attacks",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Area Damage and Area"
+     },
+     {
+      "id": "7809",
+      "lines": [
+       {
+        "line": "Gain 4% of Damage as Extra Cold Damage",
+        "parsed": true
+       },
+       {
+        "line": "Gain 4% of Damage as Extra Lightning Damage",
+        "parsed": true
+       },
+       {
+        "line": "+10 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Wild Storm"
+     },
+     {
+      "id": "10364",
+      "lines": [
+       {
+        "line": "4% increased Skill Speed",
+        "parsed": true
+       }
+      ],
+      "name": "Skill Speed"
+     },
+     {
+      "id": "11495",
+      "lines": [],
+      "name": "Martial Artist"
+     },
+     {
+      "id": "11598",
+      "lines": [
+       {
+        "line": "3% increased Attack Speed with Quarterstaves",
+        "parsed": true
+       }
+      ],
+      "name": "Quarterstaff Speed"
+     },
+     {
+      "id": "11604",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "12249",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "12761",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "13407",
+      "lines": [
+       {
+        "line": "25% increased Critical Damage Bonus",
+        "parsed": true
+       },
+       {
+        "line": "+10 to Strength",
+        "parsed": true
+       }
+      ],
+      "name": "Heartbreaking"
+     },
+     {
+      "id": "13457",
+      "lines": [
+       {
+        "line": "40% increased Evasion Rating if you have been Hit Recently",
+        "parsed": true
+       },
+       {
+        "line": "40% faster start of Energy Shield Recharge if you've been Stunned Recently",
+        "parsed": true
+       }
+      ],
+      "name": "Shadow Dancing"
+     },
+     {
+      "id": "13724",
+      "lines": [
+       {
+        "line": "15% increased Damage if you've dealt a Critical Hit in the past 8 seconds",
+        "parsed": true
+       },
+       {
+        "line": "15% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Deadly Force"
+     },
+     {
+      "id": "14262",
+      "lines": [
+       {
+        "line": "+5 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Intelligence"
+     },
+     {
+      "id": "14267",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "14446",
+      "lines": [
+       {
+        "line": "+5 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Intelligence"
+     },
+     {
+      "id": "14725",
+      "lines": [
+       {
+        "line": "3% increased Skill Speed",
+        "parsed": true
+       }
+      ],
+      "name": "Skill Speed"
+     },
+     {
+      "id": "15343",
+      "lines": [
+       {
+        "line": "Gain Deflection Rating equal to 5% of Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "4% faster start of Energy Shield Recharge",
+        "parsed": true
+       }
+      ],
+      "name": "Deflection and Energy Shield Delay"
+     },
+     {
+      "id": "15775",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "15975",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "16705",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "17088",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "17367",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "17548",
+      "lines": [
+       {
+        "line": "25% increased Critical Damage Bonus if you've dealt a Non-Critical Hit Recently",
+        "parsed": true
+       },
+       {
+        "line": "15% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Moment of Truth"
+     },
+     {
+      "id": "19722",
+      "lines": [
+       {
+        "line": "20% increased Freeze Buildup",
+        "parsed": true
+       },
+       {
+        "line": "50% increased Damage with Hits against Frozen Enemies",
+        "parsed": true
+       }
+      ],
+      "name": "Thin Ice"
+     },
+     {
+      "id": "20024",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage"
+     },
+     {
+      "id": "20437",
+      "lines": [
+       {
+        "line": "+5 to all Attributes",
+        "parsed": true
+       }
+      ],
+      "name": "Attributes"
+     },
+     {
+      "id": "20677",
+      "lines": [
+       {
+        "line": "25% increased Critical Damage Bonus",
+        "parsed": true
+       },
+       {
+        "line": "+10 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "For the Jugular"
+     },
+     {
+      "id": "21336",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "21945",
+      "lines": [
+       {
+        "line": "5% chance to Daze on Hit",
+        "parsed": true
+       }
+      ],
+      "name": "Damage and Criticals vs Dazed Enemies"
+     },
+     {
+      "id": "21984",
+      "lines": [],
+      "name": "Jewel Socket"
+     },
+     {
+      "id": "22713",
+      "lines": [
+       {
+        "line": "10% increased Cold Damage",
+        "parsed": true
+       }
+      ],
+      "name": "Cold Damage"
+     },
+     {
+      "id": "24287",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "24786",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "26034",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "26556",
+      "lines": [
+       {
+        "line": "Gain Deflection Rating equal to 5% of Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "4% faster start of Energy Shield Recharge",
+        "parsed": true
+       }
+      ],
+      "name": "Deflection and Energy Shield Delay"
+     },
+     {
+      "id": "26572",
+      "lines": [
+       {
+        "line": "12% increased Critical Hit Chance against Dazed Enemies",
+        "parsed": true
+       }
+      ],
+      "name": "Criticals vs Dazed Enemies"
+     },
+     {
+      "id": "27705",
+      "lines": [
+       {
+        "line": "+5 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Intelligence"
+     },
+     {
+      "id": "28044",
+      "lines": [
+       {
+        "line": "40% increased Cold Damage while affected by Herald of Ice",
+        "parsed": true
+       },
+       {
+        "line": "40% increased Fire Damage while affected by Herald of Ash",
+        "parsed": true
+       },
+       {
+        "line": "40% increased Lightning Damage while affected by Herald of Thunder",
+        "parsed": true
+       }
+      ],
+      "name": "Coming Calamity"
+     },
+     {
+      "id": "28329",
+      "lines": [
+       {
+        "line": "35% increased Stun Buildup",
+        "parsed": true
+       },
+       {
+        "line": "35% increased Freeze Buildup",
+        "parsed": true
+       }
+      ],
+      "name": "Pressure Points"
+     },
+     {
+      "id": "28835",
+      "lines": [
+       {
+        "line": "12% increased Damage while affected by a Herald",
+        "parsed": true
+       }
+      ],
+      "name": "Herald Damage"
+     },
+     {
+      "id": "29408",
+      "lines": [
+       {
+        "line": "8% increased Mana Cost Efficiency",
+        "parsed": true
+       }
+      ],
+      "name": "Mana Cost Efficiency"
+     },
+     {
+      "id": "29959",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage"
+     },
+     {
+      "id": "30615",
+      "lines": [
+       {
+        "line": "20% increased Critical Damage Bonus if you've consumed a Power Charge Recently",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage when consuming a Power Charge"
+     },
+     {
+      "id": "30657",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "30808",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "31765",
+      "lines": [
+       {
+        "line": "+5 to Strength",
+        "parsed": true
+       }
+      ],
+      "name": "Strength"
+     },
+     {
+      "id": "31888",
+      "lines": [
+       {
+        "line": "8% increased Mana Cost Efficiency",
+        "parsed": true
+       }
+      ],
+      "name": "Mana Cost Efficiency"
+     },
+     {
+      "id": "32763",
+      "lines": [],
+      "name": "Jewel Socket"
+     },
+     {
+      "id": "34015",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "34168",
+      "lines": [
+       {
+        "line": "25% increased Damage if you've dealt a Critical Hit in the past 8 seconds",
+        "parsed": true
+       }
+      ],
+      "name": "Crashing Wave"
+     },
+     {
+      "id": "34300",
+      "lines": [
+       {
+        "line": "20% increased Mana Regeneration Rate",
+        "parsed": true
+       },
+       {
+        "line": "15% increased Mana Cost Efficiency",
+        "parsed": true
+       }
+      ],
+      "name": "Conservative Casting"
+     },
+     {
+      "id": "34316",
+      "lines": [
+       {
+        "line": "10% chance to Daze on Hit",
+        "parsed": true
+       },
+       {
+        "line": "30% increased Armour, Evasion and Energy Shield while wielding a Quarterstaff",
+        "parsed": true
+       },
+       {
+        "line": "30% increased Freeze Buildup with Quarterstaves",
+        "parsed": true
+       },
+       {
+        "line": "30% increased Stun Buildup with Quarterstaves",
+        "parsed": true
+       }
+      ],
+      "name": "One with the River"
+     },
+     {
+      "id": "34621",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage"
+     },
+     {
+      "id": "36231",
+      "lines": [
+       {
+        "line": "20% increased Critical Damage Bonus if you've consumed a Power Charge Recently",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage when consuming a Power Charge"
+     },
+     {
+      "id": "36723",
+      "lines": [
+       {
+        "line": "15% increased Stun Buildup",
+        "parsed": true
+       },
+       {
+        "line": "15% increased Freeze Buildup",
+        "parsed": true
+       }
+      ],
+      "name": "Stun and Freeze Buildup"
+     },
+     {
+      "id": "36931",
+      "lines": [
+       {
+        "line": "25% increased Attack Damage",
+        "parsed": true
+       },
+       {
+        "line": "5% chance to Daze on Hit",
+        "parsed": true
+       }
+      ],
+      "name": "Concussive Attack"
+     },
+     {
+      "id": "37250",
+      "lines": [
+       {
+        "line": "10% increased Attack Area Damage",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Area Damage"
+     },
+     {
+      "id": "37514",
+      "lines": [
+       {
+        "line": "8% increased Attack Speed with Quarterstaves",
+        "parsed": true
+       },
+       {
+        "line": "Knocks Back Enemies if you get a Critical Hit with a Quarterstaff",
+        "parsed": true
+       }
+      ],
+      "name": "Whirling Assault"
+     },
+     {
+      "id": "37691",
+      "lines": [
+       {
+        "line": "10% increased Attack Damage",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Damage"
+     },
+     {
+      "id": "38342",
+      "lines": [
+       {
+        "line": "10% chance to Daze on Hit",
+        "parsed": true
+       },
+       {
+        "line": "30% increased Damage against Dazed Enemies",
+        "parsed": true
+       }
+      ],
+      "name": "Stupefy"
+     },
+     {
+      "id": "38493",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage"
+     },
+     {
+      "id": "38537",
+      "lines": [
+       {
+        "line": "+10 to Intelligence",
+        "parsed": true
+       },
+       {
+        "line": "20% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Heartstopping"
+     },
+     {
+      "id": "38541",
+      "lines": [
+       {
+        "line": "10% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Chance"
+     },
+     {
+      "id": "39369",
+      "lines": [
+       {
+        "line": "Attacks have +1% to Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Struck Through"
+     },
+     {
+      "id": "39552",
+      "lines": [
+       {
+        "line": "Can tattoo Runes onto your body, gaining",
+        "parsed": true
+       },
+       {
+        "line": "additional Rune-only sockets:",
+        "parsed": true
+       },
+       {
+        "line": "1 Helmet socket",
+        "parsed": true
+       },
+       {
+        "line": "2 Body Armour sockets",
+        "parsed": true
+       },
+       {
+        "line": "1 Gloves socket",
+        "parsed": true
+       },
+       {
+        "line": "1 Boots socket",
+        "parsed": true
+       }
+      ],
+      "name": "Runic Meridians"
+     },
+     {
+      "id": "39595",
+      "lines": [
+       {
+        "extra": "Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves ",
+        "line": "Gloves you equip have their Base Type transformed to Fists of Stone while equipped, and",
+        "parsed": false
+       },
+       {
+        "extra": "their Explicit Modifiers are transformed into more powerful related Modifiers Ignore Attribute Requirements to equip Gloves ",
+        "line": "their Explicit Modifiers are transformed into more powerful related Modifiers",
+        "parsed": false
+       },
+       {
+        "extra": "Ignore Attribute Requirements to equip Gloves ",
+        "line": "Ignore Attribute Requirements to equip Gloves",
+        "parsed": false
+       }
+      ],
+      "name": "Way of the Stonefist"
+     },
+     {
+      "id": "41751",
+      "lines": [
+       {
+        "extra": "When you gain Combo, gain an additional Combo -0.2 seconds to current Energy Shield Recharge delay per Combo expended when using Skills ",
+        "line": "When you gain Combo, gain an additional Combo",
+        "parsed": false
+       },
+       {
+        "extra": " seconds to current  Recharge delay per Combo expended when using Skills ",
+        "line": "-0.2 seconds to current Energy Shield Recharge delay per Combo expended when using Skills",
+        "parsed": true
+       }
+      ],
+      "name": "Martial Adept"
+     },
+     {
+      "id": "41811",
+      "lines": [
+       {
+        "line": "20% increased Critical Damage Bonus",
+        "parsed": true
+       },
+       {
+        "line": "30% increased Stun Buildup",
+        "parsed": true
+       }
+      ],
+      "name": "Shatter Palm"
+     },
+     {
+      "id": "42750",
+      "lines": [
+       {
+        "line": "10% increased Attack Damage",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Damage"
+     },
+     {
+      "id": "42805",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "42857",
+      "lines": [
+       {
+        "line": "4% increased Skill Speed",
+        "parsed": true
+       }
+      ],
+      "name": "Skill Speed"
+     },
+     {
+      "id": "44223",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage"
+     },
+     {
+      "id": "44516",
+      "lines": [
+       {
+        "line": "3% increased Attack Speed with Quarterstaves",
+        "parsed": true
+       }
+      ],
+      "name": "Quarterstaff Speed"
+     },
+     {
+      "id": "44683",
+      "lines": [],
+      "name": "SIX"
+     },
+     {
+      "id": "45702",
+      "lines": [
+       {
+        "line": "10% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Chance"
+     },
+     {
+      "id": "46197",
+      "lines": [
+       {
+        "line": "20% reduced Critical Damage Bonus",
+        "parsed": true
+       },
+       {
+        "line": "50% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Careful Assassin"
+     },
+     {
+      "id": "47009",
+      "lines": [
+       {
+        "line": "10% increased Attack Area Damage",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Area Damage"
+     },
+     {
+      "id": "47514",
+      "lines": [
+       {
+        "line": "10% chance to Daze on Hit",
+        "parsed": true
+       },
+       {
+        "line": "25% increased Critical Hit Chance against Dazed Enemies",
+        "parsed": true
+       }
+      ],
+      "name": "Dizzying Hits"
+     },
+     {
+      "id": "47976",
+      "lines": [
+       {
+        "line": "+5 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Intelligence"
+     },
+     {
+      "id": "48116",
+      "lines": [
+       {
+        "line": "+5 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Intelligence"
+     },
+     {
+      "id": "48198",
+      "lines": [
+       {
+        "line": "4% increased Movement Speed",
+        "parsed": true
+       },
+       {
+        "line": "15% increased Mana Regeneration Rate",
+        "parsed": true
+       },
+       {
+        "line": "+5 to Dexterity and Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Step Like Mist"
+     },
+     {
+      "id": "48773",
+      "lines": [
+       {
+        "line": "+5 to Strength",
+        "parsed": true
+       }
+      ],
+      "name": "Strength"
+     },
+     {
+      "id": "49220",
+      "lines": [
+       {
+        "line": "8% increased Attack and Cast Speed",
+        "parsed": true
+       },
+       {
+        "line": "+5 to Dexterity and Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Flow Like Water"
+     },
+     {
+      "id": "49356",
+      "lines": [
+       {
+        "line": "20% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "20% increased maximum Energy Shield",
+        "parsed": true
+       },
+       {
+        "line": "+5% to Cold Resistance",
+        "parsed": true
+       },
+       {
+        "line": "+5% to Lightning Resistance",
+        "parsed": true
+       }
+      ],
+      "name": "First Principle of the Hollow"
+     },
+     {
+      "id": "51741",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "52295",
+      "lines": [
+       {
+        "line": "15% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "15% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "53280",
+      "lines": [
+       {
+        "line": "4% increased Attack Speed",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Speed"
+     },
+     {
+      "id": "53941",
+      "lines": [
+       {
+        "line": "10% faster start of Energy Shield Recharge",
+        "parsed": true
+       },
+       {
+        "line": "20% increased Evasion Rating if you haven't been Hit Recently",
+        "parsed": true
+       },
+       {
+        "line": "3% increased Movement Speed while you have Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Shimmering"
+     },
+     {
+      "id": "54983",
+      "lines": [
+       {
+        "line": "10% increased Critical Hit Chance for Attacks",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Critical Chance"
+     },
+     {
+      "id": "55088",
+      "lines": [
+       {
+        "line": "10% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Chance"
+     },
+     {
+      "id": "55621",
+      "lines": [
+       {
+        "line": "10% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Chance"
+     },
+     {
+      "id": "56045",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "56265",
+      "lines": [
+       {
+        "line": "60% increased Critical Damage Bonus",
+        "parsed": true
+       },
+       {
+        "line": "20% reduced Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Throatseeker"
+     },
+     {
+      "id": "56349",
+      "lines": [
+       {
+        "line": "Maximum Life is 1",
+        "parsed": true
+       },
+       {
+        "line": "Immune to Chaos Damage and Bleeding",
+        "parsed": true
+       }
+      ],
+      "name": "Chaos Inoculation"
+     },
+     {
+      "id": "56453",
+      "lines": [
+       {
+        "line": "40% increased Attack Damage while on Full Life",
+        "parsed": true
+       },
+       {
+        "line": "60% increased Attack Damage while on Low Life",
+        "parsed": true
+       }
+      ],
+      "name": "Killer Instinct"
+     },
+     {
+      "id": "56838",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "56847",
+      "lines": [
+       {
+        "line": "12% increased Damage while affected by a Herald",
+        "parsed": true
+       }
+      ],
+      "name": "Herald Damage"
+     },
+     {
+      "id": "57821",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "58692",
+      "lines": [
+       {
+        "line": "Gain Deflection Rating equal to 5% of Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "4% faster start of Energy Shield Recharge",
+        "parsed": true
+       }
+      ],
+      "name": "Deflection and Energy Shield Delay"
+     },
+     {
+      "id": "59538",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "59657",
+      "lines": [
+       {
+        "line": "+5% to Fire Resistance",
+        "parsed": true
+       },
+       {
+        "line": "+5% to Chaos Resistance",
+        "parsed": true
+       },
+       {
+        "line": "Gain Deflection Rating equal to 8% of Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "10% faster start of Energy Shield Recharge",
+        "parsed": true
+       }
+      ],
+      "name": "First Teachings of the Keeper"
+     },
+     {
+      "id": "60239",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "60362",
+      "lines": [
+       {
+        "line": "15% increased Critical Damage Bonus",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Damage"
+     },
+     {
+      "id": "61196",
+      "lines": [
+       {
+        "line": "+5 to Dexterity",
+        "parsed": true
+       }
+      ],
+      "name": "Dexterity"
+     },
+     {
+      "id": "61333",
+      "lines": [
+       {
+        "line": "10% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "Critical Chance"
+     },
+     {
+      "id": "61403",
+      "lines": [
+       {
+        "line": "+5 to Intelligence",
+        "parsed": true
+       }
+      ],
+      "name": "Intelligence"
+     },
+     {
+      "id": "61586",
+      "lines": [
+       {
+        "extra": "Skills can build and retain Combo regardless of Weapon Set Gain Combo from all Attack Hits ",
+        "line": "Skills can build and retain Combo regardless of Weapon Set",
+        "parsed": false
+       },
+       {
+        "extra": "Combo from all Attack Hits ",
+        "line": "Gain Combo from all Attack Hits",
+        "parsed": false
+       }
+      ],
+      "name": "Martial Master"
+     },
+     {
+      "id": "61601",
+      "lines": [
+       {
+        "line": "+10 to Dexterity",
+        "parsed": true
+       },
+       {
+        "line": "20% increased Critical Hit Chance",
+        "parsed": true
+       }
+      ],
+      "name": "True Strike"
+     },
+     {
+      "id": "61632",
+      "lines": [
+       {
+        "line": "5% chance to Daze on Hit",
+        "parsed": true
+       },
+       {
+        "line": "20% increased Freeze Buildup with Quarterstaves",
+        "parsed": true
+       }
+      ],
+      "name": "Quarterstaff Freeze and Daze Buildup"
+     },
+     {
+      "id": "61718",
+      "lines": [
+       {
+        "line": "15% increased Damage against Dazed Enemies",
+        "parsed": true
+       }
+      ],
+      "name": "Damage vs Dazed Enemies"
+     },
+     {
+      "id": "61834",
+      "lines": [],
+      "name": "Jewel Socket"
+     },
+     {
+      "id": "62841",
+      "lines": [
+       {
+        "line": "12% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "12% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Evasion and Energy Shield"
+     },
+     {
+      "id": "62984",
+      "lines": [
+       {
+        "line": "24% increased Evasion Rating",
+        "parsed": true
+       },
+       {
+        "line": "24% increased maximum Energy Shield",
+        "parsed": true
+       }
+      ],
+      "name": "Mindful Awareness"
+     },
+     {
+      "id": "64700",
+      "lines": [
+       {
+        "line": "5% chance to Daze on Hit",
+        "parsed": true
+       },
+       {
+        "line": "20% increased Freeze Buildup with Quarterstaves",
+        "parsed": true
+       }
+      ],
+      "name": "Quarterstaff Freeze and Daze Buildup"
+     },
+     {
+      "id": "65204",
+      "lines": [
+       {
+        "line": "+2 to Maximum Power Charges",
+        "parsed": true
+       }
+      ],
+      "name": "Overflowing Power"
+     },
+     {
+      "id": "65228",
+      "lines": [
+       {
+        "line": "4% increased Attack Speed",
+        "parsed": true
+       }
+      ],
+      "name": "Attack Speed"
+     }
+    ],
+    "not_a_claim": "Parsed means PoB produced a modifier list; it does not mean the modifier is implemented correctly.",
+    "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "pob_dirty": false,
+    "selection": {
+     "Config": "1",
+     "Items": "1",
+     "Skills": "1",
+     "Tree": "1"
+    },
+    "source": "docs/evidence/P07-T01/benchmark-parse-capture.json",
+    "task": "P07-T01"
+   },
+   "source": "frozen replay bundle",
+   "source_document_sha256": "bea5a17ec62f425fcea2b0c2167618b4992527a79601b2bf6f0a0f9d9396abed",
+   "state": {
+    "document": "benchmark",
+    "forced_power_charges": 5
+   }
+  },
+  "flasks": [
+   {
+    "charges_max": 75.0,
+    "charges_per_s": 0.0,
+    "charges_used": 10.0,
+    "duration_s": 7.1,
+    "instant_percent": 0.0,
+    "mana_total": 0.0,
+    "name": "Blood of the Warrior, Gargantuan Life Flask",
+    "slot": "Flask 1"
+   },
+   {
+    "charges_max": 75.0,
+    "charges_per_s": 0.25,
+    "charges_used": 10.0,
+    "duration_s": 3.0,
+    "instant_percent": 30.0,
+    "mana_total": 356.5,
+    "name": "Bubbling Ultimate Mana Flask of the Sylvan",
+    "slot": "Flask 2"
+   }
+  ],
+  "flicker_damage_per_strike_buffed": 109864.69489897,
+  "flicker_damage_per_strike_unbuffed": 100186.64354329,
+  "flicker_ignite_dps": null,
+  "flicker_mana": 248,
+  "flicker_strike_rate": 9.3279,
+  "flicker_strikes_per_use": 11,
+  "mana_pool": 887,
+  "mana_regen_per_s": 47.9,
+  "pob_burst_damage_per_use": 1208511.6438887,
+  "pob_total_dps": 1024806.8875481,
+  "trace": {
+   "buff_duration": "docs/evidence/P09-T01.2/replay.json#/diagnostics/charged_staff_duration",
+   "charged_staff": "docs/evidence/P09-T01.2/replay.json#/charged_staff",
+   "flasks": "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/flasks",
+   "flicker_buffed": "docs/evidence/P09-T01.2/replay.json#/benchmark_documents/flicker_benchmark/5",
+   "flicker_unbuffed": "docs/evidence/P09-T01.2/replay.json#/benchmark_documents/flicker_benchmark_charged_staff_disabled/5",
+   "mana": "docs/evidence/P09-T01.2/replay.json#/diagnostics/imported/outputs",
+   "whirling": "docs/evidence/P09-T01.2/replay.json#/whirling_assault"
+  },
+  "whirling_damage_per_use": null,
+  "whirling_mana": 160,
+  "whirling_time_s": 1.2997682791202
+ }
+}

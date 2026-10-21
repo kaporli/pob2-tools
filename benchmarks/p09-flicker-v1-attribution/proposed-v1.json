@@ -1,0 +1,45 @@
+{
+ "evidence": [
+  "docs/evidence/P09-T01.2/mechanics-rules.json#/attribution"
+ ],
+ "not_modelled": {
+  "charged_shockwave": "unrelated: owned by Charged Staff",
+  "flicker_strike_ignite": "unrelated: excluded from the v1 score, PoB IgniteDPS reported",
+  "herald_of_ice": "unrelated: needs shatters or kills, absent on the benchmark",
+  "herald_of_thunder": "unrelated",
+  "living_lightning": "unrelated: minion damage"
+ },
+ "notes": {
+  "skill/ChargedStaffPlayer": "Charged Shockwave is a separate hidden attack owned by Charged Staff",
+  "skill/FlickerStrikePlayer": "PoB AverageDamage per strike at the method's charges; includes the Charged Staff buff lightning while the buff is up",
+  "skill/MeleeQuarterstaffPlayer": "default attack, not in the rotation",
+  "skill/WhirlingAssaultPlayer": "PoB AverageBurstDamage per use; separate skill",
+  "support/SupportLivingLightningPlayerTwo": "minion damage"
+ },
+ "rows": [
+  [
+   "skill/ChargedStaffPlayer",
+   "unrelated"
+  ],
+  [
+   "skill/FlickerStrikePlayer",
+   "flicker_direct"
+  ],
+  [
+   "skill/MeleeQuarterstaffPlayer",
+   "unrelated"
+  ],
+  [
+   "skill/WhirlingAssaultPlayer",
+   "unrelated"
+  ],
+  [
+   "support/SupportLivingLightningPlayerTwo",
+   "unrelated"
+  ]
+ ],
+ "status": "proposed; not accepted by a reviewer",
+ "table_hash": "sha256:b0a9fd762ab6991447140bd247c0a6efe85e66f0d4e0e887df90735175a9ef6e",
+ "table_id": "p09-t012-attribution-proposed",
+ "version": "1"
+}

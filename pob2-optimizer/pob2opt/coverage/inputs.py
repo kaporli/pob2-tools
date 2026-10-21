@@ -324,6 +324,11 @@ class ModSupport:
 
 def load_mod_support(path: str | Path) -> ModSupport:
     data = json.loads(Path(path).read_text(encoding="utf-8"))
+    return mod_support_from_json(data, str(path).replace("\\", "/"))
+
+
+def mod_support_from_json(data: Mapping[str, Any], source: str) -> ModSupport:
+    """A capture payload (``scripts/p06_seed_engine_mod_support.py`` format)."""
 
     def rows(lines):
         return tuple(LineSupport(line=r["line"], parsed=bool(r["parsed"]),
@@ -331,7 +336,7 @@ def load_mod_support(path: str | Path) -> ModSupport:
                      for r in lines)
 
     return ModSupport(
-        source=str(path).replace("\\", "/"),
+        source=source,
         pob_commit=data["pob_commit"],
         items={e["slot"]: rows(e["lines"]) for e in data["items"]},
         nodes={str(e["id"]): rows(e["lines"]) for e in data["nodes"]},

@@ -99,6 +99,10 @@ class PobSession:
             return self.catalog_page(**args)
         if op == protocol.OP_LEGALITY_STATE:
             return self.legality_state(**args)
+        if op == protocol.OP_CYCLE_INPUTS:
+            return self.cycle_inputs(**args)
+        if op == protocol.OP_PARSE_SUPPORT:
+            return self.parse_support()
         raise SessionError(ResultStatus.UNSUPPORTED,
                            "unknown operation %r" % op, stage="dispatch")
 
@@ -188,6 +192,27 @@ class PobSession:
         """
         return self._call(protocol.LEGALITY_STATE_HANDLER, {},
                           stage=protocol.OP_LEGALITY_STATE)
+
+    def cycle_inputs(self, config=None, main_skill=None) -> dict:
+        """Flask data and duration modifiers for rotation timing (P07-T01).
+
+        Applies config and main skill exactly as ``primitives`` does, then
+        runs the fixed ``protocol.CYCLE_INPUTS_LUA``. Read-only after that.
+        """
+        stage = protocol.OP_CYCLE_INPUTS
+        for name, value in (config or []):
+            self._call("set_config", {"name": name, "value": value}, stage=stage)
+        if main_skill:
+            group, skill = main_skill
+            self._call("set_main_skill", {"group": group, "skill": skill}, stage=stage)
+        return self._eval(protocol.CYCLE_INPUTS_LUA, stage=stage)
+
+    def parse_support(self) -> dict:
+        """Per-line parse verdicts, config rows and selection of the loaded
+        document (P06-T02 capture, fixed Lua in ``coverage.capture``). Read-only."""
+        from ..coverage.capture import PARSE_SUPPORT_LUA
+
+        return self._eval(PARSE_SUPPORT_LUA, stage=protocol.OP_PARSE_SUPPORT)
 
     def close(self) -> None:
         close = getattr(self.engine, "close", None)
