@@ -1,0 +1,15 @@
+{
+  "inverse_rarity": {
+    "raw_decision": "undecided",
+    "legality": "unknown",
+    "undecided_rarities": {
+      "relic": [
+        "Bow"
+      ],
+      "unique": [
+        "Bow"
+      ]
+    },
+    "violations": []
+  }
+}

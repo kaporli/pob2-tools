@@ -1,0 +1,24 @@
+{
+  "baseline": {
+    "AverageDamage": 136232.22167473
+  },
+  "modified": {
+    "AverageDamage": 1507975.8514644
+  },
+  "ratio": 11.069157009454523,
+  "custom_config_rows": [],
+  "binding_config_keys": [
+    "questAct 2Valley of the TitansMedallion",
+    "questAct 3Venom CryptsVenom Draught",
+    "questAct 4Abandoned PrisonGoddess of Justice",
+    "questAct 4Eye of HinekoraTribal Medicine",
+    "questAct 4Halls Of The DeadNgamahu's Test",
+    "questAct 4Halls Of The DeadTasalio's Test",
+    "questAct 4Halls Of The DeadTawhoa's Test",
+    "questInterlude 2QimahSeven Pillars"
+  ],
+  "engine": {
+    "commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+    "dirty_hash": null
+  }
+}

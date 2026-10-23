@@ -1,5 +1,7 @@
 # PR #5 review
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 This is the original review of `3d7ba53`. The [repair verification](PR-5-repair-verification.md) records the subsequent fixes, successful full test runs and updated disposition.
 
 - Scope: P02-T02 through P02-T05, specification 1.0.

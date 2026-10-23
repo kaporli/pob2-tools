@@ -1,5 +1,7 @@
 # P02-T01 final repair verification
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 - PR: [#4](https://github.com/kaporli/pob2-tools/pull/4), specification 1.0.
 - Verified implementation: `478aaae4606d32e35bed1ef3e47001659792a665`.
 - Follow-up: load-allowance metadata is capped against floating-point deadline roundoff, with a deterministic clock regression; see the repair handoff's hosted-CI note.
@@ -26,7 +28,7 @@ Earlier verified repairs remain covered: ordinary A-B-A, content-sensitive loadi
 | Generated schemas | All 20 match |
 | Lifecycle A-B-A | 675 keys, zero difference |
 
-Commands and acceptance mapping: [repair handoff](../worklog/P02-T01-final-repairs.md).
+Commands and acceptance mapping: [repair handoff](https://github.com/kaporli/pob2-tools/issues/136).
 Adverse-case results: [replayed independent probes](../evidence/P02/repair-r12-r13-probes.json).
 Original failed results and the [independent follow-up review](P02-T01-followup.md) are retained.
 

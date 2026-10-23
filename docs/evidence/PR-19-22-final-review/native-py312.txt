@@ -1,0 +1,20 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\final-review-stack
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 9 items
+
+tests/engine/test_p06_loadout_selection.py::test_facts_match_pobs_selected_loadout PASSED [ 11%]
+tests/engine/test_p06_loadout_selection.py::test_custom_modifier_blocks_match_pob PASSED [ 22%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_live_values_reproduce_the_frozen_bundle PASSED [ 33%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_fresh_workers_agree PASSED [ 44%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_enabled_custom_block_is_captured_and_blocks PASSED [ 55%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_the_live_probe_matches_the_committed_capture PASSED [ 66%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_the_probe_leaves_the_build_untouched PASSED [ 77%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_real_items_agree_with_the_rules_in_every_slot[seed] PASSED [ 88%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_real_items_agree_with_the_rules_in_every_slot[ninja-25c49] PASSED [100%]
+
+native fault diagnostics: 35188880 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-608\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+======================== 9 passed in 72.56s (0:01:12) =========================

@@ -1,14 +1,5 @@
-# Reviews
+# Historical review evidence
 
-One file per reviewed task or gate, written by the **reviewing assistant**, not
-by the engineer who did the work. Use [the review template](../specs/templates/review.md).
+These dated reports preserve findings and scoped verdicts for their original commits. They are not a live task ledger; later review comments may supersede them. Current reviews, repairs, dependencies and closure are tracked in [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23) and linked pull requests.
 
-Naming: `P00-T01.md` for a task, `G0.md` for a gate. A verdict is one of
-`accepted`, `changes_required`, `blocked` or `superseded`.
-
-Only a reviewer records `accepted`. An engineer may set a task to
-`review_ready` or `blocked` in its worklog and nothing else. Blocked access
-never becomes accepted by waiting.
-
-The procedure, the mandatory milestone questions and the regression
-invalidation rules are in [`docs/specs/review.md`](../specs/review.md).
+Post new handoffs and verdicts on the corresponding issue/PR using the [review format](../specs/templates/review.md). Store supporting redacted artifacts under `docs/evidence/` and link exact hashes/commits. Do not create new per-task status files or rewrite historical verdicts to simulate current state.

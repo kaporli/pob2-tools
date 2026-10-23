@@ -1,5 +1,7 @@
 # P01 follow-up implementation review
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 ## Review identity
 
 - Tasks: P01-T01 through P01-T05; specification 1.0.

@@ -1,0 +1,63 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\rereview-stack
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 8 items
+
+tests/engine/test_p06_loadout_selection.py::test_facts_match_pobs_selected_loadout PASSED [ 12%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_live_values_reproduce_the_frozen_bundle PASSED [ 25%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_fresh_workers_agree PASSED [ 37%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_the_live_probe_matches_the_committed_capture PASSED [ 50%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_the_probe_leaves_the_build_untouched PASSED [ 62%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_real_items_agree_with_the_rules_in_every_slot[seed] PASSED [ 75%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_real_items_agree_with_the_rules_in_every_slot[ninja-25c49] PASSED [ 87%]
+tests/engine/test_review_custom_modifier.py::test_custom_modifier_affects_damage_but_is_absent_from_bound_capture FAILED [100%]
+
+================================== FAILURES ===================================
+____ test_custom_modifier_affects_damage_but_is_absent_from_bound_capture _____
+
+pob_root = WindowsPath('C:/Users/Elias/PycharmProjects/pob2-tools/.venv/review-pob-clean')
+repo_root = WindowsPath('C:/Users/Elias/PycharmProjects/pob2-tools/.venv/rereview-stack')
+
+    def test_custom_modifier_affects_damage_but_is_absent_from_bound_capture(pob_root, repo_root):
+        xml = (repo_root/'docs/evidence/P09-T01.1/seed/export-flicker-main.xml').read_text(encoding='utf-8')
+        root = ET.fromstring(xml)
+        chosen, _, problems = select_loadout(root)
+        assert not problems
+        node = ET.SubElement(chosen['Config'],'CustomModifierBlock',title='Review probe',enabled='true')
+        node.text = '1000% more Damage'
+        changed = ET.tostring(root,encoding='unicode')
+        adapter = EngineAdapter(pob_worker_spec(pob_root),max_requests_per_worker=4,
+                                start_timeout_s=120,screen_timeout_s=120,detailed_timeout_s=120)
+        try:
+            state=EngineState(config={'usePowerCharges':True,'overridePowerCharges':5},
+                              main_skill=(6,1),stat_keys=('AverageDamage',))
+            plain=adapter.probe(BuildDocument(build_hash='review/plain',xml=xml),state)
+            modified=adapter.probe(BuildDocument(build_hash='review/modified',xml=changed),state)
+            raw=adapter.parse_support(BuildDocument(build_hash='review/modified-parse',xml=changed))
+            identity=adapter.identity()
+            bound=bind_capture(changed,raw,pob_commit=identity.pob_commit,pob_dirty=False)
+            result={'baseline':plain,'modified':modified,
+                    'ratio':modified['AverageDamage']/plain['AverageDamage'],
+                    'custom_config_rows':[r for r in bound['config'] if 'custom' in r['var'].lower()],
+                    'binding_config_keys':sorted(bound['binding']['config']),
+                    'engine':{'commit':identity.pob_commit,'dirty_hash':identity.pob_dirty_hash}}
+            Path(os.environ['REVIEW_NATIVE_OUTPUT']).write_text(json.dumps(result,indent=2),encoding='utf-8')
+>           assert result['ratio'] == pytest.approx(11)
+E           assert 11.069157009454523 == 11 ± 1.1e-05
+E             
+E             comparison failed
+E             Obtained: 11.069157009454523
+E             Expected: 11 ± 1.1e-05
+
+C:\Users\Elias\PycharmProjects\pob2-tools\.venv\rereview-stack\tests\engine\test_review_custom_modifier.py:39: AssertionError
+native fault diagnostics: 28706055 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-588\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+=========================== short test summary info ===========================
+FAILED tests/engine/test_review_custom_modifier.py::test_custom_modifier_affects_damage_but_is_absent_from_bound_capture - assert 11.069157009454523 == 11 ± 1.1e-05
+  
+  comparison failed
+  Obtained: 11.069157009454523
+  Expected: 11 ± 1.1e-05
+======================== 1 failed, 7 passed in 50.08s =========================

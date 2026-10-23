@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\rereview-stack
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 1 item
+
+tests/engine/test_review_custom_modifier.py::test_custom_modifier_affects_damage_but_is_absent_from_bound_capture PASSED [100%]
+
+============================== 1 passed in 6.89s ==============================

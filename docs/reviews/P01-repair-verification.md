@@ -1,5 +1,7 @@
 # P01 repair verification
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 - Tasks: P01-T01 through P01-T05, specification 1.0.
 - Implementation reviewed: `fcf1c5a09e687516018201da2c6b0a98f2fde31f`.
 - Author/reviewer: Codex, 2026-10-05. This is verification of my own repairs, not a separate engineer's review.
@@ -23,7 +25,7 @@ R06, R07 and R08 are resolved, closing the remaining R03 scope. R01, R02, R04 an
 
 - Full offline unit/local-integration suite: **562 passed, 8 expected failures**, separately on Python 3.10.22 and 3.12.4.
 - New snapshot regressions: **15 passed**; all **20 generated schemas match**.
-- [Repair handoff and exact commands](../worklog/P01-snapshot-repairs.md).
+- [Repair handoff and exact commands](https://github.com/kaporli/pob2-tools/issues/136).
 - [Independent probes replayed against the repair](../evidence/P01/snapshot-repair-probes.json); [original failed probes](../evidence/P01/review-5068871.json) preserved for comparison.
 - [Disconnected-corpus, cache and recovery demonstration](../evidence/P01/snapshot-repair-demo.json).
 - Adversarial cases include a wrong-kind source reference, reversed listing/item insertion order, a missing transitive target, direct raw-blob evidence, normal/legacy evaluation dependencies, conflicting batch imports and a cyclic gap/evaluation reference.

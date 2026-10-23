@@ -1,5 +1,7 @@
 # G0 correction review — PR #2
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 ## Review identity
 
 - Task/gate: P00 correction delivery; G0-R01 through G0-R06.

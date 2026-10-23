@@ -7,7 +7,7 @@ fixture error passed it. These cases pin each failure mode.
 
 The XML here is shaped like pytest's `--junitxml` output. The matching
 end-to-end reproduction, running pytest with a deliberately broken fixture, is
-recorded in docs/worklog/P00-T05.md.
+recorded in https://github.com/kaporli/pob2-tools/issues/48.
 """
 
 from __future__ import annotations

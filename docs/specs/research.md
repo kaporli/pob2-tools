@@ -6,7 +6,7 @@ Inspection date: 2026-10-04. This is a bounded source and code inspection. No Po
 
 Paths are relative to repository root. The listed problems are observations from source inspection, not all reproduced defects. P00 and P02 must characterize behavior before repair.
 
-| ID | Location | Observed behavior | Required disposition |
+| ID | Location | Observed behavior | Original proposed response |
 |---|---|---|---|
 | F01 | `external/PathOfBuilding-PoE2`, `.gitmodules` | Tracked submodule is absent in this working tree; no `POB2_ROOT` override was found during inspection. | P00 documents restoration/configuration; real engine tests remain unexecuted until available. |
 | F02 | `pob2opt/phases.py`, `task_tier` | Final concentration input prefers raw `realistic_dps` over rotation-adjusted DPS. | Reproduce loss of action-time penalties and establish one evaluation path. |
@@ -37,15 +37,6 @@ Paths are relative to repository root. The listed problems are observations from
 
 The source findings justify separate adapter capability studies. They do not justify inventing private endpoint URLs or declaring an integration complete from a fetched title. No provider is assumed to expose votes, DPS, rotations and full equipment in the same format.
 
-## Decisions that require evidence
+## Follow-up references
 
-| ID | Owner of investigation | Required evidence | Blocks |
-|---|---|---|---|
-| D01 | P05 engineer and reviewer | Supported live trade route, identity requirements, example payload and failure behavior | R05 live-market acceptance only; imported-item work continues |
-| D02 | P03 engineer and reviewer | One capability manifest for each named source, with representative saved input | That source's automatic adapter |
-| D03 | P02 engineer and reviewer | Official current patch evidence and pinned PoB compatibility fixture results | Current-patch claims |
-| D04 | P09 engineer, domain reviewer and owner as needed | Exact encounter suite, reference builds, mechanics subset and credible measurements | Practical performance claims |
-| D05 | P01/P02 engineer and reviewer | Catalog exports and semantic field mapping for weapon sets, supports and items | Faithful build round trips |
-| D06 | P09 reviewer | Approved accuracy gates and enough independent holdout observations | Validated recommendations and learning labels |
-
-An engineer resolves an evidence decision with a short record under `docs/decisions/`, including the question, sources, observation, proposed choice, affected contracts, reviewer and date. The assistant reviews the proposal. If evidence cannot resolve a product choice, present the concrete alternatives to Elias; do not ask him to design the implementation.
+These findings describe the 2026-10-04 inspection. Current task/decision disposition is maintained in the [GitHub delivery index](https://github.com/kaporli/pob2-tools/issues/23); [decision records](../decisions/README.md) preserve dated rationale.

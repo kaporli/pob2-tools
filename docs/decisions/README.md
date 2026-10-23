@@ -1,27 +1,14 @@
 # Decision records
 
-One file per resolved evidence decision. Name it after the decision
-(`D01-trade-access.md`) or, for a new one, the task that raised it
-(`P02-T02-patch-identity.md`).
+Decision records preserve rationale, authority, dated sources, observations and effects on technical contracts. Current questions, blockers, implementation and review status live in [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); do not maintain a second disposition table here.
 
-`docs/specs/research.md` requires each record to carry: the question, the
-sources consulted, what was actually observed, the proposed choice, the
-contracts it affects, the reviewer, and the date.
+- [D01 Trade access](D01-trade-access.md): account-character identity and public listing access are different capabilities. Follow-ups: [identity](https://github.com/kaporli/pob2-tools/issues/122) and [listing route](https://github.com/kaporli/pob2-tools/issues/123).
+- [D02 Source capabilities](D02-source-capabilities.md): dated access findings. [Source selection](https://github.com/kaporli/pob2-tools/issues/119).
+- D03 current patch: [compatibility review](https://github.com/kaporli/pob2-tools/issues/117).
+- [D04 Encounter evidence](D04-encounter-suite.md): historical synthetic-versus-empirical boundary. [Protocol implementation](https://github.com/kaporli/pob2-tools/issues/89).
+- D05 semantic mapping: [engine](https://github.com/kaporli/pob2-tools/issues/26) and [parsing](https://github.com/kaporli/pob2-tools/issues/28) issues.
+- D06 validation thresholds: [validation implementation](https://github.com/kaporli/pob2-tools/issues/91).
+- [D07 Flicker objective](D07-flicker-strike-objective.md): accepted objective and method amendments.
+- [D08 Model-based evidence](D08-model-based-evidence.md): no owner recording prerequisite, separate model and empirical tiers.
 
-## Current disposition — 2026-10-17, spec 1.1
-
-| Decision | Status | Remaining work |
-|---|---|---|
-| [D01](D01-trade-access.md) | Accepted access disposition | No approved live listing route. Project-owned registration concerns character import only; live-market acceptance remains blocked. |
-| [D02](D02-source-capabilities.md) | No automatic build provider approved | Capability investigations accepted as scoped tasks; provider selection/access and real representations remain unresolved. |
-| D03 | Open for current-game compatibility; P02-T02.1 review_ready | Live patch 0.5.5e captured verbatim and a clean `ce566ea` catalog exported ([worklog](../worklog/P02-T02.1.md)). Still `partial`: no PoB release covers 0.5.5e (latest 0.23.1, 2026-07-28), and the slot-category gap blocks. |
-| [D04](D04-encounter-suite.md) | Synthetic protocol accepted; practical evidence open | Flicker scope, representative encounters/reference results and controlled-DPS observations; P09-T01.1. Old Huntress selection superseded by D07. |
-| D05 | Implemented mappings accepted within P02/P04 review scope | No blanket coverage approval for new effects or all game content; new Flicker dependencies require coverage/evidence review. |
-| D06 | Provisional thresholds, practical acceptance open | Feasible observation protocol, independent splits and sufficient held-out evidence, including the new DPS objective. |
-| [D07](D07-flicker-strike-objective.md) | Product direction accepted; implementation pending | Maximize sustained Flicker Strike DPS, preserving both-capable gates. Objective contracts implemented under P08-T01.1, awaiting review; evaluation, search and validation remain to do. |
-
-See [delivery.md](../specs/delivery.md#current-task-ledger) for implementation status and review links. A resolved access investigation does not imply usable access; an accepted product direction does not imply implemented software.
-
-An engineer writes the proposal; the reviewing assistant resolves technical
-matters. Genuine scope or preference questions that evidence cannot settle go to
-Elias as concrete alternatives, not as a request to design the implementation.
+Discuss proposals on the issue. Once settled, retain the durable technical decision here with sources, affected contracts, authority and date. Reviewer decisions address technical evidence; unresolved product preferences go to the owner as concrete alternatives.

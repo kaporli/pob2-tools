@@ -129,7 +129,7 @@ jobs:
             echo "which this repository does not redistribute and which a hosted"
             echo "runner has no licensed, pinned copy of. Until a reviewer approves a"
             echo "provisioning route, engine evidence is produced on a Windows machine"
-            echo "with POB2_ROOT set, and attached to the task worklog:"
+            echo "with POB2_ROOT set, and linked from the GitHub issue handoff:"
             echo
             echo '```'
             echo 'set POB2_ROOT=C:\path\to\PathOfBuilding-PoE2'

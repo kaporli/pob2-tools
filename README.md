@@ -27,7 +27,7 @@ patched LuaJIT (`runtime/lua51.dll`) through `ctypes` and call into its Lua.
 
 ## Packages
 
-The staged development plan is in [the implementation specifications](docs/specs/README.md).
+Work tracking and historical deliveries are in the [GitHub delivery index](https://github.com/kaporli/pob2-tools/issues/23). Technical requirements remain in [the specifications](docs/specs/README.md).
 It includes project tasks, shared contracts, acceptance gates, and an engineering review process.
 
 | Package | What it is | Entry point |

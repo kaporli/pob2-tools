@@ -1,5 +1,7 @@
 # PRs 6–9: follow-up review, 2026-10-12
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 Historical findings below are superseded by [the October 13 repair acceptance](PR-6-9-final.md), which records the fixes, combined verification and remaining capability limits.
 
 Reviewer: Codex. Specification version 1.0. This report is the reviewer verdict for the exact heads below, superseding the earlier verdicts only where explicitly stated. Engineer-authored repair notes in earlier reports are implementation claims, not independent reviewer acceptance.

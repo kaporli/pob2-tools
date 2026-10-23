@@ -1,5 +1,7 @@
 # P02-T01 independent follow-up review
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 ## Review identity
 
 - PR: [#4](https://github.com/kaporli/pob2-tools/pull/4), P02-T01 only, specification 1.0.

@@ -1,5 +1,7 @@
 # PR #5 repair verification
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 Date: 2026-10-10. Base revision: `3d7ba53cb703e4794755c083da443019ab30bbe7`. Target: the repair commit containing this verification note.
 
 This supplements the [original review](PR-5.md); its observed-defect probe and JSON are historical evidence for that revision. Run the regression tests below against the repaired tree, not the original probe's deliberately defective-behavior assertions.

@@ -1,5 +1,7 @@
 # G0 follow-up: PR #2 fixes
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 ## Review identity
 
 - Specification: 1.0; tasks P00-T01/T04/T05, PR2-R01/PR2-R02.
@@ -23,7 +25,7 @@
 
 Durable inventories and the independent negative check are in
 [pr2-fixes evidence](../evidence/P00/pr2-fixes/validation.json).
-The [implementation handoff](../worklog/PR2-fixes.md) records reproduction commands.
+The [implementation handoff](https://github.com/kaporli/pob2-tools/issues/136) records reproduction commands.
 
 ## Scope decision for PR2-R02
 

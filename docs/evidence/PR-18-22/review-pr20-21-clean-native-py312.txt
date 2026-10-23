@@ -1,0 +1,15 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\review-pr21
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 6 items
+
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[0-seed] PASSED [ 16%]
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[0-benchmark] PASSED [ 33%]
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[5-seed] PASSED [ 50%]
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[5-benchmark] PASSED [ 66%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_live_values_reproduce_the_frozen_bundle PASSED [ 83%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_fresh_workers_agree PASSED [100%]
+
+============================= 6 passed in 33.88s ==============================

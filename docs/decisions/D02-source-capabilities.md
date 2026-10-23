@@ -121,13 +121,9 @@ snapshots and a snapshot has no author-declared variants.
    maxroll.gg, and contacting any provider for permission. The last is an owner
    decision.
 
-## Open sub-question for the reviewer
+## Follow-up reference
 
-Mobalytics is reachable by a human browser and refuses this toolchain. Deciding
-whether a browser-equivalent client is a legitimate adapter, or an attempt to
-defeat a filter the operator installed on purpose, is a judgement this task does
-not make. If the reviewer wants the question answered, the next step is reading
-the Mobalytics terms, which needs a client that page will answer.
+The dated access findings above remain evidence. Updated source selection and unresolved access questions are tracked in [P03-ACCESS](https://github.com/kaporli/pob2-tools/issues/119).
 
 ## Contracts affected
 
