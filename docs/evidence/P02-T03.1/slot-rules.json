@@ -1,0 +1,2844 @@
+{
+ "catalog_hash": "ac0e930898cb3951d96780a8a87bda8b7d08e722cd6e5c0087253bc0516ca998",
+ "gaps": [
+  {
+   "explanation": "72 jewel socket slot(s) belong to an equipment item. The engine accepts a jewel there only when the parent item has jewel sockets and, for some items, only certain jewel bases. The probe runs with empty parents, so these slots accept nothing in this profile and imported jewels in them stay unplaced. Slots: poe2/slots/Belt Jewel Socket 1, poe2/slots/Belt Jewel Socket 2, poe2/slots/Belt Jewel Socket 3, poe2/slots/Belt Jewel Socket 4, poe2/slots/Belt Jewel Socket 5, poe2/slots/Belt Jewel Socket 6, poe2/slots/Body Armour Jewel Socket 1, poe2/slots/Body Armour Jewel Socket 2, poe2/slots/Body Armour Jewel Socket 3, poe2/slots/Body Armour Jewel Socket 4, poe2/slots/Body Armour Jewel Socket 5, poe2/slots/Body Armour Jewel Socket 6, poe2/slots/Boots Jewel Socket 1, poe2/slots/Boots Jewel Socket 2, poe2/slots/Boots Jewel Socket 3, poe2/slots/Boots Jewel Socket 4, poe2/slots/Boots Jewel Socket 5, poe2/slots/Boots Jewel Socket 6, poe2/slots/Gloves Jewel Socket 1, poe2/slots/Gloves Jewel Socket 2, poe2/slots/Gloves Jewel Socket 3, poe2/slots/Gloves Jewel Socket 4, poe2/slots/Gloves Jewel Socket 5, poe2/slots/Gloves Jewel Socket 6, poe2/slots/Helmet Jewel Socket 1, poe2/slots/Helmet Jewel Socket 2, poe2/slots/Helmet Jewel Socket 3, poe2/slots/Helmet Jewel Socket 4, poe2/slots/Helmet Jewel Socket 5, poe2/slots/Helmet Jewel Socket 6, poe2/slots/Ring 1 Jewel Socket 1, poe2/slots/Ring 1 Jewel Socket 2, poe2/slots/Ring 1 Jewel Socket 3, poe2/slots/Ring 1 Jewel Socket 4, poe2/slots/Ring 1 Jewel Socket 5, poe2/slots/Ring 1 Jewel Socket 6, poe2/slots/Ring 2 Jewel Socket 1, poe2/slots/Ring 2 Jewel Socket 2, poe2/slots/Ring 2 Jewel Socket 3, poe2/slots/Ring 2 Jewel Socket 4, poe2/slots/Ring 2 Jewel Socket 5, poe2/slots/Ring 2 Jewel Socket 6, poe2/slots/Ring 3 Jewel Socket 1, poe2/slots/Ring 3 Jewel Socket 2, poe2/slots/Ring 3 Jewel Socket 3, poe2/slots/Ring 3 Jewel Socket 4, poe2/slots/Ring 3 Jewel Socket 5, poe2/slots/Ring 3 Jewel Socket 6, poe2/slots/Weapon 1 Jewel Socket 1, poe2/slots/Weapon 1 Jewel Socket 2, poe2/slots/Weapon 1 Jewel Socket 3, poe2/slots/Weapon 1 Jewel Socket 4, poe2/slots/Weapon 1 Jewel Socket 5, poe2/slots/Weapon 1 Jewel Socket 6, poe2/slots/Weapon 1 Swap Jewel Socket 1, poe2/slots/Weapon 1 Swap Jewel Socket 2, poe2/slots/Weapon 1 Swap Jewel Socket 3, poe2/slots/Weapon 1 Swap Jewel Socket 4, poe2/slots/Weapon 1 Swap Jewel Socket 5, poe2/slots/Weapon 1 Swap Jewel Socket 6, poe2/slots/Weapon 2 Jewel Socket 1, poe2/slots/Weapon 2 Jewel Socket 2, poe2/slots/Weapon 2 Jewel Socket 3, poe2/slots/Weapon 2 Jewel Socket 4, poe2/slots/Weapon 2 Jewel Socket 5, poe2/slots/Weapon 2 Jewel Socket 6, poe2/slots/Weapon 2 Swap Jewel Socket 1, poe2/slots/Weapon 2 Swap Jewel Socket 2, poe2/slots/Weapon 2 Swap Jewel Socket 3, poe2/slots/Weapon 2 Swap Jewel Socket 4, poe2/slots/Weapon 2 Swap Jewel Socket 5, poe2/slots/Weapon 2 Swap Jewel Socket 6",
+   "gap_id": "gap/p02-t03.1/socketed-item-jewel-slots",
+   "kind": "unsupported_rule",
+   "severity": "ranking_sensitive",
+   "subject_ids": []
+  },
+  {
+   "explanation": "Off-hand rules for GiantsBlood, InstrumentsOfPower, LordOfTheWilds assume the flag is set. Whether a build has it is calculated engine state, which the legality check does not read, so a pairing allowed only under one of them is reported as unknown",
+   "gap_id": "gap/p02-t03.1/off-hand-keystone-flags",
+   "kind": "unsupported_rule",
+   "severity": "ranking_sensitive",
+   "subject_ids": []
+  }
+ ],
+ "kind": "PoB-derived",
+ "not_a_claim": "Read out of the pinned Path of Building checkout. Which slot accepts which base is the engine's ItemsTab:IsItemValidForSlot, not a statement about the live game. Nothing here is a gameplay measurement.",
+ "off_hand_rules": [
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus"
+   ],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus"
+   ],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Sceptre"
+   ],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [
+    "relic",
+    "unique"
+   ],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1",
+   "off_hand_slot_id": "poe2/slots/Weapon 2",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion",
+    "Two Hand Axe",
+    "Two Hand Mace",
+    "Two Hand Sword"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "GiantsBlood"
+  },
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus"
+   ],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus"
+   ],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "InstrumentsOfPower"
+  },
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Sceptre"
+   ],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [
+    "relic",
+    "unique"
+   ],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "LordOfTheWilds"
+  },
+  {
+   "accepted_base_categories": [
+    "Quiver"
+   ],
+   "main_hand_category": "Bow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Claw",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Crossbow",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Dagger",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Fishing Rod",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Flail",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "One Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Sceptre",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Spear",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Staff/Warstaff",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Talisman",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Axe",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Mace",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [],
+   "main_hand_category": "Two Hand Sword",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Claw",
+    "Dagger",
+    "Flail",
+    "Focus",
+    "One Hand Axe",
+    "One Hand Mace",
+    "One Hand Sword",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Unarmed",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  },
+  {
+   "accepted_base_categories": [
+    "Focus",
+    "Sceptre",
+    "Shield",
+    "Shield/Armour",
+    "Shield/Armour/Energy Shield",
+    "Shield/Armour/Evasion",
+    "Shield/Evasion"
+   ],
+   "main_hand_category": "Wand",
+   "main_hand_slot_id": "poe2/slots/Weapon 1 Swap",
+   "off_hand_slot_id": "poe2/slots/Weapon 2 Swap",
+   "refused_rarities": [],
+   "required_flag": "none"
+  }
+ ],
+ "open_rule_gap_ids": [
+  "gap/p02-t02/ascendancy-point-unlock-schedule",
+  "gap/p02-t02/catalog-predates-current-patch",
+  "gap/p02-t02/gem-level-legality",
+  "gap/p02-t02/quest-passive-point-rewards",
+  "gap/p02-t02/skill-level-limit",
+  "gap/p02-t02/weapon-set-point-unlock-levels",
+  "gap/p02-t03.1/off-hand-keystone-flags",
+  "gap/p02-t03.1/socketed-item-jewel-slots"
+ ],
+ "patch_profile_id": "patch-profile/0.5.5e/ac0e930898cb3951",
+ "pob_commit": "ce566eac45ea8a86477f513c7ee65a1ebe60014e",
+ "pob_dirty_hash": null,
+ "refused_rarities": {
+  "poe2/slots/Jewel 11184": [
+   "relic",
+   "unique"
+  ],
+  "poe2/slots/Jewel 17788": [
+   "relic",
+   "unique"
+  ],
+  "poe2/slots/Jewel 23960": [
+   "relic",
+   "unique"
+  ],
+  "poe2/slots/Jewel 26178": [
+   "relic",
+   "unique"
+  ],
+  "poe2/slots/Jewel 3367": [
+   "relic",
+   "unique"
+  ],
+  "poe2/slots/Jewel 39087": [
+   "relic",
+   "unique"
+  ],
+  "poe2/slots/Jewel 62152": [
+   "relic",
+   "unique"
+  ]
+ },
+ "slots": {
+  "poe2/slots/Amulet": [
+   "Amulet"
+  ],
+  "poe2/slots/Arm 1": [
+   "Transcendent Limb/Transcendent Arm"
+  ],
+  "poe2/slots/Arm 2": [
+   "Transcendent Limb/Transcendent Arm"
+  ],
+  "poe2/slots/Belt": [
+   "Belt"
+  ],
+  "poe2/slots/Belt Jewel Socket 1": [],
+  "poe2/slots/Belt Jewel Socket 2": [],
+  "poe2/slots/Belt Jewel Socket 3": [],
+  "poe2/slots/Belt Jewel Socket 4": [],
+  "poe2/slots/Belt Jewel Socket 5": [],
+  "poe2/slots/Belt Jewel Socket 6": [],
+  "poe2/slots/Body Armour": [
+   "Body Armour",
+   "Body Armour/Armour",
+   "Body Armour/Armour/Energy Shield",
+   "Body Armour/Armour/Evasion",
+   "Body Armour/Armour/Evasion/Energy Shield",
+   "Body Armour/Energy Shield",
+   "Body Armour/Evasion",
+   "Body Armour/Evasion/Energy Shield"
+  ],
+  "poe2/slots/Body Armour Jewel Socket 1": [],
+  "poe2/slots/Body Armour Jewel Socket 2": [],
+  "poe2/slots/Body Armour Jewel Socket 3": [],
+  "poe2/slots/Body Armour Jewel Socket 4": [],
+  "poe2/slots/Body Armour Jewel Socket 5": [],
+  "poe2/slots/Body Armour Jewel Socket 6": [],
+  "poe2/slots/Boots": [
+   "Boots",
+   "Boots/Armour",
+   "Boots/Armour/Energy Shield",
+   "Boots/Armour/Evasion",
+   "Boots/Armour/Evasion/Energy Shield",
+   "Boots/Energy Shield",
+   "Boots/Evasion",
+   "Boots/Evasion/Energy Shield"
+  ],
+  "poe2/slots/Boots Jewel Socket 1": [],
+  "poe2/slots/Boots Jewel Socket 2": [],
+  "poe2/slots/Boots Jewel Socket 3": [],
+  "poe2/slots/Boots Jewel Socket 4": [],
+  "poe2/slots/Boots Jewel Socket 5": [],
+  "poe2/slots/Boots Jewel Socket 6": [],
+  "poe2/slots/Charm 1": [
+   "Charm"
+  ],
+  "poe2/slots/Charm 2": [
+   "Charm"
+  ],
+  "poe2/slots/Charm 3": [
+   "Charm"
+  ],
+  "poe2/slots/Flask 1": [
+   "Flask/Life"
+  ],
+  "poe2/slots/Flask 2": [
+   "Flask/Mana"
+  ],
+  "poe2/slots/Gloves": [
+   "Gloves",
+   "Gloves/Armour",
+   "Gloves/Armour/Energy Shield",
+   "Gloves/Armour/Evasion",
+   "Gloves/Armour/Evasion/Energy Shield",
+   "Gloves/Energy Shield",
+   "Gloves/Evasion",
+   "Gloves/Evasion/Energy Shield"
+  ],
+  "poe2/slots/Gloves Jewel Socket 1": [],
+  "poe2/slots/Gloves Jewel Socket 2": [],
+  "poe2/slots/Gloves Jewel Socket 3": [],
+  "poe2/slots/Gloves Jewel Socket 4": [],
+  "poe2/slots/Gloves Jewel Socket 5": [],
+  "poe2/slots/Gloves Jewel Socket 6": [],
+  "poe2/slots/Helmet": [
+   "Helmet",
+   "Helmet/Armour",
+   "Helmet/Armour/Energy Shield",
+   "Helmet/Armour/Evasion",
+   "Helmet/Armour/Evasion/Energy Shield",
+   "Helmet/Energy Shield",
+   "Helmet/Evasion",
+   "Helmet/Evasion/Energy Shield"
+  ],
+  "poe2/slots/Helmet Jewel Socket 1": [],
+  "poe2/slots/Helmet Jewel Socket 2": [],
+  "poe2/slots/Helmet Jewel Socket 3": [],
+  "poe2/slots/Helmet Jewel Socket 4": [],
+  "poe2/slots/Helmet Jewel Socket 5": [],
+  "poe2/slots/Helmet Jewel Socket 6": [],
+  "poe2/slots/Jewel 11184": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 17788": [
+   "Jewel"
+  ],
+  "poe2/slots/Jewel 21984": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 23960": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 2491": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 26178": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 26196": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 26725": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 32763": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 3367": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 39087": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 46882": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 54127": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 55190": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 60735": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 61419": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 61834": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 62152": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Jewel 7960": [
+   "Jewel",
+   "Jewel/Radius",
+   "Jewel/Timeless"
+  ],
+  "poe2/slots/Leg 1": [
+   "Transcendent Limb/Transcendent Leg"
+  ],
+  "poe2/slots/Leg 2": [
+   "Transcendent Limb/Transcendent Leg"
+  ],
+  "poe2/slots/Ring 1": [
+   "Ring"
+  ],
+  "poe2/slots/Ring 1 Jewel Socket 1": [],
+  "poe2/slots/Ring 1 Jewel Socket 2": [],
+  "poe2/slots/Ring 1 Jewel Socket 3": [],
+  "poe2/slots/Ring 1 Jewel Socket 4": [],
+  "poe2/slots/Ring 1 Jewel Socket 5": [],
+  "poe2/slots/Ring 1 Jewel Socket 6": [],
+  "poe2/slots/Ring 2": [
+   "Ring"
+  ],
+  "poe2/slots/Ring 2 Jewel Socket 1": [],
+  "poe2/slots/Ring 2 Jewel Socket 2": [],
+  "poe2/slots/Ring 2 Jewel Socket 3": [],
+  "poe2/slots/Ring 2 Jewel Socket 4": [],
+  "poe2/slots/Ring 2 Jewel Socket 5": [],
+  "poe2/slots/Ring 2 Jewel Socket 6": [],
+  "poe2/slots/Ring 3": [
+   "Ring"
+  ],
+  "poe2/slots/Ring 3 Jewel Socket 1": [],
+  "poe2/slots/Ring 3 Jewel Socket 2": [],
+  "poe2/slots/Ring 3 Jewel Socket 3": [],
+  "poe2/slots/Ring 3 Jewel Socket 4": [],
+  "poe2/slots/Ring 3 Jewel Socket 5": [],
+  "poe2/slots/Ring 3 Jewel Socket 6": [],
+  "poe2/slots/Weapon 1": [
+   "Bow",
+   "Claw",
+   "Crossbow",
+   "Dagger",
+   "Fishing Rod",
+   "Flail",
+   "One Hand Axe",
+   "One Hand Mace",
+   "One Hand Sword",
+   "Sceptre",
+   "Spear",
+   "Staff",
+   "Staff/Warstaff",
+   "Talisman",
+   "Two Hand Axe",
+   "Two Hand Mace",
+   "Two Hand Sword",
+   "Wand"
+  ],
+  "poe2/slots/Weapon 1 Jewel Socket 1": [],
+  "poe2/slots/Weapon 1 Jewel Socket 2": [],
+  "poe2/slots/Weapon 1 Jewel Socket 3": [],
+  "poe2/slots/Weapon 1 Jewel Socket 4": [],
+  "poe2/slots/Weapon 1 Jewel Socket 5": [],
+  "poe2/slots/Weapon 1 Jewel Socket 6": [],
+  "poe2/slots/Weapon 1 Swap": [
+   "Bow",
+   "Claw",
+   "Crossbow",
+   "Dagger",
+   "Fishing Rod",
+   "Flail",
+   "One Hand Axe",
+   "One Hand Mace",
+   "One Hand Sword",
+   "Sceptre",
+   "Spear",
+   "Staff",
+   "Staff/Warstaff",
+   "Talisman",
+   "Two Hand Axe",
+   "Two Hand Mace",
+   "Two Hand Sword",
+   "Wand"
+  ],
+  "poe2/slots/Weapon 1 Swap Jewel Socket 1": [],
+  "poe2/slots/Weapon 1 Swap Jewel Socket 2": [],
+  "poe2/slots/Weapon 1 Swap Jewel Socket 3": [],
+  "poe2/slots/Weapon 1 Swap Jewel Socket 4": [],
+  "poe2/slots/Weapon 1 Swap Jewel Socket 5": [],
+  "poe2/slots/Weapon 1 Swap Jewel Socket 6": [],
+  "poe2/slots/Weapon 2": [
+   "Claw",
+   "Dagger",
+   "Flail",
+   "Focus",
+   "One Hand Axe",
+   "One Hand Mace",
+   "One Hand Sword",
+   "Quiver",
+   "Sceptre",
+   "Shield",
+   "Shield/Armour",
+   "Shield/Armour/Energy Shield",
+   "Shield/Armour/Evasion",
+   "Shield/Evasion",
+   "Two Hand Axe",
+   "Two Hand Mace",
+   "Two Hand Sword"
+  ],
+  "poe2/slots/Weapon 2 Jewel Socket 1": [],
+  "poe2/slots/Weapon 2 Jewel Socket 2": [],
+  "poe2/slots/Weapon 2 Jewel Socket 3": [],
+  "poe2/slots/Weapon 2 Jewel Socket 4": [],
+  "poe2/slots/Weapon 2 Jewel Socket 5": [],
+  "poe2/slots/Weapon 2 Jewel Socket 6": [],
+  "poe2/slots/Weapon 2 Swap": [
+   "Claw",
+   "Dagger",
+   "Flail",
+   "Focus",
+   "One Hand Axe",
+   "One Hand Mace",
+   "One Hand Sword",
+   "Quiver",
+   "Sceptre",
+   "Shield",
+   "Shield/Armour",
+   "Shield/Armour/Energy Shield",
+   "Shield/Armour/Evasion",
+   "Shield/Evasion",
+   "Two Hand Axe",
+   "Two Hand Mace",
+   "Two Hand Sword"
+  ],
+  "poe2/slots/Weapon 2 Swap Jewel Socket 1": [],
+  "poe2/slots/Weapon 2 Swap Jewel Socket 2": [],
+  "poe2/slots/Weapon 2 Swap Jewel Socket 3": [],
+  "poe2/slots/Weapon 2 Swap Jewel Socket 4": [],
+  "poe2/slots/Weapon 2 Swap Jewel Socket 5": [],
+  "poe2/slots/Weapon 2 Swap Jewel Socket 6": []
+ },
+ "undecided": {},
+ "validation_errors": [],
+ "written_at": "2026-10-18T23:29:58Z"
+}

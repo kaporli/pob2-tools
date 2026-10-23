@@ -76,6 +76,12 @@ class ModifierParseStatus(StrEnum):
     RESOLVED = "resolved"
     UNRESOLVED = "unresolved"
     AMBIGUOUS = "ambiguous"
+    #: P04-T01.6. No random affix of this patch explains the line, but it has
+    #: the text of a catalog modifier line and a value within what all lines
+    #: of that text can sum to: a summed, exclusive, corrupted or desecrated
+    #: roll. The stat is known; which affix rolled it is not. The item stays
+    #: partial.
+    STAT_RESOLVED = "stat_resolved"
 
 
 class RecordParseStatus(StrEnum):
@@ -110,6 +116,10 @@ class PoolSlotStatus(StrEnum):
     #: The slot rule names no accepted base category, so imported items
     #: cannot be placed in it. Only owned items placed by a source build are.
     MISSING_CATEGORY_RULE = "missing_category_rule"
+    #: P02-T03.1. Candidates exist but every one is exploratory (a partial
+    #: item, an undecided slot rule, or an owned item the rule does not
+    #: accept). Not complete or recommendation-ready coverage.
+    EXPLORATORY_ONLY = "exploratory_only"
 
 
 class CandidateAvailability(StrEnum):

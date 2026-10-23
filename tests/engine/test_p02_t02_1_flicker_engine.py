@@ -101,7 +101,9 @@ def test_the_verdict_is_partial_for_the_stated_reasons_only(live_export, checkou
     reasons = " ".join(live_export.report.reasons)
     assert "summary" not in reasons
     assert "predates" in reasons
-    assert "slot-accepted-base-categories" in reasons
+    # P02-T03.1 reads slot categories from the engine, so the P02-T02 slot
+    # gap is no longer among the reasons.
+    assert "slot-accepted-base-categories" not in reasons
     if checkout.dirty_hash is None:
         assert "not a clean pinned tree" not in reasons
     else:

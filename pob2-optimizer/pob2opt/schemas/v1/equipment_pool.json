@@ -224,7 +224,8 @@
           "enum": [
             "populated",
             "empty",
-            "missing_category_rule"
+            "missing_category_rule",
+            "exploratory_only"
           ]
         },
         "candidates": {

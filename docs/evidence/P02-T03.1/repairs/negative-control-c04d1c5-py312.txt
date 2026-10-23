@@ -1,0 +1,3 @@
+# tests/unit/test_p02_t03_1_slot_rules.py from the F2 repair, run against reviewed head c04d1c5 (CPython 3.12.4)
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_f2_normal_refused_unique_accepted_is_unknown
+1 failed, 30 passed in 3.42s

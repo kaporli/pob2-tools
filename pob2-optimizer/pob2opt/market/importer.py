@@ -44,7 +44,8 @@ from ..parsers.pob import ParseContext, parse_key
 from .capture import Capture, CaptureEntry, read_capture
 
 IMPORTER_ID = "pob2opt.market.import"
-IMPORTER_VERSION = "p05-t02.1"
+#: ``.2`` follows parser ``p04-t01.6`` (P02-T03.1).
+IMPORTER_VERSION = "p05-t02.2"
 
 #: Formats this importer reads. Provider JSON is refused (D01).
 IMPORTABLE = (formats.ITEM_TEXT, formats.MARKET_CAPTURE)

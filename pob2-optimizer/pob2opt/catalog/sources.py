@@ -52,6 +52,11 @@ PATTERNS: Mapping[str, tuple[str, str]] = {
     "support_socket_limit": (
         "src/Modules/CalcSetup.lua",
         r"if\s+socketedSupportGems\s*>\s*(\d+)\s+then"),
+    # The function that decides which item fits which slot (P02-T03.1). The
+    # slot rules are read by calling it; this cites where it lives.
+    "slot_validity": (
+        "src/Classes/ItemsTab.lua",
+        r"^function\s+ItemsTabClass:(IsItemValidForSlot)\("),
     # The engine's own release, which bounds the game patch its data can
     # possibly describe. Not the game patch: that comes from release.py.
     "engine_release": (

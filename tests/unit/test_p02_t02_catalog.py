@@ -442,9 +442,10 @@ def test_the_legacy_level_plus_eight_guess_is_not_a_rule(export):
 
 
 def test_a_missing_unlock_rule_is_a_gap_with_a_collectable_request(export):
+    # slot-accepted-base-categories closed in P02-T03.1: the regenerated
+    # slice carries the engine's slot acceptance probe.
     wanted = ("quest-passive-point-rewards", "ascendancy-point-unlock-schedule",
-              "slot-accepted-base-categories", "gem-level-legality",
-              "skill-level-limit")
+              "gem-level-legality", "skill-level-limit")
     ids = {gap.gap_id for gap in export.gaps}
     for suffix in wanted:
         matching = [gap for gap in export.gaps if gap.gap_id.endswith(suffix)]
@@ -455,13 +456,14 @@ def test_a_missing_unlock_rule_is_a_gap_with_a_collectable_request(export):
         assert gap.gap_id in export.profile.character_rules.missing_rule_gap_ids
 
 
-def test_slot_rules_declare_no_accepted_categories_and_a_gap_says_why(export):
+def test_slot_rules_come_from_the_engine_probe_in_the_slice(export):
+    """P02-T03.1. The no-probe case is in test_p02_t03_1_slot_rules.py."""
     rules = export.profile.character_rules
-    assert rules.slots
-    assert all(rule.accepted_base_categories == [] for rule in rules.slots)
-    blocking = [gap for gap in export.gaps
+    empty = [r.slot_id for r in rules.slots if not r.accepted_base_categories]
+    assert rules.slots and len(empty) == 72
+    assert all("Jewel Socket" in slot for slot in empty)
+    assert not [gap for gap in export.gaps
                 if gap.gap_id.endswith("slot-accepted-base-categories")]
-    assert blocking and blocking[0].severity is GapSeverity.BLOCKING
 
 
 def test_weapon_set_rules_come_from_the_engine_constants(export):

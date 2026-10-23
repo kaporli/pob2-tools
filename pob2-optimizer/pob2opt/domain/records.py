@@ -191,6 +191,17 @@ class SlotRule:
     accepted_base_categories: list[str]
     weapon_set_id: str | None
     evidence_ids: list[str]
+    #: P02-T03.1. Item rarities (lower case) the slot refuses whatever their
+    #: category. Absent on profiles exported before rarities were probed.
+    refused_rarities: list[str] | Absent = ABSENT
+    #: P02-T03.1. What the probe could not decide; see catalog/slotrules.py.
+    #: Categories accepted for only some bases (``*``: any category not
+    #: accepted), per rarity the categories whose answer differs, and base
+    #: names whose probe failed. ``gap_ids`` names the gaps that explain them.
+    undecided_categories: list[str] | Absent = ABSENT
+    undecided_rarities: dict[str, list[str]] | Absent = ABSENT
+    undecided_bases: list[str] | Absent = ABSENT
+    gap_ids: list[str] | Absent = ABSENT
 
 
 @_frozen
@@ -203,11 +214,38 @@ class SupportRestriction:
 
 
 @_frozen
+class OffHandRule:
+    """What an off-hand slot accepts while its main-hand slot holds one category.
+
+    ``main_hand_category`` is a base category, or ``Unarmed`` for an empty
+    main hand. ``required_flag`` is ``none`` or the engine flag (a keystone
+    such as ``GiantsBlood``) the rule assumes. An empty list means the
+    main-hand category leaves no off-hand slot (two-handed use).
+    """
+
+    off_hand_slot_id: str
+    main_hand_slot_id: str
+    main_hand_category: str
+    required_flag: str
+    accepted_base_categories: list[str]
+    evidence_ids: list[str]
+    refused_rarities: list[str] | Absent = ABSENT
+    #: True when the main-hand category's bases disagree: no answer.
+    undecided: bool | Absent = ABSENT
+    undecided_categories: list[str] | Absent = ABSENT
+    undecided_rarities: dict[str, list[str]] | Absent = ABSENT
+    undecided_bases: list[str] | Absent = ABSENT
+    gap_ids: list[str] | Absent = ABSENT
+
+
+@_frozen
 class WeaponSetRules:
     set_ids: list[str]
     hands_per_set: dict[str, int]
     swap_allowed: bool
     evidence_ids: list[str]
+    #: P02-T03.1. Absent on profiles exported before off-hand rules were read.
+    off_hand_rules: list[OffHandRule] | Absent = ABSENT
 
 
 @_frozen

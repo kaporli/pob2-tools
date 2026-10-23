@@ -910,6 +910,171 @@ handlers.catalog_config_variables = function(args)
 	return catalogPage(args, keys, function(key) return index[key] end, "config_variables")
 end
 
+-- P02-T03.1. Which item bases each slot accepts, as the engine's own
+-- ItemsTab:IsItemValidForSlot decides it. One probe item per base in
+-- data.itemBases is asked against every slot, once at normal rarity and once
+-- each at unique and relic rarity, because some sockets refuse unique and
+-- relic items. Results are counted per base category (type, or
+-- type/subType), so a category the engine splits shows up as a partial count
+-- instead of being widened or dropped.
+--
+-- The second weapon slot depends on what the first one holds and on three
+-- keystone flags, so it is probed once per main-hand base and flag state.
+-- The main-hand probe sits in itemsTab.items under a temporary id for the
+-- duration of one probe and is removed again even on error: nothing in the
+-- build changes.
+local SLOT_PROBE_ID = -987654
+local OFF_HAND_FLAGS = {
+	{ name = "none" },
+	{ name = "GiantsBlood", key = "giantsBlood" },
+	{ name = "InstrumentsOfPower", key = "instrumentsOfPower" },
+	{ name = "LordOfTheWilds", key = "lordOfTheWilds" },
+}
+-- Off-hand slot and the main-hand slot ItemsTab:IsItemValidForSlot reads for
+-- it (ItemsTab.lua, the "Weapon 2" / "Weapon 2 Swap" branch).
+local OFF_HAND_PAIRS = {
+	{ off = "Weapon 2", main = "Weapon 1" },
+	{ off = "Weapon 2 Swap", main = "Weapon 1 Swap" },
+}
+-- Probe rarities and the item text that builds one. Titled rarities need a
+-- name line before the base line.
+local PROBE_RARITIES = {
+	{ name = "normal", text = function(base) return "Rarity: NORMAL\n" .. base end },
+	{ name = "unique", text = function(base) return "Rarity: UNIQUE\nProbe\n" .. base end },
+	{ name = "relic", text = function(base) return "Rarity: RELIC\nProbe\n" .. base end },
+}
+
+local function baseCategory(item)
+	if item.base.subType then return item.type .. "/" .. item.base.subType end
+	return item.type
+end
+
+local function slotAcceptance()
+	local itemsTab = build.itemsTab
+	local names = {}
+	for name in pairs(data.itemBases or {}) do names[#names + 1] = tostring(name) end
+	table.sort(names)
+	local probes, failures = {}, {}
+	for _, rarity in ipairs(PROBE_RARITIES) do
+		local list = {}
+		for _, name in ipairs(names) do
+			local ok, item = pcall(function() return new("Item"):Item(rarity.text(name)) end)
+			if ok and item and item.base then
+				list[#list + 1] = item
+			else
+				failures[#failures + 1] = rarity.name .. ":" .. name
+			end
+		end
+		probes[rarity.name] = list
+	end
+	local totals = {}
+	for _, item in ipairs(probes.normal) do
+		local key = baseCategory(item)
+		totals[key] = (totals[key] or 0) + 1
+	end
+	local function flagState(flag)
+		local state = { giantsBlood = false, instrumentsOfPower = false, lordOfTheWilds = false }
+		if flag.key then state[flag.key] = true end
+		return state
+	end
+	local function counted(list, slotName, itemSet, flags)
+		local accepted = {}
+		for _, item in ipairs(list) do
+			if itemsTab:IsItemValidForSlot(item, slotName, itemSet, flags) then
+				local key = baseCategory(item)
+				accepted[key] = (accepted[key] or 0) + 1
+			end
+		end
+		local out = {}
+		for key, n in pairs(accepted) do out[key] = { accepted = n, total = totals[key] } end
+		return out
+	end
+	-- Normal-rarity counts as `categories`, the others under `byRarity`.
+	local function allRarities(slotName, itemSet, flags)
+		local byRarity = {}
+		for _, rarity in ipairs(PROBE_RARITIES) do
+			if rarity.name ~= "normal" then
+				byRarity[rarity.name] = counted(probes[rarity.name], slotName, itemSet, flags)
+			end
+		end
+		return counted(probes.normal, slotName, itemSet, flags), byRarity
+	end
+	local emptySet = {}
+	for _, pair in ipairs(OFF_HAND_PAIRS) do emptySet[pair.main] = { selItemId = 0 } end
+	local slots = {}
+	local slotNames = {}
+	for name in pairs(itemsTab.slots or {}) do slotNames[#slotNames + 1] = tostring(name) end
+	table.sort(slotNames)
+	for _, name in ipairs(slotNames) do
+		local categories, byRarity = allRarities(name, emptySet, flagState(OFF_HAND_FLAGS[1]))
+		slots[#slots + 1] = { slot = name, context = "empty_item_set",
+			categories = categories, byRarity = byRarity }
+	end
+	local offHand = {}
+	for _, pair in ipairs(OFF_HAND_PAIRS) do
+		for _, flag in ipairs(OFF_HAND_FLAGS) do
+			local byMain = { Unarmed = { mains = 1, signatures = {} } }
+			local function record(mainKey, categories, byRarity)
+				local keys = {}
+				for _, rarity in ipairs(PROBE_RARITIES) do
+					local cats = rarity.name == "normal" and categories or byRarity[rarity.name]
+					local part = {}
+					for key, c in pairs(cats) do part[#part + 1] = key .. "=" .. c.accepted end
+					table.sort(part)
+					keys[#keys + 1] = rarity.name .. ":" .. table.concat(part, ",")
+				end
+				byMain[mainKey].signatures[table.concat(keys, ";")] =
+					{ categories = categories, byRarity = byRarity }
+			end
+			record("Unarmed", allRarities(pair.off, emptySet, flagState(flag)))
+			for _, main in ipairs(probes.normal) do
+				if itemsTab:IsItemValidForSlot(main, pair.main, emptySet, flagState(flag)) then
+					local mainKey = baseCategory(main)
+					byMain[mainKey] = byMain[mainKey] or { mains = 0, signatures = {} }
+					byMain[mainKey].mains = byMain[mainKey].mains + 1
+					local itemSet = {}
+					for k, v in pairs(emptySet) do itemSet[k] = v end
+					itemSet[pair.main] = { selItemId = SLOT_PROBE_ID }
+					itemsTab.items[SLOT_PROBE_ID] = main
+					local ok, categories, byRarity = pcall(allRarities, pair.off, itemSet, flagState(flag))
+					itemsTab.items[SLOT_PROBE_ID] = nil
+					if not ok then error(categories) end
+					record(mainKey, categories, byRarity)
+				end
+			end
+			for mainKey, entry in pairs(byMain) do
+				local variants, found = 0, nil
+				for _, result in pairs(entry.signatures) do
+					variants = variants + 1
+					found = result
+				end
+				offHand[#offHand + 1] = {
+					offSlot = pair.off, mainSlot = pair.main, flag = flag.name,
+					mainCategory = mainKey, mainBases = entry.mains,
+					-- More than one variant means bases of one main-hand
+					-- category disagree; the categories are then not a rule.
+					variants = variants,
+					categories = variants == 1 and found.categories or nil,
+					byRarity = variants == 1 and found.byRarity or nil,
+				}
+			end
+		end
+	end
+	table.sort(offHand, function(a, b)
+		if a.offSlot ~= b.offSlot then return a.offSlot < b.offSlot end
+		if a.flag ~= b.flag then return a.flag < b.flag end
+		return a.mainCategory < b.mainCategory
+	end)
+	return {
+		probe = "ItemsTab:IsItemValidForSlot, one item per data.itemBases entry at normal, unique and relic rarity",
+		probeCount = #probes.normal,
+		probeFailures = failures,
+		categoryTotals = totals,
+		slots = slots,
+		offHand = offHand,
+	}
+end
+
 handlers.catalog_rule_sources = function(args)
 	-- The upstream facts the character rules are read from. Reported as data,
 	-- not as rules: deciding what they mean is the exporter's job, and a fact
@@ -959,6 +1124,7 @@ handlers.catalog_rule_sources = function(args)
 		questRewards = rewards,
 		characterConstants = copyScalars(data.characterConstants),
 		gameConstants = copyScalars(data.gameConstants),
+		slotAcceptance = slotAcceptance(),
 		misc = copyScalars(data.misc),
 		weaponTypeInfo = (function()
 			local out = {}

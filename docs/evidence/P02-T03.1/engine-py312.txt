@@ -1,0 +1,4 @@
+== tests/engine/test_p02_t03_1_slot_rules_engine.py
+4 passed in 15.33s
+== tests/engine/test_p02_t03_legality_engine.py
+7 passed in 15.64s

@@ -12,7 +12,9 @@ Three rules upstream does not carry, recorded as gaps rather than filled in:
 * when each ascendancy point is earned. Upstream carries the maximum, 8, and
   a beginner's labyrinth hint that is a recommendation, not a rule;
 * which item base categories each equipment slot accepts. The slot table
-  names slots; it does not say what fits in them.
+  names slots; it does not say what fits in them. Since P02-T03.1 the engine
+  is asked instead (``slotrules.py``); a capture without that probe keeps the
+  original gap.
 """
 
 from __future__ import annotations
@@ -20,16 +22,20 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Mapping, Sequence
 
+from ..domain.absent import ABSENT
 from ..domain.enums import GapKind, GapSeverity, GapStatus
 from ..domain.records import (SCHEMA_VERSION, CatalogEntity, CharacterRules,
-                              DataGap, LevelRange, PointBudgetRule, SlotRule,
-                              SupportRestriction, WeaponSetRules)
+                              DataGap, LevelRange, OffHandRule,
+                              PointBudgetRule, SlotRule, SupportRestriction,
+                              WeaponSetRules)
 from .entities import entity_id
 from .evidence import (EXPORT_ROOT_ID, EvidenceBundle, json_payload,
                        pob_source_url)
+from .slotrules import NO_FLAG, SlotAcceptance, read_acceptance
 from .sources import Citation
 
 GAP_PREFIX = "gap/p02-t02"
+GAP_PREFIX_T031 = "gap/p02-t03.1"
 
 
 class MissingRuleSource(RuntimeError):
@@ -247,41 +253,11 @@ def build_character_rules(
         field_paths=["/character_rules/point_budgets"]))
 
     # -- slots -------------------------------------------------------------
-    slot_rules: list[SlotRule] = []
-    slot_evidence = _cite_data(
-        evidence, "slots",
-        [{"entity_id": slot.entity_id,
-          "weaponSet": slot.raw_reference.get("weaponSet")} for slot in slots],
-        pob_commit)
-    rule_evidence.append(slot_evidence)
-    for slot in slots:
-        weapon_set = slot.raw_reference.get("weaponSet")
-        slot_rules.append(SlotRule(
-            slot_id=slot.entity_id,
-            # Empty because upstream's slot table does not carry it, not
-            # because the slot accepts nothing. See the gap below.
-            accepted_base_categories=[],
-            weapon_set_id=(entity_id("weapon_sets", weapon_set)
-                           if weapon_set is not None else None),
-            evidence_ids=[slot_evidence]))
-    gaps.append(make_gap(
-        "%s/slot-accepted-base-categories" % GAP_PREFIX,
-        kind=GapKind.MISSING_INPUT,
-        severity=GapSeverity.BLOCKING,
-        explanation=(
-            "The engine's slot table names %d slots and which of them belong to "
-            "a weapon set. It does not say which item base categories each slot "
-            "accepts, so every exported slot rule has an empty category list and "
-            "equipment legality cannot be decided from this profile."
-            % len(slot_rules)),
-        needed_evidence=(
-            "for each equipment slot, the set of item base types it accepts and "
-            "the hand or slot conflicts it creates, read from the engine's own "
-            "item-to-slot matching code and confirmed against one fixture item "
-            "per base type"),
-        collection_method="engine implementation",
-        created_at=created_at,
-        field_paths=["/character_rules/slots"]))
+    acceptance = read_acceptance(rule_sources.get("slotAcceptance"))
+    slot_rules, off_hand_rules, slot_gaps, slot_evidence_ids = _slot_rules(
+        slots, acceptance, citations, evidence, pob_commit, created_at)
+    gaps.extend(slot_gaps)
+    rule_evidence.extend(slot_evidence_ids)
 
     # -- supports ----------------------------------------------------------
     support_restrictions: list[SupportRestriction] = []
@@ -347,14 +323,16 @@ def build_character_rules(
             set_ids=set_ids,
             hands_per_set={key: hands[key] for key in sorted(hands)},
             swap_allowed=bool(constants.get("enable_weapon_sets")),
-            evidence_ids=[weapon_set_evidence])
+            evidence_ids=[weapon_set_evidence],
+            off_hand_rules=off_hand_rules if acceptance is not None else ABSENT)
     else:
         weapon_set_evidence = _cite_data(evidence, "weapon-set-constants",
                                          constants, pob_commit)
         rule_evidence.append(weapon_set_evidence)
-        weapon_sets = WeaponSetRules(set_ids=[], hands_per_set={},
-                                     swap_allowed=False,
-                                     evidence_ids=[weapon_set_evidence])
+        weapon_sets = WeaponSetRules(
+            set_ids=[], hands_per_set={}, swap_allowed=False,
+            evidence_ids=[weapon_set_evidence],
+            off_hand_rules=off_hand_rules if acceptance is not None else ABSENT)
         gaps.append(make_gap(
             "%s/weapon-set-count" % GAP_PREFIX,
             kind=GapKind.MISSING_INPUT,
@@ -427,3 +405,242 @@ def build_character_rules(
         missing_rule_gap_ids=[gap.gap_id for gap in gaps],
         evidence_ids=sorted(set(rule_evidence)))
     return RuleBuild(rules=rules, gaps=gaps)
+
+
+def _slot_rules(slots: Sequence[CatalogEntity],
+                acceptance: SlotAcceptance | None,
+                citations: Mapping[str, Citation], evidence: EvidenceBundle,
+                pob_commit: str | None, created_at: str):
+    """Slot rules, off-hand rules, their gaps and their evidence ids."""
+    gaps: list[DataGap] = []
+    slot_evidence = _cite_data(
+        evidence, "slots",
+        [{"entity_id": slot.entity_id,
+          "weaponSet": slot.raw_reference.get("weaponSet")} for slot in slots],
+        pob_commit)
+    evidence_ids = [slot_evidence]
+
+    def weapon_set_of(slot: CatalogEntity) -> str | None:
+        weapon_set = slot.raw_reference.get("weaponSet")
+        return (entity_id("weapon_sets", weapon_set)
+                if weapon_set is not None else None)
+
+    if acceptance is None:
+        rules = [SlotRule(
+            slot_id=slot.entity_id,
+            # Empty because upstream's slot table does not carry it, not
+            # because the slot accepts nothing. See the gap below.
+            accepted_base_categories=[],
+            weapon_set_id=weapon_set_of(slot),
+            evidence_ids=[slot_evidence]) for slot in slots]
+        gaps.append(make_gap(
+            "%s/slot-accepted-base-categories" % GAP_PREFIX,
+            kind=GapKind.MISSING_INPUT,
+            severity=GapSeverity.BLOCKING,
+            explanation=(
+                "The engine's slot table names %d slots and which of them "
+                "belong to a weapon set. It does not say which item base "
+                "categories each slot accepts, so every exported slot rule has "
+                "an empty category list and equipment legality cannot be "
+                "decided from this profile." % len(rules)),
+            needed_evidence=(
+                "for each equipment slot, the set of item base types it "
+                "accepts and the hand or slot conflicts it creates, read from "
+                "the engine's own item-to-slot matching code and confirmed "
+                "against one fixture item per base type"),
+            collection_method="engine implementation",
+            created_at=created_at,
+            field_paths=["/character_rules/slots"]))
+        return rules, [], gaps, evidence_ids
+
+    probe_evidence = _cite_data(evidence, "slot-acceptance-probe", {
+        "probe_count": acceptance.probe_count,
+        "probe_failures": acceptance.probe_failures,
+        "accepted": acceptance.accepted,
+        "partial": acceptance.partial,
+        "refused_rarities": acceptance.refused_rarities,
+        "rarity_undecided": acceptance.rarity_undecided,
+        "off_hand": [{"off_slot": c.off_slot, "main_slot": c.main_slot,
+                      "flag": c.flag, "main_category": c.main_category,
+                      "accepted": list(c.accepted), "partial": list(c.partial),
+                      "uniform": c.uniform,
+                      "refused_rarities": list(c.refused_rarities),
+                      "rarity_undecided": {r: list(v) for r, v
+                                           in c.rarity_undecided.items()}}
+                     for c in acceptance.off_hand],
+    }, pob_commit)
+    evidence_ids.append(probe_evidence)
+    rule_evidence = [slot_evidence, probe_evidence]
+    citation = citations.get("slot_validity")
+    if citation is not None:
+        source_evidence = _cite(evidence, citation, pob_commit)
+        evidence_ids.append(source_evidence)
+        rule_evidence.append(source_evidence)
+
+    off_slots = acceptance.off_hand_slots
+    failed = acceptance.failed_bases
+    gap_partial = "%s/slot-partial-categories" % GAP_PREFIX_T031
+    gap_rarity = "%s/slot-rarity-partial" % GAP_PREFIX_T031
+    gap_mixed = "%s/off-hand-mixed-main-hand" % GAP_PREFIX_T031
+    gap_failed = "%s/slot-probe-failures" % GAP_PREFIX_T031
+
+    def rule_gap_ids(undecided, rarities, mixed=False):
+        out = []
+        if undecided:
+            out.append(gap_mixed if mixed or "*" in undecided else gap_partial)
+        if rarities:
+            out.append(gap_rarity)
+        if failed:
+            out.append(gap_failed)
+        return sorted(set(out))
+
+    rules: list[SlotRule] = []
+    unprobed, empty, socketed = [], [], []
+    for slot in slots:
+        name = str(slot.raw_reference.get("name") or "")
+        refused = acceptance.refused_rarities.get(name, [])
+        rarities = acceptance.rarity_undecided.get(name, {})
+        undecided = list(acceptance.partial.get(name, []))
+        if name in off_slots:
+            accepted = acceptance.off_hand_union(name)
+            refused = acceptance.off_hand_refused(name)
+            undecided = acceptance.off_hand_undecided(name)
+            # A rarity a context leaves undecided stays undecided for the slot.
+            merged: dict[str, set] = {}
+            for c in acceptance.off_hand:
+                if c.off_slot == name:
+                    for rarity, cats in c.rarity_undecided.items():
+                        merged.setdefault(rarity, set()).update(cats)
+            rarities = {r: sorted(c) for r, c in sorted(merged.items())}
+        elif name in acceptance.accepted:
+            accepted = acceptance.accepted[name]
+        else:
+            accepted = []
+            unprobed.append(slot.entity_id)
+        if not accepted and not undecided and name in acceptance.accepted:
+            (socketed if slot.raw_reference.get("parentSlot") else empty
+             ).append(slot.entity_id)
+        rules.append(SlotRule(
+            slot_id=slot.entity_id, accepted_base_categories=list(accepted),
+            weapon_set_id=weapon_set_of(slot),
+            evidence_ids=list(rule_evidence),
+            refused_rarities=list(refused),
+            undecided_categories=list(undecided),
+            undecided_rarities={r: list(c) for r, c in rarities.items()},
+            undecided_bases=list(failed),
+            gap_ids=rule_gap_ids(undecided, rarities)))
+
+    by_name = {str(slot.raw_reference.get("name") or ""): slot.entity_id
+               for slot in slots}
+    off_hand_rules = [OffHandRule(
+        off_hand_slot_id=by_name.get(c.off_slot,
+                                     entity_id("slots", c.off_slot)),
+        main_hand_slot_id=by_name.get(c.main_slot,
+                                      entity_id("slots", c.main_slot)),
+        main_hand_category=c.main_category, required_flag=c.flag,
+        accepted_base_categories=list(c.accepted),
+        evidence_ids=list(rule_evidence),
+        refused_rarities=list(c.refused_rarities),
+        undecided=not c.uniform,
+        undecided_categories=list(c.partial),
+        undecided_rarities={r: list(v) for r, v in c.rarity_undecided.items()},
+        undecided_bases=list(failed),
+        gap_ids=rule_gap_ids(c.partial, c.rarity_undecided,
+                             mixed=not c.uniform)
+        if c.uniform else sorted({gap_mixed, *([gap_failed] if failed else [])}))
+        for c in acceptance.off_hand]
+
+    def gap(suffix, subjects, explanation, needed,
+            kind=GapKind.UNSUPPORTED_RULE, severity=GapSeverity.BLOCKING,
+            field_path="/character_rules/slots"):
+        # Slot ids are catalog entity ids, not records, so they are named in
+        # the explanation rather than in subject_ids.
+        if subjects:
+            explanation = "%s. Slots: %s" % (explanation,
+                                             ", ".join(sorted(subjects)))
+        gaps.append(make_gap(
+            "%s/%s" % (GAP_PREFIX_T031, suffix), kind=kind, severity=severity,
+            explanation=explanation, needed_evidence=needed,
+            collection_method="engine implementation", created_at=created_at,
+            field_paths=[field_path]))
+
+    if acceptance.probe_failures:
+        gap("slot-probe-failures", [],
+            "%d item base(s) could not be built as probe items, so every slot "
+            "answers undecided for them: %s"
+            % (len(acceptance.probe_failures),
+               ", ".join(acceptance.probe_failures[:20])),
+            "an item text the engine parses for each listed base",
+            kind=GapKind.MISSING_INPUT)
+    partial = dict(acceptance.partial)
+    for c in acceptance.off_hand:
+        if c.partial:
+            partial["%s with %s, %s" % (c.off_slot, c.main_category,
+                                         c.flag)] = list(c.partial)
+    if partial:
+        gap("slot-partial-categories", [],
+            "The engine accepts only some bases of these categories in these "
+            "slots, so a category list cannot express the rule: %s"
+            % "; ".join("%s: %s" % (k, ", ".join(v))
+                        for k, v in sorted(partial.items())),
+            "the base-level condition the engine applies to each listed "
+            "category, read from ItemsTab:IsItemValidForSlot")
+    mixed = sorted("%s with %s, %s" % (c.off_slot, c.main_category, c.flag)
+                   for c in acceptance.off_hand if not c.uniform)
+    if mixed:
+        gap("off-hand-mixed-main-hand", [],
+            "Bases of one main-hand category give different off-hand results, "
+            "so no off-hand rule was exported for: %s" % "; ".join(mixed),
+            "the main-hand property the engine's off-hand check reads for "
+            "each listed category")
+    if unprobed:
+        gap("slot-unprobed", unprobed,
+            "%d slot(s) of the slot table were not in the acceptance probe, "
+            "so they accept nothing in this profile" % len(unprobed),
+            "an acceptance probe row for each listed slot",
+            kind=GapKind.MISSING_INPUT)
+    if socketed:
+        gap("socketed-item-jewel-slots", socketed,
+            "%d jewel socket slot(s) belong to an equipment item. The engine "
+            "accepts a jewel there only when the parent item has jewel "
+            "sockets and, for some items, only certain jewel bases. The probe "
+            "runs with empty parents, so these slots accept nothing in this "
+            "profile and imported jewels in them stay unplaced"
+            % len(socketed),
+            "the parent-item condition (canSocketJewelBase) per "
+            "socket-granting item, read from ItemsTab:IsItemValidForSlot and "
+            "the item data",
+            severity=GapSeverity.RANKING_SENSITIVE)
+    if empty:
+        gap("slot-accepts-nothing", empty,
+            "%d slot(s) accepted no probe base at all" % len(empty),
+            "the condition under which the engine accepts an item in each "
+            "listed slot")
+    rarity_partial = {"%s at %s" % (slot, rarity): list(cats)
+                      for slot, by in acceptance.rarity_undecided.items()
+                      for rarity, cats in by.items()}
+    for c in acceptance.off_hand:
+        for rarity, cats in c.rarity_undecided.items():
+            rarity_partial["%s with %s, %s at %s" % (
+                c.off_slot, c.main_category, c.flag, rarity)] = list(cats)
+    if rarity_partial:
+        gap("slot-rarity-partial", [],
+            "At these rarities the engine's answer for these categories "
+            "differs from normal rarity while the slot does not refuse the "
+            "rarity outright. Probe items are not real uniques, so these "
+            "combinations are undecided: %s"
+            % "; ".join("%s: %s" % (k, ", ".join(v))
+                        for k, v in sorted(rarity_partial.items())),
+            "the category and rarity condition the engine applies in each "
+            "listed slot, read from ItemsTab:IsItemValidForSlot")
+    flagged = sorted({c.flag for c in acceptance.off_hand if c.flag != NO_FLAG})
+    if flagged:
+        gap("off-hand-keystone-flags", [],
+            "Off-hand rules for %s assume the flag is set. Whether a build has "
+            "it is calculated engine state, which the legality check does not "
+            "read, so a pairing allowed only under one of them is reported as "
+            "unknown" % ", ".join(flagged),
+            "the build's calculated flag state from the engine's modDB",
+            severity=GapSeverity.RANKING_SENSITIVE,
+            field_path="/character_rules/weapon_sets/off_hand_rules")
+    return rules, off_hand_rules, gaps, evidence_ids

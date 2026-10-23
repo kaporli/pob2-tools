@@ -175,7 +175,8 @@
           "enum": [
             "resolved",
             "unresolved",
-            "ambiguous"
+            "ambiguous",
+            "stat_resolved"
           ]
         }
       },

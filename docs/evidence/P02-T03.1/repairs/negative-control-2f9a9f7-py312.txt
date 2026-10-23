@@ -1,0 +1,10 @@
+# tests/unit/test_p02_t03_1_slot_rules.py from the repair, run against reviewed head 2f9a9f7 (CPython 3.12.4)
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_a_main_hand_category_with_mixed_results_gets_an_undecided_rule
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_a_stat_known_partial_ring_is_placed_and_marked
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_r8_a_rarity_undecided_category_is_unknown_not_legal
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_r8_a_partially_accepted_category_is_unknown_not_illegal
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_r8_undecided_items_are_exploratory_pool_candidates
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_r8_a_mixed_off_hand_context_is_unknown
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_r8_a_partial_off_hand_context_is_unknown
+FAILED tests/unit/test_p02_t03_1_slot_rules.py::test_r8_a_probe_failure_leaves_that_base_undecided
+8 failed, 20 passed in 2.02s

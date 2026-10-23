@@ -61,7 +61,12 @@ PARSER_ID = "pob2opt.parsers.pob"
 #: as PoB item text, reads PoB's ``Rune:`` socket lines as rune names instead
 #: of modifier lines and ``{enchant}{rune}`` as one rune line, and resolves a
 #: magic item's base from its name as PoB does.
-PARSER_VERSION = "p04-t01.5"
+#: ``.6`` (P02-T03.1) reads PoB's ``Unique ID`` line as a dropped header and
+#: ``Runic Ward`` as a property instead of as modifier lines, which shifted
+#: the implicit block; and marks a line ``stat_resolved`` when its text is a
+#: catalog modifier's and its value is within their summed range, but no
+#: single affix explains it. Such an item stays partial. Reparse ``.5``.
+PARSER_VERSION = "p04-t01.6"
 
 #: Elements a PoE 2 PoB document is known to contain. Others are kept in
 #: ``raw_extensions`` and named there.
@@ -494,12 +499,20 @@ def _check_items(items, context: ParseContext, document: SourceDocument,
                     continue
                 modifiers[index] = replace(
                     modifier, parse_status=ModifierParseStatus(match.status))
-                explanation = (
-                    "affix line matches %d catalog modifiers (%s); no "
-                    "automatic choice" % (len(match.candidates),
-                                          ", ".join(match.candidates))
-                    if match.candidates else
-                    "affix line matches no catalog modifier of this patch")
+                if match.status == ModifierParseStatus.STAT_RESOLVED.value:
+                    explanation = (
+                        "line has the text of a catalog modifier and a value "
+                        "within what those modifiers can sum to, but no single "
+                        "affix of this patch explains it: the stat is known, "
+                        "the affix is not")
+                elif match.candidates:
+                    explanation = (
+                        "affix line matches %d catalog modifiers (%s); no "
+                        "automatic choice" % (len(match.candidates),
+                                              ", ".join(match.candidates)))
+                else:
+                    explanation = ("affix line matches no catalog modifier of "
+                                   "this patch")
                 reasons.append(("%s_affix" % match.status,
                                 "/modifiers/%d" % index,
                                 item.display_name + ": " + match.text,

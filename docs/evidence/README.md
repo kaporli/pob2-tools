@@ -39,7 +39,7 @@ them separate.
 | `P02/review-eca7afe-recovery-probes.py` | P02-T01 repair | Reproduction of R10 and R11 at HEAD |
 | `P02/review-eca7afe-recovery.json` | P02-T01 repair | Those two cases before and after the repair |
 | `P02/catalog-export.json` | P02-T02 | PoB-derived. What one real `catalog export` produced: entity counts, catalog hash, evaluation context hash, the compatibility report and why the verdict is `partial`, the character rules, and every gap with its needed evidence |
-| `P02/catalog-rows-slice.json` | P02-T02 | PoB-derived, and a slice, not the catalog. Bounded engine rows so the offline tests run the real export with no PoB. A catalog hash computed from it is not an export's catalog hash. Marked `restricted`: third-party game data, reviewable locally. Regenerated in P02-T02.1 from a clean checkout with adapter `p02.2` |
+| `P02/catalog-rows-slice.json` | P02-T02 | PoB-derived, and a slice, not the catalog. Bounded engine rows so the offline tests run the real export with no PoB. A catalog hash computed from it is not an export's catalog hash. Marked `restricted`: third-party game data, reviewable locally. Regenerated in P02-T02.1 from a clean checkout with adapter `p02.2`, and in P02-T03.1 with the slot acceptance probe added to `rule_sources` (tables unchanged) |
 | `P02/catalog-profile-request.json` | P02-T02 | The `--profile` request the reference export uses |
 | `P02/release/` | P02-T02 | Captures of official Path of Exile 2 patch-notes pages, one file per page, `restricted`. The export resolves the live patch from these and from nothing else; see the README there |
 | `P02-T02.1/README.md` | P02-T02.1 | Current-patch and Flicker Strike compatibility: official pages fetched, upstream PoB check, the clean export's verdict and every retained gap, test runs |
@@ -87,3 +87,7 @@ them separate.
 | `P05-T02/offline-py312.txt`, `P05-T02/offline-py310.txt` | P05-T02 | Offline suite logs on Python 3.12 and 3.10 after the item and listing import |
 | `P05-T02/engine-py312.txt`, `P05-T02/engine-py312-run2.txt` | P05-T02 | Engine suite logs against PoB `ce566ea`: the first run stopped by the test-session memory guard in an existing P02 test, the second complete. Synthetic items, no gameplay measurement |
 | `P05-T03/offline-py312.txt`, `P05-T03/offline-py310.txt` | P05-T03 | Offline suite logs on Python 3.12 and 3.10 after the equipment pools |
+| `P02-T03.1/README.md` | P02-T03.1 | Engine slot rules: how they are read, the categories per slot, off-hand and rarity rules, the engine cross-check, the real pool and the open gaps |
+| `P02-T03.1/slot-acceptance.json` | P02-T03.1 | PoB-derived. The engine's slot acceptance probe from a clean checkout of `ce566ea`; the offline tests replay it |
+| `P02-T03.1/slot-rules.json`, `P02-T03.1/real-pool.json` | P02-T03.1 | PoB-derived. Exported slot, off-hand and rarity rules with their gaps; a pool from 46 real items (owner seed owned, reference build not owned) with the reason for every empty slot |
+| `P02-T03.1/offline-py312.txt`, `P02-T03.1/offline-py310.txt`, `P02-T03.1/engine-py312.txt` | P02-T03.1 | Offline suite tails on 3.12 and 3.10; targeted engine test tails |
