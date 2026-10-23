@@ -1,6 +1,6 @@
 """P05-T03: equipment pools across catalog slots. Offline, synthetic.
 
-Acceptance cases from docs/specs/projects/P05-trade.md, by test name:
+Acceptance cases from https://github.com/kaporli/pob2-tools/issues/29, by test name:
 
 * a weak standalone enabler survives pool construction and enables the best
   pair: ``test_acceptance_weak_enabler_survives_and_enables_the_best_pair``;

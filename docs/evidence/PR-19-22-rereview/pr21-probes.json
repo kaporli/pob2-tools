@@ -1,0 +1,13 @@
+{
+  "custom_modifier_coverage": {
+    "eligible": true,
+    "blocking": [],
+    "config_explicit": {}
+  },
+  "custom_modifier": {
+    "status": "eligible",
+    "score": 124.16666666666667,
+    "blocking": [],
+    "captured_config": []
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "active_sets": {
+    "skills": [
+      "Strike"
+    ],
+    "passives": [
+      "1"
+    ],
+    "items": [
+      "1"
+    ],
+    "config": {}
+  },
+  "stale_config_evidence": {
+    "eligible": true,
+    "blocking": []
+  },
+  "missing_passive_evidence": {
+    "eligible": true,
+    "blocking": []
+  },
+  "stale_item_wrong_engine_evidence": {
+    "eligible": true,
+    "blocking": []
+  },
+  "unearned_enemy_critical_weakness": {
+    "eligible": true,
+    "blocking": [],
+    "rules": [
+      "activation/gate",
+      "attribution/bench",
+      "resource/charges",
+      "skill/Builder",
+      "skill/Strike",
+      "support/SupportGate",
+      "target/bench"
+    ]
+  }
+}

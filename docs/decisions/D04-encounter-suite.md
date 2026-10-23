@@ -1,8 +1,6 @@
 # D04 Encounter suite and credible measurements
 
-> **Current scope update, 2026-10-17:** [D07](D07-flicker-strike-objective.md) replaces the initial Huntress/three-Huntress-family target with sustained Flicker Strike DPS and a reviewed class/interaction scope. The historical investigation below and accepted `p09-synthetic-v1` artifacts retain their original wording/hashes. Their synthetic software acceptance remains valid; they do not establish the new objective. The next collection input is one complete **Flicker Strike** export with its actual rotation, followed by representative encounter and controlled-DPS evidence under P09-T01.1. Missing measurements, reference results and patch compatibility remain open; this scope change closes none of those gaps. See the [current ledger](../specs/delivery.md#current-task-ledger).
-
-> **P09-T01.1, 2026-10-17:** the seed Flicker Strike export (Monk / Martial Artist) and the owner's one-sentence rotation are stored in `docs/evidence/P09-T01.1/`. Suite `benchmarks/p09-flicker-v1/` proposes the class scope, three interaction variants, the four workloads and `flicker_sustained_v1`, with 25 open `DataGap` records. The export begins reference selection and closes no measurement gap. No encounter, enemy statistic or threshold is selected, so D04 stays blocked for practical claims. Proposed, not accepted. 2026-10-18: the owner answered Q1 to Q9; the D07 amendment makes a fixed PoB enemy configuration the `flicker_sustained_v1` target and PoB its damage source, so that benchmark no longer waits on in-game evidence. The four clear/boss workloads keep their status; clearing uses T16 maps, bosses are unnamed.
+> Historical decision and evidence snapshot. Its original proposal and review below retain their dated scope. Current implementation is tracked in [P09](https://github.com/kaporli/pob2-tools/issues/33); [D08](D08-model-based-evidence.md) governs model-based delivery without owner recordings.
 
 Raised by: P09-T01. Specification version 1.0.
 
@@ -21,7 +19,7 @@ enemy statistics, their timings, the reference builds and the pass conditions.
 | `docs/specs/scenarios.md` | The four shapes, the ranking formula, the provisional floors, the rule that synthetic results are never reported as measured times |
 | `docs/specs/product.md` | The solo softcore default, one configuration across scenarios, no party buffs, no complexity penalty, and the four no-value behaviours |
 | `docs/specs/contracts.md` | `ScenarioSpec`, `RotationPolicy`, `Observation`, `DataGap` and their nullability rules |
-| `docs/specs/projects/P09-validation.md` | P09-T01 through P09-T05, including the instruction not to invent enemy statistics |
+| https://github.com/kaporli/pob2-tools/issues/33 | P09-T01 through P09-T05, including the instruction not to invent enemy statistics |
 | `docs/evidence/P03/mobalytics-capabilities.json` (branch `p03-t01-capabilities`) | Capability manifest, 2026-10-10 |
 | `docs/evidence/P03/maxroll-capabilities.json` (same branch) | Capability manifest, 2026-10-10 |
 | `docs/evidence/P03/poe-ninja-capabilities.json` (same branch) | Capability manifest, 2026-10-10 |
@@ -91,69 +89,9 @@ yet be compared with a skill's reach.
 
 This is a proposal. It is not accepted, and P09-T01 does not accept it.
 
-## What would unblock it, and who can supply it
+## Evidence scope
 
-Two inputs, in this order. The first is small and the owner can supply it
-alone; the second is the real cost.
-
-Each input below is described by what it actually measures. An artifact closes
-a gap only when it carries the quantity, in a stated unit, with the context the
-gap names, and a reviewer accepts it. "Supplying a build" and "closing the
-reference gap" are two different events, and an earlier version of this record
-ran them together.
-
-**1. One complete Huntress build, exported by hand.** A PoB build file or build
-code carrying equipment with full modifier text, passive allocations,
-ascendancy, skill groups with levels, quality and supports, weapon-set
-bindings, and the rotation the operator plays. Imported through P03-T02 local
-acquisition, with no provider access.
-
-| Gap | What this closes | What it does not |
-|---|---|---|
-| `gap-p09-t01-reference-build` | **Begins** reference selection: it supplies a complete, importable configuration, which is the first of the two things the gap asks for. | It does not close the gap. The gap also requires an observed completion time for that configuration on the scenario, and an export contains no trial. A reference result is frozen by an accepted configuration plus an accepted observation, never by an export alone. |
-| `gap-p09-t01-build-families` | Nothing on its own. | One build does not name a family. Three builds across three distinct families, each accepted, would close it. |
-
-**2. Recorded gameplay for one named encounter.** For a single named boss and a
-single named map layout, at a stated area level and patch. What a recording can
-support depends on what is legible in it, so the gaps are listed separately
-rather than as a block:
-
-| Gap | Artifact and extractable quantity | Required context | Uncertainty | Accepted when |
-|---|---|---|---|---|
-| `gap-p09-t01-boss-windows` | Phase and invulnerability start and end times, read off the recording's clock in seconds | Named boss, area level, patch, at least five attempts | Frame rate and the operator's reaction time bound the precision; state it | A reviewer accepts the attempt set and the stated precision |
-| `gap-p09-t01-duration-limit` | Completion time per attempt, including the failures | The same | As above | The same |
-| `gap-p09-t01-movement-model` | Per-leg walked route times | Named map layout, the route walked, movement speed and movement skills used | As above | The same |
-| `gap-p09-t01-encounter-density` | Pack size and spacing along that route | The same | Spacing is in whatever unit the recording permits; see the spatial gap | The same |
-| `gap-p09-t01-incoming-damage` | Timestamped damage events | Named encounter and patch; the character's maximum/current life and energy shield, mitigation, recovery and other simultaneous resource changes | A fractional character health bar needs a known maximum; net loss alone cannot separate damage, absorption and recovery | A reviewer accepts the character resource context and a method isolating the damage quantity; enemy maximum life is not this prerequisite |
-| `gap-p09-t01-initial-resources` | The resource state at the start event | The same | Legibility of the resource display | A reviewer accepts the reading |
-| `gap-p09-t01-enemy-health` | **Not closed by a health bar.** A bar shows a fraction of an unknown maximum | Absolute maximum life needs an identified catalog row for that monster at that area level and rarity, or a controlled experiment with a known damage figure | Identification of the catalog row is the uncertainty | A reviewer accepts the catalog row or the experiment |
-| `gap-p09-t01-enemy-defenses` | **Not closed by a recording.** Mitigation is not visible | As above | As above | As above |
-| `gap-p09-t01-spatial-unit` | **Not closed by a recording.** Positions are in screen or minimap space | The conversion between that space and the game's units needs its own identified evidence | The conversion factor is the unknown | A reviewer accepts the conversion |
-
-A recording that shows boss timings but no spatial conversion closes the timing
-gaps and leaves the spatial one open. A recording with a legible fractional
-health bar and no absolute-life evidence closes neither
-`gap-p09-t01-enemy-health` nor `gap-p09-t01-incoming-damage`. None of these may
-be reported as satisfying the four-scenario, multi-family observation target:
-one dataset for one boss on one map is one dataset.
-
-Collection is what P09-T02 owns, per `docs/specs/contracts.md` `Observation`.
-None of it can be supplied by reading a guide, by a PoB number or by a
-character level.
-
-**Who can supply it.** Owner gameplay is a concrete and available collection
-path, and it is not the only permitted one. Independently sourced or exported
-data is acceptable on the same terms as anything else here: it closes what it
-measures, with its provenance recorded, and a reviewer accepts it. The
-supplemental explicit-link path P03-T01 identifies is one such source for build
-configurations. What is true today is narrower than the earlier wording: no
-provider in P03-T01's manifests offers a permitted automatic route, and this
-project runs no in-game automation.
-
-A third input is cheaper and partial: an accepted patch profile with
-compatibility `verified` rather than `partial`, from P02-T02 against the live
-patch plus the D03 decision. It closes `gap-p09-t01-patch-profile` and nothing
-else, but every representative scenario needs it.
+The original collection proposal is preserved in the [pre-migration decision](https://github.com/kaporli/pob2-tools/blob/ae8d890f243d93e8c6c61de9eec23bbcd6edd72c/docs/decisions/D04-encounter-suite.md#what-would-unblock-it-and-who-can-supply-it). Current protocol and evidence work is tracked in [P09](https://github.com/kaporli/pob2-tools/issues/33). [D08](D08-model-based-evidence.md) removes owner recordings as a prerequisite for model-based delivery while preserving the distinction from independent gameplay validation.
 
 ## Contracts affected
 
@@ -184,10 +122,6 @@ the R1 and R2 repairs in that review, which are applied.
 **Unresolved.** Items 2 and 3. Representative encounters and the three Huntress
 families stay unselected, and the fourteen `DataGap` records stay open. No
 gameplay validation and no gate is accepted by this.
-
-**Owner's, not a reviewer's.** The unblocking inputs above are requests for the
-owner's time, so they go to Elias as concrete alternatives rather than as a
-design question. The reviewer's scope does not extend to deciding them.
 
 ## Date
 

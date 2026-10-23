@@ -28,17 +28,9 @@ These are versioned engineering defaults, not assertions about game mechanics:
 
 PoB's displayed DPS is a screening/consistency input. It is not automatically this time-accounted benchmark result. Until the detailed evaluator exists, a PoB number must stay `proxy_only`. Synthetic targets can test software, but cannot establish practical superiority.
 
-## Required implementation work
+## Implementation references
 
-| Task | Deliverable / acceptance |
-|---|---|
-| P08-T01.1, with P01 contract review | Versioned request, objective and aggregate representation that pins objective ID/version, skill IDs, class scope, benchmark hash, attribution rules and windows. Preserve v1 decoding/hashes; add migration and unknown-objective refusal tests. Freeze these values into manifest/cache identity. Current RunRequest v1 cannot express this target. |
-| P09-T01 follow-up / D04 | One complete Flicker Strike export to start, its actual rotation, approved class/variant scope, and real encounter/target evidence. Propose three distinct interaction variants within Flicker Strike for the initial validation split; do not relabel near-duplicates to satisfy a quota. |
-| P06-T01/T02 | Registry and coverage checks for every dependency needed to use and sustain the skill. Missing data, missing implementation and unvalidated behavior produce different actionable requests. |
-| P07-T02/T03/T05 | Traceable time-accounted damage attribution, sustained/burst metrics and objective-specific ranking. Existing clear/boss gates remain enforced. |
-| P08-T02/T03 | Preserve the Flicker Strike main-skill constraint through mutations; search approved classes and enabling combinations without collapsing to one imported variant. |
-| P09-T02/T03 | Independent measurements, leakage-resistant splits and DPS-specific accuracy checks. Kill time without evidenced enemy health/defenses cannot be relabelled measured DPS. |
-| P10-T01/T02 | Show objective, benchmark conditions, damage breakdown, burst versus sustained results, clear/boss strengths, setup, sustain limits, execution and missing evidence. |
+The [GitHub delivery index](https://github.com/kaporli/pob2-tools/issues/23) owns tasks and dependencies for this decision. The [model evidence amendment](D08-model-based-evidence.md) describes the separate model-only delivery tier.
 
 ## Required adversarial fixtures
 

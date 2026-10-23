@@ -30,3 +30,9 @@ docs/evidence/P07-T01/** -text
 
 # P07-T01 attribution table. table_hash is recorded inside it.
 benchmarks/p09-flicker-v1-attribution/** -text
+
+# Historical review bundles published with the GitHub tracking migration.
+# Preserve their recorded SHA-256 values on Windows checkouts.
+docs/evidence/PR-18-22/** -text whitespace=cr-at-eol
+docs/evidence/PR-19-22-rereview/** -text whitespace=cr-at-eol
+docs/evidence/PR-19-22-final-review/** -text whitespace=cr-at-eol

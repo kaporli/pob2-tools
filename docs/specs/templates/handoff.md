@@ -1,10 +1,10 @@
 # Implementation handoff
 
-Copy this file to `docs/worklog/TASK-ID.md`. Replace placeholders; retain every section. Use `not applicable` with a reason rather than deleting an evidence section.
+Post this format as a comment on the assigned GitHub issue and link the implementation PR. Replace placeholders; retain every section. Use `not applicable` with a reason rather than deleting an evidence section.
 
 ## Identity
 
-- Task IDs:
+- GitHub issue URL and permanent task IDs:
 - Specification version:
 - Engineer:
 - Starting commit:

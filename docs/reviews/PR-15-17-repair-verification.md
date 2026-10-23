@@ -1,5 +1,7 @@
 # PRs 15–17 repair verification
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 Date: 2026-10-18. Self-verification of the requested repairs; no product gate
 or gameplay claim is accepted by this report. The original reviews and their
 probe outputs remain unchanged. PR #14 is merged as `3046609`.

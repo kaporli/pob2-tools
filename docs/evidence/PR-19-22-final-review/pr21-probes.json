@@ -1,0 +1,30 @@
+{
+  "custom_modifier_coverage": {
+    "eligible": false,
+    "blocking": [
+      "unsupported_modifier"
+    ],
+    "config_explicit": {}
+  },
+  "custom_modifier": {
+    "status": "blocked",
+    "score": null,
+    "blocking": [
+      {
+        "gap_id": "gap-p06-unsupported-modifier-config-custom-mods-481b610d18",
+        "class": "unsupported_modifier",
+        "domain": "config",
+        "mechanics": [],
+        "subjects": [
+          "config:custom_mods"
+        ],
+        "fields": [
+          "/config/custom_mods/0"
+        ],
+        "explanation": "Custom modifier block 'Unverified' is enabled with '1000% more Damage'; PoB applies it to every calculation and no rule establishes it.",
+        "needed_evidence": "The block removed or disabled and PoB outputs recaptured, or a rule deriving '1000% more Damage' from the build."
+      }
+    ],
+    "captured_config": []
+  }
+}

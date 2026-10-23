@@ -1,5 +1,7 @@
 # P03-T02 follow-up acceptance
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 - Reviewer: Codex, 2026-10-13; specification 1.0.
 - Reviewed repair implementation: `2e2fada116f6af778dff27bd3c285999485e8961`, following PR6 head `377c45f`.
 - Verdict: **accepted** for local acquisition and shared HTTP behavior. Supersedes the remaining P03-T02 findings from the October 12 review. No live provider or corpus coverage is accepted by this record.

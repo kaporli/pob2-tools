@@ -239,7 +239,7 @@ Lua runtime writes to the process stdout handle directly.
 
 ## Recorded results
 
-Latest P02-T01 repair results: [final repair handoff](../docs/worklog/P02-T01-final-repairs.md).
+Latest P02-T01 repair results: [final repair handoff](https://github.com/kaporli/pob2-tools/issues/136).
 Adapter p02-t01.2: 631 offline passes and 5 expected failures on each supported
 interpreter; 48 engine passes and 1 expected failure. The supervised deadline
 probe also accepts `combined`, `slow_load`, `slow_primitives`, `slow_identity`,

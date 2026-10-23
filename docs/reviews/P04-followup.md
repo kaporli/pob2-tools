@@ -1,5 +1,7 @@
 # P04 / PR #10 repair review — 2026-10-16
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 - Specification: 1.0; P01/P02 support-state follow-up and P04-T01 through T05.
 - Reviewed head: `f7561b91bf41277d4d6bcacc541da2999715b495`, against `08d400f6ac571b840d1754ba35fa792a899e34d2`.
 - Reviewer: Codex.

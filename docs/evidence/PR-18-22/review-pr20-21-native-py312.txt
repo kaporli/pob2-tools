@@ -1,0 +1,19 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\review-pr21
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 6 items
+
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[0-seed] SKIPPEDe65a1ebe60014e) [ 16%]
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[0-benchmark] SKIPPEDe65a1ebe60014e) [ 33%]
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[5-seed] SKIPPEDe65a1ebe60014e) [ 50%]
+tests/engine/test_p09_t01_2_seed_replay_engine.py::test_replay_values_reproduce[5-benchmark] SKIPPEDe65a1ebe60014e) [ 66%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_live_values_reproduce_the_frozen_bundle SKIPPED65a1ebe60014e) [ 83%]
+tests/engine/test_p07_t01_flicker_cycle_engine.py::test_fresh_workers_agree SKIPPED65a1ebe60014e) [100%]
+
+=========================== short test summary info ===========================
+SKIPPED [4] tests\engine\test_p09_t01_2_seed_replay_engine.py:46: replay values belong to a clean checkout of ce566eac45ea8a86477f513c7ee65a1ebe60014e
+SKIPPED [1] tests\engine\test_p07_t01_flicker_cycle_engine.py:54: cycle values belong to a clean checkout of ce566eac45ea8a86477f513c7ee65a1ebe60014e
+SKIPPED [1] tests\engine\test_p07_t01_flicker_cycle_engine.py:69: cycle values belong to a clean checkout of ce566eac45ea8a86477f513c7ee65a1ebe60014e
+============================= 6 skipped in 0.49s ==============================

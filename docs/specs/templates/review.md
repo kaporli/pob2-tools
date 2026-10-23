@@ -1,6 +1,6 @@
 # Implementation review
 
-Copy to `docs/reviews/TASK-ID.md` or `docs/reviews/GATE-ID.md`.
+Post this format on the relevant GitHub issue or pull request. Link durable evidence files and the exact reviewed commit.
 
 ## Review identity
 

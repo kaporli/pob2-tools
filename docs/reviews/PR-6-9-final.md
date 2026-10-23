@@ -1,5 +1,7 @@
 # PRs 6–9: repair acceptance, 2026-10-13
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 Reviewer and repair author: Codex. Specification version 1.0. Verdict: **accepted within the scope below**. This supersedes the remaining F1–F4 findings in [the October 12 review](PR-6-9-rereview.md). No GitHub PR was merged by this work.
 
 | PR | Reviewed implementation / integration | Accepted scope |

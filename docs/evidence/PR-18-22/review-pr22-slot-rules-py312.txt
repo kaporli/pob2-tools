@@ -1,0 +1,15 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Elias\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: C:\Users\Elias\PycharmProjects\pob2-tools\.venv\review-pr22
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collecting ... collected 4 items
+
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_the_live_probe_matches_the_committed_capture PASSED [ 25%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_the_probe_leaves_the_build_untouched PASSED [ 50%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_real_items_agree_with_the_rules_in_every_slot[seed] PASSED [ 75%]
+tests/engine/test_p02_t03_1_slot_rules_engine.py::test_real_items_agree_with_the_rules_in_every_slot[ninja-25c49] PASSED [100%]
+
+native fault diagnostics: 20596215 bytes at C:\Users\Elias\AppData\Local\Temp\pytest-of-Elias\pytest-552\engine-faults0\faulthandler.log
+  LuaJIT raises SEH 0xe24c4a02 during ordinary error unwinding, so this file is large and is not by itself a crash.
+============================= 4 passed in 15.18s ==============================

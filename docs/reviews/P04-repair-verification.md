@@ -1,5 +1,7 @@
 # P04 / PR #10 follow-up repair verification
 
+> Historical review of the commits named below. Current task state and follow-ups are on [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23); this snapshot is not a current assignment list.
+
 - Specification: 1.0; P02-T05 support/variant follow-up and P04-T01 through T05, with provider access still bounded by D02.
 - Implementer and reviewer: Codex, 2026-10-17. This is self-verification, not a second independent reviewer.
 - Starting implementation: `f7561b91bf41277d4d6bcacc541da2999715b495`.

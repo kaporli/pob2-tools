@@ -2,7 +2,7 @@
 
 Build a local tool that can spend hours searching PoE 2 configurations, return playable candidates strong in clearing and bossing, and explain exactly where its evidence is insufficient. Community builds supply examples and mechanics claims. They do not define the maximum possible performance.
 
-Specification 1.1, 2026-10-17: the first target is **maximum sustained single-target Flicker Strike DPS** under [D07](../decisions/D07-flicker-strike-objective.md). This replaces the Huntress-first scope and balanced-winner default. Clearing/bossing capability, survival and resource gates remain. See [delivery status](delivery.md#current-task-ledger) for what is actually implemented.
+Specification 1.1, 2026-10-17: the first target is **maximum sustained single-target Flicker Strike DPS** under [D07](../decisions/D07-flicker-strike-objective.md). This replaces the Huntress-first scope and balanced-winner default. Clearing/bossing capability, survival and resource gates remain. See [GitHub Issues](https://github.com/kaporli/pob2-tools/issues/23) for implementation status.
 
 ## Confirmed requirements
 
@@ -54,7 +54,7 @@ The level default does not mean skill levels, gem slots, quest rewards or ascend
 
 The first vertical slice evaluates imported Flicker Strike builds with a small, reviewer-approved mechanics subset, two clear scenarios, two boss scenarios and D07's separate controlled sustained-DPS benchmark. It must search equipment, supports, passives, approved classes/ascendancies and supported rotations while preserving the main-skill constraint. Document every excluded interaction, class and modifier. Begin collection with one complete export and its actual rotation; this is not enough for validation or an optimum claim.
 
-After this slice is independently validated, expand by mechanics families and repeat coverage and validation gates. Full PoE 2 coverage remains an explicit backlog. A new class is another validated capability expansion; supporting arbitrary games is outside this implementation series.
+After this slice passes the applicable model or empirical acceptance tier, expand by mechanics families and repeat coverage and validation gates. Full PoE 2 coverage remains an explicit backlog. A new class is another validated capability expansion; supporting arbitrary games is outside this implementation series.
 
 ## Non goals for the initial implementation
 
@@ -63,3 +63,8 @@ Do not build a website, hosted service, autonomous trading/buying bot, real-time
 ## Rules for honest claims
 
 Legality, mechanics coverage, performance validation, search completeness and equipment availability are separate statuses. None implies the others. Numerical uncertainty ranges are sensitivity ranges unless a justified probability model or mathematical bound establishes stronger semantics. Popularity, PoB DPS, and character level are not labels for measured combat quality.
+
+
+## Model based evidence amendment
+
+[D08](../decisions/D08-model-based-evidence.md) establishes a model-based offline tier without owner-supplied recordings. The recommendation must pass the declared modeled clear/boss, legality, survival and resource gates; reports identify predictions and assumptions. Independently validated practical superiority remains a separate claim. Missing critical mechanics continue to block a comparable score.

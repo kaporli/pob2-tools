@@ -1,0 +1,38 @@
+name: Engineering task
+description: A bounded delivery with explicit dependencies and acceptance
+title: "[TASK-ID] Concrete outcome"
+labels: ["kind:task"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Problem and scope
+      description: Name the project issue, current behavior, target behavior, and exclusions.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and starting points
+      description: Link prerequisite issues, shared contracts, modules, fixtures and evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Implementation steps
+      description: Give ordered concrete steps; distinguish missing data from missing code.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance and verification
+      description: Include positive/adverse cases, commands, prerequisites and required artifacts. Owner gameplay recordings are not a prerequisite for model-based delivery.
+    validations:
+      required: true
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Review and evidence
+      description: Link the PR and issue handoff when ready. Reviewer acceptance is required before closure. Do not create repository worklogs or status ledgers.

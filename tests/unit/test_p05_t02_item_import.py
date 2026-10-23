@@ -1,6 +1,6 @@
 """P05-T02: item text and market capture import. Offline, synthetic fixtures.
 
-Acceptance cases from docs/specs/projects/P05-trade.md, by test name:
+Acceptance cases from https://github.com/kaporli/pob2-tools/issues/29, by test name:
 
 * same-name different-roll items remain distinct:
   ``test_acceptance_same_name_different_roll_items_remain_distinct``;

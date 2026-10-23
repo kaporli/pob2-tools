@@ -1,51 +1,43 @@
-# Path of Exile 2 optimizer implementation specifications
+# Path of Exile 2 optimizer specifications
 
-This specification defines a PoE 2 build optimizer that searches for builds capable of both clearing and bossing, explains their strengths and execution requirements, and exposes missing evidence instead of inventing performance. It is an implementation plan, not a claim that these capabilities already exist.
+These documents define the technical behavior of a PoE 2 optimizer targeting maximum sustained Flicker Strike DPS, with clearing, bossing, survival and resource requirements. Implementation work and historical completion are tracked exclusively in the [GitHub delivery index](https://github.com/kaporli/pob2-tools/issues/23).
 
-Specification version: **1.1**, revised 2026-10-17 (original 1.0 prepared 2026-10-04). The first target is maximum sustained single-target **Flicker Strike DPS**, with clearing/bossing capability retained as gates; see [D07](../decisions/D07-flicker-strike-objective.md). Foundation/import work has been delivered; the optimizer is not complete. Start with the [current task ledger and next assignments](delivery.md#current-task-ledger). This revision changes documentation, not application code or persisted schemas.
+Specification 1.1 retains its schema and objective contracts. [D07](../decisions/D07-flicker-strike-objective.md) records the Flicker objective and accepted PoB method; [D08](../decisions/D08-model-based-evidence.md) records the model-based evidence direction without owner gameplay recordings. This documentation migration changes no runtime schemas or numerical results.
 
 ## Read in this order
 
-1. [Product requirements](product.md): what the system must accomplish and the defaults to implement.
-2. [Research and repository findings](research.md): observed facts, source limitations, and unresolved dependencies.
-3. [Architecture](architecture.md): module ownership, storage, and execution boundaries.
-4. [Data contracts](contracts.md) and [command interfaces](interfaces.md): shared implementation contracts.
-5. [Scenarios and scoring](scenarios.md): the definition of performance and the ranking formula.
-6. [Delivery plan](delivery.md): task order, dependencies, and acceptance gates.
-7. The assigned project below, [concrete acceptance examples](acceptance-examples.md), then [review procedure](review.md).
+1. [Product requirements](product.md) and applicable decision amendments.
+2. [Architecture](architecture.md), [contracts](contracts.md) and [interfaces](interfaces.md).
+3. [Scenarios](scenarios.md), [acceptance examples](acceptance-examples.md) and [acceptance definitions](acceptance-gates.md).
+4. The assigned GitHub issue, its dependencies and [review procedure](review.md).
+5. [Historical research](research.md) when investigating the original findings.
 
-When documents conflict, product requirements take priority, then contracts and scenarios, then project tasks. Record a conflict as a decision request; do not silently choose an interpretation. Task IDs are permanent references for implementation and review.
+When documents conflict, owner decisions and product requirements take priority, then contracts and scenarios, then implementation tasks. Raise concrete unresolved conflicts on the issue. Task IDs remain permanent references even though their descriptions moved to GitHub.
 
-## Projects
+## Project navigation
 
-| ID | Project | Specification |
-|---|---|---|
-| P00 | Reproducible foundation and characterization | [Tasks](projects/P00-foundation.md) |
-| P01 | Shared records and persistence | [Tasks](projects/P01-contracts-storage.md) |
-| P02 | PoB adapter and correctness repairs | [Tasks](projects/P02-engine.md) |
-| P03 | Build source acquisition | [Tasks](projects/P03-acquisition.md) |
-| P04 | Parsing and build normalization | [Tasks](projects/P04-parsers.md) |
-| P05 | Trade access and equipment candidates | [Tasks](projects/P05-trade.md) |
-| P06 | Mechanics coverage and missing evidence | [Tasks](projects/P06-coverage.md) |
-| P07 | Encounter and rotation evaluation | [Tasks](projects/P07-combat.md) |
-| P08 | Build search and resumable runs | [Tasks](projects/P08-search.md) |
-| P09 | Benchmarks and independent validation | [Tasks](projects/P09-validation.md) |
-| P10 | Reports and end to end delivery | [Tasks](projects/P10-reporting.md) |
-| P11 | Optional learning experiments | [Tasks](projects/P11-learning.md) |
+| Project issue | Scope |
+|---|---|
+| [P00](https://github.com/kaporli/pob2-tools/issues/24) | Reproducible foundation and characterization |
+| [P01](https://github.com/kaporli/pob2-tools/issues/25) | Shared records and persistence |
+| [P02](https://github.com/kaporli/pob2-tools/issues/26) | PoB adapter and correctness repairs |
+| [P03](https://github.com/kaporli/pob2-tools/issues/27) | Build source acquisition |
+| [P04](https://github.com/kaporli/pob2-tools/issues/28) | Parsing and build normalization |
+| [P05](https://github.com/kaporli/pob2-tools/issues/29) | Trade access and equipment candidates |
+| [P06](https://github.com/kaporli/pob2-tools/issues/30) | Mechanics coverage and missing evidence |
+| [P07](https://github.com/kaporli/pob2-tools/issues/31) | Encounter and rotation evaluation |
+| [P08](https://github.com/kaporli/pob2-tools/issues/32) | Build search and resumable runs |
+| [P09](https://github.com/kaporli/pob2-tools/issues/33) | Benchmarks and independent validation |
+| [P10](https://github.com/kaporli/pob2-tools/issues/34) | Reports and end to end delivery |
+| [P11](https://github.com/kaporli/pob2-tools/issues/35) | Optional learning experiments |
+| [P12](https://github.com/kaporli/pob2-tools/issues/36) | Game-data and targeted reverse-engineering evidence |
 
-## Instructions for an assigned engineer
+## Working with issues
 
-1. Select one task whose dependencies have passed review. Read its entire project and the shared contracts before changing code.
-2. Create or update `docs/worklog/TASK-ID.md` from the [handoff template](templates/handoff.md). Record the specification version and starting commit.
-3. Implement only the assigned task and necessary tests. Reuse the prescribed modules; do not create alternative schemas, scoring systems, or services.
-4. Exercise every acceptance case and attach commands, fixture IDs, and results. A test that never ran is not a pass.
-5. Mark the task `review_ready`, not `accepted`. Use the [review request](templates/review-request.md) when returning work to the reviewing assistant.
-6. If blocked, record the exact missing input and the work it blocks. Continue only with independent tasks in the delivery plan. Unknown game rules must never be replaced with guessed constants to make a test pass.
+Select a bounded task whose prerequisites are accepted. Read the full issue and shared contracts; reuse existing modules and records. Post the [handoff](templates/handoff.md) as an issue comment, naming commits, exact commands, evidence, negative cases and remaining limits. Submit the linked PR for independent review before merge. Keep all current status and follow-up assignments on GitHub.
 
-The [delivery ledger](delivery.md#current-task-ledger) distinguishes done, partial, blocked and remaining tasks using the actual review records. Historical reviews retain their original specification version and scope. This documentation revision approves no new implementation gate. Technical acceptance belongs to the reviewing assistant when the engineer supplies changes and evidence; product-scope changes belong to Elias.
+Store redacted durable fixtures and logs under `docs/evidence/`; retain exact artifact and context hashes. Do not recreate `docs/worklog/` or in-repository project task lists. The issue's live state supersedes historical review wording.
 
-## Completion boundaries
+## Claim boundaries
 
-The offline research milestone can finish without automated website access. The full requested live-market product cannot: manual item import is a useful fallback, not acceptance of live trade integration. Similarly, successful PoB calculations establish engine consistency; independent gameplay evidence is required for claims about practical performance.
-
-The initial release covers a documented subset of Flicker Strike interactions and compatible classes. Expansion is a required staged project outcome, not permission to call that subset all PoE 2 builds. P11 is optional and must not delay a useful, validated non-learning optimizer.
+The model-based offline tier can be delivered without owner recordings, automatic source access or live trade. It must identify predictions and assumptions and preserve critical coverage/legality refusals. Empirical gameplay superiority and live availability require their own evidence. A successful PoB comparison establishes PoB consistency, not independent game accuracy. Optional learning must not delay the non-learning optimizer.

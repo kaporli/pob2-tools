@@ -8,7 +8,7 @@ The engineer implements and submits evidence. The reviewing assistant inspects t
 
 Alternative transitions are `in_progress -> blocked`, `review_ready -> changes_required -> in_progress`, and any state to `superseded` with a replacement reference. Engineers may set work to review-ready or blocked. Only the reviewer records accepted. Blocked access never becomes accepted after a timeout.
 
-Each task needs a worklog from [the handoff template](templates/handoff.md). Do not paste massive logs into prose: save relevant redacted artifacts and provide stable paths, hashes and command summaries. Store durable review evidence under `docs/evidence/<task-or-gate>/` or a referenced content-addressed artifact bundle; ignored `runs/` files alone are insufficient for another engineer's handoff.
+Each task needs a handoff comment on its GitHub issue using [the handoff template](templates/handoff.md). Do not paste massive logs into prose: save relevant redacted artifacts and provide stable paths, hashes and command summaries. Store durable review evidence under `docs/evidence/<task-or-gate>/` or a referenced content-addressed artifact bundle; ignored `runs/` files alone are insufficient for another engineer's handoff.
 
 ## Engineer submission checklist
 
@@ -26,7 +26,7 @@ Do not mark a task complete because a mock passes where the criterion requires e
 
 ### Inspect the implementation and its dependencies
 
-Read the task, shared contracts and prior gate verdicts. Inspect git diff and surrounding call sites. Verify that the implementation is in the assigned layer and no alternate ranking/parser schema was introduced. Check preserved user changes. Separate observed defects from untested concerns.
+Read the GitHub issue, shared contracts and linked prior gate verdicts. Inspect git diff and surrounding call sites. Verify that the implementation is in the assigned layer and no alternate ranking/parser schema was introduced. Check preserved user changes. Separate observed defects from untested concerns.
 
 ### Reproduce the critical behavior
 
@@ -38,11 +38,11 @@ Use at least one independent adversarial case relevant to the change, such as an
 
 ### Issue a verdict
 
-Write `docs/reviews/TASK-ID.md` using the [review template](templates/review.md). Verdict is `accepted`, `changes_required`, `blocked` or `superseded`. Include findings in severity order, exact code locations, impact and repair acceptance cases. Acceptance includes residual scope limits; it does not automatically approve unrelated dependent gates.
+Post the verdict on the GitHub issue or PR using the [review template](templates/review.md). Verdict is `accepted`, `changes_required`, `blocked` or `superseded`. Include findings in severity order, exact code locations, impact and repair acceptance cases. Acceptance includes residual scope limits; it does not automatically approve unrelated dependent gates.
 
 ### Reassess the plan
 
-At each task, state whether its findings change contracts, assumptions or dependencies. At each milestone, update delivery sequencing and make a concrete next-task recommendation. If a defect invalidates earlier evidence, identify and reopen those gates before dependent release claims proceed.
+At each task, state whether its findings change contracts, assumptions or dependencies. At each milestone, update the GitHub project/index issue and linked dependencies, and make a concrete next-task recommendation. If a defect invalidates earlier evidence, identify and reopen those gates before dependent release claims proceed.
 
 ## Mandatory milestone questions
 
@@ -75,3 +75,8 @@ Engineers can make routine implementation choices inside this spec. They must su
 ## Acceptance versus reassessment
 
 A useful review may conclude that the code meets its task but the project should change direction. For example, the trade study can be complete as an investigation while R05 remains blocked; a learning experiment can be correctly executed and rejected for adoption. Record both task quality and product outcome so successful engineering is not confused with successful capability delivery.
+
+
+## Evidence tiers
+
+For model-only delivery, follow D08/G3M: no owner recordings are required. Verify source-backed rules, analytical cases, pinned PoB parity, explicit assumptions and model workloads. Independently observed game accuracy remains separate. Never treat missing critical mechanics as merely missing empirical validation. Historical files under docs/reviews are immutable evidence, not the live task tracker.

@@ -1,0 +1,93 @@
+[
+  {
+    "run": "review-pr22-slot-rules-py312",
+    "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\review-pr22",
+    "plugin": false,
+    "head": "2f9a9f734f7c53709fc25f01bef1580254b4ad20",
+    "seed": "22",
+    "args": [
+      "-m",
+      "pytest",
+      "-vv",
+      "-p",
+      "no:cacheprovider",
+      "tests/engine/test_p02_t03_1_slot_rules_engine.py"
+    ],
+    "exit_code": 0,
+    "parent_guard": null,
+    "limit_mb": 2048,
+    "peak_tree_rss": 736706560,
+    "elapsed_s": 15.8,
+    "python": "3.12.4",
+    "last_line": "============================= 4 passed in 15.18s =============================="
+  },
+  {
+    "run": "review-pr20-21-native-py312",
+    "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\review-pr21",
+    "plugin": false,
+    "head": "db4082700246c22d2a1eca373fb01bc5f54c76ab",
+    "seed": "21",
+    "args": [
+      "-m",
+      "pytest",
+      "-vv",
+      "-p",
+      "no:cacheprovider",
+      "tests/engine/test_p09_t01_2_seed_replay_engine.py",
+      "tests/engine/test_p07_t01_flicker_cycle_engine.py"
+    ],
+    "exit_code": 0,
+    "parent_guard": null,
+    "limit_mb": 2048,
+    "peak_tree_rss": 42225664,
+    "elapsed_s": 1.0,
+    "python": "3.12.4",
+    "last_line": "============================= 6 skipped in 0.49s =============================="
+  },
+  {
+    "run": "review-pr20-21-clean-native-py312",
+    "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\review-pr21",
+    "plugin": false,
+    "head": "db4082700246c22d2a1eca373fb01bc5f54c76ab",
+    "seed": "21",
+    "args": [
+      "-m",
+      "pytest",
+      "-vv",
+      "-p",
+      "no:cacheprovider",
+      "tests/engine/test_p09_t01_2_seed_replay_engine.py",
+      "tests/engine/test_p07_t01_flicker_cycle_engine.py"
+    ],
+    "exit_code": 0,
+    "parent_guard": null,
+    "limit_mb": 2048,
+    "peak_tree_rss": 637399040,
+    "elapsed_s": 34.7,
+    "python": "3.12.4",
+    "last_line": "============================= 6 passed in 33.88s =============================="
+  },
+  {
+    "run": "review-pr22-item-regression-py312",
+    "repo": "C:\\Users\\Elias\\PycharmProjects\\pob2-tools\\.venv\\review-pr22",
+    "plugin": false,
+    "head": "2f9a9f734f7c53709fc25f01bef1580254b4ad20",
+    "seed": "22",
+    "args": [
+      "-m",
+      "pytest",
+      "-vv",
+      "-p",
+      "no:cacheprovider",
+      "tests/engine/test_p05_t02_item_conversion.py",
+      "tests/engine/test_f12_item_conversion_golden.py"
+    ],
+    "exit_code": 0,
+    "parent_guard": null,
+    "limit_mb": 2048,
+    "peak_tree_rss": 529309696,
+    "elapsed_s": 8.2,
+    "python": "3.12.4",
+    "last_line": "============================= 19 passed in 7.30s =============================="
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "active_sets": {
+    "skills": [
+      "Strike"
+    ],
+    "passives": [
+      "1"
+    ],
+    "items": [
+      "1"
+    ],
+    "config": {}
+  },
+  "stale_config_evidence": {
+    "eligible": true,
+    "blocking": []
+  },
+  "missing_passive_evidence": {
+    "eligible": true,
+    "blocking": []
+  },
+  "stale_item_wrong_engine_evidence": {
+    "eligible": true,
+    "blocking": []
+  },
+  "unearned_enemy_critical_weakness": {
+    "eligible": true,
+    "blocking": [],
+    "rules": [
+      "activation/gate",
+      "attribution/bench",
+      "resource/charges",
+      "skill/Builder",
+      "skill/Strike",
+      "support/SupportGate",
+      "target/bench"
+    ]
+  },
+  "window_identity": {
+    "normal": {
+      "status": "eligible",
+      "id": "9eb5e5df49857f75dec99aa91540d14b2b8446a424b6a90d10041b9e2ffcab82",
+      "score": 124.16666666666667,
+      "method": "pob-community-v2"
+    },
+    "short": {
+      "status": "eligible",
+      "id": "9eb5e5df49857f75dec99aa91540d14b2b8446a424b6a90d10041b9e2ffcab82",
+      "score": 120.83333333333333,
+      "method": "pob-community-v2"
+    },
+    "burst": {
+      "status": "eligible",
+      "id": "9eb5e5df49857f75dec99aa91540d14b2b8446a424b6a90d10041b9e2ffcab82",
+      "score": 124.16666666666667,
+      "method": "pob-community-v2"
+    }
+  },
+  "unaccepted_attribution": {
+    "status": "eligible",
+    "id": "de89db62e758e3ae8e9445108b699e98f2c5ef6e723142363f6c1c3496825108",
+    "score": 525000000124.1667,
+    "method": "pob-community-v2"
+  },
+  "foreign_engine_values": {
+    "status": "eligible",
+    "id": "11ddaa443d4c224aa68a34f06996f84996d265ebb3e35ed6252277ab39c7f175",
+    "score": 124.16666666666667,
+    "method": "pob-community-v2"
+  },
+  "unsupported_method": {
+    "status": "eligible",
+    "id": "ce758523b2caf479910293b164fa0b2cb18ef6ce42fb3a8da7b7395b87199428",
+    "score": 124.16666666666667,
+    "method": "pob-cycle-v1"
+  }
+}

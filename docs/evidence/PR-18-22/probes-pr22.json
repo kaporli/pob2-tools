@@ -1,0 +1,40 @@
+{
+  "partial_rarity": {
+    "base": "Adherent Bow",
+    "check_slots": "legal",
+    "gaps": [
+      "gap/p02-t02/weapon-set-point-unlock-levels",
+      "gap/p02-t02/quest-passive-point-rewards",
+      "gap/p02-t02/ascendancy-point-unlock-schedule",
+      "gap/p02-t03.1/socketed-item-jewel-slots",
+      "gap/p02-t03.1/slot-rarity-partial",
+      "gap/p02-t03.1/off-hand-keystone-flags",
+      "gap/p02-t02/gem-level-legality",
+      "gap/p02-t02/skill-level-limit",
+      "gap/p02-t02/current-patch-unresolved"
+    ],
+    "cited_gaps": [
+      "gap/p02-t03/character-attribute-totals",
+      "gap/p02-t03/reservation-measurement",
+      "gap/p02-t03/unverified-import"
+    ]
+  },
+  "partial_category": {
+    "check_slots": "illegal",
+    "violation_codes": [
+      "base_category_not_accepted"
+    ],
+    "gaps": [
+      "gap/p02-t02/weapon-set-point-unlock-levels",
+      "gap/p02-t02/quest-passive-point-rewards",
+      "gap/p02-t02/ascendancy-point-unlock-schedule",
+      "gap/p02-t03.1/slot-partial-categories",
+      "gap/p02-t03.1/socketed-item-jewel-slots",
+      "gap/p02-t03.1/slot-rarity-partial",
+      "gap/p02-t03.1/off-hand-keystone-flags",
+      "gap/p02-t02/gem-level-legality",
+      "gap/p02-t02/skill-level-limit",
+      "gap/p02-t02/current-patch-unresolved"
+    ]
+  }
+}

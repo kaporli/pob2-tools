@@ -207,32 +207,11 @@ Rules this encodes, for P05-T04 to honour:
 
 No schema change is proposed. Every value used already exists.
 
-## If the reviewer cannot accept this
+## Follow-up references
 
-The blocking input is one fact we cannot produce: a `client_id` registered to
-this project. It gates Route A entirely, and gates nothing about Route B, which
-fails on the absence of an endpoint rather than on identity.
+Current implementation and access work: [project identity](https://github.com/kaporli/pob2-tools/issues/122), [listing access](https://github.com/kaporli/pob2-tools/issues/123), and [live transport](https://github.com/kaporli/pob2-tools/issues/72). The original alternatives remain in the [historical decision](https://github.com/kaporli/pob2-tools/blob/ae8d890f243d93e8c6c61de9eec23bbcd6edd72c/docs/decisions/D01-trade-access.md).
 
-Concrete alternatives for the owner, in the order they cost least:
-
-1. Accept the proposal as written. Market mode stays unsupported, imported
-   items carry P05-T02 and P05-T03, live acceptance stays blocked.
-2. Pursue a registered application identity for this project through whatever
-   channel is open to the owner. That unblocks Route A only, and only for the
-   owner's own characters. It does not create a listing route. This task is not
-   authorised to contact anyone, so the owner would own that step.
-3. Accept manual market capture: the user exports or pastes listing text from
-   their own browsing, which P05-T02 imports with `access_method:
-   manual_capture`. Availability is then whatever the user observed, labelled
-   `observed` with its own timestamp, never `verified_at_snapshot`. This is a
-   product decision about how much manual work the user does, not an
-   engineering gap.
-4. Re-open D01 if the published documentation changes. The trigger to watch is
-   S5, the developer changelog, for a PoE 2 listing or trade resource and for
-   application registration reopening. Nothing else should re-open it.
-
-Not an alternative: a cookie, a borrowed `client_id`, a headless browser, or any
-other means of passing the gate. Each is excluded by S1 and S4, and by the task.
+Not an alternative: a cookie, a borrowed `client_id`, a headless browser, or any other means of passing the gate. Each is excluded by S1 and S4, and by the task.
 
 ## Review
 
